@@ -1,0 +1,24 @@
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">Propertism</a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/properties/">Properties</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

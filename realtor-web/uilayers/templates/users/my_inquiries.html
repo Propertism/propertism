@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}My Inquiries - Propertism{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>My Inquiries</h1>
+        <p>View and track your property inquiries</p>
+    </div>
+
+    {% if inquiries %}
+    <div class="inquiries-list">
+        {% for inquiry in inquiries %}
+        <div class="inquiry-card">
+            <h3>{{ inquiry.property.title }}</h3>
+            <p><strong>Status:</strong> <span class="status-{{ inquiry.status }}">{{ inquiry.get_status_display }}</span></p>
+            <p><strong>Message:</strong> {{ inquiry.message|truncatechars:100 }}</p>
+            <p class="meta"><small>Created: {{ inquiry.created_at|date:"F d, Y" }}</small></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>You haven't made any inquiries yet.</p>
+        <a href="{% url 'property_list' %}" class="btn btn-primary">Browse Properties</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

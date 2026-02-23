@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Properties - Propertism{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Property Listings</h1>
+        <p>Browse our available properties</p>
+    </div>
+</div>
+
+<div class="properties-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-sidebar">
+                <div class="filters">
+                    <h3>Filter Properties</h3>
+                    <form method="get" class="filter-form">
+                        <div class="form-group">
+                            <label class="form-label">Property Type</label>
+                            <select name="type" class="form-control">
+                                <option value="">All Types</option>
+                                {% for type in property_types %}
+                                <option value="{{ type.id }}" {% if request.GET.type == type.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ type.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="location" class="form-control" placeholder="Enter location" value="{{ request.GET.location }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Price Range</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
+                                </div>
+                                <div class="col">
+                                    <input type="number" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Bedrooms</label>
+                            <select name="bedrooms" class="form-control">
+                                <option value="">Any</option>
+                                <option value="1" {% if request.GET.bedrooms == "1" %}selected{% endif %}>1+</option>
+                                <option value="2" {% if request.GET.bedrooms == "2" %}selected{% endif %}>2+</option>
+                                <option value="3" {% if request.GET.bedrooms == "3" %}selected{% endif %}>3+</option>
+                                <option value="4" {% if request.GET.bedrooms == "4" %}selected{% endif %}>4+</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        <a href="/properties/" class="btn btn-secondary">Clear Filters</a>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-main">
+                <div class="properties-header">
+                    <p>{{ page_obj.paginator.count }} properties found</p>
+                </div>
+                
+                <div class="properties-grid">
+                    {% for property in page_obj %}
+                    {% include "components/_property-card.html" with property=property %}
+                    {% empty %}
+                    <div class="no-results">
+                        <p>No properties found matching your criteria.</p>
+                        <a href="/properties/" class="btn btn-primary">View All Properties</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if page_obj.paginator.num_pages > 1 %}
+                {% include "components/_pagination.html" with page_obj=page_obj %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

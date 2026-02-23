@@ -1,0 +1,23 @@
+<div class="property-card">
+    <div class="property-image">
+        {% if property.photos.first %}
+        <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}">
+        {% else %}
+        <img src="/static/images/placeholder-property.jpg" alt="{{ property.title }}">
+        {% endif %}
+    </div>
+    <div class="property-info">
+        <h3 class="property-title">
+            <a href="{% url 'property_detail' property.pk %}">{{ property.title }}</a>
+        </h3>
+        <p class="property-price">₹{{ property.price|floatformat:0 }}</p>
+        <p class="property-location">{{ property.location }}</p>
+        <div class="property-features">
+            <span>{{ property.bedrooms }} Beds</span>
+            <span>{{ property.bathrooms }} Baths</span>
+            {% if property.area %}
+            <span>{{ property.area|floatformat:0 }} sqft</span>
+            {% endif %}
+        </div>
+    </div>
+</div>

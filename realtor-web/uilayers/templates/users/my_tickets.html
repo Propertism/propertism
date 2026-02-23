@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}My Tickets - Propertism{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>My Support Tickets</h1>
+        <p>Track your support tickets</p>
+    </div>
+
+    {% if tickets %}
+    <div class="tickets-list">
+        {% for ticket in tickets %}
+        <div class="ticket-card">
+            <h3>{{ ticket.subject }}</h3>
+            <p><strong>Priority:</strong> <span class="priority-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></p>
+            <p><strong>Status:</strong> <span class="status-{{ ticket.status }}">{{ ticket.get_status_display }}</span></p>
+            <p><strong>Category:</strong> {{ ticket.category|default:"General" }}</p>
+            <p><strong>Description:</strong> {{ ticket.description|truncatechars:100 }}</p>
+            <p class="meta"><small>Created: {{ ticket.created_at|date:"F d, Y" }}</small></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>You haven't created any support tickets yet.</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

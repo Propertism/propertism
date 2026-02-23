@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load cms_tags sekizai_tags static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% page_attribute "page_title" %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
+    {% render_block "css" %}
+</head>
+<body>
+    {% cms_toolbar %}
+    
+    {% include "components/_header.html" %}
+    
+    <main class="main-content">
+        {% block content %}
+        {% placeholder "content" %}
+        {% endblock %}
+    </main>
+    
+    {% include "components/_footer.html" %}
+    
+    <script src="{% static 'js/utils.js' %}"></script>
+    {% render_block "js" %}
+</body>
+</html>

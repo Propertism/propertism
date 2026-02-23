@@ -1,0 +1,10 @@
+<svg width="150" height="40" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simple P icon with house shape -->
+  <rect x="2" y="8" width="28" height="28" stroke="#B89A4A" stroke-width="2" fill="none"/>
+  <path d="M16 8 L16 2 L30 2 L30 8" stroke="#B89A4A" stroke-width="2" fill="none"/>
+  <rect x="10" y="20" width="6" height="10" fill="#B89A4A"/>
+  <rect x="20" y="20" width="6" height="10" fill="#B89A4A"/>
+  
+  <!-- PROPERTISM text -->
+  <text x="38" y="26" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="white" letter-spacing="2">PROPERTISM</text>
+</svg>
