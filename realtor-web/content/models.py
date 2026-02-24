@@ -9,6 +9,12 @@ class CompanyInfo(models.Model):
     about_mission = models.TextField(blank=True)
     about_description = models.TextField(blank=True)
     
+    # Hero Section
+    hero_eyebrow = models.CharField(max_length=100, blank=True, help_text="Small text above hero title")
+    hero_title = models.CharField(max_length=300, default="NRI Property Management Services In India, Chennai")
+    hero_description = models.TextField(default="We manage your property and resources when you are far from the nation")
+    hero_image = models.ImageField(upload_to='hero/', blank=True, null=True, help_text="Hero background image")
+    
     # India Office
     india_office_address = models.TextField()
     india_office_city = models.CharField(max_length=100, default="Chennai")

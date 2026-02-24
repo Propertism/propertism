@@ -3,10 +3,25 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from content.models import CompanyInfo, Statistic, Service
+from properties.models import Property
 
 
 def home(request):
-    return render(request, 'premium-home.html')
+    """Homepage with dynamic content from database"""
+    company = CompanyInfo.objects.first()
+    stats = Statistic.objects.all()[:3]
+    services = Service.objects.all()[:3]
+    featured_properties = Property.objects.filter(status='available')[:3]
+    
+    context = {
+        'company': company,
+        'stats': stats,
+        'services': services,
+        'featured_properties': featured_properties,
+    }
+    
+    return render(request, 'enterprise-home.html', context)
 
 
 @login_required

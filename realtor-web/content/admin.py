@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TabbedTranslationAdmin
 from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry
@@ -6,8 +7,12 @@ from .models import (
 
 
 @admin.register(CompanyInfo)
-class CompanyInfoAdmin(admin.ModelAdmin):
+class CompanyInfoAdmin(TabbedTranslationAdmin):
     fieldsets = (
+        ('Hero Section', {
+            'fields': ('hero_eyebrow', 'hero_title', 'hero_description', 'hero_image'),
+            'description': 'Homepage hero section content and background image'
+        }),
         ('Company Details', {
             'fields': ('company_name', 'tagline', 'about_mission', 'about_description')
         }),
@@ -42,7 +47,7 @@ class StatisticAdmin(admin.ModelAdmin):
 
 
 @admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
+class ServiceAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -66,7 +71,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 @admin.register(CoreValue)
-class CoreValueAdmin(admin.ModelAdmin):
+class CoreValueAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -74,7 +79,7 @@ class CoreValueAdmin(admin.ModelAdmin):
 
 
 @admin.register(TeamMember)
-class TeamMemberAdmin(admin.ModelAdmin):
+class TeamMemberAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'role', 'department', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active', 'department')
@@ -94,7 +99,7 @@ class TeamMemberAdmin(admin.ModelAdmin):
 
 
 @admin.register(ExpertiseArea)
-class ExpertiseAreaAdmin(admin.ModelAdmin):
+class ExpertiseAreaAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -102,7 +107,7 @@ class ExpertiseAreaAdmin(admin.ModelAdmin):
 
 
 @admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
+class BlogPostAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'author', 'category', 'published_date', 'is_published')
     list_filter = ('is_published', 'category', 'published_date')
     search_fields = ('title', 'excerpt', 'content')
@@ -153,3 +158,4 @@ class ContactInquiryAdmin(admin.ModelAdmin):
         if obj:  # Editing existing object
             return self.readonly_fields + ('name', 'email', 'phone', 'service', 'property_type', 'message')
         return self.readonly_fields
+

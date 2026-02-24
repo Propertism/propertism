@@ -1,0 +1,22 @@
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon: Geometric House/Building (White version) -->
+  <g transform="translate(5, 10)">
+    <!-- Base structure -->
+    <rect x="0" y="15" width="20" height="15" fill="#FFFFFF" stroke="#B89A4A" stroke-width="0.5"/>
+    <polygon points="10,5 0,15 20,15" fill="#B89A4A"/>
+    <!-- Window details -->
+    <rect x="4" y="19" width="4" height="4" fill="#B89A4A"/>
+    <rect x="12" y="19" width="4" height="4" fill="#B89A4A"/>
+    <rect x="8" y="25" width="4" height="5" fill="#B89A4A"/>
+  </g>
+  
+  <!-- Text: PROPERTISM (White) -->
+  <text x="35" y="32" font-family="'Inter', 'Arial', sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">
+    PROPERTISM
+  </text>
+  
+  <!-- Tagline (Light gray for dark backgrounds) -->
+  <text x="35" y="42" font-family="'Inter', 'Arial', sans-serif" font-size="6" font-weight="400" fill="#D1D3D7" letter-spacing="1.5">
+    REALTY ADVISORS
+  </text>
+</svg>

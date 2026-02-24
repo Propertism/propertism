@@ -4,6 +4,7 @@ from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry
 )
+from properties.models import Property
 
 
 def get_company_context():
@@ -17,10 +18,20 @@ def get_company_context():
 
 def home(request):
     """Homepage view"""
+    from django.utils import translation
+    
     context = get_company_context()
+    
+    # Debug: Print current language
+    current_lang = translation.get_language()
+    print(f"🌍 Current Language: {current_lang}")
+    if context.get('company'):
+        print(f"📝 Hero Title: {context['company'].hero_title}")
+    
     context.update({
         'stats': Statistic.objects.filter(is_active=True),
         'services': Service.objects.filter(is_active=True)[:3],
+        'featured_properties': Property.objects.filter(status='available')[:3],
     })
     return render(request, 'enterprise-home.html', context)
 
