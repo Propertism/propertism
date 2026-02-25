@@ -1,3 +1,5 @@
+***hosting***
+
 # Quick Demo Deployment Guide
 
 **Purpose**: Deploy a free demo for owner review  

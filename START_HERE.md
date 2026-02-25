@@ -1,3 +1,5 @@
+***hosting***
+
 # 🚀 START HERE - DEPLOY YOUR DEMO IN 15 MINUTES
 
 **Welcome!** Your Propertism website is ready to deploy. Follow these simple steps.

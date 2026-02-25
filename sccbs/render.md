@@ -1,3 +1,5 @@
+***hosting***
+
 # 🚀 RENDER DEPLOYMENT - STEP BY STEP
 
 **Status**: Code pushed to GitHub ✅  

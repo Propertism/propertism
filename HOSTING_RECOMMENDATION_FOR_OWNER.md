@@ -1,3 +1,5 @@
+***hosting***
+
 # Hosting Platform Recommendation
 
 **To**: Owner, Propertism Realty Advisors LLP  

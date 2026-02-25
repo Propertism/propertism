@@ -1,3 +1,5 @@
+***hosting***
+
 # 🚀 RENDER DEPLOYMENT - QUICK REFERENCE
 
 **Repository**: https://github.com/vijaympgs/realtor  
