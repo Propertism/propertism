@@ -1,46 +1,36 @@
 """
-Management command to ensure demo content exists
-This runs automatically on deployment to populate the database
+Django management command to ensure demo content exists
+This runs automatically during deployment
 """
 from django.core.management.base import BaseCommand
 from content.models import CompanyInfo, Service, Statistic
 
 
 class Command(BaseCommand):
-    help = 'Ensures demo content exists in the database for owner review'
+    help = 'Ensures demo content exists in all three languages'
 
     def handle(self, *args, **options):
-        self.stdout.write('Checking for demo content...')
+        self.stdout.write('Checking and adding demo content...')
         
-        # Check if company info exists
-        if not CompanyInfo.objects.exists():
-            self.stdout.write('Creating demo company information...')
-            self.create_company_info()
-        else:
-            self.stdout.write('✅ Company info already exists')
+        # Add company info
+        self.add_company_info()
         
-        # Check if services exist
-        if Service.objects.count() < 3:
-            self.stdout.write('Creating demo services...')
-            self.create_services()
-        else:
-            self.stdout.write('✅ Services already exist')
+        # Add services
+        self.add_services()
         
-        # Check if statistics exist
-        if Statistic.objects.count() < 4:
-            self.stdout.write('Creating demo statistics...')
-            self.create_statistics()
-        else:
-            self.stdout.write('✅ Statistics already exist')
+        # Add statistics
+        self.add_statistics()
         
-        self.stdout.write(self.style.SUCCESS('\n✅ Demo content is ready!'))
-        self.stdout.write('View in English: /en/')
-        self.stdout.write('View in Tamil: /ta/')
-        self.stdout.write('View in Hindi: /hi/')
+        self.stdout.write(self.style.SUCCESS('✅ Demo content ready!'))
 
-    def create_company_info(self):
-        """Create company information in all languages"""
-        company = CompanyInfo()
+    def add_company_info(self):
+        """Add company information in all three languages"""
+        if CompanyInfo.objects.exists():
+            company = CompanyInfo.objects.first()
+            self.stdout.write('Updating company info...')
+        else:
+            company = CompanyInfo()
+            self.stdout.write('Creating company info...')
         
         # English content
         company.company_name_en = "Propertism Realty Advisors LLP"
@@ -86,10 +76,10 @@ class Command(BaseCommand):
         company.business_hours = "Monday - Saturday: 9:00 AM - 6:00 PM IST"
         
         company.save()
-        self.stdout.write('✅ Company information created')
+        self.stdout.write('✅ Company info ready')
 
-    def create_services(self):
-        """Create services in all languages"""
+    def add_services(self):
+        """Add services in all three languages"""
         services_data = [
             {
                 'title_en': 'Real Estate Buy & Sell',
@@ -133,7 +123,7 @@ class Command(BaseCommand):
         ]
         
         for service_data in services_data:
-            Service.objects.get_or_create(
+            service, created = Service.objects.get_or_create(
                 order=service_data['order'],
                 defaults={
                     'title_en': service_data['title_en'],
@@ -149,11 +139,23 @@ class Command(BaseCommand):
                     'is_active': True
                 }
             )
+            if not created:
+                service.title_en = service_data['title_en']
+                service.title_ta = service_data['title_ta']
+                service.title_hi = service_data['title_hi']
+                service.short_description_en = service_data['short_description_en']
+                service.short_description_ta = service_data['short_description_ta']
+                service.short_description_hi = service_data['short_description_hi']
+                service.full_description_en = service_data['full_description_en']
+                service.full_description_ta = service_data['full_description_ta']
+                service.full_description_hi = service_data['full_description_hi']
+                service.icon = service_data['icon']
+                service.save()
         
-        self.stdout.write('✅ Services created')
+        self.stdout.write('✅ Services ready')
 
-    def create_statistics(self):
-        """Create company statistics"""
+    def add_statistics(self):
+        """Add company statistics"""
         stats_data = [
             {'label': 'Properties Managed', 'value': '500+', 'order': 1},
             {'label': 'Happy NRI Clients', 'value': '200+', 'order': 2},
@@ -162,7 +164,7 @@ class Command(BaseCommand):
         ]
         
         for stat_data in stats_data:
-            Statistic.objects.get_or_create(
+            stat, created = Statistic.objects.get_or_create(
                 order=stat_data['order'],
                 defaults={
                     'label': stat_data['label'],
@@ -170,5 +172,9 @@ class Command(BaseCommand):
                     'is_active': True
                 }
             )
+            if not created:
+                stat.label = stat_data['label']
+                stat.value = stat_data['value']
+                stat.save()
         
-        self.stdout.write('✅ Statistics created')
+        self.stdout.write('✅ Statistics ready')
