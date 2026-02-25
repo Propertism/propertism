@@ -5,6 +5,10 @@ from .models import (
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry
 )
 from properties.models import Property
+import logging
+
+# Configure logger
+logger = logging.getLogger(__name__)
 
 
 def get_company_context():
@@ -32,6 +36,9 @@ def home(request):
         'stats': Statistic.objects.filter(is_active=True),
         'services': Service.objects.filter(is_active=True)[:3],
         'featured_properties': Property.objects.filter(status='available')[:3],
+        'breadcrumbs': [
+            {'name': 'Home', 'url': None}
+        ]
     })
     return render(request, 'enterprise-home.html', context)
 
@@ -41,6 +48,10 @@ def services(request):
     context = get_company_context()
     context.update({
         'services': Service.objects.filter(is_active=True),
+        'breadcrumbs': [
+            {'name': 'Home', 'url': '/'},
+            {'name': 'Services', 'url': None}
+        ]
     })
     return render(request, 'services.html', context)
 
@@ -100,11 +111,19 @@ def contact(request):
                 property_type=request.POST.get('property_type', ''),
                 message=request.POST.get('message'),
             )
+            logger.info(f"Contact inquiry received from {inquiry.email}")
             messages.success(request, 'Thank you for your inquiry! We will get back to you soon.')
             return redirect('contact')
         except Exception as e:
-            messages.error(request, 'There was an error submitting your inquiry. Please try again.')
+            logger.exception(f"Error processing contact form: {str(e)}")
+            messages.error(request, 'There was an error submitting your inquiry. Please try again or call us directly.')
     
+    context.update({
+        'breadcrumbs': [
+            {'name': 'Home', 'url': '/'},
+            {'name': 'Contact', 'url': None}
+        ]
+    })
     return render(request, 'contact.html', context)
 
 
@@ -123,3 +142,17 @@ def newsletter_subscribe(request):
     
     # Redirect back to the referring page or home
     return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+# ==============================================================================
+# ERROR HANDLERS
+# ==============================================================================
+
+def custom_404(request, exception=None):
+    """Custom 404 error handler"""
+    return render(request, '404.html', status=404)
+
+
+def custom_500(request):
+    """Custom 500 error handler"""
+    return render(request, '500.html', status=500)

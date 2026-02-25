@@ -1,6 +1,22 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
+{% load static %}
+{% load seo_tags %}
 
-{% block title %}Home - Propertism Realty Advisors{% endblock %}
+{% block meta_title %}NRI Property Management Services Chennai | Propertism Realty{% endblock %}
+
+{% block seo_meta %}
+{% seo_meta 
+    title="NRI Property Management Services Chennai | Propertism Realty"
+    description="Expert NRI property management in Chennai, India. Buy, sell, rent properties. Professional tenant management, maintenance, and real estate advisory for Non-Resident Indians."
+    image="/static/images/propertism-hero-bg.jpg"
+    page_type="website"
+%}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% breadcrumb_schema items=breadcrumbs %}
+{% endblock %}
 
 {% block content %}
 <div class="hero"{% if company.hero_image %} style="background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(26, 41, 66, 0.75) 100%), url('{{ company.hero_image.url }}');"{% endif %}>

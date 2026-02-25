@@ -1,9 +1,9 @@
 <div class="property-card">
     <div class="property-image">
         {% if property.photos.first %}
-        <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}">
+        <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}" loading="lazy" width="400" height="300">
         {% else %}
-        <img src="/static/images/placeholder-property.jpg" alt="{{ property.title }}">
+        <img src="/static/images/placeholder-property.jpg" alt="{{ property.title }}" loading="lazy" width="400" height="300">
         {% endif %}
     </div>
     <div class="property-info">
