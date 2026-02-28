@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% load seo_tags %}
+
+{% block meta_title %}NRI Property Management Services Chennai | Propertism Realty{% endblock %}
+
+{% block seo_meta %}
+{% seo_meta title="NRI Property Management Services Chennai | Propertism Realty" description="Expert NRI property management in Chennai, India. Buy, sell, rent properties. Professional tenant management, maintenance, and real estate advisory for Non-Resident Indians." image="/static/images/propertism-hero-bg.jpg" page_type="website" %}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% breadcrumb_schema items=breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+<div class="hero"{% if company.hero_image %} style="background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(26, 41, 66, 0.75) 100%), url('{{ company.hero_image.url }}');"{% endif %}>
+    <div class="container">
+        <div class="hero-content">
+            {% if company.hero_eyebrow %}<span class="hero-eyebrow">{{ company.hero_eyebrow }}</span>{% endif %}
+            <h1>{{ company.hero_title|default:"NRI Property Management Services In Chennai, India" }}</h1>
+            <p class="hero-description">{{ company.hero_description|default:"We manage your property and resources when you are far from the nation" }}</p>
+            <div class="hero-actions">
+                <a href="{% url 'property_list' %}" class="btn btn-primary">Browse Properties</a>
+                <a href="{% url 'contact' %}" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="services-section">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <div class="row">
+            <div class="col">
+                <div class="service-card">
+                    <h3>Real Estate - Buy and Sell</h3>
+                    <p>We assist in buying and selling properties to clients who are interested in investing in a property or who want to sell their plot at a profitable price.</p>
+                    <a href="{% url 'property_list' %}" class="btn btn-link">View Properties</a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service-card">
+                    <h3>Rental and Apartment Maintenance</h3>
+                    <p>Tenant management is one of the best colored feathers in our hat. We take periodic visits to your place and take care of rental cheques deposits, reports.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-link">Learn More</a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service-card">
+                    <h3>Industrial Land Services</h3>
+                    <p>Propertism also helps with Industrial land requirements. Sale and purchase of the land required for Industry plants, according to the requirement analysis.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-link">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="featured-properties">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Properties</h2>
+            <a href="{% url 'property_list' %}" class="btn btn-secondary">View All Properties</a>
+        </div>
+        <div class="row">
+            {% for property in featured_properties %}
+            <div class="col">
+                {% include "components/_property-card.html" with property=property %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Need Advice?</h2>
+            <p>Invest right, Manage your assets and get rental payments at ease - Talk to us! We are the best to consult for your long term savings with investments.</p>
+            <div class="cta-actions">
+                <a href="tel:+918667020798" class="btn btn-primary">Call: +91 86670 20798</a>
+                <a href="{% url 'contact' %}" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

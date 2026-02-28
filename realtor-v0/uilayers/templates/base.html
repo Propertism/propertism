@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+{% load seo_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% block meta_title %}Propertism Realty Advisors | NRI Property Management Chennai{% endblock %}</title>
+    {% block seo_meta %}
+    {% seo_meta %}
+    {% endblock %}
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="{% static 'css/premium-styles.css' %}" as="style">
+    
+    <!-- Load fonts with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
+    
+    <!-- Structured Data -->
+    {% block structured_data %}
+    {% organization_schema %}
+    {% endblock %}
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% include "components/_header.html" %}
+    
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    {% include "components/_footer.html" %}
+    
+    <script src="{% static 'js/theme-switcher.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

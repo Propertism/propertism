@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/stunning-design.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section - Stunning Modern Design -->
+<section class="hero-modern">
+    <!-- Animated Background -->
+    <div class="hero-background-animated"></div>
+    
+    <!-- Floating Particles -->
+    <div class="hero-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="hero-content-modern">
+        <div class="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+            </svg>
+            Premium NRI Property Management
+        </div>
+        
+        <h1 class="hero-title-modern">
+            Your Trusted Partner for<br>
+            <span class="highlight">NRI Property Management</span><br>
+            in Chennai, India
+        </h1>
+        
+        <p class="hero-subtitle-modern">
+            We manage your property and resources when you are far from the nation. 
+            Professional, reliable, and transparent property management services tailored for NRIs.
+        </p>
+        
+        <div class="hero-actions-modern">
+            <a href="/properties/" class="btn-modern btn-primary-modern">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                Browse Properties
+            </a>
+            <a href="/contact/" class="btn-modern btn-secondary-modern">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Get in Touch
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-modern container">
+    <div class="stat-card-modern animate-on-scroll">
+        <div class="stat-number-modern">15+</div>
+        <div class="stat-label-modern">Years Experience</div>
+    </div>
+    <div class="stat-card-modern animate-on-scroll" style="animation-delay: 0.1s;">
+        <div class="stat-number-modern">500+</div>
+        <div class="stat-label-modern">Properties Managed</div>
+    </div>
+    <div class="stat-card-modern animate-on-scroll" style="animation-delay: 0.2s;">
+        <div class="stat-number-modern">98%</div>
+        <div class="stat-label-modern">Client Satisfaction</div>
+    </div>
+    <div class="stat-card-modern animate-on-scroll" style="animation-delay: 0.3s;">
+        <div class="stat-number-modern">24/7</div>
+        <div class="stat-label-modern">Support Available</div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section style="padding: var(--space-32) 0; background: var(--gray-50);">
+    <div class="container">
+        <div style="text-align: center; max-width: 800px; margin: 0 auto var(--space-20);" class="animate-on-scroll">
+            <div class="hero-badge" style="margin: 0 auto var(--space-6);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                Our Services
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--gray-900); margin-bottom: var(--space-6);">
+                Comprehensive Property Solutions
+            </h2>
+            <p style="font-size: 1.125rem; color: var(--gray-600); line-height: 1.7;">
+                From buying and selling to rental management and maintenance, we provide end-to-end property services for NRIs.
+            </p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: var(--space-8);">
+            <div class="service-card-stunning animate-on-scroll">
+                <div class="service-icon-stunning">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </div>
+                <h3 class="service-title-stunning">Real Estate - Buy and Sell</h3>
+                <p class="service-description-stunning">
+                    We assist in buying and selling properties to clients who are interested in investing in a property or who want to sell their plot at a profitable price.
+                </p>
+                <a href="/properties/" class="service-link-stunning">
+                    View Properties
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="service-card-stunning animate-on-scroll" style="animation-delay: 0.1s;">
+                <div class="service-icon-stunning">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <h3 class="service-title-stunning">Rental and Apartment Maintenance</h3>
+                <p class="service-description-stunning">
+                    Tenant management is one of the best colored feathers in our hat. We take periodic visits to your place and take care of rental cheques deposits, reports.
+                </p>
+                <a href="/contact/" class="service-link-stunning">
+                    Learn More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="service-card-stunning animate-on-scroll" style="animation-delay: 0.2s;">
+                <div class="service-icon-stunning">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
+                </div>
+                <h3 class="service-title-stunning">Industrial Land Services</h3>
+                <p class="service-description-stunning">
+                    Propertism also helps with Industrial land requirements. Sale and purchase of the land required for Industry plants, according to the requirement analysis.
+                </p>
+                <a href="/contact/" class="service-link-stunning">
+                    Get Started
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties Section -->
+<section style="padding: var(--space-32) 0;">
+    <div class="container">
+        <div style="text-align: center; max-width: 800px; margin: 0 auto var(--space-20);" class="animate-on-scroll">
+            <div class="hero-badge" style="margin: 0 auto var(--space-6);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                Featured Properties
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--gray-900); margin-bottom: var(--space-6);">
+                Handpicked Premium Properties
+            </h2>
+            <p style="font-size: 1.125rem; color: var(--gray-600); line-height: 1.7;">
+                Explore our carefully curated selection of premium properties perfect for NRI investments.
+            </p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--space-12);">
+            {% for property in featured_properties %}
+            <div class="property-card-stunning animate-on-scroll">
+                <div class="property-image-container">
+                    {% if property.photos.first %}
+                    <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}" class="property-image-stunning">
+                    {% else %}
+                    <div class="property-image-stunning" style="background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400);">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    {% endif %}
+                    <div class="property-overlay"></div>
+                    <div class="property-badge-stunning">Featured</div>
+                    <div class="property-quick-view">
+                        <a href="{% url 'property_detail' property.pk %}" class="btn-modern btn-secondary-modern" style="font-size: 0.875rem; padding: var(--space-3) var(--space-6);">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+                <div class="property-content-stunning">
+                    <div class="property-location-stunning">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        {{ property.location }}
+                    </div>
+                    <h3 class="property-title-stunning">{{ property.title }}</h3>
+                    <div class="property-meta-stunning">
+                        <div class="property-meta-item-stunning">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            </svg>
+                            {{ property.area }} sq ft
+                        </div>
+                        <div class="property-meta-item-stunning">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            </svg>
+                            {{ property.bedrooms }} BHK
+                        </div>
+                    </div>
+                    <div class="property-footer-stunning">
+                        <div class="property-price-stunning">₹{{ property.price|floatformat:0 }}</div>
+                        <a href="{% url 'property_detail' property.pk %}" class="service-link-stunning">
+                            Details
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-20) 0; color: var(--gray-400);">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto var(--space-4);">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                </svg>
+                <p style="font-size: 1.125rem;">No properties available at the moment. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div style="text-align: center; margin-top: var(--space-16);">
+            <a href="/properties/" class="btn-modern btn-primary-modern">
+                View All Properties
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section style="padding: var(--space-32) 0; background: var(--gradient-primary); color: var(--white); position: relative; overflow: hidden;">
+    <!-- Decorative Elements -->
+    <div style="position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -50%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(201, 169, 97, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+    
+    <div class="container" style="position: relative; z-index: 2;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;" class="animate-on-scroll">
+            <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--white); margin-bottom: var(--space-6);">
+                Ready to Invest in Your Future?
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); line-height: 1.7; margin-bottom: var(--space-12);">
+                Invest right, manage your assets and get rental payments at ease. Talk to us! We are the best to consult for your long term savings with investments.
+            </p>
+            <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                <a href="tel:+918667020798" class="btn-modern btn-primary-modern">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Call: +91 86670 20798
+                </a>
+                <a href="/contact/" class="btn-modern btn-secondary-modern">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Scroll Animation Observer
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => {
+    observer.observe(el);
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

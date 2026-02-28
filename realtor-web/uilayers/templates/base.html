@@ -24,6 +24,8 @@
     
     <!-- Critical CSS -->
     <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stunning-design.css' %}">
+    <link rel="stylesheet" href="{% static 'css/realtor-overrides.css' %}">
     
     <!-- Structured Data -->
     {% block structured_data %}
@@ -33,7 +35,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% include "components/_header.html" %}
+    {% include "components/_header-english.html" %}
     
     <main class="main-content">
         {% block content %}
@@ -42,7 +44,7 @@
     
     {% include "components/_footer.html" %}
     
-    <script src="{% static 'js/theme-switcher.js' %}"></script>
+    <!-- Light mode only - no theme switcher -->
     <script src="{% static 'js/utils.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

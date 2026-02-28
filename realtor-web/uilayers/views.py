@@ -8,11 +8,11 @@ from properties.models import Property
 
 
 def home(request):
-    """Homepage with dynamic content from database"""
+    """Homepage with dynamic content from database - Stunning Design"""
     company = CompanyInfo.objects.first()
-    stats = Statistic.objects.all()[:3]
+    stats = Statistic.objects.all()[:4]  # Get 4 stats for the new design
     services = Service.objects.all()[:3]
-    featured_properties = Property.objects.filter(status='available')[:3]
+    featured_properties = Property.objects.filter(status='available')[:6]  # Show more properties
     
     context = {
         'company': company,
@@ -21,7 +21,7 @@ def home(request):
         'featured_properties': featured_properties,
     }
     
-    return render(request, 'enterprise-home.html', context)
+    return render(request, 'home-stunning.html', context)
 
 
 @login_required

@@ -1,0 +1,313 @@
+/* Realtor Overrides - Ensure consistent styling */
+
+/* Realtor Font Set for All Elements */
+* {
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+/* Black Translucent Header */
+.site-header {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.site-header.scrolled {
+    background: rgba(0, 0, 0, 0.85) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Logo - Show Original Colors */
+.logo-image {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+.logo:hover .logo-image {
+    opacity: 0.8 !important;
+}
+
+/* Navigation - White Text */
+.main-nav a {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.main-nav a:hover {
+    color: var(--white) !important;
+}
+
+.main-nav a::after {
+    background: rgba(255, 255, 255, 0.9) !important;
+    height: 2px !important;
+}
+
+/* Search Box Fonts */
+.search-input-minimal input,
+.filter-button-minimal,
+.save-search-minimal,
+.search-submit-minimal {
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+/* Property Cards */
+.property-card-hybrid,
+.property-title-hybrid,
+.property-location-hybrid,
+.property-price-hybrid,
+.property-details-hybrid {
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+
+/* ============================================
+   HEADER CONTROLS - Sign In & Profile
+   ============================================ */
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Sign In Button */
+.sign-in-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+.sign-in-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--white);
+}
+
+.sign-in-btn svg {
+    flex-shrink: 0;
+}
+
+/* Profile Menu */
+.profile-menu {
+    position: relative;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.profile-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--white);
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    min-width: 220px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s;
+    z-index: 1000;
+}
+
+.profile-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--gray-900);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+.dropdown-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown-item:hover {
+    background: var(--gray-50);
+    color: var(--brand-navy);
+}
+
+.dropdown-item svg {
+    flex-shrink: 0;
+    color: var(--gray-600);
+}
+
+.dropdown-item:hover svg {
+    color: var(--brand-navy);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin: 8px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-controls {
+        gap: 12px;
+    }
+    
+    .sign-in-btn {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+    }
+    
+    .profile-btn {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+
+/* ============================================
+   TEXT LOGO - PROPERTISM
+   ============================================ */
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.logo-text:hover {
+    opacity: 0.85;
+}
+
+.logo-proper {
+    color: #FFFFFF;
+}
+
+.logo-tism {
+    color: #DC2626;
+}
+
+.logo-tm {
+    color: #B8860B;
+    font-size: 0.625rem;
+    font-weight: 600;
+    margin-left: 2px;
+    vertical-align: super;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 1.25rem;
+    }
+    
+    .logo-tm {
+        font-size: 0.5rem;
+    }
+}
+
+
+/* ============================================
+   PURE LINE SCROLLBAR - Minimal Design
+   ============================================ */
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* Track (background) - completely transparent */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Thumb (the draggable part) - thin line */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    transition: background 0.3s;
+}
+
+/* Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Remove arrows/buttons */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/* Corner where scrollbars meet */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Dark sections - lighter scrollbar */
+.hero-hybrid::-webkit-scrollbar-thumb,
+.cta-section::-webkit-scrollbar-thumb,
+[style*="background: linear-gradient"]::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.hero-hybrid::-webkit-scrollbar-thumb:hover,
+.cta-section::-webkit-scrollbar-thumb:hover,
+[style*="background: linear-gradient"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
