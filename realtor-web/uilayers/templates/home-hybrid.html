@@ -8,12 +8,14 @@
 
 {% block content %}
 <!-- Hero Section - Zillow Style -->
-<section class="hero-hybrid">
+<section class="hero-hybrid"{% if company and company.hero_image %} style="background-image: url('{{ company.hero_image.url }}');"{% endif %}>
     <div class="hero-hybrid-content">
-        <!-- Hero Title -->
-        <h1 class="hero-title-zillow animate-fade-in-up">
-            Rentals. Homes.
-        </h1>
+        <div class="hero-copy-zillow">
+            <!-- Hero Title -->
+            <h1 class="hero-title-zillow animate-fade-in-up">
+                {% if company and company.hero_title %}{{ company.hero_title }}{% else %}Rentals. Homes.{% endif %}
+            </h1>
+        </div>
         
         <!-- Search Box - Zillow Style -->
         <div class="search-box-zillow animate-fade-in-up animate-delay-1">
@@ -37,13 +39,13 @@
 </section>
 
 <!-- Featured Properties - Zillow-style -->
-<section style="padding: var(--space-20) 0; background: var(--white);">
+<section class="featured-properties-section">
     <div class="container">
-        <div style="text-align: center; width: 100%; margin: 0 auto var(--space-12);">
-            <h2 style="text-align: center; font-family: var(--realtor-font-set); font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 400; color: var(--gray-900); margin-bottom: var(--space-4);">
+        <div class="featured-properties-intro">
+            <h2 class="featured-properties-title">
                 Featured Properties for NRIs
             </h2>
-            <p style="text-align: center; font-size: 1.125rem; color: var(--gray-600); line-height: 1.7; margin: 0 auto;">
+            <p class="featured-properties-subtitle">
                 Handpicked premium properties perfect for investment
             </p>
         </div>
