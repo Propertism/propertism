@@ -188,6 +188,9 @@ See `PRE_PRODUCTION_AUDIT.md` for detailed analysis.
 - **PythonAnywhere** (Free tier available)
 - **DigitalOcean** - $12/month
 
+### Deployment Guide
+- `documents/DEPLOY_RENDER_RAILWAY.md` - Repo-specific setup for Render and Railway
+
 ---
 
 ## 📞 Company Information
