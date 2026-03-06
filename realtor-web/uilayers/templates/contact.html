@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us — Propertism Realty Advisors</title>
+    <title>Contact Us - Propertism Realty Advisors</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -386,10 +386,9 @@
             <h2>Our Offices</h2>
             
             <div class="office-block">
-                <h3>India Office — {% if company %}{{ company.india_office_city }}{% else %}Chennai{% endif %}</h3>
+                <h3>India Office - {% if company %}{{ company.india_office_city }}{% else %}Chennai{% endif %}</h3>
                 {% if company %}
-                <p>{{ company.india_office_address|linebreaks }}</p>
-                <p>{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}</p>
+                <p>{{ company.india_office_address|linebreaksbr }}<br>{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}</p>
                 <p style="margin-top: 1rem;">
                     <strong>Phone:</strong><br>
                     {{ company.india_phone_1 }}<br>
@@ -411,9 +410,9 @@
             </div>
 
             <div class="office-block">
-                <h3>US Office — {% if company %}{{ company.us_office_city }}{% else %}New Jersey{% endif %}</h3>
+                <h3>US Office - {% if company %}{{ company.us_office_city }}{% else %}Hackensack{% endif %}</h3>
                 {% if company %}
-                <p>{{ company.us_office_address }}</p>
+                <p>{{ company.us_office_address|linebreaksbr }}</p>
                 <p>{{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}</p>
                 <p>United States</p>
                 <p style="margin-top: 1rem;">
@@ -511,15 +510,15 @@
             <div class="phone-grid">
                 <div class="phone-card">
                     <h3>Chennai Office</h3>
-                    <a href="tel:+918667020798">+91 86670 20798</a>
+                    <a href="tel:{% if company %}{{ company.india_phone_1|cut:' ' }}{% else %}+918667020798{% endif %}">{% if company %}{{ company.india_phone_1 }}{% else %}+91 86670 20798{% endif %}</a>
                 </div>
                 <div class="phone-card">
                     <h3>Chennai Office</h3>
-                    <a href="tel:+919841201930">+91 98412 01930</a>
+                    <a href="tel:{% if company and company.india_phone_2 %}{{ company.india_phone_2|cut:' ' }}{% else %}+919841201930{% endif %}">{% if company and company.india_phone_2 %}{{ company.india_phone_2 }}{% else %}+91 98412 01930{% endif %}</a>
                 </div>
                 <div class="phone-card">
                     <h3>US Office</h3>
-                    <a href="tel:+15184093485">+1 518 409 3485</a>
+                    <a href="tel:{% if company %}{{ company.us_phone|cut:' ' }}{% else %}+15184093485{% endif %}">{% if company %}{{ company.us_phone }}{% else %}+1 518 409 3485{% endif %}</a>
                 </div>
             </div>
         </div>
@@ -530,7 +529,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>PROPERTISM REALTY ADVISORS LLP</h3>
-                <p>We manage your property and resources when you are far from the nation.</p>
+                <p>{% if company %}{{ company.tagline }}{% else %}We manage your property and resources when you are far from the nation.{% endif %}</p>
                 <div class="social-links">
                     <a href="https://facebook.com/propertism" target="_blank" rel="noopener" aria-label="Facebook">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -552,23 +551,26 @@
             
             <div class="footer-section">
                 <h3>INDIA OFFICE</h3>
-                <p>No. 30, 3rd Floor<br>
+                <p>{% if company %}{{ company.india_office_address|linebreaksbr }}<br>{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}{% else %}No. 30, 3rd Floor<br>
                 SSR Pankajam Towers<br>
                 Arunachalam Road, Saligramam<br>
-                Chennai, TN - 600093</p>
+                Chennai, Tamil Nadu - 600093{% endif %}</p>
                 <p style="margin-top: 1rem;">
-                    +91 86670 20798<br>
+                    {% if company %}{{ company.india_phone_1 }}<br>
+                    {% if company.india_phone_2 %}{{ company.india_phone_2 }}<br>{% endif %}
+                    {% if company.india_phone_3 %}{{ company.india_phone_3 }}{% endif %}{% else %}+91 86670 20798<br>
                     +91 98412 01930<br>
-                    +91 98418 44452
+                    +91 98418 44452{% endif %}
                 </p>
             </div>
             
             <div class="footer-section">
                 <h3>US OFFICE</h3>
-                <p>46 Berkshire Pl<br>
-                Hackensack, NJ 07601</p>
-                <p style="margin-top: 1rem;">+1 518 409 3485</p>
-                <p style="margin-top: 1rem;">info@propertism.com</p>
+                <p>{% if company %}{{ company.us_office_address|linebreaksbr }}<br>
+                {{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}{% else %}46 Berkshire Pl<br>
+                Hackensack, NJ 07601{% endif %}</p>
+                <p style="margin-top: 1rem;">{% if company %}{{ company.us_phone }}{% else %}+1 518 409 3485{% endif %}</p>
+                <p style="margin-top: 1rem;">{% if company %}{{ company.email }}{% else %}info@propertism.com{% endif %}</p>
             </div>
             
             <div class="footer-section">

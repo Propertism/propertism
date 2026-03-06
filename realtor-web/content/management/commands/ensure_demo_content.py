@@ -34,7 +34,7 @@ class Command(BaseCommand):
         
         # English content
         company.company_name_en = "Propertism Realty Advisors LLP"
-        company.tagline_en = "Your Trusted NRI Property Partner"
+        company.tagline_en = "We manage your property and resources when you are far from the nation."
         company.hero_title_en = "NRI Property Management Services In Chennai, India"
         company.hero_description_en = "We manage your property and resources when you are far from the nation"
         company.hero_eyebrow_en = "Propertism Realty Advisors"
@@ -60,17 +60,19 @@ class Command(BaseCommand):
         company.about_description_hi = "प्रॉपर्टिज्म रियल्टी एडवाइजर्स एलएलपी NRI ग्राहकों के लिए व्यापक संपत्ति प्रबंधन सेवाओं में विशेषज्ञता रखता है। चेन्नई, भारत और हैकेनसैक, NJ, USA में कार्यालयों के साथ, हम विदेशी संपत्ति मालिकों और भारत में उनके निवेश के बीच की खाई को पाटते हैं।"
         
         # Contact information
-        company.india_office_address = "Chennai, Tamil Nadu"
+        company.india_office_address = "No. 30, 3rd Floor\nSSR Pankajam Towers\nArunachalam Road, Saligramam"
         company.india_office_city = "Chennai"
         company.india_office_state = "Tamil Nadu"
         company.india_office_pincode = "600093"
-        company.india_phone_1 = "+91-86670-20798"
-        
-        company.us_office_address = "Hackensack, NJ"
+        company.india_phone_1 = "+91 86670 20798"
+        company.india_phone_2 = "+91 98412 01930"
+        company.india_phone_3 = "+91 98418 44452"
+
+        company.us_office_address = "46 Berkshire Pl"
         company.us_office_city = "Hackensack"
         company.us_office_state = "NJ"
         company.us_office_zipcode = "07601"
-        company.us_phone = "+1-XXX-XXX-XXXX"
+        company.us_phone = "+1 518 409 3485"
         
         company.email = "info@propertism.com"
         company.business_hours = "Monday - Saturday: 9:00 AM - 6:00 PM IST"

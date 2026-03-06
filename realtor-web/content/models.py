@@ -4,8 +4,11 @@ from django.utils.text import slugify
 
 class CompanyInfo(models.Model):
     """Single instance model for company information"""
+    INDIA_OFFICE_ADDRESS = "No. 30, 3rd Floor\nSSR Pankajam Towers\nArunachalam Road, Saligramam"
+    US_OFFICE_ADDRESS = "46 Berkshire Pl"
+
     company_name = models.CharField(max_length=200, default="Propertism Realty Advisors LLP")
-    tagline = models.TextField(default="We manage your property and resources when you are far from the nation")
+    tagline = models.TextField(default="We manage your property and resources when you are far from the nation.")
     about_mission = models.TextField(blank=True)
     about_description = models.TextField(blank=True)
     
@@ -16,20 +19,20 @@ class CompanyInfo(models.Model):
     hero_image = models.ImageField(upload_to='hero/', blank=True, null=True, help_text="Hero background image")
     
     # India Office
-    india_office_address = models.TextField()
+    india_office_address = models.TextField(default=INDIA_OFFICE_ADDRESS)
     india_office_city = models.CharField(max_length=100, default="Chennai")
     india_office_state = models.CharField(max_length=100, default="Tamil Nadu")
     india_office_pincode = models.CharField(max_length=20, default="600093")
-    india_phone_1 = models.CharField(max_length=20)
-    india_phone_2 = models.CharField(max_length=20, blank=True)
-    india_phone_3 = models.CharField(max_length=20, blank=True)
+    india_phone_1 = models.CharField(max_length=20, default="+91 86670 20798")
+    india_phone_2 = models.CharField(max_length=20, blank=True, default="+91 98412 01930")
+    india_phone_3 = models.CharField(max_length=20, blank=True, default="+91 98418 44452")
     
     # US Office
-    us_office_address = models.TextField()
+    us_office_address = models.TextField(default=US_OFFICE_ADDRESS)
     us_office_city = models.CharField(max_length=100, default="Hackensack")
     us_office_state = models.CharField(max_length=100, default="NJ")
     us_office_zipcode = models.CharField(max_length=20, default="07601")
-    us_phone = models.CharField(max_length=20)
+    us_phone = models.CharField(max_length=20, default="+1 518 409 3485")
     
     # Contact
     email = models.EmailField(default="info@propertism.com")

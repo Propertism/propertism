@@ -1,5 +1,4 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TabbedTranslationAdmin
 from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry
@@ -7,7 +6,7 @@ from .models import (
 
 
 @admin.register(CompanyInfo)
-class CompanyInfoAdmin(TabbedTranslationAdmin):
+class CompanyInfoAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Hero Section', {
             'fields': ('hero_eyebrow', 'hero_title', 'hero_description', 'hero_image'),
@@ -47,7 +46,7 @@ class StatisticAdmin(admin.ModelAdmin):
 
 
 @admin.register(Service)
-class ServiceAdmin(TabbedTranslationAdmin):
+class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -71,7 +70,7 @@ class ServiceAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(CoreValue)
-class CoreValueAdmin(TabbedTranslationAdmin):
+class CoreValueAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -79,7 +78,7 @@ class CoreValueAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(TeamMember)
-class TeamMemberAdmin(TabbedTranslationAdmin):
+class TeamMemberAdmin(admin.ModelAdmin):
     list_display = ('name', 'role', 'department', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active', 'department')
@@ -99,7 +98,7 @@ class TeamMemberAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(ExpertiseArea)
-class ExpertiseAreaAdmin(TabbedTranslationAdmin):
+class ExpertiseAreaAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
@@ -107,7 +106,7 @@ class ExpertiseAreaAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(BlogPost)
-class BlogPostAdmin(TabbedTranslationAdmin):
+class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'category', 'published_date', 'is_published')
     list_filter = ('is_published', 'category', 'published_date')
     search_fields = ('title', 'excerpt', 'content')

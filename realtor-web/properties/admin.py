@@ -1,5 +1,4 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TabbedTranslationAdmin
 from .models import PropertyType, Property, PropertyPhoto, Inquiry, MaintenanceRequest, SupportTicket, ContactMessage
 
 @admin.register(PropertyType)
@@ -13,7 +12,7 @@ class PropertyPhotoInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Property)
-class PropertyAdmin(TabbedTranslationAdmin):
+class PropertyAdmin(admin.ModelAdmin):
     list_display = ['title', 'property_type', 'price', 'location', 'status', 'created_at']
     list_filter = ['status', 'property_type', 'created_at']
     search_fields = ['title', 'location', 'description']

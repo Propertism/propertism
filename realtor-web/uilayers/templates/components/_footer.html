@@ -3,7 +3,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Propertism</h3>
-                <p style="color: var(--color-gray-600); margin-top: var(--space-4);">Premium NRI Property Management Services</p>
+                <p style="color: var(--color-gray-600); margin-top: var(--space-4);">{% if company %}{{ company.tagline }}{% else %}We manage your property and resources when you are far from the nation.{% endif %}</p>
             </div>
             <div class="footer-section">
                 <h3>Services</h3>
@@ -17,24 +17,24 @@
             <div class="footer-section">
                 <h3>India Office</h3>
                 <ul class="footer-links">
-                    <li>Chennai, Tamil Nadu</li>
-                    <li><a href="tel:+918667020798">+91 86670 20798</a></li>
-                    <li><a href="mailto:info@propertism.com">info@propertism.com</a></li>
+                    <li>{% if company %}{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}{% else %}Chennai, Tamil Nadu - 600093{% endif %}</li>
+                    <li><a href="tel:{% if company %}{{ company.india_phone_1|cut:' ' }}{% else %}+918667020798{% endif %}">{% if company %}{{ company.india_phone_1 }}{% else %}+91 86670 20798{% endif %}</a></li>
+                    <li><a href="mailto:{% if company %}{{ company.email }}{% else %}info@propertism.com{% endif %}">{% if company %}{{ company.email }}{% else %}info@propertism.com{% endif %}</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>US Office</h3>
                 <ul class="footer-links">
-                    <li>Hackensack, NJ 07601</li>
-                    <li><a href="tel:+15184093485">+1 518 409 3485</a></li>
+                    <li>{% if company %}{{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}{% else %}Hackensack, NJ 07601{% endif %}</li>
+                    <li><a href="tel:{% if company %}{{ company.us_phone|cut:' ' }}{% else %}+15184093485{% endif %}">{% if company %}{{ company.us_phone }}{% else %}+1 518 409 3485{% endif %}</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 Propertism Realty Advisors LLP. All rights reserved.</p>
             <div>
-                <a href="/en/about/">About</a> · 
-                <a href="/en/contact/">Contact</a> · 
+                <a href="/en/about/">About</a> |
+                <a href="/en/contact/">Contact</a> |
                 <a href="/en/management/">Management</a>
             </div>
         </div>

@@ -68,13 +68,14 @@ def organization_schema(context):
         "url": site_url,
         "logo": f"{site_url}/static/images/propertism-logo.png",
         "image": f"{site_url}/static/images/propertism-hero-bg.jpg",
-        "telephone": "+91-86670-20798",
+        "telephone": "+91 86670 20798",
         "email": "info@propertism.com",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Chennai",
+            "streetAddress": "No. 30, 3rd Floor, SSR Pankajam Towers, Arunachalam Road, Saligramam",
             "addressLocality": "Chennai",
             "addressRegion": "Tamil Nadu",
+            "postalCode": "600093",
             "addressCountry": "IN"
         },
         "geo": {
