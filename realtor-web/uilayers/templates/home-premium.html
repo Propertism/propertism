@@ -1,0 +1,629 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* Desktop Hero Section Styles */
+    .hero-hybrid-has-image {
+        display: flex !important;
+        align-items: flex-end !important;
+        min-height: 74vh !important;
+        padding: 96px 24px 88px 24px !important;
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    .hero-hybrid-media {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+        background: var(--brand-navy) !important;
+        z-index: 0 !important;
+    }
+
+    .hero-hybrid-rotator {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .hero-hybrid-image {
+        position: absolute !important;
+        inset: 0 !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: min(78vh, 920px) !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        opacity: 0 !important;
+        transition: opacity 0.8s ease !important;
+    }
+
+    .hero-hybrid-image.is-active {
+        opacity: 1 !important;
+    }
+    
+    /* Add subtle gradient overlay for text readability */
+    .hero-hybrid-has-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0) 60%);
+        z-index: 1;
+    }
+    
+    .hero-hybrid-content {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 720px;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hero section text colors */
+    .hero-eyebrow {
+        color: #DC2626 !important; /* Red color */
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        display: block;
+        text-align: left;
+        padding-left: 0 !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Remove the decorative line/dash before eyebrow */
+    .hero-eyebrow::before {
+        display: none !important;
+    }
+    
+    .hero-title-zillow .hero-title-line {
+        color: #FFFFFF !important;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    }
+    
+    .hero-description {
+        color: #FFFFFF !important;
+        font-size: 1.125rem;
+        line-height: 1.7;
+        margin-top: 1.5rem;
+        max-width: 600px;
+        opacity: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .hero-copy-zillow {
+        margin-top: 0;
+    }
+    
+    /* Mobile styles are in mobile-layout.css */
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="home-section" class="hero-hybrid{% if hero_background_urls %} hero-hybrid-has-image{% endif %}">
+    {% if hero_background_urls %}
+    <div class="hero-hybrid-media" aria-hidden="true">
+        <div class="hero-hybrid-rotator">
+            {% for hero_background_url in hero_background_urls %}
+            <img src="{{ hero_background_url }}" alt="" class="hero-hybrid-image{% if forloop.first %} is-active{% endif %}" data-hero-image="{{ forloop.counter0 }}">
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="hero-hybrid-content">
+        <div class="hero-copy-zillow">
+            <span class="hero-eyebrow animate-fade-in-up" style="opacity:1 !important;visibility:visible !important;display:block !important;color:{{ company.hero_eyebrow_color|default:'#DC2626' }} !important;position:relative !important;z-index:100 !important;">{{ company.hero_eyebrow|default:"Propertism Realty Advisors" }}</span>
+            
+            <h1 class="hero-title-zillow animate-fade-in-up" style="color:{{ company.hero_title_color|default:'#0F172A' }};">
+                {% if company.hero_title %}
+                <span class="hero-title-line">{{ company.hero_title }}</span>
+                {% else %}
+                {% for line in hero_title_segments %}
+                <span class="hero-title-line{% if line.accent %} hero-title-accent{% endif %}">{{ line.text }}</span>
+                {% empty %}
+                <span class="hero-title-line">Rentals.</span>
+                <span class="hero-title-line">Homes.</span>
+                {% endfor %}
+                {% endif %}
+            </h1>
+            
+            {% if company.hero_description %}
+            <p class="hero-description animate-fade-in-up" style="color:{{ company.hero_description_color|default:'#475569' }};">{{ company.hero_description }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="trust-strip-section">
+    <div class="container">
+        <div class="trust-strip-card">
+            <div class="trust-strip-item trust-strip-item-static trust-strip-item-intro">
+                <span class="trust-strip-kicker">Built for NRI Ownership</span>
+                <strong>On-ground execution and clear reporting for owners abroad.</strong>
+                <small>Support stays moving even when the owner is away.</small>
+            </div>
+            <div class="trust-strip-item trust-strip-item-static">
+                <span class="trust-strip-kicker">Local Chennai Team</span>
+                <strong>Visits, rentals, and maintenance handled on the ground.</strong>
+                <small>Practical follow-through without the owner needing to be present.</small>
+            </div>
+            <div class="trust-strip-item trust-strip-item-static">
+                <span class="trust-strip-kicker">India + US Coordination</span>
+                <strong>One team working across time zones and family decision paths.</strong>
+                <small>Useful when owners, relatives, and tenants are in different places.</small>
+            </div>
+            <div class="trust-strip-item trust-strip-item-static">
+                <span class="trust-strip-kicker">Regular Updates</span>
+                <strong>Clear reporting so decisions do not stall while you are away.</strong>
+                <small>From property status to next steps, owners stay informed.</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-section" class="credibility-section">
+    <div class="container">
+        <div class="credibility-grid">
+            <div class="credibility-story-card">
+                <span class="section-kicker">About</span>
+                <h2 class="credibility-title">Property support for owners living abroad.</h2>
+                <p class="credibility-copy">
+                    {% if company.about_description %}{{ company.about_description|truncatewords:34 }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team to coordinate the work in Chennai.{% endif %}
+                </p>
+                <div class="credibility-actions">
+                    <a href="{{ home_section_links.management }}" class="btn-view-all">Meet Management</a>
+                    <a href="{{ home_section_links.contact }}" class="credibility-inline-link">Request a callback</a>
+                </div>
+            </div>
+            <div class="credibility-proof-card">
+                <span class="section-kicker">Why Owners Stay With Us</span>
+                <h3 class="credibility-proof-title">Clear updates, reliable follow-through, and local execution.</h3>
+                {% if credibility_points %}
+                <ul class="credibility-proof-list">
+                    {% for point in credibility_points|slice:":3" %}
+                    <li><strong>{{ point.title }}</strong>{% if point.description %}: {{ point.description|truncatewords:12 }}{% endif %}</li>
+                    {% endfor %}
+                </ul>
+                {% elif expertise_highlights %}
+                <ul class="credibility-proof-list">
+                    {% for area in expertise_highlights|slice:":3" %}
+                    <li><strong>{{ area.title }}</strong>{% if area.description %}: {{ area.description|truncatewords:12 }}{% endif %}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="credibility-office-pills">
+                    <div class="credibility-office-pill">
+                        <span>India Office</span>
+                        <strong>{{ company.india_office_city }}, {{ company.india_office_state }}</strong>
+                    </div>
+                    <div class="credibility-office-pill">
+                        <span>US Office</span>
+                        <strong>{{ company.us_office_city }}, {{ company.us_office_state }}</strong>
+                    </div>
+                </div>
+                {% if stats %}
+                <div class="credibility-stats-grid">
+                    {% for stat in stats %}
+                    <div class="credibility-stat-card">
+                        <strong>{{ stat.value }}</strong>
+                        <span>{{ stat.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="properties-section" class="featured-properties-section">
+    <div class="container">
+        <div class="featured-properties-intro">
+            <h2 class="featured-properties-title">Featured Properties for NRIs</h2>
+            <p class="featured-properties-subtitle">Handpicked premium properties perfect for investment</p>
+        </div>
+
+        <div class="property-grid-hybrid">
+            {% for property in featured_properties %}
+            <div class="property-card-hybrid">
+                <div class="property-image-hybrid">
+                    {% if property.photos.first %}
+                    <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}">
+                    {% else %}
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect fill='%23E5E7EB' width='400' height='240'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%239CA3AF'%3EProperty Image%3C/text%3E%3C/svg%3E" alt="{{ property.title }}">
+                    {% endif %}
+                    <div class="property-badge-hybrid">Featured</div>
+                    <div class="property-save">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="property-details-hybrid">
+                    <div class="property-price-hybrid">&#8377;{{ property.price|floatformat:0 }}</div>
+                    <div class="property-address">{{ property.location }}, Chennai</div>
+                    <div class="property-features">
+                        <div class="property-feature">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            </svg>
+                            {{ property.bedrooms }} BHK
+                        </div>
+                        <div class="property-feature">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            </svg>
+                            {{ property.area }} sq ft
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-section-state">
+                <p>No properties available at the moment. Check back soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="featured-properties-cta">
+            <a href="{{ home_section_links.contact }}" class="btn-view-all">
+                Request Property Shortlist
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="services-section" class="market-insights">
+    <div class="container">
+        <div class="section-intro-center">
+            <h2>Services built for NRI ownership</h2>
+            <p>Buy, rent, maintain, and monitor property with one coordinated team in Chennai.</p>
+        </div>
+
+        <div class="insights-grid">
+            {% for service in service_highlights %}
+            <div class="insight-card service-depth-card">
+                <div class="insight-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z"/>
+                        <path d="M9 21V12h6v9"/>
+                    </svg>
+                </div>
+                <h3 class="insight-title">{{ service.title }}</h3>
+                <p class="insight-description">{{ service.short_description|truncatewords:18 }}</p>
+                <a href="{{ home_section_links.contact }}" class="service-depth-link">Discuss this service</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="management-section" class="management-preview-section">
+    <div class="container">
+        <div class="management-preview-intro">
+            <span class="section-kicker">Management</span>
+            <h2>One team coordinating owners, tenants, vendors, and follow-through.</h2>
+            <p>Practical accountability on the ground matters more than generic advisory. The management team is structured around execution, reporting, and decision support for owners abroad.</p>
+        </div>
+        <div class="management-preview-grid">
+            {% for member in team_highlights %}
+            <article class="management-preview-card">
+                <div class="management-preview-meta">
+                    <span>{{ member.role }}</span>
+                    {% if member.department %}<span>{{ member.department }}</span>{% endif %}
+                </div>
+                <h3>{{ member.name }}</h3>
+                <p>{{ member.bio|truncatewords:28 }}</p>
+                <a href="{% url 'team_member_detail' member.slug %}" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; color: #B89A4A; text-decoration: none; font-weight: 500; font-size: 0.9375rem; transition: gap 0.2s;">
+                    View Full Profile
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </article>
+            {% empty %}
+            <article class="management-preview-card">
+                <div class="management-preview-meta"><span>Management</span></div>
+                <h3>Propertism Advisory Team</h3>
+                <p>Experienced coordination for NRI ownership, rentals, maintenance, and transaction support in Chennai.</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="blog-section" class="journal-preview-section">
+    <div class="container">
+        <div class="journal-preview-intro">
+            <span class="section-kicker">Insights</span>
+            <h2>Useful updates for owners managing from abroad.</h2>
+            <p>Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai.</p>
+        </div>
+        <div class="journal-preview-grid">
+            {% for post in recent_posts %}
+            <article class="journal-preview-card">
+                <span class="journal-preview-category">{{ post.get_category_display }}</span>
+                <h3>{{ post.title }}</h3>
+                <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{ post.content|truncatewords:24 }}{% endif %}</p>
+                <small>{{ post.published_date|date:"M d, Y" }}</small>
+            </article>
+            {% empty %}
+            <article class="journal-preview-card">
+                <span class="journal-preview-category">Updates</span>
+                <h3>Fresh NRI property insights are being prepared.</h3>
+                <p>Expect concise guidance on property reporting, maintenance discipline, and ownership decisions.</p>
+                <small>Coming soon</small>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% if customer_review_section and customer_review_slides %}
+<section id="reviews-section" class="customer-reviews-section">
+    <div class="container">
+        <div class="customer-reviews-intro">
+            {% if customer_review_section.eyebrow %}
+            <span class="section-kicker">{{ customer_review_section.eyebrow }}</span>
+            {% endif %}
+            <h2>{{ customer_review_section.title }}</h2>
+            {% if customer_review_section.description %}
+            <p>{{ customer_review_section.description }}</p>
+            {% endif %}
+        </div>
+        <div class="customer-reviews-carousel" data-review-carousel>
+            <div class="customer-reviews-viewport">
+                <div class="customer-reviews-track" data-review-track>
+                    {% for review_group in customer_review_slides %}
+                    <div class="customer-reviews-slide" data-review-slide="{{ forloop.counter0 }}" aria-hidden="{% if not forloop.first %}true{% else %}false{% endif %}">
+                        <div class="customer-reviews-grid">
+                            {% for review in review_group %}
+                            <article class="customer-review-card">
+                                <div class="customer-review-stars" aria-label="{{ review.rating }} out of 5 stars">{{ review.star_icons }}</div>
+                                <div class="customer-review-quote-mark" aria-hidden="true">&rdquo;</div>
+                                <p class="customer-review-copy">{{ review.quote }}</p>
+                                {% if review.service_label %}
+                                <span class="customer-review-tag">{{ review.service_label }}</span>
+                                {% endif %}
+                                <div class="customer-review-person">
+                                    <div class="customer-review-avatar">{{ review.display_initials }}</div>
+                                    <div class="customer-review-person-meta">
+                                        <strong>{{ review.customer_name }}</strong>
+                                        {% if review.customer_location %}
+                                        <span>{{ review.customer_location }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if customer_review_slides|length > 1 %}
+            <div class="customer-reviews-indicators" aria-label="Customer review slide indicators">
+                {% for review_group in customer_review_slides %}
+                <button type="button" class="customer-reviews-indicator{% if forloop.first %} is-active{% endif %}" data-review-indicator="{{ forloop.counter0 }}" aria-label="Show review slide {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% if customer_review_section.badge_title or customer_review_section.badge_text %}
+        <div class="customer-review-badge">
+            <span class="customer-review-badge-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            {% if customer_review_section.badge_title %}
+            <strong>{{ customer_review_section.badge_title }}</strong>
+            {% endif %}
+            {% if customer_review_section.badge_text %}
+            <span>{{ customer_review_section.badge_text }}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+{% for section in custom_card_sections %}
+{% if section.active_cards %}
+<section id="{{ section.slug }}-section" class="custom-cards-section">
+    <div class="container">
+        <div class="custom-cards-intro">
+            {% if section.eyebrow %}
+            <span class="section-kicker">{{ section.eyebrow }}</span>
+            {% endif %}
+            <h2>{{ section.title }}</h2>
+            {% if section.description %}
+            <p>{{ section.description }}</p>
+            {% endif %}
+        </div>
+        <div class="custom-cards-grid">
+            {% for card in section.active_cards %}
+            <article class="custom-card-panel">
+                {% if card.eyebrow %}
+                <span class="custom-card-eyebrow">{{ card.eyebrow }}</span>
+                {% endif %}
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                {% if card.footer %}
+                <small>{{ card.footer }}</small>
+                {% endif %}
+                {% if card.cta_text and card.cta_url %}
+                <a href="{{ card.cta_url }}" class="custom-card-link">{{ card.cta_text }}</a>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        {% if section.badge_title or section.badge_text %}
+        <div class="service-depth-tags">
+            {% if section.badge_title %}
+            <span class="service-depth-tag is-label">{{ section.badge_title }}</span>
+            {% endif %}
+            {% if section.badge_text %}
+            <span class="service-depth-tag">{{ section.badge_text }}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endfor %}
+
+<section id="contact-section" class="nri-contact-section">
+    <div class="container">
+        <div class="nri-contact-shell">
+            <div class="nri-contact-copy">
+                <span class="section-kicker">Get in Touch</span>
+                <h2>Let's discuss your property needs</h2>
+                <p>Whether you're managing from abroad or looking to invest in Chennai, we're here to help. Share your requirements and we'll provide expert guidance.</p>
+                <div class="nri-contact-actions">
+                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="btn-call-premium">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        Talk to Us
+                    </a>
+                </div>
+            </div>
+            <form action="{% url 'contact' %}" method="POST" class="quote-request-form">
+                {% csrf_token %}
+                <div class="quote-request-grid">
+                    <label class="quote-request-field">
+                        <span>Full Name <span style="color: #B89A4A;">*</span></span>
+                        <input type="text" name="name" required>
+                    </label>
+                    <label class="quote-request-field">
+                        <span>Email <span style="color: #B89A4A;">*</span></span>
+                        <input type="email" name="email" required>
+                    </label>
+                    <label class="quote-request-field">
+                        <span>Phone</span>
+                        <input type="tel" name="phone">
+                    </label>
+                    <label class="quote-request-field">
+                        <span>Service Needed</span>
+                        <select name="service">
+                            <option value="">Select a service</option>
+                            <option value="buy-sell">Real Estate Buy & Sell</option>
+                            <option value="rental">Rental & Maintenance</option>
+                            <option value="industrial">Industrial Land Services</option>
+                            <option value="consultation">General Consultation</option>
+                        </select>
+                    </label>
+                    <label class="quote-request-field quote-request-field-full">
+                        <span>Property Type</span>
+                        <select name="property_type">
+                            <option value="">Select property type</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="villa">Villa</option>
+                            <option value="plot">Plot</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="industrial">Industrial Land</option>
+                        </select>
+                    </label>
+                    <label class="quote-request-field quote-request-field-full">
+                        <span>What do you need help with? <span style="color: #B89A4A;">*</span></span>
+                        <textarea name="message" rows="4" required placeholder="Tell us about the property, the current situation, and the support you need."></textarea>
+                    </label>
+                </div>
+                <button type="submit" class="quote-request-submit">Send My Request</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% if hero_background_urls %}
+{{ hero_background_urls|json_script:"hero-background-data" }}
+{% endif %}
+<script>
+    (function () {
+        const reviewCarousels = document.querySelectorAll("[data-review-carousel]");
+
+        reviewCarousels.forEach((carousel) => {
+            const track = carousel.querySelector("[data-review-track]");
+            const slides = Array.from(carousel.querySelectorAll("[data-review-slide]"));
+            const indicators = Array.from(carousel.querySelectorAll("[data-review-indicator]"));
+
+            if (!track || slides.length <= 1) {
+                return;
+            }
+
+            let currentIndex = 0;
+
+            const updateCarousel = (index) => {
+                currentIndex = (index + slides.length) % slides.length;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                slides.forEach((slide, slideIndex) => {
+                    slide.setAttribute("aria-hidden", slideIndex === currentIndex ? "false" : "true");
+                });
+
+                indicators.forEach((indicator, indicatorIndex) => {
+                    indicator.classList.toggle("is-active", indicatorIndex === currentIndex);
+                });
+            };
+
+            indicators.forEach((indicator) => {
+                indicator.addEventListener("click", () => {
+                    updateCarousel(Number(indicator.dataset.reviewIndicator));
+                });
+            });
+
+            updateCarousel(0);
+        });
+
+        const heroBackgroundData = document.getElementById("hero-background-data");
+        const heroImages = Array.from(document.querySelectorAll("[data-hero-image]"));
+
+        if (!heroBackgroundData || heroImages.length <= 1) {
+            return;
+        }
+
+        const heroImageUrls = JSON.parse(heroBackgroundData.textContent || "[]");
+        let currentHeroIndex = Math.floor(Math.random() * heroImages.length);
+
+        heroImages.forEach((image, index) => {
+            image.classList.toggle("is-active", index === currentHeroIndex);
+        });
+
+        heroImageUrls.forEach((url) => {
+            const preloadImage = new Image();
+            preloadImage.src = url;
+        });
+
+        window.setInterval(() => {
+            let nextHeroIndex = currentHeroIndex;
+
+            while (nextHeroIndex === currentHeroIndex && heroImages.length > 1) {
+                nextHeroIndex = Math.floor(Math.random() * heroImages.length);
+            }
+
+            heroImages[currentHeroIndex].classList.remove("is-active");
+            heroImages[nextHeroIndex].classList.add("is-active");
+            currentHeroIndex = nextHeroIndex;
+        }, 30000);
+    }());
+</script>
+{% endblock %}

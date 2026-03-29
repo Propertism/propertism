@@ -1,19 +1,84 @@
 from django.contrib import admin
+from django import forms
+from django.core.exceptions import ValidationError
+from django.forms.models import BaseInlineFormSet
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils.html import format_html
 from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
-    ExpertiseArea, BlogPost, Newsletter, ContactInquiry
+    ExpertiseArea, BlogPost, Newsletter, ContactInquiry,
+    CustomerReviewSection, CustomerReview, HomepageCardSection, HomepageCard,
+    HeroBackgroundImage,
 )
+
+
+class CompanyInfoForm(forms.ModelForm):
+    class Meta:
+        model = CompanyInfo
+        fields = '__all__'
+        widgets = {
+            'hero_eyebrow_color': forms.TextInput(attrs={'type': 'color'}),
+            'hero_title_color': forms.TextInput(attrs={'type': 'color'}),
+            'hero_description_color': forms.TextInput(attrs={'type': 'color'}),
+        }
+
+
+class HeroBackgroundImageInlineFormSet(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        image_count = 0
+
+        for form in self.forms:
+            if not hasattr(form, "cleaned_data") or not form.cleaned_data:
+                continue
+            if form.cleaned_data.get("DELETE"):
+                continue
+            if form.cleaned_data.get("image") or getattr(form.instance, "pk", None):
+                image_count += 1
+
+        if image_count > 5:
+            raise ValidationError("You can add up to 5 hero background images.")
+
+
+class HeroBackgroundImageInline(admin.StackedInline):
+    model = HeroBackgroundImage
+    formset = HeroBackgroundImageInlineFormSet
+    extra = 0
+    max_num = 5
+    fields = ("image", "image_preview", "order", "is_active")
+    readonly_fields = ("image_preview",)
+    ordering = ("order", "id")
+
+    def image_preview(self, obj):
+        if obj and obj.image:
+            return format_html(
+                '<img src="{}" alt="Hero background preview" style="max-height: 120px; max-width: 240px; object-fit: cover;" />',
+                obj.image.url,
+            )
+        return "No image uploaded"
+
+    image_preview.short_description = "Preview"
 
 
 @admin.register(CompanyInfo)
 class CompanyInfoAdmin(admin.ModelAdmin):
+    form = CompanyInfoForm
+    readonly_fields = ('logo_preview', 'hero_image_preview')
+    inlines = [HeroBackgroundImageInline]
+
     fieldsets = (
         ('Hero Section', {
-            'fields': ('hero_eyebrow', 'hero_title', 'hero_description', 'hero_image'),
-            'description': 'Homepage hero section content and background image'
+            'fields': (
+                'hero_eyebrow', 'hero_eyebrow_color',
+                'hero_title', 'hero_title_color',
+                'hero_description', 'hero_description_color',
+                'hero_image', 'hero_image_preview'
+            ),
+            'description': 'Homepage hero content and fallback background image. Add up to 5 rotating hero backgrounds below.'
         }),
         ('Company Details', {
-            'fields': ('company_name', 'tagline', 'about_mission', 'about_description')
+            'fields': ('company_name', 'logo', 'logo_preview', 'tagline', 'about_mission', 'about_description')
         }),
         ('India Office', {
             'fields': ('india_office_address', 'india_office_city', 'india_office_state', 
@@ -35,6 +100,26 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         # Don't allow deletion
         return False
+
+    def logo_preview(self, obj):
+        if obj and obj.logo:
+            return format_html(
+                '<img src="{}" alt="Current logo" style="max-height: 80px; max-width: 240px; object-fit: contain;" />',
+                obj.logo.url,
+            )
+        return "No logo uploaded"
+
+    logo_preview.short_description = 'Current logo'
+
+    def hero_image_preview(self, obj):
+        if obj and obj.hero_image:
+            return format_html(
+                '<img src="{}" alt="Current hero image" style="max-height: 160px; max-width: 320px; object-fit: cover;" />',
+                obj.hero_image.url,
+            )
+        return "No hero image uploaded"
+
+    hero_image_preview.short_description = 'Current hero image'
 
 
 @admin.register(Statistic)
@@ -75,6 +160,76 @@ class CoreValueAdmin(admin.ModelAdmin):
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'description')
+
+
+class CustomerReviewInline(admin.StackedInline):
+    model = CustomerReview
+    extra = 0
+    fields = (
+        'customer_name', 'customer_location', 'service_label', 'quote',
+        'rating', 'avatar_initials', 'order', 'is_active'
+    )
+    ordering = ('order',)
+
+
+@admin.register(CustomerReviewSection)
+class CustomerReviewSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    inlines = [CustomerReviewInline]
+    fieldsets = (
+        ('Section Content', {
+            'fields': ('eyebrow', 'title', 'description')
+        }),
+        ('Badge', {
+            'fields': ('badge_title', 'badge_text')
+        }),
+        ('Display', {
+            'fields': ('is_active',)
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not CustomerReviewSection.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def changelist_view(self, request, extra_context=None):
+        review_section = CustomerReviewSection.objects.first()
+        if review_section:
+            change_url = reverse(
+                'admin:content_customerreviewsection_change',
+                args=[review_section.pk],
+            )
+            return HttpResponseRedirect(change_url)
+        return super().changelist_view(request, extra_context=extra_context)
+
+
+class HomepageCardInline(admin.StackedInline):
+    model = HomepageCard
+    extra = 0
+    fields = ('eyebrow', 'title', 'description', 'footer', 'cta_text', 'cta_url', 'order', 'is_active')
+    ordering = ('order',)
+
+
+@admin.register(HomepageCardSection)
+class HomepageCardSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    search_fields = ('title', 'description', 'slug')
+    prepopulated_fields = {'slug': ('title',)}
+    inlines = [HomepageCardInline]
+    fieldsets = (
+        ('Section Content', {
+            'fields': ('title', 'slug', 'eyebrow', 'description')
+        }),
+        ('Badge', {
+            'fields': ('badge_title', 'badge_text')
+        }),
+        ('Display', {
+            'fields': ('order', 'is_active')
+        }),
+    )
 
 
 @admin.register(TeamMember)

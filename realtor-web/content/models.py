@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 
@@ -14,9 +15,13 @@ class CompanyInfo(models.Model):
     
     # Hero Section
     hero_eyebrow = models.CharField(max_length=100, blank=True, help_text="Small text above hero title")
+    hero_eyebrow_color = models.CharField(max_length=7, default="#B89A4A", help_text="Hex color code (e.g., #B89A4A)")
     hero_title = models.CharField(max_length=300, default="NRI Property Management Services In India, Chennai")
+    hero_title_color = models.CharField(max_length=7, default="#0F172A", help_text="Hex color code (e.g., #0F172A)")
     hero_description = models.TextField(default="We manage your property and resources when you are far from the nation")
+    hero_description_color = models.CharField(max_length=7, default="#475569", help_text="Hex color code (e.g., #475569)")
     hero_image = models.ImageField(upload_to='hero/', blank=True, null=True, help_text="Hero background image")
+    logo = models.ImageField(upload_to='company/', blank=True, null=True, help_text="Company logo used across the site")
     
     # India Office
     india_office_address = models.TextField(default=INDIA_OFFICE_ADDRESS)
@@ -35,11 +40,11 @@ class CompanyInfo(models.Model):
     us_phone = models.CharField(max_length=20, default="+1 518 409 3485")
     
     # Contact
-    email = models.EmailField(default="info@propertism.com")
+    email = models.EmailField(default="info@propertism.in")
     
     # Social Media
-    facebook_url = models.URLField(blank=True, default="https://facebook.com/propertism")
-    twitter_url = models.URLField(blank=True, default="https://twitter.com/propertism")
+    facebook_url = models.URLField(blank=True, default="https://www.facebook.com/PropertismIndia")
+    twitter_url = models.URLField(blank=True, default="https://x.com/PropertismIndia")
     linkedin_url = models.URLField(blank=True, default="https://linkedin.com/company/propertism")
     
     # Business Hours
@@ -56,6 +61,56 @@ class CompanyInfo(models.Model):
         # Ensure only one instance exists
         if not self.pk and CompanyInfo.objects.exists():
             raise ValueError('Only one CompanyInfo instance is allowed')
+        return super().save(*args, **kwargs)
+
+    def get_active_hero_backgrounds(self):
+        if not self.pk:
+            return []
+        try:
+            return list(self.hero_backgrounds.filter(is_active=True).order_by("order", "id"))
+        except Exception:
+            return []
+
+    def get_primary_hero_image(self):
+        hero_backgrounds = self.get_active_hero_backgrounds()
+        if hero_backgrounds:
+            return hero_backgrounds[0].image
+        return self.hero_image
+
+
+class HeroBackgroundImage(models.Model):
+    """Hero background images that rotate on the homepage."""
+
+    company = models.ForeignKey(
+        CompanyInfo,
+        on_delete=models.CASCADE,
+        related_name="hero_backgrounds",
+    )
+    image = models.ImageField(upload_to="hero/")
+    order = models.PositiveSmallIntegerField(default=0, help_text="Display order for the hero rotation.")
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Hero Background Image"
+        verbose_name_plural = "Hero Background Images"
+
+    def __str__(self):
+        return f"{self.company.company_name} hero background {self.order + 1}"
+
+    def clean(self):
+        super().clean()
+        if not self.company_id:
+            return
+
+        existing_images = HeroBackgroundImage.objects.filter(company_id=self.company_id)
+        if self.pk:
+            existing_images = existing_images.exclude(pk=self.pk)
+        if existing_images.count() >= 5:
+            raise ValidationError("You can add a maximum of 5 hero background images.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
         return super().save(*args, **kwargs)
 
 
@@ -126,9 +181,126 @@ class CoreValue(models.Model):
         return self.title
 
 
+class CustomerReviewSection(models.Model):
+    """Single review section displayed on the homepage."""
+    eyebrow = models.CharField(max_length=100, default="Customer Reviews")
+    title = models.CharField(max_length=200, default="What Our Customers Say")
+    description = models.TextField(
+        blank=True,
+        default="Hear from customers who trust us for responsive, dependable service.",
+    )
+    badge_title = models.CharField(max_length=120, blank=True, default="Five Star Service")
+    badge_text = models.CharField(max_length=200, blank=True, default="Quality Guaranteed")
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Customer Review Section"
+        verbose_name_plural = "Customer Review Section"
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk and CustomerReviewSection.objects.exists():
+            raise ValueError("Only one CustomerReviewSection instance is allowed")
+        return super().save(*args, **kwargs)
+
+
+class CustomerReview(models.Model):
+    """Individual customer review cards."""
+    section = models.ForeignKey(
+        CustomerReviewSection,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+    )
+    service_label = models.CharField(max_length=120, blank=True)
+    customer_name = models.CharField(max_length=120)
+    customer_location = models.CharField(max_length=120, blank=True)
+    quote = models.TextField()
+    rating = models.PositiveSmallIntegerField(default=5)
+    avatar_initials = models.CharField(
+        max_length=4,
+        blank=True,
+        help_text="Leave blank to generate initials automatically.",
+    )
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Customer Review"
+        verbose_name_plural = "Customer Reviews"
+
+    def __str__(self):
+        return f"{self.customer_name} review"
+
+    @property
+    def display_initials(self):
+        if self.avatar_initials:
+            return self.avatar_initials.strip().upper()
+        parts = [part[0].upper() for part in self.customer_name.split() if part][:2]
+        return "".join(parts) or "C"
+
+    @property
+    def star_icons(self):
+        rating = max(1, min(int(self.rating or 5), 5))
+        return "★" * rating
+
+
+class HomepageCardSection(models.Model):
+    """Configurable homepage section rendered as cards."""
+    slug = models.SlugField(unique=True, blank=True)
+    eyebrow = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    badge_title = models.CharField(max_length=120, blank=True)
+    badge_text = models.CharField(max_length=200, blank=True)
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "title"]
+        verbose_name = "Homepage Card Section"
+        verbose_name_plural = "Homepage Card Sections"
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
+class HomepageCard(models.Model):
+    """Cards that belong to a configurable homepage section."""
+    section = models.ForeignKey(
+        HomepageCardSection,
+        on_delete=models.CASCADE,
+        related_name="cards",
+    )
+    eyebrow = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    footer = models.CharField(max_length=160, blank=True)
+    cta_text = models.CharField(max_length=80, blank=True)
+    cta_url = models.CharField(max_length=300, blank=True)
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "title"]
+        verbose_name = "Homepage Card"
+        verbose_name_plural = "Homepage Cards"
+
+    def __str__(self):
+        return f"{self.section.title} - {self.title}"
+
+
 class TeamMember(models.Model):
     """Management team members"""
     name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True, null=True, help_text="URL-friendly version of name")
     role = models.CharField(max_length=200, help_text="e.g., Managing Director")
     department = models.CharField(max_length=100, blank=True, help_text="e.g., Leadership & Strategy")
     bio = models.TextField()
@@ -146,6 +318,12 @@ class TeamMember(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.role}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
     
     def get_expertise_list(self):
         """Return expertise as a list"""
@@ -226,7 +404,7 @@ class ContactInquiry(models.Model):
     """Contact form submissions"""
     name = models.CharField(max_length=200)
     email = models.EmailField()
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, blank=True)
     
     SERVICE_CHOICES = [
         ('buy-sell', 'Real Estate Buy & Sell'),
@@ -234,7 +412,7 @@ class ContactInquiry(models.Model):
         ('industrial', 'Industrial Land Services'),
         ('consultation', 'General Consultation'),
     ]
-    service = models.CharField(max_length=20, choices=SERVICE_CHOICES)
+    service = models.CharField(max_length=20, choices=SERVICE_CHOICES, blank=True)
     
     PROPERTY_CHOICES = [
         ('apartment', 'Apartment'),

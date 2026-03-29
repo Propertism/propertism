@@ -4,10 +4,21 @@ Provides structured data and meta tag generation
 """
 from django import template
 from django.conf import settings
-from django.urls import reverse
 import json
+from content.site_context import get_company_info
 
 register = template.Library()
+
+
+def _get_company():
+    return get_company_info()
+
+
+def _get_company_hero_url(company, site_url):
+    hero_image = company.get_primary_hero_image() if company else None
+    if hero_image:
+        return f"{site_url}{hero_image.url}"
+    return f"{site_url}/static/images/propertism-hero-bg.jpg"
 
 @register.inclusion_tag('seo/meta_tags.html', takes_context=True)
 def seo_meta(context, title=None, description=None, image=None, page_type='website'):
@@ -29,9 +40,10 @@ def seo_meta(context, title=None, description=None, image=None, page_type='websi
         site_url = current_url
     
     # Default values
+    company = _get_company()
     default_title = "Propertism Realty Advisors | NRI Property Management Chennai"
     default_description = "Expert NRI property management services in Chennai, India. Buy, sell, and manage your real estate investments with confidence. Professional rental management and property maintenance."
-    default_image = f"{site_url}/static/images/propertism-hero-bg.jpg"
+    default_image = _get_company_hero_url(company, site_url)
     
     # Use provided values or defaults
     final_title = title or default_title
@@ -49,8 +61,8 @@ def seo_meta(context, title=None, description=None, image=None, page_type='websi
         'url': current_url,
         'site_url': site_url,
         'page_type': page_type,
-        'site_name': 'Propertism Realty Advisors',
-        'twitter_handle': '@propertism',
+        'site_name': company.company_name if company else 'Propertism Realty Advisors',
+        'twitter_handle': '@PropertismIndia',
     }
 
 
@@ -59,23 +71,30 @@ def organization_schema(context):
     """Generate Organization schema for RealEstateAgent"""
     request = context.get('request')
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
+    company = _get_company()
+    logo_url = (
+        f"{site_url}{company.logo.url}"
+        if company and company.logo
+        else f"{site_url}/static/images/propertism-logo.png"
+    )
+    hero_url = _get_company_hero_url(company, site_url)
     
     schema = {
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
-        "name": "Propertism Realty Advisors LLP",
-        "description": "Professional NRI property management and real estate services in Chennai, India",
+        "name": company.company_name,
+        "description": company.tagline,
         "url": site_url,
-        "logo": f"{site_url}/static/images/propertism-logo.png",
-        "image": f"{site_url}/static/images/propertism-hero-bg.jpg",
-        "telephone": "+91 86670 20798",
-        "email": "info@propertism.com",
+        "logo": logo_url,
+        "image": hero_url,
+        "telephone": company.india_phone_1,
+        "email": company.email,
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "No. 30, 3rd Floor, SSR Pankajam Towers, Arunachalam Road, Saligramam",
-            "addressLocality": "Chennai",
-            "addressRegion": "Tamil Nadu",
-            "postalCode": "600093",
+            "streetAddress": company.india_office_address.replace("\n", ", "),
+            "addressLocality": company.india_office_city,
+            "addressRegion": company.india_office_state,
+            "postalCode": company.india_office_pincode,
             "addressCountry": "IN"
         },
         "geo": {
@@ -88,9 +107,11 @@ def organization_schema(context):
             "name": "Chennai"
         },
         "sameAs": [
-            "https://www.facebook.com/propertism",
-            "https://www.linkedin.com/company/propertism",
-            "https://twitter.com/propertism"
+            url for url in [
+                company.facebook_url,
+                company.linkedin_url,
+                company.twitter_url,
+            ] if url
         ]
     }
     
