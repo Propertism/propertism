@@ -936,12 +936,107 @@ python init_data.py
 
 ---
 
+## SESSION 13: March 29, 2026 - Production Recovery, Mobile Homepage Fixes, Chat Restore, And GitHub Resync
+**Status:** COMPLETED
+**Date:** March 29, 2026
+**Primary Goal:** Resume from Session 12, recover production to the latest local workspace, fix mobile homepage issues, restore chat, restore featured property media, and align GitHub with the final live state.
+
+**What Happened:**
+1. Resumed from this tracker and validated the earlier Session 12 checkpoint.
+2. An incorrect older branch line was force-pushed and deployed, which rolled the live homepage back to an outdated design.
+3. Production was then recovered from the full local workspace, treated as the source of truth.
+4. Multiple homepage/mobile fixes were applied, verified, and redeployed in stages.
+5. GitHub authentication was corrected and the top-level repository was pushed to the final safe state.
+
+**Recovery Actions Completed:**
+1. Created a safety snapshot branch from the full local workspace:
+   - `snapshot/local-source-of-truth-20260329`
+2. Committed the local workspace snapshot:
+   - `6a0b5b8 Snapshot full local workspace as source of truth`
+3. Pushed the safety branch and updated top-level `main`.
+4. Deployed the recovered snapshot to Elastic Beanstalk:
+   - `app-260329_182904704753`
+5. Confirmed EB environment returned to:
+   - `Status: Ready`
+   - `Health: Green`
+
+**Homepage / Mobile Fixes Completed:**
+1. Fixed oversized customer review slide indicators on mobile.
+2. Fixed customer reviews after the 3rd card not appearing on mobile.
+3. Added mobile review slide behavior so tapping a dot returns focus to the first card in the active slide.
+4. Restored chat widget asset loading in shared base template.
+5. Increased customer review indicator spacing for web and mobile:
+   - final live spacing `gap: 10px`
+   - final live top margin `24px`
+6. Fixed featured property card image handling:
+   - added backend method to resolve the first valid property image file
+   - fell back safely when backend rows referenced missing files
+7. Restored two missing production media filenames used by current featured property records:
+   - `media/properties/WhatsApp_Image_2026-03-23_at_10.01.41_PM.jpeg`
+   - `media/properties/1772514993415.jpg`
+
+**Important Deployment Discovery:**
+1. Elastic Beanstalk deployment packaging was being driven from the committed state inside `realtor-web`.
+2. Because of that, production initially continued to serve older homepage HTML even after top-level fixes existed locally.
+3. To complete recovery safely, the `realtor-web` deploy source had to be snapshotted locally and redeployed from its current committed state.
+
+**Deployments Performed On March 29, 2026:**
+1. Recovery deployment from local source-of-truth snapshot:
+   - `app-260329_182904704753`
+2. Deployment after chat restoration and early homepage fixes:
+   - `app-09a9-260329_184842196666`
+3. Deployment from current `realtor-web` workspace snapshot so production matched the real local app state:
+   - `app-ce60-260329_190148986834`
+4. Final deployment after restoring the two missing featured property media files:
+   - `app-1b03-260329_190544327799`
+
+**Git / Commit History Created Today:**
+1. Top-level repository:
+   - `6a0b5b8 Snapshot full local workspace as source of truth`
+   - `545b0bf Restore chat widget asset loading`
+   - `c39b610 Fix property image fallbacks and review indicator spacing`
+   - `e1b505d Restore featured property media and sync live homepage fixes`
+2. Local deploy-source commits inside `realtor-web` used to produce the final live deployment:
+   - `ce604e3 Snapshot current realtor-web workspace for deployment`
+   - `1b037ba Restore missing featured property media files`
+
+**Final Verified State As Of March 29, 2026:**
+1. Live site:
+   - chat widget visible
+   - featured property images loading
+   - customer review slide indicators spaced correctly
+   - customer reviews carousel working on mobile
+2. Elastic Beanstalk:
+   - Environment: `propertism-prod`
+   - Deployed Version: `app-1b03-260329_190544327799`
+   - Status: `Ready`
+   - Health: `Green`
+3. Top-level GitHub repository:
+   - Branch: `main`
+   - Latest commit: `e1b505d`
+   - Status: pushed and in sync with `origin/main`
+
+**Files Most Relevant To Today's Fixes:**
+- `realtor-web/uilayers/templates/base.html`
+- `realtor-web/uilayers/templates/home-premium.html`
+- `realtor-web/uilayers/templates/components/_property-card.html`
+- `realtor-web/static/css/mobile-layout.css`
+- `realtor-web/static/css/propertism-styles.css`
+- `realtor-web/content/views.py`
+- `realtor-web/uilayers/views.py`
+- `realtor-web/properties/models.py`
+- `realtor-web/scripts/build-eb-bundle.ps1`
+- `realtor-web/media/properties/WhatsApp_Image_2026-03-23_at_10.01.41_PM.jpeg`
+- `realtor-web/media/properties/1772514993415.jpg`
+
+---
+
 ## Document Information
 
 **Created By**: Kiro AI Assistant  
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
-**Last Updated By**: Kiro AI Assistant  
-**Last Updated On**: March 8, 2026 at 01:45:00 IST (20:15:00 UTC)  
-**Session**: 11 (HTTPS Configuration Complete, Load Balancer Health Fixed, RCA Created, Git Push)  
-**Latest Action**: Created comprehensive RCA document, force pushed all production-ready code to GitHub repository
+**Last Updated By**: Codex  
+**Last Updated On**: March 29, 2026 at 19:15:00 IST  
+**Session**: 13 (Production Recovery, Mobile Homepage Fixes, Chat Restore, Featured Property Media Restore, GitHub Resync)  
+**Latest Action**: Documented the March 29, 2026 recovery/push/deploy sequence and confirmed production is healthy on `app-1b03-260329_190544327799`
