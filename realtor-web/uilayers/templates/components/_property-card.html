@@ -1,11 +1,9 @@
 {% load static %}
 <div class="property-card">
     <div class="property-image">
-        {% with primary_photo=property.photos.first %}
-            {% if primary_photo %}
-            <img src="{{ primary_photo.image.url }}" alt="{{ property.title }}" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
-            {% elif property.image %}
-            <img src="{{ property.image }}" alt="{{ property.title }}" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+        {% with image_url=property.get_display_image_url %}
+            {% if image_url %}
+            <img src="{{ image_url }}" alt="{{ property.title }}" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
             {% else %}
             <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}" loading="lazy" width="400" height="300">
             {% endif %}

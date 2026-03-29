@@ -117,7 +117,7 @@ def home(request):
             "service_highlights": all_services[:4],
             "credibility_points": get_active_core_values(limit=4),
             "expertise_highlights": expertise_areas,
-            "featured_properties": Property.objects.filter(status="available")[:6],
+            "featured_properties": Property.objects.filter(status="available").prefetch_related("photos")[:6],
             "team_highlights": TeamMember.objects.filter(is_active=True)[:3],
             "recent_posts": BlogPost.objects.filter(is_published=True)[:3],
             "customer_review_section": customer_review_section,

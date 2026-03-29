@@ -40,6 +40,23 @@ class Property(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='available')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_display_image_url(self):
+        """Return the first photo whose file still exists, else fall back."""
+        photos = self.photos.all()
+        if hasattr(photos, "order_by"):
+            photos = photos.order_by("-is_primary", "sort_order", "id")
+
+        for photo in photos:
+            if not photo.image:
+                continue
+            try:
+                if photo.image.storage.exists(photo.image.name):
+                    return photo.image.url
+            except Exception:
+                continue
+
+        return self.image or ""
     
     def __str__(self):
         return self.title

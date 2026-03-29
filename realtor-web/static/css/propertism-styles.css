@@ -1064,8 +1064,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 24px;
 }
 
 .customer-reviews-indicator {

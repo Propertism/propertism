@@ -243,11 +243,9 @@
             {% for property in featured_properties %}
             <div class="property-card-hybrid">
                 <div class="property-image-hybrid">
-                    {% with primary_photo=property.photos.first %}
-                        {% if primary_photo %}
-                        <img src="{{ primary_photo.image.url }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
-                        {% elif property.image %}
-                        <img src="{{ property.image }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+                    {% with image_url=property.get_display_image_url %}
+                        {% if image_url %}
+                        <img src="{{ image_url }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
                         {% else %}
                         <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
                         {% endif %}
