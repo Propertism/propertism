@@ -25,7 +25,9 @@
     <!-- Critical CSS -->
     <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/stunning-design.css' %}">
+    <link rel="stylesheet" href="{% static 'css/propertism-styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/realtor-overrides.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile-layout.css' %}">
     
     <!-- Structured Data -->
     {% block structured_data %}
@@ -36,6 +38,13 @@
 </head>
 <body>
     {% include "components/_header-english.html" %}
+    {% if messages %}
+    <div class="site-flash-stack" aria-live="polite">
+        {% for message in messages %}
+        <div class="site-flash site-flash-{{ message.tags|default:'info' }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
     
     <main class="main-content">
         {% block content %}
