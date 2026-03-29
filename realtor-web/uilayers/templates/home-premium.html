@@ -565,6 +565,7 @@
             const track = carousel.querySelector("[data-review-track]");
             const slides = Array.from(carousel.querySelectorAll("[data-review-slide]"));
             const indicators = Array.from(carousel.querySelectorAll("[data-review-indicator]"));
+            const mobileReviewMediaQuery = window.matchMedia("(max-width: 768px)");
 
             if (!track || slides.length <= 1) {
                 return;
@@ -585,9 +586,30 @@
                 });
             };
 
+            const focusActiveReviewSlide = () => {
+                if (!mobileReviewMediaQuery.matches) {
+                    return;
+                }
+
+                const activeSlide = slides[currentIndex];
+                const firstReviewCard = activeSlide?.querySelector(".customer-review-card");
+
+                if (!firstReviewCard) {
+                    return;
+                }
+
+                window.requestAnimationFrame(() => {
+                    firstReviewCard.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                });
+            };
+
             indicators.forEach((indicator) => {
                 indicator.addEventListener("click", () => {
                     updateCarousel(Number(indicator.dataset.reviewIndicator));
+                    focusActiveReviewSlide();
                 });
             });
 

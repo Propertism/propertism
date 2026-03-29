@@ -194,6 +194,10 @@ select {
    ============================================ */
 
 @media (max-width: 768px) {
+    .customer-review-card {
+        scroll-margin-top: 104px;
+    }
+
     /* Quote form - full width inputs */
     .quote-request-grid {
         grid-template-columns: 1fr;
