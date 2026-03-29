@@ -37,7 +37,6 @@ function Test-ExcludedPath {
         ".mypy_cache",
         ".ruff_cache",
         "node_modules",
-        "media",
         "logs",
         "dist",
         "build"

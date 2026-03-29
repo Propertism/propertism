@@ -243,11 +243,15 @@
             {% for property in featured_properties %}
             <div class="property-card-hybrid">
                 <div class="property-image-hybrid">
-                    {% if property.photos.first %}
-                    <img src="{{ property.photos.first.image.url }}" alt="{{ property.title }}">
-                    {% else %}
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect fill='%23E5E7EB' width='400' height='240'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%239CA3AF'%3EProperty Image%3C/text%3E%3C/svg%3E" alt="{{ property.title }}">
-                    {% endif %}
+                    {% with primary_photo=property.photos.first %}
+                        {% if primary_photo %}
+                        <img src="{{ primary_photo.image.url }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+                        {% elif property.image %}
+                        <img src="{{ property.image }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+                        {% else %}
+                        <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
+                        {% endif %}
+                    {% endwith %}
                     <div class="property-badge-hybrid">Featured</div>
                     <div class="property-save">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
