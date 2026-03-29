@@ -21,7 +21,7 @@ def home(request):
         'featured_properties': featured_properties,
     }
     
-    return render(request, 'home-stunning.html', context)
+    return render(request, 'home-premium.html', context)
 
 
 @login_required

@@ -28,7 +28,7 @@
             <div class="col">
                 <div class="service-card">
                     <h3>{{ service.title }}</h3>
-                    <p>{{ service.description }}</p>
+                    <p>{{ service.short_description|default:service.full_description }}</p>
                     <a href="{% url 'contact' %}" class="btn btn-link">Learn More</a>
                 </div>
             </div>

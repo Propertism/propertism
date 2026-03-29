@@ -14,17 +14,17 @@
     <!-- Navigation -->
     <nav class="site-nav">
         <div class="nav-content">
-            <a href="/" class="logo">
-                <img src="{% static 'images/propertism-logo.png' %}" alt="Propertism" class="logo-image">
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'images/propertism-logo111.png' %}" alt="{{ company.company_name|default:'Propertism' }}" class="logo-image logo-image-wordmark">
             </a>
             <div class="nav-links">
-                <a href="/">HOME</a>
-                <a href="/en/properties/">PROPERTIES</a>
-                <a href="/en/services/">SERVICES</a>
-                <a href="/en/about/">ABOUT</a>
-                <a href="/en/management/">MANAGEMENT</a>
-                <a href="/en/blog/">BLOG</a>
-                <a href="/en/contact/">CONTACT</a>
+                <a href="{% url 'home' %}">HOME</a>
+                <a href="{% url 'property_list' %}">PROPERTIES</a>
+                <a href="{% url 'services' %}">SERVICES</a>
+                <a href="{% url 'about' %}">ABOUT</a>
+                <a href="{% url 'management' %}">MANAGEMENT</a>
+                <a href="{% url 'blog' %}">BLOG</a>
+                <a href="{% url 'contact' %}">CONTACT</a>
             </div>
         </div>
     </nav>
@@ -86,7 +86,7 @@
             {% else %}
             <div style="text-align: center; padding: 4rem 0;">
                 <p style="font-size: 1.125rem; color: #6B7280;">No properties available at the moment.</p>
-                <p style="margin-top: 1rem;"><a href="/en/contact/" style="color: #B89A4A; text-decoration: none;">Contact us</a> for upcoming properties.</p>
+                <p style="margin-top: 1rem;"><a href="{% url 'contact' %}" style="color: #B89A4A; text-decoration: none;">Contact us</a> for upcoming properties.</p>
             </div>
             {% endif %}
         </div>
@@ -99,7 +99,7 @@
             <p class="cta-description">
                 Can't find what you're looking for? Contact us and we'll help you find your perfect property.
             </p>
-            <a href="/en/contact/" class="btn-primary">Contact Us</a>
+            <a href="{% url 'contact' %}" class="btn-primary">Contact Us</a>
         </div>
     </section>
 

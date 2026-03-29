@@ -148,8 +148,8 @@
                 <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
             </div>
             <div class="error-help">
-                <p>If the problem persists, please contact us at <a href="tel:+918667020798">+91 86670 20798</a></p>
-                <p style="margin-top: 0.5rem;">or email <a href="mailto:info@propertism.com">info@propertism.com</a></p>
+                <p>If the problem persists, please contact us at <a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a></p>
+                <p style="margin-top: 0.5rem;">or email <a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
             </div>
         </div>
     </div>

@@ -1,41 +1,79 @@
 <footer class="site-footer">
     <div class="container">
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>Propertism</h3>
-                <p style="color: var(--color-gray-600); margin-top: var(--space-4);">{% if company %}{{ company.tagline }}{% else %}We manage your property and resources when you are far from the nation.{% endif %}</p>
+            <div class="footer-section footer-brand">
+                <h3>{{ company.company_name }}</h3>
+                <p class="footer-copy">{{ company.tagline }}</p>
+                <div class="footer-socials">
+                    {% if company.facebook_url %}
+                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    {% if company.twitter_url %}
+                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Twitter">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    {% if company.linkedin_url %}
+                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Services</h3>
+            <div class="footer-section footer-services">
+                <h3>Service Coverage</h3>
                 <ul class="footer-links">
-                    <li><a href="/en/services/">Real Estate Services</a></li>
-                    <li><a href="/en/services/">Rental Management</a></li>
-                    <li><a href="/en/services/">Industrial Land</a></li>
-                    <li><a href="/en/properties/">View Properties</a></li>
+                    {% for service in footer_services %}
+                    <li><a href="{{ home_section_links.services }}">{{ service.title }}</a></li>
+                    {% empty %}
+                    <li><a href="{{ home_section_links.services }}">Explore Services</a></li>
+                    {% endfor %}
+                    <li><a href="{{ home_section_links.properties }}">View Properties</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
+            <div class="footer-section footer-office">
                 <h3>India Office</h3>
                 <ul class="footer-links">
-                    <li>{% if company %}{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}{% else %}Chennai, Tamil Nadu - 600093{% endif %}</li>
-                    <li><a href="tel:{% if company %}{{ company.india_phone_1|cut:' ' }}{% else %}+918667020798{% endif %}">{% if company %}{{ company.india_phone_1 }}{% else %}+91 86670 20798{% endif %}</a></li>
-                    <li><a href="mailto:{% if company %}{{ company.email }}{% else %}info@propertism.com{% endif %}">{% if company %}{{ company.email }}{% else %}info@propertism.com{% endif %}</a></li>
+                    <li>{{ company.india_office_address|linebreaksbr }}<br>{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}</li>
+                    <li><a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a></li>
+                    {% if company.india_phone_2 %}<li><a href="tel:{{ company.india_phone_2|cut:' ' }}">{{ company.india_phone_2 }}</a></li>{% endif %}
+                    {% if company.india_phone_3 %}<li><a href="tel:{{ company.india_phone_3|cut:' ' }}">{{ company.india_phone_3 }}</a></li>{% endif %}
+                    <li><a href="mailto:{{ company.email }}">{{ company.email }}</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
+            <div class="footer-section footer-office footer-office-secondary">
                 <h3>US Office</h3>
                 <ul class="footer-links">
-                    <li>{% if company %}{{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}{% else %}Hackensack, NJ 07601{% endif %}</li>
-                    <li><a href="tel:{% if company %}{{ company.us_phone|cut:' ' }}{% else %}+15184093485{% endif %}">{% if company %}{{ company.us_phone }}{% else %}+1 518 409 3485{% endif %}</a></li>
+                    <li>{{ company.us_office_address|linebreaksbr }}<br>{{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}</li>
+                    <li><a href="tel:{{ company.us_phone|cut:' ' }}">{{ company.us_phone }}</a></li>
+                    <li>{{ company.business_hours }}</li>
                 </ul>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe for market insights, NRI ownership updates, and new property opportunities.</p>
+                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form">
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Propertism Realty Advisors LLP. All rights reserved.</p>
-            <div>
-                <a href="/en/about/">About</a> |
-                <a href="/en/contact/">Contact</a> |
-                <a href="/en/management/">Management</a>
+            <p>&copy; 2026 {{ company.company_name }}. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="{{ home_section_links.about }}">About</a>
+                <a href="{{ home_section_links.blog }}">Blog</a>
+                <a href="{{ home_section_links.contact }}">Contact</a>
+                <a href="{{ home_section_links.management }}">Management</a>
             </div>
         </div>
     </div>

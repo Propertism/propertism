@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../../../04research/01toolsquota"
+		}
+	],
+	"settings": {
+		"typescript.autoClosingTags": false,
+		"git.ignoreLimitWarning": true
+	}
+}

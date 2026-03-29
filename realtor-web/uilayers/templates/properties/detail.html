@@ -95,8 +95,8 @@
                     
                     <div class="contact-card">
                         <h3>Contact Us</h3>
-                        <p>Phone: +91 86670 20798</p>
-                        <p>Email: info@propertism.com</p>
+                        <p>Phone: <a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a></p>
+                        <p>Email: <a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
                         <a href="/contact/" class="btn btn-secondary">Contact Form</a>
                     </div>
                 </div>

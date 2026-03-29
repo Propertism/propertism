@@ -14,14 +14,50 @@ except ImportError:
 # Environment detection
 DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
 
+
+def _get_csv_env(*names, default=None):
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            return [item.strip() for item in value.split(',') if item.strip()]
+    return default if default is not None else []
+
+
+def _get_https_origins_from_hosts(hosts):
+    origins = []
+    for host in hosts:
+        normalized = (host or "").strip()
+        if not normalized or normalized == "*":
+            continue
+        if normalized.startswith("."):
+            normalized = "*" + normalized
+        if "://" not in normalized:
+            normalized = f"https://{normalized}"
+        origins.append(normalized)
+    return list(dict.fromkeys(origins))
+
 # SECURITY WARNING: Keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-realtor-project-secret-key-change-in-production')
+SECRET_KEY = (
+    os.environ.get('DJANGO_SECRET_KEY')
+    or os.environ.get('SECRET_KEY')
+    or 'django-insecure-realtor-project-secret-key-change-in-production'
+)
 
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # Allowed hosts
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',') if os.environ.get('DJANGO_ALLOWED_HOSTS') else ['*']
+ALLOWED_HOSTS = _get_csv_env('DJANGO_ALLOWED_HOSTS', 'ALLOWED_HOSTS', default=['*'])
+# Add localhost and 127.0.0.1 for local development
+if DEBUG:
+    ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
+
+CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'www.propertism.in')
+CANONICAL_SCHEME = os.environ.get('CANONICAL_SCHEME', 'https')
+CANONICAL_REDIRECT_HOSTS = _get_csv_env(
+    'CANONICAL_REDIRECT_HOSTS',
+    default=['propertism.in', 'propertism.com', 'www.propertism.com'],
+)
 
 INSTALLED_APPS = [
     'modeltranslation',  # Must be before django.contrib.admin
@@ -36,16 +72,19 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'properties',
-    'users',
-    'search',
-    'uilayers',
-    'content',
+    'properties.apps.PropertiesConfig',
+    'users.apps.UsersConfig',
+    'search.apps.SearchConfig',
+    'uilayers.apps.UilayersConfig',
+    'content.apps.ContentConfig',
+    'chat.apps.ChatConfig',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'content.middleware.HealthCheckMiddleware',  # Handle health checks before ALLOWED_HOSTS
+    'content.middleware.CanonicalDomainRedirectMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files efficiently
     'django.middleware.gzip.GZipMiddleware',  # Enable gzip compression
@@ -72,6 +111,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'content.context_processors.site_content',
             ],
         },
     },
@@ -93,10 +133,12 @@ if 'RDS_DB_NAME' in os.environ:
         }
     }
 else:
+    # Use persistent storage for SQLite on EB
+    DB_PATH = os.environ.get('DB_PATH', str(BASE_DIR / 'db.sqlite3'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': DB_PATH,
         }
     }
 
@@ -123,8 +165,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise configuration for production static file serving
-if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Using default storage to avoid manifest issues on custom domain
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ==============================================================================
 # MEDIA FILES CONFIGURATION (SCCB-44)
@@ -132,10 +174,11 @@ if not DEBUG:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10 MB
 
 # File upload settings
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5 MB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
+DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
 FILE_UPLOAD_PERMISSIONS = 0o644
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 
@@ -194,6 +237,19 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'  # Allow framing from same origin
 # CSRF Protection
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'  # Lax for development, Strict for production
+# Add trusted origins for custom domain (HTTPS after SSL is configured)
+CSRF_TRUSTED_ORIGINS = _get_csv_env('CSRF_TRUSTED_ORIGINS', default=[
+    'https://propertism.in',
+    'https://www.propertism.in',
+    'https://propertism.com',
+    'https://www.propertism.com',
+    'http://propertism.in',
+    'http://www.propertism.in',
+    'http://propertism.com',
+    'http://www.propertism.com',
+    'http://propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com',
+    'https://propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com'
+])
 
 # Session Security
 SESSION_COOKIE_HTTPONLY = True
@@ -209,15 +265,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # File upload security
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
+DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
 
 # Production-specific security settings
 if not DEBUG:
-    # HTTPS/SSL
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    # HTTPS/SSL - Enable after SSL certificate is configured
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+    SECURE_SSL_REDIRECT = True  # Enable HTTPS redirect
+    SESSION_COOKIE_SECURE = True  # Enable secure cookies
+    CSRF_COOKIE_SECURE = True  # Enable secure CSRF cookies
     SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
@@ -227,6 +285,36 @@ if not DEBUG:
     SESSION_COOKIE_SAMESITE = 'Strict'
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     X_FRAME_OPTIONS = 'DENY'
+
+    if not CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS = _get_https_origins_from_hosts(ALLOWED_HOSTS)
+
+# ==============================================================================
+# EMAIL CONFIGURATION
+# ==============================================================================
+
+# Email backend configuration
+if DEBUG:
+    # Console backend for development (prints emails to console)
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # SMTP backend for production
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Gmail SMTP Configuration
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+
+# Default email addresses
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@propertism.in')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'info@propertism.in')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
+
+# Email timeout (seconds)
+EMAIL_TIMEOUT = 10
 
 # ==============================================================================
 # ADMIN CUSTOMIZATION
@@ -239,16 +327,13 @@ ADMIN_URL = os.environ.get('ADMIN_URL', 'admin')
 # LOGGING CONFIGURATION
 # ==============================================================================
 
-# Create logs directory if it doesn't exist
-LOGS_DIR = BASE_DIR / 'logs'
-LOGS_DIR.mkdir(exist_ok=True)
-
+# Simplified logging for production - console only
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
         'simple': {
@@ -256,51 +341,21 @@ LOGGING = {
             'style': '{',
         },
     },
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
     'handlers': {
         'console': {
             'level': 'INFO',
-            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
-        },
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': LOGS_DIR / 'django.log',
-            'maxBytes': 1024 * 1024 * 10,  # 10 MB
-            'backupCount': 5,
-            'formatter': 'verbose',
-        },
-        'security': {
-            'level': 'WARNING',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': LOGS_DIR / 'security.log',
-            'maxBytes': 1024 * 1024 * 10,  # 10 MB
-            'backupCount': 5,
-            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
         },
-        'django.security': {
-            'handlers': ['security'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
         'django.request': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': False,
         },
@@ -312,12 +367,10 @@ LOGGING = {
 # PERFORMANCE OPTIMIZATION
 # ==============================================================================
 
-# Browser caching for static files (1 year)
-if not DEBUG:
-    # Cache static files for 1 year in production
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# Browser caching for static files (handled by nginx)
+# Removed conflicting STATICFILES_STORAGE setting
 
-# Gzip compression settings
+# Gzip compression settings (handled by nginx)
 GZIP_CONTENT_TYPES = (
     'text/css',
     'text/javascript',

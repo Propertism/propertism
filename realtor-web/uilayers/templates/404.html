@@ -18,7 +18,7 @@
                 <a href="{% url 'contact' %}" class="btn btn-secondary">Contact Us</a>
             </div>
             <div class="error-help">
-                <p>Need help? Call us at <a href="tel:+918667020798">+91 86670 20798</a></p>
+                <p>Need help? Call us at <a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a></p>
             </div>
         </div>
     </div>

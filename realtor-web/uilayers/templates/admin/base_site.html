@@ -1,0 +1,77 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Propertism Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <span style="color: #B89A4A; font-weight: bold;">Propertism</span> 
+        <span style="color: #0F172A;">Realty Advisors</span>
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<meta name="color-scheme" content="light">
+<script>
+    document.documentElement.setAttribute("data-theme", "light");
+    try {
+        localStorage.setItem("theme", "light");
+    } catch (error) {
+        /* Ignore storage access issues and keep light mode via data-theme. */
+    }
+</script>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    html {
+        color-scheme: light;
+    }
+
+    #header {
+        background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+        border-bottom: 3px solid #B89A4A;
+    }
+    
+    #site-name a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    #site-name a:hover {
+        color: #B89A4A;
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+        background: #0F172A;
+    }
+    
+    a:link, a:visited {
+        color: #0F172A;
+    }
+    
+    a:hover {
+        color: #B89A4A;
+    }
+    
+    .button, input[type=submit], input[type=button], .submit-row input, button {
+        background: #0F172A;
+        border-color: #0F172A;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
+        background: #B89A4A;
+        border-color: #B89A4A;
+    }
+
+    .theme-toggle,
+    [class*="theme-toggle"] {
+        display: none !important;
+    }
+</style>
+{% endblock %}

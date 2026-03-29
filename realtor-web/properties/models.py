@@ -156,14 +156,16 @@ class ContactMessage(models.Model):
     
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    subject = models.CharField(max_length=255)
+    phone = models.CharField(max_length=20, blank=True)
+    subject = models.CharField(max_length=255, blank=True)
     message = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Message from {self.name} - {self.subject}"
+        if self.subject:
+            return f"Message from {self.name} - {self.subject}"
+        return f"Message from {self.name}"
     
     class Meta:
         verbose_name_plural = "Contact Messages"
