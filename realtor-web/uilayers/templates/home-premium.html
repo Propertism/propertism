@@ -7,8 +7,8 @@
     .hero-hybrid-has-image {
         display: flex !important;
         align-items: flex-end !important;
-        min-height: 74vh !important;
-        padding: 96px 24px 88px 24px !important;
+        min-height: clamp(648px, 82vh, 880px) !important;
+        padding: 132px 24px 96px 24px !important;
         overflow: hidden !important;
         position: relative !important;
     }
@@ -30,6 +30,7 @@
         position: relative !important;
         width: 100% !important;
         height: 100% !important;
+        min-height: 100% !important;
     }
     
     .hero-hybrid-image {
@@ -38,7 +39,8 @@
         display: block !important;
         width: 100% !important;
         height: 100% !important;
-        max-height: min(78vh, 920px) !important;
+        min-height: 100% !important;
+        max-height: none !important;
         object-fit: cover !important;
         object-position: center !important;
         opacity: 0 !important;
@@ -65,7 +67,7 @@
         position: relative;
         z-index: 10;
         width: 100%;
-        max-width: 720px;
+        max-width: min(760px, 100%);
         margin: 0;
         padding: 0;
     }
@@ -101,14 +103,19 @@
         color: #FFFFFF !important;
         font-size: 1.125rem;
         line-height: 1.7;
-        margin-top: 1.5rem;
-        max-width: 600px;
+        margin-top: 1rem;
+        max-width: 52ch;
         opacity: 1;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        text-wrap: pretty;
     }
     
     .hero-copy-zillow {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
         margin-top: 0;
+        max-width: 52rem;
     }
     
     /* Mobile styles are in mobile-layout.css */

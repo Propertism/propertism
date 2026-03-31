@@ -424,7 +424,7 @@ a:focus:not(:focus-visible) {
     
     /* Hero section - resilient responsive height using clamp() */
     .hero-hybrid-has-image {
-        min-height: clamp(420px, 70vh, 720px) !important;
+        min-height: clamp(520px, 82vh, 760px) !important;
         height: auto !important;
         display: flex !important;
         align-items: flex-end !important;
@@ -453,7 +453,7 @@ a:focus:not(:focus-visible) {
         max-width: 100% !important;
         position: absolute !important;
         z-index: 10 !important;
-        bottom: 180px !important;
+        bottom: 112px !important;
         left: 20px !important;
         right: 20px !important;
         width: auto !important;
@@ -467,6 +467,13 @@ a:focus:not(:focus-visible) {
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+    }
+
+    .hero-description {
+        max-width: 34ch !important;
+        margin-top: 0.75rem !important;
+        line-height: 1.6 !important;
+        text-wrap: pretty !important;
     }
     
     /* Ensure eyebrow is visible on mobile - override animation issues */
