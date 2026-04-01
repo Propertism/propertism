@@ -32,6 +32,8 @@ function Test-ExcludedPath {
     $excludedDirectories = @(
         ".git",
         ".elasticbeanstalk",
+        ".archive",
+        ".kiro",
         "__pycache__",
         ".pytest_cache",
         ".mypy_cache",
@@ -39,7 +41,8 @@ function Test-ExcludedPath {
         "node_modules",
         "logs",
         "dist",
-        "build"
+        "build",
+        "staticfiles"
     )
 
     foreach ($segment in $segments[0..([Math]::Max(0, $segments.Length - 2))]) {

@@ -3,6 +3,7 @@
 Repository note on April 1, 2026:
 The current app now lives at the repository root.
 This document keeps historical `realtor-web/` paths because they were correct on March 29, 2026.
+The old snapshot branch mentioned below has already been removed; it remains in this note only as historical record.
 
 ## Scope
 This note records the production recovery, homepage fixes, GitHub pushes, and Elastic Beanstalk deployments completed on March 29, 2026.
