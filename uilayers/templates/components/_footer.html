@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="footer-section footer-services">
-                <h3>Service Coverage</h3>
+                <h3>{{ company.footer_services_heading }}</h3>
                 <ul class="footer-links">
                     {% for service in footer_services %}
                     <li><a href="{{ home_section_links.services }}">{{ service.title }}</a></li>
@@ -57,12 +57,12 @@
                     <li>{{ company.business_hours }}</li>
                 </ul>
                 <div class="footer-newsletter">
-                    <h3>Stay Updated</h3>
-                    <p>Subscribe for market insights, NRI ownership updates, and new property opportunities.</p>
+                    <h3>{{ company.footer_newsletter_heading }}</h3>
+                    <p>{{ company.footer_newsletter_description }}</p>
                     <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form">
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
+                        <button type="submit">{{ company.footer_newsletter_button_text }}</button>
                     </form>
                 </div>
             </div>

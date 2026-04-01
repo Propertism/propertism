@@ -3,7 +3,11 @@
     <div class="container">
         <div class="header-content">
             <a href="{{ home_section_links.home }}" class="logo logo-text">
+                {% if company.logo %}
+                <img src="{{ company.logo.url }}" alt="{{ company.company_name|default:'Propertism' }}" class="logo-image logo-image-wordmark">
+                {% else %}
                 <img src="{% static 'images/propertism-logo111.png' %}" alt="{{ company.company_name|default:'Propertism' }}" class="logo-image logo-image-wordmark">
+                {% endif %}
             </a>
             
             <!-- Desktop Navigation -->

@@ -28,6 +28,8 @@ from .site_context import (
     get_active_expertise_areas,
     get_active_services,
     get_company_info,
+    get_contact_property_choices,
+    get_contact_service_choices,
     get_hero_title_segments,
     get_home_section_links,
 )
@@ -162,6 +164,8 @@ def home(request):
             "customer_reviews": customer_reviews,
             "customer_review_slides": customer_review_slides,
             "custom_card_sections": custom_card_sections,
+            "contact_property_choices": get_contact_property_choices(),
+            "contact_service_choices": get_contact_service_choices(),
             "hero_background_urls": hero_background_urls,
             "hero_title_segments": get_hero_title_segments(company.hero_title),
             "breadcrumbs": [{"name": "Home", "url": None}],

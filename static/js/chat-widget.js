@@ -1,7 +1,31 @@
 // Chat Widget JavaScript
 (function() {
     'use strict';
-    
+
+    const defaults = {
+        title: 'Leave a message',
+        subtitle: "We'll get back to you soon",
+        submitText: 'Send',
+        sendingText: 'Sending...',
+        successTitle: 'Message sent!',
+        successMessage: "Thanks for reaching out. We'll get back to you within 24 hours."
+    };
+
+    function getWidgetContent() {
+        const configNode = document.getElementById('chat-widget-content');
+        if (!configNode) {
+            return defaults;
+        }
+
+        try {
+            return { ...defaults, ...JSON.parse(configNode.textContent || '{}') };
+        } catch (error) {
+            return defaults;
+        }
+    }
+
+    const widgetContent = getWidgetContent();
+
     const ChatWidget = {
         init() {
             this.createWidget();
@@ -23,8 +47,8 @@
                     <div class="chat-window" id="chatWindow">
                         <div class="chat-header">
                             <div>
-                                <div class="chat-header-title">Leave a message</div>
-                                <div class="chat-header-subtitle">We'll get back to you soon</div>
+                                <div class="chat-header-title">${widgetContent.title}</div>
+                                <div class="chat-header-subtitle">${widgetContent.subtitle}</div>
                             </div>
                             <button class="chat-close" id="chatClose" aria-label="Close chat">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -58,7 +82,7 @@
                                 </div>
                                 
                                 <button type="submit" class="chat-submit" id="chatSubmit">
-                                    <span>Send</span>
+                                    <span>${widgetContent.submitText}</span>
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M12 19V5M5 12l7-7 7 7"/>
                                     </svg>
@@ -123,7 +147,7 @@
             // Disable submit button
             submitBtn.disabled = true;
             const submitText = submitBtn.querySelector('span');
-            submitText.textContent = 'Sending...';
+            submitText.textContent = widgetContent.sendingText;
             errorDiv.style.display = 'none';
             
             try {
@@ -144,7 +168,7 @@
                 errorDiv.style.display = 'block';
                 submitBtn.disabled = false;
                 const submitText = submitBtn.querySelector('span');
-                submitText.textContent = 'Send';
+                submitText.textContent = widgetContent.submitText;
             }
         },
         
@@ -157,9 +181,9 @@
                             <path d="M20 6L9 17l-5-5"/>
                         </svg>
                     </div>
-                    <div class="chat-success-title">Message sent!</div>
+                    <div class="chat-success-title">${widgetContent.successTitle}</div>
                     <div class="chat-success-message">
-                        Thanks for reaching out. We'll get back to you within 24 hours.
+                        ${widgetContent.successMessage}
                     </div>
                 </div>
             `;

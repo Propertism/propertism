@@ -22,6 +22,72 @@ class CompanyInfo(models.Model):
     hero_description_color = models.CharField(max_length=7, default="#475569", help_text="Hex color code (e.g., #475569)")
     hero_image = models.ImageField(upload_to='hero/', blank=True, null=True, help_text="Hero background image")
     logo = models.ImageField(upload_to='company/', blank=True, null=True, help_text="Company logo used across the site")
+
+    # Homepage section copy
+    about_section_eyebrow = models.CharField(max_length=100, default="About")
+    about_section_title = models.CharField(max_length=200, default="Property support for owners living abroad.")
+    about_primary_cta_text = models.CharField(max_length=80, default="Meet Management")
+    about_secondary_cta_text = models.CharField(max_length=80, default="Request a callback")
+    proof_section_eyebrow = models.CharField(max_length=100, default="Why Owners Stay With Us")
+    proof_section_title = models.CharField(
+        max_length=220,
+        default="Clear updates, reliable follow-through, and local execution.",
+    )
+    properties_section_title = models.CharField(max_length=200, default="Featured Properties for NRIs")
+    properties_section_subtitle = models.TextField(
+        default="Handpicked premium properties perfect for investment"
+    )
+    properties_section_cta_text = models.CharField(max_length=80, default="Request Property Shortlist")
+    services_section_title = models.CharField(max_length=200, default="Services built for NRI ownership")
+    services_section_description = models.TextField(
+        default="Buy, rent, maintain, and monitor property with one coordinated team in Chennai."
+    )
+    services_card_cta_text = models.CharField(max_length=80, default="Discuss this service")
+    management_section_eyebrow = models.CharField(max_length=100, default="Management")
+    management_section_title = models.CharField(
+        max_length=220,
+        default="One team coordinating owners, tenants, vendors, and follow-through.",
+    )
+    management_section_description = models.TextField(
+        default=(
+            "Practical accountability on the ground matters more than generic advisory. "
+            "The management team is structured around execution, reporting, and decision support for owners abroad."
+        )
+    )
+    blog_section_eyebrow = models.CharField(max_length=100, default="Insights")
+    blog_section_title = models.CharField(
+        max_length=220,
+        default="Useful updates for owners managing from abroad.",
+    )
+    blog_section_description = models.TextField(
+        default="Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai."
+    )
+    contact_section_eyebrow = models.CharField(max_length=100, default="Get in Touch")
+    contact_section_title = models.CharField(max_length=200, default="Let's discuss your property needs")
+    contact_section_description = models.TextField(
+        default=(
+            "Whether you're managing from abroad or looking to invest in Chennai, we're here to help. "
+            "Share your requirements and we'll provide expert guidance."
+        )
+    )
+    contact_primary_cta_text = models.CharField(max_length=80, default="Talk to Us")
+    contact_form_submit_text = models.CharField(max_length=80, default="Send My Request")
+
+    # Footer and chat copy
+    footer_services_heading = models.CharField(max_length=120, default="Service Coverage")
+    footer_newsletter_heading = models.CharField(max_length=120, default="Stay Updated")
+    footer_newsletter_description = models.TextField(
+        default="Subscribe for market insights, NRI ownership updates, and new property opportunities."
+    )
+    footer_newsletter_button_text = models.CharField(max_length=80, default="Subscribe")
+    chat_window_title = models.CharField(max_length=120, default="Leave a message")
+    chat_window_subtitle = models.CharField(max_length=160, default="We'll get back to you soon")
+    chat_submit_text = models.CharField(max_length=40, default="Send")
+    chat_sending_text = models.CharField(max_length=40, default="Sending...")
+    chat_success_title = models.CharField(max_length=120, default="Message sent!")
+    chat_success_message = models.TextField(
+        default="Thanks for reaching out. We'll get back to you within 24 hours."
+    )
     
     # India Office
     india_office_address = models.TextField(default=INDIA_OFFICE_ADDRESS)

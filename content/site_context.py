@@ -1,4 +1,4 @@
-from .models import CompanyInfo, CoreValue, ExpertiseArea, Service
+from .models import CompanyInfo, ContactInquiry, CoreValue, ExpertiseArea, Service
 
 
 HOME_SECTION_IDS = {
@@ -68,3 +68,11 @@ def get_active_expertise_areas(limit=None):
         return list(queryset)
     except Exception:
         return []
+
+
+def get_contact_service_choices():
+    return ContactInquiry.SERVICE_CHOICES
+
+
+def get_contact_property_choices():
+    return ContactInquiry.PROPERTY_CHOICES

@@ -78,6 +78,49 @@ class Command(BaseCommand):
             "twitter_url": "https://twitter.com/propertism",
             "linkedin_url": "https://linkedin.com/company/propertism",
             "business_hours": "Monday - Saturday: 9:00 AM - 6:00 PM IST",
+            "about_section_eyebrow": "About",
+            "about_section_title": "Property support for owners living abroad.",
+            "about_primary_cta_text": "Meet Management",
+            "about_secondary_cta_text": "Request a callback",
+            "proof_section_eyebrow": "Why Owners Stay With Us",
+            "proof_section_title": "Clear updates, reliable follow-through, and local execution.",
+            "properties_section_title": "Featured Properties for NRIs",
+            "properties_section_subtitle": "Handpicked premium properties perfect for investment",
+            "properties_section_cta_text": "Request Property Shortlist",
+            "services_section_title": "Services built for NRI ownership",
+            "services_section_description": "Buy, rent, maintain, and monitor property with one coordinated team in Chennai.",
+            "services_card_cta_text": "Discuss this service",
+            "management_section_eyebrow": "Management",
+            "management_section_title": "One team coordinating owners, tenants, vendors, and follow-through.",
+            "management_section_description": (
+                "Practical accountability on the ground matters more than generic advisory. "
+                "The management team is structured around execution, reporting, and decision support for owners abroad."
+            ),
+            "blog_section_eyebrow": "Insights",
+            "blog_section_title": "Useful updates for owners managing from abroad.",
+            "blog_section_description": (
+                "Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai."
+            ),
+            "contact_section_eyebrow": "Get in Touch",
+            "contact_section_title": "Let's discuss your property needs",
+            "contact_section_description": (
+                "Whether you're managing from abroad or looking to invest in Chennai, we're here to help. "
+                "Share your requirements and we'll provide expert guidance."
+            ),
+            "contact_primary_cta_text": "Talk to Us",
+            "contact_form_submit_text": "Send My Request",
+            "footer_services_heading": "Service Coverage",
+            "footer_newsletter_heading": "Stay Updated",
+            "footer_newsletter_description": (
+                "Subscribe for market insights, NRI ownership updates, and new property opportunities."
+            ),
+            "footer_newsletter_button_text": "Subscribe",
+            "chat_window_title": "Leave a message",
+            "chat_window_subtitle": "We'll get back to you soon",
+            "chat_submit_text": "Send",
+            "chat_sending_text": "Sending...",
+            "chat_success_title": "Message sent!",
+            "chat_success_message": "Thanks for reaching out. We'll get back to you within 24 hours.",
         }
 
         stale_values = {

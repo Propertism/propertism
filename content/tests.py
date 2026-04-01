@@ -111,6 +111,28 @@ class HomePageContentTests(TestCase):
 
         self.assertEqual(len(response.context["hero_background_urls"]), 2)
 
+    def test_homepage_uses_companyinfo_for_section_and_chat_copy(self):
+        self.company.about_section_title = "Model Driven About Title"
+        self.company.services_section_title = "Model Driven Services"
+        self.company.management_section_title = "Model Driven Management"
+        self.company.blog_section_title = "Model Driven Blog"
+        self.company.contact_section_title = "Model Driven Contact"
+        self.company.footer_newsletter_heading = "Newsletter From Admin"
+        self.company.chat_window_title = "Chat From Admin"
+        self.company.chat_success_message = "Admin controlled success copy."
+        self.company.save()
+
+        response = self.client.get(reverse("home"), follow=True)
+
+        self.assertContains(response, "Model Driven About Title")
+        self.assertContains(response, "Model Driven Services")
+        self.assertContains(response, "Model Driven Management")
+        self.assertContains(response, "Model Driven Blog")
+        self.assertContains(response, "Model Driven Contact")
+        self.assertContains(response, "Newsletter From Admin")
+        self.assertContains(response, "Chat From Admin")
+        self.assertContains(response, "Admin controlled success copy.")
+
     @patch("content.views.Statistic.objects.filter", side_effect=OperationalError("no such table"))
     def test_homepage_gracefully_handles_missing_statistics_table(self, _mock_stats_filter):
         response = self.client.get(reverse("home"), follow=True)

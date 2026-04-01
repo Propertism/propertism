@@ -55,6 +55,7 @@
     {% include "components/_footer.html" %}
     
     <!-- Light mode only - no theme switcher -->
+    {{ chat_widget_content|json_script:"chat-widget-content" }}
     <script src="{% static 'js/utils.js' %}"></script>
     <script src="{% static 'js/chat-widget.js' %}"></script>
     {% block extra_js %}{% endblock %}

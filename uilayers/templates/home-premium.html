@@ -188,19 +188,19 @@
     <div class="container">
         <div class="credibility-grid">
             <div class="credibility-story-card">
-                <span class="section-kicker">About</span>
-                <h2 class="credibility-title">Property support for owners living abroad.</h2>
+                <span class="section-kicker">{{ company.about_section_eyebrow }}</span>
+                <h2 class="credibility-title">{{ company.about_section_title }}</h2>
                 <p class="credibility-copy">
                     {% if company.about_description %}{{ company.about_description|truncatewords:34 }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team to coordinate the work in Chennai.{% endif %}
                 </p>
                 <div class="credibility-actions">
-                    <a href="{{ home_section_links.management }}" class="btn-view-all">Meet Management</a>
-                    <a href="{{ home_section_links.contact }}" class="credibility-inline-link">Request a callback</a>
+                    <a href="{{ home_section_links.management }}" class="btn-view-all">{{ company.about_primary_cta_text }}</a>
+                    <a href="{{ home_section_links.contact }}" class="credibility-inline-link">{{ company.about_secondary_cta_text }}</a>
                 </div>
             </div>
             <div class="credibility-proof-card">
-                <span class="section-kicker">Why Owners Stay With Us</span>
-                <h3 class="credibility-proof-title">Clear updates, reliable follow-through, and local execution.</h3>
+                <span class="section-kicker">{{ company.proof_section_eyebrow }}</span>
+                <h3 class="credibility-proof-title">{{ company.proof_section_title }}</h3>
                 {% if credibility_points %}
                 <ul class="credibility-proof-list">
                     {% for point in credibility_points|slice:":3" %}
@@ -242,8 +242,8 @@
 <section id="properties-section" class="featured-properties-section">
     <div class="container">
         <div class="featured-properties-intro">
-            <h2 class="featured-properties-title">Featured Properties for NRIs</h2>
-            <p class="featured-properties-subtitle">Handpicked premium properties perfect for investment</p>
+            <h2 class="featured-properties-title">{{ company.properties_section_title }}</h2>
+            <p class="featured-properties-subtitle">{{ company.properties_section_subtitle }}</p>
         </div>
 
         <div class="property-grid-hybrid">
@@ -292,7 +292,7 @@
 
         <div class="featured-properties-cta">
             <a href="{{ home_section_links.contact }}" class="btn-view-all">
-                Request Property Shortlist
+                {{ company.properties_section_cta_text }}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -304,8 +304,8 @@
 <section id="services-section" class="market-insights">
     <div class="container">
         <div class="section-intro-center">
-            <h2>Services built for NRI ownership</h2>
-            <p>Buy, rent, maintain, and monitor property with one coordinated team in Chennai.</p>
+            <h2>{{ company.services_section_title }}</h2>
+            <p>{{ company.services_section_description }}</p>
         </div>
 
         <div class="insights-grid">
@@ -319,7 +319,7 @@
                 </div>
                 <h3 class="insight-title">{{ service.title }}</h3>
                 <p class="insight-description">{{ service.short_description|truncatewords:18 }}</p>
-                <a href="{{ home_section_links.contact }}" class="service-depth-link">Discuss this service</a>
+                <a href="{{ home_section_links.contact }}" class="service-depth-link">{{ company.services_card_cta_text }}</a>
             </div>
             {% endfor %}
         </div>
@@ -329,9 +329,9 @@
 <section id="management-section" class="management-preview-section">
     <div class="container">
         <div class="management-preview-intro">
-            <span class="section-kicker">Management</span>
-            <h2>One team coordinating owners, tenants, vendors, and follow-through.</h2>
-            <p>Practical accountability on the ground matters more than generic advisory. The management team is structured around execution, reporting, and decision support for owners abroad.</p>
+            <span class="section-kicker">{{ company.management_section_eyebrow }}</span>
+            <h2>{{ company.management_section_title }}</h2>
+            <p>{{ company.management_section_description }}</p>
         </div>
         <div class="management-preview-grid">
             {% for member in team_highlights %}
@@ -363,9 +363,9 @@
 <section id="blog-section" class="journal-preview-section">
     <div class="container">
         <div class="journal-preview-intro">
-            <span class="section-kicker">Insights</span>
-            <h2>Useful updates for owners managing from abroad.</h2>
-            <p>Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai.</p>
+            <span class="section-kicker">{{ company.blog_section_eyebrow }}</span>
+            <h2>{{ company.blog_section_title }}</h2>
+            <p>{{ company.blog_section_description }}</p>
         </div>
         <div class="journal-preview-grid">
             {% for post in recent_posts %}
@@ -501,15 +501,15 @@
     <div class="container">
         <div class="nri-contact-shell">
             <div class="nri-contact-copy">
-                <span class="section-kicker">Get in Touch</span>
-                <h2>Let's discuss your property needs</h2>
-                <p>Whether you're managing from abroad or looking to invest in Chennai, we're here to help. Share your requirements and we'll provide expert guidance.</p>
+                <span class="section-kicker">{{ company.contact_section_eyebrow }}</span>
+                <h2>{{ company.contact_section_title }}</h2>
+                <p>{{ company.contact_section_description }}</p>
                 <div class="nri-contact-actions">
                     <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="btn-call-premium">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                         </svg>
-                        Talk to Us
+                        {{ company.contact_primary_cta_text }}
                     </a>
                 </div>
             </div>
@@ -532,21 +532,18 @@
                         <span>Service Needed</span>
                         <select name="service">
                             <option value="">Select a service</option>
-                            <option value="buy-sell">Real Estate Buy & Sell</option>
-                            <option value="rental">Rental & Maintenance</option>
-                            <option value="industrial">Industrial Land Services</option>
-                            <option value="consultation">General Consultation</option>
+                            {% for value, label in contact_service_choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </label>
                     <label class="quote-request-field quote-request-field-full">
                         <span>Property Type</span>
                         <select name="property_type">
                             <option value="">Select property type</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="villa">Villa</option>
-                            <option value="plot">Plot</option>
-                            <option value="commercial">Commercial</option>
-                            <option value="industrial">Industrial Land</option>
+                            {% for value, label in contact_property_choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </label>
                     <label class="quote-request-field quote-request-field-full">
@@ -554,7 +551,7 @@
                         <textarea name="message" rows="4" required placeholder="Tell us about the property, the current situation, and the support you need."></textarea>
                     </label>
                 </div>
-                <button type="submit" class="quote-request-submit">Send My Request</button>
+                <button type="submit" class="quote-request-submit">{{ company.contact_form_submit_text }}</button>
             </form>
         </div>
     </div>

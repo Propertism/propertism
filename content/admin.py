@@ -80,6 +80,20 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         ('Company Details', {
             'fields': ('company_name', 'logo', 'logo_preview', 'tagline', 'about_mission', 'about_description')
         }),
+        ('Homepage Sections', {
+            'fields': (
+                'about_section_eyebrow', 'about_section_title',
+                'about_primary_cta_text', 'about_secondary_cta_text',
+                'proof_section_eyebrow', 'proof_section_title',
+                'properties_section_title', 'properties_section_subtitle', 'properties_section_cta_text',
+                'services_section_title', 'services_section_description', 'services_card_cta_text',
+                'management_section_eyebrow', 'management_section_title', 'management_section_description',
+                'blog_section_eyebrow', 'blog_section_title', 'blog_section_description',
+                'contact_section_eyebrow', 'contact_section_title', 'contact_section_description',
+                'contact_primary_cta_text', 'contact_form_submit_text',
+            ),
+            'description': 'Editable copy used across the homepage sections and major calls to action.'
+        }),
         ('India Office', {
             'fields': ('india_office_address', 'india_office_city', 'india_office_state', 
                       'india_office_pincode', 'india_phone_1', 'india_phone_2', 'india_phone_3')
@@ -90,6 +104,16 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         }),
         ('Contact & Social', {
             'fields': ('email', 'facebook_url', 'twitter_url', 'linkedin_url', 'business_hours')
+        }),
+        ('Footer & Chat', {
+            'fields': (
+                'footer_services_heading',
+                'footer_newsletter_heading', 'footer_newsletter_description', 'footer_newsletter_button_text',
+                'chat_window_title', 'chat_window_subtitle',
+                'chat_submit_text', 'chat_sending_text',
+                'chat_success_title', 'chat_success_message',
+            ),
+            'description': 'Controls footer newsletter copy and the floating chat popup text.'
         }),
     )
     
