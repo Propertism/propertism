@@ -1,12 +1,16 @@
 {% extends "admin/base.html" %}
+{% load static %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Propertism Admin{% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
     <a href="{% url 'admin:index' %}">
-        <span style="color: #B89A4A; font-weight: bold;">Propertism</span> 
-        <span style="color: #0F172A;">Realty Advisors</span>
+        <img
+            src="{% static 'images/propertism-logo111.png' %}"
+            alt="Propertism Realty Advisors"
+            class="admin-brand-logo"
+        >
     </a>
 </h1>
 {% endblock %}
@@ -39,12 +43,21 @@
     }
     
     #site-name a {
-        color: #fff;
         text-decoration: none;
+        display: inline-flex;
+        align-items: center;
     }
     
     #site-name a:hover {
         color: #B89A4A;
+    }
+
+    .admin-brand-logo {
+        display: block;
+        height: 34px;
+        width: auto;
+        max-width: 260px;
+        object-fit: contain;
     }
     
     .module h2, .module caption, .inline-group h2 {
