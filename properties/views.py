@@ -9,11 +9,6 @@ from .models import Property
 from .serializers import PropertySerializer
 
 
-def react_properties_app(request):
-    """View to render React SPA embedded in CMS."""
-    return render(request, "properties/cms_app.html")
-
-
 @api_view(["GET"])
 def property_list_api(request):
     """API endpoint for property list with pagination."""
