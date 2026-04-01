@@ -1,72 +1,50 @@
 # Propertism
 
-**NRI Property Management Platform**
+Propertism Realty Advisors LLP website and admin, built with Django.
 
-Propertism Realty Advisors LLP - Professional property management services for NRI owners in Chennai.
+## Current Layout
 
-## Project Structure
+As of April 1, 2026, the active app source lives directly at the repository root.
 
+```text
+01propertism/
+|-- manage.py
+|-- realtor_project/
+|-- content/
+|-- properties/
+|-- uilayers/
+|-- static/
+|-- media/
+|-- scripts/
+|-- documents/
+`-- .session-tracker/
 ```
-propertism/
-├── realtor-web/          # Django application
-│   ├── content/          # Content management
-│   ├── properties/       # Property listings
-│   ├── uilayers/         # Templates and UI
-│   ├── static/           # Static files (CSS, JS, images)
-│   ├── media/            # Uploaded media files
-│   └── documents/        # Project documentation
-├── SESSION_TRACKER.md    # Current session tracking
-└── README.md            # This file
+
+Historical notes may still mention `realtor-web/` because that was the real app folder before the repo was flattened.
+
+## Local Development
+
+Run from the repository root:
+
+```bash
+python manage.py check
+python manage.py migrate
+python manage.py runserver
 ```
 
-## Quick Links
+Useful local URLs:
 
-- **Live Site**: http://propertism.in (currently showing 502 error - being fixed)
-- **AWS Environment**: propertism-prod (us-west-2)
-- **Repository**: https://github.com/Propertism/propertism
+- Site: `http://localhost:8000/en/`
+- Admin: `http://localhost:8000/en/admin/`
 
-## Current Status
+## Important Paths
 
-🔄 **In Progress**: Fixing 502 Bad Gateway error and static files serving
+- Session notes: `.session-tracker/SESSION_TRACKER.md`
+- Deployment notes: `propertism-last-deployment-notes-29032026.md`
+- Deployment scripts: `scripts/`
+- Project docs: `documents/`
 
-See [SESSION_TRACKER.md](SESSION_TRACKER.md) for detailed session history and current status.
+## Working Rule
 
-## Documentation
-
-All project documentation is located in `realtor-web/documents/`:
-- Deployment guides
-- DNS configuration
-- Static files fix documentation
-- Session logs
-
-## Admin Access
-
-- **URL**: http://propertism.in/admin/ (once fixed)
-- **Username**: admin
-- **Password**: admin123 (change after first login)
-
-## Technology Stack
-
-- **Backend**: Django 4.2.7
-- **Database**: SQLite (persistent storage)
-- **Hosting**: AWS Elastic Beanstalk
-- **Platform**: Python 3.11 on Amazon Linux 2023
-- **Web Server**: Nginx + Gunicorn
-
-## Brand Identity
-
-- **Primary Color**: Navy Blue (#0F172A)
-- **Accent Color**: Gold (#B89A4A)
-- **Company**: Propertism Realty Advisors LLP
-- **Focus**: NRI Property Management in Chennai
-
-## Next Steps
-
-1. Wait for AWS environment to stabilize
-2. Retry deployment to fix 502 error
-3. Set up SSL certificate for HTTPS
-4. Upload company logo and content
-
----
-
-For detailed session history and current tasks, see [SESSION_TRACKER.md](SESSION_TRACKER.md)
+Do not treat historical `realtor-web/` paths as current deploy paths.
+For current work, use this repository root as the source of truth unless a newer session note explicitly says otherwise.
