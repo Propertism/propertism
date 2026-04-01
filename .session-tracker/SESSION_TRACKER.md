@@ -8,8 +8,8 @@
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
 **Last Updated By**: Codex  
-**Last Updated On**: April 1, 2026 at 10:35:00 IST (05:05:00 UTC)  
-**Last Update**: Production is now on a code-only deploy policy, live content should be managed in Django admin, and property currency support is in progress locally but not yet committed or deployed
+**Last Updated On**: April 1, 2026 at 21:12:00 IST (15:42:00 UTC)  
+**Last Update**: Property currency, logo cleanup, and premium list/detail presentation were committed, pushed to `main`, and deployed successfully to `propertism-prod` with Green health
 
 ## Repository Layout Note
 As of April 1, 2026, the active app source lives directly at the repository root in `01propertism/`.
@@ -1090,10 +1090,10 @@ python init_data.py
 
 ---
 
-## SESSION 15: April 1, 2026 - Production Guardrails, Admin Recovery, And Property Currency Work In Progress
-**Status:** IN PROGRESS - VERIFIED LOCALLY, NOT COMMITTED
+## SESSION 15: April 1, 2026 - Production Guardrails, Property Currency, Premium Property UX, And Production Deploy
+**Status:** COMPLETED - COMMITTED, PUSHED, AND DEPLOYED
 **Date:** April 1, 2026
-**Primary Goal:** Stabilize production workflow after the live content reset, make future deploys code-only unless explicitly requested, and start currency-aware property pricing.
+**Primary Goal:** Stabilize production workflow after the live content reset, keep future deploys code-only unless explicitly requested otherwise, complete currency-aware property pricing, polish property presentation, and deploy safely to production.
 
 **Important Operating Decisions Confirmed With User:**
 1. Live SQLite data is now content-owned by the Propertism admin team.
@@ -1117,70 +1117,95 @@ python init_data.py
 2. `CompanyInfo` was found empty on live at one point, which explained fallback/older-looking homepage content.
 3. Properties added by the Propertism admin team are considered live business data and should be recreated or managed in Django admin, not reseeded from local code snapshots.
 
-**Property Currency Feature Started Locally (NOT COMMITTED, NOT DEPLOYED):**
-1. Goal:
+**Property Currency And Property UX Work Completed:**
+1. Core pricing goal:
    - add a `currency` field to `Property`
    - format INR using Indian grouping
    - format USD using international grouping
    - expose amount-in-words helpers for frontend/API use
-2. Files currently modified for this work:
+2. Core implementation files:
    - `properties/models.py`
    - `properties/admin.py`
    - `properties/serializers.py`
    - `properties/migrations/0004_property_currency.py`
    - `properties/tests.py`
    - `content/templatetags/seo_tags.py`
+3. Frontend/property presentation files updated:
    - `uilayers/templates/home-premium.html`
    - `uilayers/templates/properties/detail.html`
    - `uilayers/templates/properties/list.html`
    - `uilayers/templates/components/_property-card.html`
-3. Current implementation direction:
+   - `uilayers/templates/components/_header-english.html`
+   - `uilayers/templates/components/_header.html`
+   - `static/css/realtor-overrides.css`
+   - `static/css/propertism-styles.css`
+   - `static/css/premium-styles.css`
+   - `static/css/mobile-layout.css`
+   - `static/images/propertism-logo.png`
+   - `static/images/propertism-logo-white.png`
+   - `static/images/propertism-logo-tm.png`
+   - `static/images/propertism-logo-white-tm.png`
+4. Final implementation direction:
    - `Property.currency` choices: `INR`, `USD`
    - computed helpers: `formatted_price`, `price_in_words`, `price_in_words_with_currency`
    - serializer fields added for currency-aware output
    - schema tag changed so `priceCurrency` is dynamic instead of hardcoded `INR`
-4. Tests added locally:
+   - `/properties/` now renders inside the shared site shell instead of a broken standalone page
+   - property detail hero now separates location, status, title, price, and amount-in-words into a premium layout
+   - mobile property detail now forces a safe single-column flow before the sidebar can crowd the hero
+   - logo handling now uses dedicated static assets instead of fragile CSS inversion of the old uploaded raster
+5. Regression coverage added:
    - INR grouping/wording
    - USD grouping/wording
    - serializer output
    - schema currency output
    - property detail rendered price copy
    - homepage featured property rendered price output
+   - property list page shell rendering
 
-**Verification Status For The Currency Work:**
+**Verification And Release Status:**
 1. Working Python launcher was confirmed as `C:\Python\python.exe`, but it only started successfully after prepending `C:\Python\django` to `PATH` because `python313.dll` was located there instead of beside the interpreter.
 2. Repo-local shortcut created for future sessions:
    - preferred: `.\scripts\django.cmd`
    - usage examples: `.\scripts\django.cmd check`, `.\scripts\django.cmd test properties.tests`, `.\scripts\django.cmd runserver`
    - secondary: `.\scripts\django.ps1` if PowerShell execution policy allows it
 3. Missing local dependency `django-modeltranslation==0.18.11` was installed into the current `C:\Python` environment so Django could boot with project settings.
-4. `manage.py check` now passes with the real project settings.
-5. `makemigrations --check --dry-run` now reports `No changes detected`.
-6. `manage.py test properties.tests` now passes:
-   - `Ran 6 tests`
+4. `manage.py check` passes with the real project settings.
+5. `makemigrations --check --dry-run` reports `No changes detected`.
+6. `manage.py test properties.tests` passes:
+   - `Ran 7 tests`
    - `OK`
-7. During verification, two additional issues were fixed locally:
+7. During verification, additional issues fixed:
    - removed a `KeyError` path in `content.templatetags.seo_tags.property_schema` when `floorSize` was absent
    - restored the missing `create_inquiry` web route used by `uilayers/templates/properties/detail.html`
-8. Remaining local follow-up before commit/deploy:
-   - optional manual browser smoke on local `:8000`
-   - then commit only the currency-related files plus the inquiry-route/schema-test fixes if approved
+   - fixed local development media serving for the company logo path
+   - replaced the nav logo flow with clean dedicated static logo assets including TM variants
+   - rebuilt the property list/detail templates to avoid the broken presentation shown in screenshots
+8. Release outcome:
+   - committed on `main` as `5e9654a` with message `Polish property pricing and detail page presentation`
+   - pushed to `origin/main`
+   - deployed to Elastic Beanstalk environment `propertism-prod`
+   - deployed version: `app-5e96-260401_210822069586`
+   - post-deploy status: `Ready`
+   - post-deploy health: `Green`
 
 **Important Git / Working Tree Notes:**
-1. Currency work is local only right now. It has not been committed, pushed, or deployed.
+1. The validated property/currency/logo/detail work has been committed and deployed.
 2. Leave these unrelated docs moves alone unless the user explicitly asks:
    - deleted: `plans-and-docs/DJANGO_PROJECT_OVERVIEW.md`
    - deleted: `plans-and-docs/REUSABLE_COMPONENTS.md`
    - untracked: `documents/DJANGO_PROJECT_OVERVIEW.md`
    - untracked: `documents/REUSABLE_COMPONENTS.md`
-3. Also leave this separate utility uncommitted unless explicitly requested:
+3. Also leave these separate local files uncommitted unless explicitly requested:
    - `scripts/audit_model_counts.py`
+   - `gofolder.bat`
+   - `media/company/propertism-logo.png`
 
 **Recommended First Step Next Session:**
 1. Re-check `git status`.
 2. Use `.\scripts\django.cmd ...` instead of rediscovering the Python launcher.
-3. Optional: smoke-test homepage featured properties and one property detail page locally in a browser.
-4. If approved, commit only the currency-related files plus the restored inquiry route and associated tests.
+3. Do a quick production smoke test on homepage, `/properties/`, and one property detail page before any new feature work.
+4. If desired, handle the remaining unrelated docs/script cleanup as a separate commit.
 
 ---
 
@@ -1190,6 +1215,6 @@ python init_data.py
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
 **Last Updated By**: Codex  
-**Last Updated On**: April 1, 2026 at 12:05:00 IST  
-**Session**: 15 (Production Guardrails, Admin Recovery, And Property Currency Work In Progress)  
-**Latest Action**: Verified the local currency feature end-to-end with Django checks and six focused tests, fixed the property schema `floorSize` KeyError, restored the missing `create_inquiry` route, and documented the working local Python command pattern
+**Last Updated On**: April 1, 2026 at 21:12:00 IST  
+**Session**: 15 (Production Guardrails, Property Currency, Premium Property UX, And Production Deploy)  
+**Latest Action**: Committed the validated property currency, logo, and property presentation work as `5e9654a`, pushed `main`, and deployed `app-5e96-260401_210822069586` to `propertism-prod` with Green health
