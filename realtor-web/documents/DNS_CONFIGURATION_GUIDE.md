@@ -1,265 +1,95 @@
-# DNS Configuration Guide for Propertism.in
+# DNS Configuration Guide for `propertism.in`
 
-**Domain**: propertism.in  
+**Domain**: `propertism.in`  
 **Registrar**: GoDaddy  
-**Target**: AWS Elastic Beanstalk (propertism-prod)  
-**Date**: March 7, 2026
+**App**: AWS Elastic Beanstalk (`propertism-prod`)  
+**Last Updated**: April 1, 2026
 
----
+## Important
 
-## Overview
+Do **not** point the apex/root domain `@` at old hard-coded Elastic Beanstalk IPs.
 
-This guide will help you configure DNS records in GoDaddy to point your custom domain `propertism.in` to your AWS Elastic Beanstalk application.
+Elastic Beanstalk sits behind AWS-managed infrastructure, and those IPs are not a stable long-term contract for your root domain. If GoDaddy still has old parking, forwarding, or stale A records for `@`, users can intermittently land on the wrong page before the browser reaches `www.propertism.in`.
 
----
+## Recommended Setup
 
-## Step 1: Access GoDaddy DNS Management
+Use `www` as the canonical public hostname:
 
-1. Log in to your GoDaddy account at https://www.godaddy.com
-2. Go to **My Products** → **Domains**
-3. Find `propertism.in` and click **DNS** or **Manage DNS**
+- `www.propertism.in` -> `CNAME` -> `propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com`
+- `propertism.in` -> permanent redirect/forward -> `https://www.propertism.in`
 
----
+The Django app already enforces the canonical redirect once the request reaches the application.
 
-## Step 2: Configure DNS Records
+## GoDaddy Records
 
-You need to add **3 DNS records** total:
+### Keep
 
-### Record 1: Root Domain A Record (Primary)
-
-```
-Type:     A
-Name:     @
-Value:    35.167.25.188
-TTL:      600 seconds (10 minutes)
+```text
+Type:  CNAME
+Name:  www
+Value: propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com
+TTL:   1 hour
 ```
 
-**What this does**: Points your root domain (propertism.in) to the primary AWS IP address.
+### Remove conflicting root-domain records
 
-### Record 2: Root Domain A Record (Secondary)
+Remove any conflicting records for `@` such as:
 
-```
-Type:     A
-Name:     @
-Value:    44.242.56.49
-TTL:      600 seconds (10 minutes)
-```
+- old `A` records pointing to AWS IPs
+- GoDaddy parking defaults
+- any duplicate root forwarding entries
 
-**What this does**: Provides redundancy by pointing to a secondary AWS IP address.
+Keep unrelated MX/TXT/email verification records.
 
-### Record 3: WWW Subdomain CNAME
+## Root Domain Fix Options
 
-```
-Type:     CNAME
-Name:     www
-Value:    propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com
-TTL:      3600 seconds (1 hour)
-```
+### Option 1: GoDaddy Forwarding
 
-**What this does**: Points www.propertism.in to your Elastic Beanstalk environment.
+If DNS stays on GoDaddy, set the root domain to a **301 permanent redirect**:
 
----
-
-## Step 3: Remove Conflicting Records (If Any)
-
-Before adding the new records, check if there are any existing records that might conflict:
-
-- **Remove** any existing A records for `@` (root domain)
-- **Remove** any existing CNAME records for `www`
-- **Keep** any MX records (for email) if you have email configured
-- **Keep** any TXT records (for domain verification)
-
----
-
-## Step 4: Add the Records in GoDaddy
-
-### Adding A Records:
-
-1. Click **Add** or **Add Record**
-2. Select **Type**: A
-3. Enter **Name**: @ (this represents the root domain)
-4. Enter **Value**: 35.167.25.188
-5. Set **TTL**: 600 seconds
-6. Click **Save**
-7. Repeat for the second A record with IP: 44.242.56.49
-
-### Adding CNAME Record:
-
-1. Click **Add** or **Add Record**
-2. Select **Type**: CNAME
-3. Enter **Name**: www
-4. Enter **Value**: propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com
-5. Set **TTL**: 3600 seconds
-6. Click **Save**
-
----
-
-## Step 5: Verify DNS Configuration
-
-After adding the records, your DNS management page should show:
-
-| Type  | Name | Value                                                      | TTL  |
-|-------|------|------------------------------------------------------------|------|
-| A     | @    | 35.167.25.188                                              | 600  |
-| A     | @    | 44.242.56.49                                               | 600  |
-| CNAME | www  | propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com | 3600 |
-
----
-
-## Step 6: Wait for DNS Propagation
-
-DNS changes take time to propagate across the internet:
-
-- **Minimum**: 10 minutes (based on TTL)
-- **Typical**: 1-4 hours
-- **Maximum**: 24-48 hours (rare)
-
-### Check DNS Propagation:
-
-You can check if DNS has propagated using these tools:
-
-1. **Online Tools**:
-   - https://www.whatsmydns.net/#A/propertism.in
-   - https://dnschecker.org/#A/propertism.in
-
-2. **Command Line** (Windows PowerShell):
-   ```powershell
-   nslookup propertism.in
-   nslookup www.propertism.in
-   ```
-
-3. **Expected Results**:
-   - `propertism.in` should resolve to 35.167.25.188 or 44.242.56.49
-   - `www.propertism.in` should resolve to the Elastic Beanstalk CNAME
-
----
-
-## Step 7: Test Your Domain
-
-Once DNS has propagated, test these URLs in your browser:
-
-1. **Root Domain**: http://propertism.in/en/
-2. **WWW Subdomain**: http://www.propertism.in/en/
-3. **Admin Panel**: http://propertism.in/en/admin/
-
-**Note**: These will be HTTP (not HTTPS) until you set up SSL certificates in the next step.
-
----
-
-## Troubleshooting
-
-### Issue: "This site can't be reached" or "DNS_PROBE_FINISHED_NXDOMAIN"
-
-**Solution**: DNS hasn't propagated yet. Wait longer and try again.
-
-### Issue: "Connection timed out"
-
-**Solution**: 
-1. Check that you entered the IP addresses correctly
-2. Verify the Elastic Beanstalk environment is running (Health: Green)
-3. Check AWS security groups allow HTTP traffic on port 80
-
-### Issue: WWW subdomain not working
-
-**Solution**:
-1. Verify the CNAME record value doesn't have "http://" or trailing "/"
-2. Make sure you entered the full Elastic Beanstalk domain name
-3. Wait for DNS propagation
-
-### Issue: Root domain works but WWW doesn't (or vice versa)
-
-**Solution**: This is normal during DNS propagation. Different records can propagate at different speeds.
-
----
-
-## Next Steps After DNS Configuration
-
-Once your domain is working on HTTP:
-
-### 1. Set Up SSL Certificate (HTTPS)
-
-1. Go to AWS Certificate Manager (ACM) in us-west-2 region
-2. Request a public certificate for:
-   - `propertism.in`
-   - `www.propertism.in`
-3. Choose DNS validation
-4. Add the CNAME records provided by ACM to GoDaddy
-5. Wait for certificate validation (5-30 minutes)
-6. Configure Elastic Beanstalk load balancer to use the certificate
-7. Enable HTTP to HTTPS redirect
-
-### 2. Update Django Settings
-
-The Django application is already configured to accept your custom domain:
-- `ALLOWED_HOSTS` includes: `propertism.in`, `www.propertism.in`
-
-### 3. Test Everything
-
-After SSL is configured, test:
-- https://propertism.in/en/
-- https://www.propertism.in/en/
-- https://propertism.in/en/admin/
-
----
-
-## Summary Checklist
-
-- [ ] Log in to GoDaddy DNS management
-- [ ] Remove any conflicting A or CNAME records
-- [ ] Add A record: @ → 35.167.25.188 (TTL: 600)
-- [ ] Add A record: @ → 44.242.56.49 (TTL: 600)
-- [ ] Add CNAME record: www → propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com (TTL: 3600)
-- [ ] Save all changes
-- [ ] Wait for DNS propagation (1-4 hours typically)
-- [ ] Test http://propertism.in/en/
-- [ ] Test http://www.propertism.in/en/
-- [ ] Proceed to SSL certificate setup
-
----
-
-## Support Information
-
-**AWS Environment**: propertism-prod  
-**Region**: us-west-2 (Oregon)  
-**Elastic Beanstalk CNAME**: propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com  
-**Current Working URL**: http://propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com/en/
-
----
-
-## GoDaddy AI Agent (Airo) Prompt
-
-If you prefer to use GoDaddy's AI assistant, copy and paste this prompt:
-
-```
-I need to configure DNS for my domain propertism.in to point to my AWS Elastic Beanstalk application.
-
-Please set up these DNS records:
-
-1. Root domain (@):
-   - Type: A Record
-   - Name: @
-   - Value: 35.167.25.188
-   - TTL: 600 seconds
-
-2. Root domain (secondary):
-   - Type: A Record
-   - Name: @
-   - Value: 44.242.56.49
-   - TTL: 600 seconds
-
-3. WWW subdomain:
-   - Type: CNAME
-   - Name: www
-   - Value: propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com
-   - TTL: 3600 seconds
-
-Please remove any existing conflicting A or CNAME records for @ and www before adding these new records.
-
-Confirm when the records are active.
+```text
+Forward: propertism.in -> https://www.propertism.in
+Type: Permanent (301)
+Masking: Off
 ```
 
----
+Use this when you want the simplest fix and `www` is your canonical hostname.
 
-**Document Version**: 1.0  
-**Last Updated**: March 7, 2026  
-**Status**: Ready for DNS configuration
+### Option 2: Move DNS To Route 53 Or Cloudflare
+
+If you want the cleanest long-term setup for both `@` and `www`, move authoritative DNS to a provider that supports apex aliasing/flattening.
+
+Then configure:
+
+- `@` -> alias/flattening -> your AWS load balancer / target
+- `www` -> CNAME/alias -> the same application target
+
+This is the more robust setup if you want AWS-native DNS management.
+
+## Why the first visit can hit GoDaddy
+
+If a user sees GoDaddy only on the first visit to `propertism.in`, but `www.propertism.in` works:
+
+1. the browser is hitting the naked domain first
+2. GoDaddy/root DNS is answering before the request ever reaches Django
+3. after `www` loads once, browser cache/HSTS/redirect memory can make later visits seem correct
+
+That means this symptom is almost always **DNS or registrar forwarding**, not an app-template issue.
+
+## Quick Verification Checklist
+
+After updating GoDaddy:
+
+1. Open a fresh private/incognito window.
+2. Visit `http://propertism.in`.
+3. Confirm it lands on `https://www.propertism.in/`.
+4. Visit `https://www.propertism.in/` directly.
+5. Confirm there is no GoDaddy landing page in either case.
+
+## Current App Behavior
+
+The app redirects alternate public hosts to `www.propertism.in` in:
+
+- [content/middleware.py](/d:/viji/viji-olivine/03rolledout/01propertism/realtor-web/content/middleware.py)
+
+That redirect only helps **after** DNS sends the request to the app.

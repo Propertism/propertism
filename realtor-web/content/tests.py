@@ -1,5 +1,8 @@
+from unittest.mock import patch
+
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db.utils import OperationalError
 from django.test import TestCase
 from django.urls import reverse
 
@@ -78,3 +81,16 @@ class HomePageContentTests(TestCase):
         response = self.client.get(reverse("home"), follow=True)
 
         self.assertEqual(len(response.context["hero_background_urls"]), 2)
+
+    @patch("content.views.Statistic.objects.filter", side_effect=OperationalError("no such table"))
+    def test_homepage_gracefully_handles_missing_statistics_table(self, _mock_stats_filter):
+        response = self.client.get(reverse("home"), follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["stats"], [])
+
+    @patch("content.views.TeamMember.objects.filter", side_effect=OperationalError("no such table"))
+    def test_team_member_detail_returns_404_when_table_is_unavailable(self, _mock_team_filter):
+        response = self.client.get(reverse("team_member_detail", args=["missing-slug"]), follow=True)
+
+        self.assertEqual(response.status_code, 404)

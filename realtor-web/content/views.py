@@ -5,15 +5,14 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Prefetch
 from django.db.utils import OperationalError, ProgrammingError
-from django.http import JsonResponse, HttpResponsePermanentRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404, HttpResponsePermanentRedirect
+from django.shortcuts import redirect, render
 
 from properties.models import Property
 from properties.models import Inquiry as PropertyInquiry
 
 from .models import (
     BlogPost,
-    ContactInquiry,
     CoreValue,
     CustomerReviewSection,
     ExpertiseArea,
@@ -34,6 +33,29 @@ from .site_context import (
 )
 
 logger = logging.getLogger(__name__)
+RECOVERABLE_DB_ERRORS = (OperationalError, ProgrammingError)
+
+
+def _safe_list(queryset, *, fallback=None, warning=None):
+    try:
+        if callable(queryset):
+            queryset = queryset()
+        return list(queryset)
+    except RECOVERABLE_DB_ERRORS:
+        if warning:
+            logger.warning(warning, exc_info=True)
+        return [] if fallback is None else fallback
+
+
+def _safe_first(queryset, *, fallback=None, warning=None):
+    try:
+        if callable(queryset):
+            queryset = queryset()
+        return queryset.first()
+    except RECOVERABLE_DB_ERRORS:
+        if warning:
+            logger.warning(warning, exc_info=True)
+        return fallback
 
 
 def health(request):
@@ -84,42 +106,58 @@ def home(request):
                 for item in company.get_active_hero_backgrounds()
                 if item.image
             ]
+    except RECOVERABLE_DB_ERRORS:
+        logger.warning("Homepage hero background tables are unavailable.", exc_info=True)
+        hero_background_urls = []
 
-        customer_review_section = CustomerReviewSection.objects.filter(is_active=True).first()
-        if customer_review_section:
-            customer_reviews = list(customer_review_section.reviews.filter(is_active=True))
-            customer_review_slides = [
-                customer_reviews[index:index + 3]
-                for index in range(0, len(customer_reviews), 3)
-            ]
-        custom_card_sections = HomepageCardSection.objects.filter(is_active=True).prefetch_related(
+    customer_review_section = _safe_first(
+        lambda: CustomerReviewSection.objects.filter(is_active=True),
+        warning="Homepage customer review section table is unavailable.",
+    )
+    if customer_review_section:
+        customer_reviews = _safe_list(
+            lambda: customer_review_section.reviews.filter(is_active=True),
+            warning="Homepage customer review table is unavailable.",
+        )
+        customer_review_slides = [
+            customer_reviews[index:index + 3]
+            for index in range(0, len(customer_reviews), 3)
+        ]
+    custom_card_sections = _safe_list(
+        lambda: HomepageCardSection.objects.filter(is_active=True).prefetch_related(
             Prefetch(
                 "cards",
                 queryset=HomepageCard.objects.filter(is_active=True),
                 to_attr="active_cards",
             )
-        )
-    except (OperationalError, ProgrammingError):
-        # Local dev can hit this before migrations are applied. The rest of the
-        # homepage should still render while the new tables are missing.
-        customer_review_section = None
-        customer_reviews = []
-        customer_review_slides = []
-        custom_card_sections = []
-        hero_background_urls = []
+        ),
+        warning="Homepage custom card section tables are unavailable.",
+    )
 
     if not hero_background_urls and company.hero_image:
         hero_background_urls = [company.hero_image.url]
 
     context.update(
         {
-            "stats": Statistic.objects.filter(is_active=True)[:4],
+            "stats": _safe_list(
+                lambda: Statistic.objects.filter(is_active=True)[:4],
+                warning="Homepage statistics table is unavailable.",
+            ),
             "service_highlights": all_services[:4],
             "credibility_points": get_active_core_values(limit=4),
             "expertise_highlights": expertise_areas,
-            "featured_properties": Property.objects.filter(status="available").prefetch_related("photos")[:6],
-            "team_highlights": TeamMember.objects.filter(is_active=True)[:3],
-            "recent_posts": BlogPost.objects.filter(is_published=True)[:3],
+            "featured_properties": _safe_list(
+                lambda: Property.objects.filter(status="available").prefetch_related("photos")[:6],
+                warning="Homepage featured properties table is unavailable.",
+            ),
+            "team_highlights": _safe_list(
+                lambda: TeamMember.objects.filter(is_active=True)[:3],
+                warning="Homepage team member table is unavailable.",
+            ),
+            "recent_posts": _safe_list(
+                lambda: BlogPost.objects.filter(is_published=True)[:3],
+                warning="Homepage blog post table is unavailable.",
+            ),
             "customer_review_section": customer_review_section,
             "customer_reviews": customer_reviews,
             "customer_review_slides": customer_review_slides,
@@ -136,7 +174,10 @@ def services(request):
     """Services page view."""
     context = get_company_context()
     context.update({
-        "services": Service.objects.filter(is_active=True),
+        "services": _safe_list(
+            lambda: Service.objects.filter(is_active=True),
+            warning="Services table is unavailable.",
+        ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
             {"name": "Services", "url": None}
@@ -149,8 +190,14 @@ def about(request):
     """About page view."""
     context = get_company_context()
     context.update({
-        "stats": Statistic.objects.filter(is_active=True),
-        "values": CoreValue.objects.filter(is_active=True),
+        "stats": _safe_list(
+            lambda: Statistic.objects.filter(is_active=True),
+            warning="About page statistics table is unavailable.",
+        ),
+        "values": _safe_list(
+            lambda: CoreValue.objects.filter(is_active=True),
+            warning="About page core values table is unavailable.",
+        ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
             {"name": "About", "url": None}
@@ -163,8 +210,14 @@ def management(request):
     """Management page view."""
     context = get_company_context()
     context.update({
-        "team_members": TeamMember.objects.filter(is_active=True),
-        "expertise_areas": ExpertiseArea.objects.filter(is_active=True),
+        "team_members": _safe_list(
+            lambda: TeamMember.objects.filter(is_active=True),
+            warning="Management page team member table is unavailable.",
+        ),
+        "expertise_areas": _safe_list(
+            lambda: ExpertiseArea.objects.filter(is_active=True),
+            warning="Management page expertise area table is unavailable.",
+        ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
             {"name": "Management", "url": None}
@@ -175,8 +228,12 @@ def management(request):
 
 def team_member_detail(request, slug):
     """Team member profile detail page."""
-    from django.shortcuts import get_object_or_404
-    team_member = get_object_or_404(TeamMember, slug=slug, is_active=True)
+    team_member = _safe_first(
+        lambda: TeamMember.objects.filter(slug=slug, is_active=True),
+        warning="Team member detail table is unavailable.",
+    )
+    if not team_member:
+        raise Http404
     context = get_company_context()
     context.update({
         "team_member": team_member,
@@ -197,11 +254,19 @@ def blog(request):
 def blog_post(request, slug):
     """Individual blog post view."""
     context = get_company_context()
-    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    post = _safe_first(
+        lambda: BlogPost.objects.filter(slug=slug, is_published=True),
+        warning="Blog post table is unavailable.",
+    )
+    if not post:
+        raise Http404
     context.update(
         {
             "post": post,
-            "recent_posts": BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3],
+            "recent_posts": _safe_list(
+                lambda: BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3],
+                warning="Recent blog post table is unavailable.",
+            ),
         }
     )
     return render(request, "blog_post.html", context)
