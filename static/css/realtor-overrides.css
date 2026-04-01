@@ -46,6 +46,20 @@ body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
     opacity: 0.8 !important;
 }
 
+.logo-has-uploaded-image {
+    padding: 0;
+}
+
+.logo-has-uploaded-image .logo-image,
+.logo-has-uploaded-image .logo-image-wordmark {
+    display: block;
+    height: 44px;
+    max-width: min(48vw, 240px);
+    width: auto;
+    object-fit: contain;
+    filter: none;
+}
+
 /* Navigation - White Text */
 .main-nav a {
     color: rgba(255, 255, 255, 0.9) !important;
@@ -75,6 +89,31 @@ body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
 .property-price-hybrid,
 .property-details-hybrid {
     font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif !important;
+}
+
+.property-title-hybrid {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    margin: 0 0 10px !important;
+}
+
+.property-title-hybrid a {
+    color: var(--brand-navy) !important;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.property-title-hybrid a::after {
+    content: "→";
+    font-size: 0.95em;
+    transition: transform 0.2s ease;
+}
+
+.property-title-hybrid a:hover::after {
+    transform: translateX(2px);
 }
 
 
@@ -485,4 +524,21 @@ body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
 .cta-section::-webkit-scrollbar-thumb:hover,
 [style*="background: linear-gradient"]::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.5);
+}
+
+.property-title a::after,
+.property-title-hybrid a::after {
+    content: "" !important;
+}
+
+.property-title .property-link-arrow,
+.property-title-hybrid .property-link-arrow {
+    display: inline-block;
+    font-size: 0.95em;
+    transition: transform 0.2s ease;
+}
+
+.property-title a:hover .property-link-arrow,
+.property-title-hybrid a:hover .property-link-arrow {
+    transform: translateX(2px);
 }

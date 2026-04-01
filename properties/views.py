@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
@@ -5,7 +7,7 @@ from rest_framework.response import Response
 
 from content.site_context import get_company_info, get_home_section_links
 
-from .models import Property
+from .models import Inquiry, Property
 from .serializers import PropertySerializer
 
 
@@ -42,8 +44,19 @@ def property_detail_api(request, pk):
 
 
 def property_list(request):
-    """Legacy list route now points to the homepage properties section."""
-    return redirect(get_home_section_links()["properties"])
+    queryset = Property.objects.filter(status="available").prefetch_related("photos").order_by("-created_at")
+    paginator = Paginator(queryset, 9)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    company = get_company_info()
+    return render(
+        request,
+        "properties/list.html",
+        {
+            "properties": page_obj,
+            "company": company,
+        },
+    )
 
 
 def property_detail(request, pk):
@@ -57,3 +70,28 @@ def property_detail(request, pk):
             "company": company,
         },
     )
+
+
+def create_inquiry(request):
+    if request.method != "POST":
+        return redirect(get_home_section_links()["properties"])
+
+    property_id = request.POST.get("property_id")
+    property_obj = get_object_or_404(Property, pk=property_id)
+
+    try:
+        Inquiry.objects.create(
+            property=property_obj,
+            name=request.POST.get("name", "").strip(),
+            email=request.POST.get("email", "").strip(),
+            phone=request.POST.get("phone", "").strip(),
+            message=request.POST.get("message", "").strip(),
+        )
+        messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
+    except Exception:
+        messages.error(
+            request,
+            "There was an error submitting your inquiry. Please try again or call us directly.",
+        )
+
+    return redirect("property_detail", pk=property_obj.pk)

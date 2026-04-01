@@ -1,115 +1,311 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Properties - Propertism</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="site-nav">
-        <div class="nav-content">
-            <a href="{% url 'home' %}" class="logo">
-                <img src="{% static 'images/propertism-logo111.png' %}" alt="{{ company.company_name|default:'Propertism' }}" class="logo-image logo-image-wordmark">
-            </a>
-            <div class="nav-links">
-                <a href="{% url 'home' %}">HOME</a>
-                <a href="{% url 'property_list' %}">PROPERTIES</a>
-                <a href="{% url 'services' %}">SERVICES</a>
-                <a href="{% url 'about' %}">ABOUT</a>
-                <a href="{% url 'management' %}">MANAGEMENT</a>
-                <a href="{% url 'blog' %}">BLOG</a>
-                <a href="{% url 'contact' %}">CONTACT</a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Page Header -->
-    <section style="padding: 6rem 0 3rem; background: #0F172A; color: white; text-align: center;">
-        <div class="container">
-            <h1 style="font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 1rem;">Our Properties</h1>
-            <p style="font-size: 1.125rem; color: rgba(255,255,255,0.8);">Discover premium properties across Chennai</p>
-        </div>
-    </section>
+{% block meta_title %}Properties | Propertism Realty Advisors{% endblock %}
 
-    <!-- Properties Grid -->
-    <section style="padding: 4rem 0; background: white;">
-        <div class="container">
+{% block extra_css %}
+<style>
+    .properties-page {
+        padding: 112px 0 72px;
+        background: #f8fafc;
+    }
+
+    .properties-page-shell {
+        display: grid;
+        gap: 36px;
+    }
+
+    .properties-page-hero {
+        background:
+            linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78)),
+            radial-gradient(circle at top left, rgba(184, 154, 74, 0.18), transparent 38%);
+        color: #ffffff;
+        padding: 40px 44px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .properties-page-kicker {
+        display: inline-block;
+        margin-bottom: 12px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #d4b15b;
+    }
+
+    .properties-page-hero h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+        max-width: 10ch;
+        color: #ffffff;
+    }
+
+    .properties-page-hero p {
+        margin: 0;
+        max-width: 54ch;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.82);
+    }
+
+    .properties-grid-modern {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 28px;
+    }
+
+    .property-item-modern {
+        background: #ffffff;
+        border: 1px solid #dbe3ea;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .property-item-media {
+        position: relative;
+        border-bottom: 1px solid #dbe3ea;
+    }
+
+    .property-item-media img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .property-item-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        background: rgba(15, 23, 42, 0.86);
+        color: #ffffff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .property-item-body {
+        padding: 22px 22px 24px;
+        display: grid;
+        gap: 12px;
+    }
+
+    .property-item-location {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #b89a4a;
+    }
+
+    .property-item-title {
+        margin: 0;
+        font-size: 1.45rem;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        color: #0f172a;
+    }
+
+    .property-item-title a {
+        color: inherit;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .property-item-title a:hover .property-link-arrow {
+        transform: translateX(2px);
+    }
+
+    .property-link-arrow {
+        display: inline-block;
+        font-size: 0.92em;
+        transition: transform 0.2s ease;
+    }
+
+    .property-item-price {
+        font-size: 1.7rem;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: #0f172a;
+    }
+
+    .property-item-price-words {
+        max-width: 24ch;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: #475569;
+    }
+
+    .property-item-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding-top: 14px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .property-item-meta span {
+        font-size: 0.85rem;
+        color: #334155;
+    }
+
+    .property-item-chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .property-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border: 1px solid #dbe3ea;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #0f172a;
+        background: #ffffff;
+    }
+
+    .property-chip.is-available {
+        border-color: #bbf7d0;
+        background: #f0fdf4;
+        color: #166534;
+    }
+
+    .properties-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .properties-pagination a,
+    .properties-pagination span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid #dbe3ea;
+        background: #ffffff;
+        color: #0f172a;
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .properties-pagination .is-current {
+        background: #0f172a;
+        color: #ffffff;
+        border-color: #0f172a;
+    }
+
+    .properties-empty {
+        background: #ffffff;
+        border: 1px solid #dbe3ea;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .properties-empty p {
+        margin: 0;
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+        .properties-page {
+            padding: 96px 0 56px;
+        }
+
+        .properties-page-hero {
+            padding: 28px 24px;
+        }
+
+        .property-item-body {
+            padding: 18px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="properties-page">
+    <div class="container">
+        <div class="properties-page-shell">
+            <section class="properties-page-hero">
+                <span class="properties-page-kicker">Curated Properties</span>
+                <h1>Premium opportunities for NRI ownership.</h1>
+                <p>Browse active listings selected for location strength, rental potential, and long-term ownership fit across Chennai.</p>
+            </section>
+
             {% if properties %}
-            <div class="properties-grid">
+            <section class="properties-grid-modern" aria-label="Property listings">
                 {% for property in properties %}
-                <div class="property-item">
-                    <img src="{{ property.image|default:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&q=80' }}" alt="{{ property.title }}">
-                    <div class="property-info">
-                        <h3 class="property-title">{{ property.title }}</h3>
-                        <p class="property-location">{{ property.location }}</p>
-                        <div style="display: flex; gap: 1rem; margin: 0.5rem 0; font-size: 0.875rem; color: #6B7280;">
-                            {% if property.bedrooms %}<span>🛏️ {{ property.bedrooms }} Beds</span>{% endif %}
-                            {% if property.bathrooms %}<span>🚿 {{ property.bathrooms }} Baths</span>{% endif %}
-                            {% if property.area %}<span>📐 {{ property.area }} sq ft</span>{% endif %}
+                <article class="property-item-modern">
+                    <div class="property-item-media">
+                        {% with image_url=property.get_display_image_url %}
+                        <img src="{{ image_url|default:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&q=80' }}" alt="{{ property.title }}">
+                        {% endwith %}
+                        <span class="property-item-badge">{{ property.get_price_type_display }}</span>
+                    </div>
+                    <div class="property-item-body">
+                        <span class="property-item-location">{{ property.location }}</span>
+                        <h2 class="property-item-title">
+                            <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
+                        </h2>
+                        <div class="property-item-price">{{ property.formatted_price }}</div>
+                        <div class="property-item-price-words">{{ property.price_in_words_with_currency }}</div>
+                        <div class="property-item-meta">
+                            {% if property.bedrooms %}<span>Bedrooms: {{ property.bedrooms }}</span>{% endif %}
+                            {% if property.bathrooms %}<span>Bathrooms: {{ property.bathrooms }}</span>{% endif %}
+                            {% if property.area %}<span>Area: {{ property.area|floatformat:0 }} sqft</span>{% endif %}
+                            {% if property.property_type %}<span>Type: {{ property.property_type.name }}</span>{% endif %}
                         </div>
-                        <div class="property-price">₹{{ property.price|floatformat:0 }}</div>
-                        <div style="margin-top: 1rem;">
-                            <span style="display: inline-block; padding: 0.25rem 0.75rem; background: #F5F5F5; color: #0F172A; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                                {{ property.get_price_type_display }}
-                            </span>
-                            <span style="display: inline-block; padding: 0.25rem 0.75rem; background: {% if property.status == 'available' %}#10B981{% else %}#6B7280{% endif %}; color: white; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem;">
-                                {{ property.get_status_display }}
-                            </span>
+                        <div class="property-item-chips">
+                            <span class="property-chip">{{ property.get_price_type_display }}</span>
+                            <span class="property-chip {% if property.status == 'available' %}is-available{% endif %}">{{ property.get_status_display }}</span>
                         </div>
                     </div>
-                </div>
+                </article>
                 {% endfor %}
-            </div>
+            </section>
 
-            <!-- Pagination -->
             {% if properties.has_other_pages %}
-            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 3rem;">
+            <nav class="properties-pagination" aria-label="Properties pagination">
                 {% if properties.has_previous %}
-                <a href="?page={{ properties.previous_page_number }}" style="padding: 0.75rem 1.5rem; border: 1px solid #0F172A; color: #0F172A; text-decoration: none; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em;">Previous</a>
+                <a href="?page={{ properties.previous_page_number }}">Previous</a>
                 {% endif %}
-                
-                <span style="padding: 0.75rem 1.5rem; background: #0F172A; color: white; font-size: 0.875rem;">
-                    Page {{ properties.number }} of {{ properties.paginator.num_pages }}
-                </span>
-                
+                <span class="is-current">Page {{ properties.number }} of {{ properties.paginator.num_pages }}</span>
                 {% if properties.has_next %}
-                <a href="?page={{ properties.next_page_number }}" style="padding: 0.75rem 1.5rem; border: 1px solid #0F172A; color: #0F172A; text-decoration: none; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em;">Next</a>
+                <a href="?page={{ properties.next_page_number }}">Next</a>
                 {% endif %}
-            </div>
+            </nav>
             {% endif %}
             {% else %}
-            <div style="text-align: center; padding: 4rem 0;">
-                <p style="font-size: 1.125rem; color: #6B7280;">No properties available at the moment.</p>
-                <p style="margin-top: 1rem;"><a href="{% url 'contact' %}" style="color: #B89A4A; text-decoration: none;">Contact us</a> for upcoming properties.</p>
+            <div class="properties-empty">
+                <p>No properties are available right now. Contact us for curated off-market opportunities or upcoming listings.</p>
             </div>
             {% endif %}
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Looking for Something Specific?</h2>
-            <p class="cta-description">
-                Can't find what you're looking for? Contact us and we'll help you find your perfect property.
-            </p>
-            <a href="{% url 'contact' %}" class="btn-primary">Contact Us</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <div>&copy; 2026 Propertism Realty Advisors LLP. All rights reserved.</div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    </div>
+</section>
+{% endblock %}

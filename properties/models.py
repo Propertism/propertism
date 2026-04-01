@@ -1,5 +1,101 @@
-﻿from django.db import models
+from decimal import Decimal
+
 from django.contrib.auth.models import User
+from django.db import models
+
+
+_ONES = {
+    0: "Zero",
+    1: "One",
+    2: "Two",
+    3: "Three",
+    4: "Four",
+    5: "Five",
+    6: "Six",
+    7: "Seven",
+    8: "Eight",
+    9: "Nine",
+    10: "Ten",
+    11: "Eleven",
+    12: "Twelve",
+    13: "Thirteen",
+    14: "Fourteen",
+    15: "Fifteen",
+    16: "Sixteen",
+    17: "Seventeen",
+    18: "Eighteen",
+    19: "Nineteen",
+}
+
+_TENS = {
+    20: "Twenty",
+    30: "Thirty",
+    40: "Forty",
+    50: "Fifty",
+    60: "Sixty",
+    70: "Seventy",
+    80: "Eighty",
+    90: "Ninety",
+}
+
+_INDIAN_SCALES = (
+    (10**7, "Crore"),
+    (10**5, "Lakh"),
+    (10**3, "Thousand"),
+)
+
+_INTERNATIONAL_SCALES = (
+    (10**9, "Billion"),
+    (10**6, "Million"),
+    (10**3, "Thousand"),
+)
+
+
+def _format_indian_number(value):
+    number = f"{value:.2f}"
+    integer_part, fractional_part = number.split(".")
+    if len(integer_part) <= 3:
+        return f"{integer_part}.{fractional_part}"
+
+    last_three = integer_part[-3:]
+    remaining = integer_part[:-3]
+    chunks = []
+
+    while remaining:
+        chunks.append(remaining[-2:])
+        remaining = remaining[:-2]
+
+    indian_integer = ",".join(reversed(chunks)) + f",{last_three}"
+    return f"{indian_integer}.{fractional_part}"
+
+
+def _number_to_words(number, scales):
+    number = int(number)
+
+    if number < 20:
+        return _ONES[number]
+    if number < 100:
+        tens_value = (number // 10) * 10
+        remainder = number % 10
+        if remainder:
+            return f"{_TENS[tens_value]} {_number_to_words(remainder, scales)}"
+        return _TENS[tens_value]
+    if number < 1000:
+        remainder = number % 100
+        if remainder:
+            return f"{_ONES[number // 100]} Hundred {_number_to_words(remainder, scales)}"
+        return f"{_ONES[number // 100]} Hundred"
+
+    for scale_value, scale_name in scales:
+        if number >= scale_value:
+            major_value, remainder = divmod(number, scale_value)
+            major_words = _number_to_words(major_value, scales)
+            if remainder:
+                return f"{major_words} {scale_name} {_number_to_words(remainder, scales)}"
+            return f"{major_words} {scale_name}"
+
+    return str(number)
+
 
 class PropertyType(models.Model):
     name = models.CharField(max_length=100)
@@ -7,37 +103,44 @@ class PropertyType(models.Model):
     description = models.TextField(blank=True)
     icon = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name_plural = "Property Types"
 
+
 class Property(models.Model):
     STATUS_CHOICES = [
-        ('available', 'Available'),
-        ('sold', 'Sold'),
-        ('pending', 'Pending'),
-        ('construction', 'Under Construction'),
+        ("available", "Available"),
+        ("sold", "Sold"),
+        ("pending", "Pending"),
+        ("construction", "Under Construction"),
     ]
-    
+
     PRICE_TYPE_CHOICES = [
-        ('sale', 'For Sale'),
-        ('rent', 'For Rent'),
+        ("sale", "For Sale"),
+        ("rent", "For Rent"),
     ]
-    
+
+    CURRENCY_CHOICES = [
+        ("INR", "Indian Rupee"),
+        ("USD", "US Dollar"),
+    ]
+
     title = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=15, decimal_places=2)
-    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, default='sale')
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default="INR")
+    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, default="sale")
     area = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     bedrooms = models.IntegerField(default=0)
     bathrooms = models.IntegerField(default=0)
     location = models.CharField(max_length=255)
     image = models.URLField(max_length=500, blank=True)
     property_type = models.ForeignKey(PropertyType, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='available')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="available")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -57,133 +160,178 @@ class Property(models.Model):
                 continue
 
         return self.image or ""
-    
+
+    @property
+    def currency_symbol(self):
+        return "₹" if self.currency == "INR" else "$"
+
+    @property
+    def currency_unit_label(self):
+        return "Indian Rupees" if self.currency == "INR" else "US Dollars"
+
+    @property
+    def currency_minor_unit_label(self):
+        return "Paise" if self.currency == "INR" else "Cents"
+
+    @property
+    def formatted_price_value(self):
+        normalized_price = Decimal(self.price).quantize(Decimal("0.01"))
+        if self.currency == "INR":
+            return _format_indian_number(normalized_price)
+        return f"{normalized_price:,.2f}"
+
+    @property
+    def formatted_price(self):
+        return f"{self.currency_symbol}{self.formatted_price_value}"
+
+    @property
+    def price_in_words(self):
+        normalized_price = Decimal(self.price).quantize(Decimal("0.01"))
+        whole_value = int(normalized_price)
+        fractional_value = int((normalized_price - whole_value) * 100)
+        scales = _INDIAN_SCALES if self.currency == "INR" else _INTERNATIONAL_SCALES
+
+        words = _number_to_words(whole_value, scales)
+        if fractional_value:
+            fractional_words = _number_to_words(fractional_value, _INTERNATIONAL_SCALES)
+            return f"{words} and {fractional_words} {self.currency_minor_unit_label}"
+        return words
+
+    @property
+    def price_in_words_with_currency(self):
+        return f"{self.price_in_words} {self.currency_unit_label}"
+
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name_plural = "Properties"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
+
 
 class PropertyPhoto(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='photos')
-    image = models.ImageField(upload_to='properties/')
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="photos")
+    image = models.ImageField(upload_to="properties/")
     caption = models.CharField(max_length=255, blank=True)
     is_primary = models.BooleanField(default=False)
     sort_order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"{self.property.title} - Photo {self.id}"
-    
+
     class Meta:
         verbose_name_plural = "Property Photos"
-        ordering = ['sort_order']
+        ordering = ["sort_order"]
+
 
 class Inquiry(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('contacted', 'Contacted'),
-        ('closed', 'Closed'),
+        ("pending", "Pending"),
+        ("contacted", "Contacted"),
+        ("closed", "Closed"),
     ]
-    
+
     property = models.ForeignKey(Property, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     message = models.TextField(blank=True)
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"Inquiry from {self.name} - {self.property.title if self.property else 'General'}"
-    
+
     class Meta:
         verbose_name_plural = "Inquiries"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
+
 
 class MaintenanceRequest(models.Model):
     PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('urgent', 'Urgent'),
+        ("low", "Low"),
+        ("medium", "Medium"),
+        ("high", "High"),
+        ("urgent", "Urgent"),
     ]
-    
+
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ("pending", "Pending"),
+        ("in_progress", "In Progress"),
+        ("completed", "Completed"),
+        ("cancelled", "Cancelled"),
     ]
-    
+
     property = models.ForeignKey(Property, on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    priority = models.CharField(max_length=50, choices=PRIORITY_CHOICES, default='medium')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
+    priority = models.CharField(max_length=50, choices=PRIORITY_CHOICES, default="medium")
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"{self.title} - {self.property.title if self.property else 'General'}"
-    
+
     class Meta:
         verbose_name_plural = "Maintenance Requests"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
+
 
 class SupportTicket(models.Model):
     PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('urgent', 'Urgent'),
+        ("low", "Low"),
+        ("medium", "Medium"),
+        ("high", "High"),
+        ("urgent", "Urgent"),
     ]
-    
+
     STATUS_CHOICES = [
-        ('open', 'Open'),
-        ('in_progress', 'In Progress'),
-        ('resolved', 'Resolved'),
-        ('closed', 'Closed'),
+        ("open", "Open"),
+        ("in_progress", "In Progress"),
+        ("resolved", "Resolved"),
+        ("closed", "Closed"),
     ]
-    
+
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     subject = models.CharField(max_length=255)
     description = models.TextField()
-    priority = models.CharField(max_length=50, choices=PRIORITY_CHOICES, default='medium')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='open')
+    priority = models.CharField(max_length=50, choices=PRIORITY_CHOICES, default="medium")
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="open")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"Ticket #{self.id} - {self.subject}"
-    
+
     class Meta:
         verbose_name_plural = "Support Tickets"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
+
 
 class ContactMessage(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('read', 'Read'),
-        ('replied', 'Replied'),
+        ("pending", "Pending"),
+        ("read", "Read"),
+        ("replied", "Replied"),
     ]
-    
+
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True)
     subject = models.CharField(max_length=255, blank=True)
     message = models.TextField()
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         if self.subject:
             return f"Message from {self.name} - {self.subject}"
         return f"Message from {self.name}"
-    
+
     class Meta:
         verbose_name_plural = "Contact Messages"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]

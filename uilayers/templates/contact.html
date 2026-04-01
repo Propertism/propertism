@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -360,7 +361,7 @@
     <nav class="site-nav">
         <div class="nav-content">
             <a href="{% url 'home' %}" class="logo-link">
-                <img src="/static/images/propertism-logo111.png" alt="Propertism" class="logo-img">
+                <img src="{% static 'images/propertism-logo-tm.png' %}" alt="Propertism" class="logo-img">
             </a>
             <div class="nav-links">
                 <a href="{% url 'home' %}">HOME</a>

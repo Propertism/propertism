@@ -3,8 +3,8 @@
 <header class="site-header">
     <div class="container">
         <div class="header-content">
-            <a href="{{ home_section_links.home }}" class="logo">
-                <img src="{% static 'images/propertism-logo111.png' %}" alt="Propertism Realty Advisors" class="logo-image logo-image-wordmark">
+            <a href="{{ home_section_links.home }}" class="logo logo-has-uploaded-image">
+                <img src="{% static 'images/propertism-logo-white-tm.png' %}" alt="{{ company.company_name|default:'Propertism Realty Advisors' }}" class="logo-image logo-image-wordmark">
             </a>
             <nav class="main-nav">
                 <a href="{{ home_section_links.home }}">Home</a>

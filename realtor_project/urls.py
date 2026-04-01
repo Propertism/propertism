@@ -32,7 +32,7 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
 ]
 
-# Static and media files (only in DEBUG mode)
-if settings.DEBUG:
+# Static and media files for local development.
+if settings.DEBUG or getattr(settings, "IS_LOCAL_DEVELOPMENT", False):
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -13,6 +13,7 @@ except ImportError:
 
 # Environment detection
 DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
+IS_LOCAL_DEVELOPMENT = DJANGO_ENV == 'development'
 
 
 def _get_csv_env(*names, default=None):
@@ -49,7 +50,7 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 # Allowed hosts
 ALLOWED_HOSTS = _get_csv_env('DJANGO_ALLOWED_HOSTS', 'ALLOWED_HOSTS', default=['*'])
 # Add localhost and 127.0.0.1 for local development
-if DEBUG:
+if DEBUG or IS_LOCAL_DEVELOPMENT:
     ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
 
 CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'www.propertism.in')

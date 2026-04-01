@@ -26,11 +26,15 @@ Historical notes may still mention `realtor-web/` because that was the real app 
 
 Run from the repository root:
 
-```bash
-python manage.py check
-python manage.py migrate
-python manage.py runserver
+```powershell
+.\scripts\django.cmd check
+.\scripts\django.cmd migrate
+.\scripts\django.cmd runserver
 ```
+
+This wrapper is the preferred local entry point on this machine.
+It pins the known-good interpreter at `C:\Python\python.exe` and prepends `C:\Python\django` to `PATH` so Django starts without rediscovering the runtime each session.
+The matching `scripts/django.ps1` is still available, but `scripts/django.cmd` avoids PowerShell execution-policy friction.
 
 Useful local URLs:
 

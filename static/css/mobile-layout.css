@@ -405,6 +405,17 @@ a:focus:not(:focus-visible) {
         height: 32px !important;
         width: auto !important;
     }
+
+    .logo-has-uploaded-image {
+        padding: 0 !important;
+    }
+
+    .logo-has-uploaded-image .logo-image,
+    .logo-has-uploaded-image .logo-image-wordmark {
+        max-width: min(56vw, 200px) !important;
+        max-height: 34px !important;
+        height: 34px !important;
+    }
     
     .header-icon-btn,
     .header-icon-btn-map,

@@ -265,7 +265,11 @@
                     </div>
                 </div>
                 <div class="property-details-hybrid">
-                    <div class="property-price-hybrid">&#8377;{{ property.price|floatformat:0 }}</div>
+                    <h3 class="property-title-hybrid">
+                        <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
+                    </h3>
+                    <div class="property-price-hybrid">{{ property.formatted_price }}</div>
+                    <div class="property-price-words-hybrid">{{ property.price_in_words_with_currency }}</div>
                     <div class="property-address">{{ property.location }}, Chennai</div>
                     <div class="property-features">
                         <div class="property-feature">

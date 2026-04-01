@@ -664,22 +664,24 @@
 
 .property-card-hybrid {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
+    border: 1px solid #dbe3ea;
     cursor: pointer;
 }
 
 .property-card-hybrid:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transform: none;
+    box-shadow: none;
 }
 
 .property-image-hybrid {
     position: relative;
     height: 240px;
     overflow: hidden;
+    border-bottom: 1px solid #dbe3ea;
 }
 
 .property-image-hybrid img {
@@ -690,7 +692,7 @@
 }
 
 .property-card-hybrid:hover .property-image-hybrid img {
-    transform: scale(1.05);
+    transform: none;
 }
 
 .property-badge-hybrid {
@@ -737,6 +739,13 @@
     font-size: 1.75rem;
     font-weight: 600;
     color: var(--brand-navy);
+    margin-bottom: var(--space-3);
+}
+
+.property-price-words-hybrid {
+    color: var(--gray-600);
+    font-size: 0.8125rem;
+    line-height: 1.5;
     margin-bottom: var(--space-3);
 }
 

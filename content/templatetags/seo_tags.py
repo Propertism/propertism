@@ -144,17 +144,15 @@ def property_schema(property_obj, request=None):
         "offers": {
             "@type": "Offer",
             "price": str(property_obj.price),
-            "priceCurrency": "INR",
+            "priceCurrency": getattr(property_obj, "currency", "INR"),
             "availability": "https://schema.org/InStock",
             "url": f"{site_url}{property_obj.get_absolute_url()}" if hasattr(property_obj, 'get_absolute_url') else site_url
         }
     }
     
-    # Remove None values
+    # Remove None values from optional schema fields.
     schema = {k: v for k, v in schema.items() if v is not None}
-    if schema.get('floorSize') is None:
-        del schema['floorSize']
-    
+
     return {'schema': json.dumps(schema, indent=2)}
 
 
