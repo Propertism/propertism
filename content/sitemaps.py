@@ -44,7 +44,7 @@ class BlogSitemap(Sitemap):
         return BlogPost.objects.filter(is_published=True)
     
     def lastmod(self, obj):
-        return obj.updated_at
+        return obj.updated_date
     
     def location(self, obj):
         return f'/blog/{obj.slug}/'

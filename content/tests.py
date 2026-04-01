@@ -1,12 +1,15 @@
+import shutil
+import tempfile
 from unittest.mock import patch
 
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.utils import OperationalError
 from django.test import TestCase
+from django.test.utils import override_settings
 from django.urls import reverse
 
-from .models import CompanyInfo, CustomerReview, CustomerReviewSection, HeroBackgroundImage
+from .models import BlogPost, CompanyInfo, CustomerReview, CustomerReviewSection, HeroBackgroundImage
 
 
 TEST_GIF = (
@@ -21,6 +24,19 @@ def make_test_image(name):
 
 
 class HeroBackgroundImageTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls._temp_media_root = tempfile.mkdtemp(prefix="propertism-test-media-")
+        cls._media_override = override_settings(MEDIA_ROOT=cls._temp_media_root)
+        cls._media_override.enable()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls._media_override.disable()
+        shutil.rmtree(cls._temp_media_root, ignore_errors=True)
+
     def setUp(self):
         self.company = CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
 
@@ -41,6 +57,19 @@ class HeroBackgroundImageTests(TestCase):
 
 
 class HomePageContentTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls._temp_media_root = tempfile.mkdtemp(prefix="propertism-test-media-")
+        cls._media_override = override_settings(MEDIA_ROOT=cls._temp_media_root)
+        cls._media_override.enable()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls._media_override.disable()
+        shutil.rmtree(cls._temp_media_root, ignore_errors=True)
+
     def setUp(self):
         self.company = CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
         self.review_section = CustomerReviewSection.objects.create(
@@ -94,3 +123,19 @@ class HomePageContentTests(TestCase):
         response = self.client.get(reverse("team_member_detail", args=["missing-slug"]), follow=True)
 
         self.assertEqual(response.status_code, 404)
+
+
+class SitemapTests(TestCase):
+    def test_sitemap_renders_published_blog_posts_without_server_error(self):
+        BlogPost.objects.create(
+            title="Chennai Property Update",
+            slug="chennai-property-update",
+            excerpt="Short summary",
+            content="Detailed content",
+            is_published=True,
+        )
+
+        response = self.client.get(reverse("django.contrib.sitemaps.views.sitemap"), follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "/blog/chennai-property-update/")
