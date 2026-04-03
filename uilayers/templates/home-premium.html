@@ -184,15 +184,48 @@
     </div>
 </section>
 
+<section id="services-section" class="market-insights">
+    <div class="container">
+        <div class="section-intro-center">
+            <h2>{{ company.services_section_title }}</h2>
+            <p>{{ company.services_section_description }}</p>
+        </div>
+
+        <div class="insights-grid">
+            {% for service in service_highlights %}
+            <div class="insight-card service-depth-card">
+                <div class="insight-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z"/>
+                        <path d="M9 21V12h6v9"/>
+                    </svg>
+                </div>
+                <h3 class="insight-title">{{ service.title }}</h3>
+                <p class="insight-description">{{ service.short_description|truncatewords:18 }}</p>
+                <a href="{{ home_section_links.contact }}" class="service-depth-link">{{ company.services_card_cta_text }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
 <section id="about-section" class="credibility-section">
     <div class="container">
         <div class="credibility-grid">
             <div class="credibility-story-card">
                 <span class="section-kicker">{{ company.about_section_eyebrow }}</span>
                 <h2 class="credibility-title">{{ company.about_section_title }}</h2>
-                <p class="credibility-copy">
-                    {% if company.about_description %}{{ company.about_description|truncatewords:34 }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team to coordinate the work in Chennai.{% endif %}
-                </p>
+                <div class="credibility-copy-stack">
+                    {% if company.about_mission %}
+                    <div class="credibility-mission-block">
+                        <span class="credibility-mission-label">Mission</span>
+                        <p class="credibility-copy credibility-mission-copy">{{ company.about_mission|linebreaksbr }}</p>
+                    </div>
+                    {% endif %}
+                    <p class="credibility-copy">
+                        {% if company.about_description %}{{ company.about_description|linebreaksbr }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team to coordinate the work in Chennai.{% endif %}
+                    </p>
+                </div>
                 <div class="credibility-actions">
                     <a href="{{ home_section_links.management }}" class="btn-view-all">{{ company.about_primary_cta_text }}</a>
                     <a href="{{ home_section_links.contact }}" class="credibility-inline-link">{{ company.about_secondary_cta_text }}</a>
@@ -239,97 +272,6 @@
     </div>
 </section>
 
-<section id="properties-section" class="featured-properties-section">
-    <div class="container">
-        <div class="featured-properties-intro">
-            <h2 class="featured-properties-title">{{ company.properties_section_title }}</h2>
-            <p class="featured-properties-subtitle">{{ company.properties_section_subtitle }}</p>
-        </div>
-
-        <div class="property-grid-hybrid">
-            {% for property in featured_properties %}
-            <div class="property-card-hybrid">
-                <div class="property-image-hybrid">
-                    {% with image_url=property.get_display_image_url %}
-                        {% if image_url %}
-                        <img src="{{ image_url }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
-                        {% else %}
-                        <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
-                        {% endif %}
-                    {% endwith %}
-                    <div class="property-badge-hybrid">Featured</div>
-                    <div class="property-save">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="property-details-hybrid">
-                    <h3 class="property-title-hybrid">
-                        <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
-                    </h3>
-                    <div class="property-price-hybrid">{{ property.formatted_price }}</div>
-                    <div class="property-price-words-hybrid">{{ property.price_in_words_with_currency }}</div>
-                    <div class="property-address">{{ property.location }}, Chennai</div>
-                    <div class="property-features">
-                        <div class="property-feature">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                            </svg>
-                            {{ property.bedrooms }} BHK
-                        </div>
-                        <div class="property-feature">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                            </svg>
-                            {{ property.area }} sq ft
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="empty-section-state">
-                <p>No properties available at the moment. Check back soon.</p>
-            </div>
-            {% endfor %}
-        </div>
-
-        <div class="featured-properties-cta">
-            <a href="{{ home_section_links.contact }}" class="btn-view-all">
-                {{ company.properties_section_cta_text }}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section id="services-section" class="market-insights">
-    <div class="container">
-        <div class="section-intro-center">
-            <h2>{{ company.services_section_title }}</h2>
-            <p>{{ company.services_section_description }}</p>
-        </div>
-
-        <div class="insights-grid">
-            {% for service in service_highlights %}
-            <div class="insight-card service-depth-card">
-                <div class="insight-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z"/>
-                        <path d="M9 21V12h6v9"/>
-                    </svg>
-                </div>
-                <h3 class="insight-title">{{ service.title }}</h3>
-                <p class="insight-description">{{ service.short_description|truncatewords:18 }}</p>
-                <a href="{{ home_section_links.contact }}" class="service-depth-link">{{ company.services_card_cta_text }}</a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
 <section id="management-section" class="management-preview-section">
     <div class="container">
         <div class="management-preview-intro">
@@ -358,33 +300,6 @@
                 <div class="management-preview-meta"><span>Management</span></div>
                 <h3>Propertism Advisory Team</h3>
                 <p>Experienced coordination for NRI ownership, rentals, maintenance, and transaction support in Chennai.</p>
-            </article>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="blog-section" class="journal-preview-section">
-    <div class="container">
-        <div class="journal-preview-intro">
-            <span class="section-kicker">{{ company.blog_section_eyebrow }}</span>
-            <h2>{{ company.blog_section_title }}</h2>
-            <p>{{ company.blog_section_description }}</p>
-        </div>
-        <div class="journal-preview-grid">
-            {% for post in recent_posts %}
-            <article class="journal-preview-card">
-                <span class="journal-preview-category">{{ post.get_category_display }}</span>
-                <h3>{{ post.title }}</h3>
-                <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{ post.content|truncatewords:24 }}{% endif %}</p>
-                <small>{{ post.published_date|date:"M d, Y" }}</small>
-            </article>
-            {% empty %}
-            <article class="journal-preview-card">
-                <span class="journal-preview-category">Updates</span>
-                <h3>Fresh NRI property insights are being prepared.</h3>
-                <p>Expect concise guidance on property reporting, maintenance discipline, and ownership decisions.</p>
-                <small>Coming soon</small>
             </article>
             {% endfor %}
         </div>
@@ -456,50 +371,98 @@
 </section>
 {% endif %}
 
-{% for section in custom_card_sections %}
-{% if section.active_cards %}
-<section id="{{ section.slug }}-section" class="custom-cards-section">
+<section id="properties-section" class="featured-properties-section">
     <div class="container">
-        <div class="custom-cards-intro">
-            {% if section.eyebrow %}
-            <span class="section-kicker">{{ section.eyebrow }}</span>
-            {% endif %}
-            <h2>{{ section.title }}</h2>
-            {% if section.description %}
-            <p>{{ section.description }}</p>
-            {% endif %}
+        <div class="featured-properties-intro">
+            <h2 class="featured-properties-title">{{ company.properties_section_title }}</h2>
+            <p class="featured-properties-subtitle">{{ company.properties_section_subtitle }}</p>
         </div>
-        <div class="custom-cards-grid">
-            {% for card in section.active_cards %}
-            <article class="custom-card-panel">
-                {% if card.eyebrow %}
-                <span class="custom-card-eyebrow">{{ card.eyebrow }}</span>
-                {% endif %}
-                <h3>{{ card.title }}</h3>
-                <p>{{ card.description }}</p>
-                {% if card.footer %}
-                <small>{{ card.footer }}</small>
-                {% endif %}
-                {% if card.cta_text and card.cta_url %}
-                <a href="{{ card.cta_url }}" class="custom-card-link">{{ card.cta_text }}</a>
-                {% endif %}
+
+        <div class="property-grid-hybrid">
+            {% for property in featured_properties %}
+            <div class="property-card-hybrid">
+                <div class="property-image-hybrid">
+                    {% with image_url=property.get_display_image_url %}
+                        {% if image_url %}
+                        <img src="{{ image_url }}" alt="{{ property.title }}" onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+                        {% else %}
+                        <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
+                        {% endif %}
+                    {% endwith %}
+                    <div class="property-badge-hybrid">Featured</div>
+                    <div class="property-save">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="property-details-hybrid">
+                    <h3 class="property-title-hybrid">
+                        <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
+                    </h3>
+                    <div class="property-price-hybrid">{{ property.formatted_price }}</div>
+                    <div class="property-price-words-hybrid">{{ property.price_in_words_with_currency }}</div>
+                    <div class="property-address">{{ property.location }}, Chennai</div>
+                    <div class="property-features">
+                        <div class="property-feature">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            </svg>
+                            {{ property.bedrooms }} BHK
+                        </div>
+                        <div class="property-feature">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            </svg>
+                            {{ property.area }} sq ft
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-section-state">
+                <p>No properties available at the moment. Check back soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="featured-properties-cta">
+            <a href="{{ home_section_links.contact }}" class="btn-view-all">
+                {{ company.properties_section_cta_text }}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="blog-section" class="journal-preview-section">
+    <div class="container">
+        <div class="journal-preview-intro">
+            <span class="section-kicker">{{ company.blog_section_eyebrow }}</span>
+            <h2>{{ company.blog_section_title }}</h2>
+            <p>{{ company.blog_section_description }}</p>
+        </div>
+        <div class="journal-preview-grid">
+            {% for post in recent_posts %}
+            <article class="journal-preview-card">
+                <span class="journal-preview-category">{{ post.get_category_display }}</span>
+                <h3>{{ post.title }}</h3>
+                <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{ post.content|truncatewords:24 }}{% endif %}</p>
+                <small>{{ post.published_date|date:"M d, Y" }}</small>
+            </article>
+            {% empty %}
+            <article class="journal-preview-card">
+                <span class="journal-preview-category">Updates</span>
+                <h3>Fresh NRI property insights are being prepared.</h3>
+                <p>Expect concise guidance on property reporting, maintenance discipline, and ownership decisions.</p>
+                <small>Coming soon</small>
             </article>
             {% endfor %}
         </div>
-        {% if section.badge_title or section.badge_text %}
-        <div class="service-depth-tags">
-            {% if section.badge_title %}
-            <span class="service-depth-tag is-label">{{ section.badge_title }}</span>
-            {% endif %}
-            {% if section.badge_text %}
-            <span class="service-depth-tag">{{ section.badge_text }}</span>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
 </section>
-{% endif %}
-{% endfor %}
 
 <section id="contact-section" class="nri-contact-section">
     <div class="container">
@@ -560,6 +523,51 @@
         </div>
     </div>
 </section>
+
+{% for section in custom_card_sections %}
+{% if section.active_cards %}
+<section id="{{ section.slug }}-section" class="custom-cards-section">
+    <div class="container">
+        <div class="custom-cards-intro">
+            {% if section.eyebrow %}
+            <span class="section-kicker">{{ section.eyebrow }}</span>
+            {% endif %}
+            <h2>{{ section.title }}</h2>
+            {% if section.description %}
+            <p>{{ section.description }}</p>
+            {% endif %}
+        </div>
+        <div class="custom-cards-grid">
+            {% for card in section.active_cards %}
+            <article class="custom-card-panel">
+                {% if card.eyebrow %}
+                <span class="custom-card-eyebrow">{{ card.eyebrow }}</span>
+                {% endif %}
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                {% if card.footer %}
+                <small>{{ card.footer }}</small>
+                {% endif %}
+                {% if card.cta_text and card.cta_url %}
+                <a href="{{ card.cta_url }}" class="custom-card-link">{{ card.cta_text }}</a>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        {% if section.badge_title or section.badge_text %}
+        <div class="service-depth-tags">
+            {% if section.badge_title %}
+            <span class="service-depth-tag is-label">{{ section.badge_title }}</span>
+            {% endif %}
+            {% if section.badge_text %}
+            <span class="service-depth-tag">{{ section.badge_text }}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endfor %}
 {% endblock %}
 
 {% block extra_js %}
