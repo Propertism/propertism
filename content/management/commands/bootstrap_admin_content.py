@@ -125,6 +125,7 @@ class Command(BaseCommand):
 
         stale_values = {
             "hero_title": {"NRI Property Management Services In India, Chennai"},
+            "hero_image": {"hero/propertism-hero1-bg.jpg.jpg"},
         }
 
         for field, value in curated.items():
@@ -134,8 +135,8 @@ class Command(BaseCommand):
 
         if force or not company.logo:
             company.logo = "company/propertism.png"
-        if force or not company.hero_image:
-            company.hero_image = "hero/propertism-hero1-bg.jpg.jpg"
+        if force or not company.hero_image or company.hero_image.name in stale_values["hero_image"]:
+            company.hero_image = "hero/propertism-hero-bg.jpg"
 
         company.save()
         self.stdout.write("Ensured company information.")
