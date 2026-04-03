@@ -1,6 +1,7 @@
 ﻿# Django settings for realtor_project
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,6 +37,53 @@ def _get_https_origins_from_hosts(hosts):
             normalized = f"https://{normalized}"
         origins.append(normalized)
     return list(dict.fromkeys(origins))
+
+
+def _get_env_value(*names):
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            return value
+    return None
+
+
+def _database_config_from_url(database_url):
+    parsed = urlparse(database_url)
+    engine_map = {
+        'postgres': 'django.db.backends.postgresql',
+        'postgresql': 'django.db.backends.postgresql',
+        'pgsql': 'django.db.backends.postgresql',
+    }
+    engine = engine_map.get(parsed.scheme)
+    if not engine:
+        return None
+    return {
+        'ENGINE': engine,
+        'NAME': parsed.path.lstrip('/'),
+        'USER': parsed.username or '',
+        'PASSWORD': parsed.password or '',
+        'HOST': parsed.hostname or '',
+        'PORT': str(parsed.port or '5432'),
+    }
+
+
+def _get_local_postgres_config():
+    database_url = _get_env_value('DATABASE_URL', 'LOCAL_DATABASE_URL')
+    if database_url:
+        return _database_config_from_url(database_url)
+
+    name = _get_env_value('POSTGRES_DB', 'LOCAL_POSTGRES_DB')
+    if not name:
+        return None
+
+    return {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': name,
+        'USER': _get_env_value('POSTGRES_USER', 'LOCAL_POSTGRES_USER') or '',
+        'PASSWORD': _get_env_value('POSTGRES_PASSWORD', 'LOCAL_POSTGRES_PASSWORD') or '',
+        'HOST': _get_env_value('POSTGRES_HOST', 'LOCAL_POSTGRES_HOST') or '127.0.0.1',
+        'PORT': _get_env_value('POSTGRES_PORT', 'LOCAL_POSTGRES_PORT') or '5432',
+    }
 
 # SECURITY WARNING: Keep the secret key used in production secret!
 SECRET_KEY = (
@@ -120,8 +168,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'realtor_project.wsgi.application'
 
-# Database - SQLite for development, PostgreSQL for production
-# Elastic Beanstalk RDS configuration
+# Database selection
+# 1. Production RDS configuration on Elastic Beanstalk
+# 2. Optional local PostgreSQL via .env
+# 3. SQLite fallback for local development
+LOCAL_POSTGRES_DATABASE = _get_local_postgres_config()
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
@@ -133,8 +184,12 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+elif LOCAL_POSTGRES_DATABASE:
+    DATABASES = {
+        'default': LOCAL_POSTGRES_DATABASE,
+    }
 else:
-    # Use persistent storage for SQLite on EB
+    # SQLite remains the default local fallback when no PostgreSQL env vars are set
     DB_PATH = os.environ.get('DB_PATH', str(BASE_DIR / 'db.sqlite3'))
     DATABASES = {
         'default': {

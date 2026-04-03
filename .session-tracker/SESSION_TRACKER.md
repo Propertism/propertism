@@ -1209,12 +1209,141 @@ python init_data.py
 
 ---
 
+## SESSION 16: April 3, 2026 - Production RCA, PostgreSQL Cutover, Static Recovery, And Local PostgreSQL Handoff
+**Status:** IN PROGRESS LOCALLY, PRODUCTION STABILIZED
+**Date:** April 3, 2026
+**Primary Goal:** Diagnose why production appeared to revert to an older stage, stabilize live infrastructure, move production off SQLite-on-instance storage, repair the broken static deploy, and prepare local development for optional PostgreSQL.
+
+**What Happened In Production:**
+1. The live site appeared to roll back to an older design/state and owners reported missing/older-looking content.
+2. Investigation confirmed this was not a Git/code rollback.
+3. Root cause was Elastic Beanstalk instance replacement combined with SQLite stored on instance-local storage at `/var/app/data/db.sqlite3`.
+4. When the instance was replaced, production came up with a fresh empty SQLite database, and the latest code rendered fallback/default content that looked like an older stage.
+
+**RCA / Documentation Work Completed:**
+1. Wrote the detailed incident report:
+   - `RCA-03042026-prod-mismatch.md`
+2. Confirmed and documented:
+   - EB instance replacement behavior
+   - empty-db symptom path
+   - fallback rendering behavior from admin/content models
+   - lack of true persistent production storage in the old SQLite setup
+
+**Production Recovery And Hardening Completed:**
+1. Added recovery logic so production can repopulate curated admin content if the database comes up empty after deploy:
+   - `.platform/hooks/postdeploy/02_bootstrap_if_db_looks_empty.sh`
+   - `.platform/hooks/postdeploy/03_repair_stale_customer_reviews.sh`
+2. Corrected bootstrap content issues in:
+   - `content/management/commands/bootstrap_admin_content.py`
+3. Migrated production from SQLite to PostgreSQL on RDS:
+   - RDS instance: `propertism-prod-pg`
+   - Elastic Beanstalk environment now reads PostgreSQL connection values instead of relying on instance-local SQLite
+4. Moved the RDS password into AWS Secrets Manager:
+   - secret: `propertism/prod/rds-password`
+5. Updated EB to read the database password from the `aws:elasticbeanstalk:application:environmentsecrets` namespace.
+6. Rotated the PostgreSQL password after the secret-backed configuration was in place.
+7. Tightened database exposure:
+   - RDS is private-only
+   - `PubliclyAccessible=false`
+   - DB security group only allows `5432` from the EB application security group
+
+**Static / Deploy Repair Completed:**
+1. A later production issue showed the site loading without CSS/JS styling.
+2. Root cause was deploy-time static collection targeting a staging path while nginx served from the live current path.
+3. Added postdeploy static rebuild hook:
+   - `.platform/hooks/postdeploy/00_collectstatic_current.sh`
+4. Added a tracked `Procfile` so EB boots the Django app with the correct WSGI target instead of generating a bad default startup command.
+5. Final production verification after the static fix:
+   - homepage returns `200`
+   - `/properties/` returns `200`
+   - property detail page returns `200`
+   - key static assets return `200`
+   - EB environment `propertism-prod` back to `Ready` / `Green`
+
+**Local Development Work Completed Today:**
+1. Added optional local PostgreSQL support in:
+   - `realtor_project/settings.py`
+2. New local DB selection order:
+   - production `RDS_*` env vars first
+   - local PostgreSQL from `.env` via `POSTGRES_*` or `DATABASE_URL`
+   - SQLite fallback when no PostgreSQL env vars are set
+3. Added sample local env file:
+   - `.env.example`
+4. Updated local setup notes in:
+   - `README.md`
+5. Important safety note:
+   - the real local `.env` was intentionally not modified
+
+**Verification Completed Today:**
+1. `python manage.py check` passes after the local PostgreSQL changes.
+2. Production smoke checks were revalidated during the recovery work:
+   - `https://www.propertism.in/`
+   - `https://www.propertism.in/properties/`
+   - one property detail page
+3. The remaining minor live browser issue observed after recovery was a missing `/favicon.ico`, which is separate from the database/static incident.
+
+**Current Working Tree Notes:**
+1. New/updated files from today that are part of the active local work:
+   - `.env.example`
+   - `README.md`
+   - `realtor_project/settings.py`
+   - `.platform/hooks/postdeploy/00_collectstatic_current.sh`
+   - `Procfile`
+   - `RCA-03042026-prod-mismatch.md`
+   - `.session-tracker/SESSION_TRACKER.md`
+2. Keep leaving these unrelated docs/file moves alone unless explicitly requested:
+   - deleted: `plans-and-docs/DJANGO_PROJECT_OVERVIEW.md`
+   - deleted: `plans-and-docs/REUSABLE_COMPONENTS.md`
+   - untracked: `documents/DJANGO_PROJECT_OVERVIEW.md`
+   - untracked: `documents/REUSABLE_COMPONENTS.md`
+   - untracked: `gofolder.bat`
+   - untracked: `media/company/propertism-logo.png`
+   - untracked: `scripts/audit_model_counts.py`
+
+**Recommended First Step Next Session:**
+1. Re-check `git status` before touching anything else.
+2. Use `.\scripts\django.cmd ...` for local Django commands.
+3. Smoke test production homepage, `/properties/`, and one property detail page to confirm EB is still healthy.
+4. Decide whether to commit the local PostgreSQL support/docs work now or extend it with Docker/local DB bootstrap helpers.
+5. If needed, clean up the separate `/favicon.ico` issue as a small isolated follow-up.
+
+---
+
+## SESSION 17: April 3, 2026 - Favicon Follow-Up
+**Status:** COMPLETED LOCALLY
+**Date:** April 3, 2026
+**Primary Goal:** Remove the remaining browser console noise from the missing favicon request without disturbing the stabilized production/database work.
+
+**What Was Verified First:**
+1. Live homepage still loads correctly.
+2. Critical CSS and JS assets return `200`.
+3. The remaining browser console error was:
+   - `404` on `https://www.propertism.in/favicon.ico`
+
+**Fix Completed:**
+1. Added an explicit favicon declaration to the shared base template:
+   - `uilayers/templates/base.html`
+2. Added a lightweight redirect for the legacy root favicon path:
+   - `realtor_project/urls.py`
+3. `/favicon.ico` now resolves to the existing tracked static logo asset:
+   - `/static/images/propertism-logo-tm.png`
+
+**Verification Completed:**
+1. `.\scripts\django.cmd check`
+2. URL wiring remains minimal and isolated from the PostgreSQL / deploy hardening work.
+
+**Notes:**
+1. This follow-up is intentionally code-only and does not touch production content/data.
+2. The broader Session 16 PostgreSQL/docs changes remain in the working tree and are still the main uncommitted block.
+
+---
+
 ## Document Information
 
 **Created By**: Kiro AI Assistant  
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
 **Last Updated By**: Codex  
-**Last Updated On**: April 1, 2026 at 21:12:00 IST  
-**Session**: 15 (Production Guardrails, Property Currency, Premium Property UX, And Production Deploy)  
-**Latest Action**: Committed the validated property currency, logo, and property presentation work as `5e9654a`, pushed `main`, and deployed `app-5e96-260401_210822069586` to `propertism-prod` with Green health
+**Last Updated On**: April 3, 2026 at 18:00:00 IST  
+**Session**: 17 (Favicon Follow-Up)  
+**Latest Action**: Verified the remaining live console issue was a missing `/favicon.ico`, then added explicit favicon wiring plus a root-path redirect so the shared site shell resolves a tracked static logo asset cleanly

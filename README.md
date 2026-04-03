@@ -41,6 +41,21 @@ Useful local URLs:
 - Site: `http://localhost:8000/en/`
 - Admin: `http://localhost:8000/en/admin/`
 
+## Optional Local PostgreSQL
+
+Local development still falls back to SQLite by default, but you can now point it at PostgreSQL through `.env` if you want a setup closer to production.
+
+1. Copy `.env.example` to `.env`
+2. Uncomment either the `POSTGRES_*` variables or `DATABASE_URL`
+3. Run:
+
+```powershell
+.\scripts\django.cmd migrate
+.\scripts\django.cmd runserver
+```
+
+If those PostgreSQL variables are absent, Django will keep using SQLite automatically.
+
 ## Important Paths
 
 - Session notes: `.session-tracker/SESSION_TRACKER.md`

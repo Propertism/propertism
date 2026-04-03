@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from content import views as content_views
 from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap
 
@@ -21,6 +22,10 @@ handler500 = 'content.views.custom_500'
 # Main URL patterns (no language prefix)
 urlpatterns = [
     path('health/', content_views.health, name='health'),
+    path(
+        'favicon.ico',
+        RedirectView.as_view(url=f'{settings.STATIC_URL}images/propertism-logo-tm.png', permanent=True),
+    ),
     path(f'{settings.ADMIN_URL}/', admin.site.urls),
     path('', include('content.urls')),
     path('properties/', include('properties.urls_web')),
