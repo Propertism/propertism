@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -144,11 +145,31 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def _normalize_image_reference(self, value):
+        if not value:
+            return ""
+
+        image_value = str(value).strip()
+        if not image_value:
+            return ""
+
+        if image_value.startswith(("http://", "https://", "//", "/")):
+            return image_value
+
+        normalized_value = image_value.lstrip("/")
+        if normalized_value.startswith("media/"):
+            return f"/{normalized_value}"
+
+        media_url = (settings.MEDIA_URL or "/media/").rstrip("/")
+        return f"{media_url}/{normalized_value}"
+
     def get_display_image_url(self):
-        """Return the first photo whose file still exists, else fall back."""
+        """Return the best available photo URL and let template onerror handle final fallback."""
         photos = self.photos.all()
         if hasattr(photos, "order_by"):
             photos = photos.order_by("-is_primary", "sort_order", "id")
+
+        optimistic_photo_url = ""
 
         for photo in photos:
             if not photo.image:
@@ -157,9 +178,18 @@ class Property(models.Model):
                 if photo.image.storage.exists(photo.image.name):
                     return photo.image.url
             except Exception:
-                continue
+                pass
 
-        return self.image or ""
+            if not optimistic_photo_url:
+                try:
+                    optimistic_photo_url = photo.image.url
+                except Exception:
+                    optimistic_photo_url = self._normalize_image_reference(photo.image.name)
+
+        if optimistic_photo_url:
+            return optimistic_photo_url
+
+        return self._normalize_image_reference(self.image)
 
     @property
     def currency_symbol(self):

@@ -1,12 +1,14 @@
 import json
 from decimal import Decimal
+from unittest.mock import patch
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 
 from content.templatetags.seo_tags import property_schema
 
-from .models import Property, PropertyType
+from .models import Property, PropertyPhoto, PropertyType
 from .serializers import PropertySerializer
 
 
@@ -130,3 +132,35 @@ class PropertyCurrencyFormattingTests(TestCase):
         self.assertContains(response, property_obj.price_in_words_with_currency)
         self.assertContains(response, "Curated Properties")
         self.assertContains(response, "css/premium-styles.css")
+
+    def test_display_image_url_returns_photo_url_when_storage_check_fails(self):
+        property_obj = Property.objects.create(
+            title="Photo Listing",
+            description="Has uploaded photo",
+            price=Decimal("1500000.00"),
+            currency="INR",
+            location="Chennai",
+            property_type=self.property_type,
+        )
+        photo = PropertyPhoto.objects.create(
+            property=property_obj,
+            image=SimpleUploadedFile("photo.jpg", b"filecontent", content_type="image/jpeg"),
+            is_primary=True,
+            sort_order=1,
+        )
+
+        with patch.object(photo.image.storage, "exists", return_value=False):
+            self.assertEqual(property_obj.get_display_image_url(), photo.image.url)
+
+    def test_display_image_url_normalizes_relative_property_image_path(self):
+        property_obj = Property.objects.create(
+            title="Relative Image Listing",
+            description="Has relative image path",
+            price=Decimal("1500000.00"),
+            currency="INR",
+            location="Chennai",
+            property_type=self.property_type,
+            image="properties/example.jpg",
+        )
+
+        self.assertEqual(property_obj.get_display_image_url(), "/media/properties/example.jpg")
