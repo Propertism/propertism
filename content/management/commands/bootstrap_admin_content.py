@@ -321,8 +321,8 @@ class Command(BaseCommand):
             "eyebrow": "Customer Reviews",
             "title": "What Our Customers Say",
             "description": (
-                "Hear from homeowners across Dubai who trust European Technical for their "
-                "home maintenance needs."
+                "Hear from owners abroad who rely on Propertism for reporting, maintenance "
+                "follow-through, and dependable local execution in Chennai."
             ),
             "badge_title": "Five Star Service",
             "badge_text": "Quality Guaranteed",
@@ -332,6 +332,7 @@ class Command(BaseCommand):
         stale_values = {
             "description": {
                 "Hear from customers who trust us for responsive, dependable service.",
+                "Hear from homeowners across Dubai who trust European Technical for their home maintenance needs.",
             },
         }
 
@@ -345,42 +346,42 @@ class Command(BaseCommand):
         reviews = [
             {
                 "order": 1,
-                "customer_name": "Sarah Al-Maktoum",
-                "customer_location": "Dubai Marina",
-                "service_label": "Air Conditioning Repair",
+                "customer_name": "Arun Narayanan",
+                "customer_location": "Hackensack, NJ",
+                "service_label": "Rental Coordination",
                 "quote": (
-                    "Absolutely fantastic service! The AC technician arrived on time, "
-                    "diagnosed the issue in minutes, and had it fixed within the hour. "
-                    "The European quality standards really show. Will definitely use again."
+                    "The team helped us coordinate tenant follow-through, minor repair work, "
+                    "and owner approvals without delays. We finally had one local team in "
+                    "Chennai that kept everything moving."
                 ),
                 "rating": 5,
-                "avatar_initials": "S",
+                "avatar_initials": "A",
             },
             {
                 "order": 2,
-                "customer_name": "James Richardson",
-                "customer_location": "JBR",
-                "service_label": "Plumbing & Electrical",
+                "customer_name": "Meera Suresh",
+                "customer_location": "Singapore",
+                "service_label": "Property Maintenance",
                 "quote": (
-                    "I have used many handyman services in Dubai, but European Technical is "
-                    "in a different league. Professional, punctual, and their work quality is "
-                    "outstanding. The 30-day warranty gives extra peace of mind."
+                    "What stood out was the clarity of the updates. I always knew what had "
+                    "been completed, what was pending, and what needed approval. That level "
+                    "of reporting made remote ownership much easier."
                 ),
                 "rating": 5,
-                "avatar_initials": "J",
+                "avatar_initials": "M",
             },
             {
                 "order": 3,
-                "customer_name": "Fatima Hassan",
-                "customer_location": "Downtown Dubai",
-                "service_label": "Emergency Plumbing",
+                "customer_name": "R. Venkatesh",
+                "customer_location": "Dubai",
+                "service_label": "Owner Reporting",
                 "quote": (
-                    "Called them for an emergency water leak at midnight. They responded "
-                    "within 30 minutes and had a plumber at my door in under an hour. "
-                    "Saved my apartment from serious damage. Cannot recommend enough!"
+                    "From inspection visits to vendor coordination, Propertism handled the "
+                    "ground work with discipline. For owners living abroad, that local "
+                    "execution support is exactly what we needed."
                 ),
                 "rating": 5,
-                "avatar_initials": "F",
+                "avatar_initials": "R",
             },
         ]
 
