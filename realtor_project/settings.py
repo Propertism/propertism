@@ -316,10 +316,8 @@ CSRF_COOKIE_SAMESITE = 'Lax'  # Lax for development, Strict for production
 CSRF_TRUSTED_ORIGINS = _get_csv_env('CSRF_TRUSTED_ORIGINS', default=[
     'https://propertism.in',
     'https://www.propertism.in',
-    'http://propertism.in',
-    'http://www.propertism.in',
+    'https://d1yv5od4i0bho.cloudfront.net',
     'http://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
-    'https://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
 ])
 
 # Session Security
