@@ -188,7 +188,7 @@
     <div class="container">
         <div class="section-intro-center">
             <h2>{{ company.services_section_title }}</h2>
-            <p>{{ company.services_section_description }}</p>
+            {% if company.services_section_description %}<p>{{ company.services_section_description }}</p>{% endif %}
         </div>
 
         <div class="insights-grid">
@@ -248,6 +248,7 @@
                 </ul>
                 {% endif %}
                 <div class="credibility-office-pills">
+                <div class="credibility-office-pills">
                     <div class="credibility-office-pill">
                         <span>India Office</span>
                         <strong>{{ company.india_office_city }}, {{ company.india_office_state }}</strong>
@@ -257,14 +258,27 @@
                         <strong>{{ company.us_office_city }}, {{ company.us_office_state }}</strong>
                     </div>
                 </div>
-                {% if stats %}
-                <div class="credibility-stats-grid">
-                    {% for stat in stats %}
-                    <div class="credibility-stat-card">
-                        <strong>{{ stat.value }}</strong>
-                        <span>{{ stat.label }}</span>
+                <div class="world-clock-strip" id="world-clock">
+                    <div class="world-clock-cell" data-tz="America/New_York">
+                        <span class="world-clock-label">US (ET)</span>
+                        <strong class="world-clock-time">--:--</strong>
+                        <small class="world-clock-date"></small>
                     </div>
-                    {% endfor %}
+                    <div class="world-clock-cell" data-tz="Europe/London">
+                        <span class="world-clock-label">UK (GMT)</span>
+                        <strong class="world-clock-time">--:--</strong>
+                        <small class="world-clock-date"></small>
+                    </div>
+                    <div class="world-clock-cell" data-tz="Asia/Kolkata">
+                        <span class="world-clock-label">India (IST)</span>
+                        <strong class="world-clock-time">--:--</strong>
+                        <small class="world-clock-date"></small>
+                    </div>
+                    <div class="world-clock-cell" data-tz="Asia/Dubai">
+                        <span class="world-clock-label">Gulf (GST)</span>
+                        <strong class="world-clock-time">--:--</strong>
+                        <small class="world-clock-date"></small>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -277,7 +291,7 @@
         <div class="management-preview-intro">
             <span class="section-kicker">{{ company.management_section_eyebrow }}</span>
             <h2>{{ company.management_section_title }}</h2>
-            <p>{{ company.management_section_description }}</p>
+            {% if company.management_section_description %}<p>{{ company.management_section_description }}</p>{% endif %}
         </div>
         <div class="management-preview-grid">
             {% for member in team_highlights %}
@@ -442,7 +456,7 @@
         <div class="journal-preview-intro">
             <span class="section-kicker">{{ company.blog_section_eyebrow }}</span>
             <h2>{{ company.blog_section_title }}</h2>
-            <p>{{ company.blog_section_description }}</p>
+            {% if company.blog_section_description %}<p>{{ company.blog_section_description }}</p>{% endif %}
         </div>
         <div class="journal-preview-grid">
             {% for post in recent_posts %}
@@ -665,5 +679,27 @@
             currentHeroIndex = nextHeroIndex;
         }, 30000);
     }());
+
+    (function () {
+        const cells = document.querySelectorAll("#world-clock .world-clock-cell");
+        if (!cells.length) return;
+
+        function tick() {
+            const now = Date.now();
+            cells.forEach(function (cell) {
+                const tz = cell.dataset.tz;
+                const timeEl = cell.querySelector(".world-clock-time");
+                const dateEl = cell.querySelector(".world-clock-date");
+                if (!timeEl) return;
+                const d = new Date(now);
+                timeEl.textContent = d.toLocaleTimeString("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: true });
+                if (dateEl) dateEl.textContent = d.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
+            });
+        }
+
+        tick();
+        window.setInterval(tick, 1000);
+    }());
 </script>
 {% endblock %}
+

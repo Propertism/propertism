@@ -245,12 +245,7 @@
     transform: translateX(1.6rem);
 }
 
-.featured-properties-section {
-    position: relative;
-    padding: clamp(1.5rem, 2.4vw, 2rem) 0 var(--space-20);
-    background: var(--white);
-    overflow: visible;
-}
+`.featured-properties-section {`n    position: relative;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n    overflow: visible;`n}
 
 .featured-properties-intro {
     width: min(100%, 1120px);
@@ -389,11 +384,7 @@
    CREDIBILITY SECTION
    ============================================ */
 
-.credibility-section {
-    margin-top: 0;
-    padding: var(--space-12) 0 var(--space-16);
-    background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
-}
+.credibility-section {`n    margin-top: 0;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n}
 
 .credibility-grid {
     display: grid;
@@ -802,10 +793,7 @@
    MARKET INSIGHTS - Trulia-style
    ============================================ */
 
-.market-insights {
-    padding: var(--space-20) 0;
-    background: var(--white);
-}
+.market-insights {`n    padding: var(--space-12) 0;`n    background: var(--white);`n}
 
 .section-intro-center {
     text-align: center;
@@ -897,14 +885,14 @@
     color: var(--brand-gold);
 }
 
-.management-preview-section,
-.journal-preview-section {
-    padding: var(--space-20) 0;
+.management-preview-section {
+    padding: var(--space-12) 0;
     background: #F8FAFC;
 }
 
 .journal-preview-section {
-    background: #FFFFFF;
+    padding: var(--space-12) 0;
+    background: var(--white);
 }
 
 .management-preview-intro,
@@ -1023,7 +1011,7 @@
 
 .customer-reviews-section,
 .custom-cards-section {
-    padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+    padding: clamp(2.5rem, 5vw, 4rem) 0;
 }
 
 .customer-reviews-section {
@@ -1032,9 +1020,7 @@
         linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
 }
 
-.custom-cards-section {
-    background: #FFFFFF;
-}
+.custom-cards-section {`n    background: #F8FAFC;`n}
 
 .customer-reviews-intro,
 .custom-cards-intro {
@@ -1715,10 +1701,7 @@
         border-top: 0;
     }
 
-    .credibility-section {
-        margin-top: 0;
-        padding-top: var(--space-10);
-    }
+    .credibility-section {`n    margin-top: 0;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n}
 
     .credibility-grid {
         grid-template-columns: 1fr;
@@ -1804,9 +1787,7 @@
         transform: translateX(-0.9rem);
     }
     
-    .featured-properties-section {
-        padding: 2.75rem 0 var(--space-16);
-    }
+    `.featured-properties-section {`n    position: relative;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n    overflow: visible;`n}
 
     .featured-properties-intro {
         margin: -0.35rem auto var(--space-8);
@@ -2380,3 +2361,10 @@
         font-size: 0.9375rem;
     }
 }
+
+
+
+
+
+
+
