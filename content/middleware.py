@@ -36,6 +36,8 @@ class CanonicalDomainRedirectMiddleware:
 
         if canonical_host and redirect_hosts:
             current_host = request.get_host().split(":", 1)[0].lower()
+            # Only redirect if the host is explicitly listed — never redirect
+            # internal/origin hostnames (e.g. EB CNAME forwarded by CloudFront)
             if current_host in redirect_hosts and current_host != canonical_host.lower():
                 scheme = getattr(settings, "CANONICAL_SCHEME", "https")
                 path = request.get_full_path()

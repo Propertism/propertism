@@ -23,6 +23,9 @@ if [ -n "${ADMIN_USERNAME:-}" ] && [ -n "${ADMIN_EMAIL:-}" ] && [ -n "${ADMIN_PA
         PYTHONPATH="$PYTHONPATH" \
         DATABASE_URL="${DATABASE_URL:-}" \
         POSTGRES_SSLMODE="${POSTGRES_SSLMODE:-}" \
+        ADMIN_USERNAME="${ADMIN_USERNAME}" \
+        ADMIN_EMAIL="${ADMIN_EMAIL}" \
+        ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
         "$PYTHON_BIN" /var/app/current/scripts/create_or_reset_prod_superuser.py
 else
     echo "ADMIN_* variables not set. Skipping superuser bootstrap."
