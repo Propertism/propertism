@@ -177,19 +177,16 @@
 }
 
 .hero-quote-pill {
-    position: fixed;
-    right: -1.35rem;
+    position: absolute;
+    right: 24px;
     bottom: clamp(2rem, 10vh, 5.5rem);
-    z-index: 40;
+    min-width: 11.5rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.68rem;
-    justify-content: flex-start;
-    min-width: 9.5rem;
-    padding: 0.9rem 1.45rem 0.9rem 1rem;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.96);
-    border: 1px solid rgba(201, 169, 97, 0.34);
+    gap: 0.62rem;
+    padding: 0.86rem 1.4rem 0.86rem 0.92rem;
+    border-radius: 50rem;
+    background: rgba(18, 31, 49, 0.95);
     color: #FFFFFF;
     text-decoration: none;
     box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
@@ -197,8 +194,7 @@
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: -0.01em;
-    transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease;
-    transform: translateX(0);
+    z-index: 10;
 }
 
 .hero-quote-pill-icon {
@@ -245,7 +241,12 @@
     transform: translateX(1.6rem);
 }
 
-`.featured-properties-section {`n    position: relative;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n    overflow: visible;`n}
+.featured-properties-section {
+    position: relative;
+    padding: clamp(4rem, 7vw, 5.75rem) 0;
+    background: #FFFFFF;
+    overflow: visible;
+}
 
 .featured-properties-intro {
     width: min(100%, 1120px);
@@ -384,7 +385,11 @@
    CREDIBILITY SECTION
    ============================================ */
 
-.credibility-section {`n    margin-top: 0;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n}
+.credibility-section {
+    margin-top: 0;
+    padding: clamp(4rem, 7vw, 5.75rem) 0;
+    background: #F8FAFC;
+}
 
 .credibility-grid {
     display: grid;
@@ -793,7 +798,10 @@
    MARKET INSIGHTS - Trulia-style
    ============================================ */
 
-.market-insights {`n    padding: var(--space-12) 0;`n    background: var(--white);`n}
+.market-insights {
+    padding: clamp(4rem, 7vw, 5.75rem) 0;
+    background: var(--white);
+}
 
 .section-intro-center {
     text-align: center;
@@ -1020,7 +1028,9 @@
         linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
 }
 
-.custom-cards-section {`n    background: #F8FAFC;`n}
+.custom-cards-section {
+    background: #FFFFFF;
+}
 
 .customer-reviews-intro,
 .custom-cards-intro {
@@ -1338,6 +1348,10 @@
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 18px 50px rgba(3, 8, 18, 0.18);
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 .quote-request-grid {
@@ -1350,6 +1364,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .quote-request-field span {
@@ -1459,16 +1474,247 @@
    ============================================ */
 
 .site-footer {
-    padding: 3.75rem 0 1.1rem;
+    padding: 5rem 0 2.5rem;
     background: #F5F5F2;
     border-top: 1px solid rgba(17, 24, 39, 0.08);
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: minmax(220px, 1.1fr) repeat(3, minmax(180px, 1fr));
-    gap: 1.75rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem 1.5rem;
+    row-gap: 2rem;
     margin-bottom: 1.5rem;
+}
+
+.footer-section {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Row 2: 3 columns - Global Presence | Clocks | Office Hours */
+.footer-presence-full {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-presence-header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.footer-presence-header h3 {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(17, 24, 39, 0.86);
+    line-height: 1.2;
+}
+
+.footer-presence-dash {
+    color: rgba(17, 24, 39, 0.3);
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.footer-presence-sub {
+    font-size: 0.82rem;
+    color: rgba(17, 24, 39, 0.72);
+    margin: 0;
+    line-height: 1.45;
+}
+
+.footer-hours {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 1.1rem;
+}
+
+.footer-hours h3 {
+    margin-bottom: 0.6rem;
+}
+
+.footer-availability-status {
+    font-size: 0.92rem;
+}
+
+.footer-hours .footer-availability-block {
+    padding-top: 0;
+    border-top: none;
+}
+
+/* Hybrid Minimal Clock Styles */
+.world-clock-widget-card--hybrid {
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-card-header {
+    text-align: center;
+    padding-bottom: 0.35rem;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-card-title {
+    justify-content: center;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.28rem;
+}
+
+/* Minimal analog dial - 50px, no ticks, 1.4px stroke */
+.world-clock-widget-dial--mini {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: 1.4px solid rgba(17, 24, 39, 0.12);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Minimal hands - slightly thicker for visibility */
+.world-clock-widget-hand-mini {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: 50% 100%;
+    border-radius: 1px;
+}
+
+.world-clock-widget-hand-hour-mini {
+    width: 2.5px;
+    height: 15px;
+    background: rgba(17, 24, 39, 0.6);
+}
+
+.world-clock-widget-hand-minute-mini {
+    width: 2px;
+    height: 21px;
+    background: rgba(17, 24, 39, 0.42);
+}
+
+/* Numeric time - PRIMARY focus */
+.world-clock-widget-card--hybrid .world-clock-widget-time {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(17, 24, 39, 0.9);
+    margin-top: 0.15rem;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-hours {
+    font-weight: 600;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-minutes {
+    font-weight: 600;
+}
+
+/* AM/PM - lowercase, smaller (65% of time) */
+.world-clock-widget-card--hybrid .world-clock-widget-meridiem {
+    font-size: 0.6em;
+    font-weight: 400;
+    text-transform: lowercase;
+    opacity: 0.65;
+    margin-left: 0.25em;
+}
+
+/* Date - small, muted, centered */
+.world-clock-widget-card--hybrid .world-clock-widget-inline-meta {
+    text-align: center;
+}
+
+.world-clock-widget-card--hybrid .world-clock-widget-date {
+    font-size: 0.72rem;
+    color: rgba(17, 24, 39, 0.48);
+}
+
+/* Clocks wrapper */
+.footer-clocks-wrapper .world-clock-widget-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.footer-clocks-wrapper .world-clock-widget-card {
+    padding: 0.65rem 0.55rem 0.72rem;
+}
+
+.world-clock-widget--no-header .world-clock-widget-grid {
+    margin-top: 0;
+}
+
+/* Compact India Office */
+.footer-office-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.footer-office-compact p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: rgba(17, 24, 39, 0.72);
+}
+
+.footer-office-address {
+    line-height: 1.5;
+}
+
+.footer-office-city {
+    font-weight: 500;
+    color: rgba(17, 24, 39, 0.65);
+}
+
+.footer-office-phones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.2rem;
+}
+
+.footer-office-phones .phone-sep {
+    color: rgba(17, 24, 39, 0.35);
+    font-size: 0.7rem;
+    padding: 0 0.15rem;
+}
+
+.footer-office-phones a {
+    color: rgba(17, 24, 39, 0.72);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.footer-office-phones a:hover {
+    color: rgba(17, 24, 39, 0.92);
+}
+
+.footer-office-email {
+    margin-top: 0.1rem;
+}
+
+.footer-office-email a {
+    color: rgba(17, 24, 39, 0.72);
+    text-decoration: none;
+}
+
+.footer-office-email a:hover {
+    color: rgba(17, 24, 39, 0.92);
 }
 
 .footer-section {
@@ -1476,34 +1722,35 @@
 }
 
 .footer-section h3 {
-    margin: 0 0 0.85rem;
+    margin: 0 0 0.6rem;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(17, 24, 39, 0.92);
+    color: rgba(17, 24, 39, 0.86);
 }
 
 .footer-brand h3 {
-    font-size: 1rem;
-    letter-spacing: 0;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
     text-transform: none;
-    color: var(--gray-900);
+    color: rgba(17, 24, 39, 0.9);
+    margin-bottom: 0.5rem;
 }
 
 .footer-copy {
     margin: 0;
     max-width: 28ch;
-    color: var(--gray-600);
-    font-size: 0.94rem;
-    line-height: 1.65;
+    color: rgba(17, 24, 39, 0.72);
+    font-size: 0.82rem;
+    line-height: 1.45;
 }
 
 .footer-socials {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.9rem;
+    margin-top: 0.6rem;
 }
 
 .footer-social-link {
@@ -1533,7 +1780,7 @@
 
 .footer-links {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.35rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -1541,9 +1788,9 @@
 
 .footer-links li {
     margin: 0;
-    color: var(--gray-600);
-    font-size: 0.91rem;
-    line-height: 1.6;
+    color: rgba(17, 24, 39, 0.72);
+    font-size: 0.82rem;
+    line-height: 1.45;
 }
 
 .site-footer a,
@@ -1571,6 +1818,382 @@
     border-top: 1px solid rgba(17, 24, 39, 0.08);
 }
 
+.footer-office-secondary {
+    display: grid;
+    gap: 1.15rem;
+}
+
+.footer-office-secondary > h3,
+.footer-office-secondary > .footer-links {
+    display: none;
+}
+
+.footer-presence-block,
+.footer-availability-block,
+.footer-engagement-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding-top: 0;
+    border-top: none;
+}
+
+.footer-presence-block {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.world-clock-widget {
+    margin-top: 0;
+}
+
+.world-clock-widget-header {
+    display: grid;
+    gap: 0.34rem;
+    margin-bottom: 0.95rem;
+}
+
+.world-clock-widget-kicker {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(17, 24, 39, 0.86);
+}
+
+.world-clock-widget-subtitle {
+    margin: 0;
+    color: var(--gray-600);
+    font-size: 0.86rem;
+    line-height: 1.58;
+}
+
+.world-clock-widget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+.world-clock-widget-card {
+    position: relative;
+    display: grid;
+    gap: 0.55rem;
+    min-width: 0;
+    padding: 0.72rem 0.72rem 0.82rem;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
+        rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    border-radius: 2px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(17, 24, 39, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.world-clock-widget-card:hover {
+    transform: scale(1.02);
+    border-color: rgba(201, 169, 97, 0.55);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 2px 8px rgba(17, 24, 39, 0.06);
+}
+
+.world-clock-widget-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(201, 169, 97, 0.94) 0%, rgba(201, 169, 97, 0.18) 100%);
+}
+
+.world-clock-widget-card-header {
+    min-width: 0;
+    padding-bottom: 0.12rem;
+}
+
+.world-clock-widget-card-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(17, 24, 39, 0.52);
+}
+
+.world-clock-widget-title-flag {
+    width: 14px;
+    height: 10px;
+    flex-shrink: 0;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.12);
+}
+
+.world-clock-widget-card-body {
+    display: grid;
+    justify-items: center;
+    gap: 0.72rem;
+    text-align: center;
+}
+
+.world-clock-widget-dial {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(17, 24, 39, 0.18);
+    background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.95) 0 18%, transparent 19%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.06) 0 45%, transparent 46%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow:
+        inset 0 1px 2px rgba(17, 24, 39, 0.06),
+        0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.world-clock-widget-dial::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.world-clock-widget-dial::after {
+    content: "";
+    position: absolute;
+    inset: 50%;
+    width: 4px;
+    height: 4px;
+    background: rgba(17, 24, 39, 0.35);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.world-clock-widget-dial-hub {
+    position: absolute;
+    inset: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:
+        0 1px 2px rgba(17, 24, 39, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    z-index: 5;
+    opacity: 0.9;
+}
+
+.world-clock-widget-tick {
+    position: absolute;
+    left: 50%;
+    top: 3px;
+    width: 1px;
+    height: 6px;
+    background: rgba(17, 24, 39, 0.25);
+    transform-origin: 50% 43px;
+}
+
+.world-clock-widget-tick.major {
+    top: 2px;
+    width: 1.5px;
+    height: 8px;
+    background: rgba(17, 24, 39, 0.45);
+}
+
+.world-clock-widget-hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: 50% calc(100% - 3px);
+    border-radius: 1px;
+    box-shadow: 0 1px 1px rgba(17, 24, 39, 0.15);
+}
+
+.world-clock-widget-hand-hour {
+    width: 3.5px;
+    height: 22px;
+    background: rgba(17, 24, 39, 0.92);
+    border-radius: 2px;
+}
+
+.world-clock-widget-hand-minute {
+    width: 2.5px;
+    height: 32px;
+    background: rgba(17, 24, 39, 0.75);
+    border-radius: 1px;
+}
+
+.world-clock-widget-hand-second {
+    width: 1px;
+    height: 36px;
+    background: rgba(201, 169, 97, 0.85);
+}
+
+/* Country flags after name */
+.world-clock-widget-card[data-region="us"] .world-clock-widget-title-flag {
+    background: linear-gradient(180deg, #B22234 0 14%, #FFFFFF 14% 28%, #B22234 28% 42%, #FFFFFF 42% 56%, #B22234 56% 70%, #FFFFFF 70% 84%, #B22234 84% 100%);
+}
+
+.world-clock-widget-card[data-region="uk"] .world-clock-widget-title-flag {
+    background:
+        linear-gradient(90deg, transparent 41%, #FFFFFF 41% 59%, transparent 59%),
+        linear-gradient(transparent 36%, #FFFFFF 36% 64%, transparent 64%),
+        linear-gradient(90deg, transparent 45%, #C8102E 45% 55%, transparent 55%),
+        linear-gradient(transparent 42%, #C8102E 42% 58%, transparent 58%),
+        linear-gradient(180deg, #012169 0%, #012169 100%);
+}
+
+.world-clock-widget-card[data-region="india"] .world-clock-widget-title-flag {
+    background: linear-gradient(180deg, #FF9933 0 33.33%, #FFFFFF 33.33% 66.66%, #138808 66.66% 100%);
+}
+
+.world-clock-widget-card[data-region="gulf"] .world-clock-widget-title-flag {
+    background:
+        linear-gradient(90deg, #FF0000 0 26%, transparent 26%),
+        linear-gradient(180deg, #00732F 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+}
+
+.world-clock-widget-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.18rem;
+    text-align: center;
+}
+
+.world-clock-widget-time {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0;
+    font-family: "Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.96rem;
+    line-height: 1;
+    color: rgba(17, 24, 39, 0.75);
+    white-space: nowrap;
+}
+
+.world-clock-widget-hours {
+    font-weight: 600;
+    color: rgba(17, 24, 39, 0.88);
+}
+
+.world-clock-widget-separator {
+    font-weight: 300;
+    opacity: 0.5;
+}
+
+.world-clock-widget-minutes {
+    font-weight: 400;
+}
+
+.world-clock-widget-meridiem {
+    margin-left: 0.32em;
+    font-size: 0.58em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    opacity: 0.55;
+}
+
+.world-clock-widget-date {
+    font-size: 0.7rem;
+    color: rgba(17, 24, 39, 0.48);
+    letter-spacing: 0.01em;
+}
+
+.world-clock-widget-inline-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.world-clock-widget-inline-divider {
+    display: none;
+}
+
+.footer-availability-block h3,
+.footer-engagement-block h3 {
+    margin: 0;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(17, 24, 39, 0.86);
+}
+
+.footer-availability-status-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.12rem;
+}
+
+.footer-availability-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.52rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gray-900);
+}
+
+.footer-availability-status::before {
+    content: "";
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    animation: availability-pulse 2s ease-in-out infinite;
+}
+
+.footer-availability-status[data-state="closed"]::before {
+    background: #DC2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+    animation: none;
+}
+
+@keyframes availability-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25); }
+    50% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.15); }
+}
+
+.footer-availability-hours {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.52rem 0.78rem;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+}
+
+.footer-availability-line {
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: rgba(17, 24, 39, 0.72);
+}
+
+.footer-engagement-block {
+    margin-top: 0;
+}
+
+.footer-engagement-block p {
+    margin: 0;
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 32ch;
+}
+
 .footer-newsletter h3 {
     margin: 0 0 0.7rem;
 }
@@ -1583,10 +2206,129 @@
     line-height: 1.6;
 }
 
+/* Standalone Newsletter Section */
+.newsletter-section {
+    padding: 2.5rem 0;
+    background: linear-gradient(180deg, #F8F8F6 0%, #F5F5F2 100%);
+    border-top: 1px solid rgba(17, 24, 39, 0.06);
+    border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.newsletter-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.newsletter-text h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: rgba(17, 24, 39, 0.9);
+}
+
+.newsletter-text p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.6rem;
+    min-width: 320px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background: #FFFFFF;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: rgba(17, 24, 39, 0.25);
+}
+
+.newsletter-form button {
+    padding: 0.85rem 1.4rem;
+    background: #111827;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.newsletter-form button:hover {
+    background: #1F2937;
+}
+
+@media (max-width: 768px) {
+    .newsletter-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+    }
+    
+    .newsletter-form {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
 .footer-newsletter-form {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.55rem;
+}
+
+/* Mini newsletter in footer Row 1 */
+.footer-newsletter-mini p {
+    font-size: 0.82rem;
+    color: rgba(17, 24, 39, 0.72);
+    margin: 0 0 0.6rem;
+    line-height: 1.45;
+}
+
+.footer-newsletter-form-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-newsletter-form-mini input {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background: #FFFFFF;
+}
+
+.footer-newsletter-form-mini input:focus {
+    outline: none;
+    border-color: rgba(17, 24, 39, 0.25);
+}
+
+.footer-newsletter-form-mini button {
+    padding: 0.65rem 1rem;
+    background: #111827;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.footer-newsletter-form-mini button:hover {
+    background: #1F2937;
 }
 
 .footer-newsletter-form input {
@@ -1675,6 +2417,18 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1.5rem;
     }
+
+    .footer-presence-full {
+        grid-column: span 2;
+    }
+
+    .footer-hours {
+        grid-column: span 2;
+    }
+
+    .footer-clocks-wrapper .world-clock-widget-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 /* ============================================
@@ -1701,7 +2455,11 @@
         border-top: 0;
     }
 
-    .credibility-section {`n    margin-top: 0;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n}
+    .credibility-section {
+        margin-top: 0;
+        padding: clamp(3.5rem, 10vw, 4.5rem) 0;
+        background: #F8FAFC;
+    }
 
     .credibility-grid {
         grid-template-columns: 1fr;
@@ -1787,7 +2545,12 @@
         transform: translateX(-0.9rem);
     }
     
-    `.featured-properties-section {`n    position: relative;`n    padding: var(--space-10) 0 var(--space-12);`n    background: #F8FAFC;`n    overflow: visible;`n}
+    .featured-properties-section {
+        position: relative;
+        padding: clamp(3.5rem, 10vw, 4.5rem) 0;
+        background: #FFFFFF;
+        overflow: visible;
+    }
 
     .featured-properties-intro {
         margin: -0.35rem auto var(--space-8);
@@ -1875,6 +2638,18 @@
         margin-bottom: 1.25rem;
     }
 
+    .footer-presence-full {
+        grid-column: span 2;
+    }
+
+    .footer-hours {
+        grid-column: span 2;
+    }
+
+    .footer-clocks-wrapper .world-clock-widget-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .footer-copy,
     .footer-newsletter p {
         max-width: none;
@@ -1885,9 +2660,13 @@
         margin-bottom: 0;
     }
 
-    .footer-office-secondary .footer-newsletter {
-        margin-top: 0.9rem;
-        padding-top: 0.9rem;
+    .world-clock-widget-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .world-clock-widget-dial {
+        width: 68px;
+        height: 68px;
     }
 
     .footer-newsletter-form {
@@ -2359,6 +3138,246 @@
         justify-content: center;
         padding: 14px 24px;
         font-size: 0.9375rem;
+    }
+}
+
+/* ============================================
+   HOMEPAGE RHYTHM + FLAT SURFACES
+   ============================================ */
+
+.management-preview-section,
+.journal-preview-section,
+.customer-reviews-section,
+.custom-cards-section,
+.nri-contact-section {
+    padding: clamp(4rem, 7vw, 5.75rem) 0;
+}
+
+.customer-reviews-section {
+    background:
+        radial-gradient(circle at top, rgba(201, 169, 97, 0.12), transparent 38%),
+        linear-gradient(180deg, #F8FAFC 0%, #F3F4F6 100%);
+}
+
+.management-preview-section {
+    background: #FFFFFF;
+}
+
+.management-preview-section + .customer-reviews-section {
+    background:
+        radial-gradient(circle at top, rgba(201, 169, 97, 0.12), transparent 38%),
+        linear-gradient(180deg, #F8FAFC 0%, #F3F4F6 100%);
+}
+
+.management-preview-section + .featured-properties-section {
+    background: #F8FAFC;
+}
+
+.customer-reviews-section + .featured-properties-section {
+    background: #FFFFFF;
+}
+
+.featured-properties-section + .journal-preview-section {
+    background: #F8FAFC;
+}
+
+.management-preview-section + .featured-properties-section + .journal-preview-section {
+    background: #FFFFFF;
+}
+
+section.custom-cards-section:nth-of-type(odd) {
+    background: #FFFFFF;
+}
+
+section.custom-cards-section:nth-of-type(even) {
+    background: #F8FAFC;
+}
+
+.hero-quote-pill,
+.hero-quote-pill-icon,
+.quick-link,
+.credibility-story-card,
+.credibility-proof-card,
+.credibility-mission-block,
+.credibility-office-pill,
+.credibility-stat-card,
+.property-badge-hybrid,
+.property-save,
+.insight-card,
+.insight-icon,
+.management-preview-card,
+.journal-preview-card,
+.customer-review-card,
+.custom-card-panel,
+.customer-review-badge,
+.customer-reviews-indicator,
+.customer-reviews-indicator::before,
+.quote-request-form,
+.quote-request-field input,
+.quote-request-field select,
+.quote-request-field textarea,
+.quote-request-submit,
+.nri-contact-card,
+.footer-social-link,
+.footer-newsletter-form input,
+.footer-newsletter-form button,
+.btn-view-all,
+.btn-call-premium,
+.btn-contact-premium,
+.btn-whatsapp,
+.contact-chat-promo,
+.contact-chat-promo-icon,
+.btn-start-chat {
+    border-radius: 0;
+}
+
+.world-clock-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.world-clock-cell {
+    position: relative;
+    display: grid;
+    gap: 5px;
+    padding: 13px 12px 12px;
+    min-height: 100px;
+    align-content: start;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 12px 28px rgba(5, 10, 22, 0.18);
+}
+
+.world-clock-cell::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(201, 169, 97, 0.95) 0%, rgba(201, 169, 97, 0.22) 55%, rgba(201, 169, 97, 0) 100%);
+}
+
+.world-clock-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.world-clock-label::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    flex-shrink: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.world-clock-cell:nth-child(1) .world-clock-label::before {
+    background-image: linear-gradient(180deg, #B22234 0 14%, #FFFFFF 14% 28%, #B22234 28% 42%, #FFFFFF 42% 56%, #B22234 56% 70%, #FFFFFF 70% 84%, #B22234 84% 100%);
+    background-size: 100% 100%;
+}
+
+.world-clock-cell:nth-child(2) .world-clock-label::before {
+    background-image:
+        linear-gradient(90deg, transparent 41%, #FFFFFF 41% 59%, transparent 59%),
+        linear-gradient(transparent 36%, #FFFFFF 36% 64%, transparent 64%),
+        linear-gradient(90deg, transparent 45%, #C8102E 45% 55%, transparent 55%),
+        linear-gradient(transparent 42%, #C8102E 42% 58%, transparent 58%),
+        linear-gradient(180deg, #012169 0%, #012169 100%);
+}
+
+.world-clock-cell:nth-child(3) .world-clock-label::before {
+    background-image: linear-gradient(180deg, #FF9933 0 33.33%, #FFFFFF 33.33% 66.66%, #138808 66.66% 100%);
+}
+
+.world-clock-cell:nth-child(4) .world-clock-label::before {
+    background-image:
+        linear-gradient(90deg, #FF0000 0 26%, transparent 26%),
+        linear-gradient(180deg, #00732F 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+}
+
+.world-clock-time {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
+    margin-top: 3px;
+    font-family: "Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: clamp(1.12rem, 1.7vw, 1.42rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    color: #F8FAFC;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
+    white-space: nowrap;
+}
+
+.world-clock-hours {
+    font-weight: 700;
+}
+
+.world-clock-separator {
+    font-weight: 300;
+    opacity: 0.72;
+}
+
+.world-clock-minutes {
+    font-weight: 400;
+}
+
+.world-clock-meridiem {
+    margin-left: 0.5em;
+    font-size: 0.58em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    opacity: 0.66;
+    vertical-align: baseline;
+    transform: none;
+}
+
+.world-clock-date {
+    margin-top: auto;
+    padding-top: 7px;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+@media (max-width: 768px) {
+    .management-preview-section,
+    .journal-preview-section,
+    .customer-reviews-section,
+    .custom-cards-section,
+    .nri-contact-section {
+        padding: clamp(3.5rem, 10vw, 4.5rem) 0;
+    }
+
+    .world-clock-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .world-clock-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .world-clock-widget-grid {
+        grid-template-columns: 1fr;
     }
 }
 

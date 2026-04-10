@@ -7,9 +7,9 @@
 **Created By**: Kiro AI Assistant  
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
-**Last Updated By**: Codex  
-**Last Updated On**: April 1, 2026 at 21:12:00 IST (15:42:00 UTC)  
-**Last Update**: Property currency, logo cleanup, and premium list/detail presentation were committed, pushed to `main`, and deployed successfully to `propertism-prod` with Green health
+**Last Updated By**: Amazon Q
+**Last Updated On**: April 10, 2026 at 10:42 IST
+**Last Update**: SESSION 19 logged - alternate section backgrounds fix, section spacing tightening, and world clock replacement for US Office section. Uncommitted local changes in home-premium.html and propertism-styles.css. To be continued next session.
 
 ## Repository Layout Note
 As of April 1, 2026, the active app source lives directly at the repository root in `01propertism/`.
@@ -1338,12 +1338,146 @@ python init_data.py
 
 ---
 
+## SESSION 18: April 3, 2026 - Homepage Sequence, About Expansion, And Property Media Restore
+**Status:** COMPLETED
+**Date:** April 3, 2026
+**Primary Goal:** Align the homepage section flow with the approved navigation order, fully expose About content from the company model, and restore the two live featured property images referenced by production admin records.
+
+**Homepage Content / Layout Work Completed:**
+1. Reordered the homepage sections so the visible page flow now matches the approved nav sequence:
+   - Home
+   - Services
+   - About
+   - Management
+   - Reviews
+   - Properties
+   - Blog
+   - Quote
+2. Moved custom admin-managed homepage card sections below the quote/contact block so they no longer interrupt the main nav-aligned sequence.
+3. Expanded the About section to render:
+   - full `about_description`
+   - `about_mission` as a dedicated mission block
+4. Removed the old About truncation behavior that previously cut the company-model copy with `...`.
+5. Added supporting About-section styling so the longer company copy remains readable on desktop and mobile.
+
+**Featured Property Image Investigation And Fix:**
+1. Verified the homepage rendering code was healthy after the earlier image URL fallback hardening.
+2. Confirmed the remaining live image problem was production data/media mismatch, not a template bug.
+3. Live homepage HTML showed these exact admin-referenced image paths:
+   - `/media/properties/WhatsApp_Image_2026-03-23_at_10.01.41_PM_e3eiHLt.jpeg`
+   - `/media/properties/1772514993415_veiBaZZ.jpg`
+4. Verified the repository only contained the original unsuffixed source files:
+   - `media/properties/WhatsApp_Image_2026-03-23_at_10.01.41_PM.jpeg`
+   - `media/properties/1772514993415.jpg`
+5. Restored the missing production filenames by adding the exact suffixed copies required by the live DB/admin references:
+   - `media/properties/WhatsApp_Image_2026-03-23_at_10.01.41_PM_e3eiHLt.jpeg`
+   - `media/properties/1772514993415_veiBaZZ.jpg`
+
+**Verification Completed:**
+1. `.\scripts\django.cmd check` passed during the homepage work.
+2. Rendered local homepage verification confirmed the final section order is:
+   - `home-section`
+   - `services-section`
+   - `about-section`
+   - `management-section`
+   - `reviews-section`
+   - `properties-section`
+   - `blog-section`
+   - `contact-section`
+3. Verified the About mission block is present and the old About truncation is gone.
+4. Verified both restored production image URLs now return:
+   - `200`
+   - `image/jpeg`
+5. Verified the homepage property cards now resolve to the restored real media URLs instead of the placeholder images.
+
+**Git / Release Status:**
+1. Homepage sequence and About expansion:
+   - commit: `ab6670b`
+   - message: `Reorder homepage sections and expand about copy`
+2. Featured property media fallback hardening:
+   - commit: `6ef3340`
+   - message: `Relax featured property image URL fallback`
+3. Missing live property media filename restore:
+   - commit: `411fcff`
+   - message: `Restore missing production property media filenames`
+
+**Deployments Completed:**
+1. Homepage sequence and About expansion:
+   - `app-ab66-260403_182035296297`
+2. Property image URL fallback hardening:
+   - `app-6ef3-260403_182755461822`
+3. Missing production property media filename restore:
+   - `app-411f-260403_183300668627`
+
+**Final Verified Result:**
+1. Homepage section order matches the approved nav order.
+2. About section now shows the full company-model About content, including Mission.
+3. Featured property cards on the homepage now display the live property images correctly again.
+4. Elastic Beanstalk environment remained:
+   - `Status: Ready`
+   - `Health: Green`
+
+---
+
 ## Document Information
 
 **Created By**: Kiro AI Assistant  
 **Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
 
 **Last Updated By**: Codex  
-**Last Updated On**: April 3, 2026 at 18:00:00 IST  
-**Session**: 17 (Favicon Follow-Up)  
-**Latest Action**: Verified the remaining live console issue was a missing `/favicon.ico`, then added explicit favicon wiring plus a root-path redirect so the shared site shell resolves a tracked static logo asset cleanly
+**Last Updated On**: April 3, 2026 at 18:36:00 IST  
+**Session**: 18 (Homepage Sequence, About Expansion, And Property Media Restore)  
+**Latest Action**: Reordered the homepage to match nav flow, expanded the About section to show full company-model Mission and Description content, and restored the two missing production property-media filenames required by the live admin image references
+
+---
+
+## SESSION 19: Homepage Section Backgrounds, Spacing, And World Clock
+**Status:** ⏸️ PAUSED - To be continued next session
+**Date:** April 3, 2026 (continued)
+**Primary Goal:** Fix alternating section backgrounds, tighten section spacing, and replace US Office business hours with a live world clock.
+
+**Work Identified / In Progress:**
+
+1. **Alternate Section Backgrounds**
+   - Some consecutive homepage sections carry white backgrounds instead of alternating
+   - Need to audit section background assignments in `home-premium.html` and `propertism-styles.css`
+   - Fix so no two adjacent sections share the same white background
+
+2. **Section Spacing Tightening**
+   - Sections with no text content have excessive vertical space
+   - Reduce to a single line gap when a section has no descriptive text
+   - Applies to both desktop and mobile layouts
+
+3. **World Clock (US Office Section)**
+   - Currently the US Office section displays static business hours
+   - Replace with a live word clock showing current local times for:
+     - United States
+     - United Kingdom
+     - India
+     - Middle East
+   - Clock should update live in the browser (JavaScript-driven)
+   - Placement: within the existing US Office / contact section
+
+**Files Touched So Far:**
+- `uilayers/templates/home-premium.html`
+- `static/css/propertism-styles.css`
+
+**Git Status:** Uncommitted local changes only - not pushed, not deployed
+
+**Recommended First Step Next Session:**
+1. Run `.\scripts\django.cmd check` to confirm clean state
+2. Review the current section background sequence on the live homepage
+3. Fix alternate backgrounds first, then spacing, then world clock
+4. Test on both desktop and mobile before deploying
+
+---
+
+## Document Information
+
+**Created By**: Kiro AI Assistant
+**Created On**: March 7, 2026 at 21:45:00 IST (16:15:00 UTC)
+
+**Last Updated By**: Amazon Q
+**Last Updated On**: April 3, 2026
+**Session**: 19 (Homepage Section Backgrounds, Spacing, And World Clock - Paused)
+**Latest Action**: Logged three in-progress homepage items - alternate section background fix, section spacing tightening, and world clock replacement for US Office section. Local changes uncommitted in home-premium.html and propertism-styles.css. To be continued next session.

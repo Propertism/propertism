@@ -1,0 +1,11 @@
+[
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"DEBUG","Value":"False"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"DJANGO_SETTINGS_MODULE","Value":"realtor_project.settings"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"DJANGO_SECRET_KEY","Value":"pT26-DgR4sE9Kx7Lq2Nw8Vz1Hb6McAa"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"DATABASE_URL","Value":"postgresql://propertismadmin:PropTami%232026!Db@propertism-db-2026.ckzsuyw4azz2.us-east-1.rds.amazonaws.com:5432/propertismdb"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"POSTGRES_SSLMODE","Value":"require"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"DJANGO_ALLOWED_HOSTS","Value":"propertism.in,www.propertism.in,propertism-prod-2026.us-east-1.elasticbeanstalk.com"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"CSRF_TRUSTED_ORIGINS","Value":"https://propertism.in,https://www.propertism.in,https://propertism-prod-2026.us-east-1.elasticbeanstalk.com"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"CANONICAL_HOST","Value":"www.propertism.in"},
+  {"Namespace":"aws:elasticbeanstalk:application:environment","OptionName":"CANONICAL_REDIRECT_HOSTS","Value":"propertism.in"}
+]

@@ -41,29 +41,53 @@
             </div>
             <div class="footer-section footer-office">
                 <h3>India Office</h3>
-                <ul class="footer-links">
-                    <li>{{ company.india_office_address|linebreaksbr }}<br>{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}</li>
-                    <li><a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a></li>
-                    {% if company.india_phone_2 %}<li><a href="tel:{{ company.india_phone_2|cut:' ' }}">{{ company.india_phone_2 }}</a></li>{% endif %}
-                    {% if company.india_phone_3 %}<li><a href="tel:{{ company.india_phone_3|cut:' ' }}">{{ company.india_phone_3 }}</a></li>{% endif %}
-                    <li><a href="mailto:{{ company.email }}">{{ company.email }}</a></li>
-                </ul>
+                <div class="footer-office-compact">
+                    <p class="footer-office-address">{{ company.india_office_address|linebreaksbr }}</p>
+                    <p class="footer-office-city">{{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}</p>
+                    <p class="footer-office-phones">
+                        <a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a>
+                        {% if company.india_phone_2 %}<span class="phone-sep">·</span><a href="tel:{{ company.india_phone_2|cut:' ' }}">{{ company.india_phone_2 }}</a>{% endif %}
+                        {% if company.india_phone_3 %}<span class="phone-sep">·</span><a href="tel:{{ company.india_phone_3|cut:' ' }}">{{ company.india_phone_3 }}</a>{% endif %}
+                    </p>
+                    <p class="footer-office-email"><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+                </div>
             </div>
-            <div class="footer-section footer-office footer-office-secondary">
-                <h3>US Office</h3>
-                <ul class="footer-links">
-                    <li>{{ company.us_office_address|linebreaksbr }}<br>{{ company.us_office_city }}, {{ company.us_office_state }} {{ company.us_office_zipcode }}</li>
-                    <li><a href="tel:{{ company.us_phone|cut:' ' }}">{{ company.us_phone }}</a></li>
-                    <li>{{ company.business_hours }}</li>
-                </ul>
-                <div class="footer-newsletter">
-                    <h3>{{ company.footer_newsletter_heading }}</h3>
-                    <p>{{ company.footer_newsletter_description }}</p>
-                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form">
-                        {% csrf_token %}
-                        <input type="email" name="email" placeholder="Your email address" required>
-                        <button type="submit">{{ company.footer_newsletter_button_text }}</button>
-                    </form>
+            <div class="footer-section footer-newsletter-mini">
+                <h3>Stay Updated</h3>
+                <p>Get NRI property insights, market trends, and curated opportunities.</p>
+                <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-mini">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <button type="submit">{{ company.footer_newsletter_button_text|default:"Subscribe" }}</button>
+                </form>
+            </div>
+            <div class="footer-section footer-presence-full">
+                <div class="footer-presence-header">
+                    <h3>Global Presence</h3>
+                    <span class="footer-presence-dash">—</span>
+                    <p class="footer-presence-sub">Coordinated support across India, Gulf, UK, and US.</p>
+                </div>
+                <div class="footer-clocks-wrapper">
+                    {% include "components/_world_clock_widget.html" with widget_id="footer-clocks-all" hide_header=True hide_config=True %}
+                    <script id="footer-clocks-all-config" type="application/json">
+                    [
+                      { "label": "US", "tzLabel": "ET", "timeZone": "America/New_York", "region": "us", "city": "New York" },
+                      { "label": "UK", "tzLabel": "GMT", "timeZone": "Europe/London", "region": "uk", "city": "London" },
+                      { "label": "INDIA", "tzLabel": "IST", "timeZone": "Asia/Kolkata", "region": "india", "city": "Chennai" },
+                      { "label": "GULF", "tzLabel": "GST", "timeZone": "Asia/Dubai", "region": "gulf", "city": "Dubai" }
+                    ]
+                    </script>
+                </div>
+            </div>
+            <div class="footer-section footer-hours">
+                <h3>Office Hours</h3>
+                <div class="footer-availability-block" data-footer-availability data-tz="Asia/Kolkata">
+                    <div class="footer-availability-status-row">
+                        <span class="footer-availability-status" data-footer-availability-status>Checking status</span>
+                    </div>
+                    <div class="footer-availability-hours" aria-label="Monday to Sunday 07:00 to 23:00 IST">
+                        <span class="footer-availability-line">Mon - Sun &nbsp;•&nbsp; 07:00 - 23:00 IST</span>
+                    </div>
                 </div>
             </div>
         </div>
