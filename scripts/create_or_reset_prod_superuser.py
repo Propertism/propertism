@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 
 def main() -> None:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "realtor_project.settings")
     django.setup()
 
     username = os.environ["ADMIN_USERNAME"]

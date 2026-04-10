@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
-    [string]$ApplicationName = "propertism",
-    [string]$EnvironmentName = "propertism-prod",
-    [string]$Region = "us-west-2",
+    [string]$ApplicationName = "propertism-2026",
+    [string]$EnvironmentName = "propertism-prod-2026",
+    [string]$Region = "us-east-1",
     [string]$ExpectedVersionLabel = "",
     [int]$TimeoutMinutes = 15
 )

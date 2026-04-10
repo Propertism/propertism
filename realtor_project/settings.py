@@ -1,7 +1,7 @@
 ﻿# Django settings for realtor_project
 import os
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -47,6 +47,15 @@ def _get_env_value(*names):
     return None
 
 
+def _get_bool_env(*names, default=False):
+    for name in names:
+        value = os.environ.get(name)
+        if value is None:
+            continue
+        return value.strip().lower() in {'1', 'true', 'yes', 'on'}
+    return default
+
+
 def _database_config_from_url(database_url):
     parsed = urlparse(database_url)
     engine_map = {
@@ -57,14 +66,18 @@ def _database_config_from_url(database_url):
     engine = engine_map.get(parsed.scheme)
     if not engine:
         return None
-    return {
+    config = {
         'ENGINE': engine,
         'NAME': parsed.path.lstrip('/'),
-        'USER': parsed.username or '',
-        'PASSWORD': parsed.password or '',
+        'USER': unquote(parsed.username or ''),
+        'PASSWORD': unquote(parsed.password or ''),
         'HOST': parsed.hostname or '',
         'PORT': str(parsed.port or '5432'),
     }
+    sslmode = _get_env_value('POSTGRES_SSLMODE', 'DATABASE_SSLMODE')
+    if sslmode:
+        config['OPTIONS'] = {'sslmode': sslmode}
+    return config
 
 
 def _get_local_postgres_config():
@@ -76,7 +89,7 @@ def _get_local_postgres_config():
     if not name:
         return None
 
-    return {
+    config = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': name,
         'USER': _get_env_value('POSTGRES_USER', 'LOCAL_POSTGRES_USER') or '',
@@ -84,6 +97,10 @@ def _get_local_postgres_config():
         'HOST': _get_env_value('POSTGRES_HOST', 'LOCAL_POSTGRES_HOST') or '127.0.0.1',
         'PORT': _get_env_value('POSTGRES_PORT', 'LOCAL_POSTGRES_PORT') or '5432',
     }
+    sslmode = _get_env_value('POSTGRES_SSLMODE', 'DATABASE_SSLMODE')
+    if sslmode:
+        config['OPTIONS'] = {'sslmode': sslmode}
+    return config
 
 # SECURITY WARNING: Keep the secret key used in production secret!
 SECRET_KEY = (
@@ -174,16 +191,18 @@ WSGI_APPLICATION = 'realtor_project.wsgi.application'
 # 3. SQLite fallback for local development
 LOCAL_POSTGRES_DATABASE = _get_local_postgres_config()
 if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
+    database_config = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['RDS_DB_NAME'],
+        'USER': os.environ['RDS_USERNAME'],
+        'PASSWORD': os.environ['RDS_PASSWORD'],
+        'HOST': os.environ['RDS_HOSTNAME'],
+        'PORT': os.environ['RDS_PORT'],
     }
+    sslmode = _get_env_value('POSTGRES_SSLMODE', 'DATABASE_SSLMODE')
+    if sslmode:
+        database_config['OPTIONS'] = {'sslmode': sslmode}
+    DATABASES = {'default': database_config}
 elif LOCAL_POSTGRES_DATABASE:
     DATABASES = {
         'default': LOCAL_POSTGRES_DATABASE,
@@ -297,14 +316,10 @@ CSRF_COOKIE_SAMESITE = 'Lax'  # Lax for development, Strict for production
 CSRF_TRUSTED_ORIGINS = _get_csv_env('CSRF_TRUSTED_ORIGINS', default=[
     'https://propertism.in',
     'https://www.propertism.in',
-    'https://propertism.com',
-    'https://www.propertism.com',
     'http://propertism.in',
     'http://www.propertism.in',
-    'http://propertism.com',
-    'http://www.propertism.com',
-    'http://propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com',
-    'https://propertism-prod.eba-rzpshqvp.us-west-2.elasticbeanstalk.com'
+    'http://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
+    'https://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
 ])
 
 # Session Security
@@ -326,15 +341,17 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
 
 # Production-specific security settings
 if not DEBUG:
-    # HTTPS/SSL - Enable after SSL certificate is configured
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     USE_X_FORWARDED_HOST = True
-    SECURE_SSL_REDIRECT = True  # Enable HTTPS redirect
-    SESSION_COOKIE_SECURE = True  # Enable secure cookies
-    CSRF_COOKIE_SECURE = True  # Enable secure CSRF cookies
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
+
+    # Enable strict HTTPS-only behavior only after SSL is actually configured.
+    if _get_bool_env('ENABLE_HTTPS', 'FORCE_HTTPS', default=False):
+        SECURE_SSL_REDIRECT = True
+        SESSION_COOKIE_SECURE = True
+        CSRF_COOKIE_SECURE = True
+        SECURE_HSTS_SECONDS = 31536000
+        SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+        SECURE_HSTS_PRELOAD = True
     
     # Stricter settings for production
     CSRF_COOKIE_SAMESITE = 'Strict'

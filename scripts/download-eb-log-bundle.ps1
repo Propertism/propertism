@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
-    [string]$EnvironmentName = "propertism-prod",
-    [string]$Region = "us-west-2",
+    [string]$EnvironmentName = "propertism-prod-2026",
+    [string]$Region = "us-east-1",
     [string]$OutputPath = ".\dist\eb-log-bundle.zip"
 )
 

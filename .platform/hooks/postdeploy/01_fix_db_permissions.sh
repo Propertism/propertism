@@ -1,6 +1,5 @@
 #!/bin/bash
-DB_DIR="/var/app/data"
-DB_FILE="$DB_DIR/db.sqlite3"
+set -euo pipefail
 
 if [ -f /opt/elasticbeanstalk/deployment/env ]; then
     set -a
@@ -8,25 +7,23 @@ if [ -f /opt/elasticbeanstalk/deployment/env ]; then
     set +a
 fi
 
-export DB_PATH="${DB_PATH:-$DB_FILE}"
 export DJANGO_SETTINGS_MODULE="${DJANGO_SETTINGS_MODULE:-realtor_project.settings}"
 export PYTHONPATH="/var/app/current:${PYTHONPATH:-}"
+PYTHON_BIN=$(echo /var/app/venv/*/bin/python)
+MEDIA_ROOT="/var/app/current/media"
 
-mkdir -p "$DB_DIR"
-chown -R webapp:webapp "$DB_DIR"
-chmod -R 775 "$DB_DIR"
+mkdir -p "$MEDIA_ROOT"
+chown -R webapp:webapp "$MEDIA_ROOT"
+chmod -R 775 "$MEDIA_ROOT"
 
-if [ -f "$DB_FILE" ]; then
-    chown webapp:webapp "$DB_FILE"
-    chmod 664 "$DB_FILE"
+if [ -n "${ADMIN_USERNAME:-}" ] && [ -n "${ADMIN_EMAIL:-}" ] && [ -n "${ADMIN_PASSWORD:-}" ]; then
+    echo "ADMIN_* variables detected. Ensuring production superuser exists."
+    sudo -u webapp env \
+        DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE" \
+        PYTHONPATH="$PYTHONPATH" \
+        DATABASE_URL="${DATABASE_URL:-}" \
+        POSTGRES_SSLMODE="${POSTGRES_SSLMODE:-}" \
+        "$PYTHON_BIN" /var/app/current/scripts/create_or_reset_prod_superuser.py
+else
+    echo "ADMIN_* variables not set. Skipping superuser bootstrap."
 fi
-
-# Run migrations against the same database file the web process uses.
-sudo -u webapp env \
-    DB_PATH="$DB_PATH" \
-    DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE" \
-    PYTHONPATH="$PYTHONPATH" \
-    /var/app/venv/*/bin/python /var/app/current/manage.py migrate --noinput || true
-
-# Seed script disabled - content is managed via Django admin
-# sudo -u webapp /var/app/venv/*/bin/python /var/app/current/manage.py seed_v2_content || true

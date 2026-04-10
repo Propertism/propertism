@@ -2,9 +2,9 @@
 param(
     [string]$VersionLabel = ("app-safe-" + (Get-Date -Format "yyMMdd-HHmmss")),
     [string]$BundlePath = "",
-    [string]$ApplicationName = "propertism",
-    [string]$EnvironmentName = "propertism-prod",
-    [string]$Region = "us-west-2",
+    [string]$ApplicationName = "propertism-2026",
+    [string]$EnvironmentName = "propertism-prod-2026",
+    [string]$Region = "us-east-1",
     [switch]$SkipCollectstatic
 )
 

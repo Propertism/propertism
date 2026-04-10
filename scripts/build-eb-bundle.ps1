@@ -8,6 +8,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 function Get-PythonCommand {
+    $knownPython = "C:\Python\python.exe"
+    if (Test-Path $knownPython) {
+        return @{ Command = $knownPython; Arguments = @() }
+    }
+
     $python = Get-Command python -ErrorAction SilentlyContinue
     if ($python) {
         return @{ Command = $python.Source; Arguments = @() }

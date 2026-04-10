@@ -1,12 +1,16 @@
 [CmdletBinding()]
 param(
-    [string]$EnvironmentName = "propertism-prod",
-    [string]$Region = "us-west-2",
-    [string]$CertificateArn = "arn:aws:acm:us-west-2:977916686136:certificate/7d12638f-6d78-4f16-8e82-08695f4b891c",
+    [string]$EnvironmentName = "propertism-prod-2026",
+    [string]$Region = "us-east-1",
+    [string]$CertificateArn = "",
     [string]$SslPolicy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 )
 
 $ErrorActionPreference = "Stop"
+
+if ([string]::IsNullOrWhiteSpace($CertificateArn)) {
+    throw "CertificateArn is required. This helper only applies to load-balanced Elastic Beanstalk environments."
+}
 
 function Get-AwsCommand {
     foreach ($candidate in @("aws", "aws.cmd", "aws.exe")) {
