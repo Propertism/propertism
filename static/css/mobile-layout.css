@@ -179,11 +179,18 @@ select {
    Navigation & Header Mobile
    ============================================ */
 
+/* Hide mobile menu elements by default on desktop */
+.mobile-nav,
+.mobile-menu-backdrop,
+.mobile-menu-toggle {
+    display: none !important;
+}
+
 @media (max-width: 1024px) {
     .main-nav { display: none !important; }
     
     .mobile-menu-toggle {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -214,6 +221,7 @@ select {
     .mobile-menu-toggle.active .hamburger-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
     .mobile-nav {
+        display: block !important;
         position: fixed;
         top: 0;
         right: -100%;

@@ -17,8 +17,10 @@
 <link rel="stylesheet" href="{% static 'css/landing-premium.css' %}">
 {% endblock %}
 
+{% block body_attributes %}data-city="{{ city.name }}" data-intent="{{ config.h1 }}" data-city-slug="{{ config.city_slug }}" data-intent-slug="{{ config.intent_slug }}"{% endblock %}
+{% block body_class %}lp-page{% endblock %}
+
 {% block content %}
-<body data-city="{{ city.name }}" data-intent="{{ config.h1 }}" data-city-slug="{{ config.city_slug }}" data-intent-slug="{{ config.intent_slug }}">
 
 <!-- Hero Section -->
 <section class="lp-hero">
@@ -116,5 +118,4 @@
 
 <script src="{% static 'js/landing-conversion.js' %}"></script>
 
-</body>
 {% endblock %}

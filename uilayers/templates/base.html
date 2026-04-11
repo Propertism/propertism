@@ -40,7 +40,7 @@
     
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
     {% include "components/_header-english.html" %}
     {% if messages %}
     <div class="site-flash-stack" aria-live="polite">

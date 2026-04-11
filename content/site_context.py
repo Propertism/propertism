@@ -14,7 +14,16 @@ HOME_SECTION_IDS = {
 
 
 def get_home_section_links():
-    return {name: f"/#{section_id}" for name, section_id in HOME_SECTION_IDS.items()}
+    return {
+        "home": "/",
+        "about": "/about/",
+        "services": "/services/",
+        "properties": "/properties/",
+        "management": "/management/",
+        "blog": "/blog/",
+        "reviews": "/#reviews-section",
+        "contact": "/contact/",
+    }
 
 
 def get_hero_title_segments(title):
