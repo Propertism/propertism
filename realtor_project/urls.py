@@ -6,13 +6,14 @@ from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from content import views as content_views
-from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap
+from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap, LandingPageSitemap
 
 # Sitemap configuration
 sitemaps = {
     'static': StaticViewSitemap,
     'properties': PropertySitemap,
     'blog': BlogSitemap,
+    'landing': LandingPageSitemap,
 }
 
 # Custom error handlers

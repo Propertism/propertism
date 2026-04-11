@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% load seo_tags %}
+
+{% block meta_title %}{{ page_title }}{% endblock %}
+
+{% block seo_meta %}
+{% seo_meta title=page_title description=page_description page_type="website" %}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% endblock %}
+
+{% block content %}
+<div class="city-hub-container">
+    <section class="city-hero">
+        <div class="container">
+            <h1>Property in {{ city.name }}</h1>
+            <p>{{ page_description }}</p>
+        </div>
+    </section>
+
+    <section class="city-intents">
+        <div class="container">
+            <h2>Browse Properties by Category</h2>
+            <div class="intents-grid">
+                {% for intent in intents %}
+                <a href="{{ intent.url }}" class="intent-card">
+                    <h3>{{ intent.title }}</h3>
+                    <p>{{ intent.description|truncatewords:20 }}</p>
+                    <span class="intent-arrow">→</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.city-hub-container {
+    background: #fff;
+}
+
+.city-hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.city-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.city-intents {
+    padding: 60px 20px;
+}
+
+.city-intents h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #0F172A;
+}
+
+.intents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.intent-card {
+    padding: 30px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #0F172A;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.intent-card:hover {
+    border-color: #B89A4A;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.intent-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #0F172A;
+}
+
+.intent-card p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.intent-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #B89A4A;
+}
+
+@media (max-width: 768px) {
+    .city-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .intents-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% load static %}
+<section class="lp-listings">
+    <div class="container">
+        <div class="section-header-compact">
+            <h2>Current Properties in {{ city.name }}</h2>
+            <p>Hand-picked verified properties updated today</p>
+        </div>
+        {% if properties %}
+        <div class="properties-grid">
+            {% for property in properties %}
+            <div class="property-card">
+                {% with image_url=property.get_display_image_url %}
+                <div class="card-image">
+                    {% if image_url %}
+                    <img src="{{ image_url }}" alt="{{ property.title }}" loading="lazy" onerror="this.src='{% static 'images/placeholder-property.jpg' %}'; this.onerror=null;">
+                    {% else %}
+                    <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
+                    {% endif %}
+                    <span class="badge-verified">Verified</span>
+                </div>
+                {% endwith %}
+                <div class="card-content">
+                    <h3 class="property-title">{{ property.title }}</h3>
+                    
+                    <p class="property-meta">
+                        {{ property.location }} · 
+                        {% if property.bedrooms %}{{ property.bedrooms }} BHK · {% endif %}
+                        {% if property.bathrooms %}{{ property.bathrooms }} Bath · {% endif %}
+                        {% if property.area %}{{ property.area }} sq.ft{% endif %}
+                    </p>
+
+                    <div class="property-footer">
+                        <div class="price">
+                            {{ property.formatted_price }}
+                            <span class="amount-words">{{ property.price_in_words_standard }}</span>
+                        </div>
+                        <div class="actions">
+                            <a href="/properties/{{ property.pk }}/" class="btn-view">Details</a>
+                            <button class="btn-whatsapp-sm whatsapp-cta" 
+                                    data-message="Hi, I'm interested in {{ property.title }} in {{ property.location }}. Please share details."
+                                    onclick="openWhatsApp(this.dataset.message)">
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Inline CTA after 3rd property -->
+            {% if forloop.counter == 3 %}
+            <div class="inline-cta">
+                <h3>Need help finding the right {{ property_type_name }}?</h3>
+                <p>Connect with our expert for personalized {{ property_type_name|lower }} recommendations</p>
+                <button class="btn-primary whatsapp-cta" onclick="openWhatsApp()">Chat with Expert</button>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            <p>No {{ config.h1|lower }} currently available. Contact us for personalized options.</p>
+            <button class="btn-primary whatsapp-cta" onclick="openWhatsApp('Hi, I\'m looking for {{ config.h1 }}. Please help me find options.')">
+                Get Personalized Options
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</section>

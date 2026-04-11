@@ -257,40 +257,17 @@
                         <strong>{{ company.us_office_city }}, {{ company.us_office_state }}</strong>
                     </div>
                 </div>
-                <div class="world-clock-strip" id="world-clock">
-                    <div class="world-clock-cell" data-tz="America/New_York">
-                        <span class="world-clock-label">US (ET)</span>
-                        <strong class="world-clock-time">
-                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                            <span class="world-clock-meridiem">--</span>
-                        </strong>
-                        <small class="world-clock-date"></small>
+                {% if stats %}
+                <div class="stats-grid">
+                    {% for stat in stats %}
+                    <div class="stat-card">
+                        <h3>{{ stat.value }}</h3>
+                        <p>{{ stat.label }}</p>
                     </div>
-                    <div class="world-clock-cell" data-tz="Europe/London">
-                        <span class="world-clock-label">UK (GMT)</span>
-                        <strong class="world-clock-time">
-                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                            <span class="world-clock-meridiem">--</span>
-                        </strong>
-                        <small class="world-clock-date"></small>
-                    </div>
-                    <div class="world-clock-cell" data-tz="Asia/Kolkata">
-                        <span class="world-clock-label">India (IST)</span>
-                        <strong class="world-clock-time">
-                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                            <span class="world-clock-meridiem">--</span>
-                        </strong>
-                        <small class="world-clock-date"></small>
-                    </div>
-                    <div class="world-clock-cell" data-tz="Asia/Dubai">
-                        <span class="world-clock-label">Gulf (GST)</span>
-                        <strong class="world-clock-time">
-                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                            <span class="world-clock-meridiem">--</span>
-                        </strong>
-                        <small class="world-clock-date"></small>
-                    </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -690,61 +667,7 @@
         }, 30000);
     }());
 
-    (function () {
-        const cells = document.querySelectorAll("#world-clock .world-clock-cell");
-        if (!cells.length) return;
 
-        function getTimeParts(date, timeZone) {
-            const parts = new Intl.DateTimeFormat("en-US", {
-                timeZone: timeZone,
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-            }).formatToParts(date);
-
-            function getValue(type) {
-                const match = parts.find(function (part) {
-                    return part.type === type;
-                });
-
-                return match ? match.value : "";
-            }
-
-            return {
-                hour: getValue("hour"),
-                minute: getValue("minute"),
-                dayPeriod: getValue("dayPeriod"),
-            };
-        }
-
-        function tick() {
-            const now = Date.now();
-            cells.forEach(function (cell) {
-                const tz = cell.dataset.tz;
-                const timeEl = cell.querySelector(".world-clock-time");
-                const dateEl = cell.querySelector(".world-clock-date");
-                const hoursEl = cell.querySelector(".world-clock-hours");
-                const minutesEl = cell.querySelector(".world-clock-minutes");
-                const meridiemEl = cell.querySelector(".world-clock-meridiem");
-                if (!timeEl) return;
-                const d = new Date(now);
-                const timeParts = getTimeParts(d, tz);
-
-                if (hoursEl) hoursEl.textContent = timeParts.hour || "--";
-                if (minutesEl) minutesEl.textContent = timeParts.minute || "--";
-                if (meridiemEl) meridiemEl.textContent = (timeParts.dayPeriod || "").toLowerCase();
-
-                if (!hoursEl || !minutesEl || !meridiemEl) {
-                    timeEl.textContent = d.toLocaleTimeString("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }).toLowerCase();
-                }
-
-                if (dateEl) dateEl.textContent = d.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
-            });
-        }
-
-        tick();
-        window.setInterval(tick, 1000);
-    }());
 </script>
 {% endblock %}
 

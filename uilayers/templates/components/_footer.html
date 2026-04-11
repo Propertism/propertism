@@ -68,14 +68,78 @@
                     <p class="footer-presence-sub">Coordinated support across India, Gulf, UK, and US.</p>
                 </div>
                 <div class="footer-clocks-wrapper">
-                    {% include "components/_world_clock_widget.html" with widget_id="footer-clocks-all" hide_header=True hide_config=True %}
-                    <script id="footer-clocks-all-config" type="application/json">
-                    [
-                      { "label": "US", "tzLabel": "ET", "timeZone": "America/New_York", "region": "us", "city": "New York" },
-                      { "label": "UK", "tzLabel": "GMT", "timeZone": "Europe/London", "region": "uk", "city": "London" },
-                      { "label": "INDIA", "tzLabel": "IST", "timeZone": "Asia/Kolkata", "region": "india", "city": "Chennai" },
-                      { "label": "GULF", "tzLabel": "GST", "timeZone": "Asia/Dubai", "region": "gulf", "city": "Dubai" }
-                    ]
+                    <div class="world-clock-strip" id="footer-digital-clock">
+                        <div class="world-clock-cell" data-tz="America/New_York">
+                            <span class="world-clock-label">US (ET)</span>
+                            <strong class="world-clock-time">
+                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                                <span class="world-clock-meridiem">--</span>
+                            </strong>
+                            <small class="world-clock-date"></small>
+                        </div>
+                        <div class="world-clock-cell" data-tz="Europe/London">
+                            <span class="world-clock-label">UK (GMT)</span>
+                            <strong class="world-clock-time">
+                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                                <span class="world-clock-meridiem">--</span>
+                            </strong>
+                            <small class="world-clock-date"></small>
+                        </div>
+                        <div class="world-clock-cell" data-tz="Asia/Kolkata">
+                            <span class="world-clock-label">India (IST)</span>
+                            <strong class="world-clock-time">
+                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                                <span class="world-clock-meridiem">--</span>
+                            </strong>
+                            <small class="world-clock-date"></small>
+                        </div>
+                        <div class="world-clock-cell" data-tz="Asia/Dubai">
+                            <span class="world-clock-label">Gulf (GST)</span>
+                            <strong class="world-clock-time">
+                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                                <span class="world-clock-meridiem">--</span>
+                            </strong>
+                            <small class="world-clock-date"></small>
+                        </div>
+                    </div>
+                    <script>
+                    (function () {
+                        var cells = document.querySelectorAll("#footer-digital-clock .world-clock-cell");
+                        if (!cells.length) return;
+
+                        function getTimeParts(date, timeZone) {
+                            var parts = new Intl.DateTimeFormat("en-US", {
+                                timeZone: timeZone,
+                                hour: "numeric",
+                                minute: "2-digit",
+                                hour12: true,
+                            }).formatToParts(date);
+                            function getValue(type) {
+                                var match = parts.find(function (p) { return p.type === type; });
+                                return match ? match.value : "";
+                            }
+                            return { hour: getValue("hour"), minute: getValue("minute"), dayPeriod: getValue("dayPeriod") };
+                        }
+
+                        function tick() {
+                            var now = new Date();
+                            cells.forEach(function (cell) {
+                                var tz = cell.dataset.tz;
+                                var hoursEl = cell.querySelector(".world-clock-hours");
+                                var minutesEl = cell.querySelector(".world-clock-minutes");
+                                var meridiemEl = cell.querySelector(".world-clock-meridiem");
+                                var dateEl = cell.querySelector(".world-clock-date");
+                                var tp = getTimeParts(now, tz);
+                                if (hoursEl) hoursEl.textContent = tp.hour || "--";
+                                if (minutesEl) minutesEl.textContent = tp.minute || "--";
+                                if (meridiemEl) meridiemEl.textContent = (tp.dayPeriod || "").toLowerCase();
+                                if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
+                            });
+                        }
+
+                        tick();
+                        window.setInterval(tick, 1000);
+                    }());
                     </script>
                 </div>
             </div>

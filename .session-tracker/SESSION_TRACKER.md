@@ -5,8 +5,8 @@
 ## File Metadata
 
 **Last Updated By**: Amazon Q
-**Last Updated On**: April 10, 2026 at 22:15 IST
-**Last Update**: SESSION 20 - full production deploy to us-east-1, redirect loop fix, static files fix, admin credentials reset. Site fully live.
+**Last Updated On**: April 10, 2026 at 23:30 IST
+**Last Update**: SESSION 21 - emergency static files restore after ADMIN_* env var removal triggered instance restart. Permanent fix: collectstatic now runs in Procfile before gunicorn on every startup.
 
 ---
 
@@ -204,7 +204,7 @@ Deploy runs automatically:
 
 1. **ENABLE_HTTPS must stay False** — CloudFront terminates HTTPS and forwards to EB over HTTP. Setting ENABLE_HTTPS=True causes an infinite redirect loop (Django redirects to HTTPS → CloudFront serves HTTP to EB → loop).
 
-2. **Static files need a full eb deploy after env-var-only changes** — Env-var updates restart the instance without running postdeploy hooks, leaving staticfiles/ empty. Always follow env-var changes with a code deploy.
+2. **Static files need a full eb deploy after env-var-only changes** — Env-var updates restart the instance without running postdeploy hooks. This is now mitigated by `collectstatic` running in the Procfile before gunicorn on every startup. No manual intervention needed.
 
 3. **ADMIN_* vars must be passed explicitly in sudo env** — The postdeploy hook sources `/opt/elasticbeanstalk/deployment/env` but `sudo -u webapp env` only forwards vars listed explicitly. ADMIN_USERNAME/EMAIL/PASSWORD must be in the env list in `01_fix_db_permissions.sh`.
 
@@ -239,7 +239,8 @@ Deploy runs automatically:
 | 17 | Apr 3 | Favicon fix (base.html + urls.py redirect) | ✅ |
 | 18 | Apr 3 | Homepage section reorder, About expansion, property media restore | ✅ |
 | 19 | Apr 3 | Alternate section backgrounds, spacing tightening, world clock in footer | ✅ |
-| 20 | Apr 10 | **Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live.** | ✅ |
+| 20 | Apr 10 | Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live. | ✅ |
+| 21 | Apr 10 | **Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn.** | ✅ |
 
 ---
 
@@ -267,6 +268,29 @@ Deploy runs automatically:
 - Admin login: `admin / admin123` ✅
 - ADMIN_* env vars removed from EB after reset ✅
 - Git: `d3feee9 Fix postdeploy hook to pass ADMIN_* vars to superuser script`
+
+---
+
+## Session 21 Detail — April 10, 2026
+
+**Trigger:** Site broken immediately after Session 20 — static files 404 again.
+
+**Root Cause:** Removing `ADMIN_*` env vars (cleanup step) restarted the EB instance without running postdeploy hooks → `staticfiles/` empty.
+
+**Immediate Fix:** Full `eb deploy` to trigger postdeploy hooks → `app-d3fe-260410-static-restore`.
+
+**Permanent Fix:** Added `collectstatic --noinput --clear` to `Procfile` before gunicorn:
+```
+web: python manage.py collectstatic --noinput --clear && gunicorn ...
+```
+Now runs on every startup — full deploy, env-var restart, instance replacement, or scaling event.
+
+**Commits:**
+- `ed83870 Run collectstatic on every startup to survive env-var restarts`
+
+**Deployed:** `app-ed83-260410-procfile-collectstatic`
+
+**Rule added to operational notes:** Any env-var change in EB will restart the instance. Always follow with a full `eb deploy` OR rely on the Procfile collectstatic (now permanent).
 
 ---
 

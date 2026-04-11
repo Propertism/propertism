@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views_landing import landing_page, city_hub, nri_landing_page
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -11,4 +12,10 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.blog_post, name='blog_post'),
     path('contact/', views.contact, name='contact'),
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    
+    # SEO Landing Pages
+    # SEO Landing Pages (Primary NRI routing first to avoid pattern overlapping)
+    path('<slug:nri_location_slug>/<slug:geo_slug>/', nri_landing_page, name='nri_landing_page'),
+    path('<slug:city_slug>/<slug:intent_slug>/', landing_page, name='landing_page'),
+    path('<slug:city_slug>/', city_hub, name='city_hub'),
 ]

@@ -1,0 +1,32 @@
+<!-- SEO Content -->
+<section class="lp-seo">
+    <div class="container">
+        <div class="seo-content">
+            <h2>Expert Advisory for {{ config.h1 }}</h2>
+            <p>{{ config.intro }}</p>
+            <p>{{ config.seo_content }}</p>
+            
+            {% if config.is_nri %}
+            <h3>Comprehensive NRI Solutions in {{ city.name }}</h3>
+            <p>Managing real estate from abroad presents unique challenges. Propertism specializes in bridging the gap for NRI investors with a focus on trust, transparency, and professional local execution. Our services are designed to address the specific pain points of overseas property owners.</p>
+            
+            <ul>
+                <li><strong>Remote Asset Management</strong> — Full visibility of your property status via periodic reports and photograps</li>
+                <li><strong>Legal & Documentation Handling</strong> — Expert coordination for registrations, tax compliance, and repatriation support</li>
+                <li><strong>Professional Tenant Management</strong> — High-quality sourcing and background vetting to ensure reliable rental income</li>
+                <li><strong>Transparency & Trust</strong> — Fixed-fee structures with no hidden costs or local coordination friction</li>
+            </ul>
+            {% else %}
+            <h3>Why Choose Propertism in {{ city.name }}?</h3>
+            <p>Propertism Realty Advisors provides a curated discovery experience for local property buyers. Our focus is on high-growth residential zones and verified documentation, ensuring your investment is secure and future-proof.</p>
+            
+            <ul>
+                <li><strong>100% Verified Listings</strong> — Every property is hand-picked and document-checked</li>
+                <li><strong>Direct Builder Pricing</strong> — Transparent deals with no brokerage on new developments</li>
+                <li><strong>Market Intelligence</strong> — Expert insights into {{ city.name }}'s residential infrastructure pipelines</li>
+                <li><strong>Transaction Support</strong> — Professional assistance from site visit to final registration</li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</section>

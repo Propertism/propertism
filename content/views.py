@@ -311,45 +311,71 @@ def contact(request):
 
 
 def send_rfq_notification(inquiry):
-    """Send email notification when RFQ is submitted."""
-    subject = f"New Quote Request from {inquiry.name}"
+    """Send email and whatsapp notification when RFQ is submitted."""
+    subject = f"🚀 New Propertism Lead: {inquiry.name}"
     
     # Build email body
     message_lines = [
-        f"New Quote Request received:",
+        f"You have a new inquiry from the website:",
         f"",
         f"Name: {inquiry.name}",
         f"Email: {inquiry.email}",
         f"Phone: {inquiry.phone or 'Not provided'}",
-        f"",
-        f"Message:",
-        f"{inquiry.message}",
+        f"Message: {inquiry.message}",
         f"",
         f"Submitted: {inquiry.created_at.strftime('%B %d, %Y at %I:%M %p')}",
-        f"",
-        f"View in admin: https://propertism.in/admin/properties/inquiry/{inquiry.id}/change/",
+        f"Admin View: https://propertism.in/admin/properties/inquiry/{inquiry.id}/change/",
     ]
     
     message = "\n".join(message_lines)
     
-    # Send email
-    send_mail(
-        subject=subject,
-        message=message,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[settings.ADMIN_EMAIL],
-        fail_silently=False,
-    )
+    # Send email to info@propertism.in
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.ADMIN_EMAIL],
+            fail_silently=False,
+        )
+    except Exception as e:
+        logger.error(f"Email notification failed: {e}")
+
+    # Trigger WhatsApp
+    send_whatsapp_notification(f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}\nMsg: {inquiry.message}")
+
+
+def send_whatsapp_notification(text):
+    """
+    Placeholder for WhatsApp API Notification.
+    In the future, a service like Twilio or Msg91 can be integrated here.
+    """
+    logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text}")
 
 
 def newsletter_subscribe(request):
-    """Newsletter subscription handler."""
+    """Newsletter subscription handler with Admin notification."""
     if request.method == "POST":
         email = request.POST.get("email")
         if email:
             try:
-                Newsletter.objects.get_or_create(email=email)
-                messages.success(request, "Thank you for subscribing to our newsletter!")
+                sub, created = Newsletter.objects.get_or_create(email=email)
+                if created:
+                    messages.success(request, "Thank you for subscribing to our newsletter!")
+                    # Notify admin via email
+                    try:
+                        send_mail(
+                            subject="📩 New Newsletter Subscriber",
+                            message=f"User {email} has subscribed to the newsletter.",
+                            from_email=settings.DEFAULT_FROM_EMAIL,
+                            recipient_list=[settings.ADMIN_EMAIL],
+                            fail_silently=False,
+                        )
+                    except Exception: pass
+                    # Notify admin via WhatsApp
+                    send_whatsapp_notification(f"📩 *Newsletter*: {email} has subscribed.")
+                else:
+                    messages.info(request, "You are already subscribed. Thank you!")
             except Exception:
                 messages.error(request, "There was an error. Please try again.")
         else:

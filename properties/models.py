@@ -52,27 +52,32 @@ _INTERNATIONAL_SCALES = (
 )
 
 
-def _format_indian_number(value):
-    number = f"{value:.2f}"
-    integer_part, fractional_part = number.split(".")
+def _format_indian_number(value, show_decimals=False):
+    integer_part = str(int(value))
+    
     if len(integer_part) <= 3:
-        return f"{integer_part}.{fractional_part}"
-
-    last_three = integer_part[-3:]
-    remaining = integer_part[:-3]
-    chunks = []
-
-    while remaining:
-        chunks.append(remaining[-2:])
-        remaining = remaining[:-2]
-
-    indian_integer = ",".join(reversed(chunks)) + f",{last_three}"
-    return f"{indian_integer}.{fractional_part}"
+        formatted_integer = integer_part
+    else:
+        last_three = integer_part[-3:]
+        remaining = integer_part[:-3]
+        chunks = []
+        while remaining:
+            chunks.append(remaining[-2:])
+            remaining = remaining[:-2]
+        formatted_integer = ",".join(reversed(chunks)) + f",{last_three}"
+    
+    if show_decimals:
+        fractional_part = f"{value:.2f}".split(".")[1]
+        return f"{formatted_integer}.{fractional_part}"
+    
+    return formatted_integer
 
 
 def _number_to_words(number, scales):
     number = int(number)
 
+    if number == 0:
+        return "Zero"
     if number < 20:
         return _ONES[number]
     if number < 100:
@@ -91,9 +96,15 @@ def _number_to_words(number, scales):
         if number >= scale_value:
             major_value, remainder = divmod(number, scale_value)
             major_words = _number_to_words(major_value, scales)
+            
+            # Simple pluralization for Indian scales
+            display_scale = scale_name
+            if major_value > 1 and scale_name in ["Lakh", "Crore"]:
+                display_scale = f"{scale_name}s"
+                
             if remainder:
-                return f"{major_words} {scale_name} {_number_to_words(remainder, scales)}"
-            return f"{major_words} {scale_name}"
+                return f"{major_words} {display_scale} {_number_to_words(remainder, scales)}"
+            return f"{major_words} {display_scale}"
 
     return str(number)
 
@@ -207,7 +218,9 @@ class Property(models.Model):
     def formatted_price_value(self):
         normalized_price = Decimal(self.price).quantize(Decimal("0.01"))
         if self.currency == "INR":
-            return _format_indian_number(normalized_price)
+            # Indian format typically hides decimals if they are zero for clean display
+            show_decimals = (normalized_price % 1) != 0
+            return _format_indian_number(normalized_price, show_decimals=show_decimals)
         return f"{normalized_price:,.2f}"
 
     @property
@@ -226,6 +239,13 @@ class Property(models.Model):
             fractional_words = _number_to_words(fractional_value, _INTERNATIONAL_SCALES)
             return f"{words} and {fractional_words} {self.currency_minor_unit_label}"
         return words
+
+    @property
+    def price_in_words_standard(self):
+        """Standard format: Rupees X Lakhs Only"""
+        if self.currency == "INR":
+            return f"Rupees {self.price_in_words} Only"
+        return f"{self.price_in_words} {self.currency_unit_label} Only"
 
     @property
     def price_in_words_with_currency(self):

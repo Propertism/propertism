@@ -1,0 +1,396 @@
+/**
+ * Landing Page Conversion Styles
+ * WhatsApp CTAs + Chatbot
+ */
+
+/* Trust Signals */
+.trust-signals {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.trust-item {
+    color: #B89A4A;
+    font-weight: 500;
+}
+
+/* Hero CTA */
+.hero-cta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* WhatsApp Buttons */
+.btn-whatsapp,
+.btn-whatsapp-large {
+    background: #25D366 !important;
+    color: white !important;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover,
+.btn-whatsapp-large:hover {
+    background: #20BA5A !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-whatsapp-small {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-whatsapp-small:hover {
+    background: #20BA5A;
+}
+
+/* Hot Deals Strip */
+.hot-deals-strip {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.hot-deals-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.hot-deals-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.hot-deals-text {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.hot-deals-text strong {
+    font-size: 1.1rem;
+}
+
+.btn-hot-deal {
+    background: white;
+    color: #FF6B6B;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-hot-deal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Property Actions */
+.property-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-view-property {
+    flex: 1;
+}
+
+/* Mid-scroll CTA */
+.mid-scroll-cta {
+    grid-column: 1 / -1;
+    margin: 20px 0;
+}
+
+.cta-card {
+    background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cta-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.cta-card p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.btn-whatsapp-large {
+    font-size: 1.2rem;
+    padding: 18px 40px;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+}
+
+.floating-whatsapp-btn svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Smart Chatbot */
+.smart-chatbot {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    max-height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.smart-chatbot.visible {
+    display: flex;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.chatbot-info strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.chatbot-info small {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    color: #94a3b8;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.bot-message,
+.user-message {
+    margin-bottom: 15px;
+}
+
+.message-bubble {
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message-bubble.bot {
+    background: #f1f5f9;
+    color: #0F172A;
+    margin-right: auto;
+}
+
+.message-bubble.user {
+    background: #0F172A;
+    color: white;
+    margin-left: auto;
+}
+
+.user-message {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bot-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.bot-option-btn {
+    background: white;
+    border: 2px solid #e5e7eb;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.bot-option-btn:hover {
+    border-color: #B89A4A;
+    background: #fffbf0;
+    transform: translateX(5px);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .floating-whatsapp-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .smart-chatbot {
+        width: calc(100% - 40px);
+        right: 20px;
+        bottom: 90px;
+    }
+    
+    .hot-deals-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hot-deals-text {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .cta-card {
+        padding: 30px 20px;
+    }
+    
+    .cta-card h3 {
+        font-size: 1.4rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+    }
+    
+    .property-actions {
+        flex-direction: column;
+    }
+    
+    .btn-view-property,
+    .btn-whatsapp-small {
+        width: 100%;
+    }
+}
+
+/* Thumb-reachable zone for mobile */
+@media (max-width: 480px) {
+    .floating-whatsapp-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+}
