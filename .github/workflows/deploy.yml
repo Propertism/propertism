@@ -15,6 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create deployment package
+        run: zip -r deploy.zip . --exclude '*.git*'
+
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
         with:
@@ -24,5 +27,5 @@ jobs:
           environment_name: propertism-prod-2026
           region: us-east-1
           version_label: "gh-${{ github.run_number }}-${{ github.sha }}"
-          deployment_package: .
+          deployment_package: deploy.zip
           wait_for_environment_recovery: 120
