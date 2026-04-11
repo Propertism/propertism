@@ -559,6 +559,30 @@ function initProfileDropdown() {
 }
 
 /**
+ * Initialize flash messages auto-dismiss
+ */
+function initFlashMessages() {
+    const flashes = document.querySelectorAll('.site-flash');
+    flashes.forEach(flash => {
+        // Auto-dismiss after 6 seconds
+        setTimeout(() => {
+            if (document.body.contains(flash)) {
+                // fade out effect
+                flash.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                flash.style.opacity = '0';
+                flash.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    if (document.body.contains(flash)) {
+                        flash.remove();
+                    }
+                }, 500); // Wait for transition
+            }
+        }, 6000);
+    });
+}
+
+/**
  * Update DOMContentLoaded to include new functions
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -567,4 +591,5 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearch();
     initSignIn();
     initProfileDropdown();
+    initFlashMessages();
 });

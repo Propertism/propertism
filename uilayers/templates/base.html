@@ -45,7 +45,10 @@
     {% if messages %}
     <div class="site-flash-stack" aria-live="polite">
         {% for message in messages %}
-        <div class="site-flash site-flash-{{ message.tags|default:'info' }}">{{ message }}</div>
+        <div class="site-flash site-flash-{{ message.tags|default:'info' }}">
+            <span class="site-flash-text">{{ message }}</span>
+            <button type="button" class="site-flash-close" aria-label="Close" onclick="this.parentElement.remove();">&times;</button>
+        </div>
         {% endfor %}
     </div>
     {% endif %}
