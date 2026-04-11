@@ -1,0 +1,40 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticbeanstalk:CreateApplicationVersion",
+        "elasticbeanstalk:UpdateEnvironment",
+        "elasticbeanstalk:DescribeEnvironments",
+        "elasticbeanstalk:DescribeApplicationVersions",
+        "elasticbeanstalk:DescribeEvents"
+      ],
+      "Resource": [
+        "arn:aws:elasticbeanstalk:us-east-1:622370466597:application/propertism-2026",
+        "arn:aws:elasticbeanstalk:us-east-1:622370466597:environment/propertism-2026/propertism-prod-2026",
+        "arn:aws:elasticbeanstalk:us-east-1:622370466597:applicationversion/propertism-2026/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::elasticbeanstalk-us-east-1-622370466597",
+        "arn:aws:s3:::elasticbeanstalk-us-east-1-622370466597/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticbeanstalk:DescribePlatformVersion",
+        "elasticbeanstalk:ListPlatformVersions"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
