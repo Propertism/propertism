@@ -1,4 +1,4 @@
-﻿# Django settings for realtor_project
+# Django settings for realtor_project
 import os
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -456,3 +456,8 @@ GZIP_CONTENT_TYPES = (
 
 # Data upload settings (already defined above, but ensuring they're set)
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+# WhatsApp Cloud API Configuration
+WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
+WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
+WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +

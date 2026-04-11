@@ -347,10 +347,39 @@ def send_rfq_notification(inquiry):
 
 def send_whatsapp_notification(text):
     """
-    Placeholder for WhatsApp API Notification.
-    In the future, a service like Twilio or Msg91 can be integrated here.
+    Sends a WhatsApp message via the Meta official Cloud API.
+    Required ENV vars: WHATSAPP_PHONE_ID, WHATSAPP_ACCESS_TOKEN, WHATSAPP_ADMIN_PHONE
     """
-    logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text}")
+    import requests
+    
+    phone_id = getattr(settings, 'WHATSAPP_PHONE_ID', None)
+    token = getattr(settings, 'WHATSAPP_ACCESS_TOKEN', None)
+    admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', None)
+
+    if not all([phone_id, token, admin_phone]):
+        logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text} (API not configured)")
+        return
+
+    url = f"https://graph.facebook.com/v17.0/{phone_id}/messages"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "messaging_product": "whatsapp",
+        "to": admin_phone,
+        "type": "text",
+        "text": {"body": text}
+    }
+
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=5)
+        if response.status_code == 200:
+            logger.info("WhatsApp notification sent successfully.")
+        else:
+            logger.error(f"WhatsApp API Error {response.status_code}: {response.text}")
+    except Exception as e:
+        logger.error(f"Failed to send WhatsApp notification: {e}")
 
 
 def newsletter_subscribe(request):

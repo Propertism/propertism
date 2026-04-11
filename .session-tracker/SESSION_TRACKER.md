@@ -5,8 +5,8 @@
 ## File Metadata
 
 **Last Updated By**: Amazon Q
-**Last Updated On**: April 10, 2026 at 23:30 IST
-**Last Update**: SESSION 21 - emergency static files restore after ADMIN_* env var removal triggered instance restart. Permanent fix: collectstatic now runs in Procfile before gunicorn on every startup.
+**Last Updated On**: April 11, 2026 at 16:45 IST
+**Last Update**: SESSION 22 logged - GitHub Actions CI/CD wired. Every push to main auto-deploys to propertism-prod-2026.
 
 ---
 
@@ -17,7 +17,7 @@
 **Site:** https://www.propertism.in/
 **Admin:** https://www.propertism.in/admin/ — `admin / admin123`
 **GitHub:** https://github.com/Propertism/propertism (branch: main)
-**Latest Commit:** d3feee9
+**Latest Commit:** 288d3f7
 
 ---
 
@@ -104,12 +104,18 @@ Local URLs:
 ## Deploy to Production
 
 ```powershell
-cd d:\viji\viji-olivine\03rolledout\01propertism
 git add .
 git commit -m "your message"
 git push origin main
-eb deploy propertism-prod-2026 --label "app-XXXX-YYMMDD-description"
 ```
+
+GitHub Actions auto-deploys on every push to `main`. No manual `eb deploy` needed.
+
+### CI/CD
+- **Workflow:** `.github/workflows/deploy.yml`
+- **IAM User:** `github-actions-propertism` (policy: `AdministratorAccess-AWSElasticBeanstalk`)
+- **GitHub Secrets:** `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+- **Monitor:** https://github.com/Propertism/propertism/actions
 
 Deploy runs automatically:
 1. `collectstatic --noinput --clear`
@@ -240,7 +246,8 @@ Deploy runs automatically:
 | 18 | Apr 3 | Homepage section reorder, About expansion, property media restore | ✅ |
 | 19 | Apr 3 | Alternate section backgrounds, spacing tightening, world clock in footer | ✅ |
 | 20 | Apr 10 | Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live. | ✅ |
-| 21 | Apr 10 | **Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn.** | ✅ |
+| 21 | Apr 10 | Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn. | ✅ |
+| 22 | Apr 11 | **GitHub Actions CI/CD. Every push to main auto-deploys to propertism-prod-2026. IAM user: github-actions-propertism.** | ✅ |
 
 ---
 
