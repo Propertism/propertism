@@ -14,15 +14,21 @@ HOME_SECTION_IDS = {
 
 
 def get_home_section_links():
+    """
+    Navigation links for header.
+    NOTE: 'contact' and 'blog' MUST remain as homepage anchors (#hash)
+    because views.contact and views.blog redirect() to these links internally.
+    Using their own /url/ would create an infinite redirect loop.
+    """
     return {
         "home": "/",
         "about": "/about/",
         "services": "/services/",
         "properties": "/properties/",
         "management": "/management/",
-        "blog": "/blog/",
+        "blog": "/#blog-section",        # views.blog redirects here — DO NOT change to /blog/
         "reviews": "/#reviews-section",
-        "contact": "/contact/",
+        "contact": "/#contact-section",  # views.contact redirects here — DO NOT change to /contact/
     }
 
 
