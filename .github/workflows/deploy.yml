@@ -1,0 +1,31 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create deployment package
+        run: zip -r deploy.zip . --exclude '*.git*'
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: propertism-2026
+          environment_name: propertism-prod-2026
+          region: us-east-1
+          version_label: "gh-${{ github.run_number }}-${{ github.sha }}"
+          deployment_package: deploy.zip
+          wait_for_environment_recovery: 120
