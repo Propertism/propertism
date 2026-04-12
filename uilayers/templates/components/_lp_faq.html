@@ -1,0 +1,19 @@
+{% if faq_items %}
+<section id="sell-faq" class="lp-faq">
+    <div class="container">
+        <div class="section-header-compact">
+            <h2>NRI Sell FAQs</h2>
+            <p>Practical answers for overseas owners planning a sale in {{ city.name }}</p>
+        </div>
+
+        <div class="faq-list">
+            {% for item in faq_items %}
+            <article class="faq-item">
+                <h3>{{ item.question }}</h3>
+                <p>{{ item.answer }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

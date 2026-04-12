@@ -5,26 +5,76 @@
             <h2>Expert Advisory for {{ config.h1 }}</h2>
             <p>{{ config.intro }}</p>
             <p>{{ config.seo_content }}</p>
-            
-            {% if config.is_nri %}
+
+            {% if config.intent_type == "sell" %}
+            <h3>Sell from Abroad with Local Execution in {{ city.name }}</h3>
+            <p>For overseas owners, a sale succeeds only when pricing, legal documentation, buyer handling, and closure coordination move together. Propertism manages the local execution so you can sell from abroad with fewer delays and less uncertainty.</p>
+
+            <ul>
+                <li><strong>Pricing Strategy</strong> - Local market positioning to improve enquiry quality and reduce negotiation drag</li>
+                <li><strong>Buyer Coordination</strong> - Screening, follow-up, site visit support, and transaction progress tracking</li>
+                <li><strong>Legal and POA Support</strong> - Documentation coordination for remote owners and advisor-led closure support</li>
+                <li><strong>Exit Clarity</strong> - Clear process ownership from first discussion to final handover</li>
+            </ul>
+            {% elif config.intent_type == "management" %}
+            <h3>Remote Property Operations for NRIs in {{ city.name }}</h3>
+            <p>Property management is not just maintenance. It is a system for supervising tenants, rentals, inspections, compliance, and owner communication without forcing the owner into constant local coordination.</p>
+
+            <ul>
+                <li><strong>Tenant Oversight</strong> - Rent tracking, renewals, issue management, and move-out coordination</li>
+                <li><strong>Inspection Rhythm</strong> - Scheduled checks and owner updates with local follow-through</li>
+                <li><strong>Maintenance Decisions</strong> - Repair coordination backed by trusted local execution</li>
+                <li><strong>Owner Reporting</strong> - Practical updates so overseas owners stay informed without chasing details</li>
+            </ul>
+            {% elif config.intent_type == "rental" %}
+            <h3>Rental Continuity for Overseas Owners in {{ city.name }}</h3>
+            <p>Rental management solves the everyday friction of leasing from abroad. The focus is not only finding a tenant, but keeping documentation, rent collection, renewals, and transitions predictable.</p>
+
+            <ul>
+                <li><strong>Tenant Sourcing</strong> - Better-fit tenant pipelines and structured screening</li>
+                <li><strong>Rental Documentation</strong> - Agreement coordination and move-in readiness</li>
+                <li><strong>Collection Discipline</strong> - Clear rent follow-up and status visibility</li>
+                <li><strong>Transition Handling</strong> - Renewal, escalation, and move-out support when needed</li>
+            </ul>
+            {% elif config.intent_type == "maintenance" %}
+            <h3>Property Care That Protects Asset Value in {{ city.name }}</h3>
+            <p>Overseas ownership becomes risky when a property is inspected irregularly or repaired late. Maintenance support should protect value, reduce vacancy risk, and keep the owner updated on ground reality.</p>
+
+            <ul>
+                <li><strong>Routine Inspections</strong> - Catch issues early before they become expensive</li>
+                <li><strong>Repair Coordination</strong> - Trusted local vendors with tracked execution</li>
+                <li><strong>Vacancy Protection</strong> - Upkeep that keeps the property ready for renting or sale</li>
+                <li><strong>Verified Updates</strong> - Practical status reporting after work is completed</li>
+            </ul>
+            {% elif config.intent_type == "informational" %}
+            <h3>What NRIs Need to Solve First</h3>
+            <p>The real problem is rarely just one task. Most owners abroad need a reliable operating model for maintenance, tenant issues, paperwork, local supervision, and eventual sale. This page is the starting point for that system.</p>
+
+            <ul>
+                <li><strong>Know the Risk Areas</strong> - Vacancies, poor follow-up, documentation gaps, and delayed repairs</li>
+                <li><strong>Choose the Right Service Path</strong> - Sell, manage, rent, or maintain based on current property condition</li>
+                <li><strong>Reduce Local Dependence</strong> - Move from informal follow-up to structured execution</li>
+                <li><strong>Protect Decision Quality</strong> - Make remote property choices with clearer information</li>
+            </ul>
+            {% elif config.is_nri %}
             <h3>Comprehensive NRI Solutions in {{ city.name }}</h3>
             <p>Managing real estate from abroad presents unique challenges. Propertism specializes in bridging the gap for NRI investors with a focus on trust, transparency, and professional local execution. Our services are designed to address the specific pain points of overseas property owners.</p>
-            
+
             <ul>
-                <li><strong>Remote Asset Management</strong> — Full visibility of your property status via periodic reports and photograps</li>
-                <li><strong>Legal & Documentation Handling</strong> — Expert coordination for registrations, tax compliance, and repatriation support</li>
-                <li><strong>Professional Tenant Management</strong> — High-quality sourcing and background vetting to ensure reliable rental income</li>
-                <li><strong>Transparency & Trust</strong> — Fixed-fee structures with no hidden costs or local coordination friction</li>
+                <li><strong>Remote Asset Management</strong> - Full visibility of your property status via periodic reports and updates</li>
+                <li><strong>Legal and Documentation Handling</strong> - Expert coordination for registrations, tax compliance, and repatriation support</li>
+                <li><strong>Professional Tenant Management</strong> - High-quality sourcing and background vetting to ensure reliable rental income</li>
+                <li><strong>Transparency and Trust</strong> - Fixed-fee structures with no hidden costs or local coordination friction</li>
             </ul>
             {% else %}
             <h3>Why Choose Propertism in {{ city.name }}?</h3>
             <p>Propertism Realty Advisors provides a curated discovery experience for local property buyers. Our focus is on high-growth residential zones and verified documentation, ensuring your investment is secure and future-proof.</p>
-            
+
             <ul>
-                <li><strong>100% Verified Listings</strong> — Every property is hand-picked and document-checked</li>
-                <li><strong>Direct Builder Pricing</strong> — Transparent deals with no brokerage on new developments</li>
-                <li><strong>Market Intelligence</strong> — Expert insights into {{ city.name }}'s residential infrastructure pipelines</li>
-                <li><strong>Transaction Support</strong> — Professional assistance from site visit to final registration</li>
+                <li><strong>100% Verified Listings</strong> - Every property is hand-picked and document-checked</li>
+                <li><strong>Direct Builder Pricing</strong> - Transparent deals with no brokerage on new developments</li>
+                <li><strong>Market Intelligence</strong> - Expert insights into {{ city.name }}'s residential infrastructure pipelines</li>
+                <li><strong>Transaction Support</strong> - Professional assistance from site visit to final registration</li>
             </ul>
             {% endif %}
         </div>

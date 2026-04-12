@@ -9,7 +9,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 
-from .models import BlogPost, CompanyInfo, CustomerReview, CustomerReviewSection, HeroBackgroundImage
+from .models import BlogPost, CompanyInfo, CustomerReview, CustomerReviewSection, HeroBackgroundImage, LandingLead
 
 
 TEST_GIF = (
@@ -161,3 +161,28 @@ class SitemapTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "/blog/chennai-property-update/")
+
+
+class LandingLeadApiTests(TestCase):
+    def test_landing_lead_api_stores_qualified_sell_lead(self):
+        response = self.client.post(
+            reverse("landing_lead_api"),
+            {
+                "phone": "+919999999999",
+                "property_city": "Chennai",
+                "intent_type": "sell",
+                "property_type": "villa",
+                "selling_timeline": "30-days",
+                "geo_origin": "dubai-uae",
+            },
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(LandingLead.objects.count(), 1)
+
+        lead = LandingLead.objects.get()
+        self.assertEqual(lead.intent_type, "sell")
+        self.assertEqual(lead.lead_stage, "qualified")
+        self.assertEqual(lead.geo_origin, "dubai-uae")
+        self.assertEqual(lead.qualification_data["selling_timeline"], "30-days")
+        self.assertEqual(lead.lead_category, "hot")

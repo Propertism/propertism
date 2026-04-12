@@ -9,7 +9,7 @@ from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry,
     CustomerReviewSection, CustomerReview, HomepageCardSection, HomepageCard,
-    HeroBackgroundImage,
+    HeroBackgroundImage, LandingLead,
 )
 
 
@@ -336,4 +336,54 @@ class ContactInquiryAdmin(admin.ModelAdmin):
         if obj:  # Editing existing object
             return self.readonly_fields + ('name', 'email', 'phone', 'service', 'property_type', 'message')
         return self.readonly_fields
+
+
+@admin.register(LandingLead)
+class LandingLeadAdmin(admin.ModelAdmin):
+    list_display = ("phone", "intent_type", "property_city", "geo_origin", "lead_score", "lead_category_badge", "lead_stage", "created_at")
+    list_filter = ("intent_type", "lead_stage", "geo_origin", "property_type", "created_at")
+    search_fields = ("name", "email", "phone", "property_city", "geo_origin")
+    readonly_fields = ("created_at",)
+    ordering = ("-lead_score", "-created_at")
+    fieldsets = (
+        ("Contact", {
+            "fields": ("name", "phone", "email")
+        }),
+        ("Lead Context", {
+            "fields": ("property_city", "property_type", "intent_type", "geo_origin", "lead_stage", "lead_score", "lead_category")
+        }),
+        ("Qualification", {
+            "fields": ("expected_price_range", "preferred_contact_time", "qualification_data", "created_at")
+        }),
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + (
+                "name",
+                "phone",
+                "email",
+                "property_city",
+                "property_type",
+                "intent_type",
+                "geo_origin",
+                "qualification_data",
+                "lead_score",
+                "lead_category",
+            )
+        return self.readonly_fields
+
+    def lead_category_badge(self, obj):
+        color = {
+            "hot": "#b91c1c",
+            "warm": "#b45309",
+            "cold": "#475569",
+        }.get(obj.lead_category, "#475569")
+        return format_html(
+            '<span style="font-weight: 700; color: {};">{}</span>',
+            color,
+            obj.lead_category.upper(),
+        )
+
+    lead_category_badge.short_description = "Lead Category"
 

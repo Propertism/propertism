@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Prefetch
 from django.db.utils import OperationalError, ProgrammingError
-from django.http import Http404, HttpResponsePermanentRedirect
+from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from properties.models import Property
 from properties.models import Inquiry as PropertyInquiry
@@ -18,6 +19,7 @@ from .models import (
     ExpertiseArea,
     HomepageCard,
     HomepageCardSection,
+    LandingLead,
     Newsletter,
     Service,
     Statistic,
@@ -310,6 +312,24 @@ def contact(request):
     return redirect_to_home_section(request, "contact")
 
 
+def send_admin_notification(subject, message_lines, whatsapp_text):
+    """Send email and WhatsApp notifications for new lead activity."""
+    message = "\n".join(message_lines)
+
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.ADMIN_EMAIL],
+            fail_silently=False,
+        )
+    except Exception as exc:
+        logger.error("Email notification failed: %s", exc)
+
+    send_whatsapp_notification(whatsapp_text)
+
+
 def send_rfq_notification(inquiry):
     """Send email and whatsapp notification when RFQ is submitted."""
     subject = f"🚀 New Propertism Lead: {inquiry.name}"
@@ -343,6 +363,181 @@ def send_rfq_notification(inquiry):
 
     # Trigger WhatsApp
     send_whatsapp_notification(f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}\nMsg: {inquiry.message}")
+
+
+def send_landing_lead_notification(lead):
+    """Send notifications for landing-page lead submissions."""
+    qualification = lead.qualification_data or {}
+    extras = []
+    if qualification.get("selling_timeline"):
+        extras.append(f"Selling timeline: {qualification['selling_timeline']}")
+    if qualification.get("occupancy_status"):
+        extras.append(f"Occupancy: {qualification['occupancy_status']}")
+    if qualification.get("expected_rent"):
+        extras.append(f"Expected rent: {qualification['expected_rent']}")
+    if lead.expected_price_range:
+        extras.append(f"Expected price range: {lead.expected_price_range}")
+    if lead.preferred_contact_time:
+        extras.append(f"Preferred contact time: {lead.preferred_contact_time}")
+
+    message_lines = [
+        "You have a new landing-page lead from Propertism:",
+        "",
+        f"Name: {lead.name or 'Not provided'}",
+        f"Phone: {lead.phone}",
+        f"Email: {lead.email or 'Not provided'}",
+        f"Property city: {lead.property_city}",
+        f"Property type: {lead.get_property_type_display() if lead.property_type else 'Not provided'}",
+        f"Intent type: {lead.intent_type}",
+        f"Geo origin: {lead.geo_origin or 'Domestic / not provided'}",
+        f"Lead stage: {lead.lead_stage}",
+        f"Lead score: {lead.lead_score}",
+        f"Lead category: {lead.lead_category}",
+    ]
+
+    if extras:
+        message_lines.extend(["", "Qualification:"])
+        message_lines.extend(extras)
+
+    message_lines.extend(
+        [
+            "",
+            f"Submitted: {lead.created_at.strftime('%B %d, %Y at %I:%M %p')}",
+            f"Admin View: https://propertism.in/admin/content/landinglead/{lead.id}/change/",
+        ]
+    )
+
+    try:
+        send_mail(
+            subject=f"New Landing Lead: {lead.property_city} / {lead.intent_type}",
+            message="\n".join(message_lines),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.ADMIN_EMAIL],
+            fail_silently=False,
+        )
+    except Exception as exc:
+        logger.error("Landing lead email notification failed: %s", exc)
+
+    whatsapp_lines = [
+        "Landing Lead",
+        f"Phone: {lead.phone}",
+        f"City: {lead.property_city}",
+        f"Intent: {lead.intent_type}",
+    ]
+    if lead.geo_origin:
+        whatsapp_lines.append(f"Geo: {lead.geo_origin}")
+    if extras:
+        whatsapp_lines.extend(extras[:2])
+    send_whatsapp_notification("\n".join(whatsapp_lines))
+
+
+@require_POST
+def landing_lead_api(request):
+    """Store leads submitted from landing pages."""
+    phone = (request.POST.get("phone") or "").strip()
+    property_city = (request.POST.get("property_city") or "").strip()
+    intent_type = (request.POST.get("intent_type") or "").strip()
+    geo_origin = (request.POST.get("geo_origin") or "").strip()
+    name = (request.POST.get("name") or "").strip()
+    email = (request.POST.get("email") or "").strip()
+    property_type = (request.POST.get("property_type") or "").strip()
+    selling_timeline = (request.POST.get("selling_timeline") or "").strip()
+    occupancy_status = (request.POST.get("occupancy_status") or "").strip()
+    expected_rent = (request.POST.get("expected_rent") or "").strip()
+
+    valid_intent_types = {choice[0] for choice in LandingLead.INTENT_TYPE_CHOICES}
+    valid_property_types = {choice[0] for choice in LandingLead.PROPERTY_CHOICES}
+
+    errors = {}
+    if not phone:
+        errors["phone"] = "Phone number is required."
+    if not property_city:
+        errors["property_city"] = "Property city is required."
+    if intent_type not in valid_intent_types:
+        errors["intent_type"] = "Intent type is invalid."
+    if property_type and property_type not in valid_property_types:
+        errors["property_type"] = "Property type is invalid."
+    if intent_type == "sell" and not property_type:
+        errors["property_type"] = "Property type is required."
+    if intent_type == "sell" and not selling_timeline:
+        errors["selling_timeline"] = "Selling timeline is required."
+    if intent_type == "management" and not occupancy_status:
+        errors["occupancy_status"] = "Please tell us whether the property is occupied or vacant."
+
+    if errors:
+        return JsonResponse({"ok": False, "errors": errors}, status=400)
+
+    qualification_data = {}
+    if selling_timeline:
+        qualification_data["selling_timeline"] = selling_timeline
+    if occupancy_status:
+        qualification_data["occupancy_status"] = occupancy_status
+    if expected_rent:
+        qualification_data["expected_rent"] = expected_rent
+
+    lead_stage = "qualified" if qualification_data else "initiated"
+
+    lead = LandingLead.objects.create(
+        name=name,
+        phone=phone,
+        email=email,
+        property_city=property_city,
+        property_type=property_type,
+        intent_type=intent_type,
+        geo_origin=geo_origin,
+        lead_stage=lead_stage,
+        qualification_data=qualification_data,
+    )
+
+    try:
+        send_landing_lead_notification(lead)
+    except Exception as exc:
+        logger.error("Failed to send landing lead notification: %s", exc)
+
+    return JsonResponse(
+        {
+            "ok": True,
+            "message": "Thanks. We received your request and will get back to you shortly.",
+            "lead_id": lead.id,
+            "lead_stage": lead.lead_stage,
+            "lead_score": lead.lead_score,
+            "lead_category": lead.lead_category,
+        },
+        status=201,
+    )
+
+
+@require_POST
+def landing_lead_followup_api(request):
+    """Store optional post-submit lead details."""
+    lead_id = (request.POST.get("lead_id") or "").strip()
+    expected_price_range = (request.POST.get("expected_price_range") or "").strip()
+    preferred_contact_time = (request.POST.get("preferred_contact_time") or "").strip()
+
+    if not lead_id:
+        return JsonResponse({"ok": False, "errors": {"lead_id": "Lead id is required."}}, status=400)
+
+    try:
+        lead = LandingLead.objects.get(pk=lead_id)
+    except LandingLead.DoesNotExist:
+        return JsonResponse({"ok": False, "errors": {"lead_id": "Lead not found."}}, status=404)
+
+    if expected_price_range:
+        lead.expected_price_range = expected_price_range
+    if preferred_contact_time:
+        lead.preferred_contact_time = preferred_contact_time
+    lead.save()
+
+    return JsonResponse(
+        {
+            "ok": True,
+            "message": "Thanks. We saved your preferences.",
+            "lead_id": lead.id,
+            "lead_score": lead.lead_score,
+            "lead_category": lead.lead_category,
+        },
+        status=200,
+    )
 
 
 def send_whatsapp_notification(text):

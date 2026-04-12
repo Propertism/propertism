@@ -12,6 +12,8 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.blog_post, name='blog_post'),
     path('contact/', views.contact, name='contact'),
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    path('api/landing-lead/', views.landing_lead_api, name='landing_lead_api'),
+    path('api/landing-lead/followup/', views.landing_lead_followup_api, name='landing_lead_followup_api'),
     
     # SEO Landing Pages
     # SEO Landing Pages (Primary NRI routing first to avoid pattern overlapping)

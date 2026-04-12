@@ -1,0 +1,46 @@
+<section class="lp-sell-cta">
+    <div class="container">
+        <div class="sell-cta-shell">
+            <div class="sell-cta-intro">
+                <span class="sell-cta-kicker">NRI Sell Support</span>
+                <h2>Sell Without Visiting India</h2>
+                <p>Propertism runs your sell process with local execution, buyer coordination, pricing support, and documentation follow-through so you can move from enquiry to closure with less friction.</p>
+            </div>
+
+            <div class="sell-cta-actions">
+                <button type="button" class="btn-primary js-open-lead-form" data-cta-label="Get Property Valuation" data-cta-source="sell-cta-primary">
+                    Get Property Valuation
+                </button>
+                <button type="button" class="btn-primary sell-cta-secondary js-open-lead-form" data-cta-label="Start Selling Process" data-cta-source="sell-cta-secondary">
+                    Start Selling Process
+                </button>
+                <a href="#sell-faq" class="btn-secondary sell-cta-link">See NRI Sell FAQs</a>
+            </div>
+
+            <div class="sell-process-grid">
+                {% for step in sell_process_steps %}
+                <article class="sell-process-card">
+                    <span class="sell-process-index">0{{ forloop.counter }}</span>
+                    <h3>{{ step.title }}</h3>
+                    <p>{{ step.description }}</p>
+                </article>
+                {% endfor %}
+            </div>
+
+            {% if sell_reviews %}
+            <div class="sell-review-grid">
+                {% for review in sell_reviews %}
+                <article class="sell-review-card">
+                    <div class="sell-review-stars" aria-label="{{ review.rating }} out of 5 stars">{{ review.star_icons }}</div>
+                    <p class="sell-review-copy">{{ review.quote }}</p>
+                    <div class="sell-review-meta">
+                        <strong>{{ review.customer_name }}</strong>
+                        {% if review.customer_location %}<span>{{ review.customer_location }}</span>{% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

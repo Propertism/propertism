@@ -1,5 +1,5 @@
 {% load static %}
-<section class="lp-listings">
+<section id="listings" class="lp-listings">
     <div class="container">
         <div class="section-header-compact">
             <h2>Current Properties in {{ city.name }}</h2>
@@ -37,8 +37,7 @@
                         <div class="actions">
                             <a href="/properties/{{ property.pk }}/" class="btn-view">Details</a>
                             <button class="btn-whatsapp-sm whatsapp-cta" 
-                                    data-message="Hi, I'm interested in {{ property.title }} in {{ property.location }}. Please share details."
-                                    onclick="openWhatsApp(this.dataset.message)">
+                                    data-message="Hi, I'm interested in {{ property.title }} in {{ property.location }}. Please share details.">
                                 WhatsApp
                             </button>
                         </div>
@@ -49,9 +48,23 @@
             <!-- Inline CTA after 3rd property -->
             {% if forloop.counter == 3 %}
             <div class="inline-cta">
+                {% if config.intent_type == "sell" %}
+                <h3>Need expert support to sell from abroad?</h3>
+                <p>Get valuation guidance, buyer handling, and document coordination from our NRI sell team.</p>
+                <button type="button" class="btn-primary js-open-lead-form" data-cta-label="Get Property Valuation" data-cta-source="inline-sell-cta">Get Property Valuation</button>
+                {% elif config.intent_type == "management" %}
+                <h3>Need structured property management from abroad?</h3>
+                <p>Tell us whether the property is occupied or vacant and we will recommend the right operating setup.</p>
+                <button type="button" class="btn-primary js-open-lead-form" data-cta-label="Manage My Property" data-cta-source="inline-management-cta">Manage My Property</button>
+                {% elif config.intent_type == "rental" %}
+                <h3>Need help finding the right tenant?</h3>
+                <p>Share your rental expectations and we will help you assess rent, demand, and tenant readiness.</p>
+                <button type="button" class="btn-primary js-open-lead-form" data-cta-label="Find Tenant" data-cta-source="inline-rental-cta">Find Tenant</button>
+                {% else %}
                 <h3>Need help finding the right {{ property_type_name }}?</h3>
                 <p>Connect with our expert for personalized {{ property_type_name|lower }} recommendations</p>
-                <button class="btn-primary whatsapp-cta" onclick="openWhatsApp()">Chat with Expert</button>
+                <button class="btn-primary whatsapp-cta">Chat with Expert</button>
+                {% endif %}
             </div>
             {% endif %}
             {% endfor %}
@@ -59,9 +72,13 @@
         {% else %}
         <div class="no-results">
             <p>No {{ config.h1|lower }} currently available. Contact us for personalized options.</p>
-            <button class="btn-primary whatsapp-cta" onclick="openWhatsApp('Hi, I\'m looking for {{ config.h1 }}. Please help me find options.')">
+            {% if config.intent_type == "sell" or config.intent_type == "management" or config.intent_type == "rental" %}
+            <button type="button" class="btn-primary js-open-lead-form" data-cta-label="{{ primary_cta_label }}" data-cta-source="no-results-cta">{{ primary_cta_label }}</button>
+            {% else %}
+            <button class="btn-primary whatsapp-cta" data-message="Hi, I'm looking for {{ config.h1 }}. Please help me find options.">
                 Get Personalized Options
             </button>
+            {% endif %}
         </div>
         {% endif %}
     </div>

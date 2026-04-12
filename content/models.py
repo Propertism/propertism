@@ -501,3 +501,81 @@ class ContactInquiry(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.service} ({self.submitted_date.strftime('%Y-%m-%d')})"
+
+
+class LandingLead(models.Model):
+    """Lead submissions captured directly from dynamic landing pages."""
+
+    INTENT_TYPE_CHOICES = [
+        ("sell", "Sell"),
+        ("management", "Management"),
+        ("rental", "Rental"),
+        ("maintenance", "Maintenance"),
+        ("informational", "Informational"),
+        ("buy", "Buy"),
+    ]
+
+    PROPERTY_CHOICES = [
+        ("apartment", "Apartment"),
+        ("villa", "Villa"),
+        ("plot", "Plot"),
+        ("commercial", "Commercial"),
+        ("industrial", "Industrial Land"),
+    ]
+
+    LEAD_STAGE_CHOICES = [
+        ("initiated", "Initiated"),
+        ("qualified", "Qualified"),
+    ]
+
+    name = models.CharField(max_length=200, blank=True)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField(blank=True)
+    property_city = models.CharField(max_length=120)
+    property_type = models.CharField(max_length=20, choices=PROPERTY_CHOICES, blank=True)
+    intent_type = models.CharField(max_length=20, choices=INTENT_TYPE_CHOICES)
+    geo_origin = models.CharField(max_length=120, blank=True)
+    lead_stage = models.CharField(max_length=20, choices=LEAD_STAGE_CHOICES, default="initiated")
+    lead_score = models.IntegerField(default=0)
+    lead_category = models.CharField(max_length=10, default="cold")
+    qualification_data = models.JSONField(default=dict, blank=True)
+    expected_price_range = models.CharField(max_length=120, blank=True)
+    preferred_contact_time = models.CharField(max_length=120, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Landing Lead"
+        verbose_name_plural = "Landing Leads"
+
+    def __str__(self):
+        return f"{self.phone} - {self.intent_type} ({self.created_at.strftime('%Y-%m-%d')})"
+
+    def _compute_lead_score(self):
+        score = 0
+        intent_type = (self.intent_type or "").strip()
+        if intent_type == "sell":
+            score += 5
+        if intent_type == "management":
+            score += 2
+        if self.geo_origin:
+            score += 3
+
+        qualification = self.qualification_data or {}
+        selling_timeline = (qualification.get("selling_timeline") or "").strip()
+        if selling_timeline in {"immediate", "30-days"}:
+            score += 3
+        return score
+
+    @staticmethod
+    def _lead_category_for(score):
+        if score >= 8:
+            return "hot"
+        if score >= 4:
+            return "warm"
+        return "cold"
+
+    def save(self, *args, **kwargs):
+        self.lead_score = self._compute_lead_score()
+        self.lead_category = self._lead_category_for(self.lead_score)
+        return super().save(*args, **kwargs)

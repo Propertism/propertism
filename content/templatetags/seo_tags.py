@@ -20,8 +20,24 @@ def _get_company_hero_url(company, site_url):
         return f"{site_url}{hero_image.url}"
     return f"{site_url}/static/images/propertism-hero-bg.jpg"
 
+
+def _make_absolute_url(url, site_url):
+    if not url:
+        return None
+    if url.startswith("http"):
+        return url
+    return f"{site_url}{url}"
+
 @register.inclusion_tag('seo/meta_tags.html', takes_context=True)
-def seo_meta(context, title=None, description=None, image=None, page_type='website'):
+def seo_meta(
+    context,
+    title=None,
+    description=None,
+    image=None,
+    page_type='website',
+    keywords=None,
+    canonical_override=None,
+):
     """
     Generate comprehensive SEO meta tags
     
@@ -48,17 +64,16 @@ def seo_meta(context, title=None, description=None, image=None, page_type='websi
     # Use provided values or defaults
     final_title = title or default_title
     final_description = description or default_description
-    final_image = image or default_image
-    
-    # Make image absolute URL if relative
-    if final_image and not final_image.startswith('http'):
-        final_image = f"{site_url}{final_image}"
+    final_image = _make_absolute_url(image or default_image, site_url)
+    final_canonical = _make_absolute_url(canonical_override or current_url, site_url)
     
     return {
         'title': final_title,
         'description': final_description,
+        'keywords': keywords,
         'image': final_image,
         'url': current_url,
+        'canonical_url': final_canonical,
         'site_url': site_url,
         'page_type': page_type,
         'site_name': company.company_name if company else 'Propertism Realty Advisors',
@@ -189,4 +204,76 @@ def breadcrumb_schema(context, items):
         "itemListElement": item_list
     }
     
+    return {'schema': json.dumps(schema, indent=2)}
+
+
+@register.inclusion_tag('seo/structured_data.html', takes_context=True)
+def service_schema(context, config, city, page_url=None):
+    """Generate service schema for service-led landing pages."""
+    request = context.get('request')
+    site_url = f"{request.scheme}://{request.get_host()}" if request else ''
+    company = _get_company()
+    url = _make_absolute_url(page_url, site_url) or site_url
+
+    service_label = config.get("property_type_label") or config.get("h1") or "Property Service"
+    description = config.get("description") or config.get("seo_content") or service_label
+    provider_name = company.company_name if company else "Propertism Realty Advisors"
+    telephone = company.india_phone_1 if company else ""
+    email = company.email if company else ""
+    locality = city.get("name", "Chennai") if city else "Chennai"
+    region = city.get("state", "Tamil Nadu") if city else "Tamil Nadu"
+
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": service_label,
+        "serviceType": service_label,
+        "description": description,
+        "url": url,
+        "areaServed": {
+            "@type": "City",
+            "name": locality,
+        },
+        "provider": {
+            "@type": "LocalBusiness",
+            "name": provider_name,
+            "telephone": telephone,
+            "email": email,
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": locality,
+                "addressRegion": region,
+                "addressCountry": "IN",
+            },
+        },
+    }
+
+    return {'schema': json.dumps(schema, indent=2)}
+
+
+@register.inclusion_tag('seo/structured_data.html')
+def faq_schema(items):
+    """Generate FAQPage schema from visible FAQ items."""
+    entity_items = []
+    for item in items or []:
+        question = item.get("question")
+        answer = item.get("answer")
+        if not question or not answer:
+            continue
+        entity_items.append(
+            {
+                "@type": "Question",
+                "name": question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": answer,
+                },
+            }
+        )
+
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": entity_items,
+    }
     return {'schema': json.dumps(schema, indent=2)}

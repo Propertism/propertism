@@ -727,6 +727,316 @@ h3 {
     font-weight: 600;
 }
 
+/* ========== SELL CTA + FAQ ========== */
+.lp-sell-cta,
+.lp-faq {
+    padding: var(--section-spacing-tablet) 20px;
+    background: #FFFFFF;
+}
+
+.sell-cta-shell {
+    background: linear-gradient(180deg, #0F172A 0%, #111827 100%);
+    color: #FFFFFF;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+}
+
+.sell-cta-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.14);
+    border: 1px solid rgba(34, 197, 94, 0.28);
+    color: #bbf7d0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.sell-cta-intro h2 {
+    color: #FFFFFF;
+    margin: 14px 0 8px;
+}
+
+.sell-cta-intro p {
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 920px;
+    margin-bottom: 18px;
+}
+
+.sell-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.sell-cta-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: none;
+}
+
+.sell-cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.sell-cta-link {
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+.sell-process-grid,
+.sell-review-grid,
+.faq-list {
+    display: grid;
+    gap: 18px;
+}
+
+.sell-process-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 22px;
+}
+
+.sell-process-card,
+.sell-review-card,
+.faq-item {
+    background: #FFFFFF;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.sell-process-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.sell-process-index {
+    display: inline-flex;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #86efac;
+    letter-spacing: 0.08em;
+}
+
+.sell-process-card h3,
+.sell-review-card strong,
+.faq-item h3 {
+    margin-bottom: 8px;
+}
+
+.sell-process-card p {
+    color: rgba(255, 255, 255, 0.76);
+    margin-bottom: 0;
+}
+
+.sell-review-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 18px;
+}
+
+.sell-review-stars {
+    color: #f59e0b;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+}
+
+.sell-review-copy,
+.faq-item p {
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+}
+
+.sell-review-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sell-review-meta span {
+    color: var(--color-text-secondary);
+    font-size: 13px;
+}
+
+.faq-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* ========== LEAD FORM ========== */
+.lp-lead-form-section {
+    padding: 0 20px var(--section-spacing-tablet);
+    background: #F8FAFC;
+}
+
+.lp-lead-form-section.is-visible {
+    display: block;
+}
+
+.lead-form-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.lead-form-copy {
+    padding: 12px 0;
+}
+
+.lead-form-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.06);
+    color: var(--color-text);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.lead-form-copy h2 {
+    margin: 14px 0 10px;
+}
+
+.lead-form-copy p {
+    max-width: 620px;
+    color: var(--color-text-secondary);
+}
+
+.lead-form-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.lead-form-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.lead-progress-step {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    background: #FFFFFF;
+}
+
+.lead-progress-step.is-active {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: #FFFFFF;
+}
+
+.lead-progress-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(15, 23, 42, 0.12);
+}
+
+.lead-form-feedback {
+    padding: 12px 14px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.lead-form-feedback.is-success {
+    background: #ECFDF3;
+    color: #166534;
+    border: 1px solid #BBF7D0;
+}
+
+.lead-form-feedback.is-error {
+    background: #FEF2F2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+.lead-field,
+.lead-field-grid {
+    margin-bottom: 16px;
+}
+
+.lead-field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.lead-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.lead-field input,
+.lead-field select {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    color: var(--color-text);
+    font-size: 15px;
+}
+
+.lead-field input:focus,
+.lead-field select:focus {
+    outline: none;
+    border-color: rgba(15, 23, 42, 0.28);
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+
+.lead-field small {
+    display: block;
+    min-height: 18px;
+    margin-top: 6px;
+    color: #B91C1C;
+    font-size: 12px;
+}
+
+.lead-form-actions,
+.lead-field-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.lead-form-actions .btn-primary,
+.lead-form-actions .btn-secondary,
+.lead-field-actions .btn-primary {
+    min-width: 160px;
+}
+
 /* ========== FLOATING WHATSAPP ========== */
 .floating-wa {
     position: fixed;
@@ -749,6 +1059,29 @@ h3 {
 .floating-wa:hover {
     transform: scale(1.08);
     box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+}
+
+.whatsapp-fallback {
+    position: fixed;
+    bottom: 88px;
+    right: 24px;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.whatsapp-fallback.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ========== CHATBOT ========== */
@@ -932,7 +1265,10 @@ h3 {
     .lp-hero,
     .lp-listings,
     .lp-related,
-    .lp-seo {
+    .lp-seo,
+    .lp-lead-form-section,
+    .lp-sell-cta,
+    .lp-faq {
         padding: var(--section-spacing-mobile) 16px;
     }
     
@@ -958,7 +1294,41 @@ h3 {
         width: 100%;
         gap: 10px;
     }
-    
+
+    .sell-cta-shell {
+        padding: 22px 18px;
+    }
+
+    .sell-cta-actions {
+        flex-direction: column;
+    }
+
+    .sell-cta-actions .btn-primary,
+    .sell-cta-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .lead-form-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .lead-field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lead-form-actions,
+    .lead-field-actions {
+        flex-direction: column;
+    }
+
+    .lead-form-actions .btn-primary,
+    .lead-form-actions .btn-secondary,
+    .lead-field-actions .btn-primary {
+        width: 100%;
+    }
+
     .btn-primary,
     .btn-secondary,
     .btn-whatsapp,
@@ -972,7 +1342,13 @@ h3 {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
+    .sell-process-grid,
+    .sell-review-grid,
+    .faq-list {
+        grid-template-columns: 1fr;
+    }
+
     .inline-cta {
         padding: 36px 24px;
     }
