@@ -123,9 +123,24 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Media files — stored in S3 so uploads survive every deploy
+_S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '')
+
+if _S3_MEDIA_BUCKET:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
+    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_S3_CUSTOM_DOMAIN = f'{_S3_MEDIA_BUCKET}.s3.amazonaws.com'
+    AWS_DEFAULT_ACL = None          # use bucket policy, not per-object ACL
+    AWS_S3_FILE_OVERWRITE = False   # never silently overwrite uploads
+    AWS_QUERYSTRING_AUTH = False    # public read via bucket policy
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+    MEDIA_ROOT = ''
+else:
+    # Fallback for local/dev — keeps working without S3
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
