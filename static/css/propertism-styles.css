@@ -3434,7 +3434,7 @@ section.custom-cards-section:nth-of-type(even) {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ── Global Presence tagline card ── */
+/* ── Global Client Network tagline card ── */
 .world-clock-cell--tagline {
     justify-content: space-between;
 }

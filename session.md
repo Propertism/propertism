@@ -1,15 +1,15 @@
 # Session Log - April 16, 2026
 
 ## Objective
-Finalize UI refinements for the "Global Presence" and "Office Hours" cards, clean up the Django Admin interface by hiding unused/passive models, and improve the Insight (Blog) section on the homepage.
+Finalize UI refinements for the "Global Client Network" and "Office Hours" cards, clean up the Django Admin interface by hiding unused/passive models, and improve the Insight (Blog) section on the homepage.
 
 ## 1. UI Refinements (Homepage)
-- **Global Presence Card**:
-    - Re-ordered layout to prioritize Global Presence before Office Hours.
+- **Global Client Network Card**:
+    - Re-ordered layout to prioritize Global Client Network before Office Hours.
     - Updated card styles with subtle borders and neutral backgrounds for a premium feel.
     - Removed date display from the Reach section to focus on coordination branding.
 - **Reach Messaging**:
-    - Unified the "Our Reach" and "Global Presence" messaging in a single line.
+    - Unified the "Our Reach" and "Global Client Network" messaging in a single line.
     - Standardized "Open Now" font weights and alignment with IST timezones.
 
 ## 2. Django Admin Cleanup
