@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>06content.post | Professional Content Engine</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#fbd185",
+                      "surface-container-low": "#f0f4f7",
+                      "on-secondary-fixed": "#324053",
+                      "secondary-dim": "#465468",
+                      "surface-tint": "#4c6078",
+                      "surface-bright": "#f7f9fb",
+                      "on-primary-fixed-variant": "#4a5d75",
+                      "on-surface-variant": "#566166",
+                      "on-primary": "#f5f7ff",
+                      "error": "#9f403d",
+                      "primary-fixed": "#d1e4ff",
+                      "on-tertiary-container": "#624604",
+                      "tertiary": "#785a1a",
+                      "on-primary-container": "#40536b",
+                      "secondary-fixed": "#d5e3fc",
+                      "surface-container": "#e8eff3",
+                      "outline": "#717c82",
+                      "on-tertiary": "#fff8f1",
+                      "secondary": "#526074",
+                      "on-tertiary-fixed-variant": "#6c500f",
+                      "surface-container-highest": "#d9e4ea",
+                      "on-secondary-fixed-variant": "#4e5c71",
+                      "on-tertiary-fixed": "#4a3400",
+                      "on-error-container": "#752121",
+                      "surface-dim": "#cfdce3",
+                      "primary-container": "#d1e4ff",
+                      "outline-variant": "#a9b4b9",
+                      "tertiary-fixed-dim": "#ecc479",
+                      "inverse-on-surface": "#9a9d9f",
+                      "primary-dim": "#41546c",
+                      "on-background": "#2a3439",
+                      "tertiary-fixed": "#fbd185",
+                      "primary-fixed-dim": "#c2d6f3",
+                      "error-container": "#fe8983",
+                      "background": "#f7f9fb",
+                      "surface-container-high": "#e1e9ee",
+                      "on-primary-fixed": "#2d4158",
+                      "tertiary-dim": "#6b4e0e",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#d9e4ea",
+                      "on-error": "#fff7f6",
+                      "inverse-surface": "#0b0f10",
+                      "secondary-fixed-dim": "#c7d5ed",
+                      "error-dim": "#4e0309",
+                      "inverse-primary": "#cadefb",
+                      "on-secondary-container": "#455367",
+                      "surface": "#f7f9fb",
+                      "on-surface": "#2a3439",
+                      "on-secondary": "#f8f8ff",
+                      "secondary-container": "#d5e3fc",
+                      "primary": "#4c6078"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+      </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .architectural-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        #output-text {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+    {% csrf_token %}
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#f7f9fb]/80 dark:bg-[#1a2e44]/80 backdrop-blur-xl shadow-[0_12px_40px_rgba(42,52,57,0.06)] h-16 flex justify-between items-center px-8">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-primary rounded-sm flex items-center justify-center overflow-hidden">
+                <span class="text-white font-bold text-xs">06</span>
+            </div>
+            <span class="text-xl font-bold tracking-tighter text-[#4c6078] dark:text-[#f7f9fb] font-headline uppercase">content.post</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-[#a9b4b9] hover:text-[#4c6078] transition-colors font-manrope tracking-tight text-sm font-semibold" href="/">Dashboard</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <span class="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest">Engine α</span>
+        </div>
+    </header>
+
+    <!-- Sidebar Wrapper -->
+    <aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 pt-20 bg-[#f7f9fb] dark:bg-[#1a2e44] z-40">
+        <div class="flex flex-col gap-2 px-4 py-6">
+            <div class="mb-8 px-4">
+                <p class="text-lg font-manrope font-bold text-[#785a1a]">Post Architect</p>
+                <p class="text-xs font-inter text-[#4c6078]/60 uppercase tracking-widest mt-1">v0.6 Internal</p>
+            </div>
+            <a class="flex items-center gap-3 bg-[#ffffff] dark:bg-[#4c6078] text-[#4c6078] dark:text-white rounded-md px-4 py-3 font-semibold transition-transform duration-300 ease-in-out" href="#">
+                <span class="material-symbols-outlined">edit_note</span>
+                <span class="font-inter text-[0.875rem]">Generator</span>
+            </a>
+            <div class="mt-auto px-4 py-8">
+                <p class="text-[10px] uppercase tracking-tighter text-outline text-center">06content.post</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-24 pb-12 px-8 lg:px-12 min-h-screen">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header Section -->
+            <div class="mb-12">
+                <h1 class="text-4xl md:text-[3.5rem] font-headline font-extrabold text-on-surface tracking-tighter leading-none mb-4">Content Architect</h1>
+                <p class="text-lg text-on-surface-variant font-body tracking-tight">Rapid rule-based content generation.</p>
+            </div>
+
+            <!-- Asymmetric Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Left: Configuration Panel (4/12) -->
+                <div class="lg:col-span-4 flex flex-col gap-8">
+                    <div class="p-8 bg-surface-container rounded-xl">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-8">Parameters</h3>
+                        <form id="generator-form" class="flex flex-col gap-6">
+                            <!-- Dropdown Platform -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-primary">Platform</label>
+                                <div class="relative">
+                                    <select name="platform" id="platform" class="w-full bg-surface-container-lowest border-none text-sm font-medium py-3 px-4 rounded-md focus:ring-2 focus:ring-primary appearance-none">
+                                        <option value="linkedin">LinkedIn</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-outline">expand_more</span>
+                                </div>
+                            </div>
+                            <!-- Dropdown Intent (Locked to SELL) -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-primary">Intent (Locked)</label>
+                                <div class="relative">
+                                    <select name="intent" id="intent" class="w-full bg-surface-container-lowest border-none text-sm font-medium py-3 px-4 rounded-md focus:ring-2 focus:ring-primary appearance-none opacity-60 cursor-not-allowed">
+                                        <option value="sell">Sell</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-outline">lock</span>
+                                </div>
+                            </div>
+                            <!-- Dropdown Geo -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-primary">Target Geo</label>
+                                <div class="relative">
+                                    <select name="geo" id="geo" class="w-full bg-surface-container-lowest border-none text-sm font-medium py-3 px-4 rounded-md focus:ring-2 focus:ring-primary appearance-none">
+                                        <option value="USA">USA</option>
+                                        <option value="UK">UK</option>
+                                        <option value="Generic">Generic</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-outline">expand_more</span>
+                                </div>
+                            </div>
+                            <button type="button" id="generate-btn" class="mt-4 w-full bg-primary py-4 text-on-primary rounded-md font-bold tracking-tight hover:bg-primary-dim transition-colors flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                                <span id="btn-text">Generate Draft</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Decorative Branding Block -->
+                    <div class="relative aspect-square rounded-xl overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-primary to-primary-dim opacity-90 z-10"></div>
+                        <img alt="Architectural Detail" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_Xh2919JaH_XGBScdBZn0a7fN-lBoSC-X3Tab9Y7yaM9H171yfvGE1dllLDY_lyB87sg2hQ4gUx23j8GpOrlbftcqI5tfb-5E4uy8xCpJzAC-GvsrWw3WhLqaF4YHtVxuX6MUrSE2eNRoFelwqgiutCAF535tTZyUMvvq6hKXQaZ1QSfoYVE2GnFayxLQJCOG4B6uS0ItApV8Q1P6M3TAKBgQCwQXcxy_vdlXQwZJb9FQzZ-bjOABcdBApNhUyzhgUPP8iB_U49sL"/>
+                        <div class="absolute inset-0 z-20 p-8 flex flex-col justify-end">
+                            <span class="text-tertiary-fixed font-headline font-extrabold text-2xl tracking-tighter">06content.post</span>
+                            <p class="text-on-primary/70 text-sm mt-2">Professional output for real estate outreach without the noise.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Output Panel (8/12) -->
+                <div class="lg:col-span-8">
+                    <div class="bg-surface-container-lowest shadow-[0_12px_40px_rgba(42,52,57,0.06)] rounded-xl overflow-hidden flex flex-col min-h-[600px]">
+                        <div class="px-10 py-6 bg-surface-container-low flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Generated Post Text</span>
+                            <div class="flex gap-4">
+                                <button id="copy-btn" class="p-2 hover:bg-surface-container rounded-md transition-colors" title="Copy to clipboard">
+                                    <span class="material-symbols-outlined text-on-surface-variant">content_copy</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-10 flex-grow">
+                            <div class="max-w-2xl">
+                                <div id="output-placeholder" class="space-y-6 text-on-surface-variant/40 font-body italic">
+                                    Click "Generate Draft" to create your content...
+                                </div>
+                                <div id="output-text" class="hidden space-y-6 text-on-surface font-body leading-relaxed text-base">
+                                    <!-- Dynamic content goes here -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Footer Area -->
+                        <div class="px-10 py-6 bg-surface-container-low/50 flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-outline">
+                            <span id="save-status">Ready</span>
+                            <span class="text-tertiary">Engine: 06content.post α</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const generateBtn = document.getElementById('generate-btn');
+        const btnText = document.getElementById('btn-text');
+        const outputText = document.getElementById('output-text');
+        const outputPlaceholder = document.getElementById('output-placeholder');
+        const copyBtn = document.getElementById('copy-btn');
+        const saveStatus = document.getElementById('save-status');
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        generateBtn.addEventListener('click', async () => {
+            const platform = document.getElementById('platform').value;
+            const intent = document.getElementById('intent').value;
+            const geo = document.getElementById('geo').value;
+
+            // Loading state
+            btnText.innerText = 'Architecting...';
+            generateBtn.disabled = true;
+            saveStatus.innerText = 'Processing...';
+
+            try {
+                const response = await fetch('/internal/06content-post/api/generate/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: new URLSearchParams({
+                        'platform': platform,
+                        'intent': intent,
+                        'geo': geo
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    outputPlaceholder.classList.add('hidden');
+                    outputText.classList.remove('hidden');
+                    outputText.innerText = data.generated_text;
+                    saveStatus.innerText = 'Draft Generated: ' + new Date().toLocaleTimeString();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to generate content'));
+                    saveStatus.innerText = 'Error';
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Connection error. Please try again.');
+                saveStatus.innerText = 'Connection Failed';
+            } finally {
+                btnText.innerText = 'Generate Draft';
+                generateBtn.disabled = false;
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            const text = outputText.innerText;
+            if (!text) return;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const icon = copyBtn.querySelector('.material-symbols-outlined');
+                const originalIcon = icon.innerText;
+                icon.innerText = 'check';
+                setTimeout(() => {
+                    icon.innerText = originalIcon;
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
