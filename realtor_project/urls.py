@@ -42,10 +42,10 @@ urlpatterns = [
 # Static and media files - serve in all environments (including production admin)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Serve media files - needed for admin image previews
-# In production, configure nginx/apache to serve /media/ for better performance
-urlpatterns += [
-    re_path(r'^media/(?P<path>.*)$', serve, {
-        'document_root': settings.MEDIA_ROOT,
-    }),
-]
+# Serve media files only in non-production (S3 handles media in production)
+if settings.MEDIA_ROOT:
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
