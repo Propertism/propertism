@@ -29,12 +29,12 @@ urlpatterns = [
         RedirectView.as_view(url=f'{settings.STATIC_URL}images/propertism-logo-tm.png', permanent=True),
     ),
     path(f'{settings.ADMIN_URL}/', admin.site.urls),
-    path('', include('content.urls')),
     path('properties/', include('properties.urls_web')),
     path('chat/', include('chat.urls')),
     path('api/', include('properties.urls')),
     path('api/', include('users.urls')),
     path('api/', include('search.urls')),
+    path('', include('content.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
 ]
