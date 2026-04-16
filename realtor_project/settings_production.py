@@ -141,6 +141,7 @@ if _S3_MEDIA_BUCKET:
     AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_S3_CUSTOM_DOMAIN = f'{_S3_MEDIA_BUCKET}.s3.amazonaws.com'
+    AWS_LOCATION = 'media'
     AWS_DEFAULT_ACL = None          # use bucket policy, not per-object ACL
     AWS_S3_FILE_OVERWRITE = False   # never silently overwrite uploads
     AWS_QUERYSTRING_AUTH = False    # public read via bucket policy
