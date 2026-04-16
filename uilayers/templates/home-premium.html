@@ -119,6 +119,54 @@
     }
     
     /* Mobile styles are in mobile-layout.css */
+    
+    /* Journal/Blog Expansion Styles */
+    .journal-clickable-title a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    
+    .journal-clickable-title a:hover {
+        color: #B89A4A;
+    }
+    
+    .journal-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .btn-journal-expand {
+        background: none;
+        border: none;
+        color: #B89A4A;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+    
+    .btn-journal-expand:hover {
+        background: rgba(184, 154, 74, 0.1);
+    }
+    
+    .journal-content-full {
+        margin-top: 1rem;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #334155;
+    }
+    
+    .journal-preview-card.is-expanded {
+        grid-column: 1 / -1; /* Take full width if expanded? Maybe too much. Let's keep it in grid. */
+        z-index: 20;
+    }
 </style>
 {% endblock %}
 
@@ -447,11 +495,25 @@
         </div>
         <div class="journal-preview-grid">
             {% for post in recent_posts %}
-            <article class="journal-preview-card">
-                <span class="journal-preview-category">{{ post.get_category_display }}</span>
-                <h3>{{ post.title }}</h3>
-                <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{ post.content|truncatewords:24 }}{% endif %}</p>
-                <small>{{ post.published_date|date:"M d, Y" }}</small>
+            <article class="journal-preview-card" data-journal-card>
+                <div class="journal-card-header">
+                    <span class="journal-preview-category">{{ post.get_category_display }}</span>
+                    <h3 class="journal-clickable-title"><a href="{% url 'blog_post' post.slug %}">{{ post.title }}</a></h3>
+                </div>
+                
+                <div class="journal-content-wrapper">
+                    <div class="journal-content-preview">
+                        {% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{ post.content|truncatewords:24 }}{% endif %}
+                    </div>
+                    <div class="journal-content-full" style="display: none;">
+                        {{ post.content|linebreaks }}
+                    </div>
+                </div>
+
+                <div class="journal-card-footer">
+                    <small>{{ post.published_date|date:"M d, Y" }}</small>
+                    <button type="button" class="btn-journal-expand" data-expand-journal>Read More</button>
+                </div>
             </article>
             {% empty %}
             <article class="journal-preview-card">
@@ -633,6 +695,34 @@
             });
 
             updateCarousel(0);
+        });
+
+        // Journal/Blog Expansion Logic
+        const journalCards = document.querySelectorAll("[data-journal-card]");
+        
+        journalCards.forEach(card => {
+            const toggleBtn = card.querySelector("[data-expand-journal]");
+            const preview = card.querySelector(".journal-content-preview");
+            const fullContent = card.querySelector(".journal-content-full");
+            
+            if (!toggleBtn || !fullContent) return;
+            
+            toggleBtn.addEventListener("click", () => {
+                const isExpanded = card.classList.toggle("is-expanded");
+                
+                if (isExpanded) {
+                    fullContent.style.display = "block";
+                    preview.style.display = "none";
+                    toggleBtn.textContent = "Show Less";
+                    
+                    // Smooth scroll to card if it's now very long
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    fullContent.style.display = "none";
+                    preview.style.display = "block";
+                    toggleBtn.textContent = "Read More";
+                }
+            });
         });
 
         const heroBackgroundData = document.getElementById("hero-background-data");

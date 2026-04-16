@@ -1,0 +1,10 @@
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+    {% comment %} 
+        Hidden as requested: "Hide the Recent Sections in the django admin"
+    {% endcomment %}
+    <div id="content-related" style="display: none !important;">
+        {{ block.super }}
+    </div>
+{% endblock %}

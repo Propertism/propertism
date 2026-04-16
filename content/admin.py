@@ -1,3 +1,4 @@
+# FIXED DUPLICATE REGISTRATION VERSION
 from django.contrib import admin
 from django import forms
 from django.core.exceptions import ValidationError
@@ -313,29 +314,29 @@ class NewsletterAdmin(admin.ModelAdmin):
     readonly_fields = ('subscribed_date',)
 
 
-@admin.register(ContactInquiry)
-class ContactInquiryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'service', 'submitted_date', 'is_read')
-    list_filter = ('is_read', 'service', 'property_type', 'submitted_date')
-    search_fields = ('name', 'email', 'phone', 'message')
-    date_hierarchy = 'submitted_date'
-    readonly_fields = ('submitted_date',)
-    fieldsets = (
-        ('Contact Information', {
-            'fields': ('name', 'email', 'phone')
-        }),
-        ('Inquiry Details', {
-            'fields': ('service', 'property_type', 'message')
-        }),
-        ('Status', {
-            'fields': ('is_read', 'notes', 'submitted_date')
-        }),
-    )
-    
-    def get_readonly_fields(self, request, obj=None):
-        if obj:  # Editing existing object
-            return self.readonly_fields + ('name', 'email', 'phone', 'service', 'property_type', 'message')
-        return self.readonly_fields
+# @admin.register(ContactInquiry)
+# class ContactInquiryAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'email', 'service', 'submitted_date', 'is_read')
+#     list_filter = ('is_read', 'service', 'property_type', 'submitted_date')
+#     search_fields = ('name', 'email', 'phone', 'message')
+#     date_hierarchy = 'submitted_date'
+#     readonly_fields = ('submitted_date',)
+#     fieldsets = (
+#         ('Contact Information', {
+#             'fields': ('name', 'email', 'phone')
+#         }),
+#         ('Inquiry Details', {
+#             'fields': ('service', 'property_type', 'message')
+#         }),
+#         ('Status', {
+#             'fields': ('is_read', 'notes', 'submitted_date')
+#         }),
+#     )
+#     
+#     def get_readonly_fields(self, request, obj=None):
+#         if obj:  # Editing existing object
+#             return self.readonly_fields + ('name', 'email', 'phone', 'service', 'property_type', 'message')
+#         return self.readonly_fields
 
 
 @admin.register(LandingLead)
@@ -387,3 +388,15 @@ class LandingLeadAdmin(admin.ModelAdmin):
 
     lead_category_badge.short_description = "Lead Category"
 
+
+# --- ADMIN UI CLEANUP ---
+# Hide core Django models to keep the admin focused on content and properties
+from django.contrib.auth.models import Group, User
+from django.contrib.sites.models import Site
+
+try:
+    admin.site.unregister(Group)
+    admin.site.unregister(User)
+    admin.site.unregister(Site)
+except admin.sites.NotRegistered:
+    pass

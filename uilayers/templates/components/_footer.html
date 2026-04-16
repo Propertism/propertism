@@ -98,7 +98,7 @@
                         </div>
                         <div class="world-clock-cell world-clock-cell--tagline">
                             <span class="world-clock-label">OUR REACH</span>
-                            <strong class="world-clock-tagline-title">Global<br>Presence</strong>
+                            <strong class="world-clock-tagline-title">Global Presence</strong>
                             <small class="world-clock-date">Coordinated support across India, Gulf, UK &amp; US.</small>
                         </div>
                         <div class="world-clock-cell world-clock-cell--office-hours" data-footer-availability data-tz="Asia/Kolkata">
@@ -156,6 +156,7 @@
                             var now = new Date();
                             cells.forEach(function (cell) {
                                 if (cell.classList.contains("world-clock-cell--office-hours")) return;
+                                if (cell.classList.contains("world-clock-cell--tagline")) return;
                                 var tz = cell.dataset.tz;
                                 var hoursEl = cell.querySelector(".world-clock-hours");
                                 var minutesEl = cell.querySelector(".world-clock-minutes");
