@@ -14,19 +14,20 @@ def _get_company():
     return get_company_info()
 
 
-def _get_company_hero_url(company, site_url):
-    hero_image = company.get_primary_hero_image() if company else None
-    if hero_image:
-        return f"{site_url}{hero_image.url}"
-    return f"{site_url}/static/images/propertism-hero-bg.jpg"
-
-
 def _make_absolute_url(url, site_url):
     if not url:
         return None
-    if url.startswith("http"):
-        return url
+    if str(url).startswith("http"):
+        return str(url)
     return f"{site_url}{url}"
+
+
+def _get_company_hero_url(company, site_url):
+    hero_image = company.get_primary_hero_image() if company else None
+    if hero_image:
+        return _make_absolute_url(hero_image.url, site_url)
+    return _make_absolute_url('/static/images/propertism-hero-bg.jpg', site_url)
+
 
 @register.inclusion_tag('seo/meta_tags.html', takes_context=True)
 def seo_meta(
@@ -40,33 +41,30 @@ def seo_meta(
 ):
     """
     Generate comprehensive SEO meta tags
-    
+
     Usage:
         {% load seo_tags %}
         {% seo_meta title="Page Title" description="Page description" image="/path/to/image.jpg" %}
     """
     request = context.get('request')
-    
-    # Build absolute URL
+
     if request:
         current_url = request.build_absolute_uri()
         site_url = f"{request.scheme}://{request.get_host()}"
     else:
         current_url = settings.ALLOWED_HOSTS[0] if settings.ALLOWED_HOSTS else 'localhost'
         site_url = current_url
-    
-    # Default values
+
     company = _get_company()
     default_title = "Propertism Realty Advisors | NRI Property Management Chennai"
     default_description = "Expert NRI property management services in Chennai, India. Buy, sell, and manage your real estate investments with confidence. Professional rental management and property maintenance."
     default_image = _get_company_hero_url(company, site_url)
-    
-    # Use provided values or defaults
+
     final_title = title or default_title
     final_description = description or default_description
     final_image = _make_absolute_url(image or default_image, site_url)
     final_canonical = _make_absolute_url(canonical_override or current_url, site_url)
-    
+
     return {
         'title': final_title,
         'description': final_description,
@@ -88,12 +86,12 @@ def organization_schema(context):
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
     company = _get_company()
     logo_url = (
-        f"{site_url}{company.logo.url}"
+        _make_absolute_url(company.logo.url, site_url)
         if company and company.logo
-        else f"{site_url}/static/images/propertism-logo.png"
+        else _make_absolute_url('/static/images/propertism-logo.png', site_url)
     )
     hero_url = _get_company_hero_url(company, site_url)
-    
+
     schema = {
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
@@ -129,7 +127,7 @@ def organization_schema(context):
             ] if url
         ]
     }
-    
+
     return {'schema': json.dumps(schema, indent=2)}
 
 
@@ -137,7 +135,7 @@ def organization_schema(context):
 def property_schema(property_obj, request=None):
     """Generate Residence schema for property listing"""
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
-    
+
     schema = {
         "@context": "https://schema.org",
         "@type": "Residence",
@@ -164,10 +162,8 @@ def property_schema(property_obj, request=None):
             "url": f"{site_url}{property_obj.get_absolute_url()}" if hasattr(property_obj, 'get_absolute_url') else site_url
         }
     }
-    
-    # Remove None values from optional schema fields.
-    schema = {k: v for k, v in schema.items() if v is not None}
 
+    schema = {k: v for k, v in schema.items() if v is not None}
     return {'schema': json.dumps(schema, indent=2)}
 
 
@@ -175,7 +171,7 @@ def property_schema(property_obj, request=None):
 def breadcrumb_schema(context, items):
     """
     Generate BreadcrumbList schema
-    
+
     Usage:
         {% breadcrumb_schema items %}
         where items = [
@@ -186,7 +182,7 @@ def breadcrumb_schema(context, items):
     """
     request = context.get('request')
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
-    
+
     item_list = []
     for position, item in enumerate(items, start=1):
         list_item = {
@@ -197,13 +193,13 @@ def breadcrumb_schema(context, items):
         if item.get('url'):
             list_item['item'] = f"{site_url}{item['url']}"
         item_list.append(list_item)
-    
+
     schema = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": item_list
     }
-    
+
     return {'schema': json.dumps(schema, indent=2)}
 
 
