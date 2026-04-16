@@ -1,0 +1,10 @@
+{
+    "EnvironmentInfo": [
+        {
+            "InfoType": "tail",
+            "Ec2InstanceId": "i-0ac62868c1ef1ab59",
+            "SampleTimestamp": "2026-04-16T13:17:30.364Z",
+            "Message": "https://elasticbeanstalk-us-east-1-622370466597.s3.amazonaws.com/resources/environments/logs/tail/e-jcbmtpnpvx/i-0ac62868c1ef1ab59/TailLogs-1776345450351.txt?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIEEXKJonbzCoH2HjCTft52DiVHz0cQA5bX10kjMHyBOYAiEAj80vbhdqREhVSDmolUiMoCULmF6gP47449CmkQCqmsEq9gIIvv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwxMTU0MTQyMTkwOTQiDBhi3x2SPrJ%2BRBQW6irKAiI404dMPY%2FccvDtb0UayEuxvDf1SXJjJLVmXKtwOwvY5fmBrSXeDbIjbAFz5vkkNcx3uxfuVQ6dBwoLb0wafdWsOF39bpX%2FzA%2FuPfiq5Rscfa%2Bv%2BxNbiYTjTiyVLMCB7DmAsS41BDrt4My%2FlTF9loTprF1jqNFGhPHlQaU7WJv9x8SDY57EsDc9aA4%2FaN6kAv6q3DJHpmAOfbDZqxcxow82Q732nH%2FbIiQVg8TBv2zHZKR9FEmaxmsjCMl60GOaUTQoTtDjK71tUtjBtiQwYcFcsOPd%2BdQdHdJqWm5y0qUw1w2QankyLu78gFHyqn%2B33N4mLiHs2%2FofIEV7pt6XsX2XxAeWZBOf0SM%2FEVw4tVkT66pPaRj4uLkvb1ZQr%2Fwc2TfJn00%2Fm27Gy8IM00yQP4is8KsTe3RjWvu87pZjaVZTPrHRJ0waRcfjyzDqtoPPBjq9AWJcX0qdVYkIeiSnBzAvQpRRnjZoAqdgr%2FseIIjeQENWKDCcLjH0re1ptlgcfp%2BUZB%2Fn19b%2BbPclpBRUP%2B5MrueIJMhG8kSYydmqijkzMMHbDUP7NF7T6JKAkL1ZL7HtxSJyygSEIK4dTfrV7X17qaC5WIKaejagK0hZM0DivWPTWaMpuFKEZFb5WzDreUQL7BH6NiieTjEd%2BEgK1ynbt3hn4znRrriY0PGqYcBTE4Q9v7Rn3659cXM07Xmm9Q%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260416T131750Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=ASIARVXZZHFLF3J5U4QA%2F20260416%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=f68af0dce917fa467a971bec29956d03ba81e09ec8e2543aac3dd0b3be9421cb"
+        }
+    ]
+}

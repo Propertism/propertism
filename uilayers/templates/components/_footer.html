@@ -62,11 +62,6 @@
                 </form>
             </div>
             <div class="footer-section footer-presence-full">
-                <div class="footer-presence-header">
-                    <h3>Global Presence</h3>
-                    <span class="footer-presence-dash">—</span>
-                    <p class="footer-presence-sub">Coordinated support across India, Gulf, UK, and US.</p>
-                </div>
                 <div class="footer-clocks-wrapper">
                     <div class="world-clock-strip" id="footer-digital-clock">
                         <div class="world-clock-cell" data-tz="America/New_York">
@@ -101,6 +96,19 @@
                             </strong>
                             <small class="world-clock-date"></small>
                         </div>
+                        <div class="world-clock-cell world-clock-cell--tagline">
+                            <span class="world-clock-label">OUR REACH</span>
+                            <strong class="world-clock-tagline-title">Global<br>Presence</strong>
+                            <small class="world-clock-date">Coordinated support across India, Gulf, UK &amp; US.</small>
+                        </div>
+                        <div class="world-clock-cell world-clock-cell--office-hours" data-footer-availability data-tz="Asia/Kolkata">
+                            <span class="world-clock-label">OFFICE HOURS</span>
+                            <strong class="world-clock-time world-clock-time--status">
+                                <span class="footer-availability-dot" aria-hidden="true"></span>
+                                <span class="footer-availability-status" data-footer-availability-status>Checking status</span>
+                            </strong>
+                            <small class="world-clock-date">Mon - Sun • 07:00 - 23:00 IST</small>
+                        </div>
                     </div>
                     <script>
                     (function () {
@@ -121,9 +129,33 @@
                             return { hour: getValue("hour"), minute: getValue("minute"), dayPeriod: getValue("dayPeriod") };
                         }
 
+                        function getISTHour(date) {
+                            var parts = new Intl.DateTimeFormat("en-US", {
+                                timeZone: "Asia/Kolkata",
+                                hour: "numeric",
+                                hour12: false
+                            }).formatToParts(date);
+                            var h = parts.find(function (p) { return p.type === "hour"; });
+                            return h ? parseInt(h.value, 10) : 0;
+                        }
+
+                        function updateOfficeHours(date) {
+                            var statusEl = document.querySelector("[data-footer-availability-status]");
+                            var dotEl = document.querySelector(".footer-availability-dot");
+                            if (!statusEl) return;
+                            var hour = getISTHour(date);
+                            var isOpen = hour >= 7 && hour < 23;
+                            statusEl.textContent = isOpen ? "Open Now" : "Closed";
+                            statusEl.style.color = isOpen ? "#22c55e" : "#f87171";
+                            if (dotEl) {
+                                dotEl.style.background = isOpen ? "#22c55e" : "#f87171";
+                            }
+                        }
+
                         function tick() {
                             var now = new Date();
                             cells.forEach(function (cell) {
+                                if (cell.classList.contains("world-clock-cell--office-hours")) return;
                                 var tz = cell.dataset.tz;
                                 var hoursEl = cell.querySelector(".world-clock-hours");
                                 var minutesEl = cell.querySelector(".world-clock-minutes");
@@ -135,23 +167,13 @@
                                 if (meridiemEl) meridiemEl.textContent = (tp.dayPeriod || "").toLowerCase();
                                 if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
                             });
+                            updateOfficeHours(now);
                         }
 
                         tick();
-                        window.setInterval(tick, 1000);
+                        window.setInterval(tick, 60000);
                     }());
                     </script>
-                </div>
-            </div>
-            <div class="footer-section footer-hours">
-                <h3>Office Hours</h3>
-                <div class="footer-availability-block" data-footer-availability data-tz="Asia/Kolkata">
-                    <div class="footer-availability-status-row">
-                        <span class="footer-availability-status" data-footer-availability-status>Checking status</span>
-                    </div>
-                    <div class="footer-availability-hours" aria-label="Monday to Sunday 07:00 to 23:00 IST">
-                        <span class="footer-availability-line">Mon - Sun &nbsp;•&nbsp; 07:00 - 23:00 IST</span>
-                    </div>
                 </div>
             </div>
         </div>

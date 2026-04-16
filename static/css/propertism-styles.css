@@ -1536,9 +1536,9 @@
     flex-direction: column;
 }
 
-/* Row 2: 3 columns - Global Presence | Clocks | Office Hours */
+/* Row 2: full width strip */
 .footer-presence-full {
-    grid-column: span 3;
+    grid-column: span 4;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -1710,6 +1710,54 @@
 
 .footer-clocks-wrapper .world-clock-date {
     padding-top: 3px;
+    color: #FFFFFF;
+}
+
+/* All text inside dark clock cards → white */
+.footer-clocks-wrapper .world-clock-label,
+.footer-clocks-wrapper .world-clock-time,
+.footer-clocks-wrapper .world-clock-separator,
+.footer-clocks-wrapper .world-clock-meridiem,
+.footer-clocks-wrapper .world-clock-time--status,
+.footer-clocks-wrapper .footer-availability-status {
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+/* Tagline + Office Hours: transparent bg, subtle border, dark text */
+.footer-clocks-wrapper .world-clock-cell--tagline,
+.footer-clocks-wrapper .world-clock-cell--office-hours {
+    background: transparent;
+    border: 1px solid rgba(17, 24, 39, 0.14);
+    box-shadow: none;
+}
+
+/* Remove gold accent top line from light-bg cards */
+.world-clock-cell--tagline::after,
+.world-clock-cell--office-hours::after {
+    display: none;
+}
+
+/* Dark text overrides for light-bg cards */
+.footer-clocks-wrapper .world-clock-cell--tagline .world-clock-label,
+.footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-label {
+    color: rgba(17, 24, 39, 0.52);
+    opacity: 1;
+}
+
+.footer-clocks-wrapper .world-clock-cell--tagline .world-clock-date,
+.footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-date {
+    color: rgba(17, 24, 39, 0.56);
+}
+
+.world-clock-tagline-title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: rgba(17, 24, 39, 0.88);
+    letter-spacing: -0.01em;
+    margin-top: 4px;
 }
 
 .world-clock-widget--no-header .world-clock-widget-grid {
@@ -2486,7 +2534,7 @@
     }
 
     .footer-clocks-wrapper .world-clock-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -2721,7 +2769,6 @@
     .footer-clocks-wrapper .world-clock-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
     .footer-copy,
     .footer-newsletter p {
         max-width: none;
@@ -3374,11 +3421,51 @@ section.custom-cards-section:nth-of-type(even) {
 
 .world-clock-strip {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 8px;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Global Presence tagline card ── */
+.world-clock-cell--tagline {
+    justify-content: space-between;
+}
+
+/* No country flag on tagline or office-hours label */
+.world-clock-cell--tagline .world-clock-label::before,
+.world-clock-cell--office-hours .world-clock-label::before {
+    display: none;
+}
+
+.world-clock-time--status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: clamp(1.12rem, 1.7vw, 1.42rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #F8FAFC;
+    margin-top: 3px;
+}
+
+.footer-availability-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    flex-shrink: 0;
+    align-self: center;
+    transition: background 0.4s ease;
+}
+
+.footer-availability-status {
+    font-size: inherit;
+    font-weight: 600;
+    line-height: 1;
 }
 
 .world-clock-cell {
@@ -3428,6 +3515,7 @@ section.custom-cards-section:nth-of-type(even) {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
+/* Flags: children 1-4 = clock cards (tagline is now child 5) */
 .world-clock-cell:nth-child(1) .world-clock-label::before {
     background-image: linear-gradient(180deg, #B22234 0 14%, #FFFFFF 14% 28%, #B22234 28% 42%, #FFFFFF 42% 56%, #B22234 56% 70%, #FFFFFF 70% 84%, #B22234 84% 100%);
     background-size: 100% 100%;
@@ -3450,6 +3538,11 @@ section.custom-cards-section:nth-of-type(even) {
     background-image:
         linear-gradient(90deg, #FF0000 0 26%, transparent 26%),
         linear-gradient(180deg, #00732F 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+}
+
+/* Office Hours cell: no country flag, no pseudo-element box */
+.world-clock-cell--office-hours .world-clock-label::before {
+    display: none;
 }
 
 .world-clock-time {
@@ -3507,6 +3600,14 @@ section.custom-cards-section:nth-of-type(even) {
         padding: clamp(3.5rem, 10vw, 4.5rem) 0;
     }
 
+    /* Tablet: 3 + 3 wrap */
+    .world-clock-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    /* Small tablet: 2 col */
     .world-clock-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
