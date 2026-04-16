@@ -21,6 +21,16 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 if not ALLOWED_HOSTS or ALLOWED_HOSTS == ['']:
     raise ValueError("DJANGO_ALLOWED_HOSTS environment variable must be set in production")
 
+# Allow EB health checker which hits the EC2 instance IP directly
+import urllib.request as _urllib_request
+try:
+    _ec2_ip = _urllib_request.urlopen(
+        'http://169.254.169.254/latest/meta-data/local-ipv4', timeout=1
+    ).read().decode()
+    ALLOWED_HOSTS.append(_ec2_ip)
+except Exception:
+    pass
+
 # Application definition
 INSTALLED_APPS = [
     'modeltranslation',
