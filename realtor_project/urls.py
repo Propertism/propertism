@@ -1,10 +1,11 @@
-﻿from django.contrib import admin
-from django.urls import path, include
+from django.contrib import admin
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
+from django.views.static import serve
 from content import views as content_views
 from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap, LandingPageSitemap
 
@@ -38,7 +39,13 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
 ]
 
-# Static and media files for local development.
-if settings.DEBUG or getattr(settings, "IS_LOCAL_DEVELOPMENT", False):
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# Static and media files - serve in all environments (including production admin)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve media files - needed for admin image previews
+# In production, configure nginx/apache to serve /media/ for better performance
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
