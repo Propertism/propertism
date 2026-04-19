@@ -368,7 +368,7 @@ if not DEBUG:
         SECURE_HSTS_PRELOAD = True
     
     # Stricter settings for production
-    CSRF_COOKIE_SAMESITE = 'Strict'
+    CSRF_COOKIE_SAMESITE = 'Lax'  # Changed from Strict to prevent admin form submission issues
     SESSION_COOKIE_SAMESITE = 'Strict'
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     X_FRAME_OPTIONS = 'DENY'

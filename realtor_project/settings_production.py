@@ -175,7 +175,14 @@ X_FRAME_OPTIONS = 'DENY'
 # CSRF Protection
 CSRF_COOKIE_HTTPONLY = True
 CSRF_USE_SESSIONS = False
-CSRF_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_SAMESITE = 'Lax'  # Changed from Strict to prevent admin save issues
+
+# CSRF Trusted Origins - must include exact domains used in production
+CSRF_TRUSTED_ORIGINS = [
+    'https://propertism.in',
+    'https://www.propertism.in',
+    'https://*.propertism.in',
+]
 
 # Session Security
 SESSION_COOKIE_HTTPONLY = True
