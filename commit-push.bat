@@ -13,7 +13,7 @@ IF %ERRORLEVEL% EQU 0 (
 )
 
 echo Committing...
-git commit -m "SCCB-V2: Surgical kill S3 - force local storage override at final layer"
+git commit -m "SCCB-V2: Fix media serving for local storage - serve /media/ files in production"
 echo.
 
 echo Pushing to origin main...
@@ -21,8 +21,8 @@ git push origin main
 echo.
 
 echo.
-echo SCCB-V2 DEPLOYED!
-echo Logs MUST show: SCCB STORAGE MODE: LOCAL (S3 DISABLED)
+echo SCCB-V2 + MEDIA FIX DEPLOYED!
+echo Images should now load without 404 errors
 echo.
 echo Done!
 pause

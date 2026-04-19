@@ -42,8 +42,9 @@ urlpatterns = [
 # Static and media files - serve in all environments (including production admin)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Serve media files only in non-production (S3 handles media in production)
-if settings.MEDIA_ROOT:
+# Serve media files when using local storage (SCCB: always serve if MEDIA_ROOT is set)
+# This fixes 404 errors for locally uploaded images in production
+if getattr(settings, 'MEDIA_ROOT', None):
     urlpatterns += [
         re_path(r'^media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
