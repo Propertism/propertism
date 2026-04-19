@@ -134,11 +134,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files — stored in S3 so uploads survive every deploy
+# FORCE local storage by setting USE_LOCAL_STORAGE=1 in EB env vars
+_USE_LOCAL = os.environ.get('USE_LOCAL_STORAGE', '').strip() in ('1', 'true', 'yes', 'True', 'TRUE')
+
 _S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '').strip()
 _AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID', '').strip()
 _AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '').strip()
 
-if _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
+if not _USE_LOCAL and _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
@@ -150,12 +153,13 @@ if _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
     MEDIA_ROOT = ''
-    print(f"[INFO] Using S3 storage: {_S3_MEDIA_BUCKET}")
 else:
-    # Fallback for local/dev — keeps working without S3
+    # Local file storage (default for admin-only low-volume uploads)
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
-    print(f"[INFO] Using local file storage (S3 credentials not configured)")
+    # Ensure media directory exists
+    import pathlib
+    pathlib.Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
