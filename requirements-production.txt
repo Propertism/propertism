@@ -35,5 +35,7 @@ colorama>=0.4.6  # For colored test output
 
 # Optional but Recommended
 # sentry-sdk>=1.32.0  # Error tracking
-# django-storages>=1.13.0  # S3/Cloud storage
-# boto3>=1.28.0  # AWS SDK (if using S3)
+
+# S3 Storage (Required for media uploads in production)
+django-storages>=1.13.0  # S3/Cloud storage
+boto3>=1.28.0  # AWS SDK for S3
