@@ -8,6 +8,11 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SCCB-WS-LOCAL-STORAGE-HARD-OVERRIDE-V1
+# FORCE local storage - single source of truth
+USE_LOCAL_STORAGE = os.getenv("USE_LOCAL_STORAGE") == "1"
+print(f"[SCCB] STORAGE MODE: {'LOCAL' if USE_LOCAL_STORAGE else 'S3'}")
+
 # SECURITY WARNING: Keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 if not SECRET_KEY:
@@ -133,33 +138,44 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files — stored in S3 so uploads survive every deploy
-# FORCE local storage by setting USE_LOCAL_STORAGE=1 in EB env vars
-_USE_LOCAL = os.environ.get('USE_LOCAL_STORAGE', '').strip() in ('1', 'true', 'yes', 'True', 'TRUE')
-
-_S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '').strip()
-_AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID', '').strip()
-_AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '').strip()
-
-if not _USE_LOCAL and _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
-    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
-    AWS_S3_CUSTOM_DOMAIN = f'{_S3_MEDIA_BUCKET}.s3.amazonaws.com'
-    AWS_LOCATION = 'media'
-    AWS_DEFAULT_ACL = None          # use bucket policy, not per-object ACL
-    AWS_S3_FILE_OVERWRITE = False   # never silently overwrite uploads
-    AWS_QUERYSTRING_AUTH = False    # public read via bucket policy
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-    MEDIA_ROOT = ''
-else:
-    # Local file storage (default for admin-only low-volume uploads)
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+# Media files — SCCB HARD OVERRIDE FOR LOCAL STORAGE
+if USE_LOCAL_STORAGE:
+    # FORCE local storage - NO S3 AT ALL
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     # Ensure media directory exists
-    import pathlib
-    pathlib.Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+    # HARD BLOCK S3 VARIABLES - prevent any implicit S3 usage
+    AWS_STORAGE_BUCKET_NAME = None
+    AWS_S3_CUSTOM_DOMAIN = None
+    AWS_S3_REGION_NAME = None
+    AWS_ACCESS_KEY_ID = None
+    AWS_SECRET_ACCESS_KEY = None
+else:
+    # S3 storage only if explicitly disabled local storage
+    _S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '').strip()
+    _AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID', '').strip()
+    _AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '').strip()
+    
+    if _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
+        DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+        AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
+        AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
+        AWS_S3_CUSTOM_DOMAIN = f'{_S3_MEDIA_BUCKET}.s3.amazonaws.com'
+        AWS_LOCATION = 'media'
+        AWS_DEFAULT_ACL = None
+        AWS_S3_FILE_OVERWRITE = False
+        AWS_QUERYSTRING_AUTH = False
+        AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+        MEDIA_ROOT = ''
+    else:
+        # Fallback to local if S3 not configured
+        DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+        MEDIA_URL = "/media/"
+        MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+        os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
