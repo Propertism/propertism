@@ -1,3 +1,55 @@
+# Session Log - April 19, 2026 | 20:33 - 21:01 IST | Agent: Windsurf
+
+## Objective
+Fix Django admin photo upload 500 error in production (Elastic Beanstalk). Implement SCCB hard override to force local file storage and eliminate all S3 interactions.
+
+---
+
+## 1. Problem Diagnosis
+- **Error**: `botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden`
+- **Root Cause**: AWS S3 credentials missing/incorrect, but `AWS_MEDIA_BUCKET_NAME` env var still set causing Django to attempt S3
+- **Previous Attempts**: Conditional fallback logic was insufficient - S3 was still being triggered
+
+## 2. SCCB Hard Override Implementation (V1)
+**File**: `realtor_project/settings_production.py`
+
+### Changes Made:
+1. **Added USE_LOCAL_STORAGE flag at top** (line 11-14):
+   ```python
+   USE_LOCAL_STORAGE = os.getenv("USE_LOCAL_STORAGE") == "1"
+   print(f"[SCCB] STORAGE MODE: {'LOCAL' if USE_LOCAL_STORAGE else 'S3'}")
+   ```
+
+2. **Replaced conditional storage logic with hard override** (lines 141-178):
+   - When `USE_LOCAL_STORAGE=1`: Forces `FileSystemStorage`, blocks all S3 vars to `None`
+   - When disabled: Falls back to S3 only if credentials exist
+   - Auto-creates `/media/` directory with `os.makedirs()`
+
+3. **Hard-blocked S3 variables** to prevent implicit usage:
+   - `AWS_STORAGE_BUCKET_NAME = None`
+   - `AWS_S3_CUSTOM_DOMAIN = None`
+   - `AWS_S3_REGION_NAME = None`
+   - `AWS_ACCESS_KEY_ID = None`
+   - `AWS_SECRET_ACCESS_KEY = None`
+
+## 3. EB Environment Configuration
+- **Key Added**: `USE_LOCAL_STORAGE = 1` to Environment Properties
+- **Location**: AWS Console → EB → Configuration → Software → Environment Variables
+
+## 4. Deployment
+- **Commit Message**: `SCCB-WS-LOCAL-STORAGE-HARD-OVERRIDE-V1: Force local storage, block all S3`
+- **Method**: Git push → GitHub Actions → Elastic Beanstalk
+
+## 5. Verification Steps (Post-Deploy)
+- [ ] EB logs show: `[SCCB] STORAGE MODE: LOCAL`
+- [ ] Admin photo upload works without 500 error
+- [ ] Files saved to `/var/app/current/media/`
+- [ ] No boto3/S3 errors in logs
+
+## Status: DEPLOYED - Pending Verification
+
+---
+
 # Session Log - April 16, 2026
 
 ## Objective

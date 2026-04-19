@@ -477,3 +477,20 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
 WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
 WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +
+
+# ===== SCCB: SURGICAL STORAGE OVERRIDE =====
+# This MUST be at the very end to override any previous storage settings
+
+USE_LOCAL_STORAGE = os.getenv("USE_LOCAL_STORAGE") == "1"
+
+if USE_LOCAL_STORAGE:
+    print("✅ SCCB STORAGE MODE: LOCAL (S3 DISABLED)")
+    
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    
+    # HARD NULLIFY S3 - prevents ANY S3 usage
+    AWS_STORAGE_BUCKET_NAME = None
+    AWS_S3_CUSTOM_DOMAIN = None
