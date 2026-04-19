@@ -181,7 +181,6 @@ CSRF_COOKIE_SAMESITE = 'Lax'  # Changed from Strict to prevent admin save issues
 CSRF_TRUSTED_ORIGINS = [
     'https://propertism.in',
     'https://www.propertism.in',
-    'https://*.propertism.in',
 ]
 
 # Session Security
