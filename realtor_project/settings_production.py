@@ -134,9 +134,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files — stored in S3 so uploads survive every deploy
-_S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '')
+_S3_MEDIA_BUCKET = os.environ.get('AWS_MEDIA_BUCKET_NAME', '').strip()
+_AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID', '').strip()
+_AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '').strip()
 
-if _S3_MEDIA_BUCKET:
+if _S3_MEDIA_BUCKET and _AWS_ACCESS_KEY and _AWS_SECRET_KEY:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
@@ -148,10 +150,12 @@ if _S3_MEDIA_BUCKET:
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
     MEDIA_ROOT = ''
+    print(f"[INFO] Using S3 storage: {_S3_MEDIA_BUCKET}")
 else:
     # Fallback for local/dev — keeps working without S3
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
+    print(f"[INFO] Using local file storage (S3 credentials not configured)")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -262,7 +266,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
@@ -270,8 +274,13 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
         },
         'django.security': {
             'handlers': ['console'],
