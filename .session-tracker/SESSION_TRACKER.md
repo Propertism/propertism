@@ -5,8 +5,8 @@
 ## File Metadata
 
 **Last Updated By**: Amazon Q
-**Last Updated On**: April 12, 2026
-**Last Update**: SESSION 23 logged - Hero and property images fix. media/ now included in EB bundle. nginx /media/ location added.
+**Last Updated On**: April 16, 2026
+**Last Update**: SESSION 23 - Hero/property images fix. media/ in bundle. nginx.conf override adds /media/ and /static/ location blocks.
 
 ---
 
@@ -248,7 +248,7 @@ Deploy runs automatically:
 | 20 | Apr 10 | Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live. | ✅ |
 | 21 | Apr 10 | Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn. | ✅ |
 | 22 | Apr 11 | **GitHub Actions CI/CD. Every push to main auto-deploys to propertism-prod-2026. IAM user: github-actions-propertism.** | ✅ |
-| 23 | Apr 12 | **Hero + property images fix. Removed `--exclude media/*` from deploy.yml zip. Added `.platform/nginx/conf.d/media.conf` to serve /media/ via nginx.** | ✅ |
+| 23 | Apr 16 | **Hero + property images fix. Removed `--exclude media/*` from deploy.yml. Added `.platform/nginx/nginx.conf` override with /media/ and /static/ location blocks. Fixed bad nginx conf.d location block that caused deploy failure.** | ✅ |
 
 ---
 
