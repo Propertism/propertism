@@ -180,25 +180,13 @@ class Property(models.Model):
         if hasattr(photos, "order_by"):
             photos = photos.order_by("-is_primary", "sort_order", "id")
 
-        optimistic_photo_url = ""
-
         for photo in photos:
             if not photo.image:
                 continue
             try:
-                if photo.image.storage.exists(photo.image.name):
-                    return photo.image.url
+                return photo.image.url
             except Exception:
-                pass
-
-            if not optimistic_photo_url:
-                try:
-                    optimistic_photo_url = photo.image.url
-                except Exception:
-                    optimistic_photo_url = self._normalize_image_reference(photo.image.name)
-
-        if optimistic_photo_url:
-            return optimistic_photo_url
+                continue
 
         return self._normalize_image_reference(self.image)
 

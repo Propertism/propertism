@@ -3925,6 +3925,11 @@ section.custom-cards-section:nth-of-type(even) {
     color: #FFFFFF;
 }
 
+.cr-see-all-btn.is-expanded {
+    background: #C9A961;
+    color: #FFFFFF;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .cr-masonry-grid {

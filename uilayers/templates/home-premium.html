@@ -514,10 +514,7 @@
         <!-- Bottom row: See All Testimonials -->
         <div class="cr-footer-row">
             {% if customer_reviews|length > 9 %}
-            <button type="button" class="cr-see-all-btn" id="cr-see-all-btn" onclick="
-                document.querySelectorAll('.cr-card--hidden').forEach(function(c){ c.classList.remove('cr-card--hidden'); });
-                this.style.display='none';
-            ">SEE ALL TESTIMONIALS</button>
+            <button type="button" class="cr-see-all-btn" id="cr-see-all-btn">SEE ALL TESTIMONIALS</button>
             {% endif %}
         </div>
     </div>
@@ -939,6 +936,28 @@
                 btn.querySelector("[data-cr-label]").textContent = expanded ? "Read less" : "Read more";
             });
         });
+    }());
+
+    // Customer Reviews - See All / Show Less toggle
+    (function () {
+        var seeAllBtn = document.getElementById("cr-see-all-btn");
+        if (!seeAllBtn) return;
+
+        var hiddenCards = Array.from(document.querySelectorAll(".cr-card--hidden"));
+        if (!hiddenCards.length) { seeAllBtn.style.display = "none"; return; }
+
+        var expanded = false;
+
+        seeAllBtn.addEventListener("click", function () {
+            expanded = !expanded;
+            hiddenCards.forEach(function (card) {
+                card.style.display = expanded ? "" : "none";
+            });
+            seeAllBtn.textContent = expanded ? "SHOW LESS" : "SEE ALL TESTIMONIALS";
+        });
+
+        // Init: ensure hidden cards are actually hidden (CSS class may be overridden)
+        hiddenCards.forEach(function (card) { card.style.display = "none"; });
     }());
 
 </script>
