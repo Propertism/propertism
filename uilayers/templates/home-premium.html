@@ -472,7 +472,7 @@
         <!-- Masonry-style 3-column grid -->
         <div class="cr-masonry-grid">
             {% for review in customer_reviews %}
-            <article class="cr-card{% if forloop.counter > 9 %} cr-card--hidden{% endif %}">
+            <article class="cr-card">
                 <!-- Card Header: Avatar + Name + Google G -->
                 <div class="cr-card-header">
                     <div class="cr-avatar">{{ review.display_initials }}</div>
@@ -940,24 +940,44 @@
 
     // Customer Reviews - See All / Show Less toggle
     (function () {
-        var seeAllBtn = document.getElementById("cr-see-all-btn");
-        if (!seeAllBtn) return;
+        function initReviewToggle() {
+            var seeAllBtn = document.getElementById("cr-see-all-btn");
+            if (!seeAllBtn) return;
 
-        var hiddenCards = Array.from(document.querySelectorAll(".cr-card--hidden"));
-        if (!hiddenCards.length) { seeAllBtn.style.display = "none"; return; }
+            var allCards = Array.from(document.querySelectorAll("#reviews-section .cr-card"));
+            var extraCards = allCards.slice(9);
 
-        var expanded = false;
+            if (!extraCards.length) {
+                seeAllBtn.style.display = "none";
+                return;
+            }
 
-        seeAllBtn.addEventListener("click", function () {
-            expanded = !expanded;
-            hiddenCards.forEach(function (card) {
-                card.style.display = expanded ? "" : "none";
+            // Hide cards 10+ on load
+            extraCards.forEach(function (card) {
+                card.style.display = "none";
             });
-            seeAllBtn.textContent = expanded ? "SHOW LESS" : "SEE ALL TESTIMONIALS";
-        });
 
-        // Init: ensure hidden cards are actually hidden (CSS class may be overridden)
-        hiddenCards.forEach(function (card) { card.style.display = "none"; });
+            var expanded = false;
+
+            seeAllBtn.addEventListener("click", function () {
+                expanded = !expanded;
+                extraCards.forEach(function (card) {
+                    card.style.display = expanded ? "block" : "none";
+                });
+                seeAllBtn.textContent = expanded ? "SHOW LESS" : "SEE ALL TESTIMONIALS";
+                if (!expanded) {
+                    // Scroll back to top of reviews section
+                    var section = document.getElementById("reviews-section");
+                    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initReviewToggle);
+        } else {
+            initReviewToggle();
+        }
     }());
 
 </script>
