@@ -300,7 +300,7 @@ class BlogPostAdmin(admin.ModelAdmin):
             'fields': ('author', 'category')
         }),
         ('Publishing', {
-            'fields': ('is_published',)
+            'fields': ('is_published', 'published_date')
         }),
     )
 

@@ -256,12 +256,12 @@ if _S3_MEDIA_BUCKET:
     AWS_STORAGE_BUCKET_NAME = _S3_MEDIA_BUCKET
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_S3_CUSTOM_DOMAIN = f'{_S3_MEDIA_BUCKET}.s3.amazonaws.com'
-    AWS_LOCATION = 'media'
+    # AWS_LOCATION removed — upload_to paths already include directory structure
     AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
     MEDIA_ROOT = ''
 else:
     MEDIA_URL = '/media/'
