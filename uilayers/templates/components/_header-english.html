@@ -9,32 +9,15 @@
             <!-- Desktop Navigation -->
             <nav class="main-nav">
                 <a href="{{ home_section_links.home }}">Home</a>
-                <a href="{{ home_section_links.services }}">Services</a>
-                <a href="{{ home_section_links.about }}">About</a>
-                <a href="{{ home_section_links.management }}">Management</a>
-                <a href="{{ home_section_links.reviews }}">Reviews</a>
+                <a href="/#services-section">Services</a>
+                <a href="/#management-section">Management</a>
+                <a href="/#reviews-section">Reviews</a>
                 <a href="{{ home_section_links.properties }}">Properties</a>
                 <a href="{{ home_section_links.blog }}">Blog</a>
-                <a href="{{ home_section_links.contact }}">Quote</a>
+                <a href="/#contact-section" class="nav-link-contact">Contact</a>
             </nav>
             
             <div class="header-actions">
-                <a href="https://www.google.com/maps/search/?api=1&query={{ company.company_name|default:'Propertism'|urlencode }}+{{ company.india_office_address|default:''|urlencode }}+{{ company.india_office_city|default:''|urlencode }}+{{ company.india_office_state|default:''|urlencode }}" class="header-icon-btn header-icon-btn-map" aria-label="View Chennai Office on Google Maps" title="View Chennai Office on Google Maps" target="_blank" rel="noopener noreferrer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2c3.87 0 7 3.13 7 7 0 4.92-4.52 9.57-6.22 11.16a1.1 1.1 0 0 1-1.56 0C9.52 18.57 5 13.92 5 9c0-3.87 3.13-7 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6.5a2.5 2.5 0 0 0 0 5Z"/>
-                    </svg>
-                </a>
-                <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="header-icon-btn header-icon-btn-phone" aria-label="Call Chennai Desk" title="Call Chennai Desk">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.34 2.74a2 2 0 0 1-.57 1.73l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.73-.57l2.74.34A2 2 0 0 1 22 16.92Z"/>
-                    </svg>
-                </a>
-                <a href="https://wa.me/{{ company.india_phone_1|cut:' '|cut:'+' }}?text=Hi%2C%20I%20want%20to%20discuss%20property%20management%20support." class="header-icon-btn header-icon-btn-whatsapp" aria-label="WhatsApp Propertism" title="WhatsApp Propertism" target="_blank" rel="noopener noreferrer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.56 0 .27 5.29.27 11.8c0 2.08.54 4.1 1.57 5.89L0 24l6.49-1.7a11.74 11.74 0 0 0 5.58 1.42h.01c6.51 0 11.8-5.29 11.8-11.8 0-3.15-1.23-6.1-3.36-8.44Zm-8.45 18.24h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.85 1.01 1.03-3.76-.23-.39a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.77 9.77 0 0 1 2.89 6.95c0 5.43-4.42 9.84-9.85 9.84Zm5.39-7.38c-.29-.14-1.71-.84-1.98-.94-.26-.1-.46-.14-.65.15-.19.29-.75.94-.92 1.14-.17.19-.34.22-.64.07-.29-.14-1.23-.45-2.35-1.45-.87-.77-1.46-1.72-1.63-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.15-.24-.57-.48-.49-.65-.5l-.55-.01c-.19 0-.5.07-.76.36-.26.29-.99.97-.99 2.36s1.01 2.73 1.15 2.92c.14.19 1.98 3.02 4.8 4.24.67.29 1.2.47 1.61.6.68.22 1.30.19 1.79.12.55-.08 1.71-.70 1.95-1.38.24-.68.24-1.27.17-1.39-.07-.12-.27-.19-.56-.34Z"/>
-                    </svg>
-                </a>
-                
                 <!-- Mobile Menu Toggle Button -->
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false">
                     <span class="hamburger-line"></span>
@@ -50,13 +33,12 @@
         <div class="mobile-nav-header">PROPERTISM</div>
         <div class="mobile-nav-content">
             <a href="{{ home_section_links.home }}" class="mobile-menu-item">Home</a>
-            <a href="{{ home_section_links.services }}" class="mobile-menu-item">Services</a>
-            <a href="{{ home_section_links.about }}" class="mobile-menu-item">About</a>
-            <a href="{{ home_section_links.management }}" class="mobile-menu-item">Management</a>
-            <a href="{{ home_section_links.reviews }}" class="mobile-menu-item">Reviews</a>
+            <a href="/#services-section" class="mobile-menu-item">Services</a>
+            <a href="/#management-section" class="mobile-menu-item">Management</a>
+            <a href="/#reviews-section" class="mobile-menu-item">Reviews</a>
             <a href="{{ home_section_links.properties }}" class="mobile-menu-item">Properties</a>
             <a href="{{ home_section_links.blog }}" class="mobile-menu-item">Blog</a>
-            <a href="{{ home_section_links.contact }}" class="mobile-menu-item mobile-menu-item-cta">Quote</a>
+            <a href="/#contact-section" class="mobile-menu-item mobile-menu-item-cta">Contact</a>
         </div>
     </nav>
     

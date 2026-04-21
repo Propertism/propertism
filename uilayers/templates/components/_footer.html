@@ -1,33 +1,81 @@
+<style>
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem 1.5rem;
+    row-gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+.footer-presence-full {
+    grid-column: span 4;
+}
+@media (max-width: 1100px) {
+    .footer-content {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .footer-presence-full { grid-column: span 2; }
+}
+@media (max-width: 768px) {
+    .footer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+    }
+    .footer-presence-full {
+        grid-column: unset;
+    }
+    .footer-section {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+    .footer-socials {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        align-items: center !important;
+        margin-top: 14px !important;
+    }
+}
+</style>
+
 <footer class="site-footer">
     <div class="container">
         <div class="footer-content">
+
+            <!-- Brand -->
             <div class="footer-section footer-brand">
                 <h3>{{ company.company_name }}</h3>
                 <p class="footer-copy">{{ company.tagline }}</p>
-                <div class="footer-socials">
+                <div class="footer-socials" style="display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;">
                     {% if company.facebook_url %}
-                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/>
-                        </svg>
+                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-facebook" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/></svg>
                     </a>
                     {% endif %}
                     {% if company.twitter_url %}
-                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Twitter">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/>
-                        </svg>
+                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-twitter" aria-label="Twitter" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/></svg>
                     </a>
                     {% endif %}
                     {% if company.linkedin_url %}
-                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/>
-                        </svg>
+                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-linkedin" aria-label="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/></svg>
                     </a>
                     {% endif %}
+                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="footer-contact-icon footer-contact-phone" aria-label="Call Us" title="Call Chennai Office" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.34 2.74a2 2 0 0 1-.57 1.73l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.73-.57l2.74.34A2 2 0 0 1 22 16.92Z"/></svg>
+                    </a>
+                    <a href="https://wa.me/{{ company.india_phone_1|cut:' '|cut:'+' }}?text=Hi%2C%20I%20want%20to%20discuss%20property%20management." class="footer-contact-icon footer-contact-whatsapp" aria-label="WhatsApp" title="Chat on WhatsApp" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.56 0 .27 5.29.27 11.8c0 2.08.54 4.1 1.57 5.89L0 24l6.49-1.7a11.74 11.74 0 0 0 5.58 1.42h.01c6.51 0 11.8-5.29 11.8-11.8 0-3.15-1.23-6.1-3.36-8.44Zm-8.45 18.24h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.85 1.01 1.03-3.76-.23-.39a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.77 9.77 0 0 1 2.89 6.95c0 5.43-4.42 9.84-9.85 9.84Zm5.39-7.38c-.29-.14-1.71-.84-1.98-.94-.26-.1-.46-.14-.65.15-.19.29-.75.94-.92 1.14-.17.19-.34.22-.64.07-.29-.14-1.23-.45-2.35-1.45-.87-.77-1.46-1.72-1.63-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.15-.24-.57-.48-.49-.65-.5l-.55-.01c-.19 0-.5.07-.76.36-.26.29-.99.97-.99 2.36s1.01 2.73 1.15 2.92c.14.19 1.98 3.02 4.8 4.24.67.29 1.20.47 1.61.6.68.22 1.30.19 1.79.12.55-.08 1.71-.70 1.95-1.38.24-.68.24-1.27.17-1.39-.07-.12-.27-.19-.56-.34Z"/></svg>
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.company_name|urlencode }}+{{ company.india_office_address|urlencode }}+{{ company.india_office_city|urlencode }}" class="footer-contact-icon footer-contact-map" aria-label="View on Map" title="View Chennai Office on Google Maps" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c3.87 0 7 3.13 7 7 0 4.92-4.52 9.57-6.22 11.16a1.1 1.1 0 0 1-1.56 0C9.52 18.57 5 13.92 5 9c0-3.87 3.13-7 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6.5a2.5 2.5 0 0 0 0 5Z"/></svg>
+                    </a>
                 </div>
             </div>
+
+            <!-- Services -->
             <div class="footer-section footer-services">
                 <h3>{{ company.footer_services_heading }}</h3>
                 <ul class="footer-links">
@@ -39,6 +87,8 @@
                     <li><a href="{{ home_section_links.properties }}">View Properties</a></li>
                 </ul>
             </div>
+
+            <!-- India Office -->
             <div class="footer-section footer-office">
                 <h3>India Office</h3>
                 <div class="footer-office-compact">
@@ -52,6 +102,8 @@
                     <p class="footer-office-email"><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
                 </div>
             </div>
+
+            <!-- Newsletter -->
             <div class="footer-section footer-newsletter-mini">
                 <h3>Stay Updated</h3>
                 <p>Get NRI property insights, market trends, and curated opportunities.</p>
@@ -61,6 +113,8 @@
                     <button type="submit">{{ company.footer_newsletter_button_text|default:"Subscribe" }}</button>
                 </form>
             </div>
+
+            <!-- World Clocks - full width row -->
             <div class="footer-section footer-presence-full">
                 <div class="footer-clocks-wrapper">
                     <div class="world-clock-strip" id="footer-digital-clock">
@@ -114,31 +168,16 @@
                     (function () {
                         var cells = document.querySelectorAll("#footer-digital-clock .world-clock-cell");
                         if (!cells.length) return;
-
                         function getTimeParts(date, timeZone) {
-                            var parts = new Intl.DateTimeFormat("en-US", {
-                                timeZone: timeZone,
-                                hour: "numeric",
-                                minute: "2-digit",
-                                hour12: true,
-                            }).formatToParts(date);
-                            function getValue(type) {
-                                var match = parts.find(function (p) { return p.type === type; });
-                                return match ? match.value : "";
-                            }
+                            var parts = new Intl.DateTimeFormat("en-US", { timeZone: timeZone, hour: "numeric", minute: "2-digit", hour12: true }).formatToParts(date);
+                            function getValue(type) { var m = parts.find(function(p){ return p.type===type; }); return m ? m.value : ""; }
                             return { hour: getValue("hour"), minute: getValue("minute"), dayPeriod: getValue("dayPeriod") };
                         }
-
                         function getISTHour(date) {
-                            var parts = new Intl.DateTimeFormat("en-US", {
-                                timeZone: "Asia/Kolkata",
-                                hour: "numeric",
-                                hour12: false
-                            }).formatToParts(date);
-                            var h = parts.find(function (p) { return p.type === "hour"; });
+                            var parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", hour12: false }).formatToParts(date);
+                            var h = parts.find(function(p){ return p.type==="hour"; });
                             return h ? parseInt(h.value, 10) : 0;
                         }
-
                         function updateOfficeHours(date) {
                             var statusEl = document.querySelector("[data-footer-availability-status]");
                             var dotEl = document.querySelector(".footer-availability-dot");
@@ -147,14 +186,11 @@
                             var isOpen = hour >= 7 && hour < 23;
                             statusEl.textContent = isOpen ? "Open Now" : "Closed";
                             statusEl.style.color = isOpen ? "#22c55e" : "#f87171";
-                            if (dotEl) {
-                                dotEl.style.background = isOpen ? "#22c55e" : "#f87171";
-                            }
+                            if (dotEl) dotEl.style.background = isOpen ? "#22c55e" : "#f87171";
                         }
-
                         function tick() {
                             var now = new Date();
-                            cells.forEach(function (cell) {
+                            cells.forEach(function(cell) {
                                 if (cell.classList.contains("world-clock-cell--office-hours")) return;
                                 if (cell.classList.contains("world-clock-cell--tagline")) return;
                                 var tz = cell.dataset.tz;
@@ -170,13 +206,13 @@
                             });
                             updateOfficeHours(now);
                         }
-
                         tick();
                         window.setInterval(tick, 60000);
                     }());
                     </script>
                 </div>
             </div>
+
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 {{ company.company_name }}. All rights reserved.</p>

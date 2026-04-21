@@ -3,6 +3,6 @@
  
 git add .
 echo Committing...
-git commit -m "SCCB-V2: Fix media serving for local storage - serve /media/ files in production"
+git commit -m "SCCB Reviews : Google reviews, contact"
 git push origin main
 echo.

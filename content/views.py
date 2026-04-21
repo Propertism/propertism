@@ -124,8 +124,8 @@ def home(request):
             warning="Homepage customer review table is unavailable.",
         )
         customer_review_slides = [
-            customer_reviews[index:index + 3]
-            for index in range(0, len(customer_reviews), 3)
+            customer_reviews[index:index + 6]
+            for index in range(0, len(customer_reviews), 6)
         ]
     custom_card_sections = _safe_list(
         lambda: HomepageCardSection.objects.filter(is_active=True).prefetch_related(

@@ -305,6 +305,57 @@ input:focus-visible {
 @media (max-width: 768px) {
     .quote-request-grid { grid-template-columns: 1fr; gap: 16px; }
     .quote-request-submit { width: 100%; }
+    
+    /* Contact Section Icons - Keep Horizontal on Mobile */
+    .nri-contact-actions {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        margin-top: 32px !important;
+    }
+    
+    .contact-icon-link {
+        width: 44px !important;
+        height: 44px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .contact-icon-link svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    /* Footer Social Icons - Keep Horizontal on Mobile */
+    .footer-socials {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-top: 16px !important;
+    }
+    
+    .footer-social-link,
+    .footer-contact-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 36px !important;
+        height: 36px !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        flex-basis: 36px !important;
+    }
+    
+    .footer-social-link svg,
+    .footer-contact-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+        flex-shrink: 0 !important;
+    }
 }
 
 /* ============================================

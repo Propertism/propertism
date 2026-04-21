@@ -1107,7 +1107,7 @@
 .customer-reviews-grid,
 .custom-cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -1210,6 +1210,45 @@
     color: var(--gray-700);
     font-size: 0.98rem;
     line-height: 1.72;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.customer-review-copy.is-expanded {
+    -webkit-line-clamp: unset;
+    display: block;
+}
+
+.customer-review-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #B89A4A;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.customer-review-read-more:hover {
+    color: #8A6A22;
+}
+
+.customer-review-read-more svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.customer-review-read-more.is-expanded svg {
+    transform: rotate(180deg);
 }
 
 .customer-review-tag,
@@ -1369,9 +1408,90 @@
 
 .nri-contact-actions {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
-    margin-top: 28px;
+    margin-top: 40px;
+    padding-top: 8px;
+}
+
+/* Contact Section Icon Links */
+.contact-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-icon-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.contact-icon-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Brand Colors for Contact Icons */
+.contact-icon-facebook {
+    color: #1877F2 !important;
+}
+
+.contact-icon-facebook:hover {
+    background: rgba(24, 119, 242, 0.1) !important;
+    border-color: rgba(24, 119, 242, 0.3) !important;
+}
+
+.contact-icon-twitter {
+    color: #000000 !important;
+}
+
+.contact-icon-twitter:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.contact-icon-linkedin {
+    color: #0A66C2 !important;
+}
+
+.contact-icon-linkedin:hover {
+    background: rgba(10, 102, 194, 0.1) !important;
+    border-color: rgba(10, 102, 194, 0.3) !important;
+}
+
+.contact-icon-phone {
+    color: #0EA5E9 !important;
+}
+
+.contact-icon-phone:hover {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border-color: rgba(14, 165, 233, 0.3) !important;
+}
+
+.contact-icon-whatsapp {
+    color: #25D366 !important;
+}
+
+.contact-icon-whatsapp:hover {
+    background: rgba(37, 211, 102, 0.1) !important;
+    border-color: rgba(37, 211, 102, 0.3) !important;
+}
+
+.contact-icon-map {
+    color: #EA4335 !important;
+}
+
+.contact-icon-map:hover {
+    background: rgba(234, 67, 53, 0.1) !important;
+    border-color: rgba(234, 67, 53, 0.3) !important;
 }
 
 .nri-contact-grid {
@@ -2749,7 +2869,7 @@
         grid-column: auto;
     }
 
-    .nri-contact-actions {
+    .nri-contact-section .nri-contact-actions {
         flex-direction: column;
         align-items: stretch;
     }
@@ -2781,6 +2901,11 @@
     }
 
     .footer-socials {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        gap: 12px !important;
         margin-top: 0.8rem;
         margin-bottom: 0;
     }
@@ -2925,6 +3050,13 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
+}
+
+/* Section CTA Center - SEO Bridge */
+.section-cta-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
 }
 
 .btn-view-all::before {
@@ -3635,3 +3767,177 @@ section.custom-cards-section:nth-of-type(even) {
 
 
 
+
+
+/* ============================================
+   CUSTOMER REVIEWS - GOOGLE-STYLE MASONRY GRID
+   ============================================ */
+
+.cr-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 2rem;
+    align-items: start;
+}
+
+.cr-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 18px 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.cr-card--hidden {
+    display: none;
+}
+
+.cr-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.cr-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cr-name-block {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cr-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cr-location {
+    font-size: 0.78rem;
+    color: #64748B;
+}
+
+.cr-google-badge {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+.cr-stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+.cr-text {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #374151;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: none;
+}
+
+.cr-text.is-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.cr-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #B89A4A;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.cr-read-more:hover {
+    color: #8A6A22;
+}
+
+.cr-read-more svg {
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.cr-read-more.is-expanded svg {
+    transform: rotate(180deg);
+}
+
+.cr-footer-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.cr-see-all-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border: 2px solid #C9A961;
+    border-radius: 4px;
+    background: transparent;
+    color: #0F172A;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.cr-see-all-btn:hover {
+    background: #C9A961;
+    color: #FFFFFF;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .cr-masonry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .cr-masonry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cr-footer-row {
+        justify-content: center;
+    }
+}

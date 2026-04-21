@@ -248,7 +248,7 @@ Deploy runs automatically:
 | 20 | Apr 10 | Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live. | ✅ |
 | 21 | Apr 10 | Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn. | ✅ |
 | 22 | Apr 11 | **GitHub Actions CI/CD. Every push to main auto-deploys to propertism-prod-2026. IAM user: github-actions-propertism.** | ✅ |
-| 23 | Apr 16 | **Hero + property images fix. Removed `--exclude media/*` from deploy.yml. Added `.platform/nginx/nginx.conf` override with /media/ and /static/ location blocks. Fixed bad nginx conf.d location block that caused deploy failure.** | ✅ |
+| 23 | Apr 16 | **Hero + property images fix. Removed `--exclude media/*` from deploy.yml. Added `.platform/nginx/nginx.conf` override with /media/ and /static/ location blocks. Fixed bad nginx conf.d location block that caused deploy failure. Added missing renamed media files (hero2/3/4/5, 1772514993415). All images live. ✅** | ✅ |
 
 ---
 

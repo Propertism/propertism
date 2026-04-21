@@ -85,14 +85,13 @@ class HomePageContentTests(TestCase):
                 is_active=True,
             )
 
-    def test_homepage_groups_reviews_into_slides_of_three(self):
+    def test_homepage_groups_reviews_into_slides_of_six(self):
         response = self.client.get(reverse("home"), follow=True)
 
         self.assertEqual(response.status_code, 200)
         slides = response.context["customer_review_slides"]
-        self.assertEqual(len(slides), 2)
-        self.assertEqual(len(slides[0]), 3)
-        self.assertEqual(len(slides[1]), 1)
+        self.assertEqual(len(slides), 1)
+        self.assertEqual(len(slides[0]), 4)
         self.assertContains(response, 'data-review-carousel')
 
     def test_homepage_exposes_rotating_hero_background_urls(self):

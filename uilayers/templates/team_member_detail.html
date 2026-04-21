@@ -23,7 +23,16 @@
         <div style="display: flex; gap: 48px; align-items: flex-start;">
             {% if team_member.photo %}
             <div style="flex-shrink: 0;">
-                <img src="{{ team_member.photo.url }}" alt="{{ team_member.name }}" style="width: 200px; height: 200px; border-radius: 12px; object-fit: cover;">
+                <img src="{{ team_member.photo.url }}" alt="{{ team_member.name }}" style="width: 200px; height: 200px; border-radius: 12px; object-fit: cover;" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display: none; width: 200px; height: 200px; border-radius: 12px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; align-items: center; justify-content: center; font-size: 3rem; font-weight: 300;">
+                    {{ team_member.name|first }}{{ team_member.name|wordcount|add:"-1"|slice:"1:2" }}
+                </div>
+            </div>
+            {% else %}
+            <div style="flex-shrink: 0;">
+                <div style="width: 200px; height: 200px; border-radius: 12px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 300;">
+                    {{ team_member.name|first }}{{ team_member.name|wordcount|add:"-1"|slice:"1:2" }}
+                </div>
             </div>
             {% endif %}
             

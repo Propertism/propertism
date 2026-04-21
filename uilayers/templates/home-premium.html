@@ -110,6 +110,87 @@
         text-wrap: pretty;
     }
     
+    /* Hero Contact Icons */
+    .hero-contact-icons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 2rem;
+    }
+    
+    .hero-icon-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    
+    .hero-icon-link svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .hero-icon-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
+    
+    /* Brand Colors for Hero Icons */
+    .hero-icon-facebook {
+        color: #1877F2 !important;
+    }
+    
+    .hero-icon-facebook:hover {
+        background: rgba(24, 119, 242, 0.15) !important;
+    }
+    
+    .hero-icon-twitter {
+        color: #000000 !important;
+    }
+    
+    .hero-icon-twitter:hover {
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .hero-icon-linkedin {
+        color: #0A66C2 !important;
+    }
+    
+    .hero-icon-linkedin:hover {
+        background: rgba(10, 102, 194, 0.15) !important;
+    }
+    
+    .hero-icon-phone {
+        color: #0EA5E9 !important;
+    }
+    
+    .hero-icon-phone:hover {
+        background: rgba(14, 165, 233, 0.15) !important;
+    }
+    
+    .hero-icon-whatsapp {
+        color: #25D366 !important;
+    }
+    
+    .hero-icon-whatsapp:hover {
+        background: rgba(37, 211, 102, 0.15) !important;
+    }
+    
+    .hero-icon-map {
+        color: #EA4335 !important;
+    }
+    
+    .hero-icon-map:hover {
+        background: rgba(234, 67, 53, 0.15) !important;
+    }
+    
     .hero-copy-zillow {
         display: flex;
         flex-direction: column;
@@ -254,6 +335,16 @@
             </div>
             {% endfor %}
         </div>
+        
+        <!-- SEO Bridge CTA -->
+        <div class="section-cta-center">
+            <a href="{{ home_section_links.services }}" class="btn-view-all">
+                View Full Services
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
     </div>
 </section>
 
@@ -352,10 +443,20 @@
             </article>
             {% endfor %}
         </div>
+        
+        <!-- SEO Bridge CTA -->
+        <div class="section-cta-center">
+            <a href="{{ home_section_links.management }}" class="btn-view-all">
+                Meet Our Full Team
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
     </div>
 </section>
 
-{% if customer_review_section and customer_review_slides %}
+{% if customer_review_section and customer_reviews %}
 <section id="reviews-section" class="customer-reviews-section">
     <div class="container">
         <div class="customer-reviews-intro">
@@ -367,55 +468,58 @@
             <p>{{ customer_review_section.description }}</p>
             {% endif %}
         </div>
-        <div class="customer-reviews-carousel" data-review-carousel>
-            <div class="customer-reviews-viewport">
-                <div class="customer-reviews-track" data-review-track>
-                    {% for review_group in customer_review_slides %}
-                    <div class="customer-reviews-slide" data-review-slide="{{ forloop.counter0 }}" aria-hidden="{% if not forloop.first %}true{% else %}false{% endif %}">
-                        <div class="customer-reviews-grid">
-                            {% for review in review_group %}
-                            <article class="customer-review-card">
-                                <div class="customer-review-stars" aria-label="{{ review.rating }} out of 5 stars">{{ review.star_icons }}</div>
-                                <div class="customer-review-quote-mark" aria-hidden="true">&rdquo;</div>
-                                <p class="customer-review-copy">{{ review.quote }}</p>
-                                {% if review.service_label %}
-                                <span class="customer-review-tag">{{ review.service_label }}</span>
-                                {% endif %}
-                                <div class="customer-review-person">
-                                    <div class="customer-review-avatar">{{ review.display_initials }}</div>
-                                    <div class="customer-review-person-meta">
-                                        <strong>{{ review.customer_name }}</strong>
-                                        {% if review.customer_location %}
-                                        <span>{{ review.customer_location }}</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </article>
-                            {% endfor %}
-                        </div>
+
+        <!-- Masonry-style 3-column grid -->
+        <div class="cr-masonry-grid">
+            {% for review in customer_reviews %}
+            <article class="cr-card{% if forloop.counter > 9 %} cr-card--hidden{% endif %}">
+                <!-- Card Header: Avatar + Name + Google G -->
+                <div class="cr-card-header">
+                    <div class="cr-avatar">{{ review.display_initials }}</div>
+                    <div class="cr-name-block">
+                        <strong class="cr-name">{{ review.customer_name }}</strong>
+                        {% if review.customer_location %}
+                        <span class="cr-location">{{ review.customer_location }}</span>
+                        {% endif %}
                     </div>
-                    {% endfor %}
+                    <div class="cr-google-badge" aria-label="Google review" title="Google Review">
+                        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            {% if customer_review_slides|length > 1 %}
-            <div class="customer-reviews-indicators" aria-label="Customer review slide indicators">
-                {% for review_group in customer_review_slides %}
-                <button type="button" class="customer-reviews-indicator{% if forloop.first %} is-active{% endif %}" data-review-indicator="{{ forloop.counter0 }}" aria-label="Show review slide {{ forloop.counter }}"></button>
-                {% endfor %}
-            </div>
+                <!-- Stars -->
+                <div class="cr-stars" aria-label="{{ review.rating }} out of 5 stars">
+                    {% with rating=review.rating %}
+                    {% for i in "12345" %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#F5A623">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+                <!-- Review text with 3-line clamp + read more -->
+                <p class="cr-text" data-cr-text>{{ review.quote }}</p>
+                <button type="button" class="cr-read-more" data-cr-toggle style="display:none;">
+                    <span data-cr-label>Read more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- Bottom row: See All Testimonials -->
+        <div class="cr-footer-row">
+            {% if customer_reviews|length > 9 %}
+            <button type="button" class="cr-see-all-btn" id="cr-see-all-btn" onclick="
+                document.querySelectorAll('.cr-card--hidden').forEach(function(c){ c.classList.remove('cr-card--hidden'); });
+                this.style.display='none';
+            ">SEE ALL TESTIMONIALS</button>
             {% endif %}
         </div>
-        {% if customer_review_section.badge_title or customer_review_section.badge_text %}
-        <div class="customer-review-badge">
-            <span class="customer-review-badge-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            {% if customer_review_section.badge_title %}
-            <strong>{{ customer_review_section.badge_title }}</strong>
-            {% endif %}
-            {% if customer_review_section.badge_text %}
-            <span>{{ customer_review_section.badge_text }}</span>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
 </section>
 {% endif %}
@@ -535,11 +639,41 @@
                 <h2>{{ company.contact_section_title }}</h2>
                 <p>{{ company.contact_section_description }}</p>
                 <div class="nri-contact-actions">
-                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="btn-call-premium">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    {% if company.facebook_url %}
+                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="contact-icon-link contact-icon-facebook" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/>
                         </svg>
-                        {{ company.contact_primary_cta_text }}
+                    </a>
+                    {% endif %}
+                    {% if company.twitter_url %}
+                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="contact-icon-link contact-icon-twitter" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    {% if company.linkedin_url %}
+                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="contact-icon-link contact-icon-linkedin" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="contact-icon-link contact-icon-phone" aria-label="Call Us" title="Call Chennai Office">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.34 2.74a2 2 0 0 1-.57 1.73l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.73-.57l2.74.34A2 2 0 0 1 22 16.92Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/{{ company.india_phone_1|cut:' '|cut:'+' }}?text=Hi%2C%20I%20want%20to%20discuss%20property%20management." class="contact-icon-link contact-icon-whatsapp" aria-label="WhatsApp" title="Chat on WhatsApp" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.56 0 .27 5.29.27 11.8c0 2.08.54 4.1 1.57 5.89L0 24l6.49-1.7a11.74 11.74 0 0 0 5.58 1.42h.01c6.51 0 11.8-5.29 11.8-11.8 0-3.15-1.23-6.1-3.36-8.44Zm-8.45 18.24h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.85 1.01 1.03-3.76-.23-.39a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.77 9.77 0 0 1 2.89 6.95c0 5.43-4.42 9.84-9.85 9.84Zm5.39-7.38c-.29-.14-1.71-.84-1.98-.94-.26-.1-.46-.14-.65.15-.19.29-.75.94-.92 1.14-.17.19-.34.22-.64.07-.29-.14-1.23-.45-2.35-1.45-.87-.77-1.46-1.72-1.63-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.15-.24-.57-.48-.49-.65-.5l-.55-.01c-.19 0-.5.07-.76.36-.26.29-.99.97-.99 2.36s1.01 2.73 1.15 2.92c.14.19 1.98 3.02 4.8 4.24.67.29 1.20.47 1.61.6.68.22 1.30.19 1.79.12.55-.08 1.71-.70 1.95-1.38.24-.68.24-1.27.17-1.39-.07-.12-.27-.19-.56-.34Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.company_name|urlencode }}+{{ company.india_office_address|urlencode }}+{{ company.india_office_city|urlencode }}" class="contact-icon-link contact-icon-map" aria-label="View on Map" title="View Chennai Office on Google Maps" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2c3.87 0 7 3.13 7 7 0 4.92-4.52 9.57-6.22 11.16a1.1 1.1 0 0 1-1.56 0C9.52 18.57 5 13.92 5 9c0-3.87 3.13-7 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6.5a2.5 2.5 0 0 0 0 5Z"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -697,6 +831,37 @@
             updateCarousel(0);
         });
 
+        // Customer Review Read More Toggle
+        const reviewCards = document.querySelectorAll(".customer-review-card");
+        
+        reviewCards.forEach(card => {
+            const reviewText = card.querySelector("[data-review-text]");
+            const toggleBtn = card.querySelector("[data-review-toggle]");
+            const toggleTextSpan = toggleBtn?.querySelector("[data-toggle-text]");
+            
+            if (!reviewText || !toggleBtn || !toggleTextSpan) return;
+            
+            // Check if text is clamped (overflowing)
+            const isTextClamped = reviewText.scrollHeight > reviewText.clientHeight;
+            
+            if (isTextClamped) {
+                toggleBtn.style.display = "inline-flex";
+            }
+            
+            toggleBtn.addEventListener("click", () => {
+                const isExpanded = reviewText.classList.toggle("is-expanded");
+                toggleBtn.classList.toggle("is-expanded", isExpanded);
+                
+                if (isExpanded) {
+                    toggleTextSpan.textContent = "Show less";
+                } else {
+                    toggleTextSpan.textContent = "Read more";
+                    // Smooth scroll back to card when collapsing
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+
         // Journal/Blog Expansion Logic
         const journalCards = document.querySelectorAll("[data-journal-card]");
         
@@ -754,9 +919,27 @@
             heroImages[currentHeroIndex].classList.remove("is-active");
             heroImages[nextHeroIndex].classList.add("is-active");
             currentHeroIndex = nextHeroIndex;
-        }, 30000);
+        }, 10000);
     }());
 
+    // Customer Reviews - 3-line clamp with Read More toggle
+    (function () {
+        document.querySelectorAll("[data-cr-text]").forEach(function (textEl) {
+            var btn = textEl.nextElementSibling;
+            if (!btn || !btn.hasAttribute("data-cr-toggle")) return;
+
+            // Only show button if text is actually clamped
+            if (textEl.scrollHeight > textEl.clientHeight + 2) {
+                btn.style.display = "inline-flex";
+            }
+
+            btn.addEventListener("click", function () {
+                var expanded = textEl.classList.toggle("is-expanded");
+                btn.classList.toggle("is-expanded", expanded);
+                btn.querySelector("[data-cr-label]").textContent = expanded ? "Read less" : "Read more";
+            });
+        });
+    }());
 
 </script>
 {% endblock %}
