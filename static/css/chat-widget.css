@@ -1,34 +1,45 @@
 /* Premium Chat Widget Styles */
 .chat-widget {
     position: fixed;
-    bottom: 192px; /* Moved up 4 more lines (96px) from 96px */
-    right: -32px; /* Half-visible bleeding from right edge (64px width / 2) */
+    bottom: 180px; /* Positioned between hero and footer to avoid overlap */
+    right: 24px; /* Moved away from edge for better visibility */
     z-index: 9999;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .chat-button {
-    width: 64px;
-    height: 64px;
-    border-radius: 8px; /* Changed from 50% (round) to 8px (square with slight rounding) */
+    width: 40px; /* Smaller from 48px */
+    height: 40px; /* Smaller from 48px */
+    border-radius: 50%; /* Perfect circle */
     background: linear-gradient(135deg, #C9A961 0%, #B89A4A 100%);
     border: none;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(184, 154, 74, 0.35), 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(184, 154, 74, 0.3), 0 2px 6px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align icon to left so it's visible */
-    padding-left: 8px; /* Add padding to position icon visibly */
+    justify-content: center; /* Center icon */
+    padding: 0; /* Remove padding */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 2;
+}
+
+.chat-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(184, 154, 74, 0.4), 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.chat-button svg {
+    width: 22px; /* Smaller icon to match smaller button */
+    height: 22px;
+    color: #FFFFFF;
 }
 
 .chat-button::before {
     content: '';
     position: absolute;
     inset: -2px;
-    border-radius: 8px; /* Changed from 50% to match button shape */
+    border-radius: 50%; /* Match circular button */
     background: linear-gradient(135deg, #C9A961 0%, #B89A4A 100%);
     opacity: 0;
     transition: opacity 0.3s;

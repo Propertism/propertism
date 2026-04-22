@@ -3797,6 +3797,8 @@ section.custom-cards-section:nth-of-type(even) {
 /* ── Global Client Network tagline card ── */
 .world-clock-cell--tagline {
     justify-content: space-between;
+    padding-right: 0.5rem; /* Reduced to move "4" towards left/red border */
+    padding-left: 0.5rem; /* Balance the spacing */
 }
 
 /* No country flag on tagline or office-hours label */

@@ -1,0 +1,90 @@
+/* Vertical Social Icons Strip */
+.social-strip {
+    position: fixed;
+    bottom: 336px; /* Moved up 1 line (24px) from 312px */
+    right: -14px; /* Hide ~30% (14px of 48px width), show ~70% */
+    z-index: 9998; /* Below chat button (9999) */
+    background: #E8E8E8; /* More dull gray off-white */
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: none; /* No shadow */
+    border-radius: 12px 0 0 12px; /* Rounded corners on left */
+    backdrop-filter: none; /* No blur effect */
+    transition: right 0.3s ease; /* Smooth slide animation */
+    width: 48px; /* Fixed width for consistent bleeding */
+}
+
+.social-strip:hover {
+    right: 0; /* Fully revealed on hover */
+}
+
+.social-strip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    opacity: 1; /* Full opacity */
+    filter: none; /* No filters */
+}
+
+.social-strip-icon:hover {
+    transform: scale(1.15); /* Slightly larger hover effect */
+    opacity: 1; /* Keep full opacity on hover */
+}
+
+.social-strip-icon svg {
+    width: 24px; /* Larger icons */
+    height: 24px; /* Larger icons */
+    opacity: 1; /* Full opacity */
+    filter: none; /* No blur */
+    stroke-width: 2.5; /* Bolder strokes where applicable */
+}
+
+/* Brand Colors for Social Icons - Brighter versions */
+.social-strip-icon:nth-child(1) {
+    color: #4F9EFF !important; /* Facebook - brighter blue */
+}
+
+.social-strip-icon:nth-child(2) {
+    color: #1E293B !important; /* X/Twitter - darker for contrast */
+}
+
+.social-strip-icon:nth-child(3) {
+    color: #4F9EFF !important; /* LinkedIn - brighter blue */
+}
+
+.social-strip-icon:nth-child(4) {
+    color: #0EA5E9 !important; /* Phone - bright cyan */
+}
+
+.social-strip-icon:nth-child(5) {
+    color: #22C55E !important; /* WhatsApp - brighter green */
+}
+
+.social-strip-icon:nth-child(6) {
+    color: #F43F5E !important; /* Map - brighter red */
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .social-strip {
+        bottom: 308px; /* 5 lines above mobile chat button at 188px */
+        padding: 10px 6px;
+        gap: 10px;
+    }
+    
+    .social-strip-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .social-strip-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+}
