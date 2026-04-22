@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{% static 'css/mobile-layout.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat-widget.css' %}">
     <link rel="stylesheet" href="{% static 'css/contact-strip.css' %}">
+    <link rel="stylesheet" href="{% static 'css/scrollbar.css' %}">
     
     <!-- Structured Data -->
     {% block structured_data %}
@@ -63,6 +64,7 @@
     
     <!-- Vertical Social Icons Strip -->
     <div class="social-strip">
+        <div class="social-strip-label">Contact</div>
         {% if company.facebook_url %}
         <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="social-strip-icon" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/></svg>

@@ -187,9 +187,9 @@
 }
 
 .testimonial-card {
-    background: var(--white);
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f5 100%); /* SCCB-PR-FE-012: Subtle gradient */
     padding: var(--space-10);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Consistent radius */
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-slow);
     position: relative;

@@ -31,6 +31,11 @@
     /* Typography */
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'Inter', -apple-system, sans-serif;
+    
+    /* SCCB-PR-FE-012: Border Radius Tokens */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
 }
 
 #home-section,
@@ -517,6 +522,7 @@
         grid-template-columns: 2fr 0.5fr 2fr 0.5fr;
         gap: clamp(6px, 0.8vw, 10px);
         padding: clamp(3px, 0.6vw, 6px) 0;
+        border-radius: var(--radius-sm); /* SCCB-PR-FE-012: Minimal radius on tablet */
     }
     
     .trust-strip-section .container {
@@ -633,12 +639,18 @@
 }
 
 .credibility-story-card {
-    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #f4f4f2 100%); /* SCCB-PR-FE-013: Increased gradient visibility */
+    border-radius: 14px; /* SCCB-PR-FE-013: Prominent radius for panels */
+    padding: var(--space-12);
+    overflow: hidden;
 }
 
 .credibility-proof-card {
-    background: linear-gradient(180deg, rgba(10, 22, 40, 0.98) 0%, rgba(24, 37, 59, 0.96) 100%);
+    background: linear-gradient(180deg, #0f1c2e 0%, #16263d 100%); /* SCCB-PR-FE-013: Dark panel gradient */
     color: rgba(255, 255, 255, 0.92);
+    border-radius: 14px; /* SCCB-PR-FE-013: Prominent radius for panels */
+    padding: var(--space-12);
+    overflow: hidden;
 }
 
 .credibility-title {
@@ -950,8 +962,8 @@
 }
 
 .property-card-hybrid {
-    background: var(--white);
-    border-radius: 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Rounded corners */
     overflow: hidden;
     transition: all 0.3s;
     box-shadow: none;
@@ -1095,11 +1107,12 @@
 }
 
 .insight-card {
-    background: var(--gray-50);
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f5 100%); /* SCCB-PR-FE-013: Consistent gradient */
     padding: var(--space-8);
-    border-radius: 12px;
+    border-radius: 10px; /* SCCB-PR-FE-013: Strict 10px radius */
     border-left: 4px solid var(--brand-gold);
     transition: all 0.3s;
+    overflow: hidden;
 }
 
 .insight-card:hover {
@@ -1199,10 +1212,11 @@
 .management-preview-card,
 .journal-preview-card {
     padding: 24px;
-    border-radius: 20px;
+    border-radius: 10px; /* SCCB-PR-FE-013: Strict 10px radius */
     border: 1px solid rgba(17, 24, 39, 0.08);
-    background: #FFFFFF;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f5 100%); /* SCCB-PR-FE-013: Consistent gradient */
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+    overflow: hidden; /* SCCB-PR-FE-013: Ensure clean edges */
 }
 
 .management-preview-meta {
@@ -1604,8 +1618,11 @@
 
 .nri-contact-section {
     padding: var(--space-20) 0;
-    background: linear-gradient(135deg, var(--brand-navy) 0%, #1a2942 100%);
+    background: linear-gradient(180deg, #0f1c2e 0%, #16263d 100%); /* SCCB-PR-FE-013: Dark panel gradient */
     color: var(--white);
+    border-radius: 14px; /* SCCB-PR-FE-013: Prominent radius for panels */
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 .nri-contact-shell {
@@ -1726,8 +1743,8 @@
 
 .quote-request-form {
     padding: 24px;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.95);
+    border-radius: 14px; /* SCCB-PR-FE-013: Prominent radius for form container */
+    background: linear-gradient(180deg, #ffffff 0%, #f4f4f2 100%); /* SCCB-PR-FE-013: Light panel gradient */
     box-shadow: 0 18px 50px rgba(3, 8, 18, 0.18);
     overflow: hidden;
     max-width: 100%;
@@ -1761,7 +1778,7 @@
 .quote-request-field textarea {
     width: 100%;
     border: 1px solid rgba(15, 23, 42, 0.12);
-    border-radius: 14px;
+    border-radius: 10px; /* SCCB-PR-FE-013: Consistent radius */
     padding: 14px 16px;
     background: #FFFFFF;
     color: var(--gray-900);
@@ -1792,18 +1809,19 @@
     justify-content: center;
     padding: 10px 24px;
     border: 0;
-    border-radius: 12px;
-    background: #0F172A;
+    border-radius: 6px; /* SCCB-PR-FE-013: Consistent button radius */
+    background: linear-gradient(180deg, #1c2b45 0%, #0f1c2e 100%); /* SCCB-PR-FE-013: Primary button gradient */
     color: #FFFFFF;
     font-size: 0.88rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: all 0.2s;
 }
 
 .quote-request-submit:hover {
-    background: #172338;
+    background: linear-gradient(180deg, #0f1c2e 0%, #0a1420 100%); /* SCCB-PR-FE-013: Darker gradient on hover */
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
 }
 
 .nri-contact-card {

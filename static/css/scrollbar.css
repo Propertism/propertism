@@ -1,0 +1,48 @@
+/* Minimal Hairline Scrollbar */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(45, 55, 72, 0.3) rgba(45, 55, 72, 0.08); /* Thumb: subtle charcoal, Track: very subtle charcoal */
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(45, 55, 72, 0.08); /* Subtle charcoal background */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(45, 55, 72, 0.3); /* Subtle charcoal */
+    border-radius: 3px;
+    transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(45, 55, 72, 0.5); /* Darker charcoal on hover */
+}
+
+/* Remove scrollbar arrows/buttons */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/* Scrollbar corner (where horizontal and vertical meet) */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Optional: Slightly darker for dark backgrounds */
+.dark-section ::-webkit-scrollbar-thumb,
+.site-footer ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark-section ::-webkit-scrollbar-thumb:hover,
+.site-footer ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

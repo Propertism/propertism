@@ -1,7 +1,8 @@
 /* Vertical Social Icons Strip */
 .social-strip {
     position: fixed;
-    bottom: 336px; /* Moved up 1 line (24px) from 312px */
+    top: calc(50% - 48px); /* Center vertically - 2 lines up (72px - 24px = -48px) */
+    transform: translateY(-50%); /* Perfect vertical centering */
     right: -14px; /* Hide ~30% (14px of 48px width), show ~70% */
     z-index: 9998; /* Below chat button (9999) */
     background: #E8E8E8; /* More dull gray off-white */
@@ -14,6 +15,22 @@
     backdrop-filter: none; /* No blur effect */
     transition: right 0.3s ease; /* Smooth slide animation */
     width: 48px; /* Fixed width for consistent bleeding */
+    border: 1px solid rgba(45, 55, 72, 0.15); /* Subtle charcoal border */
+}
+
+/* Vertical "Contact" Label */
+.social-strip-label {
+    writing-mode: vertical-rl; /* Vertical text, right-to-left */
+    transform: rotate(180deg); /* Flip to read from bottom to top */
+    font-size: 11px;
+    font-weight: 700; /* Bold */
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #C9A961; /* Mustard gold */
+    text-align: center;
+    padding: 8px 0;
+    margin-bottom: 4px;
+    user-select: none; /* Prevent text selection */
 }
 
 .social-strip:hover {
@@ -73,7 +90,8 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
     .social-strip {
-        bottom: 308px; /* 5 lines above mobile chat button at 188px */
+        top: calc(50% - 48px); /* Keep centered - 2 lines up on mobile */
+        transform: translateY(-50%);
         padding: 10px 6px;
         gap: 10px;
     }

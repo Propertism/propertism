@@ -286,8 +286,8 @@
 
 .property-card-stunning {
     position: relative;
-    background: var(--white);
-    border-radius: var(--radius-2xl);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Consistent radius */
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-slow);
@@ -444,8 +444,8 @@
 .service-card-stunning {
     position: relative;
     padding: var(--space-12);
-    background: var(--white);
-    border-radius: var(--radius-2xl);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Consistent radius */
     box-shadow: var(--shadow-md);
     transition: all var(--transition-slow);
     overflow: hidden;

@@ -372,9 +372,10 @@ p {
 }
 
 .btn-primary {
-    background: var(--color-navy);
+    background: linear-gradient(180deg, #1c2b45 0%, #0f1c2e 100%); /* SCCB-PR-FE-012: Subtle gradient */
     color: var(--color-white);
     border: 1px solid var(--color-navy);
+    border-radius: var(--radius-sm); /* SCCB-PR-FE-012: Rounded corners */
 }
 
 .btn-primary::before {
@@ -407,6 +408,7 @@ p {
     background: transparent;
     color: var(--color-navy);
     border: 1px solid var(--color-navy);
+    border-radius: var(--radius-sm); /* SCCB-PR-FE-012: Rounded corners */
 }
 
 .btn-secondary:hover {
@@ -541,8 +543,9 @@ p {
 }
 
 .property-card {
-    background: var(--color-white);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
     border: var(--border-thin);
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Rounded corners */
     overflow: hidden;
     transition: all var(--transition-slow);
     position: relative;
@@ -673,8 +676,9 @@ p {
 
 .service-card {
     padding: var(--space-12);
-    background: var(--color-gray-50);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
     border: var(--border-hairline);
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Rounded corners */
     transition: all var(--transition-slow);
     position: relative;
 }
@@ -1186,8 +1190,9 @@ a, button {
 
 .service-card-modern {
     padding: var(--space-12);
-    background: var(--color-white);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
     border: var(--border-thin);
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Rounded corners */
     transition: all var(--transition-slow);
 }
 
@@ -1244,8 +1249,9 @@ a, button {
 }
 
 .property-card-modern {
-    background: var(--color-white);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f9f7 100%); /* SCCB-PR-FE-012: Subtle gradient */
     border: var(--border-thin);
+    border-radius: var(--radius-md); /* SCCB-PR-FE-012: Rounded corners */
     overflow: hidden;
     transition: all var(--transition-slow);
 }
