@@ -149,6 +149,11 @@
 ### 5. ✅ Navigation Updates
 **Objective**: Add missing navigation items and fix anchor links
 
+#### Management Team Anchor Fix (From Previous Session)
+- **Issue**: Management navigation was linking to wrong section/page
+- **Resolution**: Corrected anchor to point to `/#management-section`
+- **Impact**: Proper navigation flow restored
+
 #### Added Navigation Items
 - **About**: Links to `/#about-section` (homepage anchor)
 - **Quote**: Links to `/#contact-section` (Get in Touch form)
@@ -300,7 +305,12 @@
 - **Resolution**: Hidden per user request (`display: none`)
 - **Status**: ✅ Resolved
 
-### Issue 3: About Navigation
+### Issue 3: Management Team Anchor (Previous Session)
+- **Problem**: Management navigation linking to wrong section/page
+- **Resolution**: Corrected to `/#management-section` anchor
+- **Status**: ✅ Resolved
+
+### Issue 4: About Navigation
 - **Problem**: Linked to SEO page instead of section
 - **Resolution**: Changed to `/#about-section` anchor
 - **Status**: ✅ Resolved
