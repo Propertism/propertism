@@ -6,6 +6,6 @@ cd /var/app/current
 source /var/app/venv/*/bin/activate
 
 echo "🚀 Loading team members..."
-python manage.py load_team_members
+python load_team_members.py
 
 echo "✅ Team members load script completed"
