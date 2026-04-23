@@ -99,7 +99,7 @@ class Command(BaseCommand):
             "blog_section_eyebrow": "Insights",
             "blog_section_title": "Useful updates for owners managing from abroad.",
             "blog_section_description": (
-                "Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai."
+                "Short, practical support for reporting, rentals, maintenance, Chennai"
             ),
             "contact_section_eyebrow": "Get in Touch",
             "contact_section_title": "Let's discuss your property needs",

@@ -1,59 +1,15 @@
 /**
- * SCCB-PR-UI-013 — VIEWPORT STABILITY HARDENING (FINAL SYSTEM ENFORCEMENT)
- *
- * Deterministic, system-driven viewport fit across all sections.
- * 2-BLOCK VERTICAL CONTRACT: HEADER BLOCK (fixed) + CONTENT BLOCK (flexible)
- *
- * SUPERSEDES: SCCB-PR-UI-012, SCCB-PR-UI-012-A
- * STATUS: PRODUCTION LOCK
+ * SCCB-PR-UI-013 — VIEWPORT STABILITY HARDENING
+ * NO CLAMPS. NO TRUNCATION. ALL CONTENT BACKEND-DRIVEN.
  *
  * ACTUAL CLASS MAP (verified from home-premium.html):
- *
- * #services-section   .market-insights
- *   intro:            .section-intro-center
- *   grid:             .insights-grid
- *   card:             .insight-card.service-depth-card
- *   card desc:        .insight-description
- *
- * #about-section      .credibility-section
- *   layout:           .credibility-grid (2-col, no standard intro)
- *   left card:        .credibility-story-card
- *   title:            .credibility-title
- *   right card:       .credibility-proof-card
- *
- * #management-section .management-preview-section
- *   intro:            .management-preview-intro
- *   label:            .section-kicker
- *   grid:             .management-preview-grid
- *   card:             .management-preview-card
- *   card desc:        p (direct child)
- *
- * #reviews-section    .customer-reviews-section
- *   intro:            .customer-reviews-intro
- *   label:            .section-kicker
- *   grid:             .cr-masonry-grid
- *   card:             .cr-card
- *   card desc:        .cr-text
- *
- * #properties-section .featured-properties-section
- *   intro:            .featured-properties-intro
- *   title:            .featured-properties-title
- *   subtitle:         .featured-properties-subtitle
- *   grid:             .property-grid-hybrid
- *   card:             .property-card-hybrid
- *
- * #blog-section       .journal-preview-section
- *   intro:            .journal-preview-intro
- *   label:            .section-kicker
- *   grid:             .journal-preview-grid
- *   card:             .journal-preview-card
- *   card desc:        .journal-content-preview
- *
- * #contact-section    .nri-contact-section
- *   layout:           .nri-contact-shell (2-col)
- *   label:            .section-kicker
- *   title:            h2 (direct)
- *   form:             .quote-request-form
+ * #services-section   → .section-intro-center / .insights-grid / .insight-card.service-depth-card
+ * #about-section      → .credibility-grid / .credibility-story-card / .credibility-proof-card
+ * #management-section → .management-preview-intro / .management-preview-grid / .management-preview-card
+ * #reviews-section    → .customer-reviews-intro / .cr-masonry-grid / .cr-card
+ * #properties-section → .featured-properties-intro / .property-grid-hybrid / .property-card-hybrid
+ * #blog-section       → .journal-preview-intro / .journal-preview-grid / .journal-preview-card
+ * #contact-section    → .nri-contact-shell / .nri-contact-copy / .quote-request-form
  */
 
 /* ============================================
@@ -61,15 +17,12 @@
    ============================================ */
 :root {
     --nav-height: 80px;
-    --header-max-height: 220px;
-    --header-gap: 12px;
     --grid-gap: 16px 20px;
     --card-padding: 16px;
-    --title-max-width: 720px;
 }
 
 /* ============================================
-   1. SECTION CONTAINER (HARD LOCK)
+   1. SECTION CONTAINER
    ============================================ */
 #services-section,
 #about-section,
@@ -78,26 +31,13 @@
 #properties-section,
 #blog-section,
 #contact-section {
-    height: calc(100vh - var(--nav-height));
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     scroll-margin-top: var(--nav-height);
     box-sizing: border-box;
 }
 
-/* Remove min-height — hard lock only */
-#services-section,
-#about-section,
-#management-section,
-#reviews-section,
-#properties-section,
-#blog-section,
-#contact-section {
-    min-height: unset !important;
-}
-
-/* Container: no extra padding */
+/* Container */
 #services-section .container,
 #about-section .container,
 #management-section .container,
@@ -108,230 +48,180 @@
     padding-top: 0 !important;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
 }
 
 /* ============================================
-   2. HEADER BLOCK (STRICT HEIGHT BUDGET — 220px MAX)
+   2. HEADER BLOCKS — CENTERED, NO CLIPPING
    ============================================ */
-
-/* Services */
-.section-intro-center {
-    flex: 0 0 auto;
-    max-height: var(--header-max-height);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--header-gap);
-    text-align: center;
-    padding: 24px 16px 0;
-    overflow: hidden;
-}
-
-/* Management */
-.management-preview-intro {
-    flex: 0 0 auto;
-    max-height: var(--header-max-height);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--header-gap);
-    text-align: center;
-    padding: 24px 16px 0;
-    overflow: hidden;
-}
-
-/* Reviews */
-.customer-reviews-intro {
-    flex: 0 0 auto;
-    max-height: var(--header-max-height);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--header-gap);
-    text-align: center;
-    padding: 24px 16px 0;
-    overflow: hidden;
-}
-
-/* Properties */
-.featured-properties-intro {
-    flex: 0 0 auto;
-    max-height: var(--header-max-height);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--header-gap);
-    text-align: center;
-    padding: 24px 16px 0;
-    overflow: hidden;
-}
-
-/* Blog */
+.section-intro-center,
+.management-preview-intro,
+.customer-reviews-intro,
+.featured-properties-intro,
 .journal-preview-intro {
-    flex: 0 0 auto;
-    max-height: var(--header-max-height);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: var(--header-gap);
     text-align: center;
+    gap: 12px;
     padding: 24px 16px 0;
-    overflow: hidden;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 /* ============================================
-   3. TITLE / SUBTITLE (DETERMINISTIC CLAMP)
+   3. TITLES & SUBTITLES
+   h2-base-style applied to: Management, Reviews, Properties, Blog
+   Excluded: About (.credibility-title), Contact (.nri-contact-copy)
    ============================================ */
 
-/* Section kicker labels */
+/* Kicker labels */
 .section-kicker {
     text-align: center;
     display: block;
-    margin: 0;
 }
 
-/* All section H2 titles — HARD 3-LINE CLAMP */
+/* Section H2 titles — 35px, NO WRAP (excludes About + Contact) */
 .section-intro-center h2,
 .management-preview-intro h2,
 .customer-reviews-intro h2,
 .featured-properties-intro h2,
 .featured-properties-title,
-.journal-preview-intro h2,
-.credibility-title {
-    max-width: var(--title-max-width);
-    line-height: 1.15;
-    margin: 0;
+.journal-preview-intro h2 {
+    font-family: var(--font-display);
+    font-size: 35px !important;
+    font-weight: 400;
+    color: var(--gray-900);
+    line-height: 1.2 !important;
     text-align: center;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0 auto 16px !important;
+    max-width: 80ch;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
 }
 
-/* All section subtitles/descriptions — HARD 3-LINE CLAMP */
+/* Management title — 1pt smaller */
+.management-preview-intro h2 {
+    font-size: calc(35px - 1pt) !important;
+}
+
+/* Section subtitles — 80ch wrap rule (wraps if > 80ch, single line if ≤ 80ch) */
 .section-intro-center p,
 .management-preview-intro p,
 .customer-reviews-intro p,
 .featured-properties-subtitle,
 .journal-preview-intro p {
-    max-width: var(--title-max-width);
-    line-height: 1.6;
-    margin: 0;
+    font-size: 1.125rem !important;
+    color: var(--gray-600);
+    line-height: 1.7 !important;
     text-align: center;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0 auto !important;
+    max-width: 80ch;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
 }
 
-/* ============================================
-   4. CONTENT BLOCK (AUTO-FIT ENGINE)
-   ============================================ */
-
-/* Services grid wrapper */
-#services-section .insights-grid {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    align-content: start;
-    padding: 16px 0 16px;
-}
-
-/* Management grid wrapper */
-.management-preview-grid {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    align-content: start;
-    padding: 16px 0 8px;
-}
-
-/* Reviews grid wrapper */
-.cr-masonry-grid {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    align-content: start;
-    padding: 16px 0 8px;
-}
-
-/* Properties grid wrapper */
-.property-grid-hybrid {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    align-content: start;
-    padding: 16px 0 8px;
-}
-
-/* Blog grid wrapper */
-.journal-preview-grid {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    align-content: start;
-    padding: 16px 0 8px;
-}
-
-/* ============================================
-   5. CARD SYSTEM (DENSITY CONTROL)
-   ============================================ */
-
-/* Services card */
-.insight-card.service-depth-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: var(--card-padding);
-    height: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.insight-card.service-depth-card h3 {
-    margin: 8px 0;
+/* About titles */
+.credibility-title {
     line-height: 1.2;
+    margin: 0 0 12px;
+    font-size: clamp(14px, 1.6vw, 22px);
+    white-space: nowrap;
+    text-align: center !important;
+    width: 100%;
 }
 
-.insight-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin: 0 0 8px;
+/* Force about section kicker to center too */
+.credibility-story-card .section-kicker {
+    text-align: left !important;
+    display: block;
 }
 
-/* Management card */
-.management-preview-card {
+.credibility-proof-title {
+    line-height: 1.2;
+    margin: 0 0 12px;
+    font-size: clamp(18px, 1.8vw, 26px);
+    white-space: normal;
+}
+
+/* Contact titles */
+#contact-section .nri-contact-copy h2 {
+    line-height: 1.2;
+    white-space: nowrap;
+    text-align: center !important;
+    width: 100%;
+}
+
+#contact-section .nri-contact-copy p {
+    line-height: 1.6;
+    white-space: normal;
+}
+
+#contact-section .nri-contact-copy .section-kicker {
+    text-align: left !important;
+}
+
+/* ============================================
+   4. GRIDS
+   ============================================ */
+#services-section .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    padding: 16px 0;
+}
+
+.management-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    padding: 16px 0 8px;
+}
+
+.cr-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    padding: 16px 0 8px;
+}
+
+.property-grid-hybrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    padding: 16px 0 8px;
+}
+
+.journal-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    padding: 16px 0 8px;
+}
+
+/* ============================================
+   5. CARDS — NO CLAMP, FULL CONTENT
+   ============================================ */
+.insight-card.service-depth-card,
+.management-preview-card,
+.cr-card,
+.journal-preview-card {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     padding: var(--card-padding);
-    height: 100%;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
-.management-preview-card h3 {
-    margin: 6px 0;
+.insight-card.service-depth-card h3,
+.management-preview-card h3,
+.journal-preview-card h3 {
+    margin: 8px 0;
     line-height: 1.2;
 }
 
@@ -340,110 +230,34 @@
     line-height: 1.3;
 }
 
-.management-preview-card > p {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin: 0 0 8px;
-}
-
-/* Reviews card */
-.cr-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: var(--card-padding);
-    height: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.cr-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin: 0 0 8px;
-}
-
 /* Properties card */
 .property-card-hybrid {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 .property-image-hybrid {
-    flex: 0 0 auto;
-    max-height: 160px;
     overflow: hidden;
 }
 
 .property-image-hybrid img {
     width: 100%;
-    height: 160px;
+    height: 180px;
     object-fit: cover;
 }
 
 .property-details-hybrid {
-    flex: 1;
     padding: 12px;
-    overflow: hidden;
-}
-
-.property-title-hybrid {
-    margin: 0 0 6px;
-    line-height: 1.2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* Blog card */
-.journal-preview-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: var(--card-padding);
-    height: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.journal-clickable-title {
-    margin: 6px 0;
-    line-height: 1.2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.journal-content-preview {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin: 0 0 8px;
 }
 
 /* ============================================
-   6. ABOUT SECTION (2-COL SPECIAL LAYOUT)
+   6. ABOUT SECTION
    ============================================ */
 #about-section .credibility-grid {
-    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    overflow: hidden;
     padding: 24px 0 16px;
 }
 
@@ -451,41 +265,8 @@
 #about-section .credibility-proof-card {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     padding: var(--card-padding);
     box-sizing: border-box;
-}
-
-.credibility-title {
-    line-height: 1.15;
-    margin: 0 0 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.credibility-copy-stack {
-    flex: 1;
-    overflow: hidden;
-}
-
-.credibility-copy {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin: 0 0 8px;
-}
-
-.credibility-proof-title {
-    line-height: 1.15;
-    margin: 0 0 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .stats-grid {
@@ -495,25 +276,13 @@
     margin-top: 12px;
 }
 
-.stat-card h3 {
-    margin: 0 0 4px;
-    line-height: 1.1;
-}
-
-.stat-card p {
-    margin: 0;
-    line-height: 1.2;
-}
-
 /* ============================================
-   7. CONTACT SECTION (2-COL FORM LAYOUT)
+   7. CONTACT SECTION
    ============================================ */
 #contact-section .nri-contact-shell {
-    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 24px;
-    overflow: hidden;
     padding: 24px 0 16px;
     align-items: start;
 }
@@ -522,83 +291,39 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    overflow: hidden;
-}
-
-#contact-section .nri-contact-copy h2 {
-    line-height: 1.15;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-#contact-section .nri-contact-copy p {
-    line-height: 1.5;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.quote-request-form {
-    overflow-y: auto;
-    max-height: calc(100vh - var(--nav-height) - 48px);
 }
 
 /* ============================================
-   8. CTA ROWS (COMPRESSED)
+   8. CTA ROWS
    ============================================ */
 .section-cta-center,
 .featured-properties-cta,
 .cr-footer-row {
-    flex: 0 0 auto;
     text-align: center;
     padding: 8px 0 12px;
 }
 
 /* ============================================
-   9. RESPONSIVE GUARDRAILS
+   9. RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
-    #services-section,
-    #about-section,
-    #management-section,
-    #reviews-section,
-    #properties-section,
-    #blog-section,
-    #contact-section {
-        height: auto !important;
-        min-height: 100vh !important;
-        overflow-y: auto !important;
-    }
-
     #services-section .insights-grid,
     .management-preview-grid,
     .cr-masonry-grid,
     .property-grid-hybrid,
     .journal-preview-grid {
         grid-template-columns: repeat(2, 1fr);
-        overflow-y: visible;
     }
 
-    #about-section .credibility-grid {
-        grid-template-columns: 1fr;
-        overflow-y: visible;
-    }
-
+    #about-section .credibility-grid,
     #contact-section .nri-contact-shell {
         grid-template-columns: 1fr;
-        overflow-y: visible;
     }
 }
 
 @media (max-width: 768px) {
     :root {
         --nav-height: 64px;
-        --header-max-height: 180px;
     }
 
     #services-section .insights-grid,

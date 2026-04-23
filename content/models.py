@@ -61,7 +61,7 @@ class CompanyInfo(models.Model):
         default="Useful updates for owners managing from abroad.",
     )
     blog_section_description = models.TextField(
-        default="Short, practical guidance around reporting, rentals, maintenance, and ownership decisions in Chennai."
+        default="Short, practical support for reporting, rentals, maintenance, Chennai"
     )
     contact_section_eyebrow = models.CharField(max_length=100, default="Get in Touch")
     contact_section_title = models.CharField(max_length=200, default="Let's discuss your property needs")

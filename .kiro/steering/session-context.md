@@ -4,6 +4,25 @@ inclusion: auto
 
 # Propertism Project - Session Context
 
+## Design Specs (Named References)
+
+### h2-base-style
+The canonical section title style used across all landing sections.
+- `font-family`: Playfair Display (`var(--font-display)`)
+- `font-size`: `clamp(2.5rem, 5vw, 3.5rem)` → 40px–56px
+- `font-weight`: 400
+- `color`: `var(--gray-900)`
+- Source: `static/css/propertism-styles.css` → `.section-intro-center h2`
+- Mobile override: `1.5rem !important` (`mobile-layout.css`)
+
+### p-base-style (subtitle)
+The canonical section subtitle style used across all landing sections.
+- `font-size`: `1.125rem` (18px)
+- `color`: `var(--gray-600)`
+- `line-height`: 1.7
+- `margin`: 0 auto
+- Source: `static/css/propertism-styles.css` → `.section-intro-center p`
+
 ## Current Session State
 **Last Updated**: April 22, 2026
 **Status**: All major tasks completed ✅

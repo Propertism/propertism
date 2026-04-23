@@ -3,6 +3,64 @@
 
 {% block title %}{{ team_member.name }} - {{ team_member.role }} | {{ company.name }}{% endblock %}
 
+{% block extra_css %}
+<style>
+/* Profile photo — circular with two subtle gold outer rings */
+.profile-photo-wrapper {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Outer ring 1 — faint gold */
+.profile-photo-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(184, 154, 74, 0.2);
+}
+
+/* Outer ring 2 — slightly stronger gold */
+.profile-photo-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(184, 154, 74, 0.4);
+}
+
+.profile-photo-img {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border: 2px solid rgba(184, 154, 74, 0.6);
+}
+
+.profile-photo-fallback {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #C9A961;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: 300;
+    border: 2px solid rgba(184, 154, 74, 0.6);
+    font-family: var(--font-display);
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container" style="max-width: 1200px; margin: 120px auto 80px; padding: 0 24px;">
     
@@ -22,16 +80,16 @@
     <div style="background: #FFFFFF; border-radius: 16px; padding: 48px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 32px;">
         <div style="display: flex; gap: 48px; align-items: flex-start;">
             {% if team_member.photo %}
-            <div style="flex-shrink: 0;">
-                <img src="{{ team_member.photo.url }}" alt="{{ team_member.name }}" style="width: 200px; height: 200px; border-radius: 12px; object-fit: cover;" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div style="display: none; width: 200px; height: 200px; border-radius: 12px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; align-items: center; justify-content: center; font-size: 3rem; font-weight: 300;">
-                    {{ team_member.name|first }}{{ team_member.name|wordcount|add:"-1"|slice:"1:2" }}
+            <div style="flex-shrink: 0;" class="profile-photo-wrapper">
+                <img src="{{ team_member.photo.url }}" alt="{{ team_member.name }}" class="profile-photo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="profile-photo-fallback" style="display: none;">
+                    {{ team_member.name|first }}
                 </div>
             </div>
             {% else %}
-            <div style="flex-shrink: 0;">
-                <div style="width: 200px; height: 200px; border-radius: 12px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 300;">
-                    {{ team_member.name|first }}{{ team_member.name|wordcount|add:"-1"|slice:"1:2" }}
+            <div style="flex-shrink: 0;" class="profile-photo-wrapper">
+                <div class="profile-photo-fallback">
+                    {{ team_member.name|first }}
                 </div>
             </div>
             {% endif %}
