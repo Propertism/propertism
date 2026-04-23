@@ -1,108 +1,47 @@
 /* Vertical Social Icons Strip */
 .social-strip {
     position: fixed;
-    top: calc(50% - 48px); /* Center vertically - 2 lines up (72px - 24px = -48px) */
-    transform: translateY(-50%); /* Perfect vertical centering */
-    right: -14px; /* Hide ~30% (14px of 48px width), show ~70% */
-    z-index: 9998; /* Below chat button (9999) */
-    background: #E8E8E8; /* More dull gray off-white */
-    padding: 12px 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    z-index: 9998;
+    background: rgba(18, 20, 24, 0.72);
+    padding: 13px 7px;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    box-shadow: none; /* No shadow */
-    border-radius: 12px 0 0 12px; /* Rounded corners on left */
-    backdrop-filter: none; /* No blur effect */
-    transition: right 0.3s ease; /* Smooth slide animation */
-    width: 48px; /* Fixed width for consistent bleeding */
-    border: 1px solid rgba(45, 55, 72, 0.15); /* Subtle charcoal border */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 10px 0 0 10px;
+    width: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Vertical "Contact" Label */
 .social-strip-label {
-    writing-mode: vertical-rl; /* Vertical text, right-to-left */
-    transform: rotate(180deg); /* Flip to read from bottom to top */
-    font-size: 11px;
-    font-weight: 700; /* Bold */
-    letter-spacing: 0.08em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 0.95;
     text-transform: uppercase;
-    color: #C9A961; /* Mustard gold */
+    color: #B89A4A;
     text-align: center;
     padding: 8px 0;
-    margin-bottom: 4px;
-    user-select: none; /* Prevent text selection */
-}
-
-.social-strip:hover {
-    right: 0; /* Fully revealed on hover */
-}
-
-.social-strip-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    text-decoration: none;
-    transition: transform 0.2s ease;
-    opacity: 1; /* Full opacity */
-    filter: none; /* No filters */
-}
-
-.social-strip-icon:hover {
-    transform: scale(1.15); /* Slightly larger hover effect */
-    opacity: 1; /* Keep full opacity on hover */
-}
-
-.social-strip-icon svg {
-    width: 24px; /* Larger icons */
-    height: 24px; /* Larger icons */
-    opacity: 1; /* Full opacity */
-    filter: none; /* No blur */
-    stroke-width: 2.5; /* Bolder strokes where applicable */
-}
-
-/* Brand Colors for Social Icons - Brighter versions */
-.social-strip-icon:nth-child(1) {
-    color: #4F9EFF !important; /* Facebook - brighter blue */
-}
-
-.social-strip-icon:nth-child(2) {
-    color: #1E293B !important; /* X/Twitter - darker for contrast */
-}
-
-.social-strip-icon:nth-child(3) {
-    color: #4F9EFF !important; /* LinkedIn - brighter blue */
-}
-
-.social-strip-icon:nth-child(4) {
-    color: #0EA5E9 !important; /* Phone - bright cyan */
-}
-
-.social-strip-icon:nth-child(5) {
-    color: #22C55E !important; /* WhatsApp - brighter green */
-}
-
-.social-strip-icon:nth-child(6) {
-    color: #F43F5E !important; /* Map - brighter red */
+    user-select: none;
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
     .social-strip {
-        top: calc(50% - 48px); /* Keep centered - 2 lines up on mobile */
+        top: 50%;
         transform: translateY(-50%);
-        padding: 10px 6px;
-        gap: 10px;
+        padding: 11px 6px;
+        width: 38px;
     }
-    
-    .social-strip-icon {
-        width: 28px;
-        height: 28px;
-    }
-    
-    .social-strip-icon svg {
-        width: 18px;
-        height: 18px;
+
+    .social-strip-label {
+        font-size: 12px;
     }
 }

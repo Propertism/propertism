@@ -1170,7 +1170,7 @@
 }
 
 .management-preview-section {
-    padding: var(--space-12) 0;
+    padding: var(--space-6) 0;
     background: #F8FAFC;
 }
 
@@ -1182,7 +1182,7 @@
 .management-preview-intro,
 .journal-preview-intro {
     max-width: 760px;
-    margin-bottom: var(--space-10);
+    margin-bottom: var(--space-6);
 }
 
 .management-preview-intro h2,
@@ -1199,24 +1199,27 @@
     margin: 0;
     color: var(--gray-600);
     font-size: 1.05rem;
-    line-height: 1.72;
+    line-height: 1.58;
 }
 
 .management-preview-grid,
 .journal-preview-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-8);
+    gap: 18px;
 }
 
 .management-preview-card,
 .journal-preview-card {
-    padding: 24px;
+    padding: 18px;
     border-radius: 10px; /* SCCB-PR-FE-013: Strict 10px radius */
     border: 1px solid rgba(17, 24, 39, 0.08);
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f5 100%); /* SCCB-PR-FE-013: Consistent gradient */
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
     overflow: hidden; /* SCCB-PR-FE-013: Ensure clean edges */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .management-preview-meta {
@@ -1252,7 +1255,15 @@
 .journal-preview-card p {
     margin: 0;
     color: var(--gray-600);
-    line-height: 1.7;
+    line-height: 1.58;
+}
+
+.management-preview-card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .journal-preview-card small {
@@ -1452,6 +1463,7 @@
     line-height: 1.72;
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -4107,6 +4119,7 @@ section.custom-cards-section:nth-of-type(even) {
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     transition: none;
