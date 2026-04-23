@@ -1,9 +1,59 @@
 /**
- * SCCB — VIEWPORT-FIT SECTION NORMALIZATION (NAV-ANCHOR COMPLIANCE)
- * SCCB-PR-UI-012-A — MICRO CORRECTIONS (BLOCKER)
- * 
- * Ensures every primary section fits within one viewport height
- * with centered titles and NO content masking.
+ * SCCB-PR-UI-013 — VIEWPORT STABILITY HARDENING (FINAL SYSTEM ENFORCEMENT)
+ *
+ * Deterministic, system-driven viewport fit across all sections.
+ * 2-BLOCK VERTICAL CONTRACT: HEADER BLOCK (fixed) + CONTENT BLOCK (flexible)
+ *
+ * SUPERSEDES: SCCB-PR-UI-012, SCCB-PR-UI-012-A
+ * STATUS: PRODUCTION LOCK
+ *
+ * ACTUAL CLASS MAP (verified from home-premium.html):
+ *
+ * #services-section   .market-insights
+ *   intro:            .section-intro-center
+ *   grid:             .insights-grid
+ *   card:             .insight-card.service-depth-card
+ *   card desc:        .insight-description
+ *
+ * #about-section      .credibility-section
+ *   layout:           .credibility-grid (2-col, no standard intro)
+ *   left card:        .credibility-story-card
+ *   title:            .credibility-title
+ *   right card:       .credibility-proof-card
+ *
+ * #management-section .management-preview-section
+ *   intro:            .management-preview-intro
+ *   label:            .section-kicker
+ *   grid:             .management-preview-grid
+ *   card:             .management-preview-card
+ *   card desc:        p (direct child)
+ *
+ * #reviews-section    .customer-reviews-section
+ *   intro:            .customer-reviews-intro
+ *   label:            .section-kicker
+ *   grid:             .cr-masonry-grid
+ *   card:             .cr-card
+ *   card desc:        .cr-text
+ *
+ * #properties-section .featured-properties-section
+ *   intro:            .featured-properties-intro
+ *   title:            .featured-properties-title
+ *   subtitle:         .featured-properties-subtitle
+ *   grid:             .property-grid-hybrid
+ *   card:             .property-card-hybrid
+ *
+ * #blog-section       .journal-preview-section
+ *   intro:            .journal-preview-intro
+ *   label:            .section-kicker
+ *   grid:             .journal-preview-grid
+ *   card:             .journal-preview-card
+ *   card desc:        .journal-content-preview
+ *
+ * #contact-section    .nri-contact-section
+ *   layout:           .nri-contact-shell (2-col)
+ *   label:            .section-kicker
+ *   title:            h2 (direct)
+ *   form:             .quote-request-form
  */
 
 /* ============================================
@@ -11,14 +61,15 @@
    ============================================ */
 :root {
     --nav-height: 80px;
-    --section-padding-top: 0px;
-    --section-padding-bottom: 16px;
-    --heading-max-width: 720px;
-    --content-max-width: 1200px;
+    --header-max-height: 220px;
+    --header-gap: 12px;
+    --grid-gap: 16px 20px;
+    --card-padding: 16px;
+    --title-max-width: 720px;
 }
 
 /* ============================================
-   SECTION HEIGHT CONTROL (TRUE VIEWPORT FIT)
+   1. SECTION CONTAINER (HARD LOCK)
    ============================================ */
 #services-section,
 #about-section,
@@ -27,384 +78,26 @@
 #properties-section,
 #blog-section,
 #contact-section {
-    min-height: calc(100vh - var(--nav-height));
-    max-height: calc(100vh - var(--nav-height));
-    overflow: hidden;
+    height: calc(100vh - var(--nav-height));
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 0;
-    padding-bottom: var(--section-padding-bottom);
-    box-sizing: border-box;
-}
-
-/* ============================================
-   NAV ANCHOR OFFSET FIX
-   ============================================ */
-#services-section,
-#about-section,
-#management-section,
-#reviews-section,
-#properties-section,
-#blog-section,
-#contact-section {
+    overflow: hidden;
     scroll-margin-top: var(--nav-height);
-}
-
-/* ============================================
-   TITLE ALIGNMENT (STRICT CENTER + DETERMINISTIC CLAMP)
-   ============================================ */
-#services-section .section-header,
-#about-section .section-header,
-#management-section .section-header,
-#reviews-section .section-header,
-#properties-section .section-header,
-#blog-section .section-header,
-#contact-section .section-header,
-.featured-properties-intro,
-.customer-reviews-intro,
-.blog-insights-intro {
-    text-align: center;
-    max-width: var(--heading-max-width);
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 16px;
-}
-
-/* Section labels (e.g., "MANAGEMENT", "CUSTOMER REVIEWS") */
-#services-section .section-label,
-#about-section .section-label,
-#management-section .section-label,
-#reviews-section .section-label,
-#properties-section .section-label,
-#blog-section .section-label,
-#contact-section .section-label {
-    text-align: center;
-    display: block;
-    margin-bottom: 8px;
-}
-
-/* Section headings - DETERMINISTIC LINE CLAMP */
-#services-section h1,
-#services-section h2,
-#about-section h1,
-#about-section h2,
-#management-section h1,
-#management-section h2,
-#reviews-section h1,
-#reviews-section h2,
-#properties-section h1,
-#properties-section h2,
-#blog-section h1,
-#blog-section h2,
-#contact-section h1,
-#contact-section h2 {
-    text-align: center;
-    line-height: 1.15;
-    margin-top: 0;
-    margin-bottom: 12px;
-    max-width: var(--heading-max-width);
-    margin-left: auto;
-    margin-right: auto;
-    /* DETERMINISTIC CLAMP - NEVER EXCEED 3 LINES */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* Section subtitles/descriptions */
-#services-section .section-subtitle,
-#services-section .section-description,
-#about-section .section-subtitle,
-#about-section .section-description,
-#management-section .section-subtitle,
-#management-section .section-description,
-#reviews-section .section-subtitle,
-#reviews-section .section-description,
-#properties-section .section-subtitle,
-#properties-section .section-description,
-#blog-section .section-subtitle,
-#blog-section .section-description,
-#contact-section .section-subtitle,
-#contact-section .section-description {
-    text-align: center;
-    line-height: 1.5;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 16px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* ============================================
-   CONTENT DENSITY REDUCTION (AGGRESSIVE)
-   ============================================ */
-
-/* Reduce heading margins */
-#services-section h1,
-#about-section h1,
-#management-section h1,
-#reviews-section h1,
-#properties-section h1,
-#blog-section h1,
-#contact-section h1 {
-    margin-top: 0;
-    margin-bottom: 12px;
-}
-
-/* Reduce paragraph spacing */
-#services-section p,
-#about-section p,
-#management-section p,
-#reviews-section p,
-#properties-section p,
-#blog-section p,
-#contact-section p {
-    line-height: 1.5;
-    margin-bottom: 8px;
-}
-
-/* ============================================
-   MANAGEMENT SECTION - CARD GRID COMPRESSION (AGGRESSIVE)
-   ============================================ */
-#management-section .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px 16px;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    flex: 1;
-    align-content: start;
-    overflow-y: auto;
-    padding: 0 16px;
-}
-
-#management-section .team-member-card {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     box-sizing: border-box;
 }
 
-#management-section .team-member-card h3 {
-    margin-top: 0;
-    margin-bottom: 6px;
-    line-height: 1.2;
-}
-
-#management-section .team-member-card .role,
-#management-section .team-member-card .department {
-    margin-bottom: 6px;
-    line-height: 1.3;
-}
-
-#management-section .team-member-card .bio {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin-bottom: 8px;
-}
-
-/* ============================================
-   SERVICES SECTION - CARD COMPRESSION (AGGRESSIVE)
-   ============================================ */
-#services-section .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px 16px;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    flex: 1;
-    align-content: start;
-    overflow-y: auto;
-    padding: 0 16px;
-}
-
-#services-section .service-card {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-#services-section .service-card h3 {
-    margin-bottom: 8px;
-    line-height: 1.2;
-}
-
-#services-section .service-card p {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-}
-
-/* ============================================
-   REVIEWS SECTION - CARD COMPRESSION (AGGRESSIVE)
-   ============================================ */
-#reviews-section .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 12px 16px;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    flex: 1;
-    align-content: start;
-    overflow-y: auto;
-    padding: 0 16px;
-}
-
-#reviews-section .review-card {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-#reviews-section .review-card .review-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-    margin-bottom: 8px;
-}
-
-/* ============================================
-   PROPERTIES SECTION - CARD COMPRESSION (AGGRESSIVE)
-   ============================================ */
-#properties-section .properties-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 12px 16px;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    flex: 1;
-    align-content: start;
-    overflow-y: auto;
-    padding: 0 16px;
-}
-
-#properties-section .property-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-#properties-section .property-card h3 {
-    margin-bottom: 6px;
-    line-height: 1.2;
-}
-
-#properties-section .property-card .property-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-}
-
-/* ============================================
-   BLOG SECTION - CARD COMPRESSION (AGGRESSIVE)
-   ============================================ */
-#blog-section .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 12px 16px;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    flex: 1;
-    align-content: start;
-    overflow-y: auto;
-    padding: 0 16px;
-}
-
-#blog-section .blog-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-#blog-section .blog-card h3 {
-    margin-bottom: 6px;
-    line-height: 1.2;
-}
-
-#blog-section .blog-card .blog-excerpt {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-}
-
-/* ============================================
-   ABOUT SECTION - CONTENT LAYOUT (COMPRESSED)
-   ============================================ */
-#about-section .about-content {
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    padding: 0 16px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-#about-section .about-mission {
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-#about-section .about-mission h3 {
-    margin-bottom: 8px;
-    line-height: 1.2;
-}
-
-#about-section .about-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.5;
-}
-
-/* ============================================
-   CONTACT SECTION - FORM LAYOUT (COMPRESSED)
-   ============================================ */
+/* Remove min-height — hard lock only */
+#services-section,
+#about-section,
+#management-section,
+#reviews-section,
+#properties-section,
+#blog-section,
 #contact-section {
-    justify-content: center;
+    min-height: unset !important;
 }
 
-#contact-section .contact-content {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 16px;
-    width: 100%;
-}
-
-#contact-section h1,
-#contact-section h2 {
-    margin-bottom: 12px;
-}
-
-#contact-section .contact-description {
-    text-align: center;
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
-
-/* ============================================
-   SECTION SPACING NORMALIZATION (ZERO ARTIFICIAL PADDING)
-   ============================================ */
-
-/* Remove excessive top padding */
+/* Container: no extra padding */
 #services-section .container,
 #about-section .container,
 #management-section .container,
@@ -412,37 +105,462 @@
 #properties-section .container,
 #blog-section .container,
 #contact-section .container {
-    padding-top: 0;
-}
-
-/* Normalize bottom spacing */
-#services-section .section-footer,
-#about-section .section-footer,
-#management-section .section-footer,
-#reviews-section .section-footer,
-#properties-section .section-footer,
-#blog-section .section-footer,
-#contact-section .section-footer {
-    margin-top: 12px;
-    text-align: center;
+    padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* ============================================
-   CTA BUTTONS - CENTERED
+   2. HEADER BLOCK (STRICT HEIGHT BUDGET — 220px MAX)
    ============================================ */
-#services-section .cta-button,
-#about-section .cta-button,
-#management-section .cta-button,
-#reviews-section .cta-button,
-#properties-section .cta-button,
-#blog-section .cta-button,
-#contact-section .cta-button {
-    display: inline-block;
-    margin: 0 auto;
+
+/* Services */
+.section-intro-center {
+    flex: 0 0 auto;
+    max-height: var(--header-max-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--header-gap);
+    text-align: center;
+    padding: 24px 16px 0;
+    overflow: hidden;
+}
+
+/* Management */
+.management-preview-intro {
+    flex: 0 0 auto;
+    max-height: var(--header-max-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--header-gap);
+    text-align: center;
+    padding: 24px 16px 0;
+    overflow: hidden;
+}
+
+/* Reviews */
+.customer-reviews-intro {
+    flex: 0 0 auto;
+    max-height: var(--header-max-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--header-gap);
+    text-align: center;
+    padding: 24px 16px 0;
+    overflow: hidden;
+}
+
+/* Properties */
+.featured-properties-intro {
+    flex: 0 0 auto;
+    max-height: var(--header-max-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--header-gap);
+    text-align: center;
+    padding: 24px 16px 0;
+    overflow: hidden;
+}
+
+/* Blog */
+.journal-preview-intro {
+    flex: 0 0 auto;
+    max-height: var(--header-max-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--header-gap);
+    text-align: center;
+    padding: 24px 16px 0;
+    overflow: hidden;
 }
 
 /* ============================================
-   RESPONSIVE GUARDRAILS
+   3. TITLE / SUBTITLE (DETERMINISTIC CLAMP)
+   ============================================ */
+
+/* Section kicker labels */
+.section-kicker {
+    text-align: center;
+    display: block;
+    margin: 0;
+}
+
+/* All section H2 titles — HARD 3-LINE CLAMP */
+.section-intro-center h2,
+.management-preview-intro h2,
+.customer-reviews-intro h2,
+.featured-properties-intro h2,
+.featured-properties-title,
+.journal-preview-intro h2,
+.credibility-title {
+    max-width: var(--title-max-width);
+    line-height: 1.15;
+    margin: 0;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* All section subtitles/descriptions — HARD 3-LINE CLAMP */
+.section-intro-center p,
+.management-preview-intro p,
+.customer-reviews-intro p,
+.featured-properties-subtitle,
+.journal-preview-intro p {
+    max-width: var(--title-max-width);
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ============================================
+   4. CONTENT BLOCK (AUTO-FIT ENGINE)
+   ============================================ */
+
+/* Services grid wrapper */
+#services-section .insights-grid {
+    flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    align-content: start;
+    padding: 16px 0 16px;
+}
+
+/* Management grid wrapper */
+.management-preview-grid {
+    flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    align-content: start;
+    padding: 16px 0 8px;
+}
+
+/* Reviews grid wrapper */
+.cr-masonry-grid {
+    flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    align-content: start;
+    padding: 16px 0 8px;
+}
+
+/* Properties grid wrapper */
+.property-grid-hybrid {
+    flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    align-content: start;
+    padding: 16px 0 8px;
+}
+
+/* Blog grid wrapper */
+.journal-preview-grid {
+    flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    align-content: start;
+    padding: 16px 0 8px;
+}
+
+/* ============================================
+   5. CARD SYSTEM (DENSITY CONTROL)
+   ============================================ */
+
+/* Services card */
+.insight-card.service-depth-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--card-padding);
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.insight-card.service-depth-card h3 {
+    margin: 8px 0;
+    line-height: 1.2;
+}
+
+.insight-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0 0 8px;
+}
+
+/* Management card */
+.management-preview-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--card-padding);
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.management-preview-card h3 {
+    margin: 6px 0;
+    line-height: 1.2;
+}
+
+.management-preview-meta {
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.management-preview-card > p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0 0 8px;
+}
+
+/* Reviews card */
+.cr-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--card-padding);
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.cr-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0 0 8px;
+}
+
+/* Properties card */
+.property-card-hybrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.property-image-hybrid {
+    flex: 0 0 auto;
+    max-height: 160px;
+    overflow: hidden;
+}
+
+.property-image-hybrid img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.property-details-hybrid {
+    flex: 1;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.property-title-hybrid {
+    margin: 0 0 6px;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Blog card */
+.journal-preview-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--card-padding);
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.journal-clickable-title {
+    margin: 6px 0;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.journal-content-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0 0 8px;
+}
+
+/* ============================================
+   6. ABOUT SECTION (2-COL SPECIAL LAYOUT)
+   ============================================ */
+#about-section .credibility-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    overflow: hidden;
+    padding: 24px 0 16px;
+}
+
+#about-section .credibility-story-card,
+#about-section .credibility-proof-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--card-padding);
+    box-sizing: border-box;
+}
+
+.credibility-title {
+    line-height: 1.15;
+    margin: 0 0 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.credibility-copy-stack {
+    flex: 1;
+    overflow: hidden;
+}
+
+.credibility-copy {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0 0 8px;
+}
+
+.credibility-proof-title {
+    line-height: 1.15;
+    margin: 0 0 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.stat-card h3 {
+    margin: 0 0 4px;
+    line-height: 1.1;
+}
+
+.stat-card p {
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ============================================
+   7. CONTACT SECTION (2-COL FORM LAYOUT)
+   ============================================ */
+#contact-section .nri-contact-shell {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 24px;
+    overflow: hidden;
+    padding: 24px 0 16px;
+    align-items: start;
+}
+
+#contact-section .nri-contact-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+}
+
+#contact-section .nri-contact-copy h2 {
+    line-height: 1.15;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#contact-section .nri-contact-copy p {
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.quote-request-form {
+    overflow-y: auto;
+    max-height: calc(100vh - var(--nav-height) - 48px);
+}
+
+/* ============================================
+   8. CTA ROWS (COMPRESSED)
+   ============================================ */
+.section-cta-center,
+.featured-properties-cta,
+.cr-footer-row {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 8px 0 12px;
+}
+
+/* ============================================
+   9. RESPONSIVE GUARDRAILS
    ============================================ */
 @media (max-width: 1024px) {
     #services-section,
@@ -452,16 +570,27 @@
     #properties-section,
     #blog-section,
     #contact-section {
-        max-height: none;
-        overflow-y: auto;
-        min-height: 100vh;
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow-y: auto !important;
     }
-    
-    #management-section .team-grid,
-    #services-section .services-grid,
-    #reviews-section .reviews-grid,
-    #properties-section .properties-grid,
-    #blog-section .blog-grid {
+
+    #services-section .insights-grid,
+    .management-preview-grid,
+    .cr-masonry-grid,
+    .property-grid-hybrid,
+    .journal-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+        overflow-y: visible;
+    }
+
+    #about-section .credibility-grid {
+        grid-template-columns: 1fr;
+        overflow-y: visible;
+    }
+
+    #contact-section .nri-contact-shell {
+        grid-template-columns: 1fr;
         overflow-y: visible;
     }
 }
@@ -469,53 +598,19 @@
 @media (max-width: 768px) {
     :root {
         --nav-height: 64px;
-        --section-padding-top: 0px;
-        --section-padding-bottom: 12px;
+        --header-max-height: 180px;
     }
-    
-    #management-section .team-grid,
-    #services-section .services-grid,
-    #reviews-section .reviews-grid,
-    #properties-section .properties-grid,
-    #blog-section .blog-grid {
+
+    #services-section .insights-grid,
+    .management-preview-grid,
+    .cr-masonry-grid,
+    .property-grid-hybrid,
+    .journal-preview-grid {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-}
 
-/* ============================================
-   PROHIBITIONS - OVERRIDE ANY CONFLICTING STYLES
-   ============================================ */
-
-/* No hero-style left alignment in sections */
-#services-section .hero-style,
-#about-section .hero-style,
-#management-section .hero-style,
-#reviews-section .hero-style,
-#properties-section .hero-style,
-#blog-section .hero-style,
-#contact-section .hero-style {
-    text-align: center !important;
-}
-
-/* No excessive whitespace */
-#services-section .spacer,
-#about-section .spacer,
-#management-section .spacer,
-#reviews-section .spacer,
-#properties-section .spacer,
-#blog-section .spacer,
-#contact-section .spacer {
-    display: none !important;
-}
-
-/* Prevent content-driven height growth */
-#services-section > *,
-#about-section > *,
-#management-section > *,
-#reviews-section > *,
-#properties-section > *,
-#blog-section > *,
-#contact-section > * {
-    flex-shrink: 0;
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
