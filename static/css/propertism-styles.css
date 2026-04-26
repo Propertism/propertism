@@ -56,7 +56,7 @@
 .hero-hybrid {
     position: relative;
     width: 100%;
-    min-height: 73vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     background: url('/static/images/propertism-hero-bg.jpg') center center/cover no-repeat;
@@ -68,10 +68,12 @@
 }
 
 .hero-hybrid-has-image {
-    display: block;
+    display: flex;
     min-height: 0;
     padding: 0;
     background: var(--brand-navy);
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .hero-hybrid-media {
@@ -93,7 +95,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    max-height: min(73vh, 840px);
+    max-height: min(60vh, 720px);
     object-fit: cover;
     object-position: center;
     opacity: 0;
@@ -104,17 +106,7 @@
     opacity: 1;
 }
 
-/* Ensure sharp, high-quality image rendering */
-.hero-hybrid::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: transparent;
-    z-index: 0;
-}
+
 
 .hero-hybrid::after {
     content: '';
@@ -136,50 +128,119 @@
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 720px;
+    max-width: 100%;
     margin: 0;
     padding: 0;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .hero-hybrid-has-image .hero-hybrid-content {
-    position: absolute;
-    left: 24px;
-    right: 24px;
-    /* LOCKED: bottom: 154-174px positions hero text in upper-middle of hero
-       - Provides optimal spacing from trust section below
-       - Ensures text is visible and readable
-       - DO NOT CHANGE without testing hero + trust alignment */
-    bottom: clamp(154px, 14vw, 174px);
-    max-width: min(640px, calc(100% - 48px));
+    position: relative;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .hero-copy-zillow {
-    max-width: 560px;
+    max-width: 720px;
+    margin-left: 0;
     margin-bottom: 0;
     padding: 0;
     background: transparent;
     border: 0;
+    border-radius: 0;
     box-shadow: none;
     backdrop-filter: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 /* Hero Title - Zillow Style */
 .hero-title-zillow {
     font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif;
-    max-width: 22ch;
+    max-width: 45ch;
     font-size: clamp(1.65rem, 3vw, 2.6rem);
     font-weight: 600;
     line-height: 1.05;
     color: var(--white);
     margin-bottom: 0;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    letter-spacing: -0.035em;
+    letter-spacing: -0.2px;
     text-wrap: balance;
 }
 
 .hero-title-line {
-    display: block;
+    display: inline;
     color: var(--white);
+}
+
+.hero-eyebrow,
+.hero-title-zillow,
+.hero-description {
+    margin: 0 !important;
+}
+
+.hero-description {
+    margin-top: 2px;
+    line-height: 1.45;
+}
+
+#home-section .hero-hybrid-content {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+#home-section.hero-hybrid-has-image {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    padding-left: 0;
+}
+
+.hero-hybrid-has-image .hero-hybrid-media {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.hero-text-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.hero-text-wrap::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--space-8, 32px)); /* reach viewport edge */
+    top: -12px;
+    bottom: -12px;
+    width: calc(100% + var(--space-8, 32px) + 12px);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    background: linear-gradient(
+        90deg,
+        rgba(0,0,0,0.45) 0%,
+        rgba(0,0,0,0.25) 45%,
+        rgba(0,0,0,0.10) 70%,
+        rgba(0,0,0,0) 100%
+    );
+
+    pointer-events: none;
+    z-index: -1;
+
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
 }
 
 .hero-title-accent {
@@ -269,7 +330,7 @@
     }
     
     .trust-strip-section {
-        margin-top: -80px;
+        margin-top: 0;
     }
     
     .trust-strip-card {
@@ -279,16 +340,16 @@
 
 @media (min-width: 769px) and (max-width: 1366px) {
     .hero-hybrid {
-        min-height: 71vh;
+        min-height: 58vh;
         padding: 68px 24px 30px 24px;
     }
     
     .hero-hybrid-image {
-        max-height: min(71vh, 780px);
+        max-height: min(58vh, 700px);
     }
     
     .trust-strip-section {
-        margin-top: -120px;
+        margin-top: 0;
     }
     
     .trust-strip-card {
@@ -348,11 +409,10 @@
 
 .trust-strip-section {
     position: relative;
-    /* LOCKED: -72px provides optimal overlap with hero image
-       - Positions trust section at bottom edge of hero
-       - Creates seamless transition from hero to trust badges
-       - DO NOT CHANGE without testing hero + trust viewport fit */
-    margin-top: -72px;
+    /* LOCKED: Overlap removed in favor of viewport stabilization
+       - Trust section now follows hero in flex viewport group
+       - Ensures no peeking of next section */
+    margin-top: 0;
     z-index: 10;
     background: #F5F5F2;
     border-top: 1px solid rgba(255, 255, 255, 0.96);
@@ -370,17 +430,10 @@
 
 .trust-strip-card {
     display: grid;
-    /* LOCKED: 80:20 ratio (2fr : 0.5fr) for Trust Badges : Metrics
-       - Trust badges get 80% width (2fr each)
-       - Metrics get 20% width (0.5fr each)
-       - 8 columns total: TB1, M1, TB2, M2, TB3, M3, TB4, M4
-       - DO NOT CHANGE ratio without design approval */
-    grid-template-columns: 2fr 0.5fr 2fr 0.5fr 2fr 0.5fr 2fr 0.5fr;
-    /* LOCKED: Minimal gaps (8-12px) for compact layout */
-    gap: clamp(8px, 1vw, 12px);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
     align-items: stretch;
-    /* LOCKED: Minimal padding (4-8px) for tight vertical spacing */
-    padding: clamp(4px, 0.8vw, 8px) 0;
+    padding: 0;
     border-radius: 0;
     background: transparent;
     border: 0;
@@ -403,19 +456,24 @@
 .trust-strip-item {
     display: flex;
     flex-direction: column;
-    /* LOCKED: gap: 0 ensures strictly 5 lines with NO spacing between text elements
-       - Kicker (line 1) + Strong (lines 2-3) + Small (lines 4-5) = exactly 5 lines
-       - DO NOT ADD gap or margins between elements */
     gap: 0;
     min-height: 100%;
-    /* LOCKED: Minimal padding (8-12px vertical, 8-16px horizontal) */
-    padding: clamp(8px, 1.2vw, 12px) clamp(8px, 1.2vw, 16px);
+    padding: clamp(4px, 0.5vw, 8px) clamp(6px, 0.7vw, 10px);
     border-radius: 0;
-    background: transparent;
     border: 0;
     color: var(--gray-900);
     text-decoration: none;
     transition: none;
+}
+
+/* Alternating backgrounds — odd columns */
+.trust-strip-card > .trust-strip-item:nth-child(odd) {
+    background: #F5F5F2;
+}
+
+/* Alternating backgrounds — even columns */
+.trust-strip-card > .trust-strip-item:nth-child(even) {
+    background: #EEECEA;
 }
 
 .trust-strip-item + .trust-strip-item {
@@ -451,8 +509,8 @@
 .trust-strip-item strong {
     /* LOCKED: max-width: 100% ensures text wraps within kicker width */
     max-width: 100%;
-    font-size: 0.92rem;
-    line-height: 1.35;
+    font-size: 0.85rem;
+    line-height: 1.28;
     color: var(--gray-900);
     text-wrap: balance;
     margin-top: 0;
@@ -463,8 +521,8 @@
 .trust-strip-item small {
     /* LOCKED: max-width: 100% ensures text wraps within kicker width */
     max-width: 100%;
-    font-size: 0.84rem;
-    line-height: 1.4;
+    font-size: 0.78rem;
+    line-height: 1.32;
     color: var(--gray-600);
     margin-top: 0;
     /* LOCKED: margin-bottom: 0 for no spacing (5-line constraint) */
@@ -1471,6 +1529,7 @@
 
 .customer-review-copy.is-expanded {
     -webkit-line-clamp: unset;
+    line-clamp: unset;
     display: block;
 }
 
@@ -4128,6 +4187,7 @@ section.custom-cards-section:nth-of-type(even) {
 .cr-text.is-expanded {
     display: block;
     -webkit-line-clamp: unset;
+    line-clamp: unset;
     overflow: visible;
 }
 

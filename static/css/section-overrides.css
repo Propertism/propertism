@@ -1,0 +1,229 @@
+/**
+ * SCCB-PR-UI-013 — SECTION SPECIFIC OVERRIDES
+ * Consolidated from home-premium.html inline blocks.
+ * 
+ * Target: Home Premium Layout
+ */
+
+/* ============================================
+   SECTION ANCHORS & SPACING
+   ============================================ */
+#services-section .section-intro-center,
+#management-section .management-preview-intro,
+#reviews-section .customer-reviews-intro,
+#properties-section .featured-properties-intro,
+#blog-section .journal-preview-intro {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto 24px;
+}
+
+/* ============================================
+   GRIDS (3-COL DESKTOP)
+   ============================================ */
+#services-section .insights-grid,
+#management-section .management-preview-grid,
+#blog-section .journal-preview-grid,
+#properties-section .property-grid-hybrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* Limit visible items if not expanded */
+#services-section .insights-grid > *:nth-child(n + 4),
+#management-section .management-preview-grid > *:nth-child(n + 4),
+#properties-section .property-grid-hybrid > *:nth-child(n + 4),
+#blog-section .journal-preview-grid > *:nth-child(n + 4) {
+    display: none;
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
+#about-section .credibility-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+#about-section .credibility-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--primary-navy);
+}
+
+#about-section .credibility-copy {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+/* ============================================
+   REVIEWS SECTION
+   ============================================ */
+#reviews-section .cr-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+#reviews-section .cr-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   PROPERTIES SECTION
+   ============================================ */
+.property-card-hybrid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+}
+
+.property-card-hybrid:hover {
+    transform: translateY(-8px);
+}
+
+.property-image-hybrid {
+    height: 200px;
+    overflow: hidden;
+}
+
+.property-image-hybrid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.property-details-hybrid {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+#contact-section .nri-contact-shell {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* ============================================
+   RESPONSIVE OVERRIDES
+   ============================================ */
+@media (max-width: 1024px) {
+    #services-section .insights-grid,
+    #management-section .management-preview-grid,
+    #blog-section .journal-preview-grid,
+    #properties-section .property-grid-hybrid,
+    #reviews-section .cr-masonry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    #about-section .credibility-grid,
+    #contact-section .nri-contact-shell {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   JOURNAL / BLOG SPECIFIC
+   ============================================ */
+.journal-clickable-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.journal-clickable-title a:hover {
+    color: var(--primary-gold);
+}
+
+.btn-journal-expand {
+    background: none;
+    border: none;
+    color: var(--primary-gold);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-journal-expand:hover {
+    background: rgba(201, 169, 97, 0.1);
+}
+
+/* ============================================
+   CREDIBILITY / ABOUT SPECIFIC
+   ============================================ */
+.credibility-mission-block {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(201, 169, 97, 0.08);
+    border: 1px solid rgba(201, 169, 97, 0.18);
+    margin-top: 16px;
+}
+
+.credibility-mission-label {
+    display: inline-flex;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary-navy);
+}
+
+.credibility-proof-list {
+    margin: 16px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+
+.credibility-proof-list li {
+    position: relative;
+    padding-left: 24px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.credibility-proof-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-gold);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    #services-section .insights-grid,
+    #management-section .management-preview-grid,
+    #blog-section .journal-preview-grid,
+    #properties-section .property-grid-hybrid,
+    #reviews-section .cr-masonry-grid {
+        grid-template-columns: 1fr;
+    }
+}

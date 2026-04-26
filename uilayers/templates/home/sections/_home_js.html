@@ -1,0 +1,236 @@
+{% if hero_background_urls %}
+{{ hero_background_urls|json_script:"hero-background-data" }}
+{% endif %}
+<script>
+    (function () {
+        const reviewCarousels = document.querySelectorAll("[data-review-carousel]");
+
+        reviewCarousels.forEach((carousel) => {
+            const track = carousel.querySelector("[data-review-track]");
+            const slides = Array.from(carousel.querySelectorAll("[data-review-slide]"));
+            const indicators = Array.from(carousel.querySelectorAll("[data-review-indicator]"));
+            const mobileReviewMediaQuery = window.matchMedia("(max-width: 768px)");
+
+            if (!track || slides.length <= 1) {
+                return;
+            }
+
+            let currentIndex = 0;
+
+            const updateCarousel = (index) => {
+                currentIndex = (index + slides.length) % slides.length;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                slides.forEach((slide, slideIndex) => {
+                    slide.setAttribute("aria-hidden", slideIndex === currentIndex ? "false" : "true");
+                });
+
+                indicators.forEach((indicator, indicatorIndex) => {
+                    indicator.classList.toggle("is-active", indicatorIndex === currentIndex);
+                });
+            };
+
+            const focusActiveReviewSlide = () => {
+                if (!mobileReviewMediaQuery.matches) {
+                    return;
+                }
+
+                const activeSlide = slides[currentIndex];
+                const firstReviewCard = activeSlide?.querySelector(".customer-review-card");
+
+                if (!firstReviewCard) {
+                    return;
+                }
+
+                window.requestAnimationFrame(() => {
+                    firstReviewCard.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                });
+            };
+
+            indicators.forEach((indicator) => {
+                indicator.addEventListener("click", () => {
+                    updateCarousel(Number(indicator.dataset.reviewIndicator));
+                    focusActiveReviewSlide();
+                });
+            });
+
+            updateCarousel(0);
+        });
+
+        // Customer Review Read More Toggle
+        const reviewCards = document.querySelectorAll(".customer-review-card");
+
+        reviewCards.forEach(card => {
+            const reviewText = card.querySelector("[data-review-text]");
+            const toggleBtn = card.querySelector("[data-review-toggle]");
+            const toggleTextSpan = toggleBtn?.querySelector("[data-toggle-text]");
+
+            if (!reviewText || !toggleBtn || !toggleTextSpan) return;
+
+            // Check if text is clamped (overflowing)
+            const isTextClamped = reviewText.scrollHeight > reviewText.clientHeight;
+
+            if (isTextClamped) {
+                toggleBtn.style.display = "inline-flex";
+            }
+
+            toggleBtn.addEventListener("click", () => {
+                const isExpanded = reviewText.classList.toggle("is-expanded");
+                toggleBtn.classList.toggle("is-expanded", isExpanded);
+
+                if (isExpanded) {
+                    toggleTextSpan.textContent = "Show less";
+                } else {
+                    toggleTextSpan.textContent = "Read more";
+                    // Smooth scroll back to card when collapsing
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+
+        // Journal/Blog Expansion Logic
+        const journalCards = document.querySelectorAll("[data-journal-card]");
+
+        journalCards.forEach(card => {
+            const toggleBtn = card.querySelector("[data-expand-journal]");
+            const preview = card.querySelector(".journal-content-preview");
+            const fullContent = card.querySelector(".journal-content-full");
+            const blogSection = card.closest("#blog-section");
+
+            if (!toggleBtn || !fullContent) return;
+
+            toggleBtn.addEventListener("click", () => {
+                const isExpanded = card.classList.toggle("is-expanded");
+
+                if (isExpanded) {
+                    fullContent.style.display = "block";
+                    preview.style.display = "none";
+                    toggleBtn.textContent = "Show Less";
+
+                    // Smooth scroll to card if it's now very long
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    fullContent.style.display = "none";
+                    preview.style.display = "block";
+                    toggleBtn.textContent = "Read More";
+                }
+
+                if (blogSection) {
+                    const hasExpandedCard = !!blogSection.querySelector(".journal-preview-card.is-expanded");
+                    blogSection.classList.toggle("is-expanded", hasExpandedCard);
+                }
+            });
+        });
+
+        const heroBackgroundData = document.getElementById("hero-background-data");
+        const heroImages = Array.from(document.querySelectorAll("[data-hero-image]"));
+
+        if (!heroBackgroundData || heroImages.length <= 1) {
+            return;
+        }
+
+        const heroImageUrls = JSON.parse(heroBackgroundData.textContent || "[]");
+        let currentHeroIndex = Math.floor(Math.random() * heroImages.length);
+
+        heroImages.forEach((image, index) => {
+            image.classList.toggle("is-active", index === currentHeroIndex);
+        });
+
+        heroImageUrls.forEach((url) => {
+            const preloadImage = new Image();
+            preloadImage.src = url;
+        });
+
+        window.setInterval(() => {
+            let nextHeroIndex = currentHeroIndex;
+
+            while (nextHeroIndex === currentHeroIndex && heroImages.length > 1) {
+                nextHeroIndex = Math.floor(Math.random() * heroImages.length);
+            }
+
+            heroImages[currentHeroIndex].classList.remove("is-active");
+            heroImages[nextHeroIndex].classList.add("is-active");
+            currentHeroIndex = nextHeroIndex;
+        }, 10000);
+    }());
+
+    // Customer Reviews - 3-line clamp with Read More toggle
+    (function () {
+        document.querySelectorAll("[data-cr-text]").forEach(function (textEl) {
+            var btn = textEl.nextElementSibling;
+            if (!btn || !btn.hasAttribute("data-cr-toggle")) return;
+
+            // Only show button if text is actually clamped
+            if (textEl.scrollHeight > textEl.clientHeight + 2) {
+                btn.style.display = "inline-flex";
+            }
+
+            btn.addEventListener("click", function () {
+                var expanded = textEl.classList.toggle("is-expanded");
+                btn.classList.toggle("is-expanded", expanded);
+                btn.querySelector("[data-cr-label]").textContent = expanded ? "Read less" : "Read more";
+            });
+        });
+    }());
+
+    // Customer Reviews - See All / Show Less toggle
+    (function () {
+        function initReviewToggle() {
+            var section = document.getElementById("reviews-section");
+            var seeAllBtn = document.getElementById("cr-see-all-btn");
+            if (!section) return;
+
+            var allCards = Array.from(section.querySelectorAll(".cr-card"));
+            var desktopViewport = window.matchMedia("(min-width: 1025px)").matches;
+            var defaultVisibleCount = desktopViewport ? 3 : allCards.length;
+            var extraCards = allCards.slice(defaultVisibleCount);
+
+            if (!extraCards.length) {
+                if (seeAllBtn) {
+                    seeAllBtn.style.display = "none";
+                }
+                return;
+            }
+
+            if (!desktopViewport) {
+                if (seeAllBtn) {
+                    seeAllBtn.style.display = "none";
+                }
+                extraCards.forEach(function (card) {
+                    card.style.display = "block";
+                });
+                return;
+            }
+
+            extraCards.forEach(function (card) {
+                card.style.display = "none";
+            });
+
+            if (!seeAllBtn) return;
+
+            var expanded = false;
+
+            seeAllBtn.addEventListener("click", function () {
+                expanded = !expanded;
+                extraCards.forEach(function (card) {
+                    card.style.display = expanded ? "block" : "none";
+                });
+                section.classList.toggle("is-expanded", expanded);
+                seeAllBtn.textContent = expanded ? "SHOW LESS" : "SEE ALL TESTIMONIALS";
+                if (!expanded) {
+                    section.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initReviewToggle);
+        } else {
+            initReviewToggle();
+        }
+    }());
+
+</script>

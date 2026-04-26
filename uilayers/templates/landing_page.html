@@ -50,8 +50,8 @@
             <span>NRI Support End-to-End</span>
         </div>
         
-        <h1>{{ hero_title }}</h1>
-        <p class="hero-subtitle">{{ hero_subtitle }}</p>
+        {% if hero_title %}<h1>{{ hero_title|striptags }}</h1>{% endif %}
+        {% if hero_subtitle %}<p class="hero-subtitle">{{ hero_subtitle|striptags }}</p>{% endif %}
         
         <!-- Primary CTAs -->
         <div class="hero-actions">
@@ -88,7 +88,7 @@
 <!-- Related Searches -->
 <section class="lp-related">
     <div class="container">
-        <h2>Related Searches in {{ city.name }}</h2>
+        {% if city.name %}<h2>Related Searches in {{ city.name|striptags }}</h2>{% endif %}
         <div class="pill-links">
             {% for intent in related_intents %}
             <a href="{{ intent.url }}" class="pill">

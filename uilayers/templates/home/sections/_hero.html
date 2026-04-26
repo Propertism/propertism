@@ -1,0 +1,37 @@
+{% load static %}
+<section id="home-section" class="hero-hybrid{% if hero_background_urls %} hero-hybrid-has-image{% endif %}">
+    {% if hero_background_urls %}
+    <div class="hero-hybrid-media" aria-hidden="true">
+        <div class="hero-hybrid-rotator">
+            {% for hero_background_url in hero_background_urls %}
+            <img src="{{ hero_background_url }}" alt=""
+                class="hero-hybrid-image{% if forloop.first %} is-active{% endif %}"
+                data-hero-image="{{ forloop.counter0 }}">
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+        <div class="hero-hybrid-content">
+            <div class="hero-text-wrap">
+                <div class="hero-copy-zillow">
+                    {% if company.hero_eyebrow %}<span class="hero-eyebrow">{{ company.hero_eyebrow }}</span>{% endif %}
+
+                    {% if company.hero_title or hero_title_segments %}
+                    <h1 class="hero-title-zillow">
+                        {% if company.hero_title %}
+                        <span class="hero-title-line">{{ company.hero_title }}</span>
+                        {% else %}
+                        {% for line in hero_title_segments %}
+                        <span class="hero-title-line">{{ line.text }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </h1>
+                    {% endif %}
+
+                    {% if company.hero_description %}<p class="hero-description">{{ company.hero_description }}</p>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

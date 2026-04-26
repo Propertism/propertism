@@ -1,0 +1,2969 @@
+.gitignore
+all_filenames.txt
+ARCHITECTURE.md
+erp-master-2304.txt
+Export Toolbar Admin Data.md
+FINAL_ARCHITECTURE_CLARIFICATION.md
+fix_all_imports.py
+fix_attributes.py
+fix_tests.py
+fix_tests_v2.py
+fix_tests_v3.py
+fix_tests_v4.py
+fix_tests_v5.py
+fix_tests_v7.py
+NEXT_SESSION_HRM_CRM_FMS.md
+NEXT_SESSION_TASKS.md
+OLIVINE_PLATFORM_GUIDE.md
+QA_LAUNCHER_APPS.md
+QUICK_START_NEXT_SESSION.md
+README_SESSION.md
+SESSION_SUMMARY.md
+SHARED_UI_STRATEGY.md
+viji.md
+.agent\session-notes\qa-launcher-console-session-2026-01-15.md
+.agent\workflows\start.md
+.agent\workflows\ai\claude\memory\SYSTEM_SPEC_MEMORY.md
+.agent\workflows\ai\claude\prompts\reasoning.spike.md
+.agent\workflows\ai\claude\prompts\spec.compress.md
+.agent\workflows\ai\claude\rules\cost.rules.md
+.agent\workflows\ai\claude\tasks\task.index.md
+.archive\archive_all.ps1
+.archive\archive_docs.ps1
+.archive\audit-command-buttons.ps1
+.archive\audit-retail-wiring.ps1
+.archive\COMMAND_BUTTON_AUDIT_2026-01-09.md
+.archive\DJANGO_APP_REGISTRATION_BLOCKER.md
+.archive\DJANGO_APP_REGISTRATION_PROGRESS.md
+.archive\DOMAIN_OWNERSHIP_MIGRATION.md
+.archive\ERP_IMPLEMENTATION_SUMMARY.md
+.archive\ERP_WORKFLOWS_COMPLETE.md
+.archive\ERP_WORKFLOW_DIAGRAMS.md
+.archive\FINAL_RETAIL_AUDIT_2026-01-09.md
+.archive\find-missing-page.ps1
+.archive\find_bad_imports.py
+.archive\find_bad_imports_again.py
+.archive\find_location_imports.py
+.archive\fix_auth_imports.py
+.archive\fix_config_imports.py
+.archive\fix_context_imports.py
+.archive\fix_hooks_imports.py
+.archive\fix_import_quotes.py
+.archive\fix_location_imports.py
+.archive\fix_modal_imports.py
+.archive\fix_services_imports.py
+.archive\HRM-CRM-MASTER-ONBOARDING.pdf
+.archive\MERGEABILITY_COMPLETE.md
+.archive\MERGEABILITY_EXECUTION_SUMMARY.md
+.archive\MERGEABILITY_FINAL_REPORT.md
+.archive\NEXT_SESSION_detailed_2025-12-27.md
+.archive\next_session_prompt_2025-12-26.md
+.archive\PHASE3_COMPLETE_2026-01-09.md
+.archive\PHASE4_2_INVENTORY_COMPLETE.md
+.archive\PHASE4_CLEANUP_PROGRESS.md
+.archive\PHASE4_CLEANUP_SUMMARY.md
+.archive\qa-timeline.html
+.archive\QUICK_FIX_COMPLETE_2026-01-09.md
+.archive\README.md
+.archive\RETAIL_FINAL_CLOSURE_2026-01-09.md
+.archive\RETAIL_MODULE_COMPLETE.md
+.archive\retail_toolbar_config.csv
+.archive\REVISED_EXECUTION_PLAN_SESSION4.md
+.archive\SALES_BACKEND_COMPLETE.md
+.archive\SALES_BACKEND_IMPLEMENTATION_PLAN.md
+.archive\SALES_BACKEND_PHASE1_COMPLETE.md
+.archive\SALES_BACKEND_PHASE1_SUMMARY.md
+.archive\SALES_BACKEND_PLAN.md
+.archive\SALES_BACKEND_PROGRESS.md
+.archive\SALES_BATCHES_1_2_SUMMARY.md
+.archive\SALES_GAP_ANALYSIS.md
+.archive\SALES_INTEGRATION_COMPLETE.md
+.archive\SALES_MIGRATION_VERIFICATION.md
+.archive\SALES_NEXT_STEPS.md
+.archive\SALES_PHASE1_COMPLETE_SUCCESS.md
+.archive\SALES_PHASE2_COMPLETE.md
+.archive\SALES_PHASE3_COMPLETE.md
+.archive\SALES_WORKFLOW_VERIFICATION.md
+.archive\scan-missing-toolbars.ps1
+.archive\scan_imports.py
+.archive\scan_imports_json.py
+.archive\SESSION4_SUMMARY_2026-01-09.md
+.archive\SIDEBAR_WIRING_AUDIT_2026-01-09.md
+.archive\test_cleanup.py
+.archive\TEST_CONSOLE_BLOCKER.md
+.archive\toolbar-files-extract.txt
+.archive\update_toolbar_simple.py
+.archive\upgrade-toolbars.ps1
+.archive\validate_architecture.py
+.archive\references\00login.png
+.archive\references\01dashboard-ctrlk.png
+.archive\references\01dashboard-settings-db.png
+.archive\references\01dashboard-userprofile.png
+.archive\references\01dashboard.png
+.archive\references\02.1pos-billing-cust.png
+.archive\references\02.1pos-billing-item.png
+.archive\references\02.1pos-billing-receipt.png
+.archive\references\02.3pos-billing-day-management.png
+.archive\references\02.3pos-billing-payment.png
+.archive\references\02.3pos-billing-tend.png
+.archive\references\02pos-billing-dayend.png
+.archive\references\02pos-billing-session-end.png
+.archive\references\02pos-billing-session.png
+.archive\references\02pos-billing-settlement.png
+.archive\references\02pos-billing.png
+.archive\references\02pos-preferences2.png
+.archive\references\02pos-terminal-add.png
+.archive\references\02pos-terminal-add2.png
+.archive\references\02pos-terminal-add3.png
+.archive\references\02pos-terminal-add4.png
+.archive\references\02pos-terminal.png
+.archive\references\03user-permissions-01.png
+.archive\references\03user-permissions-02.png
+.archive\references\03user-permissions-03.png
+.archive\references\04pos-preferences.png
+.archive\references\04system-dbconole.png
+.archive\references\04system-layout-preferences.png
+.archive\references\05openingstock-system-golive.png
+.archive\references\06merchandise-customers.png
+.archive\references\06merchandise-general-masters.png
+.archive\references\06merchandise.png
+.archive\references\07org-add-company.png
+.archive\references\07org-company.png
+.archive\references\07org-location.png
+.archive\references\09procurement-pr-additem.png
+.archive\references\09procurement-pr.png
+.archive\references\10attributes-add.png
+.archive\references\10attributes-values-add.png
+.archive\references\10attributes.png
+.archive\references\10itemadd.png
+.archive\references\10itemadd2.png
+.archive\references\10itemadd3.png
+.backups\business_entities.urls.py.bak
+.backups\erp_core.urls.py.bak
+.backups\powershell-in-py-report.txt
+.backups\qa console.jpg
+.backups\design_proofs\modern_design.html
+backend\.env.example
+backend\check_depth.py
+backend\check_location_table.py
+backend\check_output_utf8.txt
+backend\check_perms.py
+backend\check_qa_data.py
+backend\check_uom_menu.py
+backend\check_user_location_mappings.py
+backend\create_admin.py
+backend\db.sqlite3.backup_20260109_202636
+backend\db.sqlite3.backup_20260109_203406
+backend\db.sqlite3.backup_20260109_203446
+backend\db.sqlite3.backup_20260109_204433
+backend\db.sqlite3.backup_20260109_204641
+backend\db.sqlite3.backup_20260109_204803
+backend\db.sqlite3.backup_20260109_205019
+backend\db.sqlite3.backup_20260109_205315
+backend\db.sqlite3.backup_20260109_212007
+backend\debug_id_type.py
+backend\Dockerfile
+backend\domain_0001.sql
+backend\err.txt
+backend\error.txt
+backend\error_log.txt
+backend\find_company_table.py
+backend\fix_migrations.py
+backend\full_test_run_2.txt
+backend\full_test_run_3.txt
+backend\full_test_run_3_utf8.txt
+backend\full_test_run_4.txt
+backend\full_test_run_4_utf8.txt
+backend\grn_test_output.txt
+backend\grn_test_output_utf8.txt
+backend\inventory_test_run.txt
+backend\inventory_test_run_new.txt
+backend\inventory_test_run_new_utf8.txt
+backend\inventory_test_run_utf8.txt
+backend\list_all_tables.py
+backend\manage.py
+backend\menu_ids.txt
+backend\pyproject.toml
+backend\python
+backend\quick_fix_locations.py
+backend\README.md
+backend\reproduce_500.py
+backend\requirements.txt
+backend\retail_test_run_final.txt
+backend\retail_test_run_final_utf8.txt
+backend\retail_test_run_final_v2.txt
+backend\retail_test_run_final_v2_utf8.txt
+backend\retail_test_run_final_v3.txt
+backend\retail_test_run_final_v3_utf8.txt
+backend\retail_test_run_final_v4.txt
+backend\retail_test_run_final_v4_utf8.txt
+backend\retail_test_run_final_v5.txt
+backend\retail_test_run_final_v5_utf8.txt
+backend\retail_test_run_final_v6.txt
+backend\retail_test_run_final_v6_utf8.txt
+backend\schema.yaml
+backend\schema_error_utf8.txt
+backend\schema_validation_error.txt
+backend\seed_menu_items.py
+backend\show_all_l3.py
+backend\single_test_output.txt
+backend\single_test_output_utf8.txt
+backend\test_cleanup_simple.py
+backend\test_output.txt
+backend\test_output_utf8.txt
+backend\test_quick.py
+backend\test_toolbar_permissions.py
+backend\test_uom_api.py
+backend\test_with_token.py
+backend\update_menu_toolbars.py
+backend\update_toolbar_configs.py
+backend\validate.py
+backend\verify_backend_final.py
+backend\verify_inventory_l3.py
+backend\verify_master_data.py
+backend\verify_pr_fix.py
+backend\verify_sales_tables.py
+backend\__init__.py
+backend\core\auth_access\backend\menu_registry\management\__init__.py
+backend\core\auth_access\backend\menu_registry\management\commands\update_toolbar_configs.py
+backend\core\auth_access\backend\menu_registry\management\commands\__init__.py
+backend\core\auth_access\backend\user_management\admin.py
+backend\core\auth_access\backend\user_management\management\commands\fix_benchmark_screens.py
+backend\domain\__init__.py
+backend\domain\master\README.md
+backend\domain\master\serializers.py
+backend\domain\master\settings.py
+backend\domain\master\urls.py
+backend\domain\master\views.py
+backend\domain\master\__init__.py
+backend\domain\reporting\urls.py
+backend\domain\reporting\views.py
+backend\erp_core\admin_site.py
+backend\erp_core\apps.py
+backend\erp_core\asgi.py
+backend\erp_core\platform_admin.py
+backend\erp_core\urls.py
+backend\erp_core\wsgi.py
+backend\erp_core\__init__.py
+backend\erp_core\settings\base.py
+backend\erp_core\settings\dev.py
+backend\erp_core\settings\prod.py
+backend\erp_core\settings\__init__.py
+backend\extensions\__init__.py
+backend\qa_console\admin.py
+backend\qa_console\apps.py
+backend\qa_console\models.py
+backend\qa_console\serializers.py
+backend\qa_console\tests.py
+backend\qa_console\urls.py
+backend\qa_console\views.py
+backend\qa_console\__init__.py
+backend\qa_console\management\__init__.py
+backend\qa_console\management\commands\update_test_scripts.py
+backend\qa_console\management\commands\__init__.py
+backend\qa_console\migrations\0001_initial.py
+backend\qa_console\migrations\0002_testreadiness_bbp_path.py
+backend\qa_console\migrations\__init__.py
+backend\scripts\add_missing_menus.py
+backend\scripts\analyze_menu.py
+backend\scripts\analyze_output.txt
+backend\scripts\apply_sql_and_fake.py
+backend\scripts\audit_and_fix_view_types.py
+backend\scripts\audit_log_view_types.txt
+backend\scripts\build_menu_hierarchy.py
+backend\scripts\check_schema.py
+backend\scripts\check_schema_be.py
+backend\scripts\check_schema_others.py
+backend\scripts\deep_scan_menu.py
+backend\scripts\find_missing_menu_items.py
+backend\scripts\fix_all_uom_integrity.py
+backend\scripts\fix_benchmarks.py
+backend\scripts\fix_org_toolbars_v2.py
+backend\scripts\fix_uom_integrity.py
+backend\scripts\generate_erp_menu_items.py
+backend\scripts\list_tables.py
+backend\scripts\list_uom_entries.py
+backend\scripts\migrate_frontend_viewids.py
+backend\scripts\migrate_legacy_structures.py
+backend\scripts\missing_items_search.txt
+backend\scripts\remaining_list_items.txt
+backend\scripts\scan_router_operations.py
+backend\scripts\seed_demo_data.py
+backend\scripts\seed_test_data.py
+backend\scripts\seed_toolbar_controls.py
+backend\scripts\standardize_toolbars.py
+backend\scripts\sync_log.txt
+backend\scripts\sync_tracker_to_db.py
+backend\scripts\toolbar_update_log.txt
+backend\scripts\uom_migration_helpers.py
+backend\scripts\uom_verification_output.txt
+backend\scripts\update_additional_items.py
+backend\scripts\update_toolbar_configs.py
+backend\scripts\update_toolbar_configs_standard.py
+backend\scripts\update_tracker_types.py
+backend\scripts\verify_benchmark_screens.py
+backend\scripts\verify_erp_menu_items.py
+backend\scripts\verify_phase2_masters.py
+backend\scripts\verify_uom_toolbar.py
+backend\scripts\__init__.py
+BBPs\CRM\00.crm_masterindex.md
+BBPs\CRM\crm-cr.bat
+BBPs\CRM\crm-old-menu.txt
+BBPs\CRM\CRM_BBP_Autoretry_Prevention_Guide.md
+BBPs\CRM\CRM_BBP_Template_Prompt.md
+BBPs\CRM\CRM_BBP_Template_Reference.md
+BBPs\CRM\CRM_BBP_Tracker.md
+BBPs\CRM\CRM_Development_Implementation_Prompt.md
+BBPs\CRM\CRM_DEV_Tracker.md
+BBPs\CRM\01.Dashboard & Analytics\1.1 Sales Dashboard.md
+BBPs\CRM\01.Dashboard & Analytics\1.2 Lead Conversion Report.md
+BBPs\CRM\01.Dashboard & Analytics\1.3 Revenue Tracking.md
+BBPs\CRM\01.Dashboard & Analytics\1.4 Activity Summary.md
+BBPs\CRM\02.Lead & Contact Management\2.1Lead Capture & Scoring.md
+BBPs\CRM\02.Lead & Contact Management\2.2Contact Directory.md
+BBPs\CRM\02.Lead & Contact Management\2.3Lead Assignment.md
+BBPs\CRM\02.Lead & Contact Management\2.4Contact History.md
+BBPs\CRM\03.Account & Opportunity Management\3.1Account Management.md
+BBPs\CRM\03.Account & Opportunity Management\3.2Opportunity Pipeline.md
+BBPs\CRM\03.Account & Opportunity Management\3.3Deal Tracking.md
+BBPs\CRM\03.Account & Opportunity Management\3.4Sales Stages.md
+BBPs\CRM\04.Sales & Quote Management\4.1Sales Pipeline View.md
+BBPs\CRM\04.Sales & Quote Management\4.2Quote Creation.md
+BBPs\CRM\04.Sales & Quote Management\4.3Price Management.md
+BBPs\CRM\04.Sales & Quote Management\4.4Deal Conversion.md
+BBPs\CRM\05.Marketing & Campaign\5.1Campaign Creation.md
+BBPs\CRM\05.Marketing & Campaign\5.2Email Marketing.md
+BBPs\CRM\05.Marketing & Campaign\5.3Campaign Tracking.md
+BBPs\CRM\05.Marketing & Campaign\5.4Lead Nurturing.md
+BBPs\CRM\06.Customer Service & Support\6.1Ticket System.md
+BBPs\CRM\06.Customer Service & Support\6.2Case Management.md
+BBPs\CRM\06.Customer Service & Support\6.3Knowledge Base.md
+BBPs\CRM\06.Customer Service & Support\6.4Customer Feedback.md
+BBPs\CRM\07.Communication & Activities\7.1Call & Email Logging.md
+BBPs\CRM\07.Communication & Activities\7.2Task Management.md
+BBPs\CRM\07.Communication & Activities\7.3Meeting Notes.md
+BBPs\CRM\07.Communication & Activities\7.4Activity Timeline.md
+BBPs\CRM\08.Reports & Administration\8.1Sales Reports.md
+BBPs\CRM\08.Reports & Administration\8.2User Management.md
+BBPs\CRM\08.Reports & Administration\8.3System Settings.md
+BBPs\CRM\08.Reports & Administration\8.4Data Import-Export.md
+BBPs\CRM2\00.crm_masterindex.md
+BBPs\CRM2\crm-cr.bat
+BBPs\CRM2\crm-old-menu.txt
+BBPs\CRM2\CRM_BBP_Autoretry_Prevention_Guide.md
+BBPs\CRM2\CRM_BBP_Template_Prompt.md
+BBPs\CRM2\CRM_BBP_Template_Reference.md
+BBPs\CRM2\CRM_BBP_Tracker.md
+BBPs\CRM2\CRM_Development_Implementation_Prompt.md
+BBPs\CRM2\CRM_DEV_Tracker.md
+BBPs\CRM2\01.Dashboard & Analytics\1.1 Sales Dashboard.md
+BBPs\CRM2\01.Dashboard & Analytics\1.2 Lead Conversion Report.md
+BBPs\CRM2\01.Dashboard & Analytics\1.3 Revenue Tracking.md
+BBPs\CRM2\01.Dashboard & Analytics\1.4 Activity Summary.md
+BBPs\CRM2\02.Lead & Contact Management\2.1Lead Capture & Scoring.md
+BBPs\CRM2\02.Lead & Contact Management\2.2Contact Directory.md
+BBPs\CRM2\02.Lead & Contact Management\2.3Lead Assignment.md
+BBPs\CRM2\02.Lead & Contact Management\2.4Contact History.md
+BBPs\CRM2\03.Account & Opportunity Management\3.1Account Management.md
+BBPs\CRM2\03.Account & Opportunity Management\3.2Opportunity Pipeline.md
+BBPs\CRM2\03.Account & Opportunity Management\3.3Deal Tracking.md
+BBPs\CRM2\03.Account & Opportunity Management\3.4Sales Stages.md
+BBPs\CRM2\04.Sales & Quote Management\4.1Sales Pipeline View.md
+BBPs\CRM2\04.Sales & Quote Management\4.2Quote Creation.md
+BBPs\CRM2\04.Sales & Quote Management\4.3Price Management.md
+BBPs\CRM2\04.Sales & Quote Management\4.4Deal Conversion.md
+BBPs\CRM2\05.Marketing & Campaign\5.1Campaign Creation.md
+BBPs\CRM2\05.Marketing & Campaign\5.2Email Marketing.md
+BBPs\CRM2\05.Marketing & Campaign\5.3Campaign Tracking.md
+BBPs\CRM2\05.Marketing & Campaign\5.4Lead Nurturing.md
+BBPs\CRM2\06.Customer Service & Support\6.1Ticket System.md
+BBPs\CRM2\06.Customer Service & Support\6.2Case Management.md
+BBPs\CRM2\06.Customer Service & Support\6.3Knowledge Base.md
+BBPs\CRM2\06.Customer Service & Support\6.4Customer Feedback.md
+BBPs\CRM2\07.Communication & Activities\7.1Call & Email Logging.md
+BBPs\CRM2\07.Communication & Activities\7.2Task Management.md
+BBPs\CRM2\07.Communication & Activities\7.3Meeting Notes.md
+BBPs\CRM2\07.Communication & Activities\7.4Activity Timeline.md
+BBPs\CRM2\08.Reports & Administration\8.1Sales Reports.md
+BBPs\CRM2\08.Reports & Administration\8.2User Management.md
+BBPs\CRM2\08.Reports & Administration\8.3System Settings.md
+BBPs\CRM2\08.Reports & Administration\8.4Data Import-Export.md
+BBPs\FMS\00.masterindex.md
+BBPs\FMS\FMS.md
+BBPs\FMS\refer_for_new_fms_bbp.md
+BBPs\FMS\01.Dashboard & Overview\1.1 Financial Dashboard.md
+BBPs\FMS\01.Dashboard & Overview\1.2 Key Performance Indicators.md
+BBPs\FMS\01.Dashboard & Overview\1.3 Cash Flow Summary.md
+BBPs\FMS\01.Dashboard & Overview\1.4 Profit & Loss Summary.md
+BBPs\FMS\01.Dashboard & Overview\1.5 Balance Sheet Summary.md
+BBPs\FMS\01.Dashboard & Overview\1.6 Budget vs Actual.md
+BBPs\FMS\01.Dashboard & Overview\1.7 Financial Alerts.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.1 Chart of Accounts.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.10 Trial Balance.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.11 Ledger Reports.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.2 Account Groups & Hierarchies.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.3 General Ledger.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.4 Journal Entries.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.5 Journal Vouchers.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.6 Recurring Journal Entries.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.7 Reversing Entries.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.8 Inter-company Transactions.md
+BBPs\FMS\02.General Ledger & Chart of Accounts\2.9 Period-End Adjustments.md
+BBPs\FMS\03.Accounts Receivable\3.1 Customer Invoices.md
+BBPs\FMS\03.Accounts Receivable\3.10 Aging Analysis.md
+BBPs\FMS\03.Accounts Receivable\3.11 Collection Management.md
+BBPs\FMS\03.Accounts Receivable\3.12 Dunning & Reminders.md
+BBPs\FMS\03.Accounts Receivable\3.13 Customer Statements.md
+BBPs\FMS\03.Accounts Receivable\3.14 Bad Debt Provisioning.md
+BBPs\FMS\03.Accounts Receivable\3.15 Write-offs.md
+BBPs\FMS\03.Accounts Receivable\3.2 Sales Invoices.md
+BBPs\FMS\03.Accounts Receivable\3.3 Proforma Invoices.md
+BBPs\FMS\03.Accounts Receivable\3.4 Credit Notes.md
+BBPs\FMS\03.Accounts Receivable\3.5 Debit Notes.md
+BBPs\FMS\03.Accounts Receivable\3.6 Payment Receipts.md
+BBPs\FMS\03.Accounts Receivable\3.7 Payment Allocation.md
+BBPs\FMS\03.Accounts Receivable\3.8 Customer Advances.md
+BBPs\FMS\03.Accounts Receivable\3.9 Outstanding Receivables.md
+BBPs\FMS\04.Accounts Payable\4.1 Vendor Bills.md
+BBPs\FMS\04.Accounts Payable\4.10 Aging Analysis.md
+BBPs\FMS\04.Accounts Payable\4.11 Payment Terms Management.md
+BBPs\FMS\04.Accounts Payable\4.12 Vendor Statements.md
+BBPs\FMS\04.Accounts Payable\4.13 Expense Claims.md
+BBPs\FMS\04.Accounts Payable\4.14 TDS_TCS Management.md
+BBPs\FMS\04.Accounts Payable\4.2 Purchase Invoices.md
+BBPs\FMS\04.Accounts Payable\4.3 Debit Notes (Purchase Returns).md
+BBPs\FMS\04.Accounts Payable\4.4 Credit Notes (Vendor).md
+BBPs\FMS\04.Accounts Payable\4.5 Payment Vouchers.md
+BBPs\FMS\04.Accounts Payable\4.6 Payment Processing.md
+BBPs\FMS\04.Accounts Payable\4.7 Payment Runs.md
+BBPs\FMS\04.Accounts Payable\4.8 Vendor Advances.md
+BBPs\FMS\04.Accounts Payable\4.9 Outstanding Payables.md
+BBPs\FMS\05.Cash & Bank Management\5.1 Bank Accounts.md
+BBPs\FMS\05.Cash & Bank Management\5.10 Cheque Management.md
+BBPs\FMS\05.Cash & Bank Management\5.11 Cheque Printing.md
+BBPs\FMS\05.Cash & Bank Management\5.12 Post-dated Cheques (PDC).md
+BBPs\FMS\05.Cash & Bank Management\5.13 Dishonored Cheques.md
+BBPs\FMS\05.Cash & Bank Management\5.14 Bank Charges.md
+BBPs\FMS\05.Cash & Bank Management\5.15 Inter-bank Transfers.md
+BBPs\FMS\05.Cash & Bank Management\5.2 Cash Accounts.md
+BBPs\FMS\05.Cash & Bank Management\5.3 Bank Deposits.md
+BBPs\FMS\05.Cash & Bank Management\5.4 Bank Withdrawals.md
+BBPs\FMS\05.Cash & Bank Management\5.5 Cash Receipts.md
+BBPs\FMS\05.Cash & Bank Management\5.6 Cash Payments.md
+BBPs\FMS\05.Cash & Bank Management\5.7 Bank Reconciliation.md
+BBPs\FMS\05.Cash & Bank Management\5.8 Auto Reconciliation.md
+BBPs\FMS\05.Cash & Bank Management\5.9 Bank Statement Import.md
+BBPs\FMS\06.Payment Processing\6.1 Payment Gateway Integration.md
+BBPs\FMS\06.Payment Processing\6.10 Payment Reconciliation.md
+BBPs\FMS\06.Payment Processing\6.11 Electronic Fund Transfer (EFT).md
+BBPs\FMS\06.Payment Processing\6.2 Online Payments.md
+BBPs\FMS\06.Payment Processing\6.3 Payment Methods.md
+BBPs\FMS\06.Payment Processing\6.4 Payment Terms.md
+BBPs\FMS\06.Payment Processing\6.5 Payment Schedules.md
+BBPs\FMS\06.Payment Processing\6.6 Batch Payments.md
+BBPs\FMS\06.Payment Processing\6.7 Payment Approval Workflow.md
+BBPs\FMS\06.Payment Processing\6.8 Payment Reversals.md
+BBPs\FMS\06.Payment Processing\6.9 Payment Refunds.md
+BBPs\FMS\07.Fixed Assets Management\7.1 Asset Register.md
+BBPs\FMS\07.Fixed Assets Management\7.10 Asset Maintenance.md
+BBPs\FMS\07.Fixed Assets Management\7.11 Asset Insurance.md
+BBPs\FMS\07.Fixed Assets Management\7.12 Asset Physical Verification.md
+BBPs\FMS\07.Fixed Assets Management\7.13 Asset Reports.md
+BBPs\FMS\07.Fixed Assets Management\7.2 Asset Categories.md
+BBPs\FMS\07.Fixed Assets Management\7.3 Asset Acquisition.md
+BBPs\FMS\07.Fixed Assets Management\7.4 Asset Disposal.md
+BBPs\FMS\07.Fixed Assets Management\7.5 Asset Transfer.md
+BBPs\FMS\07.Fixed Assets Management\7.6 Asset Revaluation.md
+BBPs\FMS\07.Fixed Assets Management\7.7 Depreciation Calculation.md
+BBPs\FMS\07.Fixed Assets Management\7.8 Depreciation Methods.md
+BBPs\FMS\07.Fixed Assets Management\7.9 Depreciation Schedules.md
+BBPs\FMS\08.Inventory Accounting\8.1 Inventory Valuation.md
+BBPs\FMS\08.Inventory Accounting\8.10 Inventory Reports.md
+BBPs\FMS\08.Inventory Accounting\8.2 Cost of Goods Sold (COGS).md
+BBPs\FMS\08.Inventory Accounting\8.3 Stock Valuation Methods.md
+BBPs\FMS\08.Inventory Accounting\8.4 Inventory Adjustments.md
+BBPs\FMS\08.Inventory Accounting\8.5 Inventory Write-offs.md
+BBPs\FMS\08.Inventory Accounting\8.6 Inventory Reserves.md
+BBPs\FMS\08.Inventory Accounting\8.7 Landed Cost Allocation.md
+BBPs\FMS\08.Inventory Accounting\8.8 Inter-location Transfer Accounting.md
+BBPs\FMS\08.Inventory Accounting\8.9 Inventory Reconciliation.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.1 Cost Centers.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.10 Cost Reports.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.11 Profitability Analysis.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.2 Cost Categories.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.3 Cost Allocation.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.4 Job Costing.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.5 Project Costing.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.6 Work Orders.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.7 Cost Tracking.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.8 Overhead Allocation.md
+BBPs\FMS\09.Cost Accounting & Job Costing\9.9 Variance Analysis.md
+BBPs\FMS\10.Budgeting & Planning\10.1 Budget Creation.md
+BBPs\FMS\10.Budgeting & Planning\10.10 What-if Analysis.md
+BBPs\FMS\10.Budgeting & Planning\10.11 Budget Consolidation.md
+BBPs\FMS\10.Budgeting & Planning\10.2 Budget Templates.md
+BBPs\FMS\10.Budgeting & Planning\10.3 Budget Allocation.md
+BBPs\FMS\10.Budgeting & Planning\10.4 Budget Versions.md
+BBPs\FMS\10.Budgeting & Planning\10.5 Budget Approval Workflow.md
+BBPs\FMS\10.Budgeting & Planning\10.6 Budget vs Actual Analysis.md
+BBPs\FMS\10.Budgeting & Planning\10.7 Budget Variance Reports.md
+BBPs\FMS\10.Budgeting & Planning\10.8 Forecast Management.md
+BBPs\FMS\10.Budgeting & Planning\10.9 Rolling Forecasts.md
+BBPs\FMS\11.Tax Management\11.1 GST_VAT Management.md
+BBPs\FMS\11.Tax Management\11.10 TDS Returns.md
+BBPs\FMS\11.Tax Management\11.11 Withholding Tax.md
+BBPs\FMS\11.Tax Management\11.12 Sales Tax.md
+BBPs\FMS\11.Tax Management\11.13 Service Tax.md
+BBPs\FMS\11.Tax Management\11.14 E-way Bills.md
+BBPs\FMS\11.Tax Management\11.15 Tax Reports & Filings.md
+BBPs\FMS\11.Tax Management\11.2 Tax Configuration.md
+BBPs\FMS\11.Tax Management\11.3 Tax Codes & Rates.md
+BBPs\FMS\11.Tax Management\11.4 Input Tax Credit (ITC).md
+BBPs\FMS\11.Tax Management\11.5 Output Tax.md
+BBPs\FMS\11.Tax Management\11.6 Tax Invoices.md
+BBPs\FMS\11.Tax Management\11.7 Tax Returns (GSTR-1, GSTR-3B).md
+BBPs\FMS\11.Tax Management\11.8 Tax Reconciliation.md
+BBPs\FMS\11.Tax Management\11.9 TDS_TCS Management.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.1 Currency Management.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.10 Forward Contracts.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.2 Exchange Rates.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.3 Exchange Rate Types.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.4 Currency Revaluation.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.5 Foreign Exchange Gains_Losses.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.6 Multi-currency Transactions.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.7 Currency Conversion.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.8 Realized_Unrealized Gains.md
+BBPs\FMS\12.Multi-Currency & Foreign Exchange\12.9 Hedging Management.md
+BBPs\FMS\13.Financial Reporting & Analytics\13.1 Standard Reports.md
+BBPs\FMS\13.Financial Reporting & Analytics\13.2 Analytical Reports.md
+BBPs\FMS\13.Financial Reporting & Analytics\13.3 Custom Reports.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.1 Period Closing Checklist.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.10 Financial Year Setup.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.11 Closing Reports.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.2 Month-End Close.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.3 Quarter-End Close.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.4 Year-End Close.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.5 Closing Entries.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.6 Opening Balances.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.7 Period Lock.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.8 Audit Trail Lock.md
+BBPs\FMS\14.Period-End & Year-End Closing\14.9 Carry Forward.md
+BBPs\FMS\15.Compliance & Audit\15.1 Audit Trail.md
+BBPs\FMS\15.Compliance & Audit\15.10 Segregation of Duties (SoD).md
+BBPs\FMS\15.Compliance & Audit\15.11 Approval Workflows.md
+BBPs\FMS\15.Compliance & Audit\15.12 Document Management.md
+BBPs\FMS\15.Compliance & Audit\15.13 Digital Signatures.md
+BBPs\FMS\15.Compliance & Audit\15.2 Audit Logs.md
+BBPs\FMS\15.Compliance & Audit\15.3 User Activity Tracking.md
+BBPs\FMS\15.Compliance & Audit\15.4 Change History.md
+BBPs\FMS\15.Compliance & Audit\15.5 Document Versioning.md
+BBPs\FMS\15.Compliance & Audit\15.6 Compliance Checklist.md
+BBPs\FMS\15.Compliance & Audit\15.7 Regulatory Reports.md
+BBPs\FMS\15.Compliance & Audit\15.8 Statutory Compliance.md
+BBPs\FMS\15.Compliance & Audit\15.9 Internal Controls.md
+BBPs\FMS\16.Inter-company & Consolidation\16.1 Inter-company Transactions.md
+BBPs\FMS\16.Inter-company & Consolidation\16.10 Consolidated Reports.md
+BBPs\FMS\16.Inter-company & Consolidation\16.2 Inter-company Eliminations.md
+BBPs\FMS\16.Inter-company & Consolidation\16.3 Consolidation Rules.md
+BBPs\FMS\16.Inter-company & Consolidation\16.4 Multi-entity Reporting.md
+BBPs\FMS\16.Inter-company & Consolidation\16.5 Group Consolidation.md
+BBPs\FMS\16.Inter-company & Consolidation\16.6 Subsidiary Management.md
+BBPs\FMS\16.Inter-company & Consolidation\16.7 Minority Interest.md
+BBPs\FMS\16.Inter-company & Consolidation\16.8 Currency Translation.md
+BBPs\FMS\16.Inter-company & Consolidation\16.9 Consolidation Adjustments.md
+BBPs\FMS\17.Revenue Recognition\17.1 Revenue Contracts.md
+BBPs\FMS\17.Revenue Recognition\17.2 Performance Obligations.md
+BBPs\FMS\17.Revenue Recognition\17.3 Revenue Schedules.md
+BBPs\FMS\17.Revenue Recognition\17.4 Deferred Revenue.md
+BBPs\FMS\17.Revenue Recognition\17.5 Unbilled Revenue.md
+BBPs\FMS\17.Revenue Recognition\17.6 Revenue Recognition Rules.md
+BBPs\FMS\17.Revenue Recognition\17.7 Contract Assets_Liabilities.md
+BBPs\FMS\17.Revenue Recognition\17.8 Revenue Allocation.md
+BBPs\FMS\17.Revenue Recognition\17.9 Revenue Reports.md
+BBPs\FMS\18.Financial Planning & Analysis\18.1 Financial Models.md
+BBPs\FMS\18.Financial Planning & Analysis\18.10 ROI Analysis.md
+BBPs\FMS\18.Financial Planning & Analysis\18.2 Scenario Planning.md
+BBPs\FMS\18.Financial Planning & Analysis\18.3 Sensitivity Analysis.md
+BBPs\FMS\18.Financial Planning & Analysis\18.4 Financial Projections.md
+BBPs\FMS\18.Financial Planning & Analysis\18.5 Cash Flow Forecasting.md
+BBPs\FMS\18.Financial Planning & Analysis\18.6 Revenue Forecasting.md
+BBPs\FMS\18.Financial Planning & Analysis\18.7 Expense Forecasting.md
+BBPs\FMS\18.Financial Planning & Analysis\18.8 Capital Planning.md
+BBPs\FMS\18.Financial Planning & Analysis\18.9 Investment Analysis.md
+BBPs\FMS\19.Treasury Management\19.1 Cash Positioning.md
+BBPs\FMS\19.Treasury Management\19.10 Risk Management.md
+BBPs\FMS\19.Treasury Management\19.2 Cash Forecasting.md
+BBPs\FMS\19.Treasury Management\19.3 Liquidity Management.md
+BBPs\FMS\19.Treasury Management\19.4 Investment Management.md
+BBPs\FMS\19.Treasury Management\19.5 Debt Management.md
+BBPs\FMS\19.Treasury Management\19.6 Loan Management.md
+BBPs\FMS\19.Treasury Management\19.7 Interest Calculations.md
+BBPs\FMS\19.Treasury Management\19.8 Credit Facilities.md
+BBPs\FMS\19.Treasury Management\19.9 Treasury Reports.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.1 Bank Integration.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.10 Notification Settings.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.11 User Roles & Permissions.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.12 Financial Policies.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.2 Payment Gateway Integration.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.3 Tax Portal Integration.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.4 Third-party Integrations.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.5 API Management.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.6 Data Import_Export.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.7 System Settings.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.8 Workflow Configuration.md
+BBPs\FMS\20.Financial Integrations & Configuration\20.9 Approval Hierarchies.md
+BBPs\FMS2\00.fms_masterindex.md
+BBPs\FMS2\check-file-sizes.bat
+BBPs\FMS2\file_sizes.txt
+BBPs\FMS2\fms-old-tree.txt
+BBPs\FMS2\fms-tree.txt
+BBPs\FMS2\FMS_BBP_Autoretry_Prevention_Guide.md
+BBPs\FMS2\FMS_BBP_Tracker.md
+BBPs\FMS2\FMS_Development_Implementation_Prompt.md
+BBPs\FMS2\FMS_DEV_Tracker.md
+BBPs\FMS2\FMS_Template_Prompt.md
+BBPs\FMS2\FMS_Template_Reference.md
+BBPs\FMS2\move-reports.bat
+BBPs\FMS2\Phase2FMS.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.1.Chart of Accounts.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.2 Account Groups.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.3 Ledgers.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.4 Cost Centers.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.5 Currencies.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.6.Voucher Types.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.1.Core Financial Setup\1.1.7 Custom Fields.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.2.Tax Categories\1.2.1 Global Tax Management.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.2.Tax Categories\1.2.2 Withholding Tax.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.2.Tax Categories\1.2.3 Tax Codes & Rates.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.2.Tax Categories\1.2.4 Tax Returns.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.2.Tax Categories\1.2.5 Tax Compliance.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.3.Budgets\1.3.1 Budget Templates.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.3.Budgets\1.3.2 Budget Approval Workflow.md
+BBPs\FMS2\01.Finance Setup & Configuration\1.3.Budgets\1.3.3 Forecast Management.md
+BBPs\FMS2\02.Finance Operations & Entries\2.1.Unified_Finance_entry_console.md
+BBPs\FMS2\02.Finance Operations & Entries\2.2.Multi-currency.md
+BBPs\FMS2\02.Finance Operations & Entries\2.3.Inter-company Transactions.md
+BBPs\FMS2\03.Bank Reconciliation\3.1.Cheque Management.md
+BBPs\FMS2\03.Bank Reconciliation\3.2.Bank Statement Import.md
+BBPs\FMS2\03.Bank Reconciliation\3.3.Auto Reconciliation.md
+BBPs\FMS2\04.Fixed_Assets\4.1.Asset Categories.md
+BBPs\FMS2\04.Fixed_Assets\4.2 Depreciation Methods.md
+BBPs\FMS2\04.Fixed_Assets\4.3 Asset Maintenance.md
+BBPs\FMS2\05.Inventory Management\5.1 Inventory Transactions.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.1 Month-End Closing.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.2 Year-End Closing.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.3 Audit Trail.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.4 Data Backup.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.5 Data Restore.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.6 Configuration.md
+BBPs\FMS2\06.Finance Closing & Compliance\6.7 Multi-entity Consolidation.md
+BBPs\FMS2\07.Finance Analytics & Insights\Analytics_Specification.md
+BBPs\HR\README.md
+BBPs\HR\timeentry.html
+BBPs\HR\TS.xlsx
+BBPs\HR\0.1HR Dashboard\0.1 HR Dashboard Overview.md
+BBPs\HR\01.Employee Management\1.1 Employee Directory.md
+BBPs\HR\01.Employee Management\1.2 Organizational Chart.md
+BBPs\HR\01.Employee Management\1.3 Employee Self-Service.md
+BBPs\HR\01.Employee Management\1.4 Document Management.md
+BBPs\HR\01.Employee Management\1.5 Employee Lifecycle.md
+BBPs\HR\02.Talent Acquisition\2.1 Job Requisitions.md
+BBPs\HR\02.Talent Acquisition\2.2 Candidate Management.md
+BBPs\HR\02.Talent Acquisition\2.3 Interview Scheduling.md
+BBPs\HR\02.Talent Acquisition\2.4 Offer Management.md
+BBPs\HR\02.Talent Acquisition\2.5 Onboarding.md
+BBPs\HR\03.Compensation & Payroll\3.1 Salary Structure.md
+BBPs\HR\03.Compensation & Payroll\3.2 Payroll Processing.md
+BBPs\HR\03.Compensation & Payroll\3.3 Payslip Generation.md
+BBPs\HR\03.Compensation & Payroll\3.4 Tax Deductions.md
+BBPs\HR\03.Compensation & Payroll\3.5 Benefits Administration.md
+BBPs\HR\03.Compensation & Payroll\3.6 Compensation Planning.md
+BBPs\HR\04.Time & Attendance\4.1 Attendance Tracking.md
+BBPs\HR\04.Time & Attendance\4.2 Shift Management.md
+BBPs\HR\04.Time & Attendance\4.3 Leave Management.md
+BBPs\HR\04.Time & Attendance\4.4 Overtime Management.md
+BBPs\HR\04.Time & Attendance\4.5 Time Off Requests.md
+BBPs\HR\05.Performance Management\5.1 Goal Setting.md
+BBPs\HR\05.Performance Management\5.2 Performance Reviews.md
+BBPs\HR\05.Performance Management\5.3 360-Degree Feedback.md
+BBPs\HR\05.Performance Management\5.4 Performance Improvement Plans.md
+BBPs\HR\05.Performance Management\5.5 Competency Management.md
+BBPs\HR\05.Performance Management\5.6 Performance Analytics.md
+BBPs\HR\06.Learning & Development\6.1 Training Programs.md
+BBPs\HR\06.Learning & Development\6.2 Course Management.md
+BBPs\HR\06.Learning & Development\6.3 Skill Assessment.md
+BBPs\HR\06.Learning & Development\6.4 Certification Tracking.md
+BBPs\HR\06.Learning & Development\6.5 Learning Paths.md
+BBPs\HR\06.Learning & Development\6.6 Training Reports.md
+BBPs\HR\07.Employee Engagement & Recognition\7.1 Employee Surveys.md
+BBPs\HR\07.Employee Engagement & Recognition\7.2 Recognition Programs.md
+BBPs\HR\07.Employee Engagement & Recognition\7.3 Rewards & Incentives.md
+BBPs\HR\07.Employee Engagement & Recognition\7.4 Employee Feedback.md
+BBPs\HR\07.Employee Engagement & Recognition\7.5 Engagement Analytics.md
+BBPs\HR\07.Employee Engagement & Recognition\7.6 Culture Initiatives.md
+BBPs\HR\07.Employee Engagement & Recognition\TaskList.md
+BBPs\HR\08.Workforce Planning & Analytics\8.1 Workforce Planning.md
+BBPs\HR\08.Workforce Planning & Analytics\8.2 Headcount Analytics.md
+BBPs\HR\08.Workforce Planning & Analytics\8.3 Succession Planning.md
+BBPs\HR\08.Workforce Planning & Analytics\8.4 Talent Analytics.md
+BBPs\HR\08.Workforce Planning & Analytics\8.4 Talent Mobility & Succession Planning.md
+BBPs\HR\08.Workforce Planning & Analytics\8.5 Diversity & Inclusion.md
+BBPs\HR\08.Workforce Planning & Analytics\8.6 HR Metrics Dashboard.md
+BBPs\HR\08.Workforce Planning & Analytics\TaskList.md
+BBPs\HR\09.Compliance & Policies\9.1 Policy Management.md
+BBPs\HR\09.Compliance & Policies\9.2 Compliance Tracking.md
+BBPs\HR\09.Compliance & Policies\9.3 Labor Law Compliance.md
+BBPs\HR\09.Compliance & Policies\9.4 Audit Management.md
+BBPs\HR\09.Compliance & Policies\9.5 Document Repository.md
+BBPs\HR\09.Compliance & Policies\9.6 Compliance Reports.md
+BBPs\HR\10.Offboarding & Exit Management\10.1 Exit Interviews.md
+BBPs\HR\10.Offboarding & Exit Management\10.2 Clearance Process.md
+BBPs\HR\10.Offboarding & Exit Management\10.3 Final Settlement.md
+BBPs\HR\10.Offboarding & Exit Management\10.4 Alumni Network.md
+BBPs\HR\10.Offboarding & Exit Management\10.5 Exit Analytics.md
+BBPs\HR\11.HR Reports & Analytics\11.1 Headcount Reports.md
+BBPs\HR\11.HR Reports & Analytics\11.2 Turnover Analysis.md
+BBPs\HR\11.HR Reports & Analytics\11.3 Recruitment Analytics.md
+BBPs\HR\11.HR Reports & Analytics\11.4 Payroll Reports.md
+BBPs\HR\11.HR Reports & Analytics\11.5 Attendance Reports.md
+BBPs\HR\11.HR Reports & Analytics\11.6 Custom HR Reports.md
+BBPs\HR\12.Access&Security\12.1 Role-based Access.md
+BBPs\HR\12.Access&Security\12.2 Data Privacy.md
+BBPs\HR\12.Access&Security\12.3 Audit Logs.md
+BBPs\HR\12.Access&Security\12.4 Security Settings.md
+BBPs\HR\13.Integrations & Configuration\13.1 Payroll Integration.md
+BBPs\HR\13.Integrations & Configuration\13.2 Background Check Integration.md
+BBPs\HR\13.Integrations & Configuration\13.3 Benefits Provider Integration.md
+BBPs\HR\13.Integrations & Configuration\13.4 Learning Management System.md
+BBPs\HR\13.Integrations & Configuration\13.5 HR System Settings.md
+BBPs\HR\14.Advanced-BOTS\HR-Bot-Ecosystem-Recommendations.md
+BBPs\HR\15.Tasks&Templates\00.masterindex.md
+BBPs\HR\15.Tasks&Templates\01HRM_TaskList.md
+BBPs\HR\15.Tasks&Templates\02HRM_Template_Mapping.md
+BBPs\HR\15.Tasks&Templates\03HRM_Template_Task_details.md
+BBPs\HR\15.Tasks&Templates\Timeline-Roadmap.md
+BBPs\HR\15.Tasks&Templates\promptsandrules\list.txt
+BBPs\HR\15.Tasks&Templates\promptsandrules\prompt.md
+BBPs\HR\15.Tasks&Templates\promptsandrules\refer_for_new_bbp.md
+BBPs\HRM2\00hrm_masterindex.md
+BBPs\HRM2\HRM_BBP_Autoretry_Prevention_Guide.md
+BBPs\HRM2\HRM_BBP_Tracker.md
+BBPs\HRM2\HRM_Development_Implementation_Prompt.md
+BBPs\HRM2\HRM_DEV_Tracker.md
+BBPs\HRM2\HRM_Template_Prompt.md
+BBPs\HRM2\HRM_Template_Reference.md
+BBPs\HRM2\01.Dashboards & Reports\11.1 Dashboards\11.1.1 HR Dashboard Overview.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.1 Headcount Reports.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.2 Turnover Analysis.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.3 Recruitment Analytics.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.4 Payroll Reports.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.5 Attendance Reports.md
+BBPs\HRM2\01.Dashboards & Reports\11.2 HR Reports\11.2.6 Custom HR Reports.md
+BBPs\HRM2\02.Employee Management\02.1 Employee Records.md
+BBPs\HRM2\02.Employee Management\02.2 Organizational Chart.md
+BBPs\HRM2\02.Employee Management\02.3 Profile View.md
+BBPs\HRM2\02.Employee Management\employee_records.html
+BBPs\HRM2\03.Talent & Onboarding\03.1 Application Capture.md
+BBPs\HRM2\03.Talent & Onboarding\03.2 Screening.md
+BBPs\HRM2\03.Talent & Onboarding\03.3 Interview Scheduling.md
+BBPs\HRM2\03.Talent & Onboarding\03.4 Offer Management.md
+BBPs\HRM2\03.Talent & Onboarding\03.5 New Hire Setup.md
+BBPs\HRM2\04.Compensation & Payroll\04.1 Salary Structures.md
+BBPs\HRM2\04.Compensation & Payroll\04.2 Tax Calculations.md
+BBPs\HRM2\04.Compensation & Payroll\04.3 Payroll Run.md
+BBPs\HRM2\05.Time & Attendance\05.1 Clock-In-Out.md
+BBPs\HRM2\05.Time & Attendance\05.2 Timesheets.md
+BBPs\HRM2\05.Time & Attendance\05.3 Approval Workflow.md
+BBPs\HRM2\06.Performance & Goals\06.1 Goal Setting.md
+BBPs\HRM2\06.Performance & Goals\06.2 Review Cycle.md
+BBPs\HRM2\06.Performance & Goals\06.3 Ratings.md
+BBPs\HRM2\07.Learning\07.1 Course Catalog.md
+BBPs\HRM2\07.Learning\07.2 Enrollment.md
+BBPs\HRM2\07.Learning\07.3 Completion Tracking.md
+BBPs\HRM2\08.Engagement\08.1 Pulse Surveys.md
+BBPs\HRM2\08.Engagement\08.2 Recognition Badges.md
+BBPs\HRM2\09.Workforce Planning\09.1 Headcount Forecast.md
+BBPs\HRM2\09.Workforce Planning\09.2 Capacity Planning.md
+BBPs\HRM2\10.Compliance\10.1 Policy Library.md
+BBPs\HRM2\10.Compliance\10.2 Audit Trail.md
+BBPs\HRM2\11.Offboarding\11.1 Exit Checklist.md
+BBPs\HRM2\11.Offboarding\11.2 Data Archiving.md
+BBPs\HRM2\11.Offboarding\11.3 Termination Workflow.md
+BBPs\HRM2\12.Security\12.1 Role-Based Access.md
+BBPs\HRM2\12.Security\12.2 Audit Logs.md
+BBPs\HRM2\13.Integrations\13.1 Payroll Integration.md
+BBPs\HRM2\13.Integrations\13.2 Background Check Integration.md
+BBPs\HRM2\13.Integrations\13.3 Benefits Provider Integration.md
+BBPs\HRM2\13.Integrations\13.4 Learning Management System.md
+BBPs\HRM2\14.AI Assistant\14.1 HR Chatbot.md
+BBPs\HRM2\15.Templates\00.masterindex.md
+BBPs\HRM2\15.Templates\01HRM_TaskList.md
+BBPs\HRM2\15.Templates\02HRM_Template_Mapping.md
+BBPs\HRM2\15.Templates\03HRM_Template_Task_details.md
+BBPs\HRM2\15.Templates\15.1 Offer Letter.md
+BBPs\HRM2\15.Templates\15.2 Contract Template.md
+BBPs\HRM2\15.Templates\Timeline-Roadmap.md
+BBPs\HRM2\15.Templates\promptsandrules\list.txt
+BBPs\HRM2\15.Templates\promptsandrules\prompt.md
+BBPs\HRM2\15.Templates\promptsandrules\refer_for_new_bbp.md
+Bootstrap\mindra_bootstrap_v_3.md
+common\README.md
+common\__init__.py
+common\auth\.gitkeep
+common\auth\README.md
+common\domain\apps.py
+common\domain\models.py
+common\domain\__init__.py
+common\domain\migrations\0001_initial.py
+common\domain\migrations\__init__.py
+common\permissions\.gitkeep
+common\permissions\README.md
+common\qa-launcher-console\package-lock.json
+common\qa-launcher-console\package.json
+common\qa-launcher-console\README.md
+common\qa-launcher-console\backend\package-lock.json
+common\qa-launcher-console\backend\package.json
+common\qa-launcher-console\backend\server.js
+common\qa-launcher-console\frontend\index.html
+common\qa-launcher-console\frontend\package-lock.json
+common\qa-launcher-console\frontend\package.json
+common\qa-launcher-console\frontend\postcss.config.js
+common\qa-launcher-console\frontend\tailwind.config.js
+common\qa-launcher-console\frontend\tsconfig.json
+common\qa-launcher-console\frontend\tsconfig.node.json
+common\qa-launcher-console\frontend\vite.config.ts
+common\qa-launcher-console\frontend\src\App.tsx
+common\qa-launcher-console\frontend\src\index.css
+common\qa-launcher-console\frontend\src\main.tsx
+common\qa-launcher-console\scripts\start-console.bat
+common\shared-services\.gitkeep
+common\shared-services\ocr_reader.py
+common\shared-services\README.md
+common\tenancy\defaults.py
+common\tenancy\__init__.py
+common\ui-canon\.gitkeep
+common\ui-canon\README.md
+core\__init__.py
+core\auth-access\__init__.py
+core\auth-access\backend\__init__.py
+core\auth-access\backend\user_management\admin.py
+core\auth-access\backend\user_management\apps.py
+core\auth-access\backend\user_management\models.py
+core\auth-access\backend\user_management\role_permissions.py
+core\auth-access\backend\user_management\serializers.py
+core\auth-access\backend\user_management\urls.py
+core\auth-access\backend\user_management\views.py
+core\auth-access\backend\user_management\views_permissions.py
+core\auth-access\backend\user_management\__init__.py
+core\auth-access\backend\user_management\management\__init__.py
+core\auth-access\backend\user_management\management\commands\create_default_users.py
+core\auth-access\backend\user_management\management\commands\seed_all_menu_items.py
+core\auth-access\backend\user_management\management\commands\seed_default_permissions.py
+core\auth-access\backend\user_management\management\commands\seed_default_roles.py
+core\auth-access\backend\user_management\management\commands\seed_default_users.py
+core\auth-access\backend\user_management\management\commands\seed_menu_permissions.py
+core\auth-access\backend\user_management\management\commands\seed_retail_menu_items.py
+core\auth-access\backend\user_management\management\commands\__init__.py
+core\auth-access\backend\user_management\migrations\0001_initial.py
+core\auth-access\backend\user_management\migrations\__init__.py
+core\auth-access\frontend\__init__.py
+core\auth-access\frontend\user-management\__init__.py
+core\auth-access\frontend\user-management\pages\UserAndPermissionPage.tsx
+core\auth-access\frontend\user-management\pages\__init__.py
+core\auth_access\__init__.py
+core\auth_access\backend\__init__.py
+core\auth_access\backend\toolbar_control\admin.py
+core\auth_access\backend\toolbar_control\apps.py
+core\auth_access\backend\toolbar_control\models.py
+core\auth_access\backend\toolbar_control\__init__.py
+core\auth_access\backend\toolbar_control\migrations\0001_initial.py
+core\auth_access\backend\toolbar_control\migrations\0002_alter_toolbaritemproxy_options.py
+core\auth_access\backend\toolbar_control\migrations\0003_alter_toolbaritemproxy_options.py
+core\auth_access\backend\toolbar_control\migrations\__init__.py
+core\auth_access\backend\user_management\admin.py
+core\auth_access\backend\user_management\apps.py
+core\auth_access\backend\user_management\models.py
+core\auth_access\backend\user_management\role_permissions.py
+core\auth_access\backend\user_management\serializers.py
+core\auth_access\backend\user_management\toolbar_views.py
+core\auth_access\backend\user_management\urls.py
+core\auth_access\backend\user_management\views.py
+core\auth_access\backend\user_management\views_permissions.py
+core\auth_access\backend\user_management\__init__.py
+core\auth_access\backend\user_management\management\__init__.py
+core\auth_access\backend\user_management\management\commands\create_default_users.py
+core\auth_access\backend\user_management\management\commands\ensure_admin_full_access.py
+core\auth_access\backend\user_management\management\commands\seed_all_menu_items.py
+core\auth_access\backend\user_management\management\commands\seed_default_permissions.py
+core\auth_access\backend\user_management\management\commands\seed_default_roles.py
+core\auth_access\backend\user_management\management\commands\seed_default_users.py
+core\auth_access\backend\user_management\management\commands\seed_menu_permissions.py
+core\auth_access\backend\user_management\management\commands\seed_retail_menu_items.py
+core\auth_access\backend\user_management\management\commands\__init__.py
+core\auth_access\backend\user_management\migrations\0001_initial.py
+core\auth_access\backend\user_management\migrations\0002_alter_userlocationmapping_location.py
+core\auth_access\backend\user_management\migrations\0003_rolepermission_created_by_and_more.py
+core\auth_access\backend\user_management\migrations\0004_erptoolbarcontrol_and_more.py
+core\auth_access\backend\user_management\migrations\0005_alter_userpermission_options.py
+core\auth_access\backend\user_management\migrations\0006_alter_erpmenuitem_module_name_and_more.py
+core\auth_access\backend\user_management\migrations\0007_add_toolbar_permissions.py
+core\auth_access\backend\user_management\migrations\__init__.py
+core\auth_access\backend\user_management\services\toolbar_permission_service.py
+core\auth_access\backend\user_management\services\__init__.py
+core\auth_access\frontend\__init__.py
+core\auth_access\frontend\user-management\__init__.py
+core\auth_access\frontend\user-management\pages\UserAndPermissionPage.tsx
+core\auth_access\frontend\user-management\pages\__init__.py
+core\frontend\__init__.py
+core\frontend\auth-access\__init__.py
+core\frontend\auth-access\backend\__init__.py
+core\frontend\auth-access\backend\user_management\admin.py
+core\frontend\auth-access\backend\user_management\apps.py
+core\frontend\auth-access\backend\user_management\models.py
+core\frontend\auth-access\backend\user_management\role_permissions.py
+core\frontend\auth-access\backend\user_management\serializers.py
+core\frontend\auth-access\backend\user_management\urls.py
+core\frontend\auth-access\backend\user_management\views.py
+core\frontend\auth-access\backend\user_management\views_permissions.py
+core\frontend\auth-access\backend\user_management\__init__.py
+core\frontend\auth-access\backend\user_management\management\__init__.py
+core\frontend\auth-access\backend\user_management\management\commands\create_default_users.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_all_menu_items.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_default_permissions.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_default_roles.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_default_users.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_menu_permissions.py
+core\frontend\auth-access\backend\user_management\management\commands\seed_retail_menu_items.py
+core\frontend\auth-access\backend\user_management\management\commands\__init__.py
+core\frontend\auth-access\backend\user_management\migrations\0001_initial.py
+core\frontend\auth-access\backend\user_management\migrations\__init__.py
+core\frontend\auth-access\frontend\__init__.py
+core\frontend\auth-access\frontend\user-management\__init__.py
+core\frontend\auth-access\frontend\user-management\components\UserForm.tsx
+core\frontend\auth-access\frontend\user-management\pages\UserAndPermissionPage.tsx
+core\frontend\auth-access\frontend\user-management\pages\UserManagementPage.tsx
+core\frontend\auth-access\frontend\user-management\pages\__init__.py
+core\frontend\auth_access\__init__.py
+core\frontend\auth_access\backend\__init__.py
+core\frontend\auth_access\backend\user_management\admin.py
+core\frontend\auth_access\backend\user_management\apps.py
+core\frontend\auth_access\backend\user_management\models.py
+core\frontend\auth_access\backend\user_management\role_permissions.py
+core\frontend\auth_access\backend\user_management\serializers.py
+core\frontend\auth_access\backend\user_management\urls.py
+core\frontend\auth_access\backend\user_management\views.py
+core\frontend\auth_access\backend\user_management\views_permissions.py
+core\frontend\auth_access\backend\user_management\__init__.py
+core\frontend\auth_access\backend\user_management\management\__init__.py
+core\frontend\auth_access\backend\user_management\management\commands\create_default_users.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_all_menu_items.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_default_permissions.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_default_roles.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_default_users.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_menu_permissions.py
+core\frontend\auth_access\backend\user_management\management\commands\seed_retail_menu_items.py
+core\frontend\auth_access\backend\user_management\management\commands\__init__.py
+core\frontend\auth_access\backend\user_management\migrations\0001_initial.py
+core\frontend\auth_access\backend\user_management\migrations\__init__.py
+core\frontend\auth_access\frontend\__init__.py
+core\frontend\auth_access\frontend\user-management\__init__.py
+core\frontend\auth_access\frontend\user-management\pages\UserAndPermissionPage.tsx
+core\frontend\auth_access\frontend\user-management\pages\__init__.py
+core\frontend\licensing\__init__.py
+core\frontend\licensing\backend\__init__.py
+core\frontend\licensing\backend\business_entities\admin.py
+core\frontend\licensing\backend\business_entities\apps.py
+core\frontend\licensing\backend\business_entities\master_data_models.py
+core\frontend\licensing\backend\business_entities\models.py
+core\frontend\licensing\backend\business_entities\serializers.py
+core\frontend\licensing\backend\business_entities\tests.py
+core\frontend\licensing\backend\business_entities\urls.py
+core\frontend\licensing\backend\business_entities\views.py
+core\frontend\licensing\backend\business_entities\__init__.py
+core\frontend\licensing\backend\business_entities\customer\apps.py
+core\frontend\licensing\backend\business_entities\customer\__init__.py
+core\frontend\licensing\backend\business_entities\management\__init__.py
+core\frontend\licensing\backend\business_entities\management\commands\create_dummy_items.py
+core\frontend\licensing\backend\business_entities\management\commands\__init__.py
+core\frontend\licensing\backend\business_entities\migrations\0001_initial.py
+core\frontend\licensing\backend\business_entities\migrations\0002_initial.py
+core\frontend\licensing\backend\business_entities\migrations\__init__.py
+core\frontend\licensing\backend\licensing\admin.py
+core\frontend\licensing\backend\licensing\apps.py
+core\frontend\licensing\backend\licensing\models.py
+core\frontend\licensing\backend\licensing\__init__.py
+core\frontend\licensing\backend\licensing\migrations\0001_initial.py
+core\frontend\licensing\backend\licensing\migrations\__init__.py
+core\frontend\org-structure\__init__.py
+core\frontend\org-structure\backend\__init__.py
+core\frontend\org-structure\backend\company\admin.py
+core\frontend\org-structure\backend\company\apps.py
+core\frontend\org-structure\backend\company\BBP_COMPLIANCE.md
+core\frontend\org-structure\backend\company\models.py
+core\frontend\org-structure\backend\company\README.md
+core\frontend\org-structure\backend\company\serializers.py
+core\frontend\org-structure\backend\company\urls.py
+core\frontend\org-structure\backend\company\views.py
+core\frontend\org-structure\backend\company\__init__.py
+core\frontend\org-structure\backend\company\fixtures\sample_companies.json
+core\frontend\org-structure\backend\company\fixtures\__init__.py
+core\frontend\org-structure\backend\company\management\__init__.py
+core\frontend\org-structure\backend\company\management\commands\fix_migrations.py
+core\frontend\org-structure\backend\company\management\commands\seed_data.py
+core\frontend\org-structure\backend\company\management\commands\seed_masters.py
+core\frontend\org-structure\backend\company\management\commands\__init__.py
+core\frontend\org-structure\backend\company\migrations\0001_initial.py
+core\frontend\org-structure\backend\company\migrations\0002_alter_itemvariant_item.py
+core\frontend\org-structure\backend\company\migrations\__init__.py
+core\frontend\org-structure\backend\company\tests\test_vendors_master_data.py
+core\frontend\org-structure\backend\company\tests\__init__.py
+core\frontend\org-structure\backend\company_master\urls.py
+core\frontend\org-structure\backend\company_master\__init__.py
+core\frontend\org-structure\backend\company_master\models\__init__.py
+core\frontend\org-structure\backend\company_master\serializers\__init__.py
+core\frontend\org-structure\backend\company_master\services\__init__.py
+core\frontend\org-structure\backend\company_master\tests\__init__.py
+core\frontend\org-structure\backend\company_master\validators\__init__.py
+core\frontend\org-structure\backend\company_master\views\__init__.py
+core\frontend\org-structure\backend\location\urls.py
+core\frontend\org-structure\backend\location\__init__.py
+core\frontend\org-structure\backend\location\models\location.py
+core\frontend\org-structure\backend\location\models\__init__.py
+core\frontend\org-structure\backend\location\serializers\__init__.py
+core\frontend\org-structure\backend\location\services\__init__.py
+core\frontend\org-structure\backend\location\tests\__init__.py
+core\frontend\org-structure\backend\location\validators\__init__.py
+core\frontend\org-structure\backend\location\views\__init__.py
+core\frontend\org-structure\frontend\__init__.py
+core\frontend\org-structure\frontend\company\company.schema.ts
+core\frontend\org-structure\frontend\company\company.service.ts
+core\frontend\org-structure\frontend\company\company.types.ts
+core\frontend\org-structure\frontend\company\CompanyForm.tsx
+core\frontend\org-structure\frontend\company\CompanyListPage.tsx
+core\frontend\org-structure\frontend\company\CompanyPage.tsx
+core\frontend\org-structure\frontend\company\useCompanies.ts
+core\frontend\org-structure\frontend\company\__init__.py
+core\frontend\org_structure\__init__.py
+core\frontend\org_structure\backend\__init__.py
+core\frontend\org_structure\backend\company\admin.py
+core\frontend\org_structure\backend\company\apps.py
+core\frontend\org_structure\backend\company\BBP_COMPLIANCE.md
+core\frontend\org_structure\backend\company\models.py
+core\frontend\org_structure\backend\company\README.md
+core\frontend\org_structure\backend\company\serializers.py
+core\frontend\org_structure\backend\company\urls.py
+core\frontend\org_structure\backend\company\views.py
+core\frontend\org_structure\backend\company\__init__.py
+core\frontend\org_structure\backend\company\fixtures\sample_companies.json
+core\frontend\org_structure\backend\company\fixtures\__init__.py
+core\frontend\org_structure\backend\company\management\__init__.py
+core\frontend\org_structure\backend\company\management\commands\fix_migrations.py
+core\frontend\org_structure\backend\company\management\commands\seed_data.py
+core\frontend\org_structure\backend\company\management\commands\seed_masters.py
+core\frontend\org_structure\backend\company\management\commands\__init__.py
+core\frontend\org_structure\backend\company\migrations\0001_initial.py
+core\frontend\org_structure\backend\company\migrations\0002_alter_itemvariant_item.py
+core\frontend\org_structure\backend\company\migrations\__init__.py
+core\frontend\org_structure\backend\company\tests\test_vendors_master_data.py
+core\frontend\org_structure\backend\company\tests\__init__.py
+core\frontend\org_structure\backend\company_master\urls.py
+core\frontend\org_structure\backend\company_master\__init__.py
+core\frontend\org_structure\backend\company_master\models\__init__.py
+core\frontend\org_structure\backend\company_master\serializers\__init__.py
+core\frontend\org_structure\backend\company_master\services\__init__.py
+core\frontend\org_structure\backend\company_master\tests\__init__.py
+core\frontend\org_structure\backend\company_master\validators\__init__.py
+core\frontend\org_structure\backend\company_master\views\__init__.py
+core\frontend\org_structure\backend\location\urls.py
+core\frontend\org_structure\backend\location\__init__.py
+core\frontend\org_structure\backend\location\models\location.py
+core\frontend\org_structure\backend\location\models\__init__.py
+core\frontend\org_structure\backend\location\serializers\__init__.py
+core\frontend\org_structure\backend\location\services\__init__.py
+core\frontend\org_structure\backend\location\tests\__init__.py
+core\frontend\org_structure\backend\location\validators\__init__.py
+core\frontend\org_structure\backend\location\views\__init__.py
+core\frontend\org_structure\frontend\__init__.py
+core\frontend\org_structure\frontend\company\company.schema.ts
+core\frontend\org_structure\frontend\company\company.service.ts
+core\frontend\org_structure\frontend\company\company.types.ts
+core\frontend\org_structure\frontend\company\CompanyForm.tsx
+core\frontend\org_structure\frontend\company\CompanyListPage.tsx
+core\frontend\org_structure\frontend\company\CompanyPage.tsx
+core\frontend\org_structure\frontend\company\useCompanies.ts
+core\frontend\org_structure\frontend\company\__init__.py
+core\frontend\shared\__init__.py
+core\frontend\shared\backend\__init__.py
+core\frontend\shared\backend\attributes\urls.py
+core\frontend\shared\backend\attributes\__init__.py
+core\frontend\shared\backend\attributes\models\__init__.py
+core\frontend\shared\backend\attributes\serializers\__init__.py
+core\frontend\shared\backend\attributes\services\__init__.py
+core\frontend\shared\backend\attributes\tests\__init__.py
+core\frontend\shared\backend\attributes\validators\__init__.py
+core\frontend\shared\backend\attributes\views\__init__.py
+core\frontend\shared\backend\common\audit.py
+core\frontend\shared\backend\common\enums.py
+core\frontend\shared\backend\common\legacy_bridge.py
+core\frontend\shared\backend\common\legacy_manager.py
+core\frontend\shared\backend\common\mixins.py
+core\frontend\shared\backend\common\validators.py
+core\frontend\shared\backend\common\workflow_engine.py
+core\frontend\shared\backend\common\__init__.py
+core\frontend\shared\backend\uom\urls.py
+core\frontend\shared\backend\uom\__init__.py
+core\frontend\shared\backend\uom\models\__init__.py
+core\frontend\shared\backend\uom\serializers\__init__.py
+core\frontend\shared\backend\uom\services\__init__.py
+core\frontend\shared\backend\uom\tests\__init__.py
+core\frontend\shared\backend\uom\validators\__init__.py
+core\frontend\shared\backend\uom\views\__init__.py
+core\frontend\ui-canon\__init__.py
+core\frontend\ui-canon\frontend\__init__.py
+core\frontend\ui-canon\frontend\components\AttributeModal.tsx
+core\frontend\ui-canon\frontend\components\AttributeValueModal.tsx
+core\frontend\ui-canon\frontend\components\CompanyModal.tsx
+core\frontend\ui-canon\frontend\components\CustomerModal.tsx
+core\frontend\ui-canon\frontend\components\ItemModal.tsx
+core\frontend\ui-canon\frontend\components\ItemModalWithVariants.tsx
+core\frontend\ui-canon\frontend\components\LocationModal.tsx
+core\frontend\ui-canon\frontend\components\PriceListModal.tsx
+core\frontend\ui-canon\frontend\components\ProductAttributeTemplateModal.tsx
+core\frontend\ui-canon\frontend\components\SupplierModal.tsx
+core\frontend\ui-canon\frontend\components\UOMModal.tsx
+core\frontend\ui-canon\frontend\components\__init__.py
+core\frontend\ui-canon\frontend\ui\index.ts
+core\frontend\ui-canon\frontend\ui\__init__.py
+core\frontend\ui-canon\frontend\ui\components\AccordionSection.tsx
+core\frontend\ui-canon\frontend\ui\components\AppHeader.tsx
+core\frontend\ui-canon\frontend\ui\components\Badge.tsx
+core\frontend\ui-canon\frontend\ui\components\BaseModal.tsx
+core\frontend\ui-canon\frontend\ui\components\BrandLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\Button.tsx
+core\frontend\ui-canon\frontend\ui\components\Card.tsx
+core\frontend\ui-canon\frontend\ui\components\CategoryLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\ChatBot.tsx
+core\frontend\ui-canon\frontend\ui\components\ConfirmationDialog.tsx
+core\frontend\ui-canon\frontend\ui\components\DataTable.tsx
+core\frontend\ui-canon\frontend\ui\components\Divider.tsx
+core\frontend\ui-canon\frontend\ui\components\EmployeeRootLayout.tsx
+core\frontend\ui-canon\frontend\ui\components\EnterpriseSidebar.tsx
+core\frontend\ui-canon\frontend\ui\components\GlobalLocationSelector.tsx
+core\frontend\ui-canon\frontend\ui\components\Input.tsx
+core\frontend\ui-canon\frontend\ui\components\ItemVariantLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\LocationSelectionModal.tsx
+core\frontend\ui-canon\frontend\ui\components\LogoOlivine.tsx
+core\frontend\ui-canon\frontend\ui\components\LookupContainer.tsx
+core\frontend\ui-canon\frontend\ui\components\MasterToolbarConfigDriven.tsx
+core\frontend\ui-canon\frontend\ui\components\MasterToolbar_LEGACY.tsx
+core\frontend\ui-canon\frontend\ui\components\olvine-codefactory.code-workspace
+core\frontend\ui-canon\frontend\ui\components\PageContainer.tsx
+core\frontend\ui-canon\frontend\ui\components\PageHeader.tsx
+core\frontend\ui-canon\frontend\ui\components\ProductLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\Sidebar.tsx
+core\frontend\ui-canon\frontend\ui\components\SidebarSettingsAccordion.tsx
+core\frontend\ui-canon\frontend\ui\components\SimpleSidebarSettings.tsx
+core\frontend\ui-canon\frontend\ui\components\SupplierLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\Tabs.tsx
+core\frontend\ui-canon\frontend\ui\components\TransactionToolbar.tsx
+core\frontend\ui-canon\frontend\ui\components\UOMLookupModal.tsx
+core\frontend\ui-canon\frontend\ui\components\__init__.py
+core\frontend\ui-canon\frontend\ui\components\customer\CustomerEditDrawer.tsx
+core\frontend\ui-canon\frontend\ui\components\customer\CustomerList.tsx
+core\frontend\ui-canon\frontend\ui\components\customer\customers.api.ts
+core\frontend\ui-canon\frontend\ui\components\customer\__init__.py
+core\frontend\ui-canon\frontend\ui\components\dashboard\DashboardCard.tsx
+core\frontend\ui-canon\frontend\ui\components\dashboard\__init__.py
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeContextPanel.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeForm.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeFormStandalone.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeLayout.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeLifecycleNav.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\EmployeeList.tsx
+core\frontend\ui-canon\frontend\ui\components\employee\__init__.py
+core\frontend\ui_canon\__init__.py
+core\frontend\ui_canon\frontend\__init__.py
+core\frontend\ui_canon\frontend\components\AttributeModal.tsx
+core\frontend\ui_canon\frontend\components\AttributeValueModal.tsx
+core\frontend\ui_canon\frontend\components\CompanyModal.tsx
+core\frontend\ui_canon\frontend\components\CustomerModal.tsx
+core\frontend\ui_canon\frontend\components\ItemModal.tsx
+core\frontend\ui_canon\frontend\components\ItemModalWithVariants.tsx
+core\frontend\ui_canon\frontend\components\LocationModal.tsx
+core\frontend\ui_canon\frontend\components\PriceListModal.tsx
+core\frontend\ui_canon\frontend\components\ProductAttributeTemplateModal.tsx
+core\frontend\ui_canon\frontend\components\SupplierModal.tsx
+core\frontend\ui_canon\frontend\components\UOMModal.tsx
+core\frontend\ui_canon\frontend\components\__init__.py
+core\frontend\ui_canon\frontend\ui\index.ts
+core\frontend\ui_canon\frontend\ui\__init__.py
+core\frontend\ui_canon\frontend\ui\components\AccordionSection.tsx
+core\frontend\ui_canon\frontend\ui\components\AppHeader.tsx
+core\frontend\ui_canon\frontend\ui\components\Badge.tsx
+core\frontend\ui_canon\frontend\ui\components\BrandLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\Button.tsx
+core\frontend\ui_canon\frontend\ui\components\Card.tsx
+core\frontend\ui_canon\frontend\ui\components\CategoryLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\ChatBot.tsx
+core\frontend\ui_canon\frontend\ui\components\DataTable.tsx
+core\frontend\ui_canon\frontend\ui\components\Divider.tsx
+core\frontend\ui_canon\frontend\ui\components\EmployeeRootLayout.tsx
+core\frontend\ui_canon\frontend\ui\components\GlobalLocationSelector.tsx
+core\frontend\ui_canon\frontend\ui\components\Input.tsx
+core\frontend\ui_canon\frontend\ui\components\ItemVariantLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\LocationSelectionModal.tsx
+core\frontend\ui_canon\frontend\ui\components\LogoOlivine.tsx
+core\frontend\ui_canon\frontend\ui\components\LookupContainer.tsx
+core\frontend\ui_canon\frontend\ui\components\olvine-codefactory.code-workspace
+core\frontend\ui_canon\frontend\ui\components\PageContainer.tsx
+core\frontend\ui_canon\frontend\ui\components\PageHeader.tsx
+core\frontend\ui_canon\frontend\ui\components\ProductLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\Sidebar.tsx
+core\frontend\ui_canon\frontend\ui\components\SidebarSettingsAccordion.tsx
+core\frontend\ui_canon\frontend\ui\components\SimpleSidebarSettings.tsx
+core\frontend\ui_canon\frontend\ui\components\SupplierLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\Tabs.tsx
+core\frontend\ui_canon\frontend\ui\components\TransactionToolbar.tsx
+core\frontend\ui_canon\frontend\ui\components\UOMLookupModal.tsx
+core\frontend\ui_canon\frontend\ui\components\__init__.py
+core\frontend\ui_canon\frontend\ui\components\customer\CustomerEditDrawer.tsx
+core\frontend\ui_canon\frontend\ui\components\customer\CustomerList.tsx
+core\frontend\ui_canon\frontend\ui\components\customer\customers.api.ts
+core\frontend\ui_canon\frontend\ui\components\customer\__init__.py
+core\frontend\ui_canon\frontend\ui\components\dashboard\DashboardCard.tsx
+core\frontend\ui_canon\frontend\ui\components\dashboard\__init__.py
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeContextPanel.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeForm.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeFormStandalone.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeLayout.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeLifecycleNav.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\EmployeeList.tsx
+core\frontend\ui_canon\frontend\ui\components\employee\__init__.py
+core\licensing\__init__.py
+core\licensing\backend\__init__.py
+core\licensing\backend\business_entities\admin.py
+core\licensing\backend\business_entities\apps.py
+core\licensing\backend\business_entities\master_data_models.py
+core\licensing\backend\business_entities\models.py
+core\licensing\backend\business_entities\serializers.py
+core\licensing\backend\business_entities\tests.py
+core\licensing\backend\business_entities\urls.py
+core\licensing\backend\business_entities\views.py
+core\licensing\backend\business_entities\__init__.py
+core\licensing\backend\business_entities\customer\apps.py
+core\licensing\backend\business_entities\customer\__init__.py
+core\licensing\backend\business_entities\management\__init__.py
+core\licensing\backend\business_entities\management\commands\create_dummy_items.py
+core\licensing\backend\business_entities\management\commands\__init__.py
+core\licensing\backend\business_entities\migrations\0001_initial.py
+core\licensing\backend\business_entities\migrations\0002_initial.py
+core\licensing\backend\business_entities\migrations\__init__.py
+core\licensing\backend\licensing\admin.py
+core\licensing\backend\licensing\apps.py
+core\licensing\backend\licensing\models.py
+core\licensing\backend\licensing\__init__.py
+core\licensing\backend\licensing\migrations\0001_initial.py
+core\licensing\backend\licensing\migrations\__init__.py
+core\org-structure\__init__.py
+core\org-structure\backend\__init__.py
+core\org-structure\backend\company\admin.py
+core\org-structure\backend\company\apps.py
+core\org-structure\backend\company\BBP_COMPLIANCE.md
+core\org-structure\backend\company\models.py
+core\org-structure\backend\company\README.md
+core\org-structure\backend\company\serializers.py
+core\org-structure\backend\company\urls.py
+core\org-structure\backend\company\views.py
+core\org-structure\backend\company\__init__.py
+core\org-structure\backend\company\fixtures\sample_companies.json
+core\org-structure\backend\company\fixtures\__init__.py
+core\org-structure\backend\company\management\__init__.py
+core\org-structure\backend\company\management\commands\fix_migrations.py
+core\org-structure\backend\company\management\commands\seed_data.py
+core\org-structure\backend\company\management\commands\seed_masters.py
+core\org-structure\backend\company\management\commands\__init__.py
+core\org-structure\backend\company\migrations\0001_initial.py
+core\org-structure\backend\company\migrations\0002_alter_itemvariant_item.py
+core\org-structure\backend\company\migrations\__init__.py
+core\org-structure\backend\company\tests\test_vendors_master_data.py
+core\org-structure\backend\company\tests\__init__.py
+core\org-structure\backend\company_master\urls.py
+core\org-structure\backend\company_master\__init__.py
+core\org-structure\backend\company_master\models\__init__.py
+core\org-structure\backend\company_master\serializers\__init__.py
+core\org-structure\backend\company_master\services\__init__.py
+core\org-structure\backend\company_master\tests\__init__.py
+core\org-structure\backend\company_master\validators\__init__.py
+core\org-structure\backend\company_master\views\__init__.py
+core\org-structure\backend\location\urls.py
+core\org-structure\backend\location\__init__.py
+core\org-structure\backend\location\models\location.py
+core\org-structure\backend\location\models\__init__.py
+core\org-structure\backend\location\serializers\__init__.py
+core\org-structure\backend\location\services\__init__.py
+core\org-structure\backend\location\tests\__init__.py
+core\org-structure\backend\location\validators\__init__.py
+core\org-structure\backend\location\views\__init__.py
+core\org-structure\frontend\__init__.py
+core\org-structure\frontend\company\company.schema.ts
+core\org-structure\frontend\company\company.service.ts
+core\org-structure\frontend\company\company.types.ts
+core\org-structure\frontend\company\CompanyForm.tsx
+core\org-structure\frontend\company\CompanyListPage.tsx
+core\org-structure\frontend\company\CompanyPage.tsx
+core\org-structure\frontend\company\useCompanies.ts
+core\org-structure\frontend\company\__init__.py
+core\org_structure\__init__.py
+core\org_structure\backend\__init__.py
+core\org_structure\backend\company\admin.py
+core\org_structure\backend\company\apps.py
+core\org_structure\backend\company\BBP_COMPLIANCE.md
+core\org_structure\backend\company\models.py
+core\org_structure\backend\company\README.md
+core\org_structure\backend\company\serializers.py
+core\org_structure\backend\company\urls.py
+core\org_structure\backend\company\views.py
+core\org_structure\backend\company\__init__.py
+core\org_structure\backend\company\fixtures\sample_companies.json
+core\org_structure\backend\company\fixtures\__init__.py
+core\org_structure\backend\company\management\__init__.py
+core\org_structure\backend\company\management\commands\seed_enterprise.py
+core\org_structure\backend\company\management\commands\__init__.py
+core\org_structure\backend\company\migrations\0001_initial.py
+core\org_structure\backend\company\migrations\0002_alter_itemvariant_item.py
+core\org_structure\backend\company\migrations\0003_remove_location_company_and_more.py
+core\org_structure\backend\company\migrations\0004_delete_location.py
+core\org_structure\backend\company\migrations\0005_delete_location.py
+core\org_structure\backend\company\migrations\__init__.py
+core\org_structure\backend\company\tests\test_vendors_master_data.py
+core\org_structure\backend\company\tests\__init__.py
+core\org_structure\backend\company_master\urls.py
+core\org_structure\backend\company_master\__init__.py
+core\org_structure\backend\company_master\models\__init__.py
+core\org_structure\backend\company_master\serializers\__init__.py
+core\org_structure\backend\company_master\services\__init__.py
+core\org_structure\backend\company_master\tests\__init__.py
+core\org_structure\backend\company_master\validators\__init__.py
+core\org_structure\backend\company_master\views\__init__.py
+core\org_structure\backend\location\urls.py
+core\org_structure\backend\location\__init__.py
+core\org_structure\backend\location\models\location.py
+core\org_structure\backend\location\models\__init__.py
+core\org_structure\backend\location\serializers\__init__.py
+core\org_structure\backend\location\services\__init__.py
+core\org_structure\backend\location\tests\__init__.py
+core\org_structure\backend\location\validators\__init__.py
+core\org_structure\backend\location\views\__init__.py
+core\org_structure\frontend\__init__.py
+core\org_structure\frontend\company\company.schema.ts
+core\org_structure\frontend\company\company.service.ts
+core\org_structure\frontend\company\company.types.ts
+core\org_structure\frontend\company\CompanyForm.tsx
+core\org_structure\frontend\company\CompanyListPage.tsx
+core\org_structure\frontend\company\CompanyPage.tsx
+core\org_structure\frontend\company\useCompanies.ts
+core\org_structure\frontend\company\__init__.py
+core\shared\__init__.py
+core\shared\backend\__init__.py
+core\shared\backend\attributes\urls.py
+core\shared\backend\attributes\__init__.py
+core\shared\backend\attributes\models\__init__.py
+core\shared\backend\attributes\serializers\__init__.py
+core\shared\backend\attributes\services\__init__.py
+core\shared\backend\attributes\tests\__init__.py
+core\shared\backend\attributes\validators\__init__.py
+core\shared\backend\attributes\views\__init__.py
+core\shared\backend\common\audit.py
+core\shared\backend\common\enums.py
+core\shared\backend\common\legacy_bridge.py
+core\shared\backend\common\legacy_manager.py
+core\shared\backend\common\mixins.py
+core\shared\backend\common\validators.py
+core\shared\backend\common\workflow_engine.py
+core\shared\backend\common\__init__.py
+core\shared\backend\uom\urls.py
+core\shared\backend\uom\__init__.py
+core\shared\backend\uom\models\__init__.py
+core\shared\backend\uom\serializers\__init__.py
+core\shared\backend\uom\services\__init__.py
+core\shared\backend\uom\tests\__init__.py
+core\shared\backend\uom\validators\__init__.py
+core\shared\backend\uom\views\__init__.py
+core\ui-canon\__init__.py
+core\ui-canon\frontend\__init__.py
+core\ui-canon\frontend\components\AttributeModal.tsx
+core\ui-canon\frontend\components\AttributeValueModal.tsx
+core\ui-canon\frontend\components\CompanyModal.tsx
+core\ui-canon\frontend\components\CustomerModal.tsx
+core\ui-canon\frontend\components\ItemModal.tsx
+core\ui-canon\frontend\components\ItemModalWithVariants.tsx
+core\ui-canon\frontend\components\LocationModal.tsx
+core\ui-canon\frontend\components\PriceListModal.tsx
+core\ui-canon\frontend\components\ProductAttributeTemplateModal.tsx
+core\ui-canon\frontend\components\SupplierModal.tsx
+core\ui-canon\frontend\components\UOMModal.tsx
+core\ui-canon\frontend\components\__init__.py
+core\ui-canon\frontend\ui\index.ts
+core\ui-canon\frontend\ui\__init__.py
+core\ui-canon\frontend\ui\components\AccordionSection.tsx
+core\ui-canon\frontend\ui\components\AppHeader.tsx
+core\ui-canon\frontend\ui\components\Badge.tsx
+core\ui-canon\frontend\ui\components\BrandLookupModal.tsx
+core\ui-canon\frontend\ui\components\Button.tsx
+core\ui-canon\frontend\ui\components\Card.tsx
+core\ui-canon\frontend\ui\components\CategoryLookupModal.tsx
+core\ui-canon\frontend\ui\components\ChatBot.tsx
+core\ui-canon\frontend\ui\components\DataTable.tsx
+core\ui-canon\frontend\ui\components\Divider.tsx
+core\ui-canon\frontend\ui\components\EmployeeRootLayout.tsx
+core\ui-canon\frontend\ui\components\GlobalLocationSelector.tsx
+core\ui-canon\frontend\ui\components\Input.tsx
+core\ui-canon\frontend\ui\components\ItemVariantLookupModal.tsx
+core\ui-canon\frontend\ui\components\LocationSelectionModal.tsx
+core\ui-canon\frontend\ui\components\LogoOlivine.tsx
+core\ui-canon\frontend\ui\components\LookupContainer.tsx
+core\ui-canon\frontend\ui\components\MasterToolbarConfigDriven.tsx
+core\ui-canon\frontend\ui\components\olvine-codefactory.code-workspace
+core\ui-canon\frontend\ui\components\PageContainer.tsx
+core\ui-canon\frontend\ui\components\PageHeader.tsx
+core\ui-canon\frontend\ui\components\ProductLookupModal.tsx
+core\ui-canon\frontend\ui\components\Sidebar.tsx
+core\ui-canon\frontend\ui\components\SidebarSettingsAccordion.tsx
+core\ui-canon\frontend\ui\components\SimpleSidebarSettings.tsx
+core\ui-canon\frontend\ui\components\SupplierLookupModal.tsx
+core\ui-canon\frontend\ui\components\Tabs.tsx
+core\ui-canon\frontend\ui\components\TransactionToolbar.tsx
+core\ui-canon\frontend\ui\components\UOMLookupModal.tsx
+core\ui-canon\frontend\ui\components\__init__.py
+core\ui-canon\frontend\ui\components\customer\CustomerEditDrawer.tsx
+core\ui-canon\frontend\ui\components\customer\CustomerList.tsx
+core\ui-canon\frontend\ui\components\customer\customers.api.ts
+core\ui-canon\frontend\ui\components\customer\__init__.py
+core\ui-canon\frontend\ui\components\dashboard\DashboardCard.tsx
+core\ui-canon\frontend\ui\components\dashboard\__init__.py
+core\ui-canon\frontend\ui\components\employee\EmployeeContextPanel.tsx
+core\ui-canon\frontend\ui\components\employee\EmployeeForm.tsx
+core\ui-canon\frontend\ui\components\employee\EmployeeFormStandalone.tsx
+core\ui-canon\frontend\ui\components\employee\EmployeeLayout.tsx
+core\ui-canon\frontend\ui\components\employee\EmployeeLifecycleNav.tsx
+core\ui-canon\frontend\ui\components\employee\EmployeeList.tsx
+core\ui-canon\frontend\ui\components\employee\__init__.py
+core\ui_canon\__init__.py
+core\ui_canon\frontend\__init__.py
+core\ui_canon\frontend\components\AttributeModal.tsx
+core\ui_canon\frontend\components\AttributeValueModal.tsx
+core\ui_canon\frontend\components\CompanyModal.tsx
+core\ui_canon\frontend\components\CustomerModal.tsx
+core\ui_canon\frontend\components\ItemModal.tsx
+core\ui_canon\frontend\components\ItemModalWithVariants.tsx
+core\ui_canon\frontend\components\LocationModal.tsx
+core\ui_canon\frontend\components\PriceListModal.tsx
+core\ui_canon\frontend\components\ProductAttributeTemplateModal.tsx
+core\ui_canon\frontend\components\SupplierModal.tsx
+core\ui_canon\frontend\components\UOMModal.tsx
+core\ui_canon\frontend\components\__init__.py
+core\ui_canon\frontend\ui\index.ts
+core\ui_canon\frontend\ui\__init__.py
+core\ui_canon\frontend\ui\components\AccordionSection.tsx
+core\ui_canon\frontend\ui\components\AppHeader.tsx
+core\ui_canon\frontend\ui\components\Badge.tsx
+core\ui_canon\frontend\ui\components\BrandLookupModal.tsx
+core\ui_canon\frontend\ui\components\Button.tsx
+core\ui_canon\frontend\ui\components\Card.tsx
+core\ui_canon\frontend\ui\components\CategoryLookupModal.tsx
+core\ui_canon\frontend\ui\components\ChatBot.tsx
+core\ui_canon\frontend\ui\components\DataTable.tsx
+core\ui_canon\frontend\ui\components\Divider.tsx
+core\ui_canon\frontend\ui\components\EmployeeRootLayout.tsx
+core\ui_canon\frontend\ui\components\GlobalLocationSelector.tsx
+core\ui_canon\frontend\ui\components\Input.tsx
+core\ui_canon\frontend\ui\components\ItemVariantLookupModal.tsx
+core\ui_canon\frontend\ui\components\LocationSelectionModal.tsx
+core\ui_canon\frontend\ui\components\LogoOlivine.tsx
+core\ui_canon\frontend\ui\components\LookupContainer.tsx
+core\ui_canon\frontend\ui\components\olvine-codefactory.code-workspace
+core\ui_canon\frontend\ui\components\PageContainer.tsx
+core\ui_canon\frontend\ui\components\PageHeader.tsx
+core\ui_canon\frontend\ui\components\ProductLookupModal.tsx
+core\ui_canon\frontend\ui\components\Sidebar.tsx
+core\ui_canon\frontend\ui\components\SidebarSettingsAccordion.tsx
+core\ui_canon\frontend\ui\components\SimpleSidebarSettings.tsx
+core\ui_canon\frontend\ui\components\SupplierLookupModal.tsx
+core\ui_canon\frontend\ui\components\Tabs.tsx
+core\ui_canon\frontend\ui\components\TransactionToolbar.tsx
+core\ui_canon\frontend\ui\components\UOMLookupModal.tsx
+core\ui_canon\frontend\ui\components\__init__.py
+core\ui_canon\frontend\ui\components\customer\CustomerEditDrawer.tsx
+core\ui_canon\frontend\ui\components\customer\CustomerList.tsx
+core\ui_canon\frontend\ui\components\customer\customers.api.ts
+core\ui_canon\frontend\ui\components\customer\__init__.py
+core\ui_canon\frontend\ui\components\dashboard\DashboardCard.tsx
+core\ui_canon\frontend\ui\components\dashboard\__init__.py
+core\ui_canon\frontend\ui\components\employee\EmployeeContextPanel.tsx
+core\ui_canon\frontend\ui\components\employee\EmployeeForm.tsx
+core\ui_canon\frontend\ui\components\employee\EmployeeFormStandalone.tsx
+core\ui_canon\frontend\ui\components\employee\EmployeeLayout.tsx
+core\ui_canon\frontend\ui\components\employee\EmployeeLifecycleNav.tsx
+core\ui_canon\frontend\ui\components\employee\EmployeeList.tsx
+core\ui_canon\frontend\ui\components\employee\__init__.py
+CRM\README.md
+CRM\__init__.py
+CRM\backend\apps.py
+CRM\backend\urls.py
+CRM\backend\migrations\.gitkeep
+CRM\backend\migrations\0001_initial.py
+CRM\backend\migrations\__init__.py
+CRM\backend\models\customer.py
+CRM\backend\models\__init__.py
+CRM\backend\serializers\customer.py
+CRM\backend\serializers\__init__.py
+CRM\backend\services\__init__.py
+CRM\backend\tests\__init__.py
+CRM\backend\utils\__init__.py
+CRM\backend\views\customer.py
+CRM\backend\views\__init__.py
+CRM\frontend\modules\.gitkeep
+CRM\frontend\pages\.gitkeep
+CRM\frontend\routes\.gitkeep
+CRM\frontend\services\.gitkeep
+CRM\frontend\src\hooks\index.ts
+CRM\frontend\src\types\index.ts
+CRM\frontend\templates\.gitkeep
+FMS\__init__.py
+FMS\backend\__init__.py
+FMS\backend\finance\apps.py
+FMS\backend\finance\models.py
+FMS\backend\finance\serializers.py
+FMS\backend\finance\urls.py
+FMS\backend\finance\views.py
+FMS\backend\finance\__init__.py
+FMS\backend\finance\management\__init__.py
+FMS\backend\finance\management\commands\seed_finance.py
+FMS\backend\finance\management\commands\__init__.py
+FMS\backend\finance\migrations\0001_initial.py
+FMS\backend\finance\migrations\__init__.py
+FMS\frontend\__init__.py
+FMS\frontend\finance\accountService.ts
+FMS\frontend\finance\ChartOfAccountsPage.tsx
+FMS\frontend\finance\types.ts
+FMS\frontend\finance\__init__.py
+FMS\frontend\finance\components\AccountFormModal.tsx
+FMS\frontend\finance\components\__init__.py
+frontend\.env.example
+frontend\Dockerfile
+frontend\eslint.config.mjs
+frontend\index.html
+frontend\package-lock.json
+frontend\package.json
+frontend\postcss.config.cjs
+frontend\README.md
+frontend\tailwind.config.cjs
+frontend\tsconfig.json
+frontend\vite.config.mts
+frontend\.agent\BUTTON_PANEL_COLOR_SYNC.md
+frontend\.agent\BUTTON_STYLING_IMPLEMENTATION.md
+frontend\.agent\MENU_WIRING_REPORT_2026-01-06.md
+frontend\.agent\MODAL_VARIANT_IMPLEMENTATION.md
+frontend\.agent\NEXT_STEPS_COMPLETE.md
+frontend\.agent\PANEL_HEADER_FIX.md
+frontend\.agent\PENDING_UI_REPORT_2026-01-06.md
+frontend\.agent\PHASE_2_IMPLEMENTATION_COMPLETE.md
+frontend\.agent\RETAIL_UI_AUDIT_REPORT.md
+frontend\.agent\UI_MIGRATION_REPORT_2026-01-06.md
+frontend\.agent\UI_STANDARDIZATION_CHECKLIST.md
+frontend\.agent\UI_STANDARDIZATION_PLAN.md
+frontend\.agent\UI_STANDARDIZATION_SUMMARY.md
+frontend\.agent\UI_STANDARDS_QUICK_REFERENCE.md
+frontend\docs\bbp_01.txt
+frontend\docs\CONTINUE.md
+frontend\docs\DARK_THEME_SIDEBAR.md
+frontend\docs\DESIGN_SYSTEM.md
+frontend\docs\prompt-register.md
+frontend\docs\TYPOGRAPHY_SYSTEM.md
+frontend\public\login-bg.png
+frontend\public\sales_quote_concept.html
+frontend\public\toolbar-demo.html
+frontend\public\mockups\module_permission_mockup.html
+frontend\public\showcase\catalog.png
+frontend\public\showcase\customers.png
+frontend\public\showcase\dashboard.png
+frontend\public\showcase\inventory.png
+frontend\public\showcase\login.png
+frontend\public\showcase\merch_price_lists.png
+frontend\public\showcase\pos.png
+frontend\public\showcase\pos_checkout.png
+frontend\public\showcase\pos_daily_ops.png
+frontend\public\showcase\pos_terminals.png
+frontend\public\showcase\procurement.png
+frontend\public\showcase\proc_goods_receipts.png
+frontend\public\showcase\proc_requisitions.png
+frontend\public\showcase\sales_invoices.png
+frontend\public\showcase\sales_orders.png
+frontend\public\showcase\sales_quotes.png
+frontend\public\showcase\setup_company.png
+frontend\public-backup\favicon.ico
+frontend\spa\src\modules\company\hooks\useCompanies.ts
+frontend\spa\src\modules\company\mock\companyMockData.ts
+frontend\spa\src\modules\company\services\companyService.ts
+frontend\spa\src\modules\company\types\company.ts
+frontend\spa\src\modules\company\ui\CompanyFilters.tsx
+frontend\spa\src\modules\company\ui\CompanyForm.tsx
+frontend\spa\src\modules\company\ui\CompanyListPage.tsx
+frontend\spa\src\modules\company\ui\CompanyTable.tsx
+frontend\src\index.css
+frontend\src\main.tsx
+frontend\src\app\layout.tsx
+frontend\src\app\menuConfig.ts
+frontend\src\app\providers.tsx
+frontend\src\app\router.tsx
+frontend\src\auth\auth.context.tsx
+frontend\src\auth\auth.service.ts
+frontend\src\auth\auth.types.ts
+frontend\src\auth\useAuth.ts
+frontend\src\config\layoutConfig.ts
+frontend\src\config\rolePermissions.ts
+frontend\src\core\contexts\GlobalLocationContext.tsx
+frontend\src\hooks\useLayoutConfig.ts
+frontend\src\hooks\useProductLookup.ts
+frontend\src\hooks\useToolbarConfig.ts
+frontend\src\hooks\useToolbarPermissions.ts
+frontend\src\pages\CompanyForm.tsx
+frontend\src\pages\CompanyList.tsx
+frontend\src\pages\CompanySettings.tsx
+frontend\src\pages\CustomerSetup.tsx
+frontend\src\pages\DashboardHome.tsx
+frontend\src\pages\DashboardPage.tsx
+frontend\src\pages\LocationForm.tsx
+frontend\src\pages\LocationList.tsx
+frontend\src\pages\LocationSetup.tsx
+frontend\src\pages\LoginPage.tsx
+frontend\src\pages\ShowcasePage.tsx
+frontend\src\pages\TestConsolePage.tsx
+frontend\src\pages\admin\LayoutSettingsPage.tsx
+frontend\src\pages\Auth\LocationSelectionPage.tsx
+frontend\src\pages\hr\CreateEmployeePage.tsx
+frontend\src\pages\hr\EditEmployeePage.tsx
+frontend\src\pages\hr\EmployeeListPage.tsx
+frontend\src\pages\hr\EmployeeMasterPage.tsx
+frontend\src\pages\hr\EmployeePage.tsx
+frontend\src\pages\retail\RetailDashboardPage.tsx
+frontend\src\pages\sales\InvoiceDetailPage.tsx
+frontend\src\pages\sales\InvoiceListPage.tsx
+frontend\src\pages\sales\OrderDetailPage.tsx
+frontend\src\pages\sales\OrderListPage.tsx
+frontend\src\pages\sales\QuoteDetailPage.tsx
+frontend\src\pages\sales\QuoteListPage.tsx
+frontend\src\pages\sales\QuoteWireframe.tsx
+frontend\src\pages\sales\ReturnDetailPage.tsx
+frontend\src\pages\sales\ReturnListPage.tsx
+frontend\src\pages\sales\SalesConfigPage.tsx
+frontend\src\pages\Settings\ProfilePage.tsx
+frontend\src\pages\setup\SimpleMasterForm.tsx
+frontend\src\pages\setup\SimpleMasterSetup.tsx
+frontend\src\pages\test-console\types.ts
+frontend\src\pages\test-console\components\ExecutionConsole.tsx
+frontend\src\pages\test-console\components\ExplorerSidebar.tsx
+frontend\src\pages\test-console\components\ReadinessMatrix.tsx
+frontend\src\routes\index.tsx
+frontend\src\routes\protected.routes.tsx
+frontend\src\routes\public.routes.tsx
+frontend\src\services\api.ts
+frontend\src\services\attributeService.ts
+frontend\src\services\attributeValueService.ts
+frontend\src\services\brandService.ts
+frontend\src\services\categoryService.ts
+frontend\src\services\companyService.ts
+frontend\src\services\customerGroupService.ts
+frontend\src\services\customerService.ts
+frontend\src\services\inventoryConfigService.ts
+frontend\src\services\inventoryService.ts
+frontend\src\services\itemService.ts
+frontend\src\services\locationService.ts
+frontend\src\services\loyaltyProgramService.ts
+frontend\src\services\priceListService.ts
+frontend\src\services\procurementService.ts
+frontend\src\services\productAttributeTemplateService.ts
+frontend\src\services\qaService.ts
+frontend\src\services\salesService.ts
+frontend\src\services\supplierService.ts
+frontend\src\services\uomService.ts
+frontend\src\services\userPermissionService.ts
+frontend\src\store\auth.store.ts
+frontend\src\store\index.ts
+frontend\src\store\ui.store.ts
+frontend\src\styles\globals.css
+frontend\src\styles\layout.css
+frontend\src\styles\tailwind.css
+frontend\src\styles\themes.css
+frontend\src\styles\tokens.css
+frontend\src\utils\formatters.ts
+frontend\src\utils\storage.ts
+frontend\src\utils\uiAudit.ts
+frontend\src-backup\app\AppShell.tsx
+frontend\src-backup\app\menuConfig.ts
+frontend\src-backup\app\routes.ts
+frontend\src-backup\app\routes.tsx
+frontend\src-backup\components\layout\PageContainer.tsx
+frontend\src-backup\components\layout\Sidebar.tsx
+frontend\src-backup\components\layout\Topbar.tsx
+frontend\src-backup\design-system\COMPONENT_LIBRARY.md
+frontend\src-backup\design-system\MOTION_RULES.md
+frontend\src-backup\design-system\STATE_PATTERNS.md
+frontend\src-backup\design-system\THEME_GUIDE.md
+frontend\src-backup\design-system\tokens\designTokens.js
+frontend\src-backup\modules\dashboard\pages\DashboardPage.tsx
+governance\APPHEADER_TROUBLESHOOTING.md
+governance\ARCHITECTURE_GOVERNANCE.md
+governance\CRITICAL_MODELS_IMPLEMENTATION.md
+governance\CRM_IMPLEMENTATION_COMPLETE.md
+governance\CRM_MODULE_PROPOSAL.md
+governance\DOCUMENTATION_ORGANIZATION_SUMMARY.md
+governance\FINANCE_PHASE1_SIMPLIFICATION.md
+governance\FINANCIAL_MANAGEMENT_IMPLEMENTATION_COMPLETE.md
+governance\FINANCIAL_MANAGEMENT_MENU_PROPOSAL.md
+governance\FONT_CONSISTENCY_UPDATE.md
+governance\GLOBAL_PAGE_POSITIONING_FIX.md
+governance\HIGH_PRIORITY_MIGRATION_STATUS.md
+governance\INVENTORY_COMPLIANCE_CHECK.md
+governance\INVENTORY_IMPLEMENTATION_STATUS.md
+governance\INVENTORY_MIGRATION_ISSUE.md
+governance\LAYOUT_REORGANIZATION_PLAN.md
+governance\LAYOUT_SETTINGS_MANUAL_STEPS.md
+governance\LAYOUT_SETTINGS_REFINEMENT.md
+governance\LAYOUT_SIMPLIFICATION_STATUS.md
+governance\MASTER_DATA_SEED_PLAN.md
+governance\MASTER_PAGES_VERIFICATION.md
+governance\MENU_REORGANIZATION_COMPLETE.md
+governance\MENU_REORGANIZATION_PROPOSAL.md
+governance\MODEL_VALIDATION_REPORT.md
+governance\NEW_MODELS_ADMIN_CHECKLIST.md
+governance\olvine-platform-tree.md
+governance\PAGE_POSITIONING_UPDATES_SUMMARY.md
+governance\PHASE_2_IMPLEMENTATION.md
+governance\PHASE_3_SIDEBAR_IMPLEMENTATION.md
+governance\POS_IMPROVEMENTS_PLAN.md
+governance\PROCUREMENT_IMPLEMENTATION_PLAN.md
+governance\PRODUCT_LOOKUP_IMPLEMENTATION_SUMMARY.md
+governance\SIDEBAR_ENHANCEMENT_SUMMARY.md
+governance\bbp\00masterbbp.md
+governance\bbp\00_POS_BBP.md
+governance\bbp\02_POS_STANDARDS.md
+governance\bbp\4.1_pr.md
+governance\bbp\4.2_rfq.md
+governance\bbp\4.3_po.md
+governance\bbp\4.4_asn.md
+governance\bbp\4.5_grn.md
+governance\bbp\4.6_invoice_matching.md
+governance\bbp\4.7_returns.md
+governance\bbp\4.8_payments.md
+governance\bbp\4.9_compliance.md
+governance\bbp\bbp-extractor.py
+governance\bbp\inventory_bbp.md
+governance\bbp\masters_bbp_v1
+governance\bbp\pos-new.md
+governance\bbp\pos_bbp.md
+governance\bbp\POS_LAYOUT_STRUCTURE.md
+governance\bbp\POS_UI_REDESIGN_PLAN.md
+governance\fixes\LAYOUT_CONFIG_INTEGRATION.md
+governance\fixes\LAYOUT_SETTINGS_FIX_SUMMARY.md
+governance\fixes\LAYOUT_SETTINGS_NOT_APPLYING_FIX.md
+governance\fixes\LAYOUT_SETTINGS_TEST_GUIDE.md
+governance\fixes\LOGIN_USERNAME_EMAIL_SUPPORT.md
+governance\fixes\POS_CART_HEADER_ALIGNMENT_FIX.md
+governance\fixes\SIDEBAR_FLAT_DESIGN_UPDATE.md
+governance\fixes\SIDEBAR_LOADING_FIX_AND_SPEC_CREATION.md
+governance\fixes\SIDEBAR_PARENT_ACTIVE_FIX.md
+governance\prompts\day_open_task.md
+governance\reference\ACCORDION_IMPLEMENTATION_GUIDE.md
+governance\reference\LAYOUT_CONFIGURATION_SYSTEM.md
+governance\reference\POS_IMPLEMENTATION_GUIDE.md
+governance\reference\PRODUCT_LOOKUP_PATTERN.md
+governance\reference\README.md
+governance\reference\Refer_this_before_new_UI_module.md
+governance\reference\SECTION_C_MIGRATION_GUIDE.md
+governance\reference\SIDEBAR_QUICK_REFERENCE.md
+governance\root_backup\03_02_toolbar_universal_guide_v2.md
+governance\root_backup\04_02_toolbar_implementation_guide_v2.md
+governance\root_backup\04_03_toolbar_code_examples_v2.md
+governance\root_backup\04_03_toolbar_mode_based_filtering_v2.md
+governance\root_backup\admin_login.html
+governance\root_backup\admin_test.html
+governance\root_backup\analyze_csv_cleanup.py
+governance\root_backup\analyze_employees.py
+governance\root_backup\analyze_view_types.py
+governance\root_backup\api_response.json
+governance\root_backup\api_response2.json
+governance\root_backup\astra-bootstrap.md
+governance\root_backup\audit_and_fix_lists.py
+governance\root_backup\bootstrap_mandate1.md
+governance\root_backup\bootstrap_mandate2_turns.md
+governance\root_backup\bootstrap_mandate3_everytime1.turns.md
+governance\root_backup\bootstrap_mandate3_everytime2.turns.md
+governance\root_backup\BOOTSTRAP_SUMMARY.md
+governance\root_backup\bulk_fix_view_types.py
+governance\root_backup\chat_history_session_export.txt
+governance\root_backup\check_toolbar_config.py
+governance\root_backup\cline_end_rule.md
+governance\root_backup\cline_start_rule.md
+governance\root_backup\commit_org_chart.ps1
+governance\root_backup\debug_settings.py
+governance\root_backup\debug_urls.py
+governance\root_backup\employee-form-2026-01-11.html
+governance\root_backup\employee_data.json
+governance\root_backup\employee_data_273.json
+governance\root_backup\fix_menu_ui_names.py
+governance\root_backup\GITPUSH.bat
+governance\root_backup\lastsessionchat.md
+governance\root_backup\LAST_SESSION_SUMMARY.md
+governance\root_backup\mindra_all_prompts.md
+governance\root_backup\MINDRA_BOOTSTRAP.md
+governance\root_backup\NEXT_SESSION.md
+governance\root_backup\olivine-erp-folder-files.txt
+governance\root_backup\olvine-platform-tree.md
+governance\root_backup\ops.txt
+governance\root_backup\orgChartEditor.html
+governance\root_backup\package-lock.json
+governance\root_backup\registry_dump.txt
+governance\root_backup\seed.txt
+governance\root_backup\standardize_menu_ids.py
+governance\root_backup\Standardizing Toolbar Configurations.md
+governance\root_backup\start.md
+governance\root_backup\TOOLBAR_SETUP_INSTRUCTIONS.md
+governance\root_backup\uom_response.json
+governance\root_backup\update_menu_types.py
+governance\root_backup\update_toolbar_configs.py
+governance\root_backup\verify_rollout_alignment.py
+governance\root_backup\verify_zero_lists.py
+governance\root_backup\viji-next-session.txt
+governance\root_backup\viji.md
+governance\root_backup\vijis-tasks.md
+governance\root_backup\viji_command_center.md
+governance\root_backup\viji_task_issuance_ui_template.md
+governance\session_handovers\session_2025_12_15_handover.md
+governance\specifications\CENTRALIZED_CSS_CONFIG.md
+governance\specifications\EMPLOYEE_FORM_SPEC.md
+governance\specifications\SIDEBAR_NAVIGATION_SPEC.md
+governance\specs\USER_PERMISSION_MANAGEMENT_SPEC_COMPLETE.md
+governance\standards\FINAL_UI_STEPS.md
+governance\standards\OLIVINE_SIDEBAR_ENHANCEMENT_PROMPT.md
+governance\standards\UI_LAYOUT_TERMINOLOGY.md
+governance\templates\mst01.md
+governance\templates\mst02.md
+governance\templates\mst03.md
+governance\templates\txn01.md
+governance\templates\txn02.md
+governance\templates\txn03.md
+HRM\admin.py
+HRM\apps.py
+HRM\be.bat
+HRM\list.txt
+HRM\SETUP_TOOLBAR.BAT
+HRM\START_BE.BAT
+HRM\START_BOTH.BAT
+HRM\START_FE.BAT
+HRM\tests.py
+HRM\toolbar_new.md
+HRM\views.py
+HRM\__init__.py
+HRM\backend\admin_test.py
+HRM\backend\apps.py
+HRM\backend\asgi.py
+HRM\backend\check_hrm_menu_items.py
+HRM\backend\check_menu_items.py
+HRM\backend\clean_report.txt
+HRM\backend\COMPANY_CODE_FIX.md
+HRM\backend\count_reports.py
+HRM\backend\fix_domain_references.py
+HRM\backend\fix_final_conflicts.py
+HRM\backend\fix_migration_defaults.py
+HRM\backend\fix_naming_conflicts.py
+HRM\backend\fix_phase3_complete.py
+HRM\backend\fix_related_names.py
+HRM\backend\fix_remaining_conflicts.py
+HRM\backend\fix_syntax_errors.py
+HRM\backend\full_report.txt
+HRM\backend\governance_compliance_report.md
+HRM\backend\manage.py
+HRM\backend\PHASE4_MIGRATION_REPORT.md
+HRM\backend\rep.txt
+HRM\backend\reset_admin.py
+HRM\backend\settings.py
+HRM\backend\unique_errors_analysis.md
+HRM\backend\urls.py
+HRM\backend\wsgi.py
+HRM\backend\__init__.py
+HRM\backend\hrm\admin.py
+HRM\backend\hrm\admin_classes.py
+HRM\backend\hrm\admin_sites.py
+HRM\backend\hrm\apps.py
+HRM\backend\hrm\serializers.py
+HRM\backend\hrm\tenancy.py
+HRM\backend\hrm\tests.py
+HRM\backend\hrm\views.py
+HRM\backend\hrm\__init__.py
+HRM\backend\hrm\docs\employee_records_documentation.md
+HRM\backend\hrm\docs\reference-models\approval_workflow.py
+HRM\backend\hrm\docs\reference-models\completion_tracking.py
+HRM\backend\hrm\docs\reference-models\exit_checklist.py
+HRM\backend\hrm\docs\reference-models\goal_setting.py
+HRM\backend\hrm\docs\reference-models\interview_scheduling.py
+HRM\backend\hrm\docs\reference-models\new_hire_setup.py
+HRM\backend\hrm\docs\reference-models\offer_management.py
+HRM\backend\hrm\docs\reference-models\profile_view.py
+HRM\backend\hrm\docs\reference-models\pulse_surveys.py
+HRM\backend\hrm\docs\reference-models\README.md
+HRM\backend\hrm\docs\reference-models\review_cycle.py
+HRM\backend\hrm\docs\reference-models\termination_workflow.py
+HRM\backend\hrm\fixtures\00_master_companies.json
+HRM\backend\hrm\fixtures\00_master_seed_index.py
+HRM\backend\hrm\fixtures\01_master_organizational_units.json
+HRM\backend\hrm\fixtures\02_master_positions.json
+HRM\backend\hrm\fixtures\03_master_salary_structures.json
+HRM\backend\hrm\fixtures\04_master_ratings.json
+HRM\backend\hrm\fixtures\05_master_courses.json
+HRM\backend\hrm\fixtures\06_master_recognition_badges.json
+HRM\backend\hrm\fixtures\06_toolbar_config.json
+HRM\backend\hrm\fixtures\07_comprehensive_menu_items.json
+HRM\backend\hrm\fixtures\07_master_offer_templates.json
+HRM\backend\hrm\fixtures\08_master_contract_templates.json
+HRM\backend\hrm\fixtures\11_transaction_applications.json
+HRM\backend\hrm\fixtures\FIXTURE_MODEL_MAPPING.md
+HRM\backend\hrm\fixtures\validate_fixtures.py
+HRM\backend\hrm\management\commands\add_org_chart_toolbar.py
+HRM\backend\hrm\management\commands\add_profile_view_toolbar.py
+HRM\backend\hrm\management\commands\check_company_codes.py
+HRM\backend\hrm\management\commands\check_users.py
+HRM\backend\hrm\management\commands\create_org_structure.py
+HRM\backend\hrm\management\commands\diagnose_employees.py
+HRM\backend\hrm\management\commands\distribute_all_levels.py
+HRM\backend\hrm\management\commands\distribute_l6_to_l5.py
+HRM\backend\hrm\management\commands\fix_hierarchy.py
+HRM\backend\hrm\management\commands\import_org_chart.py
+HRM\backend\hrm\management\commands\ORG_HIERARCHY_POPULATED.md
+HRM\backend\hrm\management\commands\populate_org_hierarchy.py
+HRM\backend\hrm\management\commands\seed_employees.py
+HRM\backend\hrm\management\commands\seed_menu_items.py
+HRM\backend\hrm\management\commands\show_org_stats.py
+HRM\backend\hrm\management\commands\update_toolbar_config.py
+HRM\backend\hrm\migrations\0001_initial.py
+HRM\backend\hrm\migrations\0002_employeeposition_organizationalunit_position.py
+HRM\backend\hrm\migrations\0003_remove_organizationalunit_uk_org_unit_code_and_more.py
+HRM\backend\hrm\migrations\0004_employeeprofile_employeedocument_employeeskill_and_more.py
+HRM\backend\hrm\migrations\0005_applicationanswer_applicationcandidate_and_more.py
+HRM\backend\hrm\migrations\0006_erpmenuitem_erptoolbarcontrol_role_rolepermission_and_more.py
+HRM\backend\hrm\migrations\0007_add_enhanced_menu_item_fields.py
+HRM\backend\hrm\migrations\0008_alter_erpmenuitem_menu_type.py
+HRM\backend\hrm\migrations\0009_audittrailconfiguration_audittrail.py
+HRM\backend\hrm\migrations\0010_courselearningpath_profileendorsement_and_more.py
+HRM\backend\hrm\migrations\0011_employeerecord_hierarchy_level_and_more.py
+HRM\backend\hrm\migrations\0012_remove_employeerecord_manager_name.py
+HRM\backend\hrm\migrations\0013_language_alter_rolepermission_menu_item_and_more.py
+HRM\backend\hrm\migrations\__init__.py
+HRM\backend\hrm\models\application_capture.py
+HRM\backend\hrm\models\audit_trail.py
+HRM\backend\hrm\models\clock_in_out.py
+HRM\backend\hrm\models\company.py
+HRM\backend\hrm\models\contract_template.py
+HRM\backend\hrm\models\course_catalog.py
+HRM\backend\hrm\models\department.py
+HRM\backend\hrm\models\employee.py
+HRM\backend\hrm\models\employee_profile.py
+HRM\backend\hrm\models\enrollment.py
+HRM\backend\hrm\models\offer_letter.py
+HRM\backend\hrm\models\organizational_unit.py
+HRM\backend\hrm\models\payroll_run.py
+HRM\backend\hrm\models\profile_view.py
+HRM\backend\hrm\models\ratings.py
+HRM\backend\hrm\models\recognition_badges.py
+HRM\backend\hrm\models\salary_structures.py
+HRM\backend\hrm\models\screening.py
+HRM\backend\hrm\models\tax_calculations.py
+HRM\backend\hrm\models\timesheets.py
+HRM\backend\hrm\models\toolbar_config.py
+HRM\backend\hrm\models\__init__.py
+HRM\backend\hrm\serializers\audit_trail.py
+HRM\backend\hrm\serializers\employee.py
+HRM\backend\hrm\serializers\employee_profile.py
+HRM\backend\hrm\serializers\organizational_unit.py
+HRM\backend\hrm\serializers\profile_view.py
+HRM\backend\hrm\serializers\salary_structures.py
+HRM\backend\hrm\serializers\__init__.py
+HRM\backend\hrm\services\organizational_chart.py
+HRM\backend\hrm\tests\test_2.1_employee_models.py
+HRM\backend\hrm\tests\test_2.1_employee_uat.py
+HRM\backend\hrm\tests\test_2.1_employee_views.py
+HRM\backend\hrm\tests\test_2.1_mixins.py
+HRM\backend\hrm\urls\organization_urls.py
+HRM\backend\hrm\urls\profile_view.py
+HRM\backend\hrm\urls\toolbar_permissions.py
+HRM\backend\hrm\urls\__init__.py
+HRM\backend\hrm\views\admin_index.py
+HRM\backend\hrm\views\department.py
+HRM\backend\hrm\views\employee.py
+HRM\backend\hrm\views\organizational_unit.py
+HRM\backend\hrm\views\organization_views.py
+HRM\backend\hrm\views\profile_view.py
+HRM\backend\hrm\views\toolbar_config.py
+HRM\backend\hrm\views\toolbar_permissions.py
+HRM\backend\hrm\views\__init__.py
+HRM\backend\migrations\.gitkeep
+HRM\backend\serializers\employee.py
+HRM\backend\serializers\__init__.py
+HRM\backend\services\__init__.py
+HRM\backend\templates\admin\admin_index.html
+HRM\backend\templates\admin\base_site_custom.html
+HRM\backend\tests\__init__.py
+HRM\backend\tools\analyze_django_errors.py
+HRM\backend\tools\apply_canonical_related_names.py
+HRM\backend\tools\clean_report.txt
+HRM\backend\tools\complete_related_name_fix.py
+HRM\backend\tools\comprehensive_related_name_fix.py
+HRM\backend\tools\comprehensive_related_name_fix_simple.py
+HRM\backend\tools\conflicts_report.md
+HRM\backend\tools\fix_related_names.py
+HRM\backend\tools\fix_related_name_conflicts.py
+HRM\backend\tools\normalize_fixtures_timestamps.py
+HRM\backend\tools\README_RELATED_NAME_FIX.md
+HRM\backend\tools\report1.txt
+HRM\backend\tools\run_django.ps1
+HRM\backend\tools\run_related_name_fix.py
+HRM\backend\tools\scan_related_name_conflicts.py
+HRM\backend\tools\scan_related_name_conflicts_simple.py
+HRM\backend\tools\scan_relationship_fields.py
+HRM\backend\tools\validate_models.py
+HRM\backend\tools\validate_models_clean.py
+HRM\backend\tools\validate_models_only.py
+HRM\backend\utils\__init__.py
+HRM\backend\views\employee.py
+HRM\backend\views\__init__.py
+HRM\bootstrap-hrm-only\00_bootstrap_master_index.md
+HRM\bootstrap-hrm-only\01_01_governance_foundation.md
+HRM\bootstrap-hrm-only\01_02_platform_onboarding.md
+HRM\bootstrap-hrm-only\01_03_context_limit_rules.md
+HRM\bootstrap-hrm-only\02_01_django_stabilization_summary.md
+HRM\bootstrap-hrm-only\02_02_hrm_stabilization_reference.md
+HRM\bootstrap-hrm-only\02_03_session_context_preservation.md
+HRM\bootstrap-hrm-only\03_01_ui_development_guide.md
+HRM\bootstrap-hrm-only\03_02_toolbar_universal_guide_v2.md
+HRM\bootstrap-hrm-only\03_03_ui_typography_styling.md
+HRM\bootstrap-hrm-only\04_01_agent_e_onboarding.md
+HRM\bootstrap-hrm-only\04_02_toolbar_implementation_guide_v2.md
+HRM\bootstrap-hrm-only\04_03_toolbar_code_examples_v2.md
+HRM\bootstrap-hrm-only\04_03_toolbar_mode_based_filtering_v2.md
+HRM\bootstrap-hrm-only\05_01_wiring_checklists_overview.md
+HRM\bootstrap-hrm-only\05_02_master_data_wiring_hrm.md
+HRM\bootstrap-hrm-only\05_03_transaction_form_wiring_hrm.md
+HRM\bootstrap-hrm-only\05_04_workflow_wiring_hrm.md
+HRM\bootstrap-hrm-only\99_toolbar_explorer_hrm.html
+HRM\bootstrap-hrm-only\context_preservation_prompt_template.md
+HRM\bootstrap-hrm-only\FILES_REQUIRING_UPDATES_ANALYSIS.md
+HRM\bootstrap-hrm-only\task_execution_prompt.md
+HRM\bootstrap-hrm-only\TOOLBAR_DOCS_README.md
+HRM\frontend\index.html
+HRM\frontend\package-lock.json
+HRM\frontend\package.json
+HRM\frontend\postcss.config.js
+HRM\frontend\tailwind.config.js
+HRM\frontend\tsconfig.json
+HRM\frontend\tsconfig.node.json
+HRM\frontend\vite.config.ts
+HRM\frontend\modules\.gitkeep
+HRM\frontend\pages\.gitkeep
+HRM\frontend\routes\.gitkeep
+HRM\frontend\services\.gitkeep
+HRM\frontend\src\App.tsx
+HRM\frontend\src\index.css
+HRM\frontend\src\main.tsx
+HRM\frontend\src\components\EmployeeProfileTabs.tsx
+HRM\frontend\src\components\Header.tsx
+HRM\frontend\src\components\Sidebar.tsx
+HRM\frontend\src\components\orgchart\COMPACT_LAYOUT.md
+HRM\frontend\src\components\orgchart\DATA_DISTRIBUTION_SUMMARY.md
+HRM\frontend\src\components\orgchart\EXPAND_ALL_FEATURE.md
+HRM\frontend\src\components\orgchart\EXPORT_UPDATE.md
+HRM\frontend\src\components\orgchart\FINAL_FIXES.md
+HRM\frontend\src\components\orgchart\FINAL_STATUS.md
+HRM\frontend\src\components\orgchart\FINAL_SUMMARY.md
+HRM\frontend\src\components\orgchart\FINAL_UPDATES.md
+HRM\frontend\src\components\orgchart\HIERARCHY_DIAGRAM.md
+HRM\frontend\src\components\orgchart\IMPLEMENTATION_SUMMARY.md
+HRM\frontend\src\components\orgchart\L6_LAYOUT_CONFIRMATION.md
+HRM\frontend\src\components\orgchart\LAYOUT_FIXES.md
+HRM\frontend\src\components\orgchart\LAYOUT_UPDATE_SUMMARY.md
+HRM\frontend\src\components\orgchart\LEVEL6_VERTICAL_IMPLEMENTATION.md
+HRM\frontend\src\components\orgchart\LEVEL6_VERTICAL_LIST.md
+HRM\frontend\src\components\orgchart\LEVEL_FILTER_FIX.md
+HRM\frontend\src\components\orgchart\LEVEL_LABELS.md
+HRM\frontend\src\components\orgchart\orgChart.virtual.css
+HRM\frontend\src\components\orgchart\ORG_CHART_IMPROVEMENTS.md
+HRM\frontend\src\components\orgchart\SESSION_HANDOFF.md
+HRM\frontend\src\components\orgchart\USER_GUIDE.md
+HRM\frontend\src\components\orgchart\useVirtualTree.ts
+HRM\frontend\src\components\orgchart\VIRTUALIZATION_FIX.md
+HRM\frontend\src\components\orgchart\VirtualOrgChart.tsx
+HRM\frontend\src\components\orgchart\ZOOM_AND_SCROLLBAR.md
+HRM\frontend\src\components\ui\ConfirmDialog.tsx
+HRM\frontend\src\components\ui\DataTable.tsx
+HRM\frontend\src\components\ui\EmployeeFormStyles.css
+HRM\frontend\src\components\ui\Form.tsx
+HRM\frontend\src\components\ui\index.ts
+HRM\frontend\src\components\ui\LoadingStates.tsx
+HRM\frontend\src\components\ui\MasterToolbar.tsx
+HRM\frontend\src\components\ui\Modal.tsx
+HRM\frontend\src\components\ui\SearchFilter.tsx
+HRM\frontend\src\components\ui\TabForm.tsx
+HRM\frontend\src\components\ui\Toolbar.tsx
+HRM\frontend\src\components\ui\WorkspaceModal.tsx
+HRM\frontend\src\hooks\useToolbarConfig.ts
+HRM\frontend\src\hooks\__init__.py
+HRM\frontend\src\pages\Dashboard.tsx
+HRM\frontend\src\pages\DevChecklist.tsx
+HRM\frontend\src\pages\EmployeeDirectory.tsx
+HRM\frontend\src\pages\EmployeeForm.tsx
+HRM\frontend\src\pages\EmployeeProfile.tsx
+HRM\frontend\src\pages\EmployeeRecords.tsx
+HRM\frontend\src\pages\OrganizationalChart.tsx
+HRM\frontend\src\pages\ProfileView.tsx
+HRM\frontend\src\services\employeeService.ts
+HRM\frontend\src\services\orgChartService.ts
+HRM\frontend\src\styles\orgChart.css
+HRM\frontend\src\types\employee.ts
+HRM\frontend\src\types\global.d.ts
+HRM\frontend\src\types\index.ts
+HRM\frontend\templates\.gitkeep
+HRM\migrations\__init__.py
+Meet\DEPLOYMENT_CHECKLIST.md
+Meet\IMPLEMENTATION_COMPLETE.md
+Meet\IMPLEMENTATION_SUMMARY.md
+Meet\meet_api-contracts.md
+Meet\meet_architecture.md
+Meet\meet_bootstrap.md
+Meet\meet_README.md
+Meet\meet_roadmap.md
+Meet\MVP_COMPLETE.md
+Meet\PHASE2_COMPLETE.md
+Meet\PHASE3_COMPLETE.md
+Meet\PHASE4_COMPLETE.md
+Meet\README.md
+Meet\setup.bat
+Meet\setup.sh
+Meet\backend\.env.example
+Meet\backend\poetry.lock
+Meet\backend\pyproject.toml
+Meet\backend\app\main.py
+Meet\backend\app\api\websocket.py
+Meet\backend\app\core\config.py
+Meet\backend\app\services\llm.py
+Meet\backend\app\services\stt.py
+Meet\backend\app\services\tts.py
+Meet\docs\architecture.md
+Meet\docs\design-system.md
+Meet\docs\figma-spec.md
+Meet\frontend\components\Button.tsx
+Meet\frontend\components\Card.tsx
+Meet\frontend\components\Layout.tsx
+Meet\frontend\screens\ControlRoom.tsx
+Meet\frontend\styles\theme.css
+Retail\Export Toolbar Admin Data.md
+Retail\__init__.py
+Retail\backend\__init__.py
+Retail\backend\domain\apps.py
+Retail\backend\domain\models.py
+Retail\backend\domain\__init__.py
+Retail\backend\domain\migrations\0001_initial.py
+Retail\backend\domain\migrations\__init__.py
+Retail\backend\inventory\admin.py
+Retail\backend\inventory\apps.py
+Retail\backend\inventory\intercompany_models.py
+Retail\backend\inventory\models.py
+Retail\backend\inventory\models_header.txt
+Retail\backend\inventory\operational_models.py
+Retail\backend\inventory\serializers.py
+Retail\backend\inventory\urls.py
+Retail\backend\inventory\views.py
+Retail\backend\inventory\__init__.py
+Retail\backend\inventory\migrations\0001_initial.py
+Retail\backend\inventory\migrations\0002_inventoryparameter_valuationmethod_approvalrule.py
+Retail\backend\inventory\migrations\0003_remove_stockadjustment_qty_delta_and_more.py
+Retail\backend\inventory\migrations\0004_inventoryapprovallog.py
+Retail\backend\inventory\migrations\0005_cyclecountschedule_movementmastertype_serialnumber_and_more.py
+Retail\backend\inventory\migrations\0006_alter_batch_variant_and_more.py
+Retail\backend\inventory\migrations\0007_alter_intercompanytransferline_item_and_more.py
+Retail\backend\inventory\migrations\__init__.py
+Retail\backend\inventory\tests\test_5_10_inventory_setup.py
+Retail\backend\inventory\tests\test_5_1_inventory_dashboard.py
+Retail\backend\inventory\tests\test_5_2_stock_management.py
+Retail\backend\inventory\tests\test_5_3_stock_movements.py
+Retail\backend\inventory\tests\test_5_4_stock_adjustments.py
+Retail\backend\inventory\tests\test_5_5_physical_inventory.py
+Retail\backend\inventory\tests\test_5_6_inventory_valuation.py
+Retail\backend\inventory\tests\test_5_7_replenishment.py
+Retail\backend\inventory\tests\test_5_8_item_tracking.py
+Retail\backend\inventory\tests\test_5_9_inventory_reports.py
+Retail\backend\inventory\tests\__init__.py
+Retail\backend\master\__init__.py
+Retail\backend\master\item\urls.py
+Retail\backend\master\item\__init__.py
+Retail\backend\master\item\models\__init__.py
+Retail\backend\master\item\serializers\__init__.py
+Retail\backend\master\item\services\__init__.py
+Retail\backend\master\item\tests\__init__.py
+Retail\backend\master\item\validators\__init__.py
+Retail\backend\master\item\views\__init__.py
+Retail\backend\master\supplier\urls.py
+Retail\backend\master\supplier\__init__.py
+Retail\backend\master\supplier\models\__init__.py
+Retail\backend\master\supplier\serializers\__init__.py
+Retail\backend\master\supplier\services\__init__.py
+Retail\backend\master\supplier\tests\__init__.py
+Retail\backend\master\supplier\validators\__init__.py
+Retail\backend\master\supplier\views\__init__.py
+Retail\backend\pos\admin.py
+Retail\backend\pos\apps.py
+Retail\backend\pos\models.py
+Retail\backend\pos\transaction_admin.py
+Retail\backend\pos\transaction_models.py
+Retail\backend\pos\transaction_serializers.py
+Retail\backend\pos\transaction_views.py
+Retail\backend\pos\urls.py
+Retail\backend\pos\__init__.py
+Retail\backend\pos\day_open\models.py
+Retail\backend\pos\day_open\serializers.py
+Retail\backend\pos\day_open\urls.py
+Retail\backend\pos\day_open\views.py
+Retail\backend\pos\day_open\__init__.py
+Retail\backend\pos\migrations\0001_initial.py
+Retail\backend\pos\migrations\0002_postransactionline_batch.py
+Retail\backend\pos\migrations\0003_alter_dayopen_location_and_more.py
+Retail\backend\pos\migrations\__init__.py
+Retail\backend\pos\session\models.py
+Retail\backend\pos\session\serializers.py
+Retail\backend\pos\session\urls.py
+Retail\backend\pos\session\views.py
+Retail\backend\pos\session\__init__.py
+Retail\backend\pos\terminal\urls.py
+Retail\backend\pos\terminal\__init__.py
+Retail\backend\pos\terminal\models\terminal.py
+Retail\backend\pos\terminal\models\__init__.py
+Retail\backend\pos\terminal\serializers\terminal.py
+Retail\backend\pos\terminal\serializers\__init__.py
+Retail\backend\pos\terminal\services\__init__.py
+Retail\backend\pos\terminal\validators\__init__.py
+Retail\backend\pos\terminal\views\terminal.py
+Retail\backend\pos\terminal\views\__init__.py
+Retail\backend\procurement\admin.py
+Retail\backend\procurement\apps.py
+Retail\backend\procurement\models.py
+Retail\backend\procurement\serializers.py
+Retail\backend\procurement\urls.py
+Retail\backend\procurement\views.py
+Retail\backend\procurement\__init__.py
+Retail\backend\procurement\asn\__init__.py
+Retail\backend\procurement\asn\tests\test_4_5_advance_shipment_notice.py
+Retail\backend\procurement\asn\tests\__init__.py
+Retail\backend\procurement\compliance\__init__.py
+Retail\backend\procurement\compliance\tests\test_compliance_management.py
+Retail\backend\procurement\compliance\tests\__init__.py
+Retail\backend\procurement\grn\__init__.py
+Retail\backend\procurement\grn\tests\test_4_6_goods_receipts.py
+Retail\backend\procurement\grn\tests\__init__.py
+Retail\backend\procurement\invoice\__init__.py
+Retail\backend\procurement\invoice\tests\test_4_7_invoice_matching.py
+Retail\backend\procurement\invoice\tests\__init__.py
+Retail\backend\procurement\migrations\0001_initial.py
+Retail\backend\procurement\migrations\0002_alter_purchaserequisitionline_item_variant.py
+Retail\backend\procurement\migrations\0003_requestforquotation_location.py
+Retail\backend\procurement\migrations\0004_goodsreceiptline_batch_and_more.py
+Retail\backend\procurement\migrations\0005_alter_advanceshipmentnotice_supplier_and_more.py
+Retail\backend\procurement\migrations\__init__.py
+Retail\backend\procurement\payments\__init__.py
+Retail\backend\procurement\payments\tests\test_payments_processing.py
+Retail\backend\procurement\payments\tests\__init__.py
+Retail\backend\procurement\po\__init__.py
+Retail\backend\procurement\po\tests\test_4_3_purchase_order.py
+Retail\backend\procurement\po\tests\__init__.py
+Retail\backend\procurement\pr\permissions.py
+Retail\backend\procurement\pr\urls.py
+Retail\backend\procurement\pr\__init__.py
+Retail\backend\procurement\pr\models\__init__.py
+Retail\backend\procurement\pr\serializers\__init__.py
+Retail\backend\procurement\pr\services\__init__.py
+Retail\backend\procurement\pr\tests\test_4_1_purchase_requisition.py
+Retail\backend\procurement\pr\tests\test_api.py
+Retail\backend\procurement\pr\tests\test_models.py
+Retail\backend\procurement\pr\tests\test_workflow.py
+Retail\backend\procurement\pr\tests\__init__.py
+Retail\backend\procurement\pr\validators\__init__.py
+Retail\backend\procurement\pr\views\__init__.py
+Retail\backend\procurement\pr\workflow\__init__.py
+Retail\backend\procurement\returns\__init__.py
+Retail\backend\procurement\returns\tests\test_4_8_purchase_returns.py
+Retail\backend\procurement\returns\tests\__init__.py
+Retail\backend\procurement\rfq\__init__.py
+Retail\backend\procurement\rfq\tests\test_4_2_request_for_quotation.py
+Retail\backend\procurement\rfq\tests\__init__.py
+Retail\backend\procurement\tests\test_configuration_management.py
+Retail\backend\procurement\tests\__init__.py
+Retail\backend\sales\admin.py
+Retail\backend\sales\apps.py
+Retail\backend\sales\models.py
+Retail\backend\sales\models_order.py
+Retail\backend\sales\models_quote.py
+Retail\backend\sales\serializers.py
+Retail\backend\sales\services.py
+Retail\backend\sales\urls.py
+Retail\backend\sales\views.py
+Retail\backend\sales\__init__.py
+Retail\backend\sales\migrations\0001_initial.py
+Retail\backend\sales\migrations\0002_alter_salesinvoice_customer_and_more.py
+Retail\backend\sales\migrations\__init__.py
+Retail\backend\sales\tests\test_6_1_sales_quotation.py
+Retail\backend\sales\tests\test_6_2_sales_order.py
+Retail\backend\sales\tests\test_6_3_sales_invoice.py
+Retail\backend\sales\tests\test_6_5_sales_configuration.py
+Retail\backend\sales\tests\__init__.py
+Retail\docs\ERP_Menu_Items_20260110_161934.csv
+Retail\docs\PRODUCT_ATTRIBUTE_TEMPLATE_CONVERSION.md
+Retail\docs\RETAIL_ERP_MODEL_INDEX.md
+Retail\docs\retail_menu_items.txt
+Retail\frontend\__init__.py
+Retail\frontend\inventory\__init__.py
+Retail\frontend\inventory\pages\ABCAnalysisReport.tsx
+Retail\frontend\inventory\pages\AdjustmentApprovalListPage.tsx
+Retail\frontend\inventory\pages\AdjustmentFormPage.tsx
+Retail\frontend\inventory\pages\AdjustmentListPage.tsx
+Retail\frontend\inventory\pages\AdjustmentReportPage.tsx
+Retail\frontend\inventory\pages\AlertsNotificationsPage.tsx
+Retail\frontend\inventory\pages\ApprovalRulesPage.tsx
+Retail\frontend\inventory\pages\AttributeForm.tsx
+Retail\frontend\inventory\pages\AttributeList.tsx
+Retail\frontend\inventory\pages\AttributeSetup.tsx
+Retail\frontend\inventory\pages\AttributeValueForm.tsx
+Retail\frontend\inventory\pages\AttributeValueList.tsx
+Retail\frontend\inventory\pages\AttributeValueSetup.tsx
+Retail\frontend\inventory\pages\BatchListPage.tsx
+Retail\frontend\inventory\pages\BatchTraceabilityPage.tsx
+Retail\frontend\inventory\pages\CostAnalysisPage.tsx
+Retail\frontend\inventory\pages\CountApprovalPage.tsx
+Retail\frontend\inventory\pages\CycleCountingSchedulePage.tsx
+Retail\frontend\inventory\pages\DeadStockReport.tsx
+Retail\frontend\inventory\pages\ExpiryManagementPage.tsx
+Retail\frontend\inventory\pages\GoodsIssueViewPage.tsx
+Retail\frontend\inventory\pages\GoodsReceiptViewPage.tsx
+Retail\frontend\inventory\pages\index.ts
+Retail\frontend\inventory\pages\IntercompanyTransferFormPage.tsx
+Retail\frontend\inventory\pages\IntercompanyTransferListPage.tsx
+Retail\frontend\inventory\pages\InventoryDashboard.tsx
+Retail\frontend\inventory\pages\InventorySettingsPage.tsx
+Retail\frontend\inventory\pages\InventorySetup.tsx
+Retail\frontend\inventory\pages\ItemForm.tsx
+Retail\frontend\inventory\pages\ItemMasterSetup.tsx
+Retail\frontend\inventory\pages\LowStockAlertsPage.tsx
+Retail\frontend\inventory\pages\MinMaxPlanningPage.tsx
+Retail\frontend\inventory\pages\MovementReportsPage.tsx
+Retail\frontend\inventory\pages\MovementTrendsAnalytics.tsx
+Retail\frontend\inventory\pages\MovementTypeListPage.tsx
+Retail\frontend\inventory\pages\OverstockAlertsPage.tsx
+Retail\frontend\inventory\pages\PeriodEndValuationPage.tsx
+Retail\frontend\inventory\pages\PriceListSetup.tsx
+Retail\frontend\inventory\pages\ProductAttributeTemplateForm.tsx
+Retail\frontend\inventory\pages\ProductAttributeTemplateSetup.tsx
+Retail\frontend\inventory\pages\ReasonCodeListPage.tsx
+Retail\frontend\inventory\pages\ReconciliationPage.tsx
+Retail\frontend\inventory\pages\ReorderPolicyListPage.tsx
+Retail\frontend\inventory\pages\ReorderRulesPage.tsx
+Retail\frontend\inventory\pages\ReplenishmentWorksheetPage.tsx
+Retail\frontend\inventory\pages\SafetyStockAnalysisPage.tsx
+Retail\frontend\inventory\pages\SerialListPage.tsx
+Retail\frontend\inventory\pages\StockAgingAnalysisPage.tsx
+Retail\frontend\inventory\pages\StockByBatchSerialPage.tsx
+Retail\frontend\inventory\pages\StockByCategoryPage.tsx
+Retail\frontend\inventory\pages\StockByLocationPage.tsx
+Retail\frontend\inventory\pages\StockLevelListPage.tsx
+Retail\frontend\inventory\pages\StockMovementListPage.tsx
+Retail\frontend\inventory\pages\StockSummaryReport.tsx
+Retail\frontend\inventory\pages\StockTakeExecutionPage.tsx
+Retail\frontend\inventory\pages\StockTakeFormPage.tsx
+Retail\frontend\inventory\pages\StockTakeListPage.tsx
+Retail\frontend\inventory\pages\StockTakeReportsPage.tsx
+Retail\frontend\inventory\pages\StockValuationDashboard.tsx
+Retail\frontend\inventory\pages\StockValuationReport.tsx
+Retail\frontend\inventory\pages\TransferFormPage.tsx
+Retail\frontend\inventory\pages\TransferListPage.tsx
+Retail\frontend\inventory\pages\UOMForm.tsx
+Retail\frontend\inventory\pages\UOMSetup.tsx
+Retail\frontend\inventory\pages\ValuationMethodPage.tsx
+Retail\frontend\inventory\pages\ValuationMethodsPage.tsx
+Retail\frontend\inventory\pages\ValuationReportsPage.tsx
+Retail\frontend\inventory\pages\VarianceAnalysisPage.tsx
+Retail\frontend\inventory\pages\VelocityAnalysisReport.tsx
+Retail\frontend\inventory\pages\__init__.py
+Retail\frontend\master\__init__.py
+Retail\frontend\master\item\FiltersBar.tsx
+Retail\frontend\master\item\item.schema.ts
+Retail\frontend\master\item\item.service.ts
+Retail\frontend\master\item\item.types.ts
+Retail\frontend\master\item\ItemFiltersBar.tsx
+Retail\frontend\master\item\ItemForm.tsx
+Retail\frontend\master\item\ItemListPage.tsx
+Retail\frontend\master\item\ItemPage.tsx
+Retail\frontend\master\item\ItemSummaryCards.tsx
+Retail\frontend\master\item\Pagination.tsx
+Retail\frontend\master\item\ProductCard.tsx
+Retail\frontend\master\item\ProductTable.tsx
+Retail\frontend\master\item\useItems.ts
+Retail\frontend\master\item\__init__.py
+Retail\frontend\master\products\hooks.ts
+Retail\frontend\master\products\product.service.ts
+Retail\frontend\master\products\product.types.ts
+Retail\frontend\master\products\ProductForm.tsx
+Retail\frontend\master\products\ProductPage.tsx
+Retail\frontend\master\products\useProduct.ts
+Retail\frontend\master\products\__init__.py
+Retail\frontend\pos\index.ts
+Retail\frontend\pos\PosDashboard.tsx
+Retail\frontend\pos\__init__.py
+Retail\frontend\pos\billing\constants.ts
+Retail\frontend\pos\billing\PosCart.tsx
+Retail\frontend\pos\billing\PosDesktop.tsx
+Retail\frontend\pos\billing\PosModals.tsx
+Retail\frontend\pos\billing\PosPage.tsx
+Retail\frontend\pos\billing\PosRightPanel.tsx
+Retail\frontend\pos\billing\types.ts
+Retail\frontend\pos\billing\__init__.py
+Retail\frontend\pos\components\CustomerSelector.tsx
+Retail\frontend\pos\components\index.ts
+Retail\frontend\pos\components\KeyboardShortcutsHelp.tsx
+Retail\frontend\pos\components\PaymentDialog.tsx
+Retail\frontend\pos\components\ProductSearch.tsx
+Retail\frontend\pos\components\Receipt.tsx
+Retail\frontend\pos\components\SuspendedSalesDialog.tsx
+Retail\frontend\pos\components\__init__.py
+Retail\frontend\pos\day_close\DayClosePage.tsx
+Retail\frontend\pos\day_close\__init__.py
+Retail\frontend\pos\day_open\DayOpenPage.tsx
+Retail\frontend\pos\day_open\dayOpenService.ts
+Retail\frontend\pos\day_open\index.ts
+Retail\frontend\pos\day_open\__init__.py
+Retail\frontend\pos\hooks\index.ts
+Retail\frontend\pos\hooks\useKeyboardShortcuts.ts
+Retail\frontend\pos\hooks\__init__.py
+Retail\frontend\pos\session\SessionOpenPage.tsx
+Retail\frontend\pos\session\__init__.py
+Retail\frontend\pos\session\components\DayOpenForm.tsx
+Retail\frontend\pos\session\components\__init__.py
+Retail\frontend\pos\session\services\sessionService.ts
+Retail\frontend\pos\session\services\__init__.py
+Retail\frontend\pos\session_close\SessionClosePage.tsx
+Retail\frontend\pos\session_close\__init__.py
+Retail\frontend\pos\settlement\SettlementPage.tsx
+Retail\frontend\pos\settlement\__init__.py
+Retail\frontend\pos\terminal\index.ts
+Retail\frontend\pos\terminal\terminal.service.ts
+Retail\frontend\pos\terminal\terminal.types.ts
+Retail\frontend\pos\terminal\TerminalFilters.tsx
+Retail\frontend\pos\terminal\TerminalForm.tsx
+Retail\frontend\pos\terminal\TerminalForm_backup.tsx
+Retail\frontend\pos\terminal\TerminalPage.tsx
+Retail\frontend\pos\terminal\TerminalTable.tsx
+Retail\frontend\pos\terminal\useTerminal.ts
+Retail\frontend\pos\terminal\__init__.py
+Retail\frontend\procurement\procurement.service.ts
+Retail\frontend\procurement\procurement.types.ts
+Retail\frontend\procurement\ProcurementPage.tsx
+Retail\frontend\procurement\useProcurement.ts
+Retail\frontend\procurement\__init__.py
+Retail\frontend\procurement\pages\ASNListPage.tsx
+Retail\frontend\procurement\pages\BillFormPage.tsx
+Retail\frontend\procurement\pages\BillListPage.tsx
+Retail\frontend\procurement\pages\ComplianceFormPage.tsx
+Retail\frontend\procurement\pages\ComplianceListPage.tsx
+Retail\frontend\procurement\pages\GoodsReceiptFormPage.tsx
+Retail\frontend\procurement\pages\GoodsReceiptListPage.tsx
+Retail\frontend\procurement\pages\PaymentFormPage.tsx
+Retail\frontend\procurement\pages\PaymentListPage.tsx
+Retail\frontend\procurement\pages\ProcurementConfigPage.tsx
+Retail\frontend\procurement\pages\PurchaseOrderFormPage.tsx
+Retail\frontend\procurement\pages\PurchaseOrderListPage.tsx
+Retail\frontend\procurement\pages\PurchaseReturnFormPage.tsx
+Retail\frontend\procurement\pages\PurchaseReturnListPage.tsx
+Retail\frontend\procurement\pages\RequisitionFormPage.tsx
+Retail\frontend\procurement\pages\RequisitionListPage.tsx
+Retail\frontend\procurement\pages\RFQFormPage.tsx
+Retail\frontend\procurement\pages\RFQListPage.tsx
+Retail\frontend\procurement\pages\__init__.py
+Retail\frontend\sales\types.ts
+Retail\frontend\sales\__init__.py
+Retail\frontend\sales\services\salesService.ts
+Retail\frontend\sales\services\__init__.py
+Retail\frontend\stores\store.service.ts
+Retail\frontend\stores\store.types.ts
+Retail\frontend\stores\StorePage.tsx
+Retail\frontend\stores\useStore.ts
+Retail\frontend\stores\__init__.py
+Retail\frontend\suppliers\hooks.ts
+Retail\frontend\suppliers\SupplierForm.tsx
+Retail\frontend\suppliers\SupplierList.tsx
+Retail\frontend\suppliers\SupplierMasterSetup.tsx
+Retail\frontend\suppliers\SupplierPage.tsx
+Retail\frontend\suppliers\__init__.py
+Retail\references\retailmvp.zip
+Retail\scripts\export_retail_menu_items.py
+Retail\scripts\export_retail_toolbar_csv.py
+Retail\scripts\extract_retail_menu.py
+Retail\scripts\finalize_retail_types.py
+Retail\scripts\fix_pos_toolbar.py
+Retail\scripts\fix_purchase_orders.py
+Retail\scripts\fix_recent_sales.ps1
+Retail\scripts\install-pos-customer-logic.ps1
+Retail\scripts\install-pos-history.ps1
+Retail\scripts\install-pos-improvements.ps1
+Retail\scripts\install-pos-line-ops-v2.ps1
+Retail\scripts\install-pos-line-ops.ps1
+Retail\scripts\install-pos-phase2.ps1
+Retail\scripts\install-pos-products.ps1
+Retail\scripts\install-pos-safe.ps1
+Retail\scripts\install-pos-search.ps1
+Retail\scripts\install-pos-simple.ps1
+Retail\scripts\patch-customer-func.ps1
+Retail\scripts\prepare_procurement_migration.py
+Retail\scripts\query_retail_menu_items.py
+Retail\scripts\retail_menu_audit.txt
+Retail\scripts\setup_inventory_test_data.py
+Retail\scripts\sync_retail_menus.py
+Retail\scripts\update_all_retail_toolbars.py
+Retail\scripts\verify-pos-routes.js
+scripts\arch_lint.py
+scripts\cleanup_all_seeds.ps1
+scripts\cleanup_seed_files.ps1
+scripts\consolidate_seed_files.ps1
+scripts\consolidate_ui_docs.py
+scripts\dev.bat
+scripts\fix_import.ps1
+scripts\migrate_hrm_imports.py
+scripts\reset_and_seed_database.ps1
+scripts\setup.bat
+scripts\START_BACKEND.bat
+scripts\START_BOTH.bat
+scripts\START_FRONTEND.bat
+scripts\update_menu_docs.py
+Steering\00AGENT_ONBOARDING\01_Onboarding_Context.md
+Steering\00AGENT_ONBOARDING\02_Architecture_Rules.md
+Steering\00AGENT_ONBOARDING\03_Development_Standards.md
+Steering\00AGENT_ONBOARDING\04_Frontend_UI_Canon.md
+Steering\00AGENT_ONBOARDING\Enterprise_Platform_Onboarding_v5_Consolidated.md
+Steering\00AGENT_ONBOARDING\Enterprise_Platform_Onboarding_v6.md
+Steering\00AGENT_ONBOARDING\SESSION_SUMMARY_2025-12-29.md
+Steering\00AGENT_ONBOARDING\STEERING_DOCUMENTATION_MAP.md
+Steering\00AGENT_ONBOARDING\01_Governance\ARCHITECTURAL_LOCK_REFERENCE.md
+Steering\00AGENT_ONBOARDING\01_Governance\CANONICAL_RULESET.md
+Steering\00AGENT_ONBOARDING\01_Governance\governance.md
+Steering\00AGENT_ONBOARDING\01_Governance\README2_IMPORTANT_FORAGENTS.md
+Steering\00AGENT_ONBOARDING\01_Governance\system-rules.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\BBP_TEMPLATE_COMPLETE.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\1.MastersandPOS\00masterbbp_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\1.MastersandPOS\Item_Master_BBP.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\1.MastersandPOS\pos_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.1_pr_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.2_rfq_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.3_po_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.4_asn_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.5_grn_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.6_invoice_matching_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.7_returns_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.8_payments_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\4.Procurement\4.9_compliance_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\BBP_MODELS_INVENTORY.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\BBP_MODEL_REFERENCE.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\BBP_TRACKER_INVENTORY.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\README.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.10_Configuration\5.10.1_Movement_Types_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.10_Configuration\5.10.2_Adjustment_Reason_Codes_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.10_Configuration\5.10.3_Valuation_Methods_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.10_Configuration\5.10.4_Inventory_Parameters_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.10_Configuration\5.10.5_Approval_Rules_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.1_Inventory_Overview_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.2_Stock_by_Location_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.3_Stock_Valuation_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.3_Stock_Valuation_Summary_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.4_Movement_Trends_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.1_Inventory_Dashboard\5.1.5_Alerts_Notifications_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.1_Stock_on_Hand_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.2_Stock_by_Location_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.3_Stock_by_Category_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.4_Stock_by_Batch_Serial_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.5_Low_Stock_Alerts_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.6_Overstock_Alerts_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.2_Stock_Management\5.2.7_Stock_Aging_Analysis_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.1_Movement_History_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.2_Goods_Receipt_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.3_Goods_Issue_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.4_Internal_Transfers_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.5_Intercompany_Transfers_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.3_Stock_Movements\5.3.6_Movement_Reports_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.4_Stock_Adjustments\5.4.1_Adjustment_Entry_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.4_Stock_Adjustments\5.4.2_Adjustment_History_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.4_Stock_Adjustments\5.4.3_Reason_Code_Management_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.4_Stock_Adjustments\5.4.4_Approval_Workflow_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.4_Stock_Adjustments\5.4.5_Adjustment_Reports_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.5_Physical_Inventory\5.5.1_Cycle_Counting_Schedule_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.5_Physical_Inventory\5.5.2_Stock_Take_Execution_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.5_Physical_Inventory\5.5.3_Variance_Analysis_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.5_Physical_Inventory\5.5.4_Count_Approval_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.5_Physical_Inventory\5.5.5_Reconciliation_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.0_Valuation_Reports_Suite_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.1_Valuation_Methods_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.2_Valuation_Reports_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.3_Cost_Analysis_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.4_Revaluation_Phase2_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.6_Inventory_Valuation\5.6.5_Period_End_Valuation_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.1_Reorder_Point_Management_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.2_Safety_Stock_Levels_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.3_Min_Max_Planning_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.4_Reorder_Policies_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.5_Demand_Forecasting_Phase2_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.7_Replenishment_Planning\5.7.6_Replenishment_Suggestions_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.8_Batch_Serial_Tracking\5.8.1_Batch_Management_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.8_Batch_Serial_Tracking\5.8.2_Serial_Number_Tracking_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.8_Batch_Serial_Tracking\5.8.3_Expiry_Management_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.8_Batch_Serial_Tracking\5.8.4_Batch_Traceability_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.8_Batch_Serial_Tracking\5.8.5_Recall_Management_Phase2_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.0_Inventory_Reports_Suite_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.1_Stock_Summary_Report_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.2_Movement_Report_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.3_Valuation_Report_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.4_Aging_Report_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.5_ABC_Analysis_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.6_Velocity_Analysis_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\5.Inventory\5.9_Inventory_Reports\5.9.7_Dead_Stock_Report_bbp.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\6.Sales\6.1_sales_quote.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\6.Sales\6.2_sales_order.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\6.Sales\6.3_sales_invoice.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\6.Sales\6.4_sales_return.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\6.Sales\6.5_sales_config.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\FMS\8.1_payments_settlement.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\HRM\1.1 Employee Management - BBP ADDENDUM.md
+Steering\00AGENT_ONBOARDING\02_Business_Blueprints\HRM\1.1 Employee Management.md
+Steering\00AGENT_ONBOARDING\03_Navigation_Canon\MENU_REORGANIZATION_COMPLETE.md
+Steering\00AGENT_ONBOARDING\03_Navigation_Canon\SIDEBAR_QUICK_REFERENCE.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\CONSOLIDATED_DESIGN_SYSTEM.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\CONSOLIDATED_IMPLEMENTATION_SPECS.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\LOOKUP_CANON.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\mst01.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\mst02.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\mst03.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\Refer_this_before_new_UI_module.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\txn01.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\txn02.md
+Steering\00AGENT_ONBOARDING\04_UI_Canon_Templates\txn03.md
+Steering\00AGENT_ONBOARDING\05_Agent_Execution\agent.olivine_ruleset.md
+Steering\00AGENT_ONBOARDING\05_Agent_Execution\olivine_ai_governance_agent_rules.md
+Steering\00AGENT_ONBOARDING\06_QA_Testing\01_Procurement_BBP_4x_Test_Mapping.md
+Steering\00AGENT_ONBOARDING\06_QA_Testing\02_Sales_BBP_6x_Test_Mapping.md
+Steering\00AGENT_ONBOARDING\06_QA_Testing\PHASE_0_MASTER_DATA_READINESS_FINAL.md
+Steering\00AGENT_ONBOARDING\06_QA_Testing\TESTING_STANDARDS.md
+Steering\01_ARCH_GOVERNANCE\agent.olivine_ruleset.md
+Steering\01_ARCH_GOVERNANCE\ARCHITECTURAL_LOCK_REFERENCE.md
+Steering\01_ARCH_GOVERNANCE\ARCHITECTURE_CANONICAL_MODELS.md
+Steering\01_ARCH_GOVERNANCE\astra-role-quick-ref.md
+Steering\01_ARCH_GOVERNANCE\astra-role.md
+Steering\01_ARCH_GOVERNANCE\CANONICAL_RULESET.md
+Steering\01_ARCH_GOVERNANCE\governance.md
+Steering\01_ARCH_GOVERNANCE\olivine_ai_governance_agent_rules.md
+Steering\01_ARCH_GOVERNANCE\README2_IMPORTANT_FORAGENTS.md
+Steering\01_ARCH_GOVERNANCE\README2_Stabilization_Checklist.md
+Steering\01_ARCH_GOVERNANCE\README3_IMPPORTANT_FORAGENTS_SPA_STRUCTURE.md
+Steering\01_ARCH_GOVERNANCE\system-rules.md
+Steering\02_PROMPT_LIBRARY\01prompt-governance-core.md
+Steering\02_PROMPT_LIBRARY\02prompt-phase0-master-data-readiness.md
+Steering\02_PROMPT_LIBRARY\03prompt-hold-and-resume-control.md
+Steering\02_PROMPT_LIBRARY\04prompt-procurement-qa-execution.md
+Steering\02_PROMPT_LIBRARY\05prompt-daily-agent-index.md
+Steering\02_PROMPT_LIBRARY\06prompt-ui-governance.md
+Steering\02_PROMPT_LIBRARY\07prompt-agent-operating-model.md
+Steering\02_PROMPT_LIBRARY\08prompt-prompt-authoring-standards.md
+Steering\02_PROMPT_LIBRARY\prompts.index.md
+Steering\02_PROMPT_LIBRARY\backup\01_Procurement_BBP_4x_Test_Mapping (1).md
+Steering\02_PROMPT_LIBRARY\backup\01_Procurement_BBP_4x_Test_Mapping.md
+Steering\02_PROMPT_LIBRARY\backup\02_Procurement_QA_Test_Plan.md
+Steering\02_PROMPT_LIBRARY\backup\agent.rules.md
+Steering\02_PROMPT_LIBRARY\backup\agent.tasks.prompts.json
+Steering\02_PROMPT_LIBRARY\backup\ARCHITECTURE_PHASE_TASKS.md
+Steering\02_PROMPT_LIBRARY\backup\Astra_Viji_All_Prompts_Today.md
+Steering\02_PROMPT_LIBRARY\backup\EnterpriseGPT_Consolidated_Governance_Prompt.md
+Steering\02_PROMPT_LIBRARY\backup\EXECUTION_CONTRACT.md
+Steering\02_PROMPT_LIBRARY\backup\olivine_ai_governance_agent_rules.md
+Steering\02_PROMPT_LIBRARY\backup\Olivine_Procurement_QA_Prompts_Consolidated.md
+Steering\02_PROMPT_LIBRARY\backup\prompts.master.md
+Steering\02_PROMPT_LIBRARY\backup\PROMPT_GUIDE.MD
+Steering\02_PROMPT_LIBRARY\backup\prompt_ui_standard.md
+Steering\02_PROMPT_LIBRARY\backup\Refer_this_before_new_UI_module.md
+Steering\02_PROMPT_LIBRARY\backup\SPA_STRUCTURE.md
+Steering\02_PROMPT_LIBRARY\backup\token_safe_agent_architecture_cost_optimization_guide.md
+Steering\03_DESIGN_SYSTEM\COMPONENT_LIBRARY.md
+Steering\03_DESIGN_SYSTEM\MENU_TREE_STRUCTURE.md
+Steering\03_DESIGN_SYSTEM\STATE_PATTERNS.md
+Steering\03_DESIGN_SYSTEM\typography.md
+Steering\03_DESIGN_SYSTEM\UI_LAYOUT_TERMINOLOGY.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\build-guide.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\CODE_MASTERS_ROUTING_COMPLIANCE.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\EMPLOYEE_IMPLEMENTATION_PLAN.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\EMPLOYEE_IMPLEMENTATION_PROGRESS.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\EMPTY_LISTINGS_INVESTIGATION.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\GOVERNANCE_CONFORMANCE_AUDIT.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\GOVERNANCE_CONFORMANCE_AUDIT_FINAL.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\HEADER_LOCATION_SELECTOR_COMPLETE.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\HEADER_OVERLAP_FIX.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\HRM_BBP_ALIGNMENT_ANALYSIS.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\HRM_MENU_ANALYSIS_AND_REVISION.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\LAYOUT_SCROLL_FIX.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\MASTER_LOOKUP_PLAN.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\MERCHANDISING_ROUTES_FIX.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\MERCHANDISING_USAGE_AUDIT.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\MULTI_ISSUE_FIX_SUMMARY.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\PHASE1_LOOKUPS_COMPLETE.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\POS_MENU_ROUTING_FIX.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\POS_TERMINAL_CONFIGURATION_COMPLETE.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\POS_TERMINAL_FORM_REFINEMENT.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\README.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\RETAIL_IMPLEMENTATION_TRACKER.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\RETAIL_MASTER_DATA_INVENTORY.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\RETAIL_PHASE4_EXECUTION_PLAN.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\RETAIL_UI_COMPLETION_ROADMAP.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\SIDEBAR_VERIFICATION.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\SIMPLE_MASTER_IMPLEMENTATION.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\SPELLING_ERROR_FIX.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\STEERING_UPDATE_PROCUREMENT_QA.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\TASK1_WIRING_COMPLETE.md
+Steering\04_EXECUTION_PLANS_FIX_REFERENCES\USER_MANAGEMENT_REFACTOR.md
+Steering\05_RULES_TRASH_OR_OLD\codeium.md
+Steering\05_RULES_TRASH_OR_OLD\config.js
+Steering\05_RULES_TRASH_OR_OLD\folderrule.md
+Steering\05_RULES_TRASH_OR_OLD\mod.py
+Steering\05_RULES_TRASH_OR_OLD\session_start.md
+Steering\05_RULES_TRASH_OR_OLD\session_start_backup.md
+Steering\06_REPORTS_AUDITS\ADMIN_RESTRUCTURING_REPORT.md
+Steering\06_REPORTS_AUDITS\BBP_TEMPLATE_CONSOLIDATION_COMPLETE.md
+Steering\06_REPORTS_AUDITS\BBP_TEMPLATE_CREATION_COMPLETE.md
+Steering\06_REPORTS_AUDITS\DJANGO_CODEBASE_AUDIT_REPORT.md
+Steering\06_REPORTS_AUDITS\EMPLOYEE_IMPLEMENTATION_COMPLETE.md
+Steering\06_REPORTS_AUDITS\EMPLOYEE_IMPLEMENTATION_COMPLETE_75PCT.md
+Steering\06_REPORTS_AUDITS\EMPLOYEE_MASTER_BACKEND_INTEGRATION_COMPLETE.md
+Steering\06_REPORTS_AUDITS\EMPLOYEE_RECOVERY_REPORT.md
+Steering\06_REPORTS_AUDITS\EXECUTION_REPORT_21122025.md
+Steering\06_REPORTS_AUDITS\EXECUTION_REPORT_22122025.md
+Steering\06_REPORTS_AUDITS\HRM_BBP_100PCT_COMPLETE.md
+Steering\06_REPORTS_AUDITS\INVENTORY_VERIFICATION_COMPLETE.md
+Steering\06_REPORTS_AUDITS\L3_DATABASE_PROOF.md
+Steering\06_REPORTS_AUDITS\LICENSE_ENFORCEMENT_REPORT.md
+Steering\06_REPORTS_AUDITS\MENU_CONTROLLER_COMPLETE.md
+Steering\06_REPORTS_AUDITS\NORMALIZATION_REPORT.md
+Steering\06_REPORTS_AUDITS\OPERATING_COMPANY_REMOVAL_REPORT.md
+Steering\06_REPORTS_AUDITS\PHASE_3_ALIGNMENT_REPORT.md
+Steering\06_REPORTS_AUDITS\PHASE_A_IMPLEMENTATION_SUMMARY.md
+Steering\06_REPORTS_AUDITS\README_HISTORY.md
+Steering\06_REPORTS_AUDITS\RETAIL_AUDIT_REPORT.md
+Steering\06_REPORTS_AUDITS\ROLE_USER_IMPLEMENTATION_REPORT.md
+Steering\07_CREDENTIALS_AND_OPS\CREDENTIALS_MAINTENANCE.md
+Steering\07_CREDENTIALS_AND_OPS\LOGIN_CREDENTIALS.md
+Steering\07_CREDENTIALS_AND_OPS\QUICK_LOGIN_REFERENCE.txt
+Steering\07_CREDENTIALS_AND_OPS\STANDARD_CREDENTIALS.md
+Steering\07_CREDENTIALS_AND_OPS\USER_CREDENTIALS.md
+Steering\08_MASTER_REFERENCE\EMPLOYEE_DIRECTORY_VS_MASTER_GUIDE.md
+Steering\08_MASTER_REFERENCE\ENHANCED_MENU_CONTROLLER.md
+Steering\08_MASTER_REFERENCE\HRM_MENU_UPDATE_SUMMARY.md
+Steering\08_MASTER_REFERENCE\INVENTORY_MENU_TREE.md
+Steering\08_MASTER_REFERENCE\MENU_ITEMS_SEEDED.md
+Steering\08_MASTER_REFERENCE\viji_refthis.md
+Steering\09_QUALITY_GOVERNANCE\INVENTORY_QA_CROSSCHECK.md
+Steering\09_QUALITY_GOVERNANCE\INVENTORY_UI_WIRED_CHECK.md
+Steering\09_QUALITY_GOVERNANCE\QA_CONSOLE_BBP_INTEGRATION.md
+Steering\09_QUALITY_GOVERNANCE\TESTING_STANDARDS.md
+Steering\10_OTHER_SPECS\user-permission-management\design.md
+Steering\10_OTHER_SPECS\user-permission-management\requirements.md
+Steering\10_OTHER_SPECS\user-permission-management\tasks.md
+Steering\11_PROCUREMENT_STABILIZATION\ARCHITECTURAL_CORRECTION_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\CLEANUP_COMPLETION_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\FINAL_SUMMARY.md
+Steering\11_PROCUREMENT_STABILIZATION\FINAL_VALIDATION_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\MANUAL_TESTING_GUIDE.md
+Steering\11_PROCUREMENT_STABILIZATION\NEXT_STEPS_SUMMARY.md
+Steering\11_PROCUREMENT_STABILIZATION\PHASE_3_COMPLETION_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\PHASE_3_QUICK_START.md
+Steering\11_PROCUREMENT_STABILIZATION\PHASE_4_COMPLETION_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\POST_CLEANUP_TEST_REPORT.md
+Steering\11_PROCUREMENT_STABILIZATION\PROCUREMENT_CHECKLIST.md
+Steering\11_PROCUREMENT_STABILIZATION\QUICK_MANUAL_TEST_CHECKLIST.md
+Steering\11_PROCUREMENT_STABILIZATION\README.md
+Steering\11_PROCUREMENT_STABILIZATION\SESSION_SUMMARY_2025-12-23.md
+Steering\11_PROCUREMENT_STABILIZATION\executions\TASK_01_API_READINESS.md
+Steering\13TEST_PLANS\01_Procurement_BBP_4x_Test_Mapping.md
+Steering\13TEST_PLANS\02_Procurement_QA_Test_Plan.md
+Steering\13TEST_PLANS\03_Procurement_Detailed_Test_Scripts.md
+Steering\13TEST_PLANS\05_Inventory_QA_Test_Plan.md
+Steering\13TEST_PLANS\GAP_ANALYSIS_PROC_VS_INV.md
+Steering\13TEST_PLANS\INVENTORY_PHASE_0_COMPLETE.md
+Steering\13TEST_PLANS\PHASE_0_MASTER_DATA_READINESS_FINAL.md
+Steering\13TEST_PLANS\SESSION_SUMMARY_2025-12-27.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\batch_generator.py
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\COMPLETION_SUMMARY.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Compliance_Management_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Configuration_Management_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\DEFECT_RESOLUTION_LOG.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\GENERATION_PLAN.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Payments_Processing_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\PROMPT_LIBRARY_MAP.py
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\QUICK_START.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\README.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\TEST_EXECUTION_HISTORY.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Vendors_Master_Data_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.10_Inventory_Setup_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.1_Inventory_Dashboard_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.2_Stock_Management_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.3_Stock_Movements_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.4_Stock_Adjustments_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.5_Physical_Inventory_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.6_Inventory_Valuation_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.7_Replenishment_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.8_Item_Tracking_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\5.9_Inventory_Reports_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Inventory\BATCH_GENERATION_REMAINING.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.1_Purchase_Requisition_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.2_Request_for_Quotation_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.3_Purchase_Order_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.5_Advance_Shipment_Notice_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.6_Goods_Receipts_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.7_Invoice_Matching_test_script_prompt.md
+Steering\13TEST_PLANS\TEST_SCRIPT_CREATE_PROMPTS\Procurement\4.8_Purchase_Returns_test_script_prompt.md
+Steering\14UI_CANON\01_Onboarding_Context.md
+Steering\14UI_CANON\02_Architecture_Rules.md
+Steering\14UI_CANON\03_Development_Standards.md
+Steering\14UI_CANON\04_Frontend_UI_Canon.md
+Steering\14UI_CANON\05_UI_Menu_Template_Mapping.md
+Steering\14UI_CANON\06_Layout_Terminology.md
+Steering\14UI_CANON\07_Governance_Market_References.md
+Steering\14UI_CANON\08_Sidebar_Implementation.md
+Steering\14UI_CANON\09_Lookup_Canon.md
+Steering\14UI_CANON\10_Master_Simple_Template.md
+Steering\14UI_CANON\11_Master_Medium_Template.md
+Steering\14UI_CANON\12_Master_Complex_Template.md
+Steering\14UI_CANON\13_Transaction_Simple_Template.md
+Steering\14UI_CANON\14_Transaction_Medium_Template.md
+Steering\14UI_CANON\15_Transaction_Complex_Template.md
+Steering\14UI_CANON\IN_PLACE_MASTER_PATTERN.md
+Steering\14UI_CANON\TABLE_MODIFICATION_ANALYSIS.md
+Steering\15RENDER\01_celery_wiring.md
+Steering\15RENDER\02_render_production_deploy_checklist.md
+Steering\15RENDER\DEPLOYMENT_MATURITY_CHECKLIST.md
+Steering\15RENDER\DNS_HTTPS.md
+Steering\15RENDER\README.md
+Steering\15RENDER\README_RENDER_DEPLOY.md
+Steering\15RENDER\.github\workflows\render-deploy.yml
+Steering\15RENDER\backend\.env.example
+Steering\15RENDER\backend\health_check_snippet.py
+Steering\15RENDER\backend\README_SENTRY.md
+Steering\15RENDER\backend\sentry_setup.py
+Steering\15RENDER\backend\erp_core\settings\production.py
+Steering\15RENDER\celery\procurement_tasks.py
+Steering\15RENDER\db\backup_restore.md
+Steering\15RENDER\feature_flags\admin.py
+Steering\15RENDER\feature_flags\models.py
+Steering\15RENDER\frontend\.env.example
+Steering\15RENDER\migration\AWS_GCP_BLUEPRINT.md
+Steering\15RENDER\redis\redis_strategy.md
+Steering\15RENDER\terraform\aws\ecs_full.tf
+Steering\15RENDER\terraform\gcp\cloudrun_full.tf
+Steering\16_ONBOARDING\ONBOARD_COMPLETE.md
+Steering\17_ARCHIVE\employee_master_all_tabs.jpg
+Steering\17_ARCHIVE\HRM-CRM-MASTER-ONBOARDING.pdf
+Steering\17_ARCHIVE\HRM_BBP_100PCT_COMPLETE.md
+Steering\17_ARCHIVE\HRM_CRM_FMS_STATUS_REPORT.md
+Steering\17_ARCHIVE\HRM_CRM_MASTER_ONBOARDING.html
+Steering\17_ARCHIVE\SALES_GAP_ANALYSIS.md
+Steering\18_WIRING_CHECKLISTS\00_README.md
+Steering\18_WIRING_CHECKLISTS\01_MASTER_DATA_WIRING.md
+Steering\18_WIRING_CHECKLISTS\02_TRANSACTION_FORM_WIRING.md
+Steering\18_WIRING_CHECKLISTS\03_WORKFLOW_WIRING.md
+Steering\18_WIRING_CHECKLISTS\04_UI_TYPOGRAPHY_STYLING_REFERENCE.md
+Steering\18_WIRING_CHECKLISTS\05_AGENT_E_ONBOARDING.md
+Steering\18_WIRING_CHECKLISTS\07_TOOLBAR_CODE_EXAMPLES.md
+Steering\19_POS_ROADMAP\roadmap_pos.md
+Steering\19_POS_ROADMAP\vertical_auto.md
+Steering\19_POS_ROADMAP\vertical_fashion.md
+Steering\19_POS_ROADMAP\vertical_fnb.md
+Steering\19_POS_ROADMAP\vertical_grocery.md
+Steering\19_POS_ROADMAP\vertical_pharmacy.md
+Steering\19_POS_ROADMAP\vertical_wholesale.md
+Steering\20TOOLBAR_ROLLOUT\PHASE2C_ATTRIBUTE_TEMPLATES_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\README.md
+Steering\20TOOLBAR_ROLLOUT\TOOLBAR_ROLLOUT_PLAN.md
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\ARCHITECTURE_CLARIFICATION.md
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\BENCHMARK_STABILIZATION_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\BENCHMARK_STABILIZATION_REPORT.md
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\toolbar-explorer.html
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\TOOLBAR_LEGEND_AND_MAPPING.md
+Steering\20TOOLBAR_ROLLOUT\01_ESSENTIAL\UNIVERSAL_TOOLBAR_IMPLEMENTATION_CHECKLIST.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\05_Toolbar_Governance_Reference.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\AGENT_E_TOOLBAR_GAP_ANALYSIS.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\DOCUMENTATION_UPDATE_SUMMARY.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\MODE_BASED_FILTERING_TECHNICAL_REFERENCE.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\TOOLBAR_CHEAT_SHEET.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\TOOLBAR_CONFIGURATION_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\02_REFERENCE\TOOLBAR_LEGEND.md
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\06_TOOLBAR_IMPLEMENTATION_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\TOOLBAR_CONFIG_DESIGN.md
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\TOOLBAR_CONFIG_REFACTOR.md
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\MasterToolbarConfigDriven.tsx
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\models_reference.py
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\toolbar-demo.html
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\toolbar_config.json
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\TOOLBAR_GOVERNANCE_EXPLAINED.md
+Steering\20TOOLBAR_ROLLOUT\03_TECHNICAL\toolbar_reference\WiringSample.tsx
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\DETAILED_RCA_ITEM_MASTER_REFACTOR_GAPS.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_CRITICAL_ARCHITECTURAL_CHANGE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_DELIVERABLES_SUMMARY.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_IMPLEMENTATION_CHECKLIST.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_IMPLEMENTATION_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_INDEX.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\ITEM_MASTER_VISUAL_ARCHITECTURE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\README.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Item\RCA\RCA_ITEM_MASTER_LIMITATIONS.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\ADMIN_IMPROVEMENTS_PROPOSAL.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\ADMIN_UPDATE_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\DATABASE_SEED_ANALYSIS_2026-01-09.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\IMPLEMENTATION_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\NEXT_SESSION.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE1_BACKEND_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE1_MASTER_TOOLBAR_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE1_MASTER_TOOLBAR_PROGRESS.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE2AB_FRONTEND_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE2C_PERMISSION_UI_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE2_MASTER_TOOLBAR_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE2_MASTER_TOOLBAR_PROGRESS.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE3_MASTER_TOOLBAR_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\PHASE3_TOOLBAR_CONFIG_MANUAL_STEPS.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\QUICK_START_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\README.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\SESSION_2026-01-09_BENCHMARK_STABILIZATION.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\SHARING_SUMMARY.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\SUGGESTED_ADMIN_IMPROVEMENTS.py
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\TESTING_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\TOOLBAR_IMPLEMENTATION_EXPLAINED.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\TOOLBAR_PERMISSION_IMPLEMENTATION.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\TOOLBAR_UPDATE_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\UNIFIED_VIEW_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\VERIFICATION_CHECKLIST.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Others\VISUAL_GUIDE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Toolbar_general\toolbar-config-builder.html
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Toolbar_general\toolbar-revisit-checklist.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Toolbar_general\TOOLBAR_CRITICAL_INVESTIGATION_2026-01-09.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Toolbar_general\TOOLBAR_IMPLEMENTATION_COMPLETE.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\Toolbar_general\TOOLBAR_INVESTIGATION_2026-01-09.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\UOM\UOM_TESTING_ISSUES_2026-01-09.md
+Steering\20TOOLBAR_ROLLOUT\04_ARCHIVE\UOM\UOM_TOOLBAR_ACTION_AND_CHECKLIST_MANUAL.md
+UAT\attribute-template.png
+UAT\current_userandpermission.png
+UAT\User & Permissions -1.png
+UAT\User & Permissions -2.png
+UAT\User & Permissions -3.png
+UAT\User & Permissions -4.png

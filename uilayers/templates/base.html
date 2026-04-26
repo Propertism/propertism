@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{% static 'css/chat-widget.css' %}">
     <link rel="stylesheet" href="{% static 'css/contact-strip.css' %}">
     <link rel="stylesheet" href="{% static 'css/scrollbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/section-overrides.css' %}">
     <link rel="stylesheet" href="{% static 'css/viewport-section-normalization.css' %}">
     
     <!-- Structured Data -->
@@ -59,9 +60,8 @@
     <main class="main-content">
         {% block content %}
         {% endblock %}
+        {% include "components/_footer.html" %}
     </main>
-    
-    {% include "components/_footer.html" %}
     
     <!-- Vertical Social Icons Strip -->
     <a href="{{ home_section_links.contact }}" class="social-strip" aria-label="Go to Get in Touch section">

@@ -27,8 +27,8 @@
             {% for service in services %}
             <div class="col">
                 <div class="service-card">
-                    <h3>{{ service.title }}</h3>
-                    <p>{{ service.short_description|default:service.full_description }}</p>
+                    {% if service.title %}<h3>{{ service.title|striptags }}</h3>{% endif %}
+                    {% if service.short_description or service.full_description %}<p>{{ service.short_description|default:service.full_description|striptags }}</p>{% endif %}
                     <a href="{% url 'contact' %}" class="btn btn-link">Learn More</a>
                 </div>
             </div>

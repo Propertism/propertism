@@ -1,28 +1,27 @@
 /**
- * SCCB-PR-UI-013 — VIEWPORT STABILITY HARDENING
- * NO CLAMPS. NO TRUNCATION. ALL CONTENT BACKEND-DRIVEN.
- *
- * ACTUAL CLASS MAP (verified from home-premium.html):
- * #services-section   → .section-intro-center / .insights-grid / .insight-card.service-depth-card
- * #about-section      → .credibility-grid / .credibility-story-card / .credibility-proof-card
- * #management-section → .management-preview-intro / .management-preview-grid / .management-preview-card
- * #reviews-section    → .customer-reviews-intro / .cr-masonry-grid / .cr-card
- * #properties-section → .featured-properties-intro / .property-grid-hybrid / .property-card-hybrid
- * #blog-section       → .journal-preview-intro / .journal-preview-grid / .journal-preview-card
- * #contact-section    → .nri-contact-shell / .nri-contact-copy / .quote-request-form
+ * SCCB-PR-UI-015 — CLEAN DENSITY NORMALIZATION
+ * SCCB-005: Scroll hijacking removed
+ * SCCB-006: Hero viewport group removed
+ * Target: Propertism Home Premium
  */
 
-/* ============================================
-   GLOBAL VARIABLES
-   ============================================ */
 :root {
-    --nav-height: 80px;
-    --grid-gap: 16px 20px;
-    --card-padding: 16px;
+    --nav-height-desktop: 92px;
+    --nav-height-mobile: 64px;
+    --density-space: 1rem;
 }
 
 /* ============================================
-   1. SECTION CONTAINER
+   NATURAL DOCUMENT FLOW (SCCB-005)
+   No scroll hijacking. No artificial containers.
+   ============================================ */
+body {
+    margin: 0;
+}
+
+/* ============================================
+   THE 1-LINE RHYTHM (16px)
+   ID-level authority to override legacy styles
    ============================================ */
 #services-section,
 #about-section,
@@ -30,312 +29,112 @@
 #reviews-section,
 #properties-section,
 #blog-section,
-#contact-section {
-    display: flex;
-    flex-direction: column;
-    scroll-margin-top: var(--nav-height);
-    box-sizing: border-box;
+#contact-section,
+section.custom-cards-section {
+    padding-top: var(--density-space) !important;
+    padding-bottom: var(--density-space) !important;
+    min-height: auto !important;
+    scroll-margin-top: var(--nav-height-desktop);
 }
 
-/* Container */
-#services-section .container,
-#about-section .container,
-#management-section .container,
-#reviews-section .container,
-#properties-section .container,
-#blog-section .container,
-#contact-section .container {
-    padding-top: 0 !important;
-    display: flex;
-    flex-direction: column;
+/* Internal Margin Purge */
+#services-section .section-intro-center,
+#management-section .management-preview-intro,
+#reviews-section .customer-reviews-intro,
+#properties-section .featured-properties-intro,
+#blog-section .journal-preview-intro {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* ============================================
-   2. HEADER BLOCKS — CENTERED, NO CLIPPING
+   HERO — SHARES VIEWPORT WITH TRUST STRIP
+   Hero takes remaining space after trust strip
+   Both fit in exactly 1 viewport.
    ============================================ */
-.section-intro-center,
-.management-preview-intro,
-.customer-reviews-intro,
-.featured-properties-intro,
-.journal-preview-intro {
+
+/* 1. Hero fills viewport MINUS trust strip space */
+#home-section.hero-hybrid,
+#home-section.hero-hybrid.hero-hybrid-has-image {
+    position: relative;
+    height: calc(100vh - 130px) !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 12px;
-    padding: 24px 16px 0;
-    max-width: 860px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+    background: var(--brand-navy, #0A1628);
 }
 
-/* ============================================
-   3. TITLES & SUBTITLES
-   h2-base-style applied to: Management, Reviews, Properties, Blog
-   Excluded: About (.credibility-title), Contact (.nri-contact-copy)
-   ============================================ */
-
-/* Kicker labels */
-.section-kicker {
-    text-align: center;
-    display: block;
-}
-
-/* Section H2 titles — 35px, NO WRAP (excludes About + Contact) */
-.section-intro-center h2,
-.management-preview-intro h2,
-.customer-reviews-intro h2,
-.featured-properties-intro h2,
-.featured-properties-title,
-.journal-preview-intro h2 {
-    font-family: var(--font-display);
-    font-size: 35px !important;
-    font-weight: 400;
-    color: var(--gray-900);
-    line-height: 1.2 !important;
-    text-align: center;
-    margin: 0 auto 16px !important;
-    max-width: 80ch;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: unset;
-}
-
-/* Management title — 1pt smaller */
-.management-preview-intro h2 {
-    font-size: calc(35px - 1pt) !important;
-}
-
-/* Section subtitles — 80ch wrap rule (wraps if > 80ch, single line if ≤ 80ch) */
-.section-intro-center p,
-.management-preview-intro p,
-.customer-reviews-intro p,
-.featured-properties-subtitle,
-.journal-preview-intro p {
-    font-size: 1.125rem !important;
-    color: var(--gray-600);
-    line-height: 1.7 !important;
-    text-align: center;
-    margin: 0 auto !important;
-    max-width: 80ch;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
+/* 2. Background media — absolute, fills entire hero */
+#home-section .hero-hybrid-media {
+    position: absolute !important;
+    inset: 0;
     display: block !important;
-    -webkit-line-clamp: unset !important;
-    -webkit-box-orient: unset !important;
-}
-
-/* About titles */
-.credibility-title {
-    line-height: 1.2;
-    margin: 0 0 12px;
-    font-size: clamp(14px, 1.6vw, 22px);
-    white-space: nowrap;
-    text-align: center !important;
     width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: transparent !important;
 }
 
-/* Force about section kicker to center too */
-.credibility-story-card .section-kicker {
-    text-align: left !important;
-    display: block;
-}
-
-.credibility-proof-title {
-    line-height: 1.2;
-    margin: 0 0 12px;
-    font-size: clamp(18px, 1.8vw, 26px);
-    white-space: normal;
-}
-
-/* Contact titles */
-#contact-section .nri-contact-copy h2 {
-    line-height: 1.2;
-    white-space: nowrap;
-    text-align: center !important;
+/* 3. Rotator fills media */
+#home-section .hero-hybrid-rotator {
+    position: relative;
     width: 100%;
+    height: 100%;
 }
 
-#contact-section .nri-contact-copy p {
-    line-height: 1.6;
-    white-space: normal;
+/* 4. Images fill full hero — NO height cap */
+#home-section .hero-hybrid-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none !important;
+    object-fit: cover;
+    object-position: center;
 }
 
-#contact-section .nri-contact-copy .section-kicker {
-    text-align: left !important;
+/* 5. Content — LEFT ALIGNED, starts from viewport edge */
+#home-section .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 24px !important;
+}
+
+#home-section .hero-hybrid-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    text-align: left;
 }
 
 /* ============================================
-   4. GRIDS
+   TRUST STRIP — FIXED HEIGHT, TEXT WRAPPING
    ============================================ */
-#services-section .insights-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    padding: 16px 0;
-}
-
-.management-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    padding: 16px 0 8px;
-}
-
-.cr-masonry-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    padding: 16px 0 8px;
-}
-
-.property-grid-hybrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    padding: 16px 0 8px;
-}
-
-.journal-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-    padding: 16px 0 8px;
-}
-
-/* ============================================
-   5. CARDS — NO CLAMP, FULL CONTENT
-   ============================================ */
-.insight-card.service-depth-card,
-.management-preview-card,
-.cr-card,
-.journal-preview-card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--card-padding);
-    box-sizing: border-box;
-}
-
-.insight-card.service-depth-card h3,
-.management-preview-card h3,
-.journal-preview-card h3 {
-    margin: 8px 0;
-    line-height: 1.2;
-}
-
-.management-preview-meta {
-    margin-bottom: 6px;
-    line-height: 1.3;
-}
-
-/* Properties card */
-.property-card-hybrid {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-.property-image-hybrid {
+.trust-strip-section {
+    position: relative;
+    z-index: 3;
+    margin-top: 0 !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    height: 130px !important;
+    padding: 10px 0 !important;
     overflow: hidden;
 }
 
-.property-image-hybrid img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.property-details-hybrid {
-    padding: 12px;
-}
-
-/* ============================================
-   6. ABOUT SECTION
-   ============================================ */
-#about-section .credibility-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 24px 0 16px;
-}
-
-#about-section .credibility-story-card,
-#about-section .credibility-proof-card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--card-padding);
-    box-sizing: border-box;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 12px;
+/* Force the small description text to wrap to 2 lines */
+.trust-strip-item small {
+    max-width: 90%;
+    display: block;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* ============================================
-   7. CONTACT SECTION
+   CONTACT SECTION — SHARP EDGES (NO ROUNDED CORNERS)
    ============================================ */
-#contact-section .nri-contact-shell {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 24px;
-    padding: 24px 0 16px;
-    align-items: start;
-}
-
-#contact-section .nri-contact-copy {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* ============================================
-   8. CTA ROWS
-   ============================================ */
-.section-cta-center,
-.featured-properties-cta,
-.cr-footer-row {
-    text-align: center;
-    padding: 8px 0 12px;
-}
-
-/* ============================================
-   9. RESPONSIVE
-   ============================================ */
-@media (max-width: 1024px) {
-    #services-section .insights-grid,
-    .management-preview-grid,
-    .cr-masonry-grid,
-    .property-grid-hybrid,
-    .journal-preview-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    #about-section .credibility-grid,
-    #contact-section .nri-contact-shell {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    :root {
-        --nav-height: 64px;
-    }
-
-    #services-section .insights-grid,
-    .management-preview-grid,
-    .cr-masonry-grid,
-    .property-grid-hybrid,
-    .journal-preview-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.nri-contact-section {
+    border-radius: 0 !important;
 }

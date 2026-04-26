@@ -1,0 +1,66 @@
+<section id="about-section" class="credibility-section">
+    <div class="container">
+        <div class="credibility-grid">
+            <div class="credibility-story-card">
+                {% if company.about_section_eyebrow %}<span class="section-kicker">{{ company.about_section_eyebrow }}</span>{% endif %}
+                {% if company.about_section_title %}<h2 class="credibility-title">{{ company.about_section_title }}</h2>{% endif %}
+                <div class="credibility-copy-stack">
+                    {% if company.about_mission %}
+                    <div class="credibility-mission-block">
+                        <span class="credibility-mission-label">Mission</span>
+                        <p class="credibility-copy credibility-mission-copy">{{ company.about_mission|linebreaksbr }}</p>
+                    </div>
+                    {% endif %}
+                    <p class="credibility-copy">
+                        {% if company.about_description %}{{ company.about_description|linebreaksbr }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team
+                        to coordinate the work in Chennai.{% endif %}
+                    </p>
+                </div>
+                <div class="credibility-actions">
+                    <a href="{{ home_section_links.management }}" class="btn-view-all">{{ company.about_primary_cta_text|default:"Our Team" }}</a>
+                    <a href="{{ home_section_links.contact }}" class="credibility-inline-link">{{ company.about_secondary_cta_text|default:"Get in Touch" }}</a>
+                </div>
+            </div>
+            <div class="credibility-proof-card">
+                {% if company.proof_section_eyebrow %}<span class="section-kicker">{{ company.proof_section_eyebrow }}</span>{% endif %}
+                {% if company.proof_section_title %}<h3 class="credibility-proof-title">{{ company.proof_section_title }}</h3>{% endif %}
+                {% if credibility_points %}
+                <ul class="credibility-proof-list">
+                    {% for point in credibility_points|slice:":3" %}
+                    <li><strong>{{ point.title }}</strong>{% if point.description %}: {{
+                        point.description|truncatewords:12 }}{% endif %}</li>
+                    {% endfor %}
+                </ul>
+                {% elif expertise_highlights %}
+                <ul class="credibility-proof-list">
+                    {% for area in expertise_highlights|slice:":3" %}
+                    <li><strong>{{ area.title }}</strong>{% if area.description %}: {{ area.description|truncatewords:12
+                        }}{% endif %}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="credibility-office-pills">
+                    <div class="credibility-office-pill">
+                        <span>India Office</span>
+                        <strong>{{ company.india_office_city }}, {{ company.india_office_state }}</strong>
+                    </div>
+                    <div class="credibility-office-pill">
+                        <span>US Office</span>
+                        <strong>{{ company.us_office_city }}, {{ company.us_office_state }}</strong>
+                    </div>
+                </div>
+                {% if stats %}
+                <div class="stats-grid">
+                    {% for stat in stats %}
+                    <div class="stat-card">
+                        <h3>{{ stat.value }}</h3>
+                        <p>{{ stat.label }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</section>

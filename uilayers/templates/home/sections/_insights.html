@@ -1,0 +1,42 @@
+<section id="blog-section" class="journal-preview-section">
+    <div class="container">
+        <div class="journal-preview-intro">
+            {% if company.blog_section_eyebrow %}<span class="section-kicker">{{ company.blog_section_eyebrow }}</span>{% endif %}
+            {% if company.blog_section_title %}<h2>{{ company.blog_section_title }}</h2>{% endif %}
+            {% if company.blog_section_description %}<p>{{ company.blog_section_description }}</p>{% endif %}
+        </div>
+        <div class="journal-preview-grid">
+            {% for post in recent_posts %}
+            <article class="journal-preview-card" data-journal-card>
+                <div class="journal-card-header">
+                    <span class="journal-preview-category">{{ post.get_category_display }}</span>
+                    <h3 class="journal-clickable-title"><a href="{% url 'blog_post' post.slug %}">{{ post.title }}</a>
+                    </h3>
+                </div>
+
+                <div class="journal-content-wrapper">
+                    <div class="journal-content-preview">
+                        {% if post.excerpt %}{{ post.excerpt|truncatewords:24 }}{% else %}{{
+                        post.content|truncatewords:24 }}{% endif %}
+                    </div>
+                    <div class="journal-content-full" style="display: none;">
+                        {{ post.content|linebreaks }}
+                    </div>
+                </div>
+
+                <div class="journal-card-footer">
+                    <small>{{ post.published_date|date:"M d, Y" }}</small>
+                    <button type="button" class="btn-journal-expand" data-expand-journal>Read More</button>
+                </div>
+            </article>
+            {% empty %}
+            <article class="journal-preview-card">
+                <span class="journal-preview-category">Updates</span>
+                <h3>Fresh NRI property insights are being prepared.</h3>
+                <p>Expect concise guidance on property reporting, maintenance discipline, and ownership decisions.</p>
+                <small>Coming soon</small>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

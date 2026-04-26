@@ -1,0 +1,44 @@
+{% for section in custom_card_sections %}
+{% if section.active_cards %}
+<section id="{{ section.slug }}-section" class="custom-cards-section">
+    <div class="container">
+        <div class="custom-cards-intro">
+            {% if section.eyebrow %}
+            <span class="section-kicker">{{ section.eyebrow }}</span>
+            {% endif %}
+            <h2>{{ section.title }}</h2>
+            {% if section.description %}
+            <p>{{ section.description }}</p>
+            {% endif %}
+        </div>
+        <div class="custom-cards-grid">
+            {% for card in section.active_cards %}
+            <article class="custom-card-panel">
+                {% if card.eyebrow %}
+                <span class="custom-card-eyebrow">{{ card.eyebrow }}</span>
+                {% endif %}
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                {% if card.footer %}
+                <small>{{ card.footer }}</small>
+                {% endif %}
+                {% if card.cta_text and card.cta_url %}
+                <a href="{{ card.cta_url }}" class="custom-card-link">{{ card.cta_text }}</a>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        {% if section.badge_title or section.badge_text %}
+        <div class="service-depth-tags">
+            {% if section.badge_title %}
+            <span class="service-depth-tag is-label">{{ section.badge_title }}</span>
+            {% endif %}
+            {% if section.badge_text %}
+            <span class="service-depth-tag">{{ section.badge_text }}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endfor %}
