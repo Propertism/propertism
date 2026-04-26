@@ -3,7 +3,7 @@
         <div class="credibility-grid">
             <div class="credibility-story-card">
                 {% if company.about_section_eyebrow %}<span class="section-kicker">{{ company.about_section_eyebrow }}</span>{% endif %}
-                {% if company.about_section_title %}<h2 class="credibility-title">{{ company.about_section_title }}</h2>{% endif %}
+                <h2 class="credibility-title">One team coordinating owners, tenants, vendors, and follow-through.</h2>
                 <div class="credibility-copy-stack">
                     {% if company.about_mission %}
                     <div class="credibility-mission-block">
@@ -12,8 +12,7 @@
                     </div>
                     {% endif %}
                     <p class="credibility-copy">
-                        {% if company.about_description %}{{ company.about_description|linebreaksbr }}{% else %}Propertism supports NRI owners who need reliable local execution, clear updates, and one team
-                        to coordinate the work in Chennai.{% endif %}
+                        Practical accountability on the ground matters more than generic advisory. The management team is structured around execution, reporting, and decision support for owners abroad.
                     </p>
                 </div>
                 <div class="credibility-actions">
@@ -23,19 +22,18 @@
             </div>
             <div class="credibility-proof-card">
                 {% if company.proof_section_eyebrow %}<span class="section-kicker">{{ company.proof_section_eyebrow }}</span>{% endif %}
-                {% if company.proof_section_title %}<h3 class="credibility-proof-title">{{ company.proof_section_title }}</h3>{% endif %}
+                <h3 class="credibility-proof-title">Useful updates for owners managing from abroad.</h3>
+                <p class="credibility-copy credibility-proof-copy">Short, practical support for reporting, rentals, maintenance, Chennai.</p>
                 {% if credibility_points %}
                 <ul class="credibility-proof-list">
                     {% for point in credibility_points|slice:":3" %}
-                    <li><strong>{{ point.title }}</strong>{% if point.description %}: {{
-                        point.description|truncatewords:12 }}{% endif %}</li>
+                    <li><strong>{{ point.title }}</strong>{% if point.description %}: {{ point.description|truncatewords:12 }}{% endif %}</li>
                     {% endfor %}
                 </ul>
                 {% elif expertise_highlights %}
                 <ul class="credibility-proof-list">
                     {% for area in expertise_highlights|slice:":3" %}
-                    <li><strong>{{ area.title }}</strong>{% if area.description %}: {{ area.description|truncatewords:12
-                        }}{% endif %}</li>
+                    <li><strong>{{ area.title }}</strong>{% if area.description %}: {{ area.description|truncatewords:12 }}{% endif %}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}

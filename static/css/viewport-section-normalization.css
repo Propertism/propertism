@@ -138,3 +138,114 @@ section.custom-cards-section {
 .nri-contact-section {
     border-radius: 0 !important;
 }
+
+/* ============================================
+   ABOUT SECTION — TEXT WRAP FIX
+   Force titles and copy to take full available width
+   ============================================ */
+#about-section .credibility-story-card,
+#about-section .credibility-proof-card {
+    padding: 2rem !important; /* Reduce from 3rem to gain horizontal space */
+}
+
+/* Expanded grid to give story card more room for 2-line wrap */
+#about-section .credibility-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr) !important;
+}
+
+#about-section .credibility-title {
+    max-width: 35ch !important; /* Ideal for 2-line wrap of this title */
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#about-section .credibility-copy {
+    max-width: 85ch !important; /* Ideal for 2-line wrap of this description */
+    -webkit-line-clamp: unset !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+#about-section .section-kicker {
+    display: block;
+    text-align: center !important;
+    margin-bottom: 12px;
+}
+
+#about-section .credibility-actions {
+    justify-content: center !important;
+}
+
+
+#about-section .credibility-proof-title {
+    max-width: 35ch !important; /* Ideal for 2-line wrap */
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    color: #FFFFFF !important;
+}
+
+#about-section .credibility-proof-copy {
+    max-width: 60ch !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 24px !important;
+}
+
+#about-section .credibility-proof-list {
+    text-align: left; /* Keep list items left aligned for readability */
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   GLOBAL SECTION INTRO — CENTERED NORMALIZATION
+   Used across Management, Insights, and Properties
+   ============================================ */
+.management-preview-intro,
+.journal-preview-intro,
+.featured-properties-intro,
+.section-intro-centered {
+    text-align: center !important;
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 48px !important;
+}
+
+.section-title-centered {
+    font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 35ch !important; /* Forces 2-line wrap */
+    text-align: center !important;
+    color: var(--gray-900) !important;
+    margin-bottom: 16px !important;
+}
+
+.section-desc-centered {
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 85ch !important; /* Forces 2-line wrap */
+    text-align: center !important;
+    color: var(--gray-600) !important;
+}
+
+#management-section .section-kicker,
+#blog-section .section-kicker {
+    display: block;
+    text-align: center !important;
+    margin-bottom: 12px;
+}
+
+
+

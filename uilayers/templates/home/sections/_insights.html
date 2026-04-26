@@ -1,9 +1,9 @@
 <section id="blog-section" class="journal-preview-section">
     <div class="container">
         <div class="journal-preview-intro">
-            {% if company.blog_section_eyebrow %}<span class="section-kicker">{{ company.blog_section_eyebrow }}</span>{% endif %}
-            {% if company.blog_section_title %}<h2>{{ company.blog_section_title }}</h2>{% endif %}
-            {% if company.blog_section_description %}<p>{{ company.blog_section_description }}</p>{% endif %}
+            {% if company.blog_section_eyebrow %}<span class="section-kicker">{{ company.blog_section_eyebrow }}</span>{% else %}<span class="section-kicker">Insights</span>{% endif %}
+            <h2 class="section-title-centered">Useful updates for owners managing from abroad.</h2>
+            <p class="section-desc-centered">Short, practical support for reporting, rentals, maintenance, Chennai.</p>
         </div>
         <div class="journal-preview-grid">
             {% for post in recent_posts %}
