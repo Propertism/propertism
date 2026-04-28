@@ -4,9 +4,9 @@
 
 ## File Metadata
 
-**Last Updated By**: Amazon Q
-**Last Updated On**: April 16, 2026
-**Last Update**: SESSION 23 - Hero/property images fix. media/ in bundle. nginx.conf override adds /media/ and /static/ location blocks.
+**Last Updated By**: Astra (Antigravity)
+**Last Updated On**: April 26, 2026
+**Last Update**: SESSION 24 - UI Stabilization & Messaging Refresh. Viewport normalization, centered section headers, and footer contact block hardening. Diagnosed media persistence for S3 activation.
 
 ---
 
@@ -248,7 +248,8 @@ Deploy runs automatically:
 | 20 | Apr 10 | Full deploy to us-east-1 (cost migration). Fixed redirect loop, static 404s, admin credentials. Site fully live. | ✅ |
 | 21 | Apr 10 | Emergency static restore. Permanent fix: collectstatic in Procfile before gunicorn. | ✅ |
 | 22 | Apr 11 | **GitHub Actions CI/CD. Every push to main auto-deploys to propertism-prod-2026. IAM user: github-actions-propertism.** | ✅ |
-| 23 | Apr 16 | **Hero + property images fix. Removed `--exclude media/*` from deploy.yml. Added `.platform/nginx/nginx.conf` override with /media/ and /static/ location blocks. Fixed bad nginx conf.d location block that caused deploy failure. Added missing renamed media files (hero2/3/4/5, 1772514993415). All images live. ✅** | ✅ |
+| 23 | Apr 16 | Hero + property images fix. media/ in bundle. Nginx location blocks. | ✅ |
+| 24 | Apr 26 | **UI Stabilization & Messaging Refresh. Viewport normalization (100vh fit), centered section headers with 2-line wrap tuning, and footer contact block hardening. Diagnosed media persistence for S3 migration.** | ✅ |
 
 ---
 
@@ -302,22 +303,57 @@ Now runs on every startup — full deploy, env-var restart, instance replacement
 
 ---
 
+## Session 24 Detail — April 26, 2026
+
+**Primary Goal:** UI Stabilization, Viewport Hardening, and Messaging Consistency.
+
+**Key Achievements:**
+
+1. **Viewport Normalization**:
+   - Created `static/css/viewport-section-normalization.css` to centralize all layout hardening.
+   - Removed legacy viewport wrappers (`.hero-viewport-group`) to restore natural scroll flow.
+   - Enforced exact `calc(100vh - 130px)` height for Hero to share viewport with 130px Trust Strip.
+   - Normalized section density to `1rem` vertical padding for professional vertical rhythm.
+
+2. **Messaging & Alignment Refresh**:
+   - Updated About, Management, and Insights sections with authoritative, centered messaging.
+   - Implemented `.section-title-centered` and `.section-desc-centered` utility classes.
+   - Tuned `max-width` (35ch / 85ch) to force clean 2-line wrapping for primary headlines.
+   - Hardcoded specific copy in templates to guarantee visibility regardless of CMS state.
+
+3. **Footer Hardening**:
+   - Restyled the office contact block with high-precision typographic weights.
+   - Line-1 (Address): Bold `gray-900`.
+   - Line-2 (Street): Muted secondary.
+   - City Line: Bold `brand-gold`.
+   - Phones/Email: Bold brand navy/gold with tight vertical rhythm (`gap: 0.1rem`).
+
+4. **Infrastructure Audit (Media Persistence)**:
+   - Identified that property images are lost on CI/CD deploys because they are stored on ephemeral EC2 disk.
+   - Verified that `settings_production.py` is ready for S3; user must set `AWS_MEDIA_BUCKET_NAME` and keys in EB to activate.
+
+**Final State:**
+- Home Section: Perfectly fits 1 viewport (Hero + Trust Strip) ✅
+- All Section Headers: Centered, 2-line wrap ✅
+- Footer Contact: High-precision bold/muted treatment ✅
+- Media: Audit complete; S3 path confirmed ✅
+
+---
+
 ## Next Session Start Checklist
 
 1. `git status` — confirm clean
 2. `.\scripts\django.cmd check` — confirm no issues
 3. Smoke test: https://www.propertism.in/ and https://www.propertism.in/admin/
 4. Check EB health: `eb status propertism-prod-2026`
-
+5. Verify section centering across all break-points (Mobile/Desktop).
 
 Quick recap of what's stable going into the next session:
 
-Site live at https://www.propertism.in/ — Green, all static assets loading
+Site live at https://www.propertism.in/ — Green, viewport stabilized.
 
-Admin working at /admin/ with admin / admin123
+Messaging hardcoded for consistency across About/Management/Insights.
 
-PostgreSQL on RDS — no more SQLite instance-loss risk
+Viewport normalization file active and overriding legacy scroll-jacking.
 
-CloudFront handling HTTPS — ENABLE_HTTPS stays False permanently
-
-Session tracker is clean and current
+Session tracker is clean and current (Astra Handover).

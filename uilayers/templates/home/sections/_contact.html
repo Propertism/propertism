@@ -1,78 +1,56 @@
 <section id="contact-section" class="nri-contact-section">
     <div class="container">
-        <div class="nri-contact-shell">
-            <div class="nri-contact-copy">
-                {% if company.contact_section_eyebrow %}<span class="section-kicker">{{ company.contact_section_eyebrow }}</span>{% endif %}
-                {% if company.contact_section_title %}<h2>{{ company.contact_section_title }}</h2>{% endif %}
+        <div class="section-intro-center">
+            {% if company.contact_section_eyebrow %}<span class="section-kicker">{{ company.contact_section_eyebrow }}</span>{% endif %}
+            {% if company.contact_section_title %}<h2 style="color: white;">{{ company.contact_section_title }}</h2>{% endif %}
+        </div>
+        
+        <div class="contact-section-grid">
+            <div class="contact-info-column">
                 {% if company.contact_section_description %}<p>{{ company.contact_section_description }}</p>{% endif %}
-                <div class="nri-contact-actions">
-                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="contact-icon-link contact-icon-phone"
-                        aria-label="Call Us" title="Call Chennai Office">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.34 2.74a2 2 0 0 1-.57 1.73l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.73-.57l2.74.34A2 2 0 0 1 22 16.92Z" />
-                        </svg>
-                    </a>
-                    <a href="https://wa.me/{{ company.india_phone_1|cut:' '|cut:'+' }}?text=Hi%2C%20I%20want%20to%20discuss%20property%20management."
-                        class="contact-icon-link contact-icon-whatsapp" aria-label="WhatsApp" title="Chat on WhatsApp"
-                        target="_blank" rel="noopener noreferrer">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.56 0 .27 5.29.27 11.8c0 2.08.54 4.1 1.57 5.89L0 24l6.49-1.7a11.74 11.74 0 0 0 5.58 1.42h.01c6.51 0 11.8-5.29 11.8-11.8 0-3.15-1.23-6.1-3.36-8.44Zm-8.45 18.24h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.85 1.01 1.03-3.76-.23-.39a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.77 9.77 0 0 1 2.89 6.95c0 5.43-4.42 9.84-9.85 9.84Zm5.39-7.38c-.29-.14-1.71-.84-1.98-.94-.26-.1-.46-.14-.65.15-.19.29-.75.94-.92 1.14-.17.19-.34.22-.64.07-.29-.14-1.23-.45-2.35-1.45-.87-.77-1.46-1.72-1.63-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.15-.24-.57-.48-.49-.65-.5l-.55-.01c-.19 0-.5.07-.76.36-.26.29-.99.97-.99 2.36s1.01 2.73 1.15 2.92c.14.19 1.98 3.02 4.8 4.24.67.29 1.20.47 1.61.6.68.22 1.30.19 1.79.12.55-.08 1.71-.70 1.95-1.38.24-.68.24-1.27.17-1.39-.07-.12-.27-.19-.56-.34Z" />
-                        </svg>
-                    </a>
-                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.company_name|urlencode }}+{{ company.india_office_address|urlencode }}+{{ company.india_office_city|urlencode }}"
-                        class="contact-icon-link contact-icon-map" aria-label="View on Map"
-                        title="View Chennai Office on Google Maps" target="_blank" rel="noopener noreferrer">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 2c3.87 0 7 3.13 7 7 0 4.92-4.52 9.57-6.22 11.16a1.1 1.1 0 0 1-1.56 0C9.52 18.57 5 13.92 5 9c0-3.87 3.13-7 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6.5a2.5 2.5 0 0 0 0 5Z" />
-                        </svg>
-                    </a>
+                
+                <div class="contact-details-list">
+                    <div class="detail-item">
+                        <h4>Chennai Office</h4>
+                        <p class="address-text">{{ company.india_office_address|linebreaksbr }}</p>
+                        <span class="phone-text">{{ company.india_phone_1 }}</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4>US Coordination</h4>
+                        <p class="address-text">{{ company.us_office_address|linebreaksbr }}</p>
+                        <span class="phone-text">{{ company.us_phone }}</span>
+                    </div>
                 </div>
+
+                <a href="https://www.google.com/maps/search/Propertism+Realty+Advisors+Saligramam+Chennai" target="_blank" rel="noopener noreferrer" class="contact-map-link">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                    <span>View on Google Maps</span>
+                </a>
             </div>
-            <form action="{% url 'contact' %}" method="POST" class="quote-request-form">
-                {% csrf_token %}
-                <div class="quote-request-grid">
-                    <label class="quote-request-field">
-                        <span>Full Name <span style="color: #B89A4A;">*</span></span>
-                        <input type="text" name="name" required>
-                    </label>
-                    <label class="quote-request-field">
-                        <span>Email <span style="color: #B89A4A;">*</span></span>
-                        <input type="email" name="email" required>
-                    </label>
-                    <label class="quote-request-field">
-                        <span>Phone</span>
-                        <input type="tel" name="phone">
-                    </label>
-                    <label class="quote-request-field">
-                        <span>Service Needed</span>
-                        <select name="service">
-                            <option value="">Select a service</option>
-                            {% for value, label in contact_service_choices %}
-                            <option value="{{ value }}">{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
-                    <label class="quote-request-field quote-request-field-full">
-                        <span>Property Type</span>
-                        <select name="property_type">
-                            <option value="">Select property type</option>
-                            {% for value, label in contact_property_choices %}
-                            <option value="{{ value }}">{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
-                    <label class="quote-request-field quote-request-field-full">
-                        <span>What do you need help with? <span style="color: #B89A4A;">*</span></span>
-                        <textarea name="message" rows="4" required
-                            placeholder="Tell us about the property, the current situation, and the support you need."></textarea>
-                    </label>
-                </div>
-                <button type="submit" class="quote-request-submit">{{ company.contact_form_submit_text }}</button>
-            </form>
+
+            <div class="contact-form-column">
+                <form action="{% url 'contact' %}" method="POST" class="contact-form">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input type="tel" name="phone" placeholder="Phone Number">
+                    
+                    <select name="service">
+                        <option value="">Select Service Needed</option>
+                        {% for value, label in contact_service_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <textarea name="message" rows="5" placeholder="How can we help manage your property?" required></textarea>
+                    
+                    <button type="submit" class="btn-gold">Book Free NRI Consultation</button>
+                </form>
+            </div>
         </div>
     </div>
 </section>

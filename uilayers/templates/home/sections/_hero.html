@@ -13,24 +13,18 @@
     {% endif %}
     <div class="container">
         <div class="hero-hybrid-content">
-            <div class="hero-text-wrap">
-                <div class="hero-copy-zillow">
-                    {% if company.hero_eyebrow %}<span class="hero-eyebrow">{{ company.hero_eyebrow }}</span>{% endif %}
+            <h1 class="hero-title-premium">
+                We manage, protect & grow your <span class="highlight-gold">Chennai Property</span>
+            </h1>
+            <div class="hero-title-divider"></div>
 
-                    {% if company.hero_title or hero_title_segments %}
-                    <h1 class="hero-title-zillow">
-                        {% if company.hero_title %}
-                        <span class="hero-title-line">{{ company.hero_title }}</span>
-                        {% else %}
-                        {% for line in hero_title_segments %}
-                        <span class="hero-title-line">{{ line.text }}</span>
-                        {% endfor %}
-                        {% endif %}
-                    </h1>
-                    {% endif %}
+            <p class="hero-description">
+                End-to-end management for NRIs — even if you’re 10,000 km away. Complete transparency, on-ground execution, and high-yield results.
+            </p>
 
-                    {% if company.hero_description %}<p class="hero-description">{{ company.hero_description }}</p>{% endif %}
-                </div>
+            <div class="hero-actions">
+                <a href="/#contact-section" class="btn-gold">Book Free NRI Consultation</a>
+                <a href="/#services-section" class="btn-outline-white">View Our Services</a>
             </div>
         </div>
     </div>

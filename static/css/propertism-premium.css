@@ -1,0 +1,934 @@
+/* 
+   PROPERTISM PREMIUM DESIGN SYSTEM (STITCH x GOOGLE x WARMTH)
+   SCCB-ANNEX-UX-WARMTH-010
+*/
+
+:root {
+    --prm-bg: #0F0F10;
+    --prm-bg-soft: #1A1A1D;
+    --prm-gold: #C9A14A;
+    --prm-gold-hover: #D4AF37;
+    --prm-text: #FFFFFF;
+    --prm-text-muted: #B0B0B5;
+    --prm-border: rgba(201, 161, 74, 0.15);
+    
+    --prm-font-serif: 'Playfair Display', serif;
+    --prm-font-sans: 'Inter', sans-serif;
+    
+    --prm-container: 1100px;
+    --prm-section-padding: 100px;
+}
+
+/* Global Foundation */
+body {
+    background-color: var(--prm-bg);
+    color: var(--prm-text);
+    font-family: var(--prm-font-sans);
+    line-height: 1.6;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: var(--prm-container);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* 1. Global Softness & Warmth */
+h1, h2, h3 { 
+    font-family: var(--prm-font-serif);
+    letter-spacing: 0.01em; 
+    color: #1A1A1A; /* Deep Espresso */
+}
+
+h1 { font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.05; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+h2 { font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.15; }
+
+p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
+
+/* 
+   IMMEDIATE RECOVERY & HARDENING (SCCB-RECOVERY-011)
+   Fixing contrast, hierarchy, and template-feel issues.
+*/
+
+/* 1. Navbar Hardening (High Visibility) */
+.site-header {
+    background: rgba(15, 15, 16, 0.9) !important; 
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    padding: 1rem 0 !important;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-image {
+    max-height: 45px !important; /* Constrain huge logo */
+    width: auto;
+    display: block;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.main-nav a {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0 1.2rem;
+    display: inline-block;
+    line-height: 1; /* Reset line-height for perfect centering */
+}
+
+.nav-cta {
+    background: var(--prm-gold) !important;
+    color: #111111 !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+    padding: 0.6rem 1.5rem !important;
+}
+
+/* 2. Hero Clarity (Absolute 100% Resolution - No Overlays) */
+.hero-hybrid {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #000 !important;
+}
+
+.hero-hybrid-image {
+    filter: none !important; /* Force no blur/dullness */
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+}
+
+/* NO DIMMING OVERLAY - Removed ::before gradient completely */
+.hero-hybrid::before {
+    display: none !important;
+}
+
+.hero-hybrid-content {
+    z-index: 2;
+    max-width: 950px !important;
+    padding-left: 0 !important; 
+    margin: 0 auto !important;
+    text-align: center !important;
+    transform: translateY(20px); /* Shift DOWN to avoid cutoff at top */
+}
+
+.hero-hybrid-image {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+.hero-title-premium {
+    color: #FFFFFF !important;
+    font-size: clamp(2.2rem, 5vw, 3.8rem) !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    /* High-contrast shadows for legibility on pure bright images */
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.4) !important;
+    font-family: var(--prm-font-serif);
+}
+
+.hero-title-premium .highlight-gold {
+    color: var(--prm-gold) !important;
+    font-size: 1em !important; 
+    font-weight: 900 !important;
+    letter-spacing: normal !important; /* Remove extreme letter-spacing */
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.hero-description {
+    color: #FFFFFF !important; /* Pure white for max contrast */
+    font-size: 1.2rem !important;
+    max-width: 650px !important;
+    margin: 0 auto 2.5rem auto !important;
+    line-height: 1.7 !important;
+    opacity: 1 !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8) !important;
+}
+
+.hero-actions {
+    margin-top: 24px !important;
+    display: flex;
+    gap: 20px !important;
+    justify-content: center !important;
+}
+
+/* 3. Button Polish */
+.btn-gold {
+    background: var(--prm-gold) !important;
+    color: #111111 !important;
+    padding: 16px 32px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(201, 161, 74, 0.4) !important;
+    transition: transform 0.3s ease;
+}
+
+.btn-gold:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+}
+
+.btn-outline-white {
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    background: transparent !important;
+    padding: 14px 30px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-white:hover {
+    background: #FFFFFF !important;
+    color: #111111 !important;
+}
+
+/* 4. Trust Strip Authority */
+#stats-section {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #EEE !important;
+}
+
+.trust-strip-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Accommodate all 4 metrics */
+    text-align: center;
+    align-items: center;
+}
+
+.metric-item {
+    position: relative;
+    padding: 0 20px;
+}
+
+.metric-value {
+    color: var(--prm-gold) !important;
+    font-size: 3.5rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 0 !important;
+    font-family: var(--prm-font-serif);
+    display: block;
+    line-height: 1;
+}
+
+.metric-label {
+    color: #111111 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.1em !important;
+    margin-top: 5px !important;
+    display: block;
+}
+
+/* 2. Section Rhythm (Premium Warmth) */
+section { padding: 100px 0 !important; }
+@media (max-width: 768px) { section { padding: 70px 0 !important; } }
+
+#about-section, #reviews-section, #blog-section { background-color: #FFFFFF !important; }
+#services-section, #management-section, #properties-section { background-color: #F9F8F5 !important; }
+#contact-section { background-color: #0F0F10 !important; color: white !important; }
+#contact-section h2, #contact-section p { color: white !important; }
+
+/* 6. Card Uniformity (Softer & Warmer) */
+.insight-card, .cr-card, .property-card-hybrid, .credibility-proof-card {
+    background-color: #FFFFFF !important;
+    border-radius: 12px !important;
+    padding: 3rem !important;
+    border: 1px solid rgba(201, 161, 74, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(26,20,10,0.04) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 7. Footer Premium — COMPREHENSIVE TEXT VISIBILITY */
+.site-footer {
+    background-color: #0F0F10 !important;
+    padding: 120px 0 60px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    color: #FFFFFF !important;
+}
+
+/* Force ALL text inside footer to be visible */
+.site-footer,
+.site-footer p,
+.site-footer div,
+.site-footer span,
+.site-footer li,
+.site-footer small,
+.site-footer strong {
+    color: #B0B0B5 !important;
+}
+
+.site-footer h3 {
+    color: var(--prm-gold) !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.25em !important;
+    margin-bottom: 2.5rem !important;
+    font-weight: 800 !important;
+}
+
+.site-footer a {
+    color: #B0B0B5 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: var(--prm-gold) !important;
+}
+
+.footer-links a {
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.site-footer strong,
+.site-footer .highlight-gold,
+.footer-office-city,
+.world-clock-tagline-title {
+    color: #FFFFFF !important;
+}
+
+/* Office details: bright addresses & phones */
+.footer-office-address,
+.footer-office-city {
+    color: #D1D5DB !important;
+}
+
+.footer-office-phones a,
+.footer-office-email a {
+    color: var(--prm-gold) !important;
+}
+
+.footer-copy {
+    color: #B0B0B5 !important;
+}
+
+/* Social Icons to Gold */
+.footer-social-link i, .footer-social-link svg {
+    color: var(--prm-gold) !important;
+}
+
+.footer-social-link:hover {
+    transform: translateY(-3px);
+}
+
+/* Newsletter Premium */
+.footer-newsletter-form-mini input {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: #FFFFFF !important;
+    padding: 12px 16px !important;
+    border-radius: 4px !important;
+}
+
+.footer-newsletter-form-mini button {
+    background: linear-gradient(135deg, #D4AF37 0%, #C9A14A 100%) !important;
+    color: #1A1A1A !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px !important;
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* World Clock Strip Visibility */
+.world-clock-strip {
+    background: rgba(255,255,255,0.02) !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    padding: 2.5rem !important;
+}
+
+.world-clock-label {
+    color: var(--prm-gold) !important;
+    font-weight: 600 !important;
+}
+
+.world-clock-time,
+.world-clock-hours,
+.world-clock-minutes,
+.world-clock-separator,
+.world-clock-meridiem {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
+.world-clock-date {
+    color: #B0B0B5 !important;
+}
+
+.world-clock-tagline-title {
+    color: #FFFFFF !important;
+}
+
+.footer-reach-text, .footer-hours-text {
+    color: #FFFFFF !important;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    padding-top: 40px !important;
+    margin-top: 80px !important;
+}
+
+.footer-bottom p, .footer-bottom-links a {
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 0.85rem !important;
+}
+
+/* 8. Removal of Template Signals */
+.section-kicker, .highlight-gold {
+    color: var(--prm-gold) !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.25em !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+    display: inline-block;
+}
+
+.property-price-hybrid {
+    color: var(--prm-gold) !important;
+    font-weight: 700 !important;
+    font-size: 1.6rem !important;
+    font-family: var(--prm-font-serif) !important;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* 9. Contact Section Premium (Stitch Style) */
+.nri-contact-section {
+    background-color: var(--prm-bg) !important;
+    padding: 120px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.contact-section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .contact-section-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+}
+
+.contact-info-column p {
+    color: var(--prm-text-muted) !important;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.detail-item {
+    margin-bottom: 2.5rem;
+}
+
+.detail-item h4 {
+    color: var(--prm-gold) !important;
+    font-family: var(--prm-font-sans);
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.75rem !important;
+}
+
+.detail-item .address-text {
+    color: #FFFFFF !important;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 !important;
+}
+
+.detail-item .phone-text {
+    color: var(--prm-gold) !important;
+    font-family: var(--prm-font-sans);
+    font-weight: 600;
+    margin-top: 0.5rem !important;
+    display: block;
+}
+
+/* Map Link (replaces iframe) */
+.contact-map-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 2.5rem;
+    padding: 20px 24px;
+    background: var(--prm-bg-soft);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--prm-gold) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.contact-map-link svg {
+    color: var(--prm-gold);
+    flex-shrink: 0;
+}
+
+.contact-map-link:hover {
+    background: rgba(201, 161, 74, 0.08);
+    border-color: rgba(201, 161, 74, 0.2);
+    transform: translateY(-2px);
+    color: var(--prm-gold) !important;
+}
+
+/* Premium Form Styles */
+.contact-form {
+    background: var(--prm-bg-soft);
+    padding: 3.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.contact-form input, 
+.contact-form select, 
+.contact-form textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: #FFFFFF !important;
+    padding: 1.2rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 1.5rem !important;
+    font-family: var(--prm-font-sans);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.contact-form input:focus, 
+.contact-form select:focus, 
+.contact-form textarea:focus {
+    outline: none !important;
+    border-color: var(--prm-gold) !important;
+    background: rgba(255,255,255,0.06) !important;
+    box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.1) !important;
+}
+
+.contact-form select option {
+    background: var(--prm-bg-soft);
+    color: white;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* 10. About Section Premium (SCCB-PRM-ABOUT-REFINE-011) */
+
+/* 1. Grid: 60/40 split */
+#about-section.credibility-section {
+    background: #FFFFFF !important;
+    padding: 100px 0 !important;
+}
+
+#about-section .credibility-grid {
+    grid-template-columns: 1fr 1fr !important; /* Equal width */
+    gap: 40px !important;
+    align-items: stretch !important; /* Same height */
+}
+
+@media (max-width: 992px) {
+    #about-section .credibility-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+}
+
+/* Left card: clean white, natural flow */
+#about-section .credibility-story-card {
+    background: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
+#about-section .credibility-copy-stack {
+    max-width: 620px !important;
+    line-height: 1.75 !important;
+}
+
+/* 4. CTA anchored (SCCB-012A) */
+#about-section .credibility-actions {
+    margin-top: 36px !important; /* Firmly grounded */
+    justify-content: flex-start !important;
+    gap: 16px !important;
+}
+
+/* 1. Heading: editorial wrap (SCCB-012A) */
+#about-section .credibility-title {
+    font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
+    line-height: 1.25 !important;
+    max-width: 480px !important; /* Force break after "vendors," */
+    margin-bottom: 28px !important;
+    color: #111111 !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Kicker: left-align for editorial feel */
+#about-section .section-kicker {
+    text-align: left !important;
+    display: inline-block !important;
+    margin-bottom: 16px !important;
+}
+
+/* 2. Mission card: sharp premium highlight (SCCB-012A) */
+#about-section .credibility-mission-block {
+    background: #F4EFE6 !important; /* Warmer tone */
+    border: 1px solid rgba(0,0,0,0.05) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05) !important; /* Sharp elevation */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#about-section .credibility-mission-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08) !important;
+}
+
+#about-section .credibility-mission-block .highlight-gold {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.15em !important;
+    color: var(--prm-gold) !important;
+    font-weight: 800 !important;
+}
+
+#about-section .credibility-mission-block .credibility-copy {
+    color: #2A2A2A !important; /* Full contrast */
+    opacity: 1 !important;
+    text-align: left !important;
+    margin: 0 !important;
+    margin-top: 0.5rem !important;
+}
+
+/* 3. Body text: premium readability (SCCB-012A) */
+#about-section .credibility-copy {
+    max-width: 600px !important;
+    line-height: 1.75 !important;
+    margin-bottom: 15px !important; /* Consistent rhythm */
+    color: #2A2A2A !important; /* Strong contrast */
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+#about-section .credibility-copy-stack {
+    max-width: 620px !important;
+    line-height: 1.75 !important;
+}
+
+
+#about-section .btn-view-all {
+    background: #111111 !important;
+    color: #FFFFFF !important;
+    padding: 14px 28px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15) !important; /* Sharpened */
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+#about-section .btn-view-all:hover {
+    background: #222222 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2) !important;
+}
+
+#about-section .credibility-inline-link {
+    color: #111111 !important;
+    opacity: 0.65 !important; /* Slightly more subdued */
+    font-weight: 600 !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+#about-section .credibility-inline-link:hover {
+    color: var(--prm-gold) !important;
+    opacity: 1 !important;
+}
+
+/* 5. Right panel: softened + nudged (SCCB-012A) */
+#about-section .credibility-proof-card {
+    background: linear-gradient(180deg, #132236 0%, #182c44 100%) !important; /* 5% softer */
+    border-radius: 14px !important;
+    padding: 2.2rem 2rem !important; /* Reduced horizontal padding */
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.10) !important;
+    margin-top: 12px !important; /* Visual alignment nudge */
+}
+
+#about-section .credibility-proof-title {
+    color: #FFFFFF !important;
+    font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 12px !important;
+}
+
+#about-section .credibility-proof-copy {
+    color: #D1D5DB !important; /* Not pure white */
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 20px !important;
+}
+
+/* 6. Right panel text hierarchy (SCCB-012A) */
+#about-section .credibility-proof-list {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    gap: 22px !important; /* +12px between blocks */
+}
+
+#about-section .credibility-proof-list li {
+    color: #D1D5DB !important;
+    line-height: 1.6;
+}
+
+#about-section .credibility-proof-list li strong {
+    color: #FFFFFF !important;
+    font-weight: 600 !important; /* Not too bold */
+}
+
+/* 7. Location pills: interactive polish (SCCB-012A) */
+#about-section .credibility-office-pill {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 12px !important; /* Unified radius */
+    transition: transform 0.3s ease;
+}
+
+#about-section .credibility-office-pill:hover {
+    transform: translateY(-2px);
+}
+
+#about-section .credibility-office-pill span {
+    color: rgba(255,255,255,0.5) !important;
+}
+
+/* 8. Metrics grid: tight premium (SCCB-012A) */
+#about-section .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important; /* Consistent */
+    margin-top: 24px !important;
+}
+
+#about-section .stat-card {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    padding: 16px 12px !important;
+    border-radius: 12px !important; /* Unified radius */
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    min-height: 80px !important; /* Equal height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#about-section .stat-card h3 {
+    font-size: 1.75rem !important; /* +8% */
+    color: #FFFFFF !important;
+    margin-bottom: 4px !important;
+    line-height: 1 !important;
+}
+
+#about-section .stat-card p {
+    color: #D1D5DB !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE (SCCB-MOBILE-001)
+   ============================================ */
+@media (max-width: 768px) {
+
+    /* Hero: full title visible, smaller type */
+    .hero-hybrid {
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 100px 20px 60px 20px !important;
+    }
+
+    .hero-hybrid-content {
+        max-width: 100% !important;
+        transform: none !important;
+        padding: 0 !important;
+    }
+
+    .hero-title-premium {
+        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .hero-title-premium .highlight-gold {
+        font-size: 1em !important;
+        letter-spacing: 0.02em !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .hero-actions {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: center !important;
+    }
+
+    .btn-gold,
+    .btn-outline-white {
+        padding: 14px 24px !important;
+        font-size: 0.85rem !important;
+        width: auto !important;
+        min-width: 220px !important;
+        text-align: center !important;
+    }
+
+    /* Trust Strip: 2x2 grid on mobile */
+    .trust-strip-metrics {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .metric-value {
+        font-size: 2.2rem !important;
+    }
+
+    .metric-label {
+        font-size: 0.65rem !important;
+    }
+
+    .trust-strip-section {
+        height: auto !important;
+        padding: 30px 0 !important;
+    }
+
+    /* About: stack vertically */
+    #about-section .credibility-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+
+    #about-section .credibility-title {
+        max-width: 100% !important;
+        font-size: clamp(1.5rem, 5vw, 2rem) !important;
+    }
+
+    #about-section .credibility-proof-card {
+        margin-top: 0 !important;
+        padding: 1.5rem !important;
+    }
+
+    #about-section .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    #about-section .stat-card {
+        min-height: 60px !important;
+        padding: 12px 8px !important;
+    }
+
+    #about-section .stat-card h3 {
+        font-size: 1.4rem !important;
+    }
+
+    /* Contact: stack vertically */
+    .contact-section-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    .contact-form {
+        padding: 2rem !important;
+    }
+
+    /* Navbar: tighter on mobile */
+    .site-header {
+        padding: 0.6rem 0 !important;
+    }
+
+    .logo-image {
+        max-height: 35px !important;
+    }
+
+    /* Footer */
+    .site-footer {
+        padding: 60px 0 40px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title-premium {
+        font-size: 1.5rem !important;
+    }
+
+    .metric-value {
+        font-size: 1.8rem !important;
+    }
+
+    .contact-form {
+        padding: 1.5rem !important;
+    }
+}
+
+html { scroll-behavior: smooth; }

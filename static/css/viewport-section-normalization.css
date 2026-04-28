@@ -57,7 +57,7 @@ section.custom-cards-section {
 #home-section.hero-hybrid,
 #home-section.hero-hybrid.hero-hybrid-has-image {
     position: relative;
-    height: calc(100vh - 130px) !important;
+    height: calc(100vh - 160px) !important;
     min-height: 0 !important;
     padding: 0 !important;
     overflow: hidden;
@@ -119,9 +119,10 @@ section.custom-cards-section {
     margin-top: 0 !important;
     border-top: none !important;
     border-bottom: none !important;
-    height: 130px !important;
-    padding: 10px 0 !important;
-    overflow: hidden;
+    height: 160px !important;
+    padding: 20px 0 !important;
+    display: flex;
+    align-items: center;
 }
 
 /* Force the small description text to wrap to 2 lines */

@@ -2,8 +2,12 @@
 <header class="site-header">
     <div class="container">
         <div class="header-content">
-            <a href="{{ home_section_links.home }}" class="logo logo-text logo-has-uploaded-image">
-                <img src="{% static 'images/propertism-logo-white-tm.png' %}" alt="{{ company.company_name|default:'Propertism' }}" class="logo-image logo-image-wordmark">
+            <a href="{{ home_section_links.home }}" class="logo">
+                {% if company.logo %}
+                <img src="{{ company.logo.url }}" alt="Propertism" class="logo-image">
+                {% else %}
+                <span style="font-family: var(--prm-font-serif); font-size: 1.5rem; font-weight: 700; color: white; letter-spacing: 0.1em;">PROPERTISM</span>
+                {% endif %}
             </a>
             
             <!-- Desktop Navigation -->
@@ -11,11 +15,8 @@
                 <a href="{{ home_section_links.home }}">Home</a>
                 <a href="/#services-section">Services</a>
                 <a href="/#about-section">About</a>
-                <a href="/#management-section">Management</a>
                 <a href="/#reviews-section">Reviews</a>
-                <a href="/#properties-section">Properties</a>
-                <a href="{{ home_section_links.blog }}">Blog</a>
-                <a href="/#contact-section">Quote</a>
+                <a href="/#contact-section" class="nav-cta">Contact</a>
             </nav>
             
             <div class="header-actions">
@@ -36,11 +37,8 @@
             <a href="{{ home_section_links.home }}" class="mobile-menu-item">Home</a>
             <a href="/#services-section" class="mobile-menu-item">Services</a>
             <a href="/#about-section" class="mobile-menu-item">About</a>
-            <a href="/#management-section" class="mobile-menu-item">Management</a>
             <a href="/#reviews-section" class="mobile-menu-item">Reviews</a>
-            <a href="/#properties-section" class="mobile-menu-item">Properties</a>
-            <a href="{{ home_section_links.blog }}" class="mobile-menu-item">Blog</a>
-            <a href="/#contact-section" class="mobile-menu-item">Quote</a>
+            <a href="/#contact-section" class="mobile-menu-item mobile-nav-cta">Contact</a>
         </div>
     </nav>
     
