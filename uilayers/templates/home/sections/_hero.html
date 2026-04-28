@@ -29,3 +29,20 @@
         </div>
     </div>
 </section>
+
+<script>
+(function () {
+    var images = document.querySelectorAll('.hero-hybrid-image');
+    if (images.length < 2) return;
+    var current = 0;
+    var total = images.length;
+
+    function rotateHero() {
+        images[current].classList.remove('is-active');
+        current = (current + 1) % total;
+        images[current].classList.add('is-active');
+    }
+
+    window.setInterval(rotateHero, 10000);
+}());
+</script>

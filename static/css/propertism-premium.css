@@ -915,6 +915,21 @@ section { padding: 100px 0 !important; }
     .site-footer {
         padding: 60px 0 40px 0 !important;
     }
+
+    /* World Clock Strip: wrap on mobile */
+    .world-clock-strip {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        padding: 1.5rem !important;
+    }
+
+    .world-clock-cell {
+        padding: 8px !important;
+    }
+
+    .world-clock-time--status {
+        font-size: 1rem !important;
+    }
 }
 
 @media (max-width: 480px) {
