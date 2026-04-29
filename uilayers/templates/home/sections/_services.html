@@ -1,10 +1,16 @@
-<section id="services-section" class="market-insights">
-    <div class="container">
-        <div class="section-intro-center">
-            {% if company.services_section_title %}<h2>{{ company.services_section_title }}</h2>{% endif %}
-            {% if company.services_section_description %}<p>{{ company.services_section_description }}</p>{% endif %}
+<section id="services-section" class="section-full">
+    <div class="section-inner">
+        <!-- HEADER (SCCB-027) -->
+        <div class="section-header">
+            <span class="section-kicker">SERVICES</span>
+            <h2 class="section-title">Services built for NRI ownership</h2>
+            <p class="section-subtitle">
+                Buy, rent, maintain, and monitor property with one coordinated team in Chennai.
+            </p>
         </div>
-        <div class="insights-grid">
+
+        <!-- CARDS (SCCB-027) -->
+        <div class="grid-3">
             {% for service in service_highlights %}
             <div class="insight-card">
                 <div class="insight-icon">

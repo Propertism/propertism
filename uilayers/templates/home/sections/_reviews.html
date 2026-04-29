@@ -1,18 +1,14 @@
 {% if customer_review_section and customer_reviews %}
 <section id="reviews-section" class="customer-reviews-section">
-    <div class="container">
-        <div class="customer-reviews-intro">
-            {% if customer_review_section.eyebrow %}
-            <span class="section-kicker">{{ customer_review_section.eyebrow }}</span>
-            {% endif %}
-            <h2>{{ customer_review_section.title }}</h2>
-            {% if customer_review_section.description %}
-            <p>{{ customer_review_section.description }}</p>
-            {% endif %}
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-kicker">{{ customer_review_section.eyebrow|default:"CUSTOMER REVIEWS" }}</span>
+            <h2 class="section-title">{{ customer_review_section.title|default:"Trusted by NRI Property Owners Worldwide" }}</h2>
+            <p class="section-subtitle">{{ customer_review_section.description|default:"Real experiences from clients who trust us to manage their properties from across the globe." }}</p>
         </div>
 
         <!-- Masonry-style 3-column grid -->
-        <div class="cr-masonry-grid">
+        <div class="grid-3 cr-masonry-grid">
             {% for review in customer_reviews %}
             <article class="cr-card">
                 <!-- Card Header: Avatar + Name + Google G -->
@@ -66,7 +62,7 @@
         </div>
 
         <!-- Bottom row: See All Testimonials -->
-        <div class="cr-footer-row">
+        <div class="cr-footer-row" style="margin-top: 32px; text-align: left;">
             {% if customer_reviews|length > 3 %}
             <button type="button" class="cr-see-all-btn" id="cr-see-all-btn">SEE ALL TESTIMONIALS</button>
             {% endif %}

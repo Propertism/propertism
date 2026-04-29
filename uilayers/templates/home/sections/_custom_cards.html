@@ -1,17 +1,13 @@
 {% for section in custom_card_sections %}
 {% if section.active_cards %}
 <section id="{{ section.slug }}-section" class="custom-cards-section">
-    <div class="container">
-        <div class="custom-cards-intro">
-            {% if section.eyebrow %}
-            <span class="section-kicker">{{ section.eyebrow }}</span>
-            {% endif %}
-            <h2>{{ section.title }}</h2>
-            {% if section.description %}
-            <p>{{ section.description }}</p>
-            {% endif %}
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-kicker">{{ section.eyebrow|default:"Property Advisory" }}</span>
+            <h2 class="section-title">{{ section.title }}</h2>
+            <p class="section-subtitle">{{ section.description|default:"Structured support and additional advisory modules for owners who need clear next steps." }}</p>
         </div>
-        <div class="custom-cards-grid">
+        <div class="grid-3 custom-cards-grid">
             {% for card in section.active_cards %}
             <article class="custom-card-panel">
                 {% if card.eyebrow %}
@@ -29,7 +25,7 @@
             {% endfor %}
         </div>
         {% if section.badge_title or section.badge_text %}
-        <div class="service-depth-tags">
+        <div class="service-depth-tags" style="margin-top: 32px; text-align: left;">
             {% if section.badge_title %}
             <span class="service-depth-tag is-label">{{ section.badge_title }}</span>
             {% endif %}

@@ -1,11 +1,11 @@
 <section id="management-section" class="management-preview-section">
-    <div class="container">
-        <div class="management-preview-intro">
-            {% if company.management_section_eyebrow %}<span class="highlight-gold">{{ company.management_section_eyebrow }}</span>{% else %}<span class="highlight-gold">Our Team</span>{% endif %}
-            <h2 class="section-title-centered">On-ground experts dedicated to your property.</h2>
-            <p class="section-desc-centered">Direct coordination and accountability for NRI owners who need reliable execution in Chennai.</p>
+    <div class="section-inner">
+        <div class="section-header">
+            {% if company.management_section_eyebrow %}<span class="section-kicker">{{ company.management_section_eyebrow }}</span>{% else %}<span class="section-kicker">Our Team</span>{% endif %}
+            <h2 class="section-title">On-ground experts dedicated to your property.</h2>
+            <p class="section-subtitle">Direct coordination and accountability for NRI owners who need reliable execution in Chennai.</p>
         </div>
-        <div class="management-preview-grid">
+        <div class="grid-3">
             {% for member in team_highlights %}
             <article class="management-preview-card">
                 <div class="management-preview-meta">
@@ -33,7 +33,7 @@
         </div>
 
         <!-- SEO Bridge CTA -->
-        <div class="section-cta-center">
+        <div class="section-cta-left" style="margin-top: 32px;">
             <a href="{{ home_section_links.management }}" class="btn-view-all">
                 Meet Our Full Team
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -41,6 +41,9 @@
     --border-hairline: 0.5px solid var(--color-gray-200);
     --border-thin: 1px solid var(--color-gray-200);
     --border-medium: 2px solid var(--color-navy);
+    
+    /* Layout Unification */
+    --prm-container: 1440px;
 }
 
 /* Reset - Precision Foundation */
@@ -159,10 +162,62 @@ p {
 
 /* Container - Museum Quality Grid */
 .container {
-    max-width: 1440px;
+    max-width: var(--prm-container);
     margin: 0 auto;
     padding: 0 var(--space-8);
 }
+
+/* SCCB-PRM-LAYOUT-SYSTEM-UNIFICATION-027 */
+.section-inner {
+    width: 92%;
+    max-width: var(--prm-container);
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: left;
+    margin-bottom: 32px;
+}
+
+.section-title,
+.section-subtitle {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.section-title {
+    font-size: 32px;
+    line-height: 1.25;
+    font-weight: 600;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: #6B7280;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.grid-3,
+.grid-4 {
+    margin-top: 24px;
+}
+
+section {
+    padding: 72px 0;
+}
+
 
 @media (min-width: 1920px) {
     .container {
@@ -455,8 +510,8 @@ p {
 }
 
 .stat-item {
-    text-align: center;
-    padding: var(--space-8) var(--space-4);
+    text-align: left;
+    padding: var(--space-8) 0;
     position: relative;
 }
 
@@ -737,7 +792,7 @@ p {
 /* CTA Section - Compelling Invitation */
 .cta-section {
     padding: var(--space-32) 0;
-    text-align: center;
+    text-align: left;
     background: var(--color-navy);
     color: var(--color-white);
     position: relative;
@@ -759,7 +814,6 @@ p {
 
 .cta-content {
     max-width: 840px;
-    margin: 0 auto;
 }
 
 .cta-title {
@@ -781,7 +835,7 @@ p {
 .cta-actions {
     display: flex;
     gap: var(--space-4);
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 

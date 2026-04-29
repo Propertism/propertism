@@ -20,8 +20,13 @@ def update_company_info():
 
     obj.tagline = "We manage, protect & grow your Chennai property — even if you’re 10,000 km away."
     obj.hero_description = "End-to-end property management for NRIs with complete transparency, reporting, and on-ground execution."
+    
+    # SCCB-019 Point 6: Conversion-driven contact copy
+    obj.contact_section_title = "Let’s manage your Chennai property — stress-free."
+    obj.contact_section_description = "End-to-end support for NRIs. Transparent, reliable, on-ground execution."
+    
     obj.save()
-    print("Company Info updated.")
+    print("Company Info updated with SCCB-019 copy.")
 
 def update_homepage_cards():
     from content.models import HomepageCard

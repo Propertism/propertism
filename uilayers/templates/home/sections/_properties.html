@@ -1,12 +1,13 @@
 {% load static %}
 <section id="properties-section" class="featured-properties-section">
-    <div class="container">
-        <div class="featured-properties-intro">
-            {% if company.properties_section_title %}<h2 class="featured-properties-title">{{ company.properties_section_title|striptags }}</h2>{% endif %}
-            {% if company.properties_section_subtitle %}<p class="featured-properties-subtitle">{{ company.properties_section_subtitle|striptags }}</p>{% endif %}
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-kicker">Featured Properties</span>
+            <h2 class="section-title">{{ company.properties_section_title|default:"Handpicked Chennai properties for NRI buyers and owners."|striptags }}</h2>
+            <p class="section-subtitle">{{ company.properties_section_subtitle|default:"Explore high-signal listings curated for reliable location, ownership clarity, and long-term value."|striptags }}</p>
         </div>
 
-        <div class="property-grid-hybrid">
+        <div class="grid-3 property-grid-hybrid">
             {% for property in featured_properties %}
             <div class="property-card-hybrid">
                 <div class="property-image-hybrid">
@@ -59,7 +60,7 @@
             {% endfor %}
         </div>
 
-        <div class="featured-properties-cta" style="margin-top: 4rem; text-align: center;">
+        <div class="featured-properties-cta" style="margin-top: 4rem; text-align: left;">
             <a href="{{ home_section_links.contact }}" class="btn-gold">
                 View All Properties
             </a>

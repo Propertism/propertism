@@ -15,7 +15,7 @@
     --prm-font-serif: 'Playfair Display', serif;
     --prm-font-sans: 'Inter', sans-serif;
 
-    --prm-container: 1100px;
+    --prm-container: 1440px;
     --prm-section-padding: 100px;
 }
 
@@ -27,6 +27,11 @@ body {
     line-height: 1.6;
     margin: 0;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 .container {
@@ -110,12 +115,63 @@ p {
     /* Reset line-height for perfect centering */
 }
 
+@media (min-width: 769px) {
+    .main-nav-even {
+        flex: 1 1 auto !important;
+        display: grid !important;
+        grid-template-columns: repeat(5, max-content) !important;
+        justify-content: space-evenly !important;
+        align-items: center !important;
+        min-width: 0 !important;
+        margin: 0 clamp(1.5rem, 4vw, 4rem) !important;
+    }
+
+    .main-nav-even a {
+        margin: 0 !important;
+        justify-self: center !important;
+    }
+}
+
 .nav-cta {
-    background: var(--prm-gold) !important;
-    color: #111111 !important;
+    position: relative !important;
+    background: rgba(201, 161, 74, 0.06) !important;
+    color: #E9D3A4 !important;
+    border: 1px solid rgba(201, 161, 74, 0.78) !important;
     border-radius: 4px !important;
     font-weight: 700 !important;
     padding: 0.6rem 1.5rem !important;
+    box-shadow:
+        0 0 0 1px rgba(201, 161, 74, 0.22),
+        0 0 12px rgba(201, 161, 74, 0.18) !important;
+    animation: navCtaGlow 2.4s ease-in-out infinite !important;
+}
+
+.main-nav .nav-cta::after {
+    display: none !important;
+}
+
+.main-nav .nav-cta:hover,
+.main-nav .nav-cta:focus-visible {
+    color: #E9D3A4 !important;
+    border-color: rgba(212, 175, 55, 0.96) !important;
+    background: rgba(201, 161, 74, 0.12) !important;
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.28),
+        0 0 18px rgba(212, 175, 55, 0.28) !important;
+}
+
+@keyframes navCtaGlow {
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 1px rgba(201, 161, 74, 0.18),
+            0 0 10px rgba(201, 161, 74, 0.14);
+    }
+    50% {
+        box-shadow:
+            0 0 0 1px rgba(212, 175, 55, 0.34),
+            0 0 18px rgba(212, 175, 55, 0.3);
+    }
 }
 
 /* 2. Hero Clarity (Absolute 100% Resolution - No Overlays) */
@@ -735,15 +791,18 @@ section {
 /* 1. Grid: 60/40 split */
 #about-section.credibility-section {
     background: #FFFFFF !important;
-    padding: 100px 0 !important;
+    padding: 60px 0 !important;
+}
+
+#about-section .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 60px !important;
 }
 
 #about-section .credibility-grid {
-    grid-template-columns: 1fr 1fr !important;
-    /* Equal width */
+    grid-template-columns: 1fr !important;
     gap: 40px !important;
-    align-items: stretch !important;
-    /* Same height */
 }
 
 @media (max-width: 992px) {
@@ -775,17 +834,15 @@ section {
     gap: 16px !important;
 }
 
-/* 1. Heading: editorial wrap (SCCB-012A) */
 #about-section .credibility-title {
     font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
     line-height: 1.25 !important;
-    max-width: 480px !important;
-    /* Force break after "vendors," */
-    margin-bottom: 28px !important;
+    max-width: 100% !important; /* Spans full card width */
+    margin-bottom: 16px !important;
     color: #111111 !important;
-    text-align: left !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    text-align: center !important; /* Centered for stacked layout */
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 /* Kicker: left-align for editorial feel */
@@ -1174,4 +1231,1977 @@ section {
 
 html {
     scroll-behavior: smooth;
+}
+
+/* ============================================================
+   SCCB-PRM-DESKTOP-WIDTH-EXPANSION-014
+   Full Viewport Utilization & Desktop Layout Expansion
+   Author: Astra | 2026-04-29
+   Scope: All sections EXCEPT hero (locked)
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   GLOBAL CONTAINER — Widened to 1440px with 92% fluid width
+   ----------------------------------------------------------- */
+.container {
+    max-width: var(--prm-container) !important;
+    width: 92% !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+}
+
+/* Premium feel on high-end desktops */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1600px !important;
+    }
+}
+
+/* -----------------------------------------------------------
+   SECTION RHYTHM — Consistent vertical spacing
+   ----------------------------------------------------------- */
+@media (min-width: 1600px) {
+    section {
+        padding: 100px 0 !important;
+    }
+}
+
+/* -----------------------------------------------------------
+   SERVICES — 3-column grid, edge-balanced
+   Actual class: .insights-grid inside #services-section
+   ----------------------------------------------------------- */
+#services-section .section-inner {
+    width: 92% !important;
+    max-width: var(--prm-container) !important;
+    margin: 0 auto !important;
+}
+
+.services-header {
+    text-align: left !important;
+    margin-bottom: 32px !important;
+    max-width: 720px !important; /* Controlled width for readability */
+    padding-left: 0 !important;
+}
+
+.services-header .section-title,
+.services-header .section-subtitle {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+}
+
+.services-header .section-title {
+    font-size: 34px !important;
+    font-weight: 700 !important;
+    color: #111111 !important;
+    margin: 12px 0 !important;
+    max-width: none !important;
+}
+
+.services-header .section-subtitle {
+    font-size: 15px !important;
+    color: #6B7280 !important;
+    line-height: 1.6 !important;
+    margin-bottom: 40px !important;
+}
+
+.services-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+    align-items: stretch !important;
+}
+
+.insight-card {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 2.5rem !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+    height: 100% !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.insight-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08) !important;
+}
+
+.insight-icon {
+    width: 60px !important;
+    height: 60px !important;
+    background: var(--prm-gold) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 28px !important;
+    border-radius: 4px !important;
+}
+
+.insight-icon svg {
+    color: #111111 !important;
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.insight-title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #111111 !important;
+    margin-bottom: 14px !important;
+    line-height: 1.3 !important;
+}
+
+.insight-description {
+    font-size: 14px !important;
+    color: #4B5563 !important;
+    line-height: 1.7 !important;
+    margin-bottom: 32px !important;
+}
+
+.service-depth-link {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #111111 !important;
+    text-decoration: none !important;
+    margin-top: auto !important;
+    display: inline-block !important;
+    border-bottom: 2px solid transparent !important;
+}
+
+.service-depth-link:hover {
+    color: var(--prm-gold) !important;
+    border-bottom: 2px solid var(--prm-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   ABOUT — 2-column grid, equal width, edge-balanced
+   Actual class: .credibility-grid inside #about-section
+   ----------------------------------------------------------- */
+#about-section .credibility-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 48px !important;
+    align-items: stretch !important;
+}
+
+/* -----------------------------------------------------------
+   MANAGEMENT — 3-column grid (same rhythm as services)
+   Actual class: .management-preview-grid
+   ----------------------------------------------------------- */
+#management-section .management-preview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+    align-items: stretch !important;
+}
+
+/* -----------------------------------------------------------
+   REVIEWS — 3-column masonry grid
+   Actual class: .cr-masonry-grid inside #reviews-section
+   ----------------------------------------------------------- */
+#reviews-section .cr-masonry-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+    align-items: start !important;
+}
+
+/* -----------------------------------------------------------
+   FEATURED PROPERTIES — 3-column grid
+   Actual class: .property-grid-hybrid inside #properties-section
+   ----------------------------------------------------------- */
+#properties-section .property-grid-hybrid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+    align-items: stretch !important;
+}
+
+/* -----------------------------------------------------------
+   INSIGHTS / JOURNAL — 3-column grid
+   Actual class: .journal-preview-grid inside #blog-section
+   ----------------------------------------------------------- */
+#blog-section .journal-preview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+    align-items: stretch !important;
+}
+
+/* -----------------------------------------------------------
+   GET IN TOUCH (CONTACT) — 2-column grid, left=info right=form
+   Background corrected: dark theme retained (design canon)
+   Actual class: .contact-section-grid inside #contact-section
+   ----------------------------------------------------------- */
+.contact-section-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.2fr !important;
+    gap: 80px !important;
+    align-items: start !important;
+}
+
+/* Remove intro centering constraint — let it breathe */
+#contact-section .section-intro-center {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* -----------------------------------------------------------
+   FOOTER BOTTOM STRIP — flex, space-between
+   ----------------------------------------------------------- */
+.footer-bottom {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+}
+
+/* -----------------------------------------------------------
+   SECTION INTRO BLOCKS — Full width, no capping
+   ----------------------------------------------------------- */
+#services-section .section-intro-center,
+#management-section .management-preview-intro,
+#reviews-section .customer-reviews-intro,
+#properties-section .featured-properties-intro,
+#blog-section .journal-preview-intro {
+    max-width: 100% !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 48px !important;
+}
+
+/* -----------------------------------------------------------
+   DESKTOP RESPONSIVE SCALING
+   1024px–1280px: 2-col grids where needed
+   Preserve mobile from propertism-premium.css @768 block
+   ----------------------------------------------------------- */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #services-section .insights-grid,
+    #management-section .management-preview-grid,
+    #blog-section .journal-preview-grid,
+    #properties-section .property-grid-hybrid,
+    #reviews-section .cr-masonry-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 24px !important;
+    }
+
+    #about-section .credibility-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 32px !important;
+    }
+
+    .contact-section-grid {
+        grid-template-columns: 1fr 1.2fr !important;
+        gap: 48px !important;
+    }
+}
+
+/* Tablet: collapse to 2-col at 768–1024 (preserve existing 768 mobile block) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #services-section .insights-grid,
+    #management-section .management-preview-grid,
+    #blog-section .journal-preview-grid,
+    #properties-section .property-grid-hybrid,
+    #reviews-section .cr-masonry-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 24px !important;
+    }
+
+    #about-section .credibility-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+
+    .contact-section-grid {
+        grid-template-columns: 1fr !important;
+        gap: 48px !important;
+    }
+}
+
+/* END SCCB-PRM-DESKTOP-WIDTH-EXPANSION-014 */
+
+/* ============================================================
+   SCCB-PRM-EDGE-ALIGN-FULLBLEED-015
+   Edge Anchoring + Full-Bleed Sections + Contact Visual Fix
+   Author: Astra | 2026-04-29
+   Dependencies: SCCB-014 applied
+   Scope: All sections EXCEPT hero (locked)
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   1. UTILITY CLASSES — Full-Bleed Section Pattern
+   .section-full  → background spans 100% viewport width
+   .section-inner → content bounded to --prm-container
+   (Existing sections already use <section> + .container
+   which achieves the same; these utilities are for future use)
+   ----------------------------------------------------------- */
+.section-full {
+    width: 100%;
+    position: relative;
+}
+
+.section-inner {
+    max-width: var(--prm-container);
+    width: 92%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* -----------------------------------------------------------
+   2. EDGE ANCHORING — Grid item stretch enforcement
+   NOTE: justify-self: start/center/end on 1fr columns shrinks
+   cards to content width — breaking layout. Correct mechanism
+   for 1fr grids is justify-self: stretch + width: 100%.
+   This fills each cell edge-to-edge without collapsing cards.
+   ----------------------------------------------------------- */
+
+/* 3-column grid items: full-cell stretch */
+#services-section .insights-grid > *,
+#management-section .management-preview-grid > *,
+#reviews-section .cr-masonry-grid > *,
+#properties-section .property-grid-hybrid > *,
+#blog-section .journal-preview-grid > * {
+    justify-self: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 2-column grid items: full-cell stretch */
+#about-section .credibility-grid > *,
+.contact-section-grid > * {
+    justify-self: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* -----------------------------------------------------------
+   3. MICRO SPACING at 1600px+ (premium high-end displays)
+   ----------------------------------------------------------- */
+@media (min-width: 1600px) {
+    #services-section .insights-grid,
+    #management-section .management-preview-grid,
+    #reviews-section .cr-masonry-grid,
+    #properties-section .property-grid-hybrid,
+    #blog-section .journal-preview-grid {
+        gap: 40px !important;
+    }
+
+    #about-section .credibility-grid {
+        gap: 56px !important;
+    }
+
+    .contact-section-grid {
+        gap: 96px !important;
+    }
+}
+
+/* -----------------------------------------------------------
+   4. CONTACT SECTION — Full Light Theme Override
+   Dark #0F0F10 → Light #f8f9fb to remove visual break.
+   ALL affected sub-elements recolored for light-bg compat.
+   ----------------------------------------------------------- */
+
+/* Section wrapper background */
+#contact-section,
+.nri-contact-section {
+    background-color: #f8f9fb !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    color: #111111 !important;
+}
+
+/* Heading and paragraph recolor for light bg */
+#contact-section h2 {
+    color: #111111 !important;
+}
+
+#contact-section p {
+    color: #4A4A4A !important;
+}
+
+#contact-section .section-kicker {
+    color: var(--prm-gold) !important;
+}
+
+/* Contact info column */
+.contact-info-column p {
+    color: #4A4A4A !important;
+}
+
+.detail-item h4 {
+    color: var(--prm-gold) !important;
+}
+
+.detail-item .address-text {
+    color: #1A1A1A !important;
+}
+
+.detail-item .phone-text {
+    color: var(--prm-gold) !important;
+}
+
+/* Map link: light surface */
+.contact-map-link {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: var(--prm-gold) !important;
+}
+
+.contact-map-link:hover {
+    background: rgba(201, 161, 74, 0.06) !important;
+    border-color: rgba(201, 161, 74, 0.2) !important;
+    color: var(--prm-gold) !important;
+}
+
+.contact-map-link svg {
+    color: var(--prm-gold) !important;
+}
+
+/* Contact form: light surface */
+.contact-form {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    background: #f8f9fb !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    color: #111111 !important;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #9CA3AF !important;
+}
+
+.contact-form select {
+    color: #111111 !important;
+}
+
+.contact-form select option {
+    background: #FFFFFF !important;
+    color: #111111 !important;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none !important;
+    border-color: var(--prm-gold) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.08) !important;
+}
+
+/* -----------------------------------------------------------
+   5. FOOTER WIDTH ENFORCEMENT
+   Ensures footer .container uses the expanded width token
+   from SCCB-014 without being overridden by other rules
+   ----------------------------------------------------------- */
+.site-footer .container {
+    max-width: var(--prm-container) !important;
+    width: 92% !important;
+    padding: 0 !important;
+}
+
+/* -----------------------------------------------------------
+   6. CONTACT RESPONSIVE — Tablet restore (light theme safe)
+   ----------------------------------------------------------- */
+@media (max-width: 992px) {
+    .contact-section-grid {
+        grid-template-columns: 1fr !important;
+        gap: 48px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Restore mobile contact form padding */
+    .contact-form {
+        padding: 2rem !important;
+    }
+}
+
+/* END SCCB-PRM-EDGE-ALIGN-FULLBLEED-015 */
+
+/* ============================================================
+   SCCB-PRM-TYPO-RHYTHM-COLOR-016
+   Typography Consistency + Section Rhythm + Background Harmonization
+   Author: Astra | 2026-04-29
+   Dependencies: SCCB-014, SCCB-015 applied
+   Constraints: Hero (#home-section / .hero-hybrid) locked
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   1. DESIGN TOKENS — Premium palette extensions
+   ----------------------------------------------------------- */
+:root {
+    --prm-white:       #FFFFFF;
+    --prm-beige:       #F7F5F2;
+    --prm-footer-bg:   #0F0F10;     /* retained dark — footer light is SCCB-017 */
+    --prm-footer-light: #FBFAF8;    /* token ready for SCCB-017 */
+    --prm-text-body:   #4A4A4A;
+    --prm-text-sub:    #6B7280;
+}
+
+/* -----------------------------------------------------------
+   2. TYPOGRAPHY UTILITY SYSTEM
+   .section-title / .section-subtitle — canonical utility classes
+   Also targeting existing template classes for consistency.
+   text-wrap: balance prevents single-word orphan wrapping.
+   ----------------------------------------------------------- */
+
+/* Utility classes (future use + any manually-applied) */
+.section-title {
+    font-size: clamp(1.8rem, 2.8vw, 2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    max-width: 900px;
+    margin: 0 auto 12px;
+    text-align: center;
+    text-wrap: balance;
+    color: #111111;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--prm-text-sub);
+    max-width: 720px;
+    margin: 0 auto 40px;
+    text-align: center;
+    text-wrap: pretty;
+}
+
+/* Existing template class: Management + Insights headings */
+.section-title-centered {
+    font-size: clamp(1.8rem, 2.8vw, 2rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px !important;
+    max-width: 900px !important;
+    margin: 0 auto 12px !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    color: #111111 !important;
+}
+
+/* Existing template class: Management + Insights subtitles */
+.section-desc-centered {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: var(--prm-text-sub) !important;
+    max-width: 720px !important;
+    margin: 0 auto 40px !important;
+    text-align: center !important;
+    text-wrap: pretty !important;
+}
+
+/* Section intro headings without a utility class
+   (Services .section-intro-center h2, Reviews .customer-reviews-intro h2) */
+#services-section .section-intro-center h2,
+#reviews-section .customer-reviews-intro h2 {
+    font-size: clamp(1.8rem, 2.8vw, 2rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px !important;
+    max-width: 900px !important;
+    margin: 0 auto 12px !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    color: #111111 !important;
+}
+
+/* Section intro subtitles without utility class */
+#services-section .section-intro-center p,
+#reviews-section .customer-reviews-intro p {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: var(--prm-text-sub) !important;
+    max-width: 720px !important;
+    margin: 0 auto 40px !important;
+    text-align: center !important;
+    text-wrap: pretty !important;
+}
+
+/* Featured Properties heading + subtitle */
+.featured-properties-title {
+    font-size: clamp(1.8rem, 2.8vw, 2rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px !important;
+    max-width: 900px !important;
+    margin: 0 auto 12px !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    color: #111111 !important;
+}
+
+.featured-properties-subtitle {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: var(--prm-text-sub) !important;
+    max-width: 720px !important;
+    margin: 0 auto 40px !important;
+    text-align: center !important;
+    text-wrap: pretty !important;
+}
+
+/* -----------------------------------------------------------
+   3. BACKGROUND RHYTHM SYSTEM
+   Alternating white ↔ beige — no harsh dark section breaks.
+   Overrides earlier #F9F8F5 approximations with canonical token.
+   ----------------------------------------------------------- */
+
+/* Stats strip — white */
+#stats-section {
+    background-color: var(--prm-white) !important;
+}
+
+/* Services — beige */
+#services-section.market-insights {
+    background-color: var(--prm-beige) !important;
+}
+
+/* About — white */
+#about-section,
+#about-section.credibility-section {
+    background-color: var(--prm-white) !important;
+}
+
+/* Management — beige */
+#management-section.management-preview-section {
+    background-color: var(--prm-beige) !important;
+}
+
+/* Reviews — white */
+#reviews-section.customer-reviews-section {
+    background-color: var(--prm-white) !important;
+}
+
+/* Featured Properties — beige */
+#properties-section.featured-properties-section {
+    background-color: var(--prm-beige) !important;
+}
+
+/* Insights / Blog — white */
+#blog-section.journal-preview-section {
+    background-color: var(--prm-white) !important;
+}
+
+/* Contact — beige (refine from SCCB-015 #f8f9fb to canonical beige token) */
+#contact-section,
+.nri-contact-section {
+    background-color: var(--prm-beige) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.04) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Contact form surface: slightly lighter than beige bg */
+.contact-form {
+    background: var(--prm-white) !important;
+}
+
+/* Contact form inputs match beige bg */
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    background: var(--prm-beige) !important;
+}
+
+/* -----------------------------------------------------------
+   4. SECTION RHYTHM — Tighter premium cadence
+   72px base (down from 100px) for less dead air between sections.
+   88px at 1600px+ for high-end desktop breathing room.
+   Hero (#home-section) excluded — height is 100vh, not padding-driven.
+   ----------------------------------------------------------- */
+
+/* Override line 276: section { padding: 100px 0 !important } */
+section {
+    padding: 72px 0 !important;
+}
+
+/* Hero: padding reset — it's height: 100vh flex-centered */
+#home-section,
+#home-section.hero-hybrid {
+    padding: 0 !important;
+}
+
+/* Tablet: preserve existing rhythm */
+@media (max-width: 768px) {
+    section {
+        padding: 60px 0 !important;
+    }
+    #home-section,
+    #home-section.hero-hybrid {
+        padding: 100px 20px 60px 20px !important;
+    }
+}
+
+/* Premium 1600px+: more breathing room */
+@media (min-width: 1600px) {
+    section {
+        padding: 88px 0 !important;
+    }
+    #home-section,
+    #home-section.hero-hybrid {
+        padding: 0 !important;
+    }
+}
+
+/* -----------------------------------------------------------
+   5. ABOUT: "WHY OWNERS" CARD TONE CORRECTION
+   .credibility-proof-card is the right panel of About section.
+   Softened gradient angle + warmer dark navy palette.
+   ----------------------------------------------------------- */
+#about-section .credibility-proof-card {
+    background: linear-gradient(135deg, #1F2937 0%, #111827 100%) !important;
+    color: #F9FAFB !important;
+    border-radius: 16px !important;
+}
+
+/* -----------------------------------------------------------
+   6. CARD DENSITY — Uniform padding + radius
+   Tighter padding (24px) reduces bulk, 14px radius = premium.
+   ----------------------------------------------------------- */
+.insight-card,
+.cr-card,
+.management-preview-card,
+.journal-preview-card {
+    padding: 24px !important;
+    border-radius: 14px !important;
+}
+
+/* -----------------------------------------------------------
+   7. FOOTER — DEFERRED
+   Dark #0F0F10 → light #FBFAF8 requires full text/link/
+   world-clock/newsletter recolor. Implementing without those
+   overrides would render all footer text invisible on light bg.
+   Token --prm-footer-light: #FBFAF8 is ready.
+   Target: SCCB-PRM-FOOTER-LIGHT-017
+   ----------------------------------------------------------- */
+
+/* END SCCB-PRM-TYPO-RHYTHM-COLOR-016 */
+
+/* ============================================================
+   SCCB-PRM-FOOTER-LIGHT-THEME-017
+   Footer Light Theme — Full Token Recolor
+   Author: Astra | 2026-04-29
+   Dependencies: SCCB-016 tokens (--prm-footer-light, --prm-text-sub)
+   Overrides: ALL dark-theme !important rules from lines 337–581
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   1. FOOTER BASE — Background + border + base color
+   Overrides: line 338–343 (.site-footer dark block)
+   ----------------------------------------------------------- */
+.site-footer {
+    background-color: var(--prm-footer-light) !important; /* #FBFAF8 */
+    color: #111111 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+    padding: 60px 0 40px 0 !important;
+}
+
+.footer-content {
+    grid-template-columns: 1.8fr 1fr 1.2fr 1fr !important; /* Significant brand column expansion */
+    gap: 3rem !important; /* Extra spacing for clarity */
+}
+
+/* -----------------------------------------------------------
+   2. BLANKET TEXT RECOLOR
+   Overrides: line 346–354 (broad dark #B0B0B5 on all children)
+   ----------------------------------------------------------- */
+.site-footer,
+.site-footer p,
+.site-footer div,
+.site-footer span,
+.site-footer li,
+.site-footer small,
+.site-footer strong {
+    color: #6B7280 !important;
+}
+
+/* -----------------------------------------------------------
+   3. HEADINGS — Dark for contrast on cream/beige bg
+   Overrides: line 356–363 (.site-footer h3 gold)
+   h3 = section headings (Services, India Office, Stay Updated)
+   ----------------------------------------------------------- */
+.site-footer h3 {
+    color: #111111 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important; /* Reduced from 0.25em to prevent wrap */
+    margin-bottom: 24px !important; /* Standardized tight 1-line space */
+    font-weight: 800 !important;
+}
+
+/* Specifically prevent brand name from wrapping in the first column */
+.footer-brand h3 {
+    white-space: nowrap !important;
+}
+
+/* -----------------------------------------------------------
+   4. LINKS — Medium gray base, dark on hover
+   Overrides: line 365–373 (gold hover on dark bg)
+   ----------------------------------------------------------- */
+.site-footer a {
+    color: #6B7280 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.site-footer a:hover {
+    color: #111111 !important;
+}
+
+/* Footer nav links */
+.footer-links a {
+    color: #6B7280 !important;
+    font-size: 0.82rem !important;
+    line-height: 1.3 !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+/* -----------------------------------------------------------
+   5. WHITE-TEXT ELEMENTS → DARK
+   Overrides: line 393–398 (.site-footer strong, .highlight-gold,
+   .footer-office-city, .world-clock-tagline-title = #FFFFFF)
+   ----------------------------------------------------------- */
+.site-footer strong,
+.footer-office-city,
+.world-clock-tagline-title {
+    color: #111111 !important;
+}
+
+/* .highlight-gold in footer context = keep gold (branded kicker) */
+.site-footer .highlight-gold {
+    color: var(--prm-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   6. OFFICE DETAIL ELEMENTS
+   Overrides: line 401–412 (all office text #B0B0B5 on dark)
+   ----------------------------------------------------------- */
+.site-footer .footer-text-white,
+.site-footer .footer-text-gold,
+.site-footer .footer-office-address,
+.site-footer .footer-office-city,
+.site-footer .footer-office-email a {
+    color: #6B7280 !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+/* Phone numbers: retain gold — branded accent, legible on light bg */
+.site-footer .footer-phone-item {
+    color: var(--prm-gold) !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+/* -----------------------------------------------------------
+   7. FOOTER TAGLINE / COPY
+   Overrides: line 458–460 (.footer-copy #B0B0B5)
+   ----------------------------------------------------------- */
+.footer-copy {
+    color: #6B7280 !important;
+    max-width: 540px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 24px !important;
+    text-wrap: balance !important;
+}
+
+/* -----------------------------------------------------------
+   8. SOCIAL ICONS — Gray on light bg, dark hover
+   Overrides: line 463–470 (gold icon color on dark bg)
+   ----------------------------------------------------------- */
+.footer-social-link i,
+.footer-social-link svg {
+    color: #6B7280 !important;
+    transition: color 0.3s ease !important;
+}
+
+.footer-social-link:hover i,
+.footer-social-link:hover svg {
+    color: #111111 !important;
+}
+
+/* -----------------------------------------------------------
+   9. NEWSLETTER FORM — Light surface inputs
+   Overrides: line 473–490 (dark glass inputs, white text)
+   ----------------------------------------------------------- */
+.footer-newsletter-form-mini input {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0, 0, 0, 0.10) !important;
+    color: #111111 !important;
+    padding: 12px 16px !important;
+    border-radius: 4px !important;
+}
+
+.footer-newsletter-form-mini input::placeholder {
+    color: #9CA3AF !important;
+}
+
+.footer-newsletter-form-mini input:focus {
+    outline: none !important;
+    border-color: var(--prm-gold) !important;
+    box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.08) !important;
+}
+
+/* Newsletter button: gold gradient — unchanged, works on light */
+.footer-newsletter-form-mini button {
+    background: linear-gradient(135deg, #D4AF37 0%, #C9A14A 100%) !important;
+    color: #1A1A1A !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    border-radius: 4px !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    border: none !important;
+    padding: 12px 16px !important;
+}
+
+.footer-newsletter-form-mini button:hover {
+    background: linear-gradient(135deg, #C9A14A 0%, #B8933F 100%) !important;
+}
+
+/* -----------------------------------------------------------
+   10. WORLD CLOCK STRIP — Light theme text
+   Overrides: line 492–557 (all #B0B0B5 dark-bg text)
+   Gold labels retained — premium accent on light bg.
+   ----------------------------------------------------------- */
+.world-clock-strip {
+    background: none !important;
+    border: none !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+    padding: 2.5rem 0 0 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: stretch !important; /* height parity */
+    gap: 1.5rem !important;
+    flex-wrap: wrap !important;
+}
+
+.world-clock-cell {
+    background: rgba(255, 255, 255, 0.5) !important;
+    padding: 16px 20px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+    flex: 1 !important;
+    min-width: 180px !important;
+}
+
+/* Gold label: retained — reads well on cream/beige */
+.world-clock-label {
+    color: var(--prm-gold) !important;
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
+    white-space: nowrap !important;
+}
+
+/* Clock time + date: darker for legibility on light */
+.world-clock-time,
+.world-clock-hours,
+.world-clock-minutes,
+.world-clock-separator,
+.world-clock-meridiem,
+.world-clock-date,
+.footer-reach-text,
+.footer-hours-text {
+    color: #4A4A4A !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+}
+
+/* Tagline title: heading weight on light bg */
+.world-clock-tagline-title {
+    color: #111111 !important;
+    font-weight: 600 !important;
+    font-size: 0.82rem !important;
+    line-height: 1.3 !important;
+}
+
+/* Office hours open/closed status: JS-colored, enhance weight */
+.world-clock-time--status {
+    font-weight: 600 !important;
+    color: #111111 !important; /* base before JS override */
+}
+
+/* -----------------------------------------------------------
+   11. FOOTER BOTTOM STRIP
+   Overrides: line 571–581
+   rgba(255,255,255,0.4) = invisible on light bg → #9CA3AF
+   ----------------------------------------------------------- */
+.footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+    padding-top: 32px !important;
+    margin-top: 48px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+}
+
+.footer-bottom p,
+.footer-bottom-links a {
+    color: #9CA3AF !important; /* replaces rgba(255,255,255,0.4) */
+    font-size: 0.85rem !important;
+}
+
+.footer-bottom-links a:hover {
+    color: #111111 !important;
+}
+
+/* -----------------------------------------------------------
+   12. MOBILE — World clock 2-col grid (structural, preserved)
+   Text color overrides applied above cover mobile too.
+   ----------------------------------------------------------- */
+@media (max-width: 768px) {
+    .world-clock-strip {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 24px 16px !important;
+        padding: 2rem 0 !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+    }
+
+    .footer-bottom {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+}
+
+/* END SCCB-PRM-FOOTER-LIGHT-THEME-017 */
+
+/* ============================================================
+   SCCB-PRM-BALANCE-ABOUT-CONTACT-018
+   About Section Density Fix + Contact Section Balance
+   Author: Astra | 2026-04-29
+   Dependencies: SCCB-014 → 017 applied
+   Class Resolution: All SCCB aliases mapped to real HTML classes
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   ABOUT SECTION
+   ----------------------------------------------------------- */
+
+/* 1. LEFT SIDE DENSITY
+   SCCB: .about-text → Real: #about-section .credibility-story-card
+   Constrain left column text block for visual density balance.
+   ----------------------------------------------------------- */
+#about-section .credibility-story-card {
+    max-width: 520px !important;
+}
+
+/* Left side body text: tighter line-height for density
+   SCCB: .about-text p → Real: #about-section .credibility-copy */
+#about-section .credibility-copy {
+    line-height: 1.65 !important;
+    max-width: 520px !important;
+}
+
+/* CTA group: anchor at bottom, vertically centered row
+   SCCB: .about-text .cta-group → Real: #about-section .credibility-actions */
+#about-section .credibility-actions {
+    margin-top: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+}
+
+/* 2. RIGHT CARD SOFTEN
+   SCCB: .why-owners-card → Real: #about-section .credibility-proof-card
+   Reduce visual dominance with softer shadow + subtle border. */
+#about-section .credibility-proof-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 3. ABOUT GRID — Vertical centering + gap upgrade
+   SCCB: .about-grid → Real: #about-section .credibility-grid
+   align-items: center prevents tall right card from pushing left content top. */
+#about-section .credibility-grid {
+    align-items: center !important;
+    gap: 56px !important;
+}
+
+/* ----------------------------------------------------------- */
+
+/* -----------------------------------------------------------
+   CONTACT SECTION
+   ----------------------------------------------------------- */
+
+/* 4. BACKGROUND — Gradient transition, not hard block
+   SCCB: .get-in-touch → Real: #contact-section / .nri-contact-section
+   Smooth beige → white gradient dissolves the section boundary
+   and creates visual continuity into the light footer.
+   ----------------------------------------------------------- */
+#contact-section,
+.nri-contact-section {
+    background: linear-gradient(
+        to bottom,
+        var(--prm-beige) 0%,
+        var(--prm-beige) 70%,
+        #FFFFFF 100%
+    ) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.04) !important;
+    border-bottom: none !important;
+}
+
+/* 5. CONTACT GRID REBALANCE — Left column slightly wider
+   SCCB: .get-in-touch-grid → Real: .contact-section-grid
+   1.1fr / 1fr gives more visual weight to the info column. */
+.contact-section-grid {
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 56px !important;
+    align-items: start !important;
+}
+
+/* 6. CONTACT LEFT SIDE — h2 + description text width control
+   h2 lives in .section-intro-center (above grid, not in .contact-info-column)
+   description p lives in .contact-info-column */
+#contact-section .section-intro-center h2 {
+    max-width: 420px !important;
+    margin-left: 0 !important;
+    text-align: left !important;
+    color: #111111 !important; /* override inline style="color:white" */
+}
+
+#contact-section .section-intro-center {
+    text-align: left !important;
+    margin-bottom: 40px !important;
+}
+
+#contact-section .section-intro-center .section-kicker {
+    text-align: left !important;
+    display: block !important;
+}
+
+.contact-info-column p {
+    max-width: 420px !important;
+    line-height: 1.6 !important;
+    color: #4A4A4A !important;
+}
+
+/* 7 + 8. CONTACT FORM — Width control + card elevation
+   .contact-form is the real class — matches exactly.
+   max-width: 520px prevents form from overpowering layout.
+   Elevated white card with subtle shadow. */
+.contact-form {
+    max-width: 520px !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
+    border-radius: 14px !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 9. CONTACT SECTION PADDING
+   SCCB: .get-in-touch { padding: 72px 0 80px }
+   Asymmetric: extra bottom padding softens the gradient exit. */
+#contact-section,
+.nri-contact-section {
+    padding: 72px 0 80px 0 !important;
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE — Restore centered intro on tablet/mobile
+   ----------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .contact-section-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    #contact-section .section-intro-center h2 {
+        max-width: 100% !important;
+        text-align: center !important;
+        margin-left: auto !important;
+    }
+
+    #contact-section .section-intro-center {
+        text-align: center !important;
+    }
+
+    #contact-section .section-intro-center .section-kicker {
+        text-align: center !important;
+    }
+
+    .contact-info-column p {
+        max-width: 100% !important;
+    }
+
+    .contact-form {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #about-section .credibility-grid {
+        align-items: stretch !important;
+        gap: 32px !important;
+    }
+
+    #about-section .credibility-story-card {
+        max-width: 100% !important;
+    }
+}
+
+/* END SCCB-PRM-BALANCE-ABOUT-CONTACT-018 */
+
+/* ============================================================
+   SCCB-CONVERSION-BOOST-019
+   Trust → Action Flow Optimization (Why Owners + Get In Touch)
+   Author: Astra | 2026-04-29
+   Dependencies: SCCB-014 → 018 applied
+   HTML changes: _about.html (why-owners-cta), _contact.html (trust points)
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   1. WHY OWNERS CARD — Gold accent bar (::before)
+   Real class: #about-section .credibility-proof-card
+   Creates a premium trust signal above card content.
+   ----------------------------------------------------------- */
+#about-section .credibility-proof-card {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+#about-section .credibility-proof-card::before {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 60px;
+    background: var(--prm-gold);
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+/* -----------------------------------------------------------
+   2. BTN-OUTLINE-LIGHT — CTA for dark card context
+   Used in .why-owners-cta inside .credibility-proof-card
+   ----------------------------------------------------------- */
+.btn-outline-light {
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF !important;
+    background: transparent;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+}
+
+/* Why Owners CTA container — spacing within dark card */
+.why-owners-cta {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* -----------------------------------------------------------
+   3. CONTACT FORM — Elevated shadow (conversion hotspot)
+   Overrides and refines SCCB-018 elevation.
+   ----------------------------------------------------------- */
+.contact-form {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* -----------------------------------------------------------
+   4. CONTACT CTA BUTTON — Primary action boost
+   Real class: .btn-gold inside .contact-form
+   ----------------------------------------------------------- */
+.contact-form .btn-gold {
+    width: 100% !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px !important;
+    padding: 16px 24px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    background: var(--prm-gold) !important;
+    color: #111111 !important;
+    border: none !important;
+    cursor: pointer !important;
+    display: block !important;
+    text-align: center !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.contact-form .btn-gold:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(201, 161, 74, 0.35) !important;
+    background: var(--prm-gold-hover) !important;
+}
+
+/* -----------------------------------------------------------
+   5. CONTACT TRUST POINTS — Left column social proof list
+   HTML: <ul class="contact-trust-points"> added in _contact.html
+   ----------------------------------------------------------- */
+.contact-trust-points {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 24px 0 0 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.contact-trust-points li {
+    color: #374151 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.contact-trust-points li::before {
+    content: "✔";
+    color: var(--prm-gold) !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+}
+
+/* -----------------------------------------------------------
+   6. VISUAL FLOW — Ensure only ONE dark block (proof card)
+   Reinforce that no other section breaks the light rhythm.
+   (Informational — already enforced by SCCB-016 bg system)
+   ----------------------------------------------------------- */
+
+/* END SCCB-CONVERSION-BOOST-019 */
+
+/* ============================================================
+   HOTFIX-ABOUT-CONTACT-ALIGN
+   About: rogue 3rd grid item fixed in HTML (_about.html)
+   Contact: re-center section intro to match page rhythm
+   Triggered by: visual regression report 2026-04-29 18:04
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   CONTACT INTRO — Re-centered (overrides SCCB-018 left-align)
+   SCCB-018 set text-align: left making contact uniquely off-rhythm.
+   All other sections use centered intros — contact should match.
+   ----------------------------------------------------------- */
+#contact-section .section-intro-center,
+.nri-contact-section .section-intro-center {
+    text-align: center !important;
+    margin-bottom: 48px !important;
+}
+
+#contact-section .section-intro-center h2 {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    color: #111111 !important;
+}
+
+#contact-section .section-intro-center .section-kicker {
+    margin-bottom: 12px !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+/* Ensure contact title stays on a single line on desktop */
+@media (min-width: 1024px) {
+    #contact-section .section-intro-center h2 {
+        white-space: nowrap !important;
+    }
+}
+
+/* 10. ABOUT HEADING WRAP — Ensure 2-line fit
+   SCCB Point: Rebalance grid to 1.5fr/1fr + reduce font size to 1.6rem. */
+#about-section .credibility-grid {
+    grid-template-columns: 1fr !important;
+    gap: 56px !important;
+}
+
+#about-section .credibility-story-card {
+    max-width: 720px !important;
+}
+
+#about-section .credibility-title {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* END HOTFIX-ABOUT-CONTACT-ALIGN */
+
+/* ============================================================
+   SCCB-PRM-ABOUT-CONTACT-REFINE-020
+   About Authority + Contact Conversion Pass
+   Author: Astra | 2026-04-29
+   ============================================================ */
+
+/* ABOUT SECTION REFINEMENTS */
+#about-section .credibility-title {
+    font-size: 34px !important;
+    line-height: 1.25 !important;
+    font-weight: 600 !important;
+    max-width: 460px !important;
+}
+
+#about-section .credibility-copy {
+    max-width: 460px !important;
+}
+
+#about-section .credibility-mission-block {
+    background: #EFE7DA !important;
+    border-radius: 12px !important;
+    padding: 18px 20px !important;
+    border: 1px solid rgba(0,0,0,0.04) !important;
+}
+
+#about-section .cta-group {
+    margin-top: 24px !important;
+}
+
+#about-section .cta-group .btn-primary {
+    padding: 12px 18px !important;
+    font-weight: 600 !important;
+}
+
+/* CONTACT SECTION REFINEMENTS — Corrective Pass */
+#contact-section .container {
+    max-width: 1200px !important;
+}
+
+#contact-section .contact-section-grid {
+    grid-template-columns: 1.2fr 1fr !important;
+    gap: 80px !important; /* Increased breathing room */
+    align-items: start !important;
+}
+
+#contact-section .contact-info-column {
+    max-width: 520px !important; /* Expanded for readability */
+}
+
+#contact-section .contact-info-column p {
+    font-size: 1.1rem !important;
+    line-height: 1.65 !important;
+    color: #4B5563 !important;
+    margin-bottom: 32px !important;
+}
+
+#contact-section .detail-item h4 {
+    color: var(--prm-gold) !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: 8px !important;
+}
+
+#contact-section .address-text, 
+#contact-section .phone-text {
+    font-size: 1rem !important;
+    color: #1F2937 !important;
+}
+
+#contact-section .contact-map-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 16px 24px !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    border-radius: 8px !important;
+    margin: 24px 0 !important;
+    text-decoration: none !important;
+    color: #111111 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+}
+
+#contact-section .contact-trust {
+    margin-top: 32px !important;
+    margin-bottom: 0 !important;
+    font-size: 16px !important; /* Larger for authority */
+    color: #111111 !important;
+    font-weight: 500 !important;
+    line-height: 1.8 !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+}
+
+#contact-section .contact-trust li {
+    margin-bottom: 8px !important;
+}
+
+#contact-section .contact-form {
+    padding: 40px !important;
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.1) !important;
+}
+
+#contact-section .contact-form button {
+    width: 100% !important;
+    height: 56px !important;
+    font-size: 16px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* END SCCB-PRM-ABOUT-CONTACT-REFINE-020 */
+
+/* 11. SCCB-021: CONTACT & FOOTER POLISH */
+
+@media (min-width: 1025px) {
+    .contact-info-column p strong,
+    .contact-benefit-line {
+        white-space: nowrap !important;
+    }
+}
+
+.footer-brand {
+    margin-bottom: 12px !important;
+}
+
+.footer-tagline {
+    margin-top: 6px !important;
+    line-height: 1.5 !important;
+    color: rgba(17, 24, 39, 0.72);
+    font-size: 0.82rem;
+}
+
+/* 12. SCCB-023: ABOUT SECTION 3-LINE RESTRUCTURE */
+
+.about-premium-restructure {
+    background: #FFFFFF !important;
+    padding: 80px 0 !important;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.about-premium-restructure .container-fluid {
+    width: 100% !important;
+    padding: 0 !important; /* SCCB-024: Container handled by row widths */
+}
+
+.about-header-full {
+    text-align: left !important;
+    margin-bottom: 64px;
+    width: 100%;
+}
+
+.about-main-title {
+    font-size: 34px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+    margin: 16px 0 !important; /* Left aligned */
+    white-space: nowrap !important;
+    width: 100%;
+    max-width: none !important; /* SCCB-026: Spans width from left */
+    text-align: left !important;
+}
+
+.about-row-top {
+    display: grid !important;
+    grid-template-columns: 1.1fr 1fr 1fr 0.9fr !important;
+    gap: 40px !important; /* SCCB-025: Increased for breathing room */
+    align-items: start !important;
+    width: 92% !important;
+    max-width: var(--prm-container) !important;
+    margin: 0 auto 32px !important;
+}
+
+.about-row-top p::before {
+    content: none !important; /* SCCB-025: No accidental prefixes */
+}
+
+.about-row-top .about-content {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.about-row-top > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important; /* SCCB-025: Uniform internal spacing */
+}
+
+.about-row-top .cta-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 12px !important;
+}
+
+@media (max-width: 1024px) {
+    .about-row-top {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-row-top {
+        grid-template-columns: 1fr !important;
+    }
+    .about-row-top .cta-group {
+        align-items: flex-start !important;
+    }
+}
+
+.about-col p {
+    font-size: 14px !important; /* SCCB-025: Professional readability */
+    line-height: 1.6 !important;
+    color: #4B5563 !important;
+    margin: 0 !important;
+}
+
+.mission-block h4,
+.about-row-top h4 {
+    font-size: 16px !important; /* SCCB-025: Typography hierarchy */
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    color: #111111 !important;
+}
+
+.mission-desc {
+    font-weight: 600 !important;
+    color: #111111 !important;
+}
+
+.about-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+}
+
+.btn-about-primary {
+    background: #111111 !important;
+    color: #FFFFFF !important;
+    padding: 14px 24px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease;
+}
+
+.btn-about-secondary {
+    background: transparent !important;
+    color: #111111 !important;
+    border: 1px solid #D1D5DB !important;
+    padding: 14px 24px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease;
+}
+
+.btn-about-primary:hover {
+    background: #333333 !important;
+}
+
+.btn-about-secondary:hover {
+    background: #F9FAFB !important;
+    border-color: #111111 !important;
+}
+
+.about-row-line-4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 40px !important; /* Standardized with Row Top */
+    align-items: start !important;
+    width: 92% !important;
+    max-width: var(--prm-container) !important;
+    margin: 48px 0 0 !important; /* Left aligned */
+    border-top: 1px solid #F3F4F6 !important;
+    padding-top: 40px !important;
+}
+
+.about-metrics {
+    display: block !important;
+}
+
+.about-stats-mini {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.about-metrics .stat-item {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.about-metrics .stat-item::after {
+    content: none !important; /* Removes vertical divider | */
+}
+
+.about-trust-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.about-trust-list li {
+    font-size: 0.9rem !important; /* Smaller for density */
+    line-height: 1.5 !important;
+    color: #4B5563 !important;
+    margin-bottom: 20px !important;
+    position: relative;
+    padding-left: 0 !important;
+}
+
+.about-trust-list li strong {
+    color: #111111 !important;
+    font-weight: 700 !important;
+    display: block !important; /* Block for better vertical rhythm */
+    margin-bottom: 4px !important;
+    font-size: 0.95rem !important;
+}
+
+.about-offices {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+}
+
+.office-item {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.office-label {
+    font-size: 0.65rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    color: var(--prm-gold) !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+}
+
+.office-location {
+    font-size: 0.95rem !important;
+    color: #111111 !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+
+.about-stats-mini {
+    display: flex !important; /* Stack vertically for space */
+    flex-direction: column !important;
+    gap: 24px !important;
+}
+
+.stat-item {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 4px !important; /* Tightened gap */
+}
+
+.stat-item strong {
+    font-size: 1.2rem !important; /* Slightly smaller for density */
+    color: #111111 !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+}
+
+.stat-item small {
+    font-size: 0.85rem !important;
+    color: #4B5563 !important;
+    line-height: 1 !important;
+}
+
+@media (max-width: 1200px) {
+    .about-row-line-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 40px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .about-row-line-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .about-content-row {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 32px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-main-title {
+        white-space: normal !important;
+    }
+    .about-content-row {
+        grid-template-columns: 1fr !important;
+    }
+    .about-premium-restructure .container-fluid {
+        padding: 0 24px !important;
+    }
+}
+
+/* 13. SCCB-026: GLOBAL LEFT ALIGNMENT FOR SECTION HEADERS */
+
+section:not(#home-section) .section-intro-center,
+section:not(#home-section) .section-kicker,
+section:not(#home-section) .section-title,
+section:not(#home-section) .section-title-centered,
+section:not(#home-section) .credibility-title,
+section:not(#home-section) .customer-reviews-intro,
+section:not(#home-section) .custom-cards-intro,
+section:not(#home-section) .journal-preview-intro,
+section:not(#home-section) .section-desc-centered,
+section:not(#home-section) p {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    align-items: flex-start !important; /* SCCB-026: Fix for flex containers */
+}
+
+/* Ensure kicker doesn't have auto-margin from normalization */
+section:not(#home-section) .section-kicker {
+    display: inline-block !important;
+    width: auto !important;
+}
+
+section:not(#home-section) .section-intro-center,
+section:not(#home-section) .customer-reviews-intro,
+section:not(#home-section) .custom-cards-intro,
+section:not(#home-section) .journal-preview-intro {
+    max-width: 100% !important;
+}
+
+@media (max-width: 1024px) {
+    .about-main-title {
+        white-space: normal !important;
+    }
+}
+
+/* 14. SCCB-PRM-HEADER-AXIS-UNIFICATION-031 */
+section:not(#home-section) .section-inner {
+    width: 92% !important;
+    max-width: var(--prm-container) !important;
+    margin: 0 auto !important;
+}
+
+section:not(#home-section) .section-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 auto 32px !important;
+    text-align: left !important;
+}
+
+section:not(#home-section) .section-header > * {
+    margin: 0 !important;
+}
+
+section:not(#home-section) .section-kicker {
+    display: block !important;
+    width: auto !important;
+    margin: 0 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+section:not(#home-section) .section-title {
+    max-width: min(100%, 52rem) !important;
+    margin: 0 !important;
+    text-align: left !important;
+    text-wrap: balance !important;
+}
+
+section:not(#home-section) .section-subtitle {
+    max-width: min(100%, 58rem) !important;
+    margin: 0 !important;
+    color: #6B7280 !important;
+    text-align: left !important;
+    text-wrap: pretty !important;
+}
+
+section:not(#home-section) .section-header,
+section:not(#home-section) .grid-3,
+section:not(#home-section) .grid-4,
+section:not(#home-section) .services-grid,
+section:not(#home-section) .about-row-top,
+section:not(#home-section) .management-grid,
+section:not(#home-section) .reviews-grid,
+section:not(#home-section) .property-grid-hybrid,
+section:not(#home-section) .journal-preview-grid,
+section:not(#home-section) .cr-masonry-grid,
+section:not(#home-section) .custom-cards-grid,
+section:not(#home-section) .contact-section-grid {
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+section:not(#home-section) .grid-3,
+section:not(#home-section) .grid-4,
+section:not(#home-section) .services-grid,
+section:not(#home-section) .property-grid-hybrid,
+section:not(#home-section) .journal-preview-grid {
+    justify-items: stretch !important;
+}
+
+#about-section .about-row-top .cta-group {
+    align-items: flex-start !important;
+}
+
+#contact-section .section-title {
+    color: #111111 !important;
+}
+
+#contact-section .section-subtitle {
+    color: #6B7280 !important;
 }

@@ -141,92 +141,87 @@ section.custom-cards-section {
 }
 
 /* ============================================
-   ABOUT SECTION — TEXT WRAP FIX
-   Force titles and copy to take full available width
+   ABOUT SECTION — LEFT ALIGNMENT (SCCB-027)
    ============================================ */
 #about-section .credibility-story-card,
 #about-section .credibility-proof-card {
-    padding: 2rem !important; /* Reduce from 3rem to gain horizontal space */
+    padding: 2rem !important;
 }
 
-/* Expanded grid to give story card more room for 2-line wrap */
 #about-section .credibility-grid {
     grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr) !important;
 }
 
 #about-section .credibility-title {
-    max-width: 35ch !important; /* Ideal for 2-line wrap of this title */
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    max-width: none !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 #about-section .credibility-copy {
-    max-width: 85ch !important; /* Ideal for 2-line wrap of this description */
+    max-width: 85ch !important;
     -webkit-line-clamp: unset !important;
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
-
 
 #about-section .section-kicker {
     display: block;
-    text-align: center !important;
+    text-align: left !important;
     margin-bottom: 12px;
 }
 
 #about-section .credibility-actions {
-    justify-content: center !important;
+    justify-content: flex-start !important;
 }
 
-
 #about-section .credibility-proof-title {
-    max-width: 35ch !important; /* Ideal for 2-line wrap */
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    max-width: 35ch !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     color: #FFFFFF !important;
 }
 
 #about-section .credibility-proof-copy {
     max-width: 60ch !important;
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     color: rgba(255, 255, 255, 0.8) !important;
     margin-bottom: 24px !important;
 }
 
 #about-section .credibility-proof-list {
-    text-align: left; /* Keep list items left aligned for readability */
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: left;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* ============================================
-   GLOBAL SECTION INTRO — CENTERED NORMALIZATION
-   Used across Management, Insights, and Properties
+   GLOBAL SECTION INTRO — LEFT ALIGNMENT (SCCB-027)
    ============================================ */
 .management-preview-intro,
 .journal-preview-intro,
 .featured-properties-intro,
 .section-intro-centered {
-    text-align: center !important;
-    max-width: 1000px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    text-align: left !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     margin-bottom: 48px !important;
 }
 
 .section-title-centered {
     font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
     line-height: 1.2 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: 35ch !important; /* Forces 2-line wrap */
-    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    text-align: left !important;
     color: var(--gray-900) !important;
     margin-bottom: 16px !important;
 }
@@ -234,19 +229,20 @@ section.custom-cards-section {
 .section-desc-centered {
     font-size: 1.1rem !important;
     line-height: 1.6 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: 85ch !important; /* Forces 2-line wrap */
-    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 85ch !important;
+    text-align: left !important;
     color: var(--gray-600) !important;
 }
 
 #management-section .section-kicker,
 #blog-section .section-kicker {
     display: block;
-    text-align: center !important;
+    text-align: left !important;
     margin-bottom: 12px;
 }
+
 
 
 

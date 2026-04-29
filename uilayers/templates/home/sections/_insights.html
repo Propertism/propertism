@@ -1,11 +1,11 @@
 <section id="blog-section" class="journal-preview-section">
-    <div class="container">
-        <div class="journal-preview-intro">
+    <div class="section-inner">
+        <div class="section-header">
             {% if company.blog_section_eyebrow %}<span class="section-kicker">{{ company.blog_section_eyebrow }}</span>{% else %}<span class="section-kicker">Insights</span>{% endif %}
-            <h2 class="section-title-centered">Useful updates for owners managing from abroad.</h2>
-            <p class="section-desc-centered">Short, practical support for reporting, rentals, maintenance, Chennai.</p>
+            <h2 class="section-title">Useful updates for owners managing from abroad.</h2>
+            <p class="section-subtitle">Short, practical support for reporting, rentals, maintenance, Chennai.</p>
         </div>
-        <div class="journal-preview-grid">
+        <div class="grid-3 journal-preview-grid">
             {% for post in recent_posts %}
             <article class="journal-preview-card" data-journal-card>
                 <div class="journal-card-header">

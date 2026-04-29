@@ -1,21 +1,22 @@
 <section id="contact-section" class="nri-contact-section">
-    <div class="container">
-        <div class="section-intro-center">
-            {% if company.contact_section_eyebrow %}<span class="section-kicker">{{ company.contact_section_eyebrow }}</span>{% endif %}
-            {% if company.contact_section_title %}<h2 style="color: white;">{{ company.contact_section_title }}</h2>{% endif %}
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-kicker">{{ company.contact_section_eyebrow|default:"CONTACT" }}</span>
+            <h2 class="section-title">Let's manage your Chennai property without the stress.</h2>
+            <p class="section-subtitle">Talk to our Chennai and US coordination team about rentals, maintenance, reporting, or end-to-end property oversight.</p>
         </div>
-        
+
         <div class="contact-section-grid">
             <div class="contact-info-column">
-                {% if company.contact_section_description %}<p>{{ company.contact_section_description }}</p>{% endif %}
-                
+                <p class="contact-benefit-line">Let's discuss your property needs</p>
+
                 <div class="contact-details-list">
                     <div class="detail-item">
                         <h4>Chennai Office</h4>
                         <p class="address-text">{{ company.india_office_address|linebreaksbr }}</p>
                         <span class="phone-text">{{ company.india_phone_1 }}</span>
                     </div>
-                    
+
                     <div class="detail-item">
                         <h4>US Coordination</h4>
                         <p class="address-text">{{ company.us_office_address|linebreaksbr }}</p>
@@ -30,6 +31,13 @@
                     </svg>
                     <span>View on Google Maps</span>
                 </a>
+
+                <!-- SCCB-020: Trust proof bullets -->
+                <ul class="contact-trust">
+                  <li>10+ years experience</li>
+                  <li>500+ properties managed</li>
+                  <li>Chennai-based execution team</li>
+                </ul>
             </div>
 
             <div class="contact-form-column">
@@ -38,7 +46,7 @@
                     <input type="text" name="name" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email Address" required>
                     <input type="tel" name="phone" placeholder="Phone Number">
-                    
+
                     <select name="service">
                         <option value="">Select Service Needed</option>
                         {% for value, label in contact_service_choices %}
@@ -47,7 +55,7 @@
                     </select>
 
                     <textarea name="message" rows="5" placeholder="How can we help manage your property?" required></textarea>
-                    
+
                     <button type="submit" class="btn-gold">Book Free NRI Consultation</button>
                 </form>
             </div>
