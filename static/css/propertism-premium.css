@@ -151,18 +151,17 @@ p {
 
 .hero-hybrid-content {
     z-index: 2;
-    max-width: 950px !important;
+    max-width: 1150px !important; /* Widened to avoid collapsed feel */
     padding-left: 0 !important;
     margin: 0 auto !important;
     text-align: center !important;
     transform: translateY(20px);
-    /* Restored previous stage */
 }
 
 .hero-title-premium {
     color: #FFFFFF !important;
-    font-size: clamp(2.2rem, 5vw, 3.8rem) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(2.2rem, 5vw, 4rem) !important;
+    line-height: 1.1 !important;
     font-weight: 700 !important;
     margin-bottom: 1.5rem !important;
     /* High-contrast shadows for legibility on pure bright images */
@@ -183,8 +182,8 @@ p {
 .hero-description {
     color: #FFFFFF !important;
     /* Pure white for max contrast */
-    font-size: 1.2rem !important;
-    max-width: 650px !important;
+    font-size: 1.25rem !important;
+    max-width: 900px !important; /* Widened */
     margin: 0 auto 2.5rem auto !important;
     line-height: 1.7 !important;
     opacity: 1 !important;
@@ -317,6 +316,22 @@ section {
     border: 1px solid rgba(201, 161, 74, 0.08) !important;
     box-shadow: 0 8px 24px rgba(26, 20, 10, 0.04) !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.property-save {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1A1A1A !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.property-save:hover {
+    background: var(--prm-gold) !important;
+    color: #111111 !important;
+    transform: scale(1.1) !important;
 }
 
 /* 7. Footer Premium — COMPREHENSIVE TEXT VISIBILITY */
