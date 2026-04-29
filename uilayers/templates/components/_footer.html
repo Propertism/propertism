@@ -83,14 +83,14 @@
             <div class="footer-section footer-office">
                 <h3>India Office</h3>
                 <div class="footer-office-compact">
-                    <p class="footer-office-address">{{ company.india_office_address|linebreaksbr }}</p>
-                    <p class="footer-office-city">{{ company.india_office_city }}, {{ company.india_office_state }} – {{ company.india_office_pincode }}</p>
-                    <p class="footer-office-phones">
-                        <a href="tel:{{ company.india_phone_1|cut:' ' }}">{{ company.india_phone_1 }}</a>
-                        {% if company.india_phone_2 %}<span class="phone-sep">|</span><a href="tel:{{ company.india_phone_2|cut:' ' }}">{{ company.india_phone_2 }}</a>{% endif %}
-                        {% if company.india_phone_3 %}<span class="phone-sep">|</span><a href="tel:{{ company.india_phone_3|cut:' ' }}">{{ company.india_phone_3 }}</a>{% endif %}
-                    </p>
-                    <p class="footer-office-email"><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+                    <p class="footer-office-address footer-text-white">{{ company.india_office_address|linebreaksbr }}</p>
+                    <p class="footer-office-city footer-text-gold">{{ company.india_office_city }}, {{ company.india_office_state }} – {{ company.india_office_pincode }}</p>
+                    <div class="footer-office-phones">
+                        <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_1 }}</a>
+                        {% if company.india_phone_2 %}<a href="tel:{{ company.india_phone_2|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_2 }}</a>{% endif %}
+                        {% if company.india_phone_3 %}<a href="tel:{{ company.india_phone_3|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_3 }}</a>{% endif %}
+                    </div>
+                    <p class="footer-office-email"><a href="mailto:{{ company.email }}" class="footer-text-gold">{{ company.email }}</a></p>
                 </div>
             </div>
 

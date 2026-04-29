@@ -11,10 +11,10 @@
     --prm-text: #FFFFFF;
     --prm-text-muted: #B0B0B5;
     --prm-border: rgba(201, 161, 74, 0.15);
-    
+
     --prm-font-serif: 'Playfair Display', serif;
     --prm-font-sans: 'Inter', sans-serif;
-    
+
     --prm-container: 1100px;
     --prm-section-padding: 100px;
 }
@@ -36,16 +36,32 @@ body {
 }
 
 /* 1. Global Softness & Warmth */
-h1, h2, h3 { 
+h1,
+h2,
+h3 {
     font-family: var(--prm-font-serif);
-    letter-spacing: 0.01em; 
-    color: #1A1A1A; /* Deep Espresso */
+    letter-spacing: 0.01em;
+    color: #1A1A1A;
+    /* Deep Espresso */
 }
 
-h1 { font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.05; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-h2 { font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.15; }
+h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.05;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
+h2 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.15;
+}
+
+p {
+    color: #4A4A4A;
+    max-width: 650px;
+    line-height: 1.75;
+    font-size: 1.05rem;
+}
 
 /* 
    IMMEDIATE RECOVERY & HARDENING (SCCB-RECOVERY-011)
@@ -54,8 +70,8 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 
 /* 1. Navbar Hardening (High Visibility) */
 .site-header {
-    background: rgba(15, 15, 16, 0.9) !important; 
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(15, 15, 16, 0.9) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     padding: 1rem 0 !important;
     position: fixed;
     width: 100%;
@@ -70,7 +86,8 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 }
 
 .logo-image {
-    max-height: 45px !important; /* Constrain huge logo */
+    max-height: 45px !important;
+    /* Constrain huge logo */
     width: auto;
     display: block;
 }
@@ -89,7 +106,8 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
     text-decoration: none;
     margin: 0 1.2rem;
     display: inline-block;
-    line-height: 1; /* Reset line-height for perfect centering */
+    line-height: 1;
+    /* Reset line-height for perfect centering */
 }
 
 .nav-cta {
@@ -102,21 +120,31 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 
 /* 2. Hero Clarity (Absolute 100% Resolution - No Overlays) */
 .hero-hybrid {
-    height: 100vh;
+    height: 100vh !important;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
-    background-color: #000 !important;
+    background: #000 !important;
 }
 
 .hero-hybrid-image {
-    filter: none !important; /* Force no blur/dullness */
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    /* Widen and Fit */
+    filter: none !important;
     -webkit-filter: none !important;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.hero-hybrid-image.is-active {
     opacity: 1 !important;
 }
 
-/* NO DIMMING OVERLAY - Removed ::before gradient completely */
 .hero-hybrid::before {
     display: none !important;
 }
@@ -124,15 +152,11 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 .hero-hybrid-content {
     z-index: 2;
     max-width: 950px !important;
-    padding-left: 0 !important; 
+    padding-left: 0 !important;
     margin: 0 auto !important;
     text-align: center !important;
-    transform: translateY(20px); /* Shift DOWN to avoid cutoff at top */
-}
-
-.hero-hybrid-image {
-    filter: none !important;
-    -webkit-filter: none !important;
+    transform: translateY(20px);
+    /* Restored previous stage */
 }
 
 .hero-title-premium {
@@ -142,27 +166,29 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
     font-weight: 700 !important;
     margin-bottom: 1.5rem !important;
     /* High-contrast shadows for legibility on pure bright images */
-    text-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.4) !important;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.4) !important;
     font-family: var(--prm-font-serif);
 }
 
 .hero-title-premium .highlight-gold {
     color: var(--prm-gold) !important;
-    font-size: 1em !important; 
+    font-size: 1em !important;
     font-weight: 900 !important;
-    letter-spacing: normal !important; /* Remove extreme letter-spacing */
+    letter-spacing: normal !important;
+    /* Remove extreme letter-spacing */
     display: inline-block;
     margin-top: 0.5rem;
 }
 
 .hero-description {
-    color: #FFFFFF !important; /* Pure white for max contrast */
+    color: #FFFFFF !important;
+    /* Pure white for max contrast */
     font-size: 1.2rem !important;
     max-width: 650px !important;
     margin: 0 auto 2.5rem auto !important;
     line-height: 1.7 !important;
     opacity: 1 !important;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8) !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
 }
 
 .hero-actions {
@@ -216,7 +242,8 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 
 .trust-strip-metrics {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Accommodate all 4 metrics */
+    grid-template-columns: repeat(4, 1fr);
+    /* Accommodate all 4 metrics */
     text-align: center;
     align-items: center;
 }
@@ -247,21 +274,48 @@ p { color: #4A4A4A; max-width: 650px; line-height: 1.75; font-size: 1.05rem; }
 }
 
 /* 2. Section Rhythm (Premium Warmth) */
-section { padding: 100px 0 !important; }
-@media (max-width: 768px) { section { padding: 70px 0 !important; } }
+section {
+    padding: 100px 0 !important;
+}
 
-#about-section, #reviews-section, #blog-section { background-color: #FFFFFF !important; }
-#services-section, #management-section, #properties-section { background-color: #F9F8F5 !important; }
-#contact-section { background-color: #0F0F10 !important; color: white !important; }
-#contact-section h2, #contact-section p { color: white !important; }
+@media (max-width: 768px) {
+    section {
+        padding: 70px 0 !important;
+    }
+}
+
+#about-section,
+#reviews-section,
+#blog-section {
+    background-color: #FFFFFF !important;
+}
+
+#services-section,
+#management-section,
+#properties-section {
+    background-color: #F9F8F5 !important;
+}
+
+#contact-section {
+    background-color: #0F0F10 !important;
+    color: white !important;
+}
+
+#contact-section h2,
+#contact-section p {
+    color: white !important;
+}
 
 /* 6. Card Uniformity (Softer & Warmer) */
-.insight-card, .cr-card, .property-card-hybrid, .credibility-proof-card {
+.insight-card,
+.cr-card,
+.property-card-hybrid,
+.credibility-proof-card {
     background-color: #FFFFFF !important;
     border-radius: 12px !important;
     padding: 3rem !important;
     border: 1px solid rgba(201, 161, 74, 0.08) !important;
-    box-shadow: 0 8px 24px rgba(26,20,10,0.04) !important;
+    box-shadow: 0 8px 24px rgba(26, 20, 10, 0.04) !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -269,7 +323,7 @@ section { padding: 100px 0 !important; }
 .site-footer {
     background-color: #0F0F10 !important;
     padding: 120px 0 60px 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
     color: #FFFFFF !important;
 }
 
@@ -303,9 +357,22 @@ section { padding: 100px 0 !important; }
     color: var(--prm-gold) !important;
 }
 
+.footer-links {
+    margin-bottom: 0 !important;
+}
+
+.footer-links li {
+    margin-bottom: 0 !important;
+    line-height: 1.2 !important;
+}
+
 .footer-links a {
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 0.82rem !important;
+    line-height: 1.3 !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    color: #B0B0B5 !important;
 }
 
 .site-footer strong,
@@ -315,15 +382,62 @@ section { padding: 100px 0 !important; }
     color: #FFFFFF !important;
 }
 
-/* Office details: bright addresses & phones */
-.footer-office-address,
-.footer-office-city {
-    color: #D1D5DB !important;
+/* Office details: Unified with Tagline/Links spec */
+.site-footer .footer-text-white,
+.site-footer .footer-text-gold,
+.site-footer .footer-office-address,
+.site-footer .footer-office-city,
+.site-footer .footer-office-email a {
+    color: #B0B0B5 !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
 }
 
-.footer-office-phones a,
-.footer-office-email a {
+.site-footer .footer-phone-item {
     color: var(--prm-gold) !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+.footer-office-address,
+.footer-office-city {
+    margin-bottom: 0 !important;
+}
+
+.footer-office-phones {
+    display: flex;
+    flex-direction: column;
+    gap: 0 !important;
+    margin-top: 1rem !important;
+    /* Gap after address */
+    margin-bottom: 1rem !important;
+    /* Gap before email */
+    align-items: flex-start !important;
+}
+
+.site-footer .footer-phone-item {
+    display: block;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.site-footer .footer-phone-item:hover {
+    opacity: 0.8;
+}
+
+.footer-office-email {
+    margin-top: 0 !important;
+}
+
+.site-footer .footer-office-email a {
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .footer-copy {
@@ -331,7 +445,8 @@ section { padding: 100px 0 !important; }
 }
 
 /* Social Icons to Gold */
-.footer-social-link i, .footer-social-link svg {
+.footer-social-link i,
+.footer-social-link svg {
     color: var(--prm-gold) !important;
 }
 
@@ -341,8 +456,8 @@ section { padding: 100px 0 !important; }
 
 /* Newsletter Premium */
 .footer-newsletter-form-mini input {
-    background: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #FFFFFF !important;
     padding: 12px 16px !important;
     border-radius: 4px !important;
@@ -359,52 +474,100 @@ section { padding: 100px 0 !important; }
     width: 100%;
 }
 
-/* World Clock Strip Visibility */
+/* World Clock Strip Visibility - CLEAN & FLEXIBLE */
 .world-clock-strip {
-    background: rgba(255,255,255,0.02) !important;
-    border: 1px solid rgba(255,255,255,0.05) !important;
-    padding: 2.5rem !important;
+    background: none !important;
+    border: none !important;
+    padding: 2.5rem 0 0 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 2rem !important;
+    flex-wrap: wrap;
+    /* Allow wrap on mobile */
+}
+
+.world-clock-cell {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    min-height: unset !important;
+    flex: 0 1 auto;
+}
+
+.world-clock-cell::after {
+    display: none !important;
 }
 
 .world-clock-label {
     color: var(--prm-gold) !important;
-    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em !important;
+    /* Reduced for better fit */
+    margin-bottom: 0.5rem !important;
+    display: block;
+    white-space: nowrap !important;
 }
 
 .world-clock-time,
 .world-clock-hours,
 .world-clock-minutes,
 .world-clock-separator,
-.world-clock-meridiem {
-    color: #FFFFFF !important;
-    font-weight: 700 !important;
-}
-
+.world-clock-meridiem,
 .world-clock-date {
+    white-space: nowrap !important;
+}
+
+.world-clock-time,
+.world-clock-hours,
+.world-clock-minutes,
+.world-clock-separator,
+.world-clock-meridiem,
+.world-clock-date,
+.world-clock-tagline-title,
+.footer-reach-text,
+.footer-hours-text {
     color: #B0B0B5 !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
 }
 
-.world-clock-tagline-title {
-    color: #FFFFFF !important;
+.world-clock-time--status {
+    font-weight: 600 !important;
 }
 
-.footer-reach-text, .footer-hours-text {
-    color: #FFFFFF !important;
+/* Specific wrapping rules */
+.world-clock-cell--tagline .world-clock-date {
+    white-space: normal !important;
+    max-width: 100%;
+    display: block;
+}
+
+.world-clock-cell--office-hours .world-clock-date {
+    white-space: nowrap !important;
+    display: block;
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
     padding-top: 40px !important;
     margin-top: 80px !important;
 }
 
-.footer-bottom p, .footer-bottom-links a {
-    color: rgba(255,255,255,0.4) !important;
+.footer-bottom p,
+.footer-bottom-links a {
+    color: rgba(255, 255, 255, 0.4) !important;
     font-size: 0.85rem !important;
 }
 
 /* 8. Removal of Template Signals */
-.section-kicker, .highlight-gold {
+.section-kicker,
+.highlight-gold {
     color: var(--prm-gold) !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
@@ -427,7 +590,7 @@ section { padding: 100px 0 !important; }
 .nri-contact-section {
     background-color: var(--prm-bg) !important;
     padding: 120px 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .contact-section-grid {
@@ -488,7 +651,7 @@ section { padding: 100px 0 !important; }
     margin-top: 2.5rem;
     padding: 20px 24px;
     background: var(--prm-bg-soft);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     text-decoration: none;
     color: var(--prm-gold) !important;
@@ -514,16 +677,16 @@ section { padding: 100px 0 !important; }
     background: var(--prm-bg-soft);
     padding: 3.5rem;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
-.contact-form input, 
-.contact-form select, 
+.contact-form input,
+.contact-form select,
 .contact-form textarea {
     width: 100%;
-    background: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #FFFFFF !important;
     padding: 1.2rem !important;
     border-radius: 4px !important;
@@ -533,12 +696,12 @@ section { padding: 100px 0 !important; }
     transition: all 0.3s ease;
 }
 
-.contact-form input:focus, 
-.contact-form select:focus, 
+.contact-form input:focus,
+.contact-form select:focus,
 .contact-form textarea:focus {
     outline: none !important;
     border-color: var(--prm-gold) !important;
-    background: rgba(255,255,255,0.06) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
     box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.1) !important;
 }
 
@@ -561,9 +724,11 @@ section { padding: 100px 0 !important; }
 }
 
 #about-section .credibility-grid {
-    grid-template-columns: 1fr 1fr !important; /* Equal width */
+    grid-template-columns: 1fr 1fr !important;
+    /* Equal width */
     gap: 40px !important;
-    align-items: stretch !important; /* Same height */
+    align-items: stretch !important;
+    /* Same height */
 }
 
 @media (max-width: 992px) {
@@ -589,7 +754,8 @@ section { padding: 100px 0 !important; }
 
 /* 4. CTA anchored (SCCB-012A) */
 #about-section .credibility-actions {
-    margin-top: 36px !important; /* Firmly grounded */
+    margin-top: 36px !important;
+    /* Firmly grounded */
     justify-content: flex-start !important;
     gap: 16px !important;
 }
@@ -598,7 +764,8 @@ section { padding: 100px 0 !important; }
 #about-section .credibility-title {
     font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
     line-height: 1.25 !important;
-    max-width: 480px !important; /* Force break after "vendors," */
+    max-width: 480px !important;
+    /* Force break after "vendors," */
     margin-bottom: 28px !important;
     color: #111111 !important;
     text-align: left !important;
@@ -615,17 +782,19 @@ section { padding: 100px 0 !important; }
 
 /* 2. Mission card: sharp premium highlight (SCCB-012A) */
 #about-section .credibility-mission-block {
-    background: #F4EFE6 !important; /* Warmer tone */
-    border: 1px solid rgba(0,0,0,0.05) !important;
+    background: #F4EFE6 !important;
+    /* Warmer tone */
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
     border-radius: 12px !important;
     padding: 24px !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05) !important; /* Sharp elevation */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05) !important;
+    /* Sharp elevation */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #about-section .credibility-mission-block:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.08) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08) !important;
 }
 
 #about-section .credibility-mission-block .highlight-gold {
@@ -636,7 +805,8 @@ section { padding: 100px 0 !important; }
 }
 
 #about-section .credibility-mission-block .credibility-copy {
-    color: #2A2A2A !important; /* Full contrast */
+    color: #2A2A2A !important;
+    /* Full contrast */
     opacity: 1 !important;
     text-align: left !important;
     margin: 0 !important;
@@ -647,8 +817,10 @@ section { padding: 100px 0 !important; }
 #about-section .credibility-copy {
     max-width: 600px !important;
     line-height: 1.75 !important;
-    margin-bottom: 15px !important; /* Consistent rhythm */
-    color: #2A2A2A !important; /* Strong contrast */
+    margin-bottom: 15px !important;
+    /* Consistent rhythm */
+    color: #2A2A2A !important;
+    /* Strong contrast */
     text-align: left !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -669,7 +841,8 @@ section { padding: 100px 0 !important; }
     text-transform: uppercase;
     letter-spacing: 0.05em;
     text-decoration: none;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.15) !important; /* Sharpened */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15) !important;
+    /* Sharpened */
     transition: all 0.3s ease;
     display: inline-block;
 }
@@ -677,12 +850,13 @@ section { padding: 100px 0 !important; }
 #about-section .btn-view-all:hover {
     background: #222222 !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2) !important;
 }
 
 #about-section .credibility-inline-link {
     color: #111111 !important;
-    opacity: 0.65 !important; /* Slightly more subdued */
+    opacity: 0.65 !important;
+    /* Slightly more subdued */
     font-weight: 600 !important;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -695,12 +869,15 @@ section { padding: 100px 0 !important; }
 
 /* 5. Right panel: softened + nudged (SCCB-012A) */
 #about-section .credibility-proof-card {
-    background: linear-gradient(180deg, #132236 0%, #182c44 100%) !important; /* 5% softer */
+    background: linear-gradient(180deg, #132236 0%, #182c44 100%) !important;
+    /* 5% softer */
     border-radius: 14px !important;
-    padding: 2.2rem 2rem !important; /* Reduced horizontal padding */
-    border: 1px solid rgba(255,255,255,0.05) !important;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.10) !important;
-    margin-top: 12px !important; /* Visual alignment nudge */
+    padding: 2.2rem 2rem !important;
+    /* Reduced horizontal padding */
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10) !important;
+    margin-top: 12px !important;
+    /* Visual alignment nudge */
 }
 
 #about-section .credibility-proof-title {
@@ -713,7 +890,8 @@ section { padding: 100px 0 !important; }
 }
 
 #about-section .credibility-proof-copy {
-    color: #D1D5DB !important; /* Not pure white */
+    color: #D1D5DB !important;
+    /* Not pure white */
     text-align: left !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -727,7 +905,8 @@ section { padding: 100px 0 !important; }
     margin-left: 0 !important;
     margin-right: 0 !important;
     max-width: 100% !important;
-    gap: 22px !important; /* +12px between blocks */
+    gap: 22px !important;
+    /* +12px between blocks */
 }
 
 #about-section .credibility-proof-list li {
@@ -737,14 +916,16 @@ section { padding: 100px 0 !important; }
 
 #about-section .credibility-proof-list li strong {
     color: #FFFFFF !important;
-    font-weight: 600 !important; /* Not too bold */
+    font-weight: 600 !important;
+    /* Not too bold */
 }
 
 /* 7. Location pills: interactive polish (SCCB-012A) */
 #about-section .credibility-office-pill {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
-    border-radius: 12px !important; /* Unified radius */
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+    /* Unified radius */
     transition: transform 0.3s ease;
 }
 
@@ -753,24 +934,27 @@ section { padding: 100px 0 !important; }
 }
 
 #about-section .credibility-office-pill span {
-    color: rgba(255,255,255,0.5) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* 8. Metrics grid: tight premium (SCCB-012A) */
 #about-section .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important; /* Consistent */
+    gap: 12px !important;
+    /* Consistent */
     margin-top: 24px !important;
 }
 
 #about-section .stat-card {
-    background: rgba(255,255,255,0.06) !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
     padding: 16px 12px !important;
-    border-radius: 12px !important; /* Unified radius */
+    border-radius: 12px !important;
+    /* Unified radius */
     text-align: center;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
-    min-height: 80px !important; /* Equal height */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    min-height: 80px !important;
+    /* Equal height */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -778,7 +962,8 @@ section { padding: 100px 0 !important; }
 }
 
 #about-section .stat-card h3 {
-    font-size: 1.75rem !important; /* +8% */
+    font-size: 1.75rem !important;
+    /* +8% */
     color: #FFFFFF !important;
     margin-bottom: 4px !important;
     line-height: 1 !important;
@@ -911,20 +1096,46 @@ section { padding: 100px 0 !important; }
         max-height: 35px !important;
     }
 
-    /* Footer */
-    .site-footer {
-        padding: 60px 0 40px 0 !important;
+    /* Footer Stacking */
+    .footer-content {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+        text-align: left !important;
     }
 
-    /* World Clock Strip: wrap on mobile */
+    .footer-links a {
+        font-size: 1rem !important;
+        /* Slightly larger for touch on mobile */
+        padding: 4px 0;
+        display: block;
+    }
+
+    /* World Clock Strip: 2-column grid on mobile */
     .world-clock-strip {
+        display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
-        padding: 1.5rem !important;
+        gap: 24px 16px !important;
+        padding: 2rem 0 !important;
     }
 
     .world-clock-cell {
-        padding: 8px !important;
+        padding: 0 !important;
+        flex: none !important;
+    }
+
+    .world-clock-label {
+        white-space: normal !important;
+        font-size: 0.75rem !important;
+    }
+
+    .world-clock-time,
+    .world-clock-date {
+        white-space: normal !important;
+        font-size: 0.85rem !important;
+    }
+
+    .world-clock-cell--office-hours .world-clock-date {
+        white-space: normal !important;
     }
 
     .world-clock-time--status {
@@ -946,4 +1157,6 @@ section { padding: 100px 0 !important; }
     }
 }
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
