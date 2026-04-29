@@ -3205,3 +3205,98 @@ section:not(#home-section) .journal-preview-grid {
 #contact-section .section-subtitle {
     color: #6B7280 !important;
 }
+
+/* 15. SCCB-PRM-MOBILE-REPAIR-032 */
+@media (max-width: 768px) {
+    section:not(#home-section) .section-inner {
+        width: calc(100% - 32px) !important;
+        max-width: none !important;
+    }
+
+    section:not(#home-section) .section-header {
+        gap: 6px !important;
+        margin-bottom: 20px !important;
+    }
+
+    section:not(#home-section) .section-title {
+        max-width: 100% !important;
+        font-size: clamp(1.45rem, 6vw, 1.8rem) !important;
+        line-height: 1.22 !important;
+    }
+
+    section:not(#home-section) .section-subtitle {
+        max-width: 100% !important;
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+    }
+
+    section:not(#home-section) .grid-3,
+    section:not(#home-section) .grid-4,
+    section:not(#home-section) .services-grid,
+    section:not(#home-section) .management-grid,
+    section:not(#home-section) .reviews-grid,
+    section:not(#home-section) .property-grid-hybrid,
+    section:not(#home-section) .journal-preview-grid,
+    section:not(#home-section) .cr-masonry-grid,
+    section:not(#home-section) .custom-cards-grid,
+    section:not(#home-section) .contact-section-grid,
+    #about-section .about-row-top,
+    #about-section .about-row-line-4 {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    section:not(#home-section) .grid-3 > *,
+    section:not(#home-section) .grid-4 > *,
+    section:not(#home-section) .services-grid > *,
+    section:not(#home-section) .management-grid > *,
+    section:not(#home-section) .reviews-grid > *,
+    section:not(#home-section) .property-grid-hybrid > *,
+    section:not(#home-section) .journal-preview-grid > *,
+    section:not(#home-section) .cr-masonry-grid > *,
+    section:not(#home-section) .custom-cards-grid > *,
+    section:not(#home-section) .contact-section-grid > * {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    #about-section .about-row-top,
+    #about-section .about-row-line-4 {
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about-section .about-row-line-4 {
+        margin-top: 24px !important;
+        padding-top: 24px !important;
+    }
+
+    #about-section .about-row-top .cta-group,
+    #about-section .about-row-line-4 .cta-group {
+        align-items: stretch !important;
+    }
+
+    #management-section .section-cta-left,
+    #properties-section .featured-properties-cta,
+    #reviews-section .cr-footer-row {
+        margin-top: 20px !important;
+    }
+
+    #management-section .section-cta-left .btn-view-all,
+    #properties-section .featured-properties-cta .btn-gold,
+    #about-section .btn-about-primary,
+    #about-section .btn-about-secondary {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    #contact-section .contact-form {
+        padding: 20px !important;
+    }
+
+    #contact-section .contact-map-link {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
