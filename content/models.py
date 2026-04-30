@@ -1,7 +1,50 @@
+import logging
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+
+logger = logging.getLogger(__name__)
+
+HERO_IMAGE_NAME_ALIASES = {
+    "hero/8k_resolution_ultra_high_definition_cinematic_shot_of_chennai_s_modern_skyline_1.png":
+        "hero/8k_resolution_ultra_high_definition_cinematic_shot_of_chennai_s_modern_skyline.png",
+    "hero/a_premium_8k_resolution_cinematic_shot_of_chennai_s_omr_old_mahabalipuram_road.png":
+        "hero/premium_8k_resolution_cinematic_shot_of_omr_old_mahabalipuram_road_chennai..png",
+}
+
+
+def resolve_media_field_url(media_field):
+    """Return a valid storage URL for a media field, repairing known stale hero aliases."""
+    if not media_field or not getattr(media_field, "name", None):
+        return None
+
+    storage = media_field.storage
+    candidate_names = [media_field.name]
+    alias_name = HERO_IMAGE_NAME_ALIASES.get(media_field.name)
+    if alias_name and alias_name not in candidate_names:
+        candidate_names.append(alias_name)
+
+    for candidate_name in candidate_names:
+        try:
+            if storage.exists(candidate_name):
+                if candidate_name != media_field.name:
+                    logger.warning(
+                        "Resolved stale hero media reference %s -> %s",
+                        media_field.name,
+                        candidate_name,
+                    )
+                return storage.url(candidate_name)
+        except Exception:
+            logger.warning(
+                "Error checking media existence for %s",
+                candidate_name,
+                exc_info=True,
+            )
+
+    logger.warning("Hero media missing from storage: %s", media_field.name)
+    return None
 
 
 class CompanyInfo(models.Model):
@@ -138,11 +181,25 @@ class CompanyInfo(models.Model):
         except Exception:
             return []
 
+    def get_active_hero_background_urls(self):
+        hero_background_urls = []
+        for background in self.get_active_hero_backgrounds():
+            resolved_url = background.get_resolved_image_url()
+            if resolved_url:
+                hero_background_urls.append(resolved_url)
+        return hero_background_urls
+
     def get_primary_hero_image(self):
         hero_backgrounds = self.get_active_hero_backgrounds()
         if hero_backgrounds:
             return hero_backgrounds[0].image
         return self.hero_image
+
+    def get_primary_hero_image_url(self):
+        hero_background_urls = self.get_active_hero_background_urls()
+        if hero_background_urls:
+            return hero_background_urls[0]
+        return resolve_media_field_url(self.hero_image)
 
 
 class HeroBackgroundImage(models.Model):
@@ -164,6 +221,9 @@ class HeroBackgroundImage(models.Model):
 
     def __str__(self):
         return f"{self.company.company_name} hero background {self.order + 1}"
+
+    def get_resolved_image_url(self):
+        return resolve_media_field_url(self.image)
 
     def clean(self):
         super().clean()

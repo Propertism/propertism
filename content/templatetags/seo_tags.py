@@ -23,9 +23,9 @@ def _make_absolute_url(url, site_url):
 
 
 def _get_company_hero_url(company, site_url):
-    hero_image = company.get_primary_hero_image() if company else None
-    if hero_image:
-        return _make_absolute_url(hero_image.url, site_url)
+    hero_url = company.get_primary_hero_image_url() if company else None
+    if hero_url:
+        return _make_absolute_url(hero_url, site_url)
     return _make_absolute_url('/static/images/propertism-hero-bg.jpg', site_url)
 
 

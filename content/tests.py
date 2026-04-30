@@ -1,7 +1,9 @@
+from pathlib import Path
 import shutil
-import tempfile
 from unittest.mock import patch
+from uuid import uuid4
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.utils import OperationalError
@@ -9,7 +11,15 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 
-from .models import BlogPost, CompanyInfo, CustomerReview, CustomerReviewSection, HeroBackgroundImage, LandingLead
+from .models import (
+    BlogPost,
+    CompanyInfo,
+    CustomerReview,
+    CustomerReviewSection,
+    HERO_IMAGE_NAME_ALIASES,
+    HeroBackgroundImage,
+    LandingLead,
+)
 
 
 TEST_GIF = (
@@ -23,10 +33,18 @@ def make_test_image(name):
     return SimpleUploadedFile(name, TEST_GIF, content_type="image/gif")
 
 
+def make_test_media_root():
+    media_root_parent = Path(settings.BASE_DIR) / ".tmp-test-media"
+    media_root_parent.mkdir(exist_ok=True)
+    media_root = media_root_parent / f"propertism-test-media-{uuid4().hex}"
+    media_root.mkdir()
+    return str(media_root)
+
+
 class HeroBackgroundImageTests(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls._temp_media_root = tempfile.mkdtemp(prefix="propertism-test-media-")
+        cls._temp_media_root = make_test_media_root()
         cls._media_override = override_settings(MEDIA_ROOT=cls._temp_media_root)
         cls._media_override.enable()
         super().setUpClass()
@@ -59,7 +77,7 @@ class HeroBackgroundImageTests(TestCase):
 class HomePageContentTests(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls._temp_media_root = tempfile.mkdtemp(prefix="propertism-test-media-")
+        cls._temp_media_root = make_test_media_root()
         cls._media_override = override_settings(MEDIA_ROOT=cls._temp_media_root)
         cls._media_override.enable()
         super().setUpClass()
@@ -110,25 +128,49 @@ class HomePageContentTests(TestCase):
 
         self.assertEqual(len(response.context["hero_background_urls"]), 2)
 
+    def test_homepage_skips_missing_hero_backgrounds_and_uses_company_fallback(self):
+        self.company.hero_image = make_test_image("fallback-hero.gif")
+        self.company.save(update_fields=["hero_image"])
+
+        missing_hero = HeroBackgroundImage.objects.create(
+            company=self.company,
+            image=make_test_image("hero-missing-source.gif"),
+            order=0,
+        )
+        HeroBackgroundImage.objects.filter(pk=missing_hero.pk).update(image="hero/does-not-exist.gif")
+
+        response = self.client.get(reverse("home"), follow=True)
+
+        self.assertEqual(response.context["hero_background_urls"], [self.company.hero_image.url])
+
+    def test_homepage_repairs_known_stale_hero_aliases(self):
+        stale_name, canonical_name = next(iter(HERO_IMAGE_NAME_ALIASES.items()))
+        canonical_basename = canonical_name.split("/", 1)[1]
+
+        repaired_hero = HeroBackgroundImage.objects.create(
+            company=self.company,
+            image=make_test_image(canonical_basename),
+            order=0,
+        )
+        HeroBackgroundImage.objects.filter(pk=repaired_hero.pk).update(image=stale_name)
+
+        response = self.client.get(reverse("home"), follow=True)
+
+        self.assertEqual(response.context["hero_background_urls"], [f"/media/{canonical_name}"])
+
     def test_homepage_uses_companyinfo_for_section_and_chat_copy(self):
-        self.company.about_section_title = "Model Driven About Title"
-        self.company.services_section_title = "Model Driven Services"
-        self.company.management_section_title = "Model Driven Management"
-        self.company.blog_section_title = "Model Driven Blog"
-        self.company.contact_section_title = "Model Driven Contact"
-        self.company.footer_newsletter_heading = "Newsletter From Admin"
+        self.company.contact_section_eyebrow = "Talk With Us"
+        self.company.footer_services_heading = "Custom Service Coverage"
+        self.company.footer_newsletter_button_text = "Join Updates"
         self.company.chat_window_title = "Chat From Admin"
         self.company.chat_success_message = "Admin controlled success copy."
         self.company.save()
 
         response = self.client.get(reverse("home"), follow=True)
 
-        self.assertContains(response, "Model Driven About Title")
-        self.assertContains(response, "Model Driven Services")
-        self.assertContains(response, "Model Driven Management")
-        self.assertContains(response, "Model Driven Blog")
-        self.assertContains(response, "Model Driven Contact")
-        self.assertContains(response, "Newsletter From Admin")
+        self.assertContains(response, "Talk With Us")
+        self.assertContains(response, "Custom Service Coverage")
+        self.assertContains(response, "Join Updates")
         self.assertContains(response, "Chat From Admin")
         self.assertContains(response, "Admin controlled success copy.")
 

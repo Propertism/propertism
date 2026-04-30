@@ -105,11 +105,7 @@ def home(request):
 
     try:
         if getattr(company, "pk", None):
-            hero_background_urls = [
-                item.image.url
-                for item in company.get_active_hero_backgrounds()
-                if item.image
-            ]
+            hero_background_urls = company.get_active_hero_background_urls()
     except RECOVERABLE_DB_ERRORS:
         logger.warning("Homepage hero background tables are unavailable.", exc_info=True)
         hero_background_urls = []
@@ -138,8 +134,10 @@ def home(request):
         warning="Homepage custom card section tables are unavailable.",
     )
 
-    if not hero_background_urls and company.hero_image:
-        hero_background_urls = [company.hero_image.url]
+    if not hero_background_urls:
+        fallback_hero_url = company.get_primary_hero_image_url()
+        if fallback_hero_url:
+            hero_background_urls = [fallback_hero_url]
 
     context.update(
         {
