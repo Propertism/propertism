@@ -50,6 +50,8 @@ h3 {
     /* Deep Espresso */
 }
 
+
+
 h1 {
     font-size: clamp(3rem, 8vw, 5.5rem);
     line-height: 1.05;
@@ -67,6 +69,8 @@ p {
     line-height: 1.75;
     font-size: 1.05rem;
 }
+
+
 
 /* 
    IMMEDIATE RECOVERY & HARDENING (SCCB-RECOVERY-011)
@@ -328,6 +332,8 @@ p {
     display: block;
 }
 
+
+
 /* 2. Section Rhythm (Premium Warmth) */
 section {
     padding: 100px 0 !important;
@@ -351,15 +357,15 @@ section {
     background-color: #F9F8F5 !important;
 }
 
-#contact-section {
-    background-color: #0F0F10 !important;
-    color: white !important;
-}
+
 
 #contact-section h2,
 #contact-section p {
-    color: white !important;
+    color: inherit !important;
 }
+
+
+
 
 /* 6. Card Uniformity (Softer & Warmer) */
 .insight-card,
@@ -373,6 +379,8 @@ section {
     box-shadow: 0 8px 24px rgba(26, 20, 10, 0.04) !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
+
 
 .property-save {
     background: rgba(255, 255, 255, 0.95) !important;
@@ -659,9 +667,9 @@ section {
 
 /* 9. Contact Section Premium (Stitch Style) */
 .nri-contact-section {
-    background-color: var(--prm-bg) !important;
+    background-color: #FFFFFF !important;
     padding: 120px 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid #EEEEEE;
 }
 
 .contact-section-grid {
@@ -680,14 +688,31 @@ section {
 
 .contact-info-column p {
     color: var(--prm-text-muted) !important;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 3rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
 
-.detail-item {
-    margin-bottom: 2.5rem;
+.contact-benefit-line {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    color: #111111 !important;
 }
+
+
+.contact-details-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    margin-bottom: 1.5rem;
+}
+
+
+.detail-item {
+    margin-bottom: 0;
+}
+
 
 .detail-item h4 {
     color: var(--prm-gold) !important;
@@ -700,7 +725,7 @@ section {
 }
 
 .detail-item .address-text {
-    color: #FFFFFF !important;
+    color: #1A1A1A !important;
     font-size: 1.05rem;
     line-height: 1.6;
     margin: 0 !important;
@@ -710,71 +735,115 @@ section {
     color: var(--prm-gold) !important;
     font-family: var(--prm-font-sans);
     font-weight: 600;
-    margin-top: 0.5rem !important;
+    margin-top: 2px !important;
     display: block;
 }
+
+.section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-kicker-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--prm-gold);
+    flex-shrink: 0;
+}
+
+.contact-trust {
+    list-style: none;
+    padding: 0 !important;
+    margin: 1.5rem 0 0 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.contact-trust li {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    padding: 16px 12px 16px 36px !important;
+    color: #E5E5E5 !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.contact-trust li:hover {
+    border-color: var(--prm-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .contact-trust {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+
+
+.contact-trust li::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a24c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center/contain;
+}
+
+
 
 /* Map Link (replaces iframe) */
 .contact-map-link {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 2.5rem;
-    padding: 20px 24px;
-    background: var(--prm-bg-soft);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    gap: 12px;
+    margin-top: 1rem;
+    padding: 12px 18px;
+    background: #F9F9F7;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
     text-decoration: none;
-    color: var(--prm-gold) !important;
+    color: #111111 !important;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     transition: all 0.3s ease;
+    width: fit-content;
 }
 
 .contact-map-link svg {
+    width: 20px;
+    height: 20px;
     color: var(--prm-gold);
     flex-shrink: 0;
 }
 
 .contact-map-link:hover {
-    background: rgba(201, 161, 74, 0.08);
-    border-color: rgba(201, 161, 74, 0.2);
+    background: #FFFFFF;
+    border-color: var(--prm-gold);
     transform: translateY(-2px);
-    color: var(--prm-gold) !important;
+    box-shadow: 0 10px 30px rgba(201, 161, 74, 0.1);
 }
 
-/* Premium Form Styles */
-.contact-form {
-    background: var(--prm-bg-soft);
-    padding: 3.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-}
 
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #FFFFFF !important;
-    padding: 1.2rem !important;
-    border-radius: 4px !important;
-    margin-bottom: 1.5rem !important;
-    font-family: var(--prm-font-sans);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
 
-.contact-form input:focus,
-.contact-form select:focus,
-.contact-form textarea:focus {
-    outline: none !important;
-    border-color: var(--prm-gold) !important;
-    background: rgba(255, 255, 255, 0.06) !important;
-    box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.1) !important;
-}
+
+
 
 .contact-form select option {
     background: var(--prm-bg-soft);
@@ -793,6 +862,8 @@ section {
     background: #FFFFFF !important;
     padding: 60px 0 !important;
 }
+
+
 
 #about-section .container {
     max-width: 100% !important;
@@ -820,6 +891,8 @@ section {
     padding: 0 !important;
     border-radius: 0 !important;
 }
+
+
 
 #about-section .credibility-copy-stack {
     max-width: 620px !important;
@@ -3685,4 +3758,230 @@ section:not(#home-section) .journal-preview-grid {
         grid-column: span 1;
         min-height: auto;
     }
+}
+
+/* ============================================================
+   SCCB-FORM-DARK-THEME-031 (NUCLEAR OVERRIDE V3)
+   Target BOTH classes and Parent column to eliminate white box.
+   ============================================================ */
+
+.contact-form-column {
+    background: transparent !important;
+}
+
+#contact-section .contact-form,
+#contact-section .contact-form-dark {
+    background: #111111 !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important;
+    border: none !important;
+    margin-top: 0 !important;
+}
+
+#contact-section .form-row-dual {
+    display: flex !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+@media (max-width: 600px) {
+    #contact-section .form-row-dual {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+}
+
+#contact-section .contact-form input,
+#contact-section .contact-form-dark input,
+#contact-section .contact-form textarea,
+#contact-section .contact-form-dark textarea,
+#contact-section .contact-form select,
+#contact-section .contact-form-dark select {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    color: #e5e5e5 !important;
+    padding: 1.15rem !important;
+    margin-bottom: 1.15rem !important;
+    width: 100% !important;
+    border-radius: 4px !important;
+    height: auto !important;
+}
+
+
+#contact-section .contact-form input::placeholder,
+#contact-section .contact-form-dark input::placeholder,
+#contact-section .contact-form textarea::placeholder,
+#contact-section .contact-form-dark textarea::placeholder {
+    color: #888888 !important;
+}
+
+#contact-section .contact-form input:focus,
+#contact-section .contact-form-dark input:focus,
+#contact-section .contact-form textarea:focus,
+#contact-section .contact-form-dark textarea:focus,
+#contact-section .contact-form select:focus,
+#contact-section .contact-form-dark select:focus {
+    border-color: #c8a24c !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(200,162,76,0.4) !important;
+}
+
+#contact-section .contact-form select,
+#contact-section .contact-form-dark select {
+    color: #e5e5e5 !important;
+    background-color: #1a1a1a !important;
+}
+
+#contact-section .contact-form button,
+#contact-section .contact-form-dark button {
+    background: #c8a24c !important;
+    color: #111111 !important;
+    border: none !important;
+    padding: 16px 32px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: auto !important;
+    display: block !important;
+}
+
+.detail-item .address-text {
+    margin-bottom: 0 !important;
+}
+
+.detail-item .phone-text {
+    margin-top: 0 !important;
+    display: block !important;
+}
+
+/* ============================================================
+   SCCB-FOOTER-CLOCK-DARK-STRIP (NUCLEAR V9 - PREMIUM IVORY-GRAY)
+   ============================================================ */
+
+.site-footer .footer-clocks-wrapper,
+.site-footer #footer-digital-clock {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    margin-top: 3rem !important;
+}
+
+.site-footer .footer-clocks-wrapper::before {
+    display: none !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-strip {
+    background: transparent !important;
+    gap: 4px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+/* Base Cell Style (Dark) - MATERIAL DENSITY */
+.site-footer .footer-clocks-wrapper .world-clock-cell,
+.site-footer #footer-digital-clock .world-clock-cell,
+.site-footer #footer-digital-clock .world-clock-cell:nth-child(1),
+.site-footer #footer-digital-clock .world-clock-cell:nth-child(2),
+.site-footer #footer-digital-clock .world-clock-cell:nth-child(3),
+.site-footer #footer-digital-clock .world-clock-cell:nth-child(4) {
+    background: linear-gradient(165deg, #2A3140 0%, #1e242f 100%) !important;
+    border-radius: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.03) !important;
+    border-top: 3px solid var(--prm-gold) !important;
+    padding: 14px 22px !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
+    flex: 1 !important;
+    min-width: 180px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+/* Light Cell Style for Reach and Hours - IVORY GRAY (#F7F7F5) */
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline,
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours,
+.site-footer #footer-digital-clock .world-clock-cell--tagline,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours {
+    background: #F7F7F5 !important; /* Premium Warm Ivory-Gray */
+    border: 1px solid #EAEAEA !important;
+    border-top: 1px solid #EAEAEA !important;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.01) !important;
+    flex: 1.3 !important;
+    padding: 14px 22px !important;
+}
+
+/* Typography for Dark Cells */
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-label,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-label {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 0.72rem !important;
+    margin-bottom: 4px !important;
+    font-weight: 700 !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-time,
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-hours,
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-minutes,
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-separator,
+.site-footer .footer-clocks-wrapper .world-clock-cell .world-clock-meridiem,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-time,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-hours,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-minutes,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-separator,
+.site-footer #footer-digital-clock .world-clock-cell .world-clock-meridiem {
+    color: #FFFFFF !important;
+    font-size: 1.45rem !important;
+    font-weight: 800 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Typography for Light Cells - FORCE DARK COLOR with ID Specificity */
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-label,
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-label,
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-tagline-title,
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-date,
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-date,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-label,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours .world-clock-label,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-tagline-title,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-date,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours .world-clock-date {
+    color: #111827 !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-label,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-label,
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-label,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours .world-clock-label {
+    color: #6B7280 !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-tagline-title,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-tagline-title {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 2px !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell--tagline .world-clock-date,
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours .world-clock-date,
+.site-footer #footer-digital-clock .world-clock-cell--tagline .world-clock-date,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours .world-clock-date {
+    color: #4B5563 !important;
+    font-size: 0.78rem !important;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours .footer-availability-status,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours .footer-availability-status {
+    color: #166534 !important;
+    font-size: 1.45rem !important;
+    font-weight: 800 !important;
 }

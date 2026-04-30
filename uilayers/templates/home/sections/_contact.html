@@ -19,15 +19,23 @@
                 <p class="contact-benefit-line">Let's discuss your property needs</p>
 
                 <div class="contact-details-list">
+                    <!-- Office Names -->
                     <div class="detail-item">
                         <h4>Chennai Office</h4>
                         <p class="address-text">{{ company.india_office_address|linebreaksbr }}</p>
-                        <span class="phone-text">{{ company.india_phone_1 }}</span>
                     </div>
 
                     <div class="detail-item">
                         <h4>US Coordination</h4>
                         <p class="address-text">{{ company.us_office_address|linebreaksbr }}</p>
+                    </div>
+
+                    <!-- Phone Numbers (Dedicated Row for Alignment) -->
+                    <div class="detail-item">
+                        <span class="phone-text">{{ company.india_phone_1 }}</span>
+                    </div>
+
+                    <div class="detail-item">
                         <span class="phone-text">{{ company.us_phone }}</span>
                     </div>
                 </div>
@@ -49,11 +57,13 @@
             </div>
 
             <div class="contact-form-column">
-                <form action="{% url 'contact' %}" method="POST" class="contact-form">
+                <form action="{% url 'contact' %}" method="POST" class="contact-form contact-form-dark">
                     {% csrf_token %}
                     <input type="text" name="name" placeholder="Full Name" required>
-                    <input type="email" name="email" placeholder="Email Address" required>
-                    <input type="tel" name="phone" placeholder="Phone Number">
+                    <div class="form-row-dual">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                        <input type="tel" name="phone" placeholder="Phone Number">
+                    </div>
 
                     <select name="service">
                         <option value="">Select Service Needed</option>
