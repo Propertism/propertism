@@ -2,7 +2,12 @@
 <section id="reviews-section" class="customer-reviews-section">
     <div class="section-inner">
         <div class="section-header">
-            <span class="section-kicker">{{ customer_review_section.eyebrow|default:"CUSTOMER REVIEWS" }}</span>
+            <span class="section-kicker">
+                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="m12 2 3.09 6.26 6.91 1-5 4.87 1.18 6.87L12 17.77 5.82 21 7 14.13 2 9.26l6.91-1L12 2Z" />
+                </svg>
+                {{ customer_review_section.eyebrow|default:"CUSTOMER REVIEWS" }}
+            </span>
             <h2 class="section-title">{{ customer_review_section.title|default:"Trusted by NRI Property Owners Worldwide" }}</h2>
             <p class="section-subtitle">{{ customer_review_section.description|default:"Real experiences from clients who trust us to manage their properties from across the globe." }}</p>
         </div>

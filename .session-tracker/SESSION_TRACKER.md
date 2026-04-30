@@ -4,9 +4,9 @@
 
 ## File Metadata
 
-**Last Updated By**: Astra (Antigravity)
-**Last Updated On**: April 26, 2026
-**Last Update**: SESSION 24 - UI Stabilization & Messaging Refresh. Viewport normalization, centered section headers, and footer contact block hardening. Diagnosed media persistence for S3 activation.
+**Last Updated By**: Codex
+**Last Updated On**: April 30, 2026
+**Last Update**: SESSION 25 - Homepage polish checkpoint. Section kicker iconography/sizing, About + Contact single-line desktop titles with mobile fallback, Featured Properties CTA spacing, and footer presence-band beautification. Awaiting push and production verification.
 
 ---
 
@@ -357,3 +357,23 @@ Messaging hardcoded for consistency across About/Management/Insights.
 Viewport normalization file active and overriding legacy scroll-jacking.
 
 Session tracker is clean and current (Astra Handover).
+
+---
+
+## Session 25 Checkpoint — April 30, 2026
+
+**Status:** Awaiting git push and production verification.
+
+**Work Completed In This Checkpoint:**
+- Increased and iconized homepage section kickers for Services, Management, Reviews, Featured Properties, Insights, About, and Contact.
+- Tuned kicker spacing for Management and Insights.
+- Tightened the Featured Properties CTA spacing.
+- Forced the long About and Contact titles into a desktop single-line / mobile wrapped split.
+- Refined the lower footer presence band with improved world clock, reach, and office-hours presentation.
+- Created `codex-session-3004.md` as the active handoff note.
+
+**Validation:**
+- `python manage.py check` passed locally.
+
+**Next Action:**
+- User will push current changes, check production, and return for either final wind-down or one more polish pass.

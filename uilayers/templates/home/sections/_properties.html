@@ -2,7 +2,14 @@
 <section id="properties-section" class="featured-properties-section">
     <div class="section-inner">
         <div class="section-header">
-            <span class="section-kicker">Featured Properties</span>
+            <span class="section-kicker">
+                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8" />
+                    <path d="M9 21v-9h6v9" />
+                </svg>
+                Featured Properties
+            </span>
             <h2 class="section-title">{{ company.properties_section_title|default:"Handpicked Chennai properties for NRI buyers and owners."|striptags }}</h2>
             <p class="section-subtitle">{{ company.properties_section_subtitle|default:"Explore high-signal listings curated for reliable location, ownership clarity, and long-term value."|striptags }}</p>
         </div>
@@ -60,7 +67,7 @@
             {% endfor %}
         </div>
 
-        <div class="featured-properties-cta" style="margin-top: 4rem; text-align: left;">
+        <div class="featured-properties-cta">
             <a href="{{ home_section_links.contact }}" class="btn-gold">
                 View All Properties
             </a>
