@@ -117,6 +117,36 @@
     font-size: 1.2rem !important;
 }
 
+.hf-maps-cta {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+    padding: 12px 20px !important;
+    background: transparent !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-main) !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    cursor: pointer !important;
+}
+
+.hf-maps-cta:hover {
+    border-color: var(--brand-gold) !important;
+    color: var(--brand-gold) !important;
+    transform: translateX(4px) !important;
+}
+
+.hf-maps-icon {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+}
+
 /* 2. STATS TILE GRID (UNIFIED) */
 .hf-stats-grid {
     display: grid;
@@ -295,6 +325,17 @@ html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-addr
 
 html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-phone {
     color: #FFFFFF !important;
+}
+
+/* Google Maps CTA - Dark mode neutral */
+html[data-theme="dark"] body #contact-section .hf-maps-cta {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #E2E8F0 !important;
+}
+
+html[data-theme="dark"] body #contact-section .hf-maps-cta:hover {
+    border-color: var(--brand-gold) !important;
+    color: var(--brand-gold) !important;
 }
 
 /* Stats grid border */
