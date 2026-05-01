@@ -13,7 +13,22 @@ header#site-header {
     padding: 0 !important;
     background: var(--glass-bg) !important;
     border-bottom: 1px solid rgba(15, 23, 42, 0.15) !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     transition: all 0.3s ease;
+}
+
+header#site-header.scrolled {
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="dark"] header#site-header {
+    border-bottom-color: rgba(196, 156, 82, 0.34) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="dark"] header#site-header.scrolled {
+    border-bottom-color: rgba(196, 156, 82, 0.48) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.44);
 }
 
 .header-content {

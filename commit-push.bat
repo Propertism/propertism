@@ -1,11 +1,38 @@
 @echo off
+setlocal
 echo.
 echo ========================================
 echo  PROPERTISM -- COMMIT + PUSH
 echo ========================================
 echo.
 
-python manage.py collectstatic --noinput
+echo Running collectstatic...
+set "COLLECTSTATIC_RAN=0"
+where python >nul 2>&1
+if not errorlevel 1 (
+    python manage.py collectstatic --noinput
+    if errorlevel 1 (
+        echo.
+        echo collectstatic failed. Aborting before commit.
+        echo.
+        exit /b 1
+    )
+    set "COLLECTSTATIC_RAN=1"
+) else (
+    where py >nul 2>&1
+    if not errorlevel 1 (
+        py manage.py collectstatic --noinput
+        if errorlevel 1 (
+            echo.
+            echo collectstatic failed. Aborting before commit.
+            echo.
+            exit /b 1
+        )
+        set "COLLECTSTATIC_RAN=1"
+    ) else (
+        echo Python launcher not found. Skipping collectstatic.
+    )
+)
 
 echo.
 echo Staging current local source of truth...
@@ -21,7 +48,15 @@ if exist .tmp-test-media git restore --staged .tmp-test-media >nul 2>&1
 
 echo.
 echo Review staged changes:
-git status --short
+git diff --cached --name-status
+
+git diff --cached --quiet
+if %errorlevel%==0 (
+    echo.
+    echo No staged changes found. Aborting.
+    echo.
+    exit /b 1
+)
 
 set /p MSG=Commit message: 
 if "%MSG%"=="" (

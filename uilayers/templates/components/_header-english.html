@@ -119,6 +119,16 @@
     const html = document.documentElement;
     const themeBtn = document.getElementById('themeToggle');
     const typoBtn = document.getElementById('typoToggle');
+    const siteHeader = document.getElementById('site-header');
+
+    if (siteHeader) {
+        const syncHeaderState = () => {
+            siteHeader.classList.toggle('scrolled', window.scrollY > 8);
+        };
+
+        syncHeaderState();
+        window.addEventListener('scroll', syncHeaderState, { passive: true });
+    }
     
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
