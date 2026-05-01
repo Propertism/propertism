@@ -2254,6 +2254,7 @@ body,
 
 #contact-section .form-row-dual {
     display: flex !important;
+    flex-direction: column !important;
     gap: 12px !important;
     width: 100% !important;
 }

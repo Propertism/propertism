@@ -1,0 +1,191 @@
+/**
+ * PROPERTISM V4 - MANAGEMENT SECTION MODULE
+ * High-Density Team Grid with Sharp Dashboard Logic
+ */
+
+#management-section.management-preview-section {
+    background-color: var(--bg-primary) !important;
+    padding: var(--section-v-padding) 0 !important;
+    color: var(--text-main) !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    scroll-margin-top: var(--nav-height) !important;
+}
+
+#management-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+#management-section .section-header {
+    text-align: left !important;
+    margin-bottom: 60px !important;
+    max-width: 100% !important; /* Edge-to-edge alignment with first card */
+    width: 100% !important;
+}
+
+#management-section .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 20px !important;
+}
+
+#management-section .section-kicker-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--brand-gold);
+}
+
+#management-section .section-title {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(1.2rem, 2vw + 0.8rem, 2.2rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#management-section .section-subtitle {
+    font-size: 1.2rem !important;
+    line-height: 1.6 !important;
+    color: var(--text-muted) !important;
+}
+
+/* 1. THE GRID SYSTEM */
+#management-section .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px !important; /* Sharp separator logic */
+    background-color: var(--border-subtle) !important; /* Visible separators */
+    border: 1px solid var(--border-subtle) !important;
+}
+
+/* 2. THE CARD HARDENING */
+.management-preview-card {
+    background-color: var(--bg-card) !important;
+    padding: 50px 40px !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.management-preview-card:hover {
+    background-color: rgba(184, 154, 74, 0.02) !important;
+}
+
+.management-preview-meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px !important;
+}
+
+.management-preview-meta span {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    color: var(--brand-gold) !important;
+    padding: 6px 12px !important;
+    border: 1px solid rgba(184, 154, 74, 0.2) !important;
+}
+
+.management-preview-card h3 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 16px !important;
+    letter-spacing: -0.01em;
+}
+
+.management-preview-card p {
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 30px !important;
+}
+
+/* 3. CTA LOGIC */
+.management-link-sharp {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: var(--brand-gold) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    transition: gap 0.2s ease !important;
+    margin-top: auto;
+}
+
+.management-link-sharp:hover {
+    gap: 12px !important;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    #management-section .grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    #management-section .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   Driven by [data-theme="dark"] on <html>
+   ============================================ */
+html[data-theme="dark"] #management-section.management-preview-section {
+    background-color: #0b0f1a !important; /* bg-primary hex */
+}
+
+html[data-theme="dark"] #management-section .grid-3 {
+    background-color: rgba(196, 156, 82, 0.15) !important; /* border-subtle hex */
+    border-color: rgba(196, 156, 82, 0.15) !important;
+}
+
+html[data-theme="dark"] .management-preview-card {
+    background: #1E2A3A !important; /* bg-card hex + Neutralizes legacy gradients */
+}
+
+html[data-theme="dark"] .management-preview-card h3,
+html[data-theme="dark"] .management-preview-card p,
+html[data-theme="dark"] .management-preview-card .management-preview-meta span {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .management-preview-card:hover {
+    background-color: rgba(196, 156, 82, 0.05) !important;
+}
+
+[data-theme="dark"] .management-preview-card h3 {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .management-preview-card p {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .management-preview-meta span {
+    border-color: rgba(196, 156, 82, 0.4) !important;
+}

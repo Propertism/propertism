@@ -1,26 +1,44 @@
 <section id="stats-section" class="trust-strip-section compact">
     <div class="container">
-        <div class="trust-strip-metrics">
-            {% for stat in stats %}
-            <div class="metric-item">
-                <span class="metric-value">{{ stat.value }}</span>
-                <span class="metric-label">{{ stat.label }}</span>
+        <div class="trust-strip-metrics split-layout">
+            <!-- Group 1: Performance Metrics (50%) -->
+            <div class="metrics-group metrics-performance">
+                {% for stat in stats %}
+                <div class="metric-item">
+                    <span class="metric-value">{{ stat.value }}</span>
+                    <span class="metric-label">{{ stat.label }}</span>
+                </div>
+                {% empty %}
+                <div class="metric-item">
+                    <span class="metric-value">10+</span>
+                    <span class="metric-label">Years Experience</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">100+</span>
+                    <span class="metric-label">NRI Clients</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">500+</span>
+                    <span class="metric-label">Properties Managed</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">4</span>
+                    <span class="metric-label">Cities Covered</span>
+                </div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <!-- Fallback if stats are not loaded yet -->
-            <div class="metric-item">
-                <span class="metric-value">10+</span>
-                <span class="metric-label">Years Experience</span>
+
+            <!-- Group 2: Brand Pillars (50%) -->
+            <div class="metrics-group metrics-brand">
+                <div class="metric-item">
+                    <span class="metric-value">Why Owners Stay With Us</span>
+                    <span class="metric-label">Clear updates, reliable follow-through, and local execution.</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">Trust & Transparency</span>
+                    <span class="metric-label">Professional Excellence | Reliability</span>
+                </div>
             </div>
-            <div class="metric-item">
-                <span class="metric-value">100+</span>
-                <span class="metric-label">NRI Clients</span>
-            </div>
-            <div class="metric-item">
-                <span class="metric-value">500+</span>
-                <span class="metric-label">Properties Managed</span>
-            </div>
-            {% endfor %}
         </div>
     </div>
 </section>

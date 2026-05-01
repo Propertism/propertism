@@ -1,0 +1,145 @@
+/**
+ * PROPERTISM V4 - NAVIGATION MODULE
+ */
+
+header#site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--nav-height) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--glass-bg) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.15) !important;
+    transition: all 0.3s ease;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100% !important;
+    padding: 0 24px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.logo-image {
+    max-height: 45px;
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* Theme-based Logo Toggling */
+.logo-light { display: none !important; }
+.logo-dark { display: block !important; }
+
+[data-theme="light"] .logo-light { display: block !important; }
+[data-theme="light"] .logo-dark { display: none !important; }
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 100% !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+}
+
+@media (min-width: 769px) {
+    .main-nav-even {
+        display: grid !important;
+        grid-template-columns: repeat(8, max-content) !important;
+        gap: clamp(0.5rem, 1.5vw, 2rem) !important;
+        justify-content: center !important;
+        margin: 0 1rem !important;
+    }
+}
+
+.main-nav a {
+    font-family: var(--sans-main) !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-main) !important;
+    padding: 0 15px !important; /* Zero vertical padding */
+    line-height: var(--nav-height) !important; /* Force vertical center via line-height */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: var(--brand-gold) !important;
+}
+
+.nav-cta {
+    background: var(--brand-gold) !important;
+    border: 1px solid var(--brand-gold) !important;
+    color: var(--brand-navy) !important;
+    padding: 0 25px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 10px rgba(196, 156, 82, 0.2);
+}
+
+.nav-cta:hover {
+    background: var(--text-main) !important;
+    color: #FFFFFF !important;
+    border-color: var(--text-main) !important;
+}
+
+/* Tool Buttons Styling */
+.header-v4-tools {
+    display: flex;
+    align-items: center;
+    height: 100% !important;
+    gap: 12px;
+    margin-right: 20px;
+    padding-right: 20px;
+    border-right: 1px solid var(--border-subtle);
+}
+
+.v4-tool-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0 8px !important;
+    height: var(--nav-height); /* Match header height */
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* For subscript label */
+}
+
+.v4-sub-label {
+    position: absolute;
+    bottom: 22px;
+    right: 2px;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    color: var(--brand-gold);
+    pointer-events: none;
+    line-height: 1;
+}
+
+.v4-tool-btn:hover {
+    background: var(--border-subtle);
+    color: var(--brand-gold);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .main-nav { display: none; }
+}

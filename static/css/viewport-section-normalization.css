@@ -57,7 +57,7 @@ section.custom-cards-section {
 #home-section.hero-hybrid,
 #home-section.hero-hybrid.hero-hybrid-has-image {
     position: relative;
-    height: calc(100vh - 160px) !important;
+    height: var(--hero-height) !important;
     min-height: 0 !important;
     padding: 0 !important;
     overflow: hidden;
@@ -116,11 +116,6 @@ section.custom-cards-section {
 .trust-strip-section {
     position: relative;
     z-index: 3;
-    margin-top: 0 !important;
-    border-top: none !important;
-    border-bottom: none !important;
-    height: 160px !important;
-    padding: 20px 0 !important;
     display: flex;
     align-items: center;
 }

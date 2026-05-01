@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 {% load seo_tags %}
-<html lang="en">
+<html lang="en" data-theme="light" data-typography="editorial">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,11 @@
     <link rel="apple-touch-icon" href="{% static 'images/propertism-logo-tm.png' %}">
     
     <!-- Load premium fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- V4 Design System Core -->
+    <link rel="stylesheet" href="{% static 'css/v4-tokens.css' %}">
     
     <!-- Critical CSS -->
     <link rel="stylesheet" href="{% static 'css/premium-styles.css' %}">
@@ -37,6 +41,20 @@
     <link rel="stylesheet" href="{% static 'css/section-overrides.css' %}">
     <link rel="stylesheet" href="{% static 'css/viewport-section-normalization.css' %}">
     <link rel="stylesheet" href="{% static 'css/propertism-premium.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hf-consultation.css' %}">
+    
+    <!-- V4 Modular System (Phase 3) -->
+    <link rel="stylesheet" href="{% static 'css/v4-nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-hero.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-trust-strip.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-services.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-management.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-reviews.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-properties.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-insights.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-contact.css' %}">
+    <link rel="stylesheet" href="{% static 'css/v4-custom-cards.css' %}">
     
     <!-- Structured Data -->
     {% block structured_data %}

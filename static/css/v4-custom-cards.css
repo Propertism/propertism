@@ -1,0 +1,221 @@
+/**
+ * PROPERTISM V4 - CUSTOM CARDS MODULE
+ * High-Density Dynamic Grid
+ */
+
+.custom-cards-section {
+    background-color: var(--bg-surface);
+    padding: var(--section-v-padding) 0 !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    scroll-margin-top: var(--nav-height) !important;
+}
+
+[data-theme="dark"] .custom-cards-section {
+    background-color: var(--bg-primary) !important;
+}
+
+.custom-cards-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+.custom-cards-section .section-header {
+    text-align: left !important;
+    margin-bottom: 60px !important;
+    max-width: 100% !important; /* Edge-to-edge alignment */
+    width: 100% !important;
+}
+
+.custom-cards-section .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 20px !important;
+}
+
+.custom-cards-section .section-kicker-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--brand-gold);
+}
+
+.custom-cards-section .section-title {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(1.2rem, 2vw + 0.8rem, 2.2rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.custom-cards-section .section-subtitle {
+    font-size: 1.2rem !important;
+    line-height: 1.6 !important;
+    color: var(--text-muted) !important;
+}
+
+/* 1. THE GRID SYSTEM */
+.custom-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px !important; /* Sharp separator logic */
+    background-color: var(--border-subtle) !important;
+    border: 1px solid var(--border-subtle) !important;
+}
+
+/* 2. THE CARD PANEL */
+.custom-card-panel {
+    background-color: var(--bg-card) !important;
+    padding: 50px 40px !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.custom-card-panel:hover {
+    background-color: rgba(184, 154, 74, 0.02) !important;
+}
+
+.custom-card-eyebrow {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 16px !important;
+    display: block;
+}
+
+.custom-card-panel h3 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    letter-spacing: -0.01em;
+    line-height: 1.2 !important;
+}
+
+.custom-card-panel p {
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 30px !important;
+}
+
+.custom-card-panel small {
+    font-size: 0.8rem !important;
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.custom-card-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: var(--brand-gold) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 24px;
+}
+
+.custom-card-link:hover {
+    color: var(--text-main) !important;
+}
+
+/* 3. DEPTH TAGS */
+.service-depth-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.service-depth-tag {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-subtle) !important;
+    padding: 6px 16px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.service-depth-tag.is-label {
+    background: var(--brand-gold) !important;
+    color: #0F172A !important;
+    border-color: var(--brand-gold) !important;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .custom-cards-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   Driven by [data-theme="dark"] on <html>
+   ============================================ */
+[data-theme="dark"] .custom-cards-section {
+    background-color: var(--bg-surface) !important;
+}
+
+[data-theme="dark"] .custom-cards-grid {
+    background-color: var(--border-subtle) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .custom-card-panel {
+    background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .custom-card-panel:hover {
+    background-color: rgba(196, 156, 82, 0.05) !important;
+}
+
+[data-theme="dark"] .custom-card-panel h3 {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .custom-card-panel p {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .service-depth-tag {
+    background: var(--bg-surface) !important;
+    color: var(--text-muted) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .service-depth-tag.is-label {
+    background: var(--brand-gold) !important;
+    color: #0F172A !important;
+}

@@ -1,0 +1,181 @@
+/**
+ * PROPERTISM V4 - SERVICES SECTION MODULE
+ */
+
+#services-section.section-full {
+    background-color: var(--bg-primary) !important;
+    padding: var(--section-v-padding) 0 !important; /* Sharp & Dense minimal margin */
+    border-top: 1px solid #B89A4A !important;
+}
+
+#services-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+#services-section .section-header {
+    text-align: left !important;
+    margin-bottom: 60px !important;
+    max-width: 100% !important; /* Full-width — aligns edge-to-edge with first card */
+    width: 100% !important;
+}
+
+#services-section .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 20px !important;
+}
+
+#services-section .section-kicker-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--brand-gold);
+}
+
+#services-section .section-title {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(1.2rem, 2vw + 0.8rem, 2.2rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#services-section .section-subtitle {
+    font-size: 1.2rem !important;
+    line-height: 1.6 !important;
+    color: var(--text-muted) !important;
+}
+
+/* THE SERVICE GRID */
+#services-section .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px !important;
+}
+
+.hf-service-card {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 0 !important;
+    padding: 50px 40px !important;
+    height: 100%;
+    transition: all 0.3s ease !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.hf-service-card:hover {
+    border-color: var(--brand-gold) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04) !important;
+    transform: translateY(-5px);
+}
+
+.insight-icon {
+    color: var(--brand-gold) !important;
+    margin-bottom: 30px !important;
+}
+
+.insight-title {
+    font-family: var(--serif-main) !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    letter-spacing: -0.01em;
+}
+
+.insight-description {
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 30px !important;
+}
+
+.service-depth-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    color: var(--brand-gold) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    margin-top: auto;
+}
+
+/* Remove corner decorations for V4 minimalism */
+.hf-corner { display: none !important; }
+
+/* ============================================
+   DARK MODE OVERRIDES
+   Driven by [data-theme="dark"] on <html>
+   ============================================ */
+[data-theme="dark"] #services-section.section-full {
+    background-color: var(--bg-secondary) !important;
+    border-top: 1px solid #B89A4A !important;
+}
+
+[data-theme="dark"] .hf-service-card {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .hf-service-card:hover {
+    border-color: var(--brand-gold) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .insight-title {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .insight-description {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] #services-section .section-title {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] #services-section .section-subtitle {
+    color: var(--text-muted) !important;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+html[data-theme="dark"] #services-section.section-full {
+    background-color: #0b0f1a !important; /* bg-primary absolute hex */
+}
+
+html[data-theme="dark"] .insights-grid {
+    background-color: rgba(196, 156, 82, 0.15) !important;
+    border-color: rgba(196, 156, 82, 0.15) !important;
+}
+
+html[data-theme="dark"] .insight-card {
+    background-color: #1E2A3A !important;
+}
+
+/* ============================================
+   TYPOGRAPHY PROFILE OVERRIDE
+   Driven by [data-typography="classic"] on <html>
+   ============================================ */
+[data-typography="classic"] #services-section .section-title,
+[data-typography="classic"] .insight-title {
+    font-family: var(--serif-main) !important; /* Remaps to Playfair Display */
+    letter-spacing: 0 !important;
+}

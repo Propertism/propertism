@@ -79,8 +79,8 @@ p {
 
 /* 1. Navbar Hardening (High Visibility) */
 .site-header {
-    background: rgba(15, 15, 16, 0.9) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: var(--bg-primary) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     padding: 1rem 0 !important;
     position: fixed;
     width: 100%;
@@ -667,16 +667,37 @@ section {
 
 /* 9. Contact Section Premium (Stitch Style) */
 .nri-contact-section {
-    background-color: #FFFFFF !important;
-    padding: 120px 0 !important;
-    border-top: 1px solid #EEEEEE;
+    background-color: #FDFDFB !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
 }
 
-.contact-section-grid {
+#contact-section {
+    padding-top: 40px !important; /* Small breathing room at very top */
+    padding-bottom: 40px !important;
+}
+
+.contact-split-container {
+    padding-bottom: 40px;
+}
+
+.contact-office-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 80px;
-    align-items: start;
+    grid-template-columns: 1.2fr 1fr 0.8fr; /* Weighted columns for address readability */
+    gap: 32px;
+}
+
+@media (max-width: 1200px) {
+    .contact-office-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-office-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 992px) {
@@ -687,62 +708,25 @@ section {
 }
 
 .contact-info-column p {
-    color: var(--prm-text-muted) !important;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.contact-benefit-line {
-    font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    margin-bottom: 1.5rem !important;
-    color: #111111 !important;
-}
-
-
-.contact-details-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 24px;
-    margin-bottom: 1.5rem;
-}
-
-
-.detail-item {
-    margin-bottom: 0;
-}
-
-
-.detail-item h4 {
-    color: var(--prm-gold) !important;
-    font-family: var(--prm-font-sans);
-    font-size: 0.75rem !important;
-    font-weight: 800 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    margin-bottom: 0.75rem !important;
-}
-
-.detail-item .address-text {
-    color: #1A1A1A !important;
+    color: #64748B !important;
     font-size: 1.05rem;
-    line-height: 1.6;
-    margin: 0 !important;
+    line-height: 1.5;
+    margin-bottom: 16px;
 }
 
-.detail-item .phone-text {
-    color: var(--prm-gold) !important;
-    font-family: var(--prm-font-sans);
-    font-weight: 600;
-    margin-top: 2px !important;
+.phone-text {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
     display: block;
+    margin-top: 2px;
+    color: #0F172A !important; /* High authority navy */
 }
 
 .section-kicker {
     display: inline-flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 24px !important;
 }
 
 .section-kicker-icon {
@@ -752,58 +736,154 @@ section {
     flex-shrink: 0;
 }
 
-.contact-trust {
-    list-style: none;
-    padding: 0 !important;
-    margin: 1.5rem 0 0 0 !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 12px !important;
-    background: transparent !important;
-    border: none !important;
+.contact-trust-block {
+    margin: 16px 0;
 }
 
-.contact-trust li {
-    background: #1a1a1a !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 10px !important;
-    padding: 16px 12px 16px 36px !important;
-    color: #E5E5E5 !important;
-    font-size: 0.72rem !important;
+.contact-stats-grid {
+    margin-top: 16px !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Balanced 2x2 grid */
+    gap: 12px;
+}
+
+.contact-stats-grid .stat-box {
+    padding: 20px 16px !important;
+    border-radius: 0 !important;
+    border: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.contact-stats-grid .stat-number {
+    font-size: 1.6rem !important;
+    line-height: 1 !important;
+    margin-bottom: 4px !important;
+    display: block;
+}
+
+.contact-stats-grid .stat-label {
+    font-size: 0.7rem !important;
     font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
-    position: relative;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+.contact-stats-grid .stat-box:nth-child(1),
+.contact-stats-grid .stat-box:nth-child(4) {
+    background-color: #B89A4A !important;
+}
+
+.contact-stats-grid .stat-box:nth-child(2),
+.contact-stats-grid .stat-box:nth-child(3) {
+    background-color: #F4EFE6 !important; /* Richer off-white/Champagne */
+}
+
+.directions-card {
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: linear-gradient(180deg, #FDFDFB 0%, #F9F9F7 100%);
+    padding: 14px 16px;
+    border-radius: 0 !important; /* Sharp corners globally */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px; /* Tight gap from label */
+}
+
+.directions-meta {
     display: flex;
     align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+}
+
+.directions-icon {
+    font-size: 14px;
+}
+
+.directions-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid #0F172A;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0F172A !important;
+    text-decoration: none;
+    border-radius: 0 !important; /* Sharp corners */
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.directions-btn:hover {
+    border-color: #B89A4A;
+    background: #F4EFE6;
+    color: #B89A4A !important;
+}
+
+/* 9. Premium Form (Navy Context) */
+.contact-form-premium {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 0;
+    flex: 1;
+}
+
+.form-group-premium {
+    position: relative;
+}
+
+.contact-form-premium input,
+.contact-form-premium select,
+.contact-form-premium textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 0 !important; /* Sharp corners */
+    padding: 14px 16px !important;
+    color: #FFFFFF !important;
+    font-size: 0.95rem !important;
     transition: all 0.3s ease;
 }
 
-.contact-trust li:hover {
-    border-color: var(--prm-gold);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+.contact-form-premium textarea {
+    min-height: 140px !important; /* Balanced height */
+    margin-bottom: 0 !important;
 }
 
-@media (max-width: 768px) {
-    .contact-trust {
-        grid-template-columns: 1fr !important;
-    }
+.contact-form-premium .form-row-dual {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
 }
 
+#contact-section .form-row-dual {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
 
+.contact-form-premium input:focus,
+.contact-form-premium select:focus,
+.contact-form-premium textarea:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--prm-gold) !important;
+    outline: none;
+}
 
-
-.contact-trust li::before {
-    content: "";
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a24c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center/contain;
+.contact-form-premium select option {
+    background: #0F172A;
+    color: #FFFFFF;
 }
 
 
@@ -1948,48 +2028,47 @@ html {
 }
 
 /* Management — beige */
+/* Legacy backgrounds purged to allow V4 theme tokens to propagate */
+/*
 #management-section.management-preview-section {
     background-color: var(--prm-beige) !important;
 }
 
-/* Reviews — white */
 #reviews-section.customer-reviews-section {
     background-color: var(--prm-white) !important;
 }
 
-/* Featured Properties — beige */
 #properties-section.featured-properties-section {
     background-color: var(--prm-beige) !important;
 }
 
-#properties-section .featured-properties-cta {
-    margin-top: 3rem;
-    text-align: left;
-}
-
-/* Insights / Blog — white */
 #blog-section.journal-preview-section {
     background-color: var(--prm-white) !important;
 }
 
-/* Contact — beige (refine from SCCB-015 #f8f9fb to canonical beige token) */
 #contact-section,
 .nri-contact-section {
     background-color: var(--prm-beige) !important;
     border-top: 1px solid rgba(0, 0, 0, 0.04) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
 }
+*/
+
+#properties-section .featured-properties-cta {
+    margin-top: 3rem;
+    text-align: left;
+}
 
 /* Contact form surface: slightly lighter than beige bg */
 .contact-form {
-    background: var(--prm-white) !important;
+    background: var(--bg-card) !important;
 }
 
-/* Contact form inputs match beige bg */
+/* Contact form inputs match bg */
 .contact-form input,
 .contact-form select,
 .contact-form textarea {
-    background: var(--prm-beige) !important;
+    background: var(--bg-surface) !important;
 }
 
 /* -----------------------------------------------------------
@@ -3781,15 +3860,9 @@ section:not(#home-section) .journal-preview-grid {
 
 #contact-section .form-row-dual {
     display: flex !important;
+    flex-direction: column !important;
     gap: 12px !important;
     width: 100% !important;
-}
-
-@media (max-width: 600px) {
-    #contact-section .form-row-dual {
-        flex-direction: column !important;
-        gap: 0 !important;
-    }
 }
 
 #contact-section .contact-form input,
@@ -3985,3 +4058,51 @@ section:not(#home-section) .journal-preview-grid {
     font-size: 1.45rem !important;
     font-weight: 800 !important;
 }
+
+/* ============================================
+   V4 NUCLEAR TYPOGRAPHY HARDENING
+   Enforcing single-line headings for key sections
+   ============================================ */
+#management-section .section-title,
+#reviews-section .section-title,
+#blog-section .section-title {
+    font-size: clamp(1rem, 2vw + 0.5rem, 1.8rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+#management-section .section-subtitle,
+#reviews-section .section-subtitle,
+#blog-section .section-subtitle {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* ============================================
+   V4 LIGHT MODE ZEBRA RHYTHM
+   Alternating backgrounds for editorial flow
+   ============================================ */
+html:not([data-theme="dark"]) section {
+    background-color: var(--bg-surface) !important;
+}
+
+/* Apply Trust Beige to even sections, skipping fixed modules */
+html:not([data-theme="dark"]) section:nth-of-type(even):not(.hero-hybrid):not(.trust-strip-section):not(.nri-contact-section) {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Enforce fixed contrast for institutional anchors */
+html:not([data-theme="dark"]) .hero-hybrid { background-color: #000000 !important; }
+html:not([data-theme="dark"]) .nri-contact-section { background-color: #FDFDFB !important; }
+html:not([data-theme="dark"]) .site-footer { background-color: #0F172A !important; }
+
+/* Institutional Anchors Maintained */
+[data-theme="dark"] .hero-hybrid { background-color: #000000 !important; }
+[data-theme="dark"] .nri-contact-section { background-color: #0B0F1A !important; }
+[data-theme="dark"] .site-footer { background-color: #050A14 !important; }

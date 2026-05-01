@@ -1,0 +1,329 @@
+/**
+ * PROPERTISM V4 - CONTACT SECTION MODULE
+ */
+
+#contact-section.nri-contact-section {
+    background-color: var(--bg-primary) !important;
+    padding: var(--section-v-padding) 0 !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    scroll-margin-top: var(--nav-height) !important;
+}
+
+#contact-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+#contact-section .section-header {
+    text-align: left !important;
+    margin-bottom: 60px !important;
+    max-width: 100% !important; /* Edge-to-edge alignment */
+    width: 100% !important;
+}
+
+#contact-section .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 20px !important;
+}
+
+#contact-section .section-kicker-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--brand-gold);
+}
+
+#contact-section .section-title {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(1.2rem, 2vw + 0.8rem, 2.2rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#contact-section .section-subtitle {
+    font-size: 1.2rem !important;
+    line-height: 1.6 !important;
+    color: var(--text-muted) !important;
+}
+
+#contact-section .contact-split-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr; /* Form gets slightly more room */
+    gap: 60px;
+    align-items: stretch;
+}
+
+/* 1. LEFT CARD: NARRATIVE/INFO */
+.hf-narrative-card {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 0 !important;
+    padding: 60px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.hf-card-title {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(2rem, 4vw, 2.5rem) !important; /* Slightly smaller than main title but still impactful */
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 40px !important;
+    letter-spacing: -0.02em;
+    line-height: 1.1 !important;
+}
+
+.hf-office-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.hf-office-label {
+    font-size: 0.85rem !important; /* V4 Kicker standard */
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-gold) !important;
+    margin-bottom: 12px !important;
+    display: block;
+}
+
+.hf-office-address {
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 12px !important;
+}
+
+.hf-office-phone {
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    font-size: 1.2rem !important;
+}
+
+/* 2. STATS TILE GRID (UNIFIED) */
+.hf-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 !important;
+    border: 1px solid var(--border-subtle);
+    margin-top: auto;
+}
+
+.hf-stat-tile {
+    padding: 25px 10px;
+    text-align: center;
+}
+
+.hf-stat-tile.is-gold {
+    background-color: var(--brand-gold) !important;
+}
+
+.hf-stat-tile.is-offwhite {
+    background-color: var(--bg-surface) !important;
+}
+
+.hf-stat-number {
+    font-family: var(--serif-main) !important;
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+}
+
+.hf-stat-label {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    color: #0F172A !important;
+}
+
+/* 3. RIGHT CARD: THE FORM (DARK THEME) */
+.hf-form-card {
+    background: #0F172A !important; /* Professional Dark Navy */
+    color: #FFFFFF !important;
+    padding: 60px !important;
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.hf-form-card h1 {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(2rem, 4vw, 2.5rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 12px !important;
+    letter-spacing: -0.02em;
+}
+
+.hf-form-card h1 em {
+    font-style: italic;
+    color: var(--brand-gold);
+}
+
+#contact-section .hf-form-card .hf-sub {
+    font-size: 1.2rem !important; /* V4 Subtitle standard */
+    color: #FFFFFF !important;
+    margin-bottom: 40px !important;
+}
+
+/* FORM FIELDS HARDENING */
+.hf-field-group {
+    margin-bottom: 30px !important;
+}
+
+.hf-field-label {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94A3B8 !important;
+    margin-bottom: 8px !important;
+    display: block;
+}
+
+.hf-field-input, .hf-field-textarea, .hf-field-select {
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 16px !important;
+    color: #FFFFFF !important;
+    font-family: var(--sans-main) !important;
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+}
+
+.hf-field-input:focus {
+    border-color: var(--brand-gold) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    outline: none !important;
+}
+
+.hf-submit-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--brand-gold) !important;
+    color: #0F172A !important;
+    width: 100% !important;
+    padding: 22px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    text-decoration: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.hf-submit-btn:hover {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Neutralize legacy elements */
+.hf-corner, .hf-eyebrow, .hf-divider, .hf-field-underline { display: none !important; }
+
+/* ============================================
+   DARK MODE OVERRIDES
+   Cards stay dark by design.
+   The section shell must override legacy light gradients.
+   ============================================ */
+html[data-theme="dark"] #contact-section.nri-contact-section {
+    background: #0B0F1A !important;
+    background-image: none !important;
+    border-top-color: rgba(196, 156, 82, 0.15) !important;
+}
+
+[data-theme="dark"] .hf-narrative-card {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .hf-card-title,
+[data-theme="dark"] .hf-office-address,
+[data-theme="dark"] .hf-office-phone {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .hf-stats-grid {
+    border-color: var(--border-subtle) !important;
+}
+
+/* ABSOLUTE AUTHORITY: Overriding hf-consultation.css Line 504 and propertism-styles.css */
+
+/* Section background - Class removed for match reliability */
+html[data-theme="dark"] body #contact-section {
+    background: #0B0F1A !important;
+    background-image: none !important;
+    border-top-color: rgba(196, 156, 82, 0.15) !important;
+}
+
+/* Left narrative card */
+html[data-theme="dark"] body #contact-section .hf-narrative-card {
+    background-color: #1E2A3A !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Left card headings — counter global h1/h2/h3 color: #1A1A1A */
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-card-title {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-address {
+    color: #E2E8F0 !important;
+}
+
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-phone {
+    color: #FFFFFF !important;
+}
+
+/* Stats grid border */
+html[data-theme="dark"] body #contact-section .hf-stats-grid {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Off-white tiles → Deep Obsidian Slate in dark */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite {
+    background-color: #1E2A3A !important;
+}
+
+/* Text on off-white (now dark) tiles → white */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite .hf-stat-number,
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite .hf-stat-label {
+    color: #FFFFFF !important;
+}
+
+/* Text on gold tiles → stays dark navy */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-gold .hf-stat-number,
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-gold .hf-stat-label {
+    color: #0F172A !important;
+}
+
+/* Section header text — counter global p color: #4A4A4A (line 67) */
+html[data-theme="dark"] body #contact-section .section-title {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #contact-section .section-subtitle {
+    color: #94A3B8 !important;
+}

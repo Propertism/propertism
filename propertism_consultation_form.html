@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Consultation — Propertism</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #080c15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .form-card {
+      background: #0b0f1a;
+      width: 100%;
+      max-width: 520px;
+      padding: 52px 48px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient glow */
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(196,156,82,0.07) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .form-card::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(196,156,82,0.05) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    /* Corner brackets */
+    .corner {
+      position: absolute;
+      width: 28px; height: 28px;
+      border-color: rgba(196,156,82,0.45);
+      border-style: solid;
+    }
+    .corner-tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+    .corner-tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+    .corner-bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+    .corner-br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+
+    /* Eyebrow */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .eyebrow-line {
+      width: 24px; height: 1px;
+      background: #c49c52;
+    }
+    .eyebrow-text {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: #c49c52;
+      text-transform: uppercase;
+    }
+
+    /* Heading */
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.22;
+      color: #f0ead8;
+      margin-bottom: 8px;
+    }
+    h1 em { font-style: italic; font-weight: 400; }
+
+    .sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(240,234,216,0.38);
+      letter-spacing: 0.02em;
+      margin-bottom: 30px;
+    }
+
+    .divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, #c49c52, transparent);
+      margin-bottom: 32px;
+    }
+
+    /* Field groups */
+    .field-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .row-2 .field-group { margin-bottom: 0; }
+
+    .field-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #c49c52;
+      font-weight: 500;
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .field-group.active .field-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .field-input,
+    .field-select,
+    .field-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(196,156,82,0.22);
+      color: #f0ead8;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      padding: 10px 0;
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+    .field-input::placeholder,
+    .field-textarea::placeholder {
+      color: rgba(240,234,216,0.28);
+      font-weight: 300;
+    }
+    .field-select {
+      cursor: pointer;
+      color: rgba(240,234,216,0.28);
+    }
+    .field-select.has-value { color: #f0ead8; }
+    .field-select option {
+      background: #121829;
+      color: #f0ead8;
+    }
+    .field-textarea {
+      resize: none;
+      height: 78px;
+    }
+    .field-input:focus,
+    .field-select:focus,
+    .field-textarea:focus {
+      border-bottom-color: #c49c52;
+    }
+
+    /* Animated underline */
+    .field-underline {
+      height: 1px;
+      background: #c49c52;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      margin-top: -1px;
+    }
+    .field-input:focus ~ .field-underline,
+    .field-select:focus ~ .field-underline,
+    .field-textarea:focus ~ .field-underline {
+      transform: scaleX(1);
+    }
+
+    /* Select arrow */
+    .select-wrapper { position: relative; }
+    .select-arrow {
+      position: absolute;
+      right: 4px;
+      top: 52%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .select-arrow::before,
+    .select-arrow::after {
+      content: '';
+      position: absolute;
+      background: rgba(196,156,82,0.55);
+      height: 1px;
+    }
+    .select-arrow::before { width: 7px; top: 0; left: 0; transform: rotate(38deg); }
+    .select-arrow::after  { width: 7px; top: 0; left: 5px; transform: rotate(-38deg); }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      margin-top: 30px;
+      padding: 16px;
+      background: transparent;
+      border: 1px solid #c49c52;
+      color: #c49c52;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.35s;
+    }
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #c49c52;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+      z-index: 0;
+    }
+    .submit-btn:hover::before { transform: scaleX(1); }
+    .submit-btn:hover { color: #0b0f1a; }
+
+    .btn-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-arrow {
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      position: relative;
+      transition: width 0.3s;
+      flex-shrink: 0;
+    }
+    .btn-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 5px; height: 5px;
+      border-right: 1px solid currentColor;
+      border-top: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+    .submit-btn:hover .btn-arrow { width: 28px; }
+
+    /* Footer note */
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 11px;
+      color: rgba(240,234,216,0.18);
+      letter-spacing: 0.06em;
+    }
+
+    /* Success state */
+    #successMsg {
+      display: none;
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+    #successMsg.show { display: block; }
+    .success-ring {
+      width: 54px; height: 54px;
+      border: 1px solid #c49c52;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #c49c52;
+      animation: ringIn 0.5s ease;
+    }
+    @keyframes ringIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .success-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 500;
+      color: #f0ead8;
+      margin-bottom: 10px;
+    }
+    .success-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(240,234,216,0.38);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .form-card { padding: 44px 28px 48px; }
+      .row-2 { grid-template-columns: 1fr; gap: 0; }
+      .row-2 .field-group { margin-bottom: 20px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-card">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Request a Consultation</span>
+    </div>
+
+    <h1>Start your property<br><em>oversight journey</em></h1>
+    <p class="sub">Our specialists respond within 24 hours</p>
+    <div class="divider"></div>
+
+    <div id="theForm">
+      <div class="row-2">
+        <div class="field-group" id="fg-name">
+          <label class="field-label" for="fullName">Full Name</label>
+          <input class="field-input" id="fullName" type="text" placeholder="Full Name"
+            onfocus="activate('fg-name')" onblur="deactivate('fg-name', this)" />
+          <div class="field-underline"></div>
+        </div>
+        <div class="field-group" id="fg-phone">
+          <label class="field-label" for="phone">Phone</label>
+          <input class="field-input" id="phone" type="tel" placeholder="Phone Number"
+            onfocus="activate('fg-phone')" onblur="deactivate('fg-phone', this)" />
+          <div class="field-underline"></div>
+        </div>
+      </div>
+
+      <div class="field-group" id="fg-email">
+        <label class="field-label" for="email">Email Address</label>
+        <input class="field-input" id="email" type="email" placeholder="Email Address"
+          onfocus="activate('fg-email')" onblur="deactivate('fg-email', this)" />
+        <div class="field-underline"></div>
+      </div>
+
+      <div class="field-group" id="fg-svc">
+        <label class="field-label" for="service">Service Needed</label>
+        <div class="select-wrapper">
+          <select class="field-select" id="service"
+            onfocus="activate('fg-svc')"
+            onblur="deactivate('fg-svc', this)"
+            onchange="this.classList.add('has-value')">
+            <option value="" disabled selected>Select Service Needed</option>
+            <option>Property Management</option>
+            <option>Rental Advisory</option>
+            <option>Portfolio Oversight</option>
+            <option>Investment Consultation</option>
+            <option>Tenant Management</option>
+          </select>
+          <div class="select-arrow"></div>
+        </div>
+        <div class="field-underline"></div>
+      </div>
+
+      <div class="field-group" id="fg-msg">
+        <label class="field-label" for="message">Message</label>
+        <textarea class="field-textarea" id="message" placeholder="How can we help manage your property?"
+          onfocus="activate('fg-msg')" onblur="deactivate('fg-msg', this)"></textarea>
+        <div class="field-underline"></div>
+      </div>
+
+      <button class="submit-btn" onclick="handleSubmit()">
+        <span class="btn-inner">
+          Send My Request
+          <span class="btn-arrow"></span>
+        </span>
+      </button>
+
+      <p class="form-footer">Confidential &nbsp;·&nbsp; No obligation &nbsp;·&nbsp; Propertism.in</p>
+    </div>
+
+    <div id="successMsg">
+      <div class="success-ring">✓</div>
+      <p class="success-heading">Request Received</p>
+      <p class="success-body">We'll be in touch within 24 hours.</p>
+    </div>
+  </div>
+
+  <script>
+    function activate(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function deactivate(id, el) {
+      if (!el.value) document.getElementById(id).classList.remove('active');
+    }
+    function handleSubmit() {
+      const name    = document.getElementById('fullName').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const service = document.getElementById('service').value;
+      if (!name || !email || !service) {
+        alert('Please fill in Name, Email and Service before submitting.');
+        return;
+      }
+      document.getElementById('theForm').style.display = 'none';
+      document.getElementById('successMsg').classList.add('show');
+    }
+  </script>
+
+</body>
+</html>

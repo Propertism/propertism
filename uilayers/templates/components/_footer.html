@@ -1,66 +1,29 @@
-<style>
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem 1.5rem;
-    row-gap: 2rem;
-    margin-bottom: 0;
-}
-.footer-presence-full {
-    grid-column: span 4;
-}
-@media (max-width: 1100px) {
-    .footer-content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .footer-presence-full { grid-column: span 2; }
-}
-@media (max-width: 768px) {
-    .footer-content {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2rem !important;
-    }
-    .footer-presence-full {
-        grid-column: unset;
-    }
-    .footer-section {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
-    .footer-socials {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        gap: 8px !important;
-        align-items: center !important;
-        margin-top: 14px !important;
-    }
-}
-</style>
+{% load static %}
+<!-- FOOTER V4 - INSTITUTIONAL OVERSIGHT -->
+<link rel="stylesheet" href="{% static 'css/v4-footer.css' %}">
 
 <footer class="site-footer">
-    <div class="container">
+    <div class="section-inner">
         <div class="footer-content">
 
             <!-- Brand -->
             <div class="footer-section footer-brand">
                 <h3>{{ company.company_name }}</h3>
-                <p class="footer-tagline">Your property, managed with care.<br>Complete peace of mind.</p>
-                <div class="footer-socials" style="display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;">
+                <p class="footer-tagline">Institutional property oversight for NRI owners.<br>Global reach, local execution.</p>
+                <div class="footer-socials">
                     {% if company.facebook_url %}
-                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-facebook" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/></svg>
+                    <a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.3-1.6 1.6-1.6H16V5a12.8 12.8 0 0 0-1.8-.1c-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.7v7h3.8Z"/></svg>
                     </a>
                     {% endif %}
                     {% if company.twitter_url %}
-                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-twitter" aria-label="Twitter" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/></svg>
+                    <a href="{{ company.twitter_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.5 22H3.4l7.3-8.4L1 2h6.5l4.4 5.9L18.9 2Zm-1.1 18h1.7L6.5 3.9H4.7L17.8 20Z"/></svg>
                     </a>
                     {% endif %}
                     {% if company.linkedin_url %}
-                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-linkedin" aria-label="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:50%;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/></svg>
+                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9 8.5A1.9 1.9 0 1 1 6.9 4.7a1.9 1.9 0 0 1 0 3.8ZM5.1 9.9h3.6V21H5.1V9.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V21h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.6V9.9Z"/></svg>
                     </a>
                     {% endif %}
                 </div>
@@ -81,138 +44,136 @@
 
             <!-- India Office -->
             <div class="footer-section footer-office">
-                <h3>India Office</h3>
+                <h3>Chennai Headquarters</h3>
                 <div class="footer-office-compact">
-                    <p class="footer-office-address footer-text-white">{{ company.india_office_address|linebreaksbr }}</p>
-                    <p class="footer-office-city footer-text-gold">{{ company.india_office_city }}, {{ company.india_office_state }} – {{ company.india_office_pincode }}</p>
-                    <div class="footer-office-phones">
-                        <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_1 }}</a>
-                        {% if company.india_phone_2 %}<a href="tel:{{ company.india_phone_2|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_2 }}</a>{% endif %}
-                        {% if company.india_phone_3 %}<a href="tel:{{ company.india_phone_3|cut:' ' }}" class="footer-phone-item footer-text-white">{{ company.india_phone_3 }}</a>{% endif %}
+                    <p class="footer-office-address">{{ company.india_office_address|linebreaksbr }}</p>
+                    <p class="footer-office-city" style="color: var(--brand-gold) !important; margin-top: 10px;">{{ company.india_office_city }}, {{ company.india_office_state }} – {{ company.india_office_pincode }}</p>
+                    <div class="footer-office-phones" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+                        <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="footer-phone-item" style="color: #FFFFFF !important; text-decoration: none; font-weight: 700;">{{ company.india_phone_1 }}</a>
+                        {% if company.india_phone_2 %}<a href="tel:{{ company.india_phone_2|cut:' ' }}" class="footer-phone-item" style="color: #FFFFFF !important; text-decoration: none; font-weight: 700;">{{ company.india_phone_2 }}</a>{% endif %}
                     </div>
-                    <p class="footer-office-email"><a href="mailto:{{ company.email }}" class="footer-text-gold">{{ company.email }}</a></p>
                 </div>
             </div>
 
             <!-- Newsletter -->
             <div class="footer-section footer-newsletter-mini">
-                <h3>Stay Updated</h3>
-                <p>Get NRI property insights, market trends, and curated opportunities.</p>
+                <h3>Advisory Insights</h3>
+                <p>Curated property management updates for owners abroad.</p>
                 <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-mini">
                     {% csrf_token %}
-                    <input type="email" name="email" placeholder="Your email" required>
-                    <button type="submit">{{ company.footer_newsletter_button_text|default:"Subscribe" }}</button>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <button type="submit">JOIN</button>
                 </form>
             </div>
 
             <!-- World Clocks - full width row -->
             <div class="footer-section footer-presence-full">
-                <div class="footer-clocks-wrapper">
-                    <div class="world-clock-strip" id="footer-digital-clock">
-                        <div class="world-clock-cell" data-tz="America/New_York">
-                            <span class="world-clock-label">US (ET)</span>
-                            <strong class="world-clock-time">
-                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                                <span class="world-clock-meridiem">--</span>
-                            </strong>
-                            <small class="world-clock-date"></small>
-                        </div>
-                        <div class="world-clock-cell" data-tz="Europe/London">
-                            <span class="world-clock-label">UK (GMT)</span>
-                            <strong class="world-clock-time">
-                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                                <span class="world-clock-meridiem">--</span>
-                            </strong>
-                            <small class="world-clock-date"></small>
-                        </div>
-                        <div class="world-clock-cell" data-tz="Asia/Kolkata">
-                            <span class="world-clock-label">India (IST)</span>
-                            <strong class="world-clock-time">
-                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                                <span class="world-clock-meridiem">--</span>
-                            </strong>
-                            <small class="world-clock-date"></small>
-                        </div>
-                        <div class="world-clock-cell" data-tz="Asia/Dubai">
-                            <span class="world-clock-label">Gulf (GST)</span>
-                            <strong class="world-clock-time">
-                                <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
-                                <span class="world-clock-meridiem">--</span>
-                            </strong>
-                            <small class="world-clock-date"></small>
-                        </div>
-                        <div class="world-clock-cell world-clock-cell--tagline">
-                            <span class="world-clock-label">OUR REACH</span>
-                            <strong class="world-clock-tagline-title">Global Client Network</strong>
-                            <small class="world-clock-date">Coordinated support across India, Gulf, UK &amp; US.</small>
-                        </div>
-                        <div class="world-clock-cell world-clock-cell--office-hours" data-footer-availability data-tz="Asia/Kolkata">
-                            <span class="world-clock-label">OFFICE HOURS</span>
-                            <strong class="world-clock-time world-clock-time--status">
-                                <span class="footer-availability-dot" aria-hidden="true"></span>
-                                <span class="footer-availability-status" data-footer-availability-status>Checking status</span>
-                            </strong>
-                            <small class="world-clock-date">Mon - Sun • 07:00 - 23:00 IST</small>
-                        </div>
+                <div class="world-clock-strip" id="footer-digital-clock">
+                    <div class="world-clock-cell" data-tz="America/New_York">
+                        <span class="world-clock-label">US (ET)</span>
+                        <strong class="world-clock-time">
+                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                            <span class="world-clock-meridiem">--</span>
+                        </strong>
+                        <small class="world-clock-date"></small>
                     </div>
-                    <script>
-                    (function () {
-                        var cells = document.querySelectorAll("#footer-digital-clock .world-clock-cell");
-                        if (!cells.length) return;
-                        function getTimeParts(date, timeZone) {
+                    <div class="world-clock-cell" data-tz="Europe/London">
+                        <span class="world-clock-label">UK (GMT)</span>
+                        <strong class="world-clock-time">
+                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                            <span class="world-clock-meridiem">--</span>
+                        </strong>
+                        <small class="world-clock-date"></small>
+                    </div>
+                    <div class="world-clock-cell" data-tz="Asia/Kolkata">
+                        <span class="world-clock-label">India (IST)</span>
+                        <strong class="world-clock-time">
+                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                            <span class="world-clock-meridiem">--</span>
+                        </strong>
+                        <small class="world-clock-date"></small>
+                    </div>
+                    <div class="world-clock-cell" data-tz="Asia/Dubai">
+                        <span class="world-clock-label">Gulf (GST)</span>
+                        <strong class="world-clock-time">
+                            <span class="world-clock-hours">--</span><span class="world-clock-separator">:</span><span class="world-clock-minutes">--</span>
+                            <span class="world-clock-meridiem">--</span>
+                        </strong>
+                        <small class="world-clock-date"></small>
+                    </div>
+                    <div class="world-clock-cell world-clock-cell--reach">
+                        <span class="world-clock-label">REACH</span>
+                        <strong class="world-clock-time">Global Network</strong>
+                        <small class="world-clock-date">US, UK, Gulf, India</small>
+                    </div>
+                    <div class="world-clock-cell world-clock-cell--office-hours" data-footer-availability data-tz="Asia/Kolkata" style="background: #EDE6DA !important; background-image: none !important;">
+                        <span class="world-clock-label">OFFICE HOURS</span>
+                        <strong class="world-clock-time world-clock-time--status">
+                            <span class="footer-availability-dot"></span>
+                            <span class="footer-availability-status" data-footer-availability-status>Checking status</span>
+                        </strong>
+                        <small class="world-clock-date">07:00 - 23:00 IST</small>
+                    </div>
+                </div>
+                <script>
+                (function () {
+                    var cells = document.querySelectorAll("#footer-digital-clock .world-clock-cell");
+                    if (!cells.length) return;
+                    function getTimeParts(date, timeZone) {
+                        try {
                             var parts = new Intl.DateTimeFormat("en-US", { timeZone: timeZone, hour: "numeric", minute: "2-digit", hour12: true }).formatToParts(date);
                             function getValue(type) { var m = parts.find(function(p){ return p.type===type; }); return m ? m.value : ""; }
                             return { hour: getValue("hour"), minute: getValue("minute"), dayPeriod: getValue("dayPeriod") };
-                        }
-                        function getISTHour(date) {
-                            var parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", hour12: false }).formatToParts(date);
-                            var h = parts.find(function(p){ return p.type==="hour"; });
-                            return h ? parseInt(h.value, 10) : 0;
-                        }
-                        function updateOfficeHours(date) {
-                            var statusEl = document.querySelector("[data-footer-availability-status]");
-                            var dotEl = document.querySelector(".footer-availability-dot");
-                            if (!statusEl) return;
-                            var hour = getISTHour(date);
-                            var isOpen = hour >= 7 && hour < 23;
-                            statusEl.textContent = isOpen ? "Open Now" : "Closed";
-                            statusEl.style.color = isOpen ? "#22c55e" : "#f87171";
-                            if (dotEl) dotEl.style.background = isOpen ? "#22c55e" : "#f87171";
-                        }
-                        function tick() {
-                            var now = new Date();
-                            cells.forEach(function(cell) {
-                                if (cell.classList.contains("world-clock-cell--office-hours")) return;
-                                if (cell.classList.contains("world-clock-cell--tagline")) return;
-                                var tz = cell.dataset.tz;
-                                var hoursEl = cell.querySelector(".world-clock-hours");
-                                var minutesEl = cell.querySelector(".world-clock-minutes");
-                                var meridiemEl = cell.querySelector(".world-clock-meridiem");
-                                var dateEl = cell.querySelector(".world-clock-date");
-                                var tp = getTimeParts(now, tz);
-                                if (hoursEl) hoursEl.textContent = tp.hour || "--";
-                                if (minutesEl) minutesEl.textContent = tp.minute || "--";
-                                if (meridiemEl) meridiemEl.textContent = (tp.dayPeriod || "").toLowerCase();
-                                if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
-                            });
-                            updateOfficeHours(now);
-                        }
-                        tick();
-                        window.setInterval(tick, 60000);
-                    }());
-                    </script>
-                </div>
+                        } catch(e) { return { hour: "--", minute: "--", dayPeriod: "" }; }
+                    }
+                    function getISTHour(date) {
+                        var parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", hour12: false }).formatToParts(date);
+                        var h = parts.find(function(p){ return p.type==="hour"; });
+                        return h ? parseInt(h.value, 10) : 0;
+                    }
+                    function updateOfficeHours(date) {
+                        var statusEl = document.querySelector("[data-footer-availability-status]");
+                        var dotEl = document.querySelector(".footer-availability-dot");
+                        if (!statusEl) return;
+                        var hour = getISTHour(date);
+                        var isOpen = hour >= 7 && hour < 23;
+                        statusEl.textContent = isOpen ? "Open Now" : "Closed";
+                        statusEl.style.color = isOpen ? "#22c55e" : "#f87171";
+                        if (dotEl) dotEl.style.background = isOpen ? "#22c55e" : "#f87171";
+                    }
+                    function tick() {
+                        var now = new Date();
+                        cells.forEach(function(cell) {
+                            var tz = cell.dataset.tz;
+                            if (!tz) return;
+                            var hoursEl = cell.querySelector(".world-clock-hours");
+                            var minutesEl = cell.querySelector(".world-clock-minutes");
+                            var meridiemEl = cell.querySelector(".world-clock-meridiem");
+                            var dateEl = cell.querySelector(".world-clock-date");
+                            var tp = getTimeParts(now, tz);
+                            if (hoursEl) hoursEl.textContent = tp.hour || "--";
+                            if (minutesEl) minutesEl.textContent = tp.minute || "--";
+                            if (meridiemEl) meridiemEl.textContent = (tp.dayPeriod || "").toLowerCase();
+                            if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", { timeZone: tz, weekday: "short", month: "short", day: "numeric" });
+                        });
+                        updateOfficeHours(now);
+                    }
+                    tick();
+                    window.setInterval(tick, 60000);
+                }());
+                </script>
             </div>
 
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 {{ company.company_name }}. All rights reserved.</p>
+            <p>&copy; 2026 {{ company.company_name }}. Institutional Oversight.</p>
             <div class="footer-bottom-links">
                 <a href="{{ home_section_links.about }}">About</a>
                 <a href="{{ home_section_links.blog }}">Blog</a>
                 <a href="{{ home_section_links.contact }}">Contact</a>
                 <a href="{{ home_section_links.management }}">Management</a>
             </div>
+        </div>
         </div>
     </div>
 </footer>

@@ -1,0 +1,76 @@
+/**
+ * PROPERTISM V4 - GLOBAL DESIGN TOKENS (2-PROFILE EDITION)
+ */
+
+:root {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+}
+
+:root {
+    /* PROFILE 1: Editorial (Hero/Contact Style) */
+    --font-serif-1: 'Cormorant Garamond', serif;
+    --font-sans-1: 'Jost', sans-serif;
+    
+    /* PROFILE 2: Classic (About Style) */
+    --font-serif-2: 'Playfair Display', serif;
+    --font-sans-2: 'Inter', sans-serif;
+
+    /* DYNAMIC MAPPING */
+    --serif-main: var(--font-serif-1);
+    --sans-main: var(--font-sans-1);
+
+    /* BRAND COLORS */
+    --brand-gold: #C49C52;
+    --brand-gold-glow: rgba(196, 156, 82, 0.3);
+    --brand-navy: #0b0f1a;
+}
+
+/* Typography Profile Override */
+[data-typography="classic"] {
+    --serif-main: var(--font-serif-2);
+    --sans-main: var(--font-sans-2);
+}
+
+/* THEME TOKENS */
+:root, [data-theme="light"] {
+    --bg-primary: #FDFDFB; /* Advisor White */
+    --bg-secondary: #F8F5F0; /* Trust Beige */
+    --bg-surface: #FDFDFB;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+    --bg-card: #FFFFFF;          /* Card surface: pure white lifts off Advisor White bg */
+    --border-subtle: rgba(15, 23, 42, 0.12); /* Sharpened for Beige background */
+    --glass-bg: #EDE6DA; /* Warm Parchment — Luxury Editorial Nav */
+}
+
+html[data-theme="dark"] {
+    --bg-primary: #0b0f1a;
+    --bg-secondary: #050a14;
+    --bg-surface: #121926;
+    --bg-card: #1E2A3A;          /* Card lifts above bg-surface in dark mode */
+    --text-main: #FFFFFF;
+    --text-muted: #94A3B8;
+    --text-inverse: #0F172A;
+    --border-subtle: rgba(196, 156, 82, 0.15);
+    --glass-bg: rgba(11, 15, 26, 0.9);
+}
+
+/* VIEWPORT & SPACING */
+:root {
+    --nav-height: 92px;
+    --trust-strip-height: 120px;
+    --hero-height: calc(100vh - var(--trust-strip-height));
+    --section-v-padding: 25px; /* Ultra-Dense minimal margin */
+}

@@ -228,20 +228,21 @@ select {
         width: 300px;
         max-width: 85vw;
         height: 100vh;
-        background: #FFFFFF;
+        background: #EDE6DA !important; /* V4 Warm Parchment */
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
         z-index: 10002;
         transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         overflow-y: auto;
         padding-bottom: 40px;
+        border-left: 1px solid var(--border-subtle);
     }
     
     .mobile-nav.active { right: 0; }
     
     .mobile-nav-header {
-        background: #F8F9FB;
+        background: #E5DDD0 !important; /* Slightly deeper parchment */
         padding: 32px 24px;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        border-bottom: 1px solid var(--border-subtle);
     }
 
     .mobile-nav-header .logo-image {
@@ -252,12 +253,15 @@ select {
     .mobile-menu-item {
         display: flex;
         align-items: center;
-        padding: 16px 24px;
+        padding: 20px 24px;
         color: #0F172A;
         text-decoration: none;
-        font-size: 1rem;
-        font-weight: 500;
-        border-bottom: 1px solid rgba(0,0,0,0.03);
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.15em !important;
+        border-bottom: 1px solid var(--border-subtle);
+        transition: all 0.3s ease;
     }
 
     .mobile-menu-item:hover {
@@ -268,12 +272,15 @@ select {
     .mobile-menu-item-cta,
     .mobile-nav-cta {
         margin: 24px;
-        background: #0F172A;
-        color: #fff;
-        border-radius: 8px;
+        background: #0F172A !important;
+        color: #fff !important;
+        border-radius: 0 !important; /* Sharp corners */
         justify-content: center;
-        font-weight: 600;
+        font-weight: 700 !important;
         border-bottom: none;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.8rem !important;
     }
 
     .mobile-menu-backdrop {

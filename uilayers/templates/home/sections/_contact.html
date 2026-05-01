@@ -1,81 +1,94 @@
+{% load static %}
+<!-- CONTACT SECTION V4 - NRI ADVISORY GATEWAY -->
+<link rel="stylesheet" href="{% static 'css/v4-contact.css' %}">
+
 <section id="contact-section" class="nri-contact-section">
     <div class="section-inner">
         <div class="section-header">
             <span class="section-kicker">
-                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.16a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.61.59A2 2 0 0 1 22 16.92Z" />
                 </svg>
-                {{ company.contact_section_eyebrow|default:"CONTACT" }}
+                {{ company.contact_section_eyebrow|default:"GET IN TOUCH" }}
             </span>
-            <h2 class="section-title section-title-single-line">
-                <span class="title-desktop-single-line">Let's&nbsp;manage&nbsp;your&nbsp;Chennai&nbsp;property&nbsp;without&nbsp;the&nbsp;stress.</span>
-                <span class="title-mobile-wrap">Let's manage your Chennai property without the stress.</span>
-            </h2>
-            <p class="section-subtitle">Talk to our Chennai and US coordination team about rentals, maintenance, reporting, or end-to-end property oversight.</p>
+            <h2 class="section-title">{{ company.contact_section_title }}</h2>
+            <p class="section-subtitle">{{ company.contact_section_description }}</p>
         </div>
 
-        <div class="contact-section-grid">
-            <div class="contact-info-column">
-                <p class="contact-benefit-line">Let's discuss your property needs</p>
+        <div class="contact-split-container">
+            <!-- LEFT CARD: CONTACT INFO (WHITE) -->
+            <div class="hf-narrative-card">
+                <span class="hf-office-label">WHERE EXPERTISE MEETS LOCAL EXECUTION</span>
+                <h2 class="hf-card-title">Institutional oversight for your private assets</h2>
 
-                <div class="contact-details-list">
-                    <!-- Office Names -->
-                    <div class="detail-item">
-                        <h4>Chennai Office</h4>
-                        <p class="address-text">{{ company.india_office_address|linebreaksbr }}</p>
+                <div class="hf-office-grid">
+                    <div class="hf-office-item">
+                        <span class="hf-office-label">Chennai Headquarters</span>
+                        <p class="hf-office-address">{{ company.india_office_address|linebreaksbr }}</p>
+                        <span class="hf-office-phone">{{ company.india_phone_1 }}</span>
                     </div>
 
-                    <div class="detail-item">
-                        <h4>US Coordination</h4>
-                        <p class="address-text">{{ company.us_office_address|linebreaksbr }}</p>
-                    </div>
-
-                    <!-- Phone Numbers (Dedicated Row for Alignment) -->
-                    <div class="detail-item">
-                        <span class="phone-text">{{ company.india_phone_1 }}</span>
-                    </div>
-
-                    <div class="detail-item">
-                        <span class="phone-text">{{ company.us_phone }}</span>
+                    <div class="hf-office-item">
+                        <span class="hf-office-label">US Coordination</span>
+                        <p class="hf-office-address">{{ company.us_office_address|linebreaksbr }}</p>
+                        <span class="hf-office-phone">{{ company.us_phone }}</span>
                     </div>
                 </div>
 
-                <a href="https://www.google.com/maps/search/Propertism+Realty+Advisors+Saligramam+Chennai" target="_blank" rel="noopener noreferrer" class="contact-map-link">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                        <circle cx="12" cy="9" r="2.5"/>
-                    </svg>
-                    <span>View on Google Maps</span>
-                </a>
-
-                <!-- SCCB-020: Trust proof bullets -->
-                <ul class="contact-trust">
-                  <li>10+ years experience</li>
-                  <li>500+ properties managed</li>
-                  <li>Chennai-based execution team</li>
-                </ul>
+                <div class="hf-stats-grid">
+                    {% for stat in stats %}
+                    <div class="hf-stat-tile {% if forloop.counter|divisibleby:2 %}is-offwhite{% else %}is-gold{% endif %}">
+                        <strong class="hf-stat-number">{{ stat.value }}</strong>
+                        <small class="hf-stat-label">{{ stat.label }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
 
-            <div class="contact-form-column">
-                <form action="{% url 'contact' %}" method="POST" class="contact-form contact-form-dark">
-                    {% csrf_token %}
-                    <input type="text" name="name" placeholder="Full Name" required>
-                    <div class="form-row-dual">
-                        <input type="email" name="email" placeholder="Email Address" required>
-                        <input type="tel" name="phone" placeholder="Phone Number">
-                    </div>
+            <!-- RIGHT CARD: HIGH-FIDELITY FORM -->
+            <div class="hf-form-card">
+                <span class="hf-office-label" style="color: var(--brand-gold) !important;">REQUEST A CONSULTATION</span>
+                <h1>Start your property<br><em>oversight journey</em></h1>
+                <p class="hf-sub">Our specialists respond within 24 hours</p>
 
-                    <select name="service">
-                        <option value="">Select Service Needed</option>
-                        {% for value, label in contact_service_choices %}
-                        <option value="{{ value }}">{{ label }}</option>
-                        {% endfor %}
-                    </select>
+                <div id="hf-theForm">
+                    <form action="{% url 'contact' %}" method="POST" id="propertism-hf-form">
+                        {% csrf_token %}
+                        <div class="hf-field-group">
+                            <label class="hf-field-label">Full Name</label>
+                            <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required />
+                        </div>
 
-                    <textarea name="message" rows="5" placeholder="How can we help manage your property?" required></textarea>
+                        <div class="hf-field-group">
+                            <label class="hf-field-label">Email Address</label>
+                            <input class="hf-field-input" name="email" type="email" placeholder="email@example.com" required />
+                        </div>
 
-                    <button type="submit" class="btn-gold">Book Free NRI Consultation</button>
-                </form>
+                        <div class="hf-field-group">
+                            <label class="hf-field-label">Service Needed</label>
+                            <select class="hf-field-select" name="service" required>
+                                <option value="" disabled selected>Select Service Needed</option>
+                                {% for value, label in contact_service_choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="hf-field-group">
+                            <label class="hf-field-label">Message</label>
+                            <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required></textarea>
+                        </div>
+
+                        <button type="submit" class="hf-submit-btn">
+                            {{ company.contact_form_submit_text|default:"Send My Request" }}
+                        </button>
+                    </form>
+                </div>
+
+                <div id="hf-successMsg" {% if messages %}class="show"{% endif %}>
+                    <p class="hf-success-heading">Request Received</p>
+                    <p class="hf-success-body">We'll be in touch within 24 hours.</p>
+                </div>
             </div>
         </div>
     </div>

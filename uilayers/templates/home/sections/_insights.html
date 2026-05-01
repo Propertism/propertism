@@ -1,4 +1,7 @@
-<section id="blog-section" class="journal-preview-section">
+{% load static %}
+<!-- INSIGHTS SECTION V4 - AUTHORITY JOURNAL -->
+<link rel="stylesheet" href="{% static 'css/v4-insights.css' %}">
+<section id="blog-section" class="section-full">
     <div class="section-inner">
         <div class="section-header">
             {% if company.blog_section_eyebrow %}<span class="section-kicker"><svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg> {{ company.blog_section_eyebrow }}</span>{% else %}<span class="section-kicker"><svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg> Insights</span>{% endif %}

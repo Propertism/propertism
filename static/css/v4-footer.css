@@ -1,0 +1,233 @@
+/**
+ * PROPERTISM V4 - FOOTER MODULE
+ * High-Density Institutional Footer
+ */
+
+.site-footer {
+    background-color: #0F172A !important; /* Deep Institutional Navy */
+    color: #FFFFFF !important;
+    padding: var(--section-v-padding) 0 !important;
+    border-top: 1px solid #B89A4A !important; /* Bookend Gold */
+}
+
+.site-footer .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-bottom: 80px;
+}
+
+.footer-section h3 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--brand-gold) !important;
+    margin-bottom: 30px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.footer-tagline {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: #94A3B8 !important;
+    margin-bottom: 30px !important;
+}
+
+/* 1. SHARP SOCIALS */
+.footer-socials {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-social-link {
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 !important; /* Sharp corners */
+    transition: all 0.3s ease;
+}
+
+.footer-social-link:hover {
+    background: var(--brand-gold) !important;
+    color: #0F172A !important;
+    border-color: var(--brand-gold) !important;
+    transform: translateY(-3px);
+}
+
+/* 2. FOOTER LINKS */
+.footer-links {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer-links li {
+    margin-bottom: 12px !important;
+}
+
+.footer-links a {
+    color: #94A3B8 !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--brand-gold) !important;
+}
+
+/* 3. CLOCK STRIP (SEPARATOR GRID) */
+.footer-presence-full {
+    grid-column: span 4;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.world-clock-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.world-clock-cell {
+    background-color: #0F172A !important;
+    padding: 30px 20px !important;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.world-clock-label {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: var(--brand-gold) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.world-clock-time {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    font-family: var(--sans-main) !important;
+}
+
+.world-clock-date {
+    font-size: 0.7rem !important;
+    color: #64748B !important;
+    text-transform: uppercase;
+}
+
+.world-clock-cell--reach {
+    text-align: left !important;
+    padding-left: 30px !important;
+}
+
+.world-clock-cell--reach .world-clock-time {
+    font-size: 0.95rem !important;
+}
+
+.world-clock-cell--office-hours .world-clock-time--status {
+    font-size: 1.1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours,
+.site-footer #footer-digital-clock .world-clock-cell--office-hours {
+    background: #EDE6DA !important;
+    background-image: none !important;
+}
+
+.footer-availability-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #64748B;
+}
+
+/* 4. NEWSLETTER */
+.footer-newsletter-mini p {
+    color: #94A3B8 !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 24px !important;
+}
+
+.footer-newsletter-form-mini {
+    display: flex;
+    gap: 0; /* Merged design */
+}
+
+.footer-newsletter-form-mini input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 14px 20px !important;
+    color: #FFFFFF !important;
+    border-radius: 0 !important;
+}
+
+.footer-newsletter-form-mini button {
+    background: var(--brand-gold) !important;
+    color: #0F172A !important;
+    padding: 0 24px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.8rem !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+}
+
+/* 5. FOOTER BOTTOM */
+.footer-bottom {
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem !important;
+    color: #64748B !important;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--brand-gold) !important;
+}
+
+/* ============================================
+   TYPOGRAPHY PROFILE OVERRIDES
+   ============================================ */
+[data-typography="classic"] .site-footer h3 {
+    font-family: var(--serif-main) !important;
+}
+
+[data-typography="editorial"] .site-footer h3 {
+    font-family: var(--serif-main) !important;
+    letter-spacing: 0.05em !important;
+}

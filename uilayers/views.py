@@ -1,9 +1,9 @@
-﻿from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from content.models import CompanyInfo, Statistic, Service
+from content.models import CompanyInfo, Statistic, Service, CoreValue, HomepageCard
 from properties.models import Property
 
 
@@ -19,6 +19,8 @@ def home(request):
         'stats': stats,
         'services': services,
         'featured_properties': featured_properties,
+        'core_values': CoreValue.objects.filter(is_active=True)[:3],
+        'homepage_cards': HomepageCard.objects.filter(is_active=True)[:3],
     }
     
     return render(request, 'home-premium.html', context)

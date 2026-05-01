@@ -1,3 +1,7 @@
+{% load static %}
+<!-- MANAGEMENT SECTION V4 - ON-GROUND AUTHORITY -->
+<link rel="stylesheet" href="{% static 'css/v4-management.css' %}">
+
 <section id="management-section" class="management-preview-section">
     <div class="section-inner">
         <div class="section-header">
@@ -14,8 +18,7 @@
                 </div>
                 <h3>{{ member.name }}</h3>
                 <p>{{ member.bio|truncatewords:28 }}</p>
-                <a href="{% url 'team_member_detail' member.slug %}"
-                    style="display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; color: #B89A4A; text-decoration: none; font-weight: 500; font-size: 0.9375rem; transition: gap 0.2s;">
+                <a href="{% url 'team_member_detail' member.slug %}" class="management-link-sharp">
                     View Full Profile
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7" />
@@ -32,11 +35,10 @@
             {% endfor %}
         </div>
 
-        <!-- SEO Bridge CTA -->
-        <div class="section-cta-left" style="margin-top: 32px;">
-            <a href="{{ home_section_links.management }}" class="btn-view-all">
+        <div class="section-cta-left" style="margin-top: 60px;">
+            <a href="{{ home_section_links.management }}" class="btn-premium-solid" style="max-width: 300px;">
                 Meet Our Full Team
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
             </a>

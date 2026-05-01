@@ -1,0 +1,263 @@
+/**
+ * PROPERTISM V4 - PROPERTY DETAIL MODULE
+ * High-Density Asset Catalog Detail View
+ */
+
+.property-detail-section {
+    background-color: var(--bg-surface) !important;
+    padding: var(--section-v-padding) 0 !important;
+    color: var(--text-main) !important;
+    min-height: 80vh;
+}
+
+.property-detail-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+/* Back Link - Hardened */
+.property-back-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 30px !important;
+    color: var(--text-muted) !important;
+    text-decoration: none !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    transition: color 0.3s ease !important;
+}
+
+.property-back-link:hover {
+    color: var(--brand-gold) !important;
+}
+
+/* Gallery - Zero Radius */
+.property-gallery-v4 {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.gallery-main-v4 {
+    border: 1px solid var(--border-subtle) !important;
+    background: var(--bg-card) !important;
+    line-height: 0;
+}
+
+.gallery-main-v4 img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+.gallery-thumbs-v4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.gallery-thumbs-v4 img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid var(--border-subtle) !important;
+    cursor: pointer;
+    transition: all 0.3s ease !important;
+}
+
+.gallery-thumbs-v4 img:hover {
+    border-color: var(--brand-gold) !important;
+}
+
+/* Layout - Editorial Grid */
+.property-grid-v4 {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 60px;
+    align-items: start;
+}
+
+/* Header Info - Aligned Left */
+.property-header-v4 {
+    margin-bottom: 40px;
+}
+
+.property-kicker-rail {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.property-location-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-gold);
+    border: 1px solid var(--brand-gold);
+    padding: 4px 12px;
+}
+
+.property-status-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: 4px 12px;
+}
+
+.property-title-v4 {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(2.5rem, 5vw, 4rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.05 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 20px !important;
+    letter-spacing: -0.02em;
+}
+
+.property-price-v4 {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: var(--brand-gold) !important;
+    margin-bottom: 5px !important;
+}
+
+.property-price-words-v4 {
+    font-size: 1rem !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 0 !important;
+}
+
+/* Features Grid - Sharp */
+.features-grid-v4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 40px;
+}
+
+.feature-box-v4 {
+    background: var(--bg-card);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.feature-label-v4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.feature-value-v4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* Description */
+.property-desc-v4 h2 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.75rem !important;
+    margin-bottom: 20px !important;
+    color: var(--text-main) !important;
+}
+
+.property-desc-v4 p {
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: var(--text-muted) !important;
+}
+
+/* Sidebar Cards - Zero Radius */
+.sidebar-card-v4 {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    padding: 35px !important;
+    margin-bottom: 30px !important;
+}
+
+.sidebar-card-v4 h3 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 25px !important;
+    color: var(--text-main) !important;
+}
+
+/* Form Hardening */
+.v4-form-group {
+    margin-bottom: 20px;
+}
+
+.v4-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.v4-input {
+    width: 100%;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    padding: 15px !important;
+    color: var(--text-main) !important;
+    font-size: 1rem !important;
+}
+
+.v4-input:focus {
+    outline: none !important;
+    border-color: var(--brand-gold) !important;
+}
+
+/* Button - Sharp */
+.btn-v4-primary {
+    width: 100%;
+    background: var(--brand-gold) !important;
+    color: white !important;
+    border: none !important;
+    padding: 18px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    font-size: 0.85rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-v4-primary:hover {
+    background: var(--brand-navy) !important;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .property-grid-v4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-main-v4 img {
+        height: 400px;
+    }
+    .property-detail-section .section-inner {
+        padding: 0 20px !important;
+    }
+}

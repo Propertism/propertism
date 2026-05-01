@@ -1,0 +1,217 @@
+/**
+ * PROPERTISM V4 - TEAM MEMBER DETAIL MODULE
+ * High-Density Professional Profile View
+ */
+
+.team-detail-section {
+    background-color: var(--bg-surface) !important;
+    padding: var(--section-v-padding) 0 !important;
+    color: var(--text-main) !important;
+    min-height: 70vh;
+}
+
+.team-detail-section .section-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+}
+
+/* Breadcrumbs - Hardened */
+.v4-breadcrumbs {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+}
+
+.v4-breadcrumbs a {
+    color: var(--text-muted) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.v4-breadcrumbs a:hover {
+    color: var(--brand-gold) !important;
+}
+
+.v4-breadcrumbs .sep {
+    color: var(--border-subtle) !important;
+}
+
+.v4-breadcrumbs span.current {
+    color: var(--brand-gold) !important;
+}
+
+/* Profile Layout - Sharp & Dense */
+.profile-grid-v4 {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* Portrait - Architectural Style */
+.portrait-wrapper-v4 {
+    border: 1px solid var(--border-subtle) !important;
+    padding: 15px !important;
+    background: var(--bg-card) !important;
+    position: relative;
+}
+
+.portrait-wrapper-v4::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border: 1px solid var(--brand-gold);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.portrait-img-v4 {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+}
+
+.portrait-fallback-v4 {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--brand-navy);
+    color: var(--brand-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    font-family: var(--serif-main);
+}
+
+/* Profile Info */
+.profile-info-v4 .dept-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-subtle);
+}
+
+.profile-info-v4 h1 {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(2.5rem, 6vw, 4.5rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.05 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.02em;
+}
+
+.profile-info-v4 .role-text {
+    font-size: 1.5rem !important;
+    color: var(--brand-gold) !important;
+    font-weight: 500 !important;
+    margin-bottom: 30px !important;
+}
+
+/* Expertise Area */
+.expertise-v4 {
+    margin-top: 40px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 30px;
+}
+
+.expertise-v4 h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.skill-pills-v4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-pill-v4 {
+    padding: 6px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Bio Section */
+.bio-section-v4 {
+    margin-top: 60px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 50px;
+}
+
+.bio-section-v4 h2 {
+    font-family: var(--serif-main) !important;
+    font-size: 1.75rem !important;
+    margin-bottom: 30px !important;
+    color: var(--text-main) !important;
+}
+
+.bio-content-v4 {
+    font-size: 1.1rem !important;
+    line-height: 1.9 !important;
+    color: var(--text-muted) !important;
+    white-space: pre-line;
+}
+
+/* CTA - Back */
+.team-back-cta {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-v4-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 35px;
+    border: 1px solid var(--brand-gold);
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.btn-v4-outline:hover {
+    background: var(--brand-gold);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .profile-grid-v4 {
+        grid-template-columns: 1fr;
+    }
+    .portrait-wrapper-v4 {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .bio-section-v4 {
+        padding: 30px;
+    }
+}

@@ -1,0 +1,146 @@
+/**
+ * PROPERTISM V4 - TRUST STRIP MODULE
+ */
+
+#stats-section.trust-strip-section {
+    position: relative;
+    height: var(--trust-strip-height) !important;
+    background: var(--bg-surface) !important;
+    border-top: 1px solid #B89A4A !important; /* 100% Solid Gold */
+    border-bottom: 1px solid #B89A4A !important; /* 100% Solid Gold */
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: stretch !important; /* Force children to stretch */
+    overflow: hidden !important; /* Enforce strict boundary clipping */
+    z-index: 10;
+}
+
+#stats-section .container {
+    height: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.trust-strip-metrics.split-layout {
+    display: flex !important;
+    height: 100% !important; /* Force full height */
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+.metrics-group {
+    display: flex !important;
+    flex: 1 !important;
+    width: 50% !important;
+    height: 100% !important;
+    align-items: stretch !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.metrics-performance {
+    border-right: 1px solid #B89A4A !important; /* 100% Solid Gold */
+}
+
+.metric-item {
+    text-align: left !important;
+    position: relative !important;
+    padding: 0 40px !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    transition: background 0.3s ease;
+}
+
+/* Zebra Rhythm - High Visibility */
+.metrics-performance .metric-item:nth-child(odd),
+.metrics-brand .metric-item:nth-child(odd) { 
+    background-color: #FFFFFF !important; 
+}
+
+.metrics-performance .metric-item:nth-child(even),
+.metrics-brand .metric-item:nth-child(even) { 
+    background-color: #F8F5F0 !important; /* Refined Creamy Beige */
+}
+
+/* Vertical Separator */
+.metric-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: rgba(184, 154, 74, 0.4) !important; /* Bumped to 40% */
+    z-index: 10 !important;
+}
+
+.metrics-performance .metric-value {
+    font-size: clamp(24px, 2.5vw, 36px) !important;
+    line-height: 1 !important;
+}
+
+.metrics-performance .metric-label {
+    font-size: 11px !important;
+    letter-spacing: 0.15em !important;
+}
+
+.metric-value {
+    display: block !important;
+    font-family: var(--serif-main) !important;
+    font-size: clamp(16px, 1.5vw, 22px) !important; /* Base size for brand pillars */
+    font-weight: 600 !important;
+    color: var(--text-main) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+    text-transform: none !important;
+}
+
+.metric-label {
+    display: block !important;
+    font-family: var(--sans-main) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--brand-gold) !important;
+    white-space: normal !important;
+    max-width: none !important;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   Driven by [data-theme="dark"] on <html>
+   ============================================ */
+[data-theme="dark"] #stats-section.trust-strip-section {
+    background: var(--bg-surface) !important;
+    border-top: 1px solid rgba(196, 156, 82, 0.3) !important;
+    border-bottom: 1px solid rgba(196, 156, 82, 0.3) !important;
+}
+
+[data-theme="dark"] .metrics-performance .metric-item:nth-child(odd),
+[data-theme="dark"] .metrics-brand .metric-item:nth-child(odd) {
+    background-color: var(--bg-surface) !important;
+}
+
+[data-theme="dark"] .metrics-performance .metric-item:nth-child(even),
+[data-theme="dark"] .metrics-brand .metric-item:nth-child(even) {
+    background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .metric-value {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .metrics-performance {
+    border-right: 1px solid var(--border-subtle) !important;
+}

@@ -147,6 +147,7 @@ def home(request):
             ),
             "service_highlights": all_services[:4],
             "credibility_points": get_active_core_values(limit=4),
+            "core_values": get_active_core_values(limit=3),
             "expertise_highlights": expertise_areas,
             "featured_properties": _safe_list(
                 lambda: Property.objects.filter(status="available").prefetch_related("photos")[:6],
@@ -614,4 +615,3 @@ def custom_404(request, exception=None):
 def custom_500(request):
     """Custom 500 error handler."""
     return render(request, "500.html", status=500)
-
