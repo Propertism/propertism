@@ -5,16 +5,20 @@
 .hero-hybrid {
     position: relative;
     height: var(--hero-height) !important;
-    padding-top: var(--nav-height) !important;
     min-height: 0 !important;
     margin: 0 !important;
-    padding: 0 !important;
+    padding: calc(var(--nav-height) + 12px) 0 0 !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     background: var(--brand-navy);
+}
+
+#home-section.hero-hybrid,
+#home-section.hero-hybrid.hero-hybrid-has-image {
+    padding: calc(var(--nav-height) + 12px) 0 0 !important;
 }
 
 .hero-hybrid-media {
@@ -63,6 +67,7 @@
     margin: 0 auto;
     width: 100%;
     text-align: center;
+    transform: none;
 }
 
 .hero-title-premium {
@@ -78,9 +83,15 @@
 .hero-title-premium .highlight-gold {
     font-family: var(--serif-main) !important;
     font-style: italic !important;
-    color: var(--brand-gold) !important;
+    color: #E4C36A !important;
     font-weight: inherit !important;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(196, 156, 82, 0.3) !important;
+    white-space: nowrap;
+    filter: brightness(1.12) saturate(1.08);
+    text-shadow:
+        0 2px 10px rgba(255, 255, 255, 0.18),
+        0 0 22px rgba(228, 195, 106, 0.48),
+        0 0 44px rgba(228, 195, 106, 0.32),
+        0 12px 30px rgba(0, 0, 0, 0.45) !important;
 }
 
 .hero-title-divider {
@@ -161,16 +172,31 @@
 }
 
 /* Typography Profile Tuning */
+[data-typography="classic"] .hero-hybrid-content {
+    transform: translateY(clamp(2rem, 4vh, 3rem));
+}
+
 [data-typography="classic"] .hero-title-premium {
-    font-size: clamp(2.2rem, 4.6vw, 4rem) !important;
-    line-height: 1.02 !important;
+    font-size: clamp(2rem, 4.1vw, 3.55rem) !important;
+    line-height: 1.03 !important;
     letter-spacing: -0.035em !important;
-    max-width: 15.5ch;
+    max-width: 20ch;
     margin-left: auto !important;
     margin-right: auto !important;
     text-wrap: balance;
 }
 
 [data-typography="classic"] .hero-title-premium .highlight-gold {
-    margin-top: 0.35rem;
+    margin-top: 0.3rem;
+}
+
+@media (max-width: 900px) {
+    #home-section.hero-hybrid,
+    #home-section.hero-hybrid.hero-hybrid-has-image {
+        padding-top: calc(var(--nav-height) + 8px) !important;
+    }
+
+    [data-typography="classic"] .hero-hybrid-content {
+        transform: translateY(clamp(0.75rem, 2vh, 1.25rem));
+    }
 }

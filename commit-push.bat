@@ -45,6 +45,9 @@ if exist v4-darkmode-patch.css git restore --staged v4-darkmode-patch.css >nul 2
 if exist .agent git restore --staged .agent >nul 2>&1
 if exist .session-tracker git restore --staged .session-tracker >nul 2>&1
 if exist .tmp-test-media git restore --staged .tmp-test-media >nul 2>&1
+for %%F in (hero-*.png) do (
+    if exist "%%F" git restore --staged -- "%%F" >nul 2>&1
+)
 
 echo.
 echo Review staged changes:
