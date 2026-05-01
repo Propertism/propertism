@@ -6,7 +6,7 @@
 .site-footer {
     background-color: #0F172A !important; /* Deep Institutional Navy */
     color: #FFFFFF !important;
-    padding: var(--section-v-padding) 0 !important;
+    padding: 30px 0 20px 0 !important;
     border-top: 1px solid #B89A4A !important; /* Bookend Gold */
 }
 
@@ -18,27 +18,61 @@
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 60px;
-    margin-bottom: 80px;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) 1.5fr !important;
+    gap: 24px !important;
+    margin-bottom: 24px !important;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px !important;
+    border-left: 1px solid rgba(184, 154, 74, 0.3) !important; /* Subtle gold line */
+    transition: border-color 0.3s ease;
+}
+
+.footer-section:hover {
+    border-left-color: var(--brand-gold) !important;
+}
+
+.footer-presence-column {
+    grid-column: 1 / -1 !important;
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-left: none !important; /* Clocks don't get the vertical bar as they are a full-width row */
+    padding-left: 0 !important;
 }
 
 .footer-section h3 {
-    font-family: var(--serif-main) !important;
-    font-size: 1.25rem !important;
+    font-family: var(--sans-main) !important;
+    font-size: 0.75rem !important;
     font-weight: 700 !important;
     color: var(--brand-gold) !important;
-    margin-bottom: 30px !important;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    margin-bottom: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+}
+
+/* Allow brand name to wrap properly */
+.footer-brand h3 {
+    white-space: normal !important;
+    word-wrap: break-word !important;
 }
 
 .footer-tagline {
-    font-size: 1rem !important;
-    line-height: 1.6 !important;
-    color: #94A3B8 !important;
-    margin-bottom: 30px !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    color: #FFFFFF !important;
+    margin-bottom: 14px !important;
+    white-space: nowrap !important;
+}
+
+/* Override any conflicting styles from other CSS files */
+.site-footer .footer-tagline {
+    color: #FFFFFF !important;
+    white-space: nowrap !important;
 }
 
 /* 1. SHARP SOCIALS */
@@ -48,15 +82,15 @@
 }
 
 .footer-social-link {
-    width: 40px !important;
-    height: 40px !important;
+    width: 34px !important;
+    height: 34px !important;
     background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #FFFFFF !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    border-radius: 0 !important; /* Sharp corners */
+    border-radius: 0 !important;
     transition: all 0.3s ease;
 }
 
@@ -72,16 +106,24 @@
     list-style: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    display: block !important;
+    gap: 0 !important;
 }
 
 .footer-links li {
-    margin-bottom: 12px !important;
+    margin-bottom: 0 !important;
+    color: #FFFFFF !important;
 }
 
 .footer-links a {
-    color: #94A3B8 !important;
+    color: #FFFFFF !important;
     text-decoration: none !important;
-    font-size: 0.95rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
     transition: color 0.3s ease;
 }
 
@@ -89,109 +131,230 @@
     color: var(--brand-gold) !important;
 }
 
-/* 3. CLOCK STRIP (SEPARATOR GRID) */
-.footer-presence-full {
-    grid-column: span 4;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    background: rgba(255, 255, 255, 0.02) !important;
+/* Override any conflicting styles from other CSS files */
+.site-footer .footer-links li {
+    color: #FFFFFF !important;
+}
+
+.site-footer .footer-links a,
+.site-footer .footer-links a:visited {
+    color: #FFFFFF !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+.footer-services .footer-links a {
+    color: #FFFFFF !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+/* OFFICE ADDRESS STYLING */
+.footer-office-compact {
+    color: #FFFFFF !important;
+}
+
+.footer-office-address {
+    color: #FFFFFF !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+}
+
+.footer-office-city {
+    color: #FFFFFF !important;
+    font-size: 0.85rem !important;
+    margin-top: 2px !important;
+}
+
+.footer-office-phones {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.footer-phone-item {
+    color: #FFFFFF !important;
+    font-size: 0.85rem !important;
+    text-decoration: none !important;
+    font-weight: 400 !important;
+    transition: color 0.3s ease;
+}
+
+.footer-phone-item:hover {
+    color: var(--brand-gold) !important;
+}
+
+/* Override any conflicting styles from other CSS files */
+.site-footer .footer-office-address {
+    color: #FFFFFF !important;
+    font-weight: 400 !important;
+}
+
+.site-footer .footer-office-city {
+    color: var(--brand-gold) !important;
+}
+
+/* 3. CLOCK STRIP - NOW IN COLUMN 5 AS 2x3 GRID */
+.footer-presence-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .world-clock-strip {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1px !important;
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 12px !important;
+    background: transparent !important;
+    border: none !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 
-.world-clock-cell {
-    background-color: #0F172A !important;
-    padding: 30px 20px !important;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.site-footer .world-clock-cell {
+    background: transparent !important;
+    background-image: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    padding: 0 !important;
+    border: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding-right: 12px !important;
+    min-height: unset !important;
+    box-shadow: none !important;
 }
 
-.world-clock-label {
-    font-size: 0.65rem !important;
-    font-weight: 700 !important;
+.site-footer .world-clock-cell:last-child {
+    border-right: none !important;
+    padding-right: 0 !important;
+}
+
+.site-footer .world-clock-label::before,
+.site-footer .world-clock-label::after {
+    content: none !important;
+    display: none !important;
+}
+
+.site-footer .world-clock-label {
+    font-size: 0.55rem !important;
+    font-weight: 400 !important;
     color: var(--brand-gold) !important;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px !important;
 }
 
-.world-clock-time {
-    font-size: 1.25rem !important;
-    font-weight: 700 !important;
+.site-footer .world-clock-time {
+    font-size: 0.65rem !important;
+    font-weight: 400 !important;
     color: #FFFFFF !important;
     font-family: var(--sans-main) !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+    letter-spacing: normal !important;
+    white-space: nowrap !important;
 }
 
-.world-clock-date {
-    font-size: 0.7rem !important;
-    color: #64748B !important;
+.site-footer .world-clock-date {
+    font-size: 0.52rem !important;
+    color: #94A3B8 !important;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px !important;
+    display: block !important;
 }
 
-.world-clock-cell--reach {
-    text-align: left !important;
-    padding-left: 30px !important;
+
+
+.site-footer .world-clock-meridiem {
+    font-size: 0.75em !important;
+    margin-left: 0.4em !important;
+    font-weight: 400 !important;
+    color: #94A3B8 !important;
 }
 
-.world-clock-cell--reach .world-clock-time {
-    font-size: 0.95rem !important;
+.site-footer .world-clock-cell--reach,
+.site-footer .world-clock-cell--office-hours {
+    padding: 8px 6px !important;
 }
 
-.world-clock-cell--office-hours .world-clock-time--status {
-    font-size: 1.1rem !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.site-footer .world-clock-cell--reach .world-clock-time {
+    font-size: 0.7rem !important;
+    white-space: nowrap !important;
+    font-weight: 400 !important;
 }
 
-.site-footer .footer-clocks-wrapper .world-clock-cell--office-hours,
-.site-footer #footer-digital-clock .world-clock-cell--office-hours {
-    background: #EDE6DA !important;
-    background-image: none !important;
+.site-footer .world-clock-time--status {
+    font-size: 0.7rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    font-weight: 400 !important;
+}
+
+.site-footer .world-clock-cell--office-hours .world-clock-label {
+    color: var(--brand-gold) !important;
+    font-weight: 400 !important;
 }
 
 .footer-availability-dot {
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 4px;
     background: #64748B;
 }
 
 /* 4. NEWSLETTER */
 .footer-newsletter-mini p {
-    color: #94A3B8 !important;
-    font-size: 0.95rem !important;
-    margin-bottom: 24px !important;
+    color: #FFFFFF !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 12px !important;
+}
+
+/* Override any conflicting styles */
+.site-footer .footer-newsletter-mini p {
+    color: #FFFFFF !important;
+    margin-bottom: 6px !important;
 }
 
 .footer-newsletter-form-mini {
     display: flex;
+    flex-wrap: nowrap !important;
     gap: 0; /* Merged design */
 }
 
 .footer-newsletter-form-mini input {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    padding: 14px 20px !important;
+    padding: 8px 12px !important;
     color: #FFFFFF !important;
     border-radius: 0 !important;
+    font-size: 0.85rem !important;
 }
 
 .footer-newsletter-form-mini button {
     background: var(--brand-gold) !important;
     color: #0F172A !important;
-    padding: 0 24px !important;
+    padding: 0 18px !important;
     font-weight: 700 !important;
     text-transform: uppercase;
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
     border: none !important;
     border-radius: 0 !important;
     cursor: pointer;
@@ -199,7 +362,7 @@
 
 /* 5. FOOTER BOTTOM */
 .footer-bottom {
-    padding-top: 40px;
+    padding-top: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: space-between;
@@ -207,13 +370,20 @@
 }
 
 .footer-bottom p {
-    font-size: 0.85rem !important;
+    font-size: 0.75rem !important;
     color: #64748B !important;
 }
 
 .footer-bottom-links {
     display: flex;
-    gap: 24px;
+    gap: 16px;
+}
+
+.footer-bottom-links a {
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .footer-bottom-links a:hover {
@@ -237,6 +407,10 @@
         padding: 0 20px !important;
     }
 
+    .footer-tagline {
+        white-space: normal !important;
+    }
+
     .footer-content {
         grid-template-columns: 1fr;
         gap: 36px;
@@ -244,26 +418,32 @@
     }
 
     .world-clock-strip {
+        display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
     }
 
     .world-clock-cell {
         min-width: 0;
-        padding: 20px 14px !important;
+        padding: 18px 12px !important;
     }
 
     .world-clock-cell--reach,
     .world-clock-cell--office-hours {
         text-align: center !important;
-        padding-left: 14px !important;
+        padding: 18px 12px !important;
+    }
+
+    .world-clock-time--status {
+        justify-content: center !important;
     }
 
     .world-clock-time {
-        font-size: 1.05rem !important;
+        font-size: 0.9rem !important;
     }
 
     .world-clock-date {
-        font-size: 0.62rem !important;
+        font-size: 0.55rem !important;
     }
 
     .footer-bottom {

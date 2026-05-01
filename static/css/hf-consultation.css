@@ -405,9 +405,9 @@
 }
 
 .hf-office-phone {
-  font-size: 16px !important;
-  font-weight: 700 !important;
-  color: #0F172A !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  color: var(--brand-gold) !important;
   letter-spacing: 0.02em;
 }
 
