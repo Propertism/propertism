@@ -231,3 +231,49 @@
     font-family: var(--serif-main) !important;
     letter-spacing: 0.05em !important;
 }
+
+@media (max-width: 768px) {
+    .site-footer .section-inner {
+        padding: 0 20px !important;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-bottom: 48px;
+    }
+
+    .world-clock-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .world-clock-cell {
+        min-width: 0;
+        padding: 20px 14px !important;
+    }
+
+    .world-clock-cell--reach,
+    .world-clock-cell--office-hours {
+        text-align: center !important;
+        padding-left: 14px !important;
+    }
+
+    .world-clock-time {
+        font-size: 1.05rem !important;
+    }
+
+    .world-clock-date {
+        font-size: 0.62rem !important;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .footer-bottom-links {
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+}

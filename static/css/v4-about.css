@@ -349,3 +349,23 @@ html[data-theme="dark"] #about-section.about-section-premium {
 #about-section .about-mission-highlight p {
     font-family: var(--serif-main) !important;
 }
+
+@media (max-width: 768px) {
+    .proof-card .stats-grid-mini {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .proof-card .stat-box {
+        min-width: 0;
+        padding: 18px 10px;
+    }
+
+    .proof-card .stat-number {
+        font-size: 1.4rem !important;
+    }
+
+    .proof-card .stat-label {
+        font-size: 0.58rem !important;
+        letter-spacing: 0.08em;
+    }
+}

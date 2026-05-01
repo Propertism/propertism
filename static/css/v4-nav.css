@@ -157,4 +157,22 @@ html[data-theme="dark"] header#site-header.scrolled {
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .main-nav { display: none; }
+
+    .header-content {
+        padding: 0 16px;
+    }
+
+    .header-v4-tools {
+        gap: 6px;
+        margin-right: 8px;
+        padding-right: 8px;
+    }
+
+    .v4-tool-btn {
+        padding: 0 6px !important;
+    }
+
+    .logo-image {
+        max-height: 40px;
+    }
 }
