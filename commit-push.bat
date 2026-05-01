@@ -61,13 +61,8 @@ if %errorlevel%==0 (
     exit /b 1
 )
 
-set /p MSG=Commit message: 
-if "%MSG%"=="" (
-    echo.
-    echo Commit message is required. Aborting.
-    echo.
-    exit /b 1
-)
+set /p MSG=Commit message (default: "Stabilize Mobile V4 Interface: Padding normalization and stacking hardening"): 
+if "%MSG%"=="" set "MSG=Stabilize Mobile V4 Interface: Padding normalization and stacking hardening"
 
 git commit -m "%MSG%"
 if errorlevel 1 (

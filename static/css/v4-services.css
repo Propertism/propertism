@@ -179,3 +179,49 @@ html[data-theme="dark"] .insight-card {
     font-family: var(--serif-main) !important; /* Remaps to Playfair Display */
     letter-spacing: 0 !important;
 }
+
+/* ============================================
+   RESPONSIVENESS
+   ============================================ */
+@media (max-width: 1024px) {
+    #services-section .grid-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #services-section .section-inner {
+        padding: 0 24px !important;
+    }
+
+    #services-section .section-header {
+        margin-bottom: 40px !important;
+    }
+
+    #services-section .section-title {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        max-width: 15ch !important;
+    }
+
+    #services-section .grid-3 {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    .hf-service-card {
+        padding: 36px 24px !important;
+    }
+
+    .insight-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .insight-description {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 24px !important;
+    }
+}

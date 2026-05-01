@@ -225,8 +225,23 @@
 }
 
 @media (max-width: 768px) {
+    #properties-section .section-inner {
+        padding: 0 24px !important;
+    }
+
+    #properties-section .section-title {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        max-width: 15ch !important;
+    }
+
     .property-grid-hybrid {
         grid-template-columns: 1fr;
+    }
+
+    .property-details-hybrid {
+        padding: 24px !important;
     }
 }
 

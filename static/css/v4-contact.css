@@ -585,8 +585,12 @@ html[data-theme="dark"] body #contact-section .section-subtitle {
 }
 
 @media (max-width: 768px) {
+    #contact-section .section-inner {
+        padding: 0 24px !important;
+    }
+
     .hf-stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 
     .hf-stat-tile {
@@ -605,6 +609,7 @@ html[data-theme="dark"] body #contact-section .section-subtitle {
 
     .hf-form-card {
         padding: 36px 24px !important;
+        margin: 0 !important; /* Neutralize legacy external margins */
     }
 
     .hf-form-card h1 {
@@ -617,8 +622,40 @@ html[data-theme="dark"] body #contact-section .section-subtitle {
         margin-top: 0.15rem;
     }
 
-    #contact-section .hf-form-card .hf-sub {
+    .hf-form-card .hf-sub {
         font-size: 1rem !important;
         margin-bottom: 28px !important;
+    }
+
+    .contact-split-container {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+
+    .hf-office-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .hf-office-grid::before {
+        display: none !important;
+    }
+
+    .hf-field-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hf-field-row-submit {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .hf-field-row-submit .hf-submit-btn {
+        margin-top: 0 !important;
+        height: 56px !important;
+    }
+
+    .hf-form-card h1 {
+        white-space: normal !important;
     }
 }

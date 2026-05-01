@@ -146,8 +146,23 @@
 }
 
 @media (max-width: 768px) {
+    #management-section .section-inner {
+        padding: 0 24px !important;
+    }
+
+    #management-section .section-title {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        max-width: 15ch !important;
+    }
+
     #management-section .grid-3 {
         grid-template-columns: 1fr;
+    }
+
+    .management-preview-card {
+        padding: 36px 24px !important;
     }
 }
 
