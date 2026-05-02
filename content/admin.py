@@ -104,7 +104,11 @@ class CompanyInfoAdmin(admin.ModelAdmin):
                       'us_office_zipcode', 'us_phone')
         }),
         ('Contact & Social', {
-            'fields': ('email', 'facebook_url', 'twitter_url', 'linkedin_url', 'business_hours')
+            'fields': (
+                'email', 'business_hours',
+                'facebook_url', 'twitter_url', 'linkedin_url', 
+                'instagram_url', 'whatsapp_url', 'youtube_url'
+            )
         }),
         ('Footer & Chat', {
             'fields': (

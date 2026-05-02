@@ -42,8 +42,6 @@ echo.
 echo Removing local-only artifacts from staging...
 if exist .playwright-mcp git restore --staged .playwright-mcp >nul 2>&1
 if exist v4-darkmode-patch.css git restore --staged v4-darkmode-patch.css >nul 2>&1
-if exist .agent git restore --staged .agent >nul 2>&1
-if exist .session-tracker git restore --staged .session-tracker >nul 2>&1
 if exist .tmp-test-media git restore --staged .tmp-test-media >nul 2>&1
 for %%F in (hero-*.png) do (
     if exist "%%F" git restore --staged -- "%%F" >nul 2>&1
@@ -61,8 +59,8 @@ if %errorlevel%==0 (
     exit /b 1
 )
 
-set /p MSG=Commit message (default: "Stabilize Mobile V4 Interface: Padding normalization and stacking hardening"): 
-if "%MSG%"=="" set "MSG=Stabilize Mobile V4 Interface: Padding normalization and stacking hardening"
+set /p MSG=Commit message (default: "Social Architecture Unification: Dynamic model-driven icons for Contact Section"): 
+if "%MSG%"=="" set "MSG=Social Architecture Unification: Dynamic model-driven icons for Contact Section"
 
 git commit -m "%MSG%"
 if errorlevel 1 (

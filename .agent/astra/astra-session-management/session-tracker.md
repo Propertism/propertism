@@ -4,8 +4,8 @@ Issued By: Astra (Platform Owner-Propertism)
 Reviewed By: Viji (Product Owner & Final Decision Authority)
 Created By: Astra
 Created On: 2026-04-28 20:04:00
-Last Updated By: Codex
-Last Updated On: 2026-04-30 07:44:00
+Last Updated By: Astra
+Last Updated On: 2026-05-01 20:40:00
 Searchtag:ASTRASESSIONTRACKER
 -->
 
@@ -16,30 +16,40 @@ Searchtag:ASTRASESSIONTRACKER
 
 ---
 
-## CURRENT SESSION (April 30, 2026)
-**Session ID**: `CODEX-SESSION-3004`
-**Focus**: Homepage UI Polish Checkpoint Before Push / Prod Verification
+## CURRENT SESSION (May 02, 2026)
+**Session ID**: `CODEX-SESSION-0205`
+**Focus**: Social Architecture Unification (Contact Section Only)
 
-### Today's Achievements:
-- [x] Raised and iconized homepage section kickers for Services, Management, Reviews, Featured Properties, Insights, About, and Contact.
-- [x] Tuned kicker spacing for Management and Insights.
-- [x] Moved the Featured Properties CTA upward for better section rhythm.
-- [x] Forced About and Contact long titles into a desktop single-line / mobile wrapped split.
-- [x] Refined the lower footer presence band (world clocks, Our Reach, Office Hours).
-- [x] Generated `codex-session-3004.md` for push / prod-check handoff.
-- [ ] Pending user git push and production smoke test.
-WRITE / HOLD
+- [x] **Model Hardening**: Added `instagram_url`, `whatsapp_url`, and `youtube_url` to `CompanyInfo` model.
+- [x] **Admin Unification**: Updated `CompanyInfoAdmin` to group all 6 social fields in the "Contact & Social" fieldset.
+- [x] **Contact UI Dynamicization**: Updated `_contact.html` to be fully model-driven for social icons (WhatsApp, Facebook, X, Instagram, LinkedIn, YouTube).
+- [x] **Style Hardening**: Added brand colors and dark mode support for new social icons in `v4-contact.css`.
+- [x] **Boundary Reversion**: Restored `_footer.html` to its original state to respect "Contact-only" session scope.
+- [x] Generated `commit-details-20260502-1256.md`.
+- [ ] Pending user git push and production check.
+- [x] WRITE / HOLD
 
 ---
 
-## LAST SESSION (April 28, 2026)
-**Session ID**: `ASTRA-PROPERTISM-INIT-2804`
-**Focus**: Astra session contract + governance initialization
+## PREVIOUS SESSION (May 01, 2026)
+**Session ID**: `CODEX-SESSION-0105`
+**Focus**: Footer Dashboard Re-Architecture & Contact UI Hardening
+
+- [x] **Mobile V4 Stabilization**: Normalized global section padding to 24px and hardened editorial stacking for About, Contact, and Footer modules.
+- [x] **Last Update**: SESSION 28 - MOBILE V4 STABILIZATION.
+- [x] Generated `commit-details-20260501-2220.md`.
+
+---
+
+## LAST SESSION (April 30, 2026)
+**Session ID**: `CODEX-SESSION-3004`
+**Focus**: Homepage UI Polish Checkpoint Before Push / Prod Verification
 
 ### Key Achievements:
-- **Session Infrastructure**: Initialized `.agent/` and workflow structure.
-- **Governance**: Ported `start` / `end` workflows and locked Propertism scope.
-- **Tracking**: Unified Astra session management into repository trackers.
+- [x] Redesigned About Section with "Sharp & Dense" system (left-aligned, zero-radius, mission blocks).
+- [x] Redesigned Contact Section with 3-column Command Center and Midnight Navy form card.
+- [x] Refined footer presence band (world clocks, Reach, Office Hours).
+- [x] Raised and iconized homepage section kickers.
 
 ---
 
@@ -51,7 +61,7 @@ WRITE / HOLD
 
 ### Phase 2: Closure Decision
 - If production is clean, execute session wrap-up only.
-- If production shows regressions, resume from `codex-session-3004.md`.
+- If production shows regressions, resume from `codex-session-0105.md`.
 
 ---
-*Updated by Codex | 2026-04-30 07:44 IST*
+*Updated by Astra | 2026-05-01 20:40 IST*

@@ -254,6 +254,14 @@
     color: #0A66C2;
 }
 
+.hf-icon-link[title="Twitter/X"] {
+    color: #000000;
+}
+
+.hf-icon-link[title="YouTube"] {
+    color: #FF0000;
+}
+
 .hf-icon-link:hover {
     background: rgba(196, 156, 82, 0.12);
     border-color: var(--brand-gold);
@@ -546,6 +554,14 @@ html[data-theme="dark"] .hf-icon-link[title="Instagram"] {
 
 html[data-theme="dark"] .hf-icon-link[title="LinkedIn"] {
     color: #0A66C2;
+}
+
+html[data-theme="dark"] .hf-icon-link[title="Twitter/X"] {
+    color: #FFFFFF;
+}
+
+html[data-theme="dark"] .hf-icon-link[title="YouTube"] {
+    color: #FF0000;
 }
 
 html[data-theme="dark"] .hf-icon-link:hover {

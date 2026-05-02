@@ -156,6 +156,9 @@ class CompanyInfo(models.Model):
     facebook_url = models.URLField(blank=True, default="https://www.facebook.com/PropertismIndia")
     twitter_url = models.URLField(blank=True, default="https://x.com/PropertismIndia")
     linkedin_url = models.URLField(blank=True, default="https://linkedin.com/company/propertism")
+    instagram_url = models.URLField(blank=True, default="https://www.instagram.com/propertism")
+    whatsapp_url = models.URLField(blank=True, default="https://wa.me/918667020798", help_text="WhatsApp link (e.g., https://wa.me/number)")
+    youtube_url = models.URLField(blank=True, default="https://www.youtube.com/@propertism", help_text="Optional YouTube channel link")
     
     # Business Hours
     business_hours = models.CharField(max_length=200, default="Monday - Saturday: 9:00 AM - 6:00 PM IST")

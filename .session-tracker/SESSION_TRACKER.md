@@ -4,9 +4,9 @@
 
 ## File Metadata
 
-**Last Updated By**: Codex
-**Last Updated On**: April 30, 2026
-**Last Update**: SESSION 25 - Homepage polish checkpoint. Section kicker iconography/sizing, About + Contact single-line desktop titles with mobile fallback, Featured Properties CTA spacing, and footer presence-band beautification. Awaiting push and production verification.
+**Last Updated By**: Antigravity (Astra)
+**Last Updated On**: May 02, 2026 (Midday)
+**Last Update**: SESSION 29 - SOCIAL ARCHITECTURE UNIFICATION. Astra unified the social media architecture for Propertism by transitioning from hardcoded links to a dynamic, model-driven system surgically restricted to the Contact Section. Added Instagram, WhatsApp, and YouTube fields to the CompanyInfo model and updated the Contact UI to be fully dynamic.
 
 ---
 
@@ -104,6 +104,7 @@ Local URLs:
 ## Deploy to Production
 
 ```powershell
+# Run from repo root
 git add .
 git commit -m "your message"
 git push origin main
@@ -131,7 +132,7 @@ Deploy runs automatically:
 
 1. Set EB env vars: `ADMIN_USERNAME=admin`, `ADMIN_EMAIL=admin@propertism.in`, `ADMIN_PASSWORD=<new>`
 2. Run `eb deploy propertism-prod-2026`
-3. Confirm log shows `updated / admin`
+3. Confirm log shows `updated / admin` in logs
 4. Remove the three ADMIN_* env vars from EB immediately after
 
 ---
@@ -250,6 +251,11 @@ Deploy runs automatically:
 | 22 | Apr 11 | **GitHub Actions CI/CD. Every push to main auto-deploys to propertism-prod-2026. IAM user: github-actions-propertism.** | ✅ |
 | 23 | Apr 16 | Hero + property images fix. media/ in bundle. Nginx location blocks. | ✅ |
 | 24 | Apr 26 | **UI Stabilization & Messaging Refresh. Viewport normalization (100vh fit), centered section headers with 2-line wrap tuning, and footer contact block hardening. Diagnosed media persistence for S3 migration.** | ✅ |
+| 25 | Apr 30 | **Homepage polish checkpoint. Section kicker iconography/sizing, About + Contact single-line desktop titles with mobile fallback.** | ✅ |
+| 26 | Apr 30 | **PROPERTISM V4 MIGRATION. Full-platform refactor into modular, sharp-grid editorial system.** | ✅ |
+| 27 | May 01 | **Hardening Section Typography Unification. Strict V4 typography standards across Management, Reviews, and Insights.** | ✅ |
+| 28 | May 01 | **MOBILE V4 STABILIZATION. Normalized global section padding to 24px and hardened editorial stacking.** | ✅ |
+| 29 | May 02 | **SOCIAL ARCHITECTURE UNIFICATION. Unified social media architecture via dynamic, model-driven system for Contact Section.** | ✅ |
 
 ---
 
