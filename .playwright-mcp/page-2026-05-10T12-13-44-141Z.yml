@@ -1,0 +1,255 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "Propertism" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Propertism" [ref=e6]
+      - navigation [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Services" [ref=e9] [cursor=pointer]:
+          - /url: /#services-section
+        - link "Properties" [ref=e10] [cursor=pointer]:
+          - /url: /#properties-section
+        - link "Management" [ref=e11] [cursor=pointer]:
+          - /url: /#management-section
+        - link "Reviews" [ref=e12] [cursor=pointer]:
+          - /url: /#reviews-section
+        - link "Insights" [ref=e13] [cursor=pointer]:
+          - /url: /#blog-section
+        - link "About" [ref=e14] [cursor=pointer]:
+          - /url: /#about-section
+        - link "NRI ASSIST Register Free →" [ref=e15] [cursor=pointer]:
+          - /url: "#nri-auth"
+          - generic [ref=e16]: NRI ASSIST
+          - generic [ref=e17]: Register Free →
+        - link "Contact" [ref=e18] [cursor=pointer]:
+          - /url: /#contact-section
+      - generic [ref=e20]:
+        - button "Toggle Theme" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "m" [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+          - generic: m
+  - main [ref=e31]:
+    - generic [ref=e33]:
+      - generic [ref=e34]:
+        - img "Propertism" [ref=e36]
+        - paragraph [ref=e37]: Propertism Advisory
+        - heading "Private NRI Assistance" [level=1] [ref=e38]
+      - generic [ref=e40]:
+        - paragraph [ref=e41]: Secure Sign-In
+        - heading "You're signing in with Google" [level=2] [ref=e42]
+        - paragraph [ref=e43]: We'll send you through Google to confirm your identity and bring you back into your Propertism advisory flow.
+        - generic [ref=e44]:
+          - img [ref=e46]
+          - generic [ref=e51]:
+            - paragraph [ref=e52]: Google
+            - paragraph [ref=e53]: Your Google account will be confirmed on the next step.
+        - generic [ref=e54]:
+          - button "Continue" [ref=e56] [cursor=pointer]
+          - link "Back" [ref=e57] [cursor=pointer]:
+            - /url: /accounts/login/
+            - img [ref=e58]
+            - text: Back
+    - generic [ref=e61]:
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - heading "Propertism Realty Advisors LLP" [level=3] [ref=e64]
+          - generic [ref=e65]:
+            - link "Facebook" [ref=e66] [cursor=pointer]:
+              - /url: https://www.facebook.com/PropertismIndia
+              - img [ref=e67]
+            - link "Twitter" [ref=e69] [cursor=pointer]:
+              - /url: https://x.com/PropertismIndia
+              - img [ref=e70]
+            - link "LinkedIn" [ref=e72] [cursor=pointer]:
+              - /url: https://linkedin.com/company/propertism
+              - img [ref=e73]
+        - generic [ref=e75]:
+          - heading "Service Coverage" [level=3] [ref=e76]
+          - list [ref=e77]:
+            - listitem [ref=e78]:
+              - link "Real Estate Buy & Sell" [ref=e79] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e80]:
+              - link "Rental Income Management" [ref=e81] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e82]:
+              - link "Land / Plot Services" [ref=e83] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e84]:
+              - link "View Properties" [ref=e85] [cursor=pointer]:
+                - /url: /properties/
+            - listitem [ref=e86]:
+              - link "NRI Assist" [ref=e87] [cursor=pointer]:
+                - /url: /nri-assist/
+        - generic [ref=e88]:
+          - heading "Chennai Headquarters" [level=3] [ref=e89]
+          - generic [ref=e90]:
+            - paragraph [ref=e91]:
+              - text: No. 30, 3rd Floor
+              - text: SSR Pankajam Towers
+              - text: Arunachalam Road, Saligramam
+            - paragraph [ref=e92]: Chennai, Tamil Nadu – 600093
+            - generic [ref=e93]:
+              - link "+91 86670 20798" [ref=e94] [cursor=pointer]:
+                - /url: tel:+918667020798
+              - link "+91 98412 01930" [ref=e95] [cursor=pointer]:
+                - /url: tel:+919841201930
+        - generic [ref=e96]:
+          - heading "Advisory Insights" [level=3] [ref=e97]
+          - paragraph [ref=e98]: Curated property management updates for owners abroad.
+          - generic [ref=e99]:
+            - textbox "Email Address" [ref=e100]
+            - button "JOIN" [ref=e101] [cursor=pointer]
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - generic [ref=e105]: US (ET)
+            - strong [ref=e106]:
+              - generic [ref=e107]: "8"
+              - generic [ref=e108]: ":"
+              - generic [ref=e109]: "13"
+              - generic [ref=e110]: AM
+            - generic [ref=e111]: May 10
+          - generic [ref=e112]:
+            - generic [ref=e113]: UK (GMT)
+            - strong [ref=e114]:
+              - generic [ref=e115]: "1"
+              - generic [ref=e116]: ":"
+              - generic [ref=e117]: "13"
+              - generic [ref=e118]: PM
+            - generic [ref=e119]: May 10
+          - generic [ref=e120]:
+            - generic [ref=e121]: India (IST)
+            - strong [ref=e122]:
+              - generic [ref=e123]: "5"
+              - generic [ref=e124]: ":"
+              - generic [ref=e125]: "43"
+              - generic [ref=e126]: PM
+            - generic [ref=e127]: May 10
+          - generic [ref=e128]:
+            - generic [ref=e129]: Gulf (GST)
+            - strong [ref=e130]:
+              - generic [ref=e131]: "4"
+              - generic [ref=e132]: ":"
+              - generic [ref=e133]: "13"
+              - generic [ref=e134]: PM
+            - generic [ref=e135]: May 10
+          - generic [ref=e136]:
+            - generic [ref=e137]: REACH
+            - strong [ref=e138]: Global Network
+            - generic [ref=e139]: US, UK, UAE, India
+          - generic [ref=e140]:
+            - generic [ref=e141]: OFFICE HOURS
+            - strong [ref=e142]:
+              - generic [ref=e144]: Open Now
+            - generic [ref=e145]: 07:00 AM - 11:00 PM IST
+      - generic [ref=e146]:
+        - paragraph [ref=e147]: © 2026 Propertism Realty Advisors LLP. Institutional Oversight.
+        - generic [ref=e148]:
+          - link "About" [ref=e149] [cursor=pointer]:
+            - /url: /about/
+          - link "Blog" [ref=e150] [cursor=pointer]:
+            - /url: /#blog-section
+          - link "Contact" [ref=e151] [cursor=pointer]:
+            - /url: /#contact-section
+          - link "Management" [ref=e152] [cursor=pointer]:
+            - /url: /management/
+          - link "NRI Assist" [ref=e153] [cursor=pointer]:
+            - /url: /nri-assist/
+  - dialog "Authentication Drawer" [ref=e154]:
+    - generic [ref=e155]:
+      - button "Close panel" [ref=e157] [cursor=pointer]: ×
+      - img "Propertism" [ref=e159]
+      - generic [ref=e160]:
+        - paragraph [ref=e161]: Propertism Advisory
+        - heading "Private NRI Assistance" [level=2] [ref=e162]
+    - generic [ref=e165]:
+      - generic [ref=e167]:
+        - heading "Secure access to your property advisor" [level=3] [ref=e168]
+        - paragraph [ref=e169]: Private, secure guidance for NRIs managing property remotely.
+        - list [ref=e170]:
+          - listitem [ref=e171]:
+            - img [ref=e172]
+            - generic [ref=e175]: Property Care
+          - listitem [ref=e176]:
+            - img [ref=e177]
+            - generic [ref=e180]: Sale Assistance
+          - listitem [ref=e181]:
+            - img [ref=e182]
+            - generic [ref=e185]: Acquisition Support
+          - listitem [ref=e186]:
+            - img [ref=e187]
+            - generic [ref=e190]: Priority Coordination
+          - listitem [ref=e191]:
+            - img [ref=e192]
+            - generic [ref=e195]: Legal & Compliance
+          - listitem [ref=e196]:
+            - img [ref=e197]
+            - generic [ref=e200]: Portfolio Strategy
+        - link "Continue with Google" [ref=e201] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - img [ref=e202]
+          - text: Continue with Google
+        - generic [ref=e208]: Or Continue With Email
+        - button "Sign In with Email" [ref=e209] [cursor=pointer]
+        - generic [ref=e210]:
+          - paragraph [ref=e211]:
+            - text: By continuing, you agree to Propertism's
+            - link "Terms of Service" [ref=e212] [cursor=pointer]:
+              - /url: /terms/
+            - text: and
+            - link "Privacy Policy" [ref=e213] [cursor=pointer]:
+              - /url: /privacy/
+            - text: .
+          - paragraph [ref=e214]: Private | Secure | Concierge Assistance
+          - generic [ref=e215]:
+            - generic [ref=e216]:
+              - img [ref=e217]
+              - text: Encrypted
+            - generic [ref=e219]:
+              - img [ref=e220]
+              - text: Secured
+      - generic [ref=e223]:
+        - heading "Welcome Back" [level=1] [ref=e224]
+        - paragraph [ref=e225]: Manage your NRI property portfolio.
+        - generic [ref=e226]:
+          - generic [ref=e227] [cursor=pointer]: Sign In
+          - generic [ref=e228] [cursor=pointer]: Create Account
+        - link "Sign in with Google" [ref=e229] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - img [ref=e230]
+          - text: Sign in with Google
+        - generic [ref=e236]: Or Continue With Email
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e239]: Email Address
+            - textbox "name@email.com" [ref=e240]
+          - generic [ref=e241]:
+            - generic [ref=e242]: Password
+            - textbox "********" [ref=e243]
+          - button "Sign In" [ref=e244] [cursor=pointer]
+      - generic [ref=e246]:
+        - heading "Join Propertism" [level=1] [ref=e247]
+        - paragraph [ref=e248]: Set up your NRI property advisory account.
+        - generic [ref=e249]:
+          - generic [ref=e250] [cursor=pointer]: Sign In
+          - generic [ref=e251] [cursor=pointer]: Create Account
+        - link "Continue with Google" [ref=e252] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - img [ref=e253]
+          - text: Continue with Google
+        - generic [ref=e259]: Or Continue With Email
+        - generic [ref=e260]:
+          - generic [ref=e261]:
+            - generic [ref=e262]: Email Address
+            - textbox "name@email.com" [ref=e263]
+          - generic [ref=e264]:
+            - generic [ref=e265]: Password
+            - textbox "********" [ref=e266]
+            - paragraph [ref=e267]: Min 8 characters
+          - generic [ref=e268]:
+            - generic [ref=e269]: Confirm Password
+            - textbox "********" [ref=e270]
+          - button "Create Account" [ref=e271] [cursor=pointer]
