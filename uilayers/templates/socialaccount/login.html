@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}
+{% if process == "connect" %}Connect {{ provider.name }} - Propertism{% else %}Continue with {{ provider.name }} - Propertism{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.social-auth-page {
+    min-height: 100vh;
+    background: var(--bg-secondary, #F8F5F0);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: calc(var(--nav-height, 92px) + 0.85rem) 1.25rem 3rem;
+}
+.social-auth-card {
+    width: 100%;
+    max-width: 460px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #ffffff;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+}
+.social-auth-banner {
+    background: radial-gradient(circle at top right, #1e293b, #0b0f1a);
+    padding: 1.5rem 1.75rem;
+    color: #ffffff;
+}
+.social-auth-banner-logo img {
+    height: 22px;
+    width: auto;
+    display: block;
+    margin-bottom: 0.9rem;
+}
+.social-auth-banner-label {
+    margin: 0 0 0.25rem;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.66);
+}
+.social-auth-banner-title {
+    margin: 0;
+    font-family: var(--serif-main, "Cormorant Garamond", serif);
+    font-size: 1.65rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+.social-auth-body {
+    padding: 1.85rem 1.75rem 1.75rem;
+}
+.social-auth-eyebrow {
+    margin: 0 0 0.55rem;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-gold, #C49C52);
+}
+.social-auth-title {
+    margin: 0 0 0.45rem;
+    font-family: var(--serif-main, "Cormorant Garamond", serif);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    font-weight: 600;
+    color: var(--text-main, #0F172A);
+}
+.social-auth-copy {
+    margin: 0 0 1.45rem;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-muted, #64748B);
+}
+.social-auth-provider {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.95rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #f8fafc;
+}
+.social-auth-provider-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+.social-auth-provider-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+.social-auth-provider-initial {
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main, #0F172A);
+}
+.social-auth-provider-name {
+    margin: 0 0 0.2rem;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main, #0F172A);
+}
+.social-auth-provider-email,
+.social-auth-provider-note {
+    margin: 0;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.82rem;
+    color: var(--text-muted, #64748B);
+}
+.social-auth-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+.social-auth-submit {
+    width: 100%;
+    padding: 0.95rem 1.25rem;
+    border: none;
+    background: #0b0f1a;
+    color: #ffffff;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.social-auth-submit:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+}
+.social-auth-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-family: var(--sans-main, "Jost", sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted, #64748B);
+    text-decoration: none;
+}
+.social-auth-back:hover {
+    color: var(--text-main, #0F172A);
+}
+.social-auth-back svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .social-auth-page {
+        padding: calc(var(--nav-height, 92px) + 0.5rem) 1rem 2rem;
+    }
+
+    .social-auth-banner,
+    .social-auth-body {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
+
+    .social-auth-title {
+        font-size: 1.55rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="social-auth-page">
+    <div class="social-auth-card">
+        <div class="social-auth-banner">
+            <div class="social-auth-banner-logo">
+                <img src="{% static 'images/propertism-logo-white-tm.png' %}" alt="Propertism">
+            </div>
+            <p class="social-auth-banner-label">Propertism Advisory</p>
+            <h1 class="social-auth-banner-title">Private NRI Assistance</h1>
+        </div>
+
+        <div class="social-auth-body">
+            <p class="social-auth-eyebrow">Secure Sign-In</p>
+            {% if process == "connect" %}
+            <h2 class="social-auth-title">You're connecting {{ provider.name }}</h2>
+            <p class="social-auth-copy">Confirm this account to link {{ provider.name }} to your Propertism profile for faster, secure access.</p>
+            {% else %}
+            <h2 class="social-auth-title">You're signing in with {{ provider.name }}</h2>
+            <p class="social-auth-copy">We'll send you through {{ provider.name }} to confirm your identity and bring you back into your Propertism advisory flow.</p>
+            {% endif %}
+
+            <div class="social-auth-provider">
+                <div class="social-auth-provider-icon" aria-hidden="true">
+                    {% if provider.id == "google" %}
+                    <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                    </svg>
+                    {% else %}
+                    <span class="social-auth-provider-initial">{{ provider.name|first|upper }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <p class="social-auth-provider-name">{{ provider.name }}</p>
+                    {% if sociallogin.user.email %}
+                    <p class="social-auth-provider-email">{{ sociallogin.user.email }}</p>
+                    {% elif sociallogin.account.extra_data.email %}
+                    <p class="social-auth-provider-email">{{ sociallogin.account.extra_data.email }}</p>
+                    {% else %}
+                    <p class="social-auth-provider-note">Your {{ provider.name }} account will be confirmed on the next step.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="social-auth-actions">
+                <form method="post" action="{{ request.get_full_path }}">
+                    {% csrf_token %}
+                    <button type="submit" class="social-auth-submit">Continue</button>
+                </form>
+
+                {% if process == "connect" %}
+                <a
+                    href="{% url 'socialaccount_connections' %}"
+                    class="social-auth-back"
+                    onclick="if (window.history.length > 1) { window.history.back(); return false; }"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back
+                </a>
+                {% else %}
+                <a
+                    href="{% url 'account_login' %}"
+                    class="social-auth-back"
+                    onclick="if (window.history.length > 1) { window.history.back(); return false; }"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

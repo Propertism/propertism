@@ -1,4 +1,4 @@
-{% load static %}
+{% load static socialaccount %}
 <header class="site-header" id="site-header">
     <div class="container">
         <div class="header-content">
@@ -19,9 +19,15 @@
                 <a href="/#blog-section">Insights</a>
                 <a href="/#about-section">About</a>
                 {% if user.is_authenticated %}
-                <a href="/nri-assist/">NRI Assist</a>
+                <a href="/dashboard/" class="nri-assist-cta">
+                    <span class="nri-assist-label">NRI ASSIST</span>
+                    <span class="nri-assist-sub">My Dashboard &rarr;</span>
+                </a>
                 {% else %}
-                <a href="#nri-auth" class="nri-assist-cta" data-open-auth-drawer>NRI Assist</a>
+                <a href="#nri-auth" class="nri-assist-cta" data-open-auth-drawer id="nriAssistBtn">
+                    <span class="nri-assist-label">NRI ASSIST</span>
+                    <span class="nri-assist-sub">Register Free &rarr;</span>
+                </a>
                 {% endif %}
                 <a href="/#contact-section" class="nav-cta">Contact</a>
             </nav>
@@ -37,6 +43,93 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
                         <span id="typoLabel" class="v4-sub-label">m</span>
                     </button>
+
+                    {% if user.is_authenticated %}
+                    {% get_social_accounts user as social_accounts %}
+                    <div class="nav-profile-wrapper" id="navProfileWrapper">
+                        <button
+                            class="nav-profile-btn"
+                            id="navProfileBtn"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-controls="navProfileDropdown"
+                            type="button"
+                        >
+                            <span class="nav-profile-stack">
+                                {% if social_accounts.google %}
+                                <img
+                                    src="{{ social_accounts.google.0.get_avatar_url }}"
+                                    alt="{{ user.get_full_name|default:user.email }}"
+                                    class="nav-profile-avatar"
+                                    id="navProfileAvatar"
+                                    onerror="this.style.display='none';document.getElementById('navProfileInitials').style.display='flex';"
+                                />
+                                {% endif %}
+                                <span
+                                    class="nav-profile-initials"
+                                    id="navProfileInitials"
+                                    {% if social_accounts.google %}style="display:none;"{% endif %}
+                                >
+                                    {% firstof user.get_full_name|slice:":1"|upper user.email|slice:":1"|upper %}
+                                </span>
+                                <span class="nav-profile-trigger-name" title="{{ user.get_full_name|default:user.email }}">
+                                    {{ user.get_full_name|default:user.email }}
+                                </span>
+                            </span>
+                            <span class="nav-profile-chevron" aria-hidden="true">&#9662;</span>
+                        </button>
+
+                        <div
+                            class="nav-profile-dropdown"
+                            id="navProfileDropdown"
+                            role="menu"
+                            aria-hidden="true"
+                        >
+                            <div class="nav-profile-identity">
+                                {% if social_accounts.google %}
+                                <img
+                                    src="{{ social_accounts.google.0.get_avatar_url }}"
+                                    alt="{{ user.get_full_name|default:user.email }}"
+                                    class="nav-profile-identity-avatar"
+                                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                />
+                                {% endif %}
+                                <div
+                                    class="nav-profile-identity-initials"
+                                    {% if social_accounts.google %}style="display:none;"{% endif %}
+                                >
+                                    {% firstof user.get_full_name|slice:":1"|upper user.email|slice:":1"|upper %}
+                                </div>
+                                <div class="nav-profile-identity-text">
+                                    <span class="nav-profile-name">{{ user.get_full_name|default:user.email }}</span>
+                                    <span class="nav-profile-email">{{ user.email }}</span>
+                                </div>
+                            </div>
+
+                            <div class="nav-profile-divider"></div>
+
+                            <a href="/dashboard/" class="nav-profile-item" role="menuitem">My Dashboard</a>
+                            <a href="#" class="nav-profile-item" role="menuitem" data-nav-placeholder="true">My Profile</a>
+                            <a href="#" class="nav-profile-item" role="menuitem" data-nav-placeholder="true">My Requests</a>
+                            <a href="#" class="nav-profile-item" role="menuitem" data-nav-placeholder="true">Notifications</a>
+
+                            <div class="nav-profile-divider"></div>
+
+                            <a href="#" class="nav-profile-item" role="menuitem" data-nav-placeholder="true">Settings</a>
+
+                            <form method="post" action="{% url 'account_logout' %}" id="navSignOutForm">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="nav-profile-item nav-profile-signout"
+                                    role="menuitem"
+                                >
+                                    Sign Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <!-- Mobile Menu Toggle Button -->
@@ -61,9 +154,15 @@
             <a href="/#blog-section" class="mobile-menu-item">Insights</a>
             <a href="/#about-section" class="mobile-menu-item">About</a>
             {% if user.is_authenticated %}
-            <a href="/nri-assist/" class="mobile-menu-item">NRI Assist</a>
+            <a href="/dashboard/" class="mobile-menu-item nri-assist-cta">
+                <span class="nri-assist-label">NRI ASSIST</span>
+                <span class="nri-assist-sub">My Dashboard &rarr;</span>
+            </a>
             {% else %}
-            <a href="#nri-auth" class="mobile-menu-item" data-open-auth-drawer>NRI Assist</a>
+            <a href="#nri-auth" class="mobile-menu-item nri-assist-cta" data-open-auth-drawer>
+                <span class="nri-assist-label">NRI ASSIST</span>
+                <span class="nri-assist-sub">Register Free &rarr;</span>
+            </a>
             {% endif %}
             <a href="/#contact-section" class="mobile-menu-item mobile-nav-cta">Contact</a>
         </div>
@@ -181,5 +280,49 @@
             }
         });
     });
+
+    const profileBtn = document.getElementById('navProfileBtn');
+    const profileDropdown = document.getElementById('navProfileDropdown');
+
+    function closeProfileDropdown() {
+        if (!profileBtn || !profileDropdown) return;
+        profileDropdown.classList.remove('open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+        profileDropdown.setAttribute('aria-hidden', 'true');
+    }
+
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = profileDropdown.classList.contains('open');
+            if (isOpen) {
+                closeProfileDropdown();
+            } else {
+                profileDropdown.classList.add('open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+                profileDropdown.setAttribute('aria-hidden', 'false');
+            }
+        });
+
+        profileDropdown.querySelectorAll('[data-nav-placeholder="true"]').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeProfileDropdown();
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                closeProfileDropdown();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProfileDropdown();
+                profileBtn.focus();
+            }
+        });
+    }
 })();
 </script>

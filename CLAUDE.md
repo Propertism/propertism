@@ -80,3 +80,9 @@ Fully built by Antigravity. No changes to this module.
 Write modified files to code-review\ after every task.
 Update fix-report.md after every SCCB.
 Check ANTHROPIC_API_KEY is unset before sessions.
+
+SCCB-DE-008-REV1  → OLX Serper 5-cap          ✅
+SCCB-100          → Buyer Discovery audit       ✅
+SCCB-101          → Buyer Discovery Phase-1     ✅
+Production 502    → requirements.txt fix        ✅
+Update CLAUDE.md when you get a moment and we'll pick up from here nex
