@@ -8,6 +8,8 @@ from django.views.generic.base import RedirectView
 from django.views.static import serve
 from content import views as content_views
 from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap, LandingPageSitemap
+from users import views as user_views
+from uilayers import views as uilayers_views
 
 # Sitemap configuration
 sitemaps = {
@@ -29,11 +31,25 @@ urlpatterns = [
         RedirectView.as_view(url=f'{settings.STATIC_URL}images/propertism-logo-tm.png', permanent=True),
     ),
     path(f'{settings.ADMIN_URL}/', admin.site.urls),
+    # Google OAuth + allauth
+    path('accounts/', include('allauth.urls')),
+    # User dashboard (web)
+    path('dashboard/', user_views.dashboard, name='dashboard'),
+    # NRI Assist module
+    path('nri-assist/', include('nri_assist.urls')),
     path('properties/', include('properties.urls_web')),
     path('chat/', include('chat.urls')),
     path('api/', include('properties.urls')),
     path('api/', include('users.urls')),
     path('api/', include('search.urls')),
+    # Auth routes (must precede catch-all slug routes in content.urls)
+    path('login/', uilayers_views.user_login, name='login'),
+    path('register/', uilayers_views.user_register, name='register'),
+    path('logout/', uilayers_views.user_logout, name='logout'),
+    # Legal Pages
+    path('terms/', TemplateView.as_view(template_name='legal/terms.html'), name='terms'),
+    path('privacy/', TemplateView.as_view(template_name='legal/privacy.html'), name='privacy'),
+    
     path('', include('content.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),

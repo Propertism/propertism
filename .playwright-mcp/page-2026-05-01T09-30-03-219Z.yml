@@ -1,0 +1,530 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "Propertism" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Propertism" [ref=e6]
+      - navigation [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Services" [ref=e9] [cursor=pointer]:
+          - /url: /#services-section
+        - link "Properties" [ref=e10] [cursor=pointer]:
+          - /url: /#properties-section
+        - link "Management" [ref=e11] [cursor=pointer]:
+          - /url: /#management-section
+        - link "Reviews" [ref=e12] [cursor=pointer]:
+          - /url: /#reviews-section
+        - link "Insights" [ref=e13] [cursor=pointer]:
+          - /url: /#blog-section
+        - link "About" [ref=e14] [cursor=pointer]:
+          - /url: /#about-section
+        - link "Contact" [ref=e15] [cursor=pointer]:
+          - /url: /#contact-section
+      - generic [ref=e17]:
+        - button "Toggle Theme" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "c" [active] [ref=e570] [cursor=pointer]:
+          - img [ref=e26]
+          - generic: c
+  - main [ref=e28]:
+    - generic [ref=e33]:
+      - heading "We manage, protect & grow your Chennai Property" [level=1] [ref=e34]:
+        - text: We manage, protect & grow your
+        - generic [ref=e35]: Chennai Property
+      - paragraph [ref=e37]: End-to-end management for NRIs — even if you’re 10,000 km away. Complete transparency, on-ground execution, and high-yield results.
+      - generic [ref=e38]:
+        - link "Book Free NRI Consultation" [ref=e39] [cursor=pointer]:
+          - /url: /#contact-section
+        - link "View Our Services" [ref=e40] [cursor=pointer]:
+          - /url: /#services-section
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: 10+
+          - generic [ref=e47]: Years Experience
+        - generic [ref=e48]:
+          - generic [ref=e49]: 100+
+          - generic [ref=e50]: NRI Clients
+        - generic [ref=e51]:
+          - generic [ref=e52]: 500+
+          - generic [ref=e53]: Properties Managed
+        - generic [ref=e54]:
+          - generic [ref=e55]: "4"
+          - generic [ref=e56]: Cities Covered
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]: Why Owners Stay With Us
+          - generic [ref=e60]: Clear updates, reliable follow-through, and local execution.
+        - generic [ref=e61]:
+          - generic [ref=e62]: Trust & Transparency
+          - generic [ref=e63]: Professional Excellence | Reliability
+    - generic [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - img [ref=e68]
+          - text: SERVICES
+        - heading "Services built for NRI ownership" [level=2] [ref=e71]
+        - paragraph [ref=e72]: Buy, rent, maintain, and monitor property with one coordinated team in Chennai.
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - img [ref=e76]
+          - heading "Real Estate - Buy and Sell assistance" [level=3] [ref=e79]
+          - paragraph [ref=e80]: We assist in buying and selling properties, to clients who are interested in investing in a property or who want …
+          - link "Discuss This Plan →" [ref=e81] [cursor=pointer]:
+            - /url: /#contact-section
+            - text: Discuss This Plan
+            - img [ref=e82]
+            - text: →
+        - generic [ref=e84]:
+          - img [ref=e86]
+          - heading "Rental Income Management" [level=3] [ref=e89]
+          - paragraph [ref=e90]: Maximize your rental returns with tenant sourcing, rent optimization, and seamless collection.
+          - link "Discuss This Plan →" [ref=e91] [cursor=pointer]:
+            - /url: /#contact-section
+            - text: Discuss This Plan
+            - img [ref=e92]
+            - text: →
+        - generic [ref=e94]:
+          - img [ref=e96]
+          - heading "Land / Plot Services" [level=3] [ref=e99]
+          - paragraph [ref=e100]: Propertism also facilitates land requirements, including the sale and purchase of plots.
+          - link "Discuss This Plan →" [ref=e101] [cursor=pointer]:
+            - /url: /#contact-section
+            - text: Discuss This Plan
+            - img [ref=e102]
+            - text: →
+    - generic [ref=e106]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - img [ref=e110]
+          - text: About
+        - heading "One team coordinating owners, tenants, vendors, and follow-through." [level=2] [ref=e115]
+        - heading "Property support for owners living abroad." [level=4] [ref=e116]
+        - paragraph [ref=e118]: To assist NRI owners with dependable property coordination, reporting, and follow-through in Chennai.
+        - paragraph [ref=e120]: Practical accountability on the ground matters more than generic advisory. What owners need is not just guidance, but reliable execution they can depend on from anywhere in the world.
+        - generic [ref=e121]:
+          - link "Meet Management" [ref=e122] [cursor=pointer]:
+            - /url: /management/
+          - link "Request a callback" [ref=e123] [cursor=pointer]:
+            - /url: /#contact-section
+      - generic [ref=e125]:
+        - heading "Why Owners Stay With Us" [level=3] [ref=e126]
+        - paragraph [ref=e128]: Clear updates, reliable follow-through, and local execution.
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - img [ref=e132]
+              - text: Trust & Transparency
+            - paragraph [ref=e136]: Complete transparency in all dealings with regular updates and honest communication.
+          - generic [ref=e137]:
+            - generic [ref=e138]:
+              - img [ref=e139]
+              - text: Professional Excellence
+            - paragraph [ref=e143]: Excellence in every aspect of property management with highest standard of care.
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - img [ref=e146]
+              - text: Reliability
+            - paragraph [ref=e150]: Consistent, dependable service with clear accountability at every step.
+        - generic [ref=e151]:
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - generic [ref=e154]: INDIA OFFICE
+              - strong [ref=e155]: Chennai, Tamil Nadu
+            - generic [ref=e156]:
+              - generic [ref=e157]: US OFFICE
+              - strong [ref=e158]: Hackensack, NJ
+          - generic [ref=e159]:
+            - generic [ref=e160]:
+              - strong [ref=e161]: 10+
+              - generic [ref=e162]: Years Experience
+            - generic [ref=e163]:
+              - strong [ref=e164]: 100+
+              - generic [ref=e165]: NRI Clients
+            - generic [ref=e166]:
+              - strong [ref=e167]: 500+
+              - generic [ref=e168]: Properties Managed
+            - generic [ref=e169]:
+              - strong [ref=e170]: "4"
+              - generic [ref=e171]: Cities Covered
+    - generic [ref=e173]:
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - img [ref=e176]
+          - text: Management
+        - heading "On-ground experts dedicated to your property." [level=2] [ref=e181]
+        - paragraph [ref=e182]: Direct coordination and accountability for NRI owners who need reliable execution in Chennai.
+      - generic [ref=e183]:
+        - article [ref=e184]:
+          - generic [ref=e185]:
+            - generic [ref=e186]: Managing Partner
+            - generic [ref=e187]: Property Acquisition & Management
+          - heading "Mr. Tamilselvan" [level=3] [ref=e188]
+          - paragraph [ref=e189]: Mr. Tamilselvan possesses rich domain knowledge with respect to land and properties. His experience is about 15 years in this field. His fields of excellence include land acquisitions …
+          - link "View Full Profile" [ref=e190] [cursor=pointer]:
+            - /url: /management/mr-tamilselvan/
+            - text: View Full Profile
+            - img [ref=e191]
+        - article [ref=e193]:
+          - generic [ref=e194]:
+            - generic [ref=e195]: Technology Partner
+            - generic [ref=e196]: Technology & Innovation
+          - heading "Mr. Lawrence Manickam" [level=3] [ref=e197]
+          - paragraph [ref=e198]: Propertism involves cutting-edge technologies, and Lawrence has 15 years of experience in IT industry. Right now, he is based out of New York, who owns Tecneto - http://www.tecneto.com/ …
+          - link "View Full Profile" [ref=e199] [cursor=pointer]:
+            - /url: /management/mr-lawrence-manickam/
+            - text: View Full Profile
+            - img [ref=e200]
+        - article [ref=e202]:
+          - generic [ref=e203]:
+            - generic [ref=e204]: Co-Founder
+            - generic [ref=e205]: Business Strategy & Entrepreneurship
+          - heading "Mr. Raju Packianathan" [level=3] [ref=e206]
+          - paragraph [ref=e207]: Raju is the first-generation entrepreneur, who is the co-founder of Quadruple Group of Companies - www.quadruplegroup.com formed in 2008 and is one of the leading IT firms with …
+          - link "View Full Profile" [ref=e208] [cursor=pointer]:
+            - /url: /management/mr-raju-packianathan/
+            - text: View Full Profile
+            - img [ref=e209]
+      - link "Meet Our Full Team" [ref=e212] [cursor=pointer]:
+        - /url: /management/
+        - text: Meet Our Full Team
+        - img [ref=e213]
+    - generic [ref=e216]:
+      - generic [ref=e217]:
+        - generic [ref=e218]:
+          - img [ref=e219]
+          - text: Customer Reviews
+        - heading "Trusted by NRI Property Owners Worldwide" [level=2] [ref=e221]
+        - paragraph [ref=e222]: Real experiences from clients who trust us to manage their properties from across the globe.
+      - generic [ref=e223]:
+        - article [ref=e224]:
+          - generic [ref=e225]:
+            - generic [ref=e226]: A
+            - generic [ref=e227]:
+              - strong [ref=e228]: Anupama Natarajan
+              - generic [ref=e229]: New Zealand
+            - generic "Google review" [ref=e230]:
+              - img [ref=e231]
+          - generic "5 out of 5 stars" [ref=e236]:
+            - img [ref=e237]
+            - img [ref=e239]
+            - img [ref=e241]
+            - img [ref=e243]
+            - img [ref=e245]
+          - paragraph [ref=e247]: I am currently using the services of Propertism - NRI Property management services, and really happy with the services provided by them. Really friendly people and provide great service for their customers. Highly recommend using their services.
+          - button "Read more" [ref=e248] [cursor=pointer]:
+            - generic [ref=e249]: Read more
+            - img [ref=e250]
+        - article [ref=e252]:
+          - generic [ref=e253]:
+            - generic [ref=e254]: A
+            - generic [ref=e255]:
+              - strong [ref=e256]: Arun Vishnu
+              - generic [ref=e257]: USA
+            - generic "Google review" [ref=e258]:
+              - img [ref=e259]
+          - generic "5 out of 5 stars" [ref=e264]:
+            - img [ref=e265]
+            - img [ref=e267]
+            - img [ref=e269]
+            - img [ref=e271]
+            - img [ref=e273]
+          - paragraph [ref=e275]: Mr Tamilselvan is very professional and responsive. When I decided to sell my Chennai apartment, he helped me in cleaning, painting, and putting the apartment on the market for sale. After finding the buyer, he coordinated the entire registration process with different departments and helped to navigate through all of them without much of my involvement. Being far away from the property, communication is very important for me, and he was reachable and responsive through email and mobile. The registration went smoothly with my physical presence only for a couple of days, and I cannot imagine anybody doing better than Mr Tamilselvan.
+          - button "Read more" [ref=e276] [cursor=pointer]:
+            - generic [ref=e277]: Read more
+            - img [ref=e278]
+        - article [ref=e280]:
+          - generic [ref=e281]:
+            - generic [ref=e282]: R
+            - generic [ref=e283]:
+              - strong [ref=e284]: Raja Lakshman
+              - generic [ref=e285]: Australia
+            - generic "Google review" [ref=e286]:
+              - img [ref=e287]
+          - generic "5 out of 5 stars" [ref=e292]:
+            - img [ref=e293]
+            - img [ref=e295]
+            - img [ref=e297]
+            - img [ref=e299]
+            - img [ref=e301]
+          - paragraph [ref=e303]: I am an NRI and Mr. Tamilselvan was very helpful in finding a suitable buyer for my property inherited from my parents. He is very professional in his dealings. Helped us with all the steps, like obtaining the encumbrance certificate, TDS by the buyer, document preparation, registration, etc. And many things he has done behind the scenes without me knowing. Thanks a lot.
+          - button "Read more" [ref=e304] [cursor=pointer]:
+            - generic [ref=e305]: Read more
+            - img [ref=e306]
+    - generic [ref=e309]:
+      - generic [ref=e310]:
+        - generic [ref=e311]:
+          - img [ref=e312]
+          - text: Featured Properties
+        - heading "Featured Properties for NRIs" [level=2] [ref=e316]
+        - paragraph [ref=e317]: Handpicked premium properties perfect for investment
+      - generic [ref=e318]:
+        - generic [ref=e319] [cursor=pointer]:
+          - generic [ref=e320]:
+            - img "Affordable Apartment in Porur" [ref=e321]
+            - generic [ref=e322]: Featured
+            - img [ref=e324]
+          - generic [ref=e326]:
+            - heading "Affordable Apartment in Porur" [level=3] [ref=e327]:
+              - link "Affordable Apartment in Porur" [ref=e328]:
+                - /url: /properties/12/
+                - text: Affordable Apartment in Porur
+                - generic [ref=e329]: →
+            - generic [ref=e330]: ₹85,00,000
+            - generic [ref=e331]: Eighty Five Lakhs Indian Rupees
+            - generic [ref=e332]: Porur, Chennai
+            - generic [ref=e333]:
+              - generic [ref=e334]:
+                - img [ref=e335]
+                - text: 3 BHK
+              - generic [ref=e337]:
+                - img [ref=e338]
+                - text: 1100.00 sq ft
+        - generic [ref=e340] [cursor=pointer]:
+          - generic [ref=e341]:
+            - img "Luxury Penthouse in Nungambakkam" [ref=e342]
+            - generic [ref=e343]: Featured
+            - img [ref=e345]
+          - generic [ref=e347]:
+            - heading "Luxury Penthouse in Nungambakkam" [level=3] [ref=e348]:
+              - link "Luxury Penthouse in Nungambakkam" [ref=e349]:
+                - /url: /properties/11/
+                - text: Luxury Penthouse in Nungambakkam
+                - generic [ref=e350]: →
+            - generic [ref=e351]: ₹55,00,000
+            - generic [ref=e352]: Fifty Five Lakhs Indian Rupees
+            - generic [ref=e353]: Nungambakkam, Chennai
+            - generic [ref=e354]:
+              - generic [ref=e355]:
+                - img [ref=e356]
+                - text: 2 BHK
+              - generic [ref=e358]:
+                - img [ref=e359]
+                - text: 2100.00 sq ft
+        - generic [ref=e361] [cursor=pointer]:
+          - generic [ref=e362]:
+            - img "Modern Apartment in OMR" [ref=e363]
+            - generic [ref=e364]: Featured
+            - img [ref=e366]
+          - generic [ref=e368]:
+            - heading "Modern Apartment in OMR" [level=3] [ref=e369]:
+              - link "Modern Apartment in OMR" [ref=e370]:
+                - /url: /properties/10/
+                - text: Modern Apartment in OMR
+                - generic [ref=e371]: →
+            - generic [ref=e372]: ₹45,00,000
+            - generic [ref=e373]: Forty Five Lakhs Indian Rupees
+            - generic [ref=e374]: OMR, Chennai
+            - generic [ref=e375]:
+              - generic [ref=e376]:
+                - img [ref=e377]
+                - text: 4 BHK
+              - generic [ref=e379]:
+                - img [ref=e380]
+                - text: 1300.00 sq ft
+      - link "View All Properties" [ref=e383] [cursor=pointer]:
+        - /url: /#contact-section
+    - generic [ref=e385]:
+      - generic [ref=e386]:
+        - generic [ref=e387]:
+          - img [ref=e388]
+          - text: Insights
+        - heading "Useful updates for owners managing from abroad." [level=2] [ref=e391]
+        - paragraph [ref=e392]: Short, practical support for reporting, rentals, maintenance, Chennai.
+      - generic [ref=e393]:
+        - article [ref=e394]:
+          - generic [ref=e395]:
+            - generic [ref=e396]: NRI Property Management
+            - heading "NRI Property Checklist for Owners in Chennai" [level=3] [ref=e397]:
+              - link "NRI Property Checklist for Owners in Chennai" [ref=e398] [cursor=pointer]:
+                - /url: /blog/nri-property-checklist-chennai/
+          - generic [ref=e400]: A practical checklist for NRI owners who need visibility, maintenance discipline, and local follow-through.
+          - generic [ref=e401]:
+            - generic [ref=e402]: Apr 21, 2026
+            - button "Read More" [ref=e403] [cursor=pointer]
+        - article [ref=e404]:
+          - generic [ref=e405]:
+            - generic [ref=e406]: Tenant Management
+            - heading "Rental Readiness for Absentee Owners" [level=3] [ref=e407]:
+              - link "Rental Readiness for Absentee Owners" [ref=e408] [cursor=pointer]:
+                - /url: /blog/rental-readiness-for-absentee-owners/
+          - generic [ref=e410]: How to keep a Chennai property rental-ready when the owner is overseas.
+          - generic [ref=e411]:
+            - generic [ref=e412]: Apr 21, 2026
+            - button "Read More" [ref=e413] [cursor=pointer]
+        - article [ref=e414]:
+          - generic [ref=e415]:
+            - generic [ref=e416]: Property Maintenance
+            - heading "Why Reporting Matters for NRI Property Management" [level=3] [ref=e417]:
+              - link "Why Reporting Matters for NRI Property Management" [ref=e418] [cursor=pointer]:
+                - /url: /blog/why-reporting-matters-for-nri-property-management/
+          - generic [ref=e420]: Consistent reporting is what turns property management from reactive work into decision support.
+          - generic [ref=e421]:
+            - generic [ref=e422]: Apr 21, 2026
+            - button "Read More" [ref=e423] [cursor=pointer]
+    - generic [ref=e425]:
+      - generic [ref=e426]:
+        - generic [ref=e427]:
+          - img [ref=e428]
+          - text: Get in Touch
+        - heading "Let's discuss your property needs" [level=2] [ref=e430]
+        - paragraph [ref=e431]: Whether you're managing from abroad or looking to invest in Chennai, we're here to help. Share your requirements and we'll provide expert guidance.
+      - generic [ref=e432]:
+        - generic [ref=e433]:
+          - generic [ref=e434]: WHERE EXPERTISE MEETS LOCAL EXECUTION
+          - heading "Institutional oversight for your private assets" [level=2] [ref=e435]
+          - generic [ref=e436]:
+            - generic [ref=e437]:
+              - generic [ref=e438]: Chennai Headquarters
+              - paragraph [ref=e439]:
+                - text: No. 30, 3rd Floor
+                - text: SSR Pankajam Towers
+                - text: Arunachalam Road, Saligramam
+              - generic [ref=e440]: +91 86670 20798
+            - generic [ref=e441]:
+              - generic [ref=e442]: US Coordination
+              - paragraph [ref=e443]: 46 Berkshire Pl
+              - generic [ref=e444]: +1 518 409 3485
+          - generic [ref=e445]:
+            - generic [ref=e446]:
+              - strong [ref=e447]: 10+
+              - generic [ref=e448]: Years Experience
+            - generic [ref=e449]:
+              - strong [ref=e450]: 100+
+              - generic [ref=e451]: NRI Clients
+            - generic [ref=e452]:
+              - strong [ref=e453]: 500+
+              - generic [ref=e454]: Properties Managed
+            - generic [ref=e455]:
+              - strong [ref=e456]: "4"
+              - generic [ref=e457]: Cities Covered
+        - generic [ref=e458]:
+          - generic [ref=e459]: REQUEST A CONSULTATION
+          - heading "Start your property oversight journey" [level=1] [ref=e460]:
+            - text: Start your property
+            - emphasis [ref=e461]: oversight journey
+          - paragraph [ref=e462]: Our specialists respond within 24 hours
+          - generic [ref=e464]:
+            - generic [ref=e465]:
+              - generic [ref=e466]: Full Name
+              - textbox "Your Name" [ref=e467]
+            - generic [ref=e468]:
+              - generic [ref=e469]: Email Address
+              - textbox "email@example.com" [ref=e470]
+            - generic [ref=e471]:
+              - generic [ref=e472]: Service Needed
+              - combobox [ref=e473] [cursor=pointer]:
+                - option "Select Service Needed" [disabled] [selected]
+                - option "Real Estate Buy & Sell"
+                - option "Rental & Maintenance"
+                - option "Industrial Land Services"
+                - option "General Consultation"
+            - generic [ref=e474]:
+              - generic [ref=e475]: Message
+              - textbox "Briefly describe your property management needs..." [ref=e476]
+            - button "Send My Request" [ref=e477] [cursor=pointer]
+    - generic [ref=e479]:
+      - generic [ref=e480]:
+        - generic [ref=e481]:
+          - heading "Propertism Realty Advisors LLP" [level=3] [ref=e482]
+          - paragraph [ref=e483]:
+            - text: Institutional property oversight for NRI owners.
+            - text: Global reach, local execution.
+          - generic [ref=e484]:
+            - link "Facebook" [ref=e485] [cursor=pointer]:
+              - /url: https://www.facebook.com/PropertismIndia
+              - img [ref=e486]
+            - link "Twitter" [ref=e488] [cursor=pointer]:
+              - /url: https://x.com/PropertismIndia
+              - img [ref=e489]
+            - link "LinkedIn" [ref=e491] [cursor=pointer]:
+              - /url: https://linkedin.com/company/propertism
+              - img [ref=e492]
+        - generic [ref=e494]:
+          - heading "Service Coverage" [level=3] [ref=e495]
+          - list [ref=e496]:
+            - listitem [ref=e497]:
+              - link "Real Estate - Buy and Sell assistance" [ref=e498] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e499]:
+              - link "Rental Income Management" [ref=e500] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e501]:
+              - link "Land / Plot Services" [ref=e502] [cursor=pointer]:
+                - /url: /services/
+            - listitem [ref=e503]:
+              - link "View Properties" [ref=e504] [cursor=pointer]:
+                - /url: /properties/
+        - generic [ref=e505]:
+          - heading "Chennai Headquarters" [level=3] [ref=e506]
+          - generic [ref=e507]:
+            - paragraph [ref=e508]:
+              - text: No. 30, 3rd Floor
+              - text: SSR Pankajam Towers
+              - text: Arunachalam Road, Saligramam
+            - paragraph [ref=e509]: Chennai, Tamil Nadu – 600093
+            - generic [ref=e510]:
+              - link "+91 86670 20798" [ref=e511] [cursor=pointer]:
+                - /url: tel:+918667020798
+              - link "+91 98412 01930" [ref=e512] [cursor=pointer]:
+                - /url: tel:+919841201930
+        - generic [ref=e513]:
+          - heading "Advisory Insights" [level=3] [ref=e514]
+          - paragraph [ref=e515]: Curated property management updates for owners abroad.
+          - generic [ref=e516]:
+            - textbox "Email Address" [ref=e517]
+            - button "JOIN" [ref=e518] [cursor=pointer]
+        - generic [ref=e520]:
+          - generic [ref=e521]:
+            - generic [ref=e522]: US (ET)
+            - strong [ref=e523]:
+              - generic [ref=e524]: "5"
+              - generic [ref=e525]: ":"
+              - generic [ref=e526]: "29"
+              - generic [ref=e527]: am
+            - generic [ref=e528]: Fri, May 1
+          - generic [ref=e529]:
+            - generic [ref=e530]: UK (GMT)
+            - strong [ref=e531]:
+              - generic [ref=e532]: "10"
+              - generic [ref=e533]: ":"
+              - generic [ref=e534]: "29"
+              - generic [ref=e535]: am
+            - generic [ref=e536]: Fri, May 1
+          - generic [ref=e537]:
+            - generic [ref=e538]: India (IST)
+            - strong [ref=e539]:
+              - generic [ref=e540]: "2"
+              - generic [ref=e541]: ":"
+              - generic [ref=e542]: "59"
+              - generic [ref=e543]: pm
+            - generic [ref=e544]: Fri, May 1
+          - generic [ref=e545]:
+            - generic [ref=e546]: Gulf (GST)
+            - strong [ref=e547]:
+              - generic [ref=e548]: "1"
+              - generic [ref=e549]: ":"
+              - generic [ref=e550]: "29"
+              - generic [ref=e551]: pm
+            - generic [ref=e552]: Fri, May 1
+          - generic [ref=e553]:
+            - generic [ref=e554]: REACH
+            - strong [ref=e555]: Global Network
+            - generic [ref=e556]: US, UK, Gulf, India
+          - generic [ref=e557]:
+            - generic [ref=e558]: OFFICE HOURS
+            - strong [ref=e559]:
+              - generic [ref=e561]: Open Now
+            - generic [ref=e562]: Fri, May 1
+      - generic [ref=e563]:
+        - paragraph [ref=e564]: © 2026 Propertism Realty Advisors LLP. Institutional Oversight.
+        - generic [ref=e565]:
+          - link "About" [ref=e566] [cursor=pointer]:
+            - /url: /about/
+          - link "Blog" [ref=e567] [cursor=pointer]:
+            - /url: /#blog-section
+          - link "Contact" [ref=e568] [cursor=pointer]:
+            - /url: /#contact-section
+          - link "Management" [ref=e569] [cursor=pointer]:
+            - /url: /management/

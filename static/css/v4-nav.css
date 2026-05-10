@@ -69,7 +69,7 @@ html[data-theme="dark"] header#site-header.scrolled {
 @media (min-width: 769px) {
     .main-nav-even {
         display: grid !important;
-        grid-template-columns: repeat(8, max-content) !important;
+        grid-template-columns: repeat(9, max-content) !important;
         gap: clamp(0.5rem, 1.5vw, 2rem) !important;
         justify-content: center !important;
         margin: 0 1rem !important;

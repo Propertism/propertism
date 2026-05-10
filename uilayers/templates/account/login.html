@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+{% load static account socialaccount %}
+
+{% block meta_title %}Sign In — Propertism{% endblock %}
+
+{% block extra_css %}
+<style>
+.auth-page {
+    min-height: 100vh;
+    background: var(--bg-secondary, #F8F5F0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--nav-height, 92px) + 2rem) 1.25rem 3rem;
+}
+.auth-card {
+    background: #ffffff;
+    border: 1px solid rgba(15,23,42,0.1);
+    box-shadow: 0 8px 40px rgba(15,23,42,0.08);
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem 2.25rem 2rem;
+    position: relative;
+}
+.auth-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted, #64748B);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.25rem;
+}
+.auth-close:hover { color: var(--text-main, #0F172A); }
+
+/* Heading */
+.auth-title {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-main, #0F172A);
+    text-align: center;
+    margin: 0 0 0.35rem;
+}
+.auth-sub {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.8rem;
+    color: var(--text-muted, #64748B);
+    text-align: center;
+    margin: 0 0 1.75rem;
+}
+
+/* Tab switcher */
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--bg-secondary, #F8F5F0);
+    border-radius: 6px;
+    padding: 3px;
+    margin-bottom: 1.75rem;
+}
+.auth-tab {
+    display: block;
+    padding: 0.6rem 1rem;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    color: var(--text-muted, #64748B);
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.auth-tab.active {
+    background: #ffffff;
+    color: var(--text-main, #0F172A);
+    box-shadow: 0 1px 4px rgba(15,23,42,0.1);
+    font-weight: 600;
+}
+.auth-tab:hover:not(.active) { color: var(--text-main, #0F172A); }
+
+/* Google button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    background: #ffffff;
+    border: 1.5px solid rgba(15,23,42,0.18);
+    border-radius: 4px;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-main, #0F172A);
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1.5rem;
+}
+.google-btn:hover {
+    border-color: var(--brand-gold, #C49C52);
+    box-shadow: 0 2px 10px rgba(196,156,82,0.15);
+    color: var(--text-main, #0F172A);
+}
+.google-icon { flex-shrink: 0; width: 18px; height: 18px; }
+
+/* Security divider */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(15,23,42,0.1);
+}
+.auth-divider-label {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted, #64748B);
+    white-space: nowrap;
+}
+
+/* Fields */
+.auth-field { margin-bottom: 1.1rem; }
+.auth-field-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.35rem;
+}
+.auth-label {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-main, #0F172A);
+}
+.auth-forgot {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.75rem;
+    color: var(--brand-gold, #C49C52);
+    text-decoration: none;
+}
+.auth-forgot:hover { color: var(--text-main, #0F172A); }
+.auth-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid rgba(15,23,42,0.15);
+    border-radius: 4px;
+    background: var(--bg-surface, #FDFDFB);
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.875rem;
+    color: var(--text-main, #0F172A);
+    outline: none;
+    transition: border-color 0.2s;
+}
+.auth-input:focus { border-color: var(--brand-gold, #C49C52); }
+.auth-input::placeholder { color: var(--text-muted, #64748B); font-size: 0.82rem; }
+
+/* Error */
+.auth-error {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.75rem;
+    color: #dc2626;
+    margin-top: 0.3rem;
+}
+.auth-form-error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 4px;
+    color: #991b1b;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.8rem;
+    padding: 0.65rem 0.9rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Primary button */
+.auth-btn-primary {
+    width: 100%;
+    padding: 0.8rem 1.25rem;
+    background: var(--text-main, #0F172A);
+    color: #ffffff;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.25rem;
+    letter-spacing: 0.02em;
+}
+.auth-btn-primary:hover { background: #1e2d4a; }
+
+/* Guest access */
+.auth-guest {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(15,23,42,0.08);
+    text-align: center;
+}
+.auth-guest-label {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-main, #0F172A);
+    margin-bottom: 0.35rem;
+}
+.auth-guest-sub {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.75rem;
+    color: var(--text-muted, #64748B);
+}
+.auth-guest-sub a {
+    color: var(--brand-gold, #C49C52);
+    text-decoration: none;
+    font-weight: 500;
+}
+.auth-guest-sub a:hover { color: var(--text-main, #0F172A); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+
+        <button class="auth-close" onclick="window.location='/';" aria-label="Close">&times;</button>
+
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-sub">Manage your NRI property portfolio.</p>
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+            <span class="auth-tab active">Sign In</span>
+            <a href="{% url 'account_signup' %}" class="auth-tab">Create Account</a>
+        </div>
+
+        <!-- Google -->
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+            <svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+            </svg>
+            Sign in with Google
+        </a>
+
+        <div class="auth-divider"><span class="auth-divider-label">Security</span></div>
+
+        {% if form.non_field_errors %}
+        <div class="auth-form-error">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.GET.next|default:'/dashboard/' }}">
+
+            <div class="auth-field">
+                <label class="auth-label" for="id_login">Email Address</label>
+                <input class="auth-input" type="email" name="login" id="id_login"
+                       value="{{ form.login.value|default:'' }}"
+                       placeholder="name@email.com" autocomplete="email" required>
+                {% if form.login.errors %}
+                <p class="auth-error">{{ form.login.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <div class="auth-field">
+                <div class="auth-field-header">
+                    <label class="auth-label" for="id_password">Password</label>
+                    <a href="{% url 'account_reset_password' %}" class="auth-forgot">Forgot?</a>
+                </div>
+                <input class="auth-input" type="password" name="password" id="id_password"
+                       placeholder="••••••••" autocomplete="current-password" required>
+                {% if form.password.errors %}
+                <p class="auth-error">{{ form.password.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="auth-btn-primary">Sign In</button>
+        </form>
+
+        <div class="auth-guest">
+            <p class="auth-guest-label">Guest Access</p>
+            <p class="auth-guest-sub">
+                New here? <a href="{% url 'account_signup' %}">Create account</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

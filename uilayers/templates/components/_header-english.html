@@ -18,6 +18,11 @@
                 <a href="/#reviews-section">Reviews</a>
                 <a href="/#blog-section">Insights</a>
                 <a href="/#about-section">About</a>
+                {% if user.is_authenticated %}
+                <a href="/nri-assist/">NRI Assist</a>
+                {% else %}
+                <a href="#nri-auth" class="nri-assist-cta" data-open-auth-drawer>NRI Assist</a>
+                {% endif %}
                 <a href="/#contact-section" class="nav-cta">Contact</a>
             </nav>
             
@@ -55,6 +60,11 @@
             <a href="/#reviews-section" class="mobile-menu-item">Reviews</a>
             <a href="/#blog-section" class="mobile-menu-item">Insights</a>
             <a href="/#about-section" class="mobile-menu-item">About</a>
+            {% if user.is_authenticated %}
+            <a href="/nri-assist/" class="mobile-menu-item">NRI Assist</a>
+            {% else %}
+            <a href="#nri-auth" class="mobile-menu-item" data-open-auth-drawer>NRI Assist</a>
+            {% endif %}
             <a href="/#contact-section" class="mobile-menu-item mobile-nav-cta">Contact</a>
         </div>
     </nav>
@@ -153,5 +163,23 @@
             }
         });
     }
+
+    // NRI Assist auth drawer trigger (SCCB-0905)
+    document.querySelectorAll('[data-open-auth-drawer]').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Close mobile menu if open
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileNav && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                document.getElementById('mobileMenuBackdrop')?.classList.remove('active');
+                document.body.classList.remove('mobile-menu-open');
+                document.body.style.overflow = '';
+            }
+            if (window.NriAuthDrawer) {
+                window.NriAuthDrawer.open();
+            }
+        });
+    });
 })();
 </script>

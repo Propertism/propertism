@@ -82,8 +82,10 @@
         {% endblock %}
         {% include "components/_footer.html" %}
     </main>
-    
-    
+
+    <!-- Premium Auth Drawer: mounted globally for NRI Assist CTAs -->
+    {% include "components/_auth_drawer.html" %}
+
     <!-- Light mode only - no theme switcher -->
     {{ chat_widget_content|json_script:"chat-widget-content" }}
     <script src="{% static 'js/utils.js' %}"></script>

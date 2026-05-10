@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}NRI Assist — Propertism Realty Advisors{% endblock %}
+
+{% block extra_css %}
+<style>
+.nri-assist-page {
+    background: var(--bg-secondary, #F8F5F0);
+    min-height: 100vh;
+    padding: calc(var(--nav-height, 92px) + 3.5rem) 1.5rem 6rem;
+}
+.nri-assist-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Hero */
+.nri-hero {
+    max-width: 620px;
+    margin-bottom: 4rem;
+}
+.nri-hero-eyebrow {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-gold, #C49C52);
+    margin-bottom: 0.75rem;
+}
+.nri-hero-title {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: var(--text-main, #0F172A);
+    margin: 0 0 1rem;
+    line-height: 1.2;
+}
+.nri-hero-body {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.95rem;
+    color: var(--text-muted, #64748B);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Service grid */
+.nri-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+@media (min-width: 640px) {
+    .nri-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Service card */
+.nri-card {
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-subtle, rgba(15,23,42,0.12));
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+}
+.nri-card-label {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-gold, #C49C52);
+    margin-bottom: 0.5rem;
+}
+.nri-card-title {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-main, #0F172A);
+    margin: 0 0 1.5rem;
+    line-height: 1.25;
+}
+.nri-service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+}
+.nri-service-list li {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.85rem;
+    color: var(--text-main, #0F172A);
+    line-height: 1.5;
+    padding-left: 1.1rem;
+    position: relative;
+}
+.nri-service-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    background: var(--brand-gold, #C49C52);
+    border-radius: 50%;
+}
+.nri-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--text-main, #0F172A);
+    color: #ffffff;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    align-self: flex-start;
+}
+.nri-card-cta:hover {
+    background: var(--brand-gold, #C49C52);
+    color: #ffffff;
+}
+
+/* Bottom CTA strip */
+.nri-bottom-strip {
+    margin-top: 4rem;
+    background: var(--text-main, #0F172A);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+}
+@media (min-width: 768px) {
+    .nri-bottom-strip {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+.nri-strip-copy h3 {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 0 0.4rem;
+}
+.nri-strip-copy p {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+    margin: 0;
+}
+.nri-strip-btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--brand-gold, #C49C52);
+    color: #ffffff;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+}
+.nri-strip-btn:hover { opacity: 0.88; color: #ffffff; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="nri-assist-page">
+    <div class="nri-assist-inner">
+
+        <div class="nri-hero">
+            <p class="nri-hero-eyebrow">Propertism Advisory Services</p>
+            <h1 class="nri-hero-title">NRI Assist</h1>
+            <p class="nri-hero-body">
+                End-to-end property support for NRIs — from inspections and sale to acquisition and coordination.
+                We handle your Chennai property as if we live next door.
+            </p>
+        </div>
+
+        <div class="nri-grid">
+            {% for cat in categories %}
+            <div class="nri-card">
+                <p class="nri-card-label">{{ forloop.counter|stringformat:"02d" }}</p>
+                <h2 class="nri-card-title">{{ cat.label }}</h2>
+                <ul class="nri-service-list">
+                    {% for svc in cat.services %}
+                    <li>{{ svc.name }}</li>
+                    {% empty %}
+                    <li>Services available on request</li>
+                    {% endfor %}
+                </ul>
+                <a href="/contact/" class="nri-card-cta"
+                   data-category="{{ cat.key }}"
+                   onclick="logCtaClick('{{ cat.key }}')">
+                    Request Assistance
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="nri-bottom-strip">
+            <div class="nri-strip-copy">
+                <h3>Ready to talk?</h3>
+                <p>Speak with an advisor about your specific requirement.</p>
+            </div>
+            <a href="/contact/" class="nri-strip-btn">Contact an Advisor</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function logCtaClick(category) {
+    fetch('/nri-assist/log-cta/', {
+        method: 'POST',
+        headers: {'X-CSRFToken': getCookie('csrftoken'), 'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'category=' + encodeURIComponent(category),
+    }).catch(function(){});
+}
+function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : '';
+}
+</script>
+{% endblock %}

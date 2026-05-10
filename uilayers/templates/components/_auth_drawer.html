@@ -1,0 +1,375 @@
+{% load static %}{% load socialaccount %}
+<style>
+/* ── DRAWER BASE ── */
+.nri-auth-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(15, 23, 42, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(10px);
+}
+.nri-auth-drawer-overlay.is-open { opacity: 1; visibility: visible; }
+
+.nri-auth-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 440px;
+    z-index: 9999;
+    background: #ffffff;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid rgba(0,0,0,0.05);
+}
+.nri-auth-drawer.is-open { transform: translateX(0); }
+
+/* ── STACK LOGIC ── */
+.nri-auth-stack-container { flex: 1; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.nri-auth-stack {
+    display: flex;
+    width: 300%;
+    height: 100%;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+.nri-auth-panel {
+    width: 33.333%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── BANNER (PREMIUM RESTORED) ── */
+.nri-auth-banner {
+    position: relative;
+    height: 130px; /* Restored for premium feel */
+    background: radial-gradient(circle at top right, #1e293b, #0b0f1a);
+    padding: 1.5rem 1.75rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+.nri-auth-controls { 
+    position: absolute; 
+    top: 1.25rem; 
+    right: 1.25rem; /* Pushed to the right */
+    display: flex; 
+    align-items: center;
+    gap: 1.25rem; /* Space between Back and Close */
+    z-index: 10; 
+}
+
+.nri-auth-banner-logo { margin-bottom: 0.8rem; }
+.nri-auth-banner-logo img { height: 22px; width: auto; opacity: 0.95; }
+
+.nri-auth-banner-label { font-family: var(--sans-main, sans-serif); font-size: 0.65rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.2rem; }
+.nri-auth-banner-title { font-family: var(--serif-main, serif); font-size: 1.6rem; color: #ffffff; margin: 0; line-height: 1.1; font-weight: 500; }
+
+.nri-auth-back { 
+    background: none; 
+    border: none; 
+    color: rgba(255,255,255,0.8); 
+    cursor: pointer; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: 0.3s; 
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--sans-main, sans-serif);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.nri-auth-back:hover { color: #fff; }
+.nri-auth-back.is-visible { opacity: 1; visibility: visible; }
+.nri-auth-close { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; backdrop-filter: blur(10px); transition: all 0.3s; }
+.nri-auth-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+
+/* ── BODY (PREMIUM FILL) ── */
+.nri-auth-inner-body { 
+    padding: 2rem 1.75rem; 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+.nri-auth-headline, .nri-auth-inner-title { 
+    font-family: var(--serif-main, serif) !important; 
+    font-size: 1.5rem !important; 
+    font-weight: 600 !important; 
+    color: #0F172A !important; 
+    margin: 0 0 0.5rem !important; 
+    line-height: 1.2 !important;
+}
+.nri-auth-subheadline, .nri-auth-inner-sub { 
+    font-family: var(--sans-main, sans-serif) !important; 
+    font-size: 0.85rem !important; 
+    color: #64748b !important; 
+    margin: 0 0 1.5rem !important; 
+}
+
+.nri-auth-benefits { list-style: none; padding: 0; margin: 0 0 1.75rem; gap: 0.8rem; display: flex; flex-direction: column; }
+.nri-auth-benefits li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #1e293b; }
+.nri-auth-benefits li svg { width: 18px; height: 18px; color: #C49C52; flex-shrink: 0; }
+
+.nri-auth-google-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    width: 100% !important;
+    padding: 0.55rem 1rem !important;
+    background: #0b0f1a !important;
+    border: 1px solid rgba(196, 156, 82, 0.4) !important;
+    border-radius: 6px !important;
+    font-family: var(--sans-main, sans-serif) !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    margin-bottom: 0.6rem !important;
+    cursor: pointer !important;
+}
+.nri-auth-google-btn svg { width: 16px; height: 16px; background: #ffffff; padding: 2px; border-radius: 3px; flex-shrink: 0; }
+
+.nri-auth-divider { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
+.nri-auth-divider::before, .nri-auth-divider::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+.nri-auth-divider span { font-size: 0.55rem; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; }
+
+.nri-auth-email-link { display: block; width: 100%; padding: 0.6rem; text-align: center; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px; text-decoration: none; color: #0F172A; font-size: 0.78rem; font-weight: 500; background: #fff; cursor: pointer; }
+
+.nri-auth-tabs { display: grid; grid-template-columns: 1fr 1fr; background: #f8f5f0; padding: 3px; border-radius: 6px; margin-bottom: 0.75rem; }
+.nri-auth-tab { padding: 0.35rem; text-align: center; font-size: 0.7rem; cursor: pointer; border-radius: 4px; border: none; background: transparent; color: #64748b; }
+.nri-auth-tab.active { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.05); font-weight: 600; color: #0F172A; }
+
+.nri-auth-form-field { margin-bottom: 0.6rem; text-align: left; }
+.nri-auth-label { display: block; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.15rem; color: #1e293b; }
+.nri-auth-input { width: 100%; padding: 0.5rem 0.7rem; border: 1.2px solid rgba(0,0,0,0.08); border-radius: 6px; outline: none; font-size: 0.8rem; }
+.nri-auth-submit-btn { width: 100%; padding: 0.7rem; background: #0f172a; color: #fff; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 0.8rem; margin-top: 0.2rem; }
+.nri-auth-hint { font-size: 0.65rem; color: #94a3b8; margin: 0.1rem 0 0; }
+
+/* ── FOOTER (MICRO) ── */
+.nri-auth-footer { padding-top: 1rem; margin-top: auto; border-top: 1px solid #f1f5f9; text-align: center; }
+.nri-auth-legal { font-family: var(--sans-main, sans-serif); font-size: 0.65rem; color: #94a3b8; margin-bottom: 0.75rem; line-height: 1.4; padding: 0 1rem; }
+.nri-auth-legal a { color: #C49C52; text-decoration: none; font-weight: 500; border-bottom: 1px solid rgba(196,156,82,0.2); transition: all 0.2s; }
+.nri-auth-legal a:hover { border-bottom-color: #C49C52; color: #b38b42; }
+.nri-auth-trust { font-size: 0.55rem; font-weight: 700; color: #C49C52; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+.nri-auth-trust-dots { display: flex; justify-content: center; gap: 1rem; }
+.nri-auth-trust-dots span { display: flex; align-items: center; gap: 0.3rem; font-size: 0.65rem; color: #64748b; }
+.nri-auth-trust-dots svg { width: 14px; height: 14px; }
+</style>
+
+<!-- Drawer Markup -->
+<div class="nri-auth-drawer-overlay" id="nriAuthDrawerOverlay" aria-hidden="true"></div>
+<aside class="nri-auth-drawer" id="nriAuthDrawer" role="dialog" aria-modal="true" aria-label="Authentication Drawer">
+
+    <div class="nri-auth-banner">
+        <div class="nri-auth-controls">
+            <button class="nri-auth-back" id="nriAuthDrawerBack" aria-label="Go back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <button class="nri-auth-close" id="nriAuthDrawerClose" aria-label="Close panel">&times;</button>
+        </div>
+        <div class="nri-auth-banner-logo">
+            <img src="{% static 'images/propertism-logo-white-tm.png' %}" alt="Propertism">
+        </div>
+        <div class="nri-auth-banner-text">
+            <p class="nri-auth-banner-label">Propertism Advisory</p>
+            <h2 class="nri-auth-banner-title">Private NRI Assistance</h2>
+        </div>
+    </div>
+
+    <div class="nri-auth-stack-container">
+        <div class="nri-auth-stack" id="nriAuthStack">
+
+            <!-- PANEL 1: ADVISORY -->
+            <div class="nri-auth-panel" data-panel="advisory">
+                <div class="nri-auth-inner-body">
+                    <h3 class="nri-auth-headline">Secure access to your property advisor</h3>
+                    <p class="nri-auth-subheadline">Private, secure guidance for NRIs managing property remotely.</p>
+
+                    <ul class="nri-auth-benefits">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Property Care</span></li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span>Sale Assistance</span></li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Acquisition Support</span></li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Priority Coordination</span></li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Legal & Compliance</span></li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><span>Portfolio Strategy</span></li>
+                    </ul>
+
+                    <a href="javascript:void(0)" onclick="NriAuthDrawer.googleLogin()" class="nri-auth-google-btn">
+                        <svg viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+                        Continue with Google
+                    </a>
+
+                    <div class="nri-auth-divider"><span>OR</span></div>
+                    <button class="nri-auth-email-link" id="nriTriggerSignIn">Sign in with Email</button>
+
+                    <div class="nri-auth-footer">
+                        <p class="nri-auth-legal">By continuing, you agree to Propertism's <a href="/terms/">Terms of Service</a> and <a href="/privacy/">Privacy Policy</a>.</p>
+                        <p class="nri-auth-trust">Private &bull; Secure &bull; Concierge Assistance</p>
+                        <div class="nri-auth-trust-dots">
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Encrypted</span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secured</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 2: SIGN IN -->
+            <div class="nri-auth-panel" data-panel="signin">
+                <div class="nri-auth-inner-body">
+                    <h1 class="nri-auth-inner-title">Welcome Back</h1>
+                    <p class="nri-auth-inner-sub">Manage your NRI property portfolio.</p>
+
+                    <div class="nri-auth-tabs">
+                        <span class="nri-auth-tab active">Sign In</span>
+                        <span class="nri-auth-tab" id="nriSwitchToSignUp">Create Account</span>
+                    </div>
+
+                    <a href="javascript:void(0)" onclick="NriAuthDrawer.googleLogin()" class="nri-auth-google-btn">
+                        <svg viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+                        Sign in with Google
+                    </a>
+
+                    <div class="nri-auth-divider"><span>Security</span></div>
+
+                    <form method="post" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="/nri-assist/">
+                        <div class="nri-auth-form-field">
+                            <label class="nri-auth-label">Email Address</label>
+                            <input class="nri-auth-input" type="email" name="login" placeholder="name@email.com" required>
+                        </div>
+                        <div class="nri-auth-form-field">
+                            <label class="nri-auth-label">Password</label>
+                            <input class="nri-auth-input" type="password" name="password" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="nri-auth-submit-btn">Sign In</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- PANEL 3: SIGN UP -->
+            <div class="nri-auth-panel" data-panel="signup">
+                <div class="nri-auth-inner-body">
+                    <h1 class="nri-auth-inner-title">Join Propertism</h1>
+                    <p class="nri-auth-inner-sub">Set up your NRI property advisory account.</p>
+
+                    <div class="nri-auth-tabs">
+                        <span class="nri-auth-tab" id="nriSwitchToSignIn">Sign In</span>
+                        <span class="nri-auth-tab active">Create Account</span>
+                    </div>
+
+                    <a href="javascript:void(0)" onclick="NriAuthDrawer.googleLogin()" class="nri-auth-google-btn">
+                        <svg viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+                        Sign in with Google
+                    </a>
+
+                    <form method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        <div class="nri-auth-form-field">
+                            <label class="nri-auth-label">Email Address</label>
+                            <input class="nri-auth-input" type="email" name="email" placeholder="name@email.com" required>
+                        </div>
+                        <div class="nri-auth-form-field">
+                            <label class="nri-auth-label">Password</label>
+                            <input class="nri-auth-input" type="password" name="password1" placeholder="••••••••" required>
+                            <p class="nri-auth-hint">Min 8 characters</p>
+                        </div>
+                        <div class="nri-auth-form-field">
+                            <label class="nri-auth-label">Confirm Password</label>
+                            <input class="nri-auth-input" type="password" name="password2" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="nri-auth-submit-btn">Create Account</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</aside>
+
+<!-- Hidden form for skipping intermediate Allauth page -->
+<form id="googleLoginPost" method="post" action="{% provider_login_url 'google' %}" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="/nri-assist/">
+</form>
+
+<script>
+(function() {
+    'use strict';
+    const overlay = document.getElementById('nriAuthDrawerOverlay');
+    const drawer  = document.getElementById('nriAuthDrawer');
+    const stack   = document.getElementById('nriAuthStack');
+    const backBtn = document.getElementById('nriAuthDrawerBack');
+    const closeBtn = document.getElementById('nriAuthDrawerClose');
+    const gPostForm = document.getElementById('googleLoginPost');
+
+    let currentPanel = 'advisory';
+    const panels = { advisory: 0, signin: 1, signup: 2 };
+
+    function switchPanel(panelName) {
+        if (!stack || panels[panelName] === undefined) return;
+        stack.style.transform = `translateX(-${panels[panelName] * 33.333}%)`;
+        currentPanel = panelName;
+        backBtn.classList.toggle('is-visible', panelName !== 'advisory');
+        const panelEl = drawer.querySelector(`[data-panel="${panelName}"]`);
+        if (panelEl) panelEl.scrollTop = 0;
+    }
+
+    function openDrawer() {
+        drawer.classList.add('is-open');
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        switchPanel('advisory');
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    window.NriAuthDrawer = {
+        open: openDrawer,
+        close: closeDrawer,
+        switch: switchPanel,
+        googleLogin: function() {
+            if (gPostForm) gPostForm.submit();
+        }
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+    if (backBtn) backBtn.addEventListener('click', () => {
+        if (currentPanel === 'signup') switchPanel('signin');
+        else if (currentPanel === 'signin') switchPanel('advisory');
+    });
+    
+    document.getElementById('nriTriggerSignIn').addEventListener('click', () => switchPanel('signin'));
+    document.getElementById('nriSwitchToSignUp').addEventListener('click', () => switchPanel('signup'));
+    document.getElementById('nriSwitchToSignIn').addEventListener('click', () => switchPanel('signin'));
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
+    });
+    if (window.location.hash === '#nri-auth') openDrawer();
+})();
+</script>

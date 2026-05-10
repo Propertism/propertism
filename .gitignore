@@ -180,3 +180,4 @@ __marimo__/
 
 # Local safety archives
 .archive/
+.aider*

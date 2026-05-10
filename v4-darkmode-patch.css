@@ -1,0 +1,131 @@
+/**
+ * PROPERTISM V4 - DARK MODE PATCH
+ * Target: Reviews Section + Contact Section
+ * Problem: propertism-premium.css lines 348–380 apply hardcoded light backgrounds
+ *          without [data-theme] guards, overriding v4-reviews.css and v4-contact.css
+ *          dark mode rules.
+ *
+ * Fix strategy: Nuclear specificity using html[data-theme="dark"] body #id .class
+ * Load this file AFTER propertism-premium.css and AFTER v4-reviews.css / v4-contact.css
+ *
+ * SCCB Reference: Add to SCCB amendment as DARK-MODE-PATCH-001
+ */
+
+/* ============================================================
+   SECTION 1: REVIEWS — BACKGROUND & CARD OVERRIDES
+   Counters: propertism-premium.css line 349–352 (#reviews-section bg: #FFF)
+             propertism-premium.css line 373–380 (.cr-card bg: #FFF, border-radius: 12px)
+   ============================================================ */
+
+/* Section background */
+html[data-theme="dark"] body #reviews-section.customer-reviews-section {
+    background-color: #050a14 !important;
+}
+
+/* Gold 1px gap grid separator */
+html[data-theme="dark"] body #reviews-section .cr-masonry-grid {
+    background-color: #B89A4A !important;
+    border-color: #B89A4A !important;
+    gap: 1px !important;
+}
+
+/* Review card: counter the #FFFFFF !important from premium.css line 375 */
+html[data-theme="dark"] body #reviews-section .cr-card {
+    background-color: #1E2A3A !important;
+    border-radius: 0 !important;
+    /* Restore sharp corners */
+    border: none !important;
+    /* Grid gap handles separation */
+    padding: 50px 40px !important;
+    box-shadow: none !important;
+}
+
+html[data-theme="dark"] body #reviews-section .cr-card:hover {
+    background-color: rgba(196, 156, 82, 0.05) !important;
+}
+
+/* Review text, name, location */
+html[data-theme="dark"] body #reviews-section .cr-text {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #reviews-section .cr-name {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #reviews-section .cr-location {
+    color: #94A3B8 !important;
+}
+
+/* See all button */
+html[data-theme="dark"] body #reviews-section .cr-see-all-btn {
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="dark"] body #reviews-section .cr-see-all-btn:hover {
+    border-color: #B89A4A !important;
+    color: #B89A4A !important;
+}
+
+/* ============================================================
+   SECTION 2: CONTACT — LEFT CARD & STATS TILE OVERRIDES
+   Counters: propertism-premium.css line 4102 (light mode anchor for .nri-contact-section)
+             propertism-premium.css line 362–365 (#contact-section h2, p color: inherit)
+             propertism-premium.css global h1/h2/h3 color: #1A1A1A (line 49)
+   ============================================================ */
+
+/* Section background */
+html[data-theme="dark"] body #contact-section.nri-contact-section {
+    background-color: #0B0F1A !important;
+}
+
+/* Left narrative card */
+html[data-theme="dark"] body #contact-section .hf-narrative-card {
+    background-color: #1E2A3A !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Left card headings — counter global h1/h2/h3 color: #1A1A1A */
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-card-title {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-address {
+    color: #E2E8F0 !important;
+}
+
+html[data-theme="dark"] body #contact-section .hf-narrative-card .hf-office-phone {
+    color: #FFFFFF !important;
+}
+
+/* Stats grid border */
+html[data-theme="dark"] body #contact-section .hf-stats-grid {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Off-white tiles → Deep Obsidian Slate in dark */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite {
+    background-color: #1E2A3A !important;
+}
+
+/* Text on off-white (now dark) tiles → white */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite .hf-stat-number,
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-offwhite .hf-stat-label {
+    color: #FFFFFF !important;
+}
+
+/* Text on gold tiles → stays dark navy */
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-gold .hf-stat-number,
+html[data-theme="dark"] body #contact-section .hf-stat-tile.is-gold .hf-stat-label {
+    color: #0F172A !important;
+}
+
+/* Section header text — counter global p color: #4A4A4A (line 67) */
+html[data-theme="dark"] body #contact-section .section-title {
+    color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body #contact-section .section-subtitle {
+    color: #94A3B8 !important;
+}
