@@ -1,4 +1,4 @@
-{% load static %}{% load socialaccount %}
+{% load static %}
 <style>
 /* ── DRAWER BASE ── */
 .nri-auth-drawer-overlay {
@@ -306,12 +306,6 @@
     </div>
 </aside>
 
-<!-- Hidden form for skipping intermediate Allauth page -->
-<form id="googleLoginPost" method="post" action="{% provider_login_url 'google' %}" style="display:none;">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="/nri-assist/">
-</form>
-
 <script>
 (function() {
     'use strict';
@@ -320,7 +314,7 @@
     const stack   = document.getElementById('nriAuthStack');
     const backBtn = document.getElementById('nriAuthDrawerBack');
     const closeBtn = document.getElementById('nriAuthDrawerClose');
-    const gPostForm = document.getElementById('googleLoginPost');
+    const googleLoginUrl = '/accounts/google/login/?next=/nri-assist/';
 
     let currentPanel = 'advisory';
     const panels = { advisory: 0, signin: 1, signup: 2 };
@@ -352,7 +346,7 @@
         close: closeDrawer,
         switch: switchPanel,
         googleLogin: function() {
-            if (gPostForm) gPostForm.submit();
+            window.location.href = googleLoginUrl;
         }
     };
 
