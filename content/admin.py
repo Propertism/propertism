@@ -396,11 +396,36 @@ class LandingLeadAdmin(admin.ModelAdmin):
 # --- ADMIN UI CLEANUP ---
 # Hide core Django models to keep the admin focused on content and properties
 from django.contrib.auth.models import Group, User
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 
 try:
     admin.site.unregister(Group)
-    admin.site.unregister(User)
     admin.site.unregister(Site)
 except admin.sites.NotRegistered:
     pass
+
+# Hide allauth EmailAddress — redundant with Users list; verification is disabled.
+try:
+    from allauth.account.models import EmailAddress
+    admin.site.unregister(EmailAddress)
+except (admin.sites.NotRegistered, ImportError):
+    pass
+
+# Re-register User with user_type column to distinguish platform admins from NRI clients.
+class PropertismUserAdmin(UserAdmin):
+    list_display = UserAdmin.list_display + ('user_type',)
+
+    @admin.display(description='User Type')
+    def user_type(self, obj):
+        if obj.is_superuser:
+            return 'Platform Admin'
+        if obj.is_staff:
+            return 'Staff'
+        return 'NRI Client'
+
+try:
+    admin.site.unregister(User)
+except admin.sites.NotRegistered:
+    pass
+admin.site.register(User, PropertismUserAdmin)

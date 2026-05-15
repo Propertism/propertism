@@ -168,6 +168,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'content.middleware.AdminAccessMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
@@ -349,8 +350,13 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = '/accounts/login/'
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_AUTO_SIGNUP = True
+
+# SCCB-SEC-PRT-1510: Close public signup — Google OAuth is the only registration path.
+ACCOUNT_ADAPTER = 'users.adapters.PropertismAccountAdapter'  # blocks /accounts/signup/
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # belt-and-suspenders: verify if ever reopened
+SOCIALACCOUNT_AUTO_SIGNUP = True        # Google OAuth registration remains open
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # Google already verifies — skip allauth re-check
+SOCIALACCOUNT_ADAPTER = 'users.adapters.AdminOnlySocialAccountAdapter'
 
 if not DEBUG:
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'

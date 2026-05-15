@@ -614,16 +614,12 @@
 }
 </style>
 
-<!-- Drawer Markup -->
+<!-- Drawer Markup — Google-only. SCCB-SEC-PRT-1510 -->
 <div class="nri-auth-drawer-overlay" id="nriAuthDrawerOverlay" aria-hidden="true"></div>
 <aside class="nri-auth-drawer" id="nriAuthDrawer" role="dialog" aria-modal="true" aria-label="Authentication Drawer">
 
     <div class="nri-auth-banner">
         <div class="nri-auth-controls">
-            <button class="nri-auth-back" id="nriAuthDrawerBack" aria-label="Go back">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                Back
-            </button>
             <button class="nri-auth-close" id="nriAuthDrawerClose" aria-label="Close panel">&times;</button>
         </div>
         <div class="nri-auth-banner-logo">
@@ -637,10 +633,10 @@
     </div>
 
     <div class="nri-auth-stack-container">
-        <div class="nri-auth-stack" id="nriAuthStack">
+        <div class="nri-auth-stack" id="nriAuthStack" style="width:100%;display:block;">
 
-            <!-- Panel 1: Advisory -->
-            <div class="nri-auth-panel" data-panel="advisory">
+            <!-- Single panel: Advisory — Google only -->
+            <div class="nri-auth-panel" data-panel="advisory" style="width:100%;height:auto;">
                 <div class="nri-auth-inner-body">
                     <h3 class="nri-auth-headline">Secure access to your property advisor</h3>
                     <p class="nri-auth-subheadline">Private, secure guidance for NRIs managing property remotely.</p>
@@ -659,9 +655,6 @@
                         Continue with Google
                     </a>
 
-                    <div class="nri-auth-divider"><span>Or Continue With Email</span></div>
-                    <button class="nri-auth-email-link" id="nriTriggerSignIn" type="button">Sign In with Email</button>
-
                     <div class="nri-auth-footer">
                         <p class="nri-auth-legal">By continuing, you agree to Propertism's <a href="/terms/">Terms of Service</a> and <a href="/privacy/">Privacy Policy</a>.</p>
                         <p class="nri-auth-trust">Private | Secure | Concierge Assistance</p>
@@ -673,78 +666,6 @@
                 </div>
             </div>
 
-            <!-- Panel 2: Sign in -->
-            <div class="nri-auth-panel" data-panel="signin">
-                <div class="nri-auth-inner-body">
-                    <h1 class="nri-auth-inner-title">Welcome Back</h1>
-                    <p class="nri-auth-inner-sub">Manage your NRI property portfolio.</p>
-
-                    <div class="nri-auth-tabs">
-                        <span class="nri-auth-tab active">Sign In</span>
-                        <span class="nri-auth-tab" id="nriSwitchToSignUp">Create Account</span>
-                    </div>
-
-                    <a href="javascript:void(0)" onclick="NriAuthDrawer.googleLogin()" class="nri-auth-google-btn">
-                        <svg viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
-                        Sign in with Google
-                    </a>
-
-                    <div class="nri-auth-divider"><span>Or Continue With Email</span></div>
-
-                    <form method="post" action="{% url 'account_login' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="/nri-assist/">
-                        <div class="nri-auth-form-field">
-                            <label class="nri-auth-label">Email Address</label>
-                            <input class="nri-auth-input" type="email" name="login" placeholder="name@email.com" required>
-                        </div>
-                        <div class="nri-auth-form-field">
-                            <label class="nri-auth-label">Password</label>
-                            <input class="nri-auth-input" type="password" name="password" placeholder="********" required>
-                        </div>
-                        <button type="submit" class="nri-auth-submit-btn">Sign In</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Panel 3: Sign up -->
-            <div class="nri-auth-panel" data-panel="signup">
-                <div class="nri-auth-inner-body">
-                    <h1 class="nri-auth-inner-title">Join Propertism</h1>
-                    <p class="nri-auth-inner-sub">Set up your NRI property advisory account.</p>
-
-                    <div class="nri-auth-tabs">
-                        <span class="nri-auth-tab" id="nriSwitchToSignIn">Sign In</span>
-                        <span class="nri-auth-tab active">Create Account</span>
-                    </div>
-
-                    <a href="javascript:void(0)" onclick="NriAuthDrawer.googleLogin()" class="nri-auth-google-btn">
-                        <svg viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
-                        Continue with Google
-                    </a>
-
-                    <div class="nri-auth-divider"><span>Or Continue With Email</span></div>
-
-                    <form method="post" action="{% url 'account_signup' %}">
-                        {% csrf_token %}
-                        <div class="nri-auth-form-field">
-                            <label class="nri-auth-label">Email Address</label>
-                            <input class="nri-auth-input" type="email" name="email" placeholder="name@email.com" required>
-                        </div>
-                        <div class="nri-auth-form-field">
-                            <label class="nri-auth-label">Password</label>
-                            <input class="nri-auth-input" type="password" name="password1" placeholder="********" required>
-                            <p class="nri-auth-hint">Min 8 characters</p>
-                        </div>
-                        <div class="nri-auth-form-field">
-                            <label class="nri-auth-label">Confirm Password</label>
-                            <input class="nri-auth-input" type="password" name="password2" placeholder="********" required>
-                        </div>
-                        <button type="submit" class="nri-auth-submit-btn">Create Account</button>
-                    </form>
-                </div>
-            </div>
-
         </div>
     </div>
 </aside>
@@ -752,30 +673,15 @@
 <script>
 (function() {
     'use strict';
-    const overlay = document.getElementById('nriAuthDrawerOverlay');
-    const drawer  = document.getElementById('nriAuthDrawer');
-    const stack   = document.getElementById('nriAuthStack');
-    const backBtn = document.getElementById('nriAuthDrawerBack');
+    const overlay  = document.getElementById('nriAuthDrawerOverlay');
+    const drawer   = document.getElementById('nriAuthDrawer');
     const closeBtn = document.getElementById('nriAuthDrawerClose');
     const googleLoginUrl = '/accounts/google/login/?next=/nri-assist/';
-
-    let currentPanel = 'advisory';
-    const panels = { advisory: 0, signin: 1, signup: 2 };
-
-    function switchPanel(panelName) {
-        if (!stack || panels[panelName] === undefined) return;
-        stack.style.transform = `translateX(-${panels[panelName] * 33.333}%)`;
-        currentPanel = panelName;
-        backBtn.classList.toggle('is-visible', panelName !== 'advisory');
-        const panelEl = drawer.querySelector(`[data-panel="${panelName}"]`);
-        if (panelEl) panelEl.scrollTop = 0;
-    }
 
     function openDrawer() {
         drawer.classList.add('is-open');
         overlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
-        switchPanel('advisory');
     }
 
     function closeDrawer() {
@@ -787,26 +693,18 @@
     window.NriAuthDrawer = {
         open: openDrawer,
         close: closeDrawer,
-        switch: switchPanel,
         googleLogin: function() {
             window.location.href = googleLoginUrl;
         }
     };
 
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if (overlay) overlay.addEventListener('click', closeDrawer);
-    if (backBtn) backBtn.addEventListener('click', () => {
-        if (currentPanel === 'signup') switchPanel('signin');
-        else if (currentPanel === 'signin') switchPanel('advisory');
-    });
-
-    document.getElementById('nriTriggerSignIn').addEventListener('click', () => switchPanel('signin'));
-    document.getElementById('nriSwitchToSignUp').addEventListener('click', () => switchPanel('signup'));
-    document.getElementById('nriSwitchToSignIn').addEventListener('click', () => switchPanel('signin'));
+    if (overlay)  overlay.addEventListener('click', closeDrawer);
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
     });
+
     if (window.location.hash === '#nri-auth') openDrawer();
 })();
 </script>

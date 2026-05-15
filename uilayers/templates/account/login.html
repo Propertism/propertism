@@ -246,11 +246,7 @@
         <h1 class="auth-title">Welcome Back</h1>
         <p class="auth-sub">Manage your NRI property portfolio.</p>
 
-        <!-- Tab switcher -->
-        <div class="auth-tabs">
-            <span class="auth-tab active">Sign In</span>
-            <a href="{% url 'account_signup' %}" class="auth-tab">Create Account</a>
-        </div>
+        <!-- Google-only registration — no Create Account tab -->
 
         <!-- Google -->
         <a href="/accounts/google/login/" class="google-btn">
@@ -301,9 +297,9 @@
         </form>
 
         <div class="auth-guest">
-            <p class="auth-guest-label">Guest Access</p>
+            <p class="auth-guest-label">New to Propertism?</p>
             <p class="auth-guest-sub">
-                New here? <a href="{% url 'account_signup' %}">Create account</a>
+                Use <strong>Sign in with Google</strong> above to create your account.
             </p>
         </div>
 
