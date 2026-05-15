@@ -137,3 +137,38 @@ Added to `.env`:
 - `uilayers/templates/components/_header-english.html` ✓
 - `uilayers/templates/components/_footer.html` ✓
 - `nri_assist/` (full app) ✓
+
+---
+
+## Session 2026-05-15 — Google OAuth UX Fixes
+
+**Date:** 2026-05-15
+**Branch:** main
+**Approved by Viji** — execution decisions
+
+### Fix 1 — Direct Google OAuth from Auth Drawer
+
+**File:** `realtor_project/settings.py`
+Added `SOCIALACCOUNT_LOGIN_ON_GET = True`.
+
+**Root cause:** allauth, by default, does not initiate OAuth on a GET request (CSRF safety measure). Clicking "Continue with Google" in the auth drawer navigated to `/accounts/google/login/` via GET, which allauth silently redirected to the login page. User had to click Google again from there.
+
+**Fix:** `SOCIALACCOUNT_LOGIN_ON_GET = True` tells allauth to honour GET-initiated OAuth. Drawer button now goes directly to Google's account chooser — no intermediate stop.
+
+---
+
+### Fix 2 — "Sign Up Closed" on New User Google OAuth Callback
+
+**File:** `users/adapters.py`
+Added `is_open_for_signup` override to `AdminOnlySocialAccountAdapter`.
+
+**Root cause:** `PropertismAccountAdapter.is_open_for_signup` returns `False` to block email/password signup (correct behaviour per SCCB-SEC-PRT-1510). However, allauth's `DefaultSocialAccountAdapter.is_open_for_signup` chains to the account adapter, so new Google OAuth users were also blocked — hitting the allauth "Sign Up Closed" page on callback.
+
+**Fix:** Override `is_open_for_signup(request, sociallogin)` on `AdminOnlySocialAccountAdapter` to return `True`. Google registration stays open; email/password signup stays closed.
+
+---
+
+### Code-Review Mirrors (2026-05-15)
+
+- `realtor_project/settings.py` ✓
+- `users/adapters.py` ✓

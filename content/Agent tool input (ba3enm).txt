@@ -1,0 +1,12 @@
+Explore the Django project at d:\viji\viji-olivine\03rolledout\01propertism and report on:
+
+1. How Django admin access is currently controlled — look for `is_staff`, `is_superuser`, `has_module_perms`, admin middleware, `AdminSite` subclass, or any custom admin authentication in urls.py / settings.py.
+2. The content of realtor_project/urls.py — specifically how the admin URL is wired.
+3. The content of content/admin.py — full file, all admin registrations and any customisation.
+4. The users/adapters.py file (recently created).
+5. realtor_project/settings.py — AUTHENTICATION_BACKENDS, INSTALLED_APPS, MIDDLEWARE, ADMIN_URL, and any allauth settings.
+6. Any existing admin.py files in: users/, properties/, nri_assist/, chat/ — look for custom ModelAdmin classes.
+7. Check if there is a custom AdminSite anywhere (grep for class.*AdminSite or admin.site = ).
+8. Check if there is any admin login view override or ADMIN_LOGIN_REQUIRED or similar.
+
+Report file paths, line numbers, and exact code snippets. Focus on what controls who can log into /admin/.

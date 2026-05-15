@@ -356,6 +356,7 @@ ACCOUNT_ADAPTER = 'users.adapters.PropertismAccountAdapter'  # blocks /accounts/
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # belt-and-suspenders: verify if ever reopened
 SOCIALACCOUNT_AUTO_SIGNUP = True        # Google OAuth registration remains open
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # Google already verifies — skip allauth re-check
+SOCIALACCOUNT_LOGIN_ON_GET = True           # drawer button goes direct to Google — skip login page
 SOCIALACCOUNT_ADAPTER = 'users.adapters.AdminOnlySocialAccountAdapter'
 
 if not DEBUG:
