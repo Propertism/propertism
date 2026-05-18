@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
 <div class="world-clock-widget{% if hide_header %} world-clock-widget--no-header{% endif %}" data-world-clock-widget data-config-id="{{ widget_id }}-config">
     {% if not hide_header %}
     <div class="world-clock-widget-header">
@@ -12,10 +13,10 @@
 {% if not hide_config %}
 <script id="{{ widget_id }}-config" type="application/json">
 [
-  { "label": "US", "tzLabel": "ET", "timeZone": "America/New_York", "region": "us", "city": "New York", "flag": "🇺🇸" },
-  { "label": "UK", "tzLabel": "GMT", "timeZone": "Europe/London", "region": "uk", "city": "London", "flag": "🇬🇧" },
-  { "label": "INDIA", "tzLabel": "IST", "timeZone": "Asia/Kolkata", "region": "india", "city": "Chennai", "flag": "🇮🇳" },
-  { "label": "GULF", "tzLabel": "GST", "timeZone": "Asia/Dubai", "region": "gulf", "city": "Dubai", "flag": "🇦🇪" }
+  { "label": "US", "tzLabel": "ET", "timeZone": "America/New_York", "region": "us", "city": "New York", "isoCode": "us" },
+  { "label": "UK", "tzLabel": "GMT", "timeZone": "Europe/London", "region": "uk", "city": "London", "isoCode": "gb" },
+  { "label": "INDIA", "tzLabel": "IST", "timeZone": "Asia/Kolkata", "region": "india", "city": "Chennai", "isoCode": "in" },
+  { "label": "GULF", "tzLabel": "GST", "timeZone": "Asia/Dubai", "region": "gulf", "city": "Dubai", "isoCode": "ae" }
 ]
 </script>
 {% endif %}

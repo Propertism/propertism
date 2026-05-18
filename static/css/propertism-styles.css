@@ -2480,8 +2480,10 @@
 
 .world-clock-widget-title-flag {
     flex-shrink: 0;
-    font-size: 1em;
-    line-height: 1;
+    width: 20px !important;
+    height: 15px !important;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
 }
 
 .world-clock-widget-card-body {
@@ -2587,10 +2589,7 @@
     background: rgba(201, 169, 97, 0.85);
 }
 
-/* Country flags — emoji, no background needed */
-.world-clock-widget-card[data-region] .world-clock-widget-title-flag {
-    background: none;
-}
+
 
 .world-clock-widget-meta {
     display: flex;
