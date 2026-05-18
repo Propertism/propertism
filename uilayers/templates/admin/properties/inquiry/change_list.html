@@ -1,0 +1,547 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Inquiries | Propertism Admin{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label='properties' %}">Properties</a>
+    &rsaquo; Inquiries
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  :root {
+    --navy:       #0F172A;
+    --navy-2:     #1E293B;
+    --gold:       #B89A4A;
+    --gold-lt:    #D4AF6A;
+    --bg:         #F1F5F9;
+    --surface:    #FFFFFF;
+    --border:     #E2E8F0;
+    --text:       #1E293B;
+    --muted:      #64748B;
+    --pending-bg: #FEF3C7;
+    --pending-fg: #92400E;
+    --pending-bd: #F59E0B;
+    --contact-bg: #DBEAFE;
+    --contact-fg: #1E40AF;
+    --contact-bd: #3B82F6;
+    --closed-bg:  #D1FAE5;
+    --closed-fg:  #065F46;
+    --closed-bd:  #10B981;
+    --radius:     10px;
+    --shadow:     0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  }
+
+  /* ── Layout ── */
+  #inq-app { padding: 24px 0; font-family: 'Jost', system-ui, sans-serif; }
+
+  /* ── Page header ── */
+  .inq-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+  }
+  .inq-header h1 {
+    font-size: 1.6rem; font-weight: 700; color: var(--navy); margin: 0;
+    letter-spacing: -.5px;
+  }
+  .inq-header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 7px; font-size: .85rem;
+    font-weight: 600; text-decoration: none; cursor: pointer;
+    border: none; transition: background .18s, transform .12s;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: var(--navy); color: #fff; }
+  .btn-primary:hover { background: var(--navy-2); color: #fff; }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { background: var(--gold-lt); color: #fff; }
+  .btn-outline {
+    background: transparent; color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); background: #fff; }
+
+  /* ── Header stat chips ── */
+  .inq-header-left { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .header-stats { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hstat {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: .78rem; font-weight: 600; cursor: pointer;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--navy); transition: all .15s; user-select: none;
+  }
+  .hstat:hover { border-color: var(--gold); background: #FFF8ED; }
+  .hstat.active { border-color: var(--navy); background: var(--navy); color: #fff; }
+  .hstat .hnum {
+    font-size: .9rem; font-weight: 800; line-height: 1;
+  }
+  .hstat.hpending  { border-color: var(--pending-bd); }
+  .hstat.hpending .hnum  { color: var(--pending-fg); }
+  .hstat.hpending.active { background: var(--pending-bg); border-color: var(--pending-bd); color: var(--pending-fg); }
+  .hstat.hcontacted { border-color: var(--contact-bd); }
+  .hstat.hcontacted .hnum { color: var(--contact-fg); }
+  .hstat.hcontacted.active { background: var(--contact-bg); border-color: var(--contact-bd); color: var(--contact-fg); }
+  .hstat.hclosed   { border-color: var(--closed-bd); }
+  .hstat.hclosed .hnum   { color: var(--closed-fg); }
+  .hstat.hclosed.active { background: var(--closed-bg); border-color: var(--closed-bd); color: var(--closed-fg); }
+
+  /* ── Search (in header) ── */
+  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 300px; }
+  .search-wrap input {
+    width: 100%; padding: 8px 12px 8px 34px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-size: .855rem; color: var(--text);
+    background: var(--bg); transition: border-color .18s;
+    box-sizing: border-box;
+  }
+  .search-wrap input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .search-icon {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); pointer-events: none; font-size: .95rem;
+  }
+  .search-wrap input::placeholder { color: var(--muted); }
+
+  /* ── Table card ── */
+  .inq-card {
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .inq-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+  .inq-table thead tr { background: #F1F5F9; border-bottom: 2px solid var(--border); }
+  .inq-table thead th {
+    padding: 9px 12px; text-align: left; font-weight: 700;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--navy); white-space: nowrap;
+  }
+  .inq-table thead th:first-child { color: var(--muted); width: 36px; }
+  .inq-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+  }
+  .inq-table tbody tr:last-child { border-bottom: none; }
+  .inq-table tbody tr:hover { background: #F8FAFC; }
+  .inq-table td { padding: 9px 12px; vertical-align: middle; color: var(--text); white-space: nowrap; }
+  .inq-table td.id-col { color: var(--muted); font-size: .75rem; width: 36px; }
+  .inq-table td.msg-cell { white-space: normal; max-width: 180px; }
+
+  /* ── Name cell ── */
+  .name-cell strong { display: block; font-weight: 600; color: var(--navy); }
+  .name-cell a { color: var(--navy); text-decoration: none; }
+  .name-cell a:hover { color: var(--gold); }
+
+  /* ── Contact cell ── */
+  .contact-cell { white-space: nowrap; }
+  .contact-cell .email { color: var(--navy); font-size: .85rem; }
+  .contact-cell .phone { color: var(--muted); font-size: .8rem; margin-top: 3px; }
+
+  /* ── Property cell ── */
+  .prop-cell { color: var(--muted); font-size: .82rem; max-width: 120px; }
+
+  /* ── Message cell ── */
+  .msg-cell { max-width: 200px; }
+  .msg-preview { color: var(--text); line-height: 1.45; }
+  .msg-full { display: none; color: var(--text); line-height: 1.45; }
+  .msg-full.open { display: block; }
+  .toggle-msg {
+    background: none; border: none; color: var(--gold);
+    font-size: .78rem; cursor: pointer; padding: 2px 0;
+    font-weight: 600;
+  }
+  .toggle-msg:hover { color: var(--gold-lt); }
+
+  /* ── Status badge ── */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: .75rem; font-weight: 700; letter-spacing: .03em;
+    white-space: nowrap;
+  }
+  .badge-pending  { background: var(--pending-bg);  color: var(--pending-fg); }
+  .badge-contacted { background: var(--contact-bg); color: var(--contact-fg); }
+  .badge-closed   { background: var(--closed-bg);   color: var(--closed-fg);  }
+
+  /* ── Status select ── */
+  .status-select {
+    padding: 6px 10px; border-radius: 6px;
+    border: 1.5px solid var(--border); background: var(--bg);
+    font-size: .8rem; color: var(--text); cursor: pointer;
+    transition: border-color .18s;
+  }
+  .status-select:focus { outline: none; border-color: var(--gold); }
+  .status-select.saving { opacity: .5; pointer-events: none; }
+  .status-select.saved  { border-color: var(--closed-bd); }
+
+  /* ── Date cell ── */
+  .date-cell { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+  .sort-th { cursor: pointer; user-select: none; }
+  .sort-th:hover { color: var(--gold); }
+  .sort-arrow { margin-left: 4px; font-size: .65rem; opacity: .7; }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center; padding: 60px 24px;
+    color: var(--muted);
+  }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+  .empty-state p { margin: 6px 0 0; font-size: .9rem; }
+
+  /* ── Pagination ── */
+  .inq-pagination {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 10px;
+  }
+  .pag-info { font-size: .8rem; color: var(--muted); }
+  .pag-controls { display: flex; gap: 6px; align-items: center; }
+  .pag-btn {
+    padding: 6px 14px; border-radius: 6px; font-size: .82rem; font-weight: 600;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--navy); text-decoration: none; transition: all .15s;
+  }
+  .pag-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .pag-btn.disabled { opacity: .4; pointer-events: none; }
+  .pag-current {
+    padding: 6px 14px; border-radius: 6px; font-size: .82rem; font-weight: 700;
+    background: var(--navy); color: #fff;
+  }
+
+  /* ── Toast ── */
+  #inq-toast {
+    position: fixed; bottom: 28px; right: 28px;
+    background: var(--navy); color: #fff;
+    padding: 12px 20px; border-radius: 8px;
+    font-size: .85rem; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    transform: translateY(80px); opacity: 0;
+    transition: transform .25s, opacity .25s;
+    z-index: 9999; pointer-events: none;
+    border-left: 4px solid var(--gold);
+  }
+  #inq-toast.show { transform: translateY(0); opacity: 1; }
+  #inq-toast.error { border-left-color: #EF4444; }
+
+  /* ── Django messages ── */
+  .inq-messages { margin-bottom: 18px; }
+  .inq-msg {
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 8px;
+    font-size: .875rem; font-weight: 500;
+  }
+  .inq-msg.success { background: var(--closed-bg); color: var(--closed-fg); }
+  .inq-msg.error   { background: #FEE2E2; color: #991B1B; }
+  .inq-msg.warning { background: var(--pending-bg); color: var(--pending-fg); }
+
+  /* ── Date filter chips ── */
+  .date-chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .date-chips-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+  .chip {
+    display: inline-block; padding: 5px 13px; border-radius: 20px;
+    font-size: .78rem; font-weight: 600; text-decoration: none;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--navy); transition: all .15s; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--gold); background: #FFF8ED; }
+  .chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .chip.month-chip { border-color: #CBD5E1; color: var(--muted); font-size: .74rem; }
+  .chip.month-chip.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .chip-sep { color: var(--border); font-size: .9rem; }
+
+  @media (max-width: 900px) {
+    .inq-table thead th.hide-mobile,
+    .inq-table tbody td.hide-mobile { display: none; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="inq-app">
+
+  {% if messages %}
+  <div class="inq-messages">
+    {% for message in messages %}
+    <div class="inq-msg {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Page header + inline stat chips + search -->
+  <form method="get" action="" id="search-form">
+    {% if current_status %}<input type="hidden" name="status" value="{{ current_status }}">{% endif %}
+    {% if current_year %}<input type="hidden" name="year" value="{{ current_year }}">{% endif %}
+    {% if current_month %}<input type="hidden" name="month" value="{{ current_month }}">{% endif %}
+    <div class="inq-header">
+      <div class="inq-header-left">
+        <h1>Inquiries</h1>
+        <div class="header-stats">
+          <span class="hstat {% if not current_status %}active{% endif %}"
+                onclick="filterStatus('')">
+            <span class="hnum">{{ stats.total }}</span> Total
+          </span>
+          <span class="hstat hpending {% if current_status == 'pending' %}active{% endif %}"
+                onclick="filterStatus('pending')">
+            <span class="hnum">{{ stats.pending }}</span> Pending
+          </span>
+          <span class="hstat hcontacted {% if current_status == 'contacted' %}active{% endif %}"
+                onclick="filterStatus('contacted')">
+            <span class="hnum">{{ stats.contacted }}</span> Contacted
+          </span>
+          <span class="hstat hclosed {% if current_status == 'closed' %}active{% endif %}"
+                onclick="filterStatus('closed')">
+            <span class="hnum">{{ stats.closed }}</span> Closed
+          </span>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">&#x1F50D;</span>
+        <input type="text" name="q" value="{{ current_q }}"
+               placeholder="Search name, email, phone…"
+               id="search-input" autocomplete="off">
+      </div>
+      <div class="inq-header-actions">
+        {% if current_q or current_status or current_year %}
+        <a href="?" class="btn btn-outline" style="padding:8px 14px;font-size:.8rem">&#x2715; Clear</a>
+        {% endif %}
+        <a href="{% url 'admin:properties_inquiry_export_csv' %}?{% if current_q %}q={{ current_q }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_year %}year={{ current_year }}&{% endif %}{% if current_month %}month={{ current_month }}{% endif %}"
+           class="btn btn-outline">
+          &#x2193; Export CSV
+        </a>
+        {% if has_add_permission %}
+        <a href="{% url 'admin:properties_inquiry_add' %}" class="btn btn-gold">+ Add Inquiry</a>
+        {% endif %}
+      </div>
+    </div>
+  </form>
+
+  <!-- Date filter chips -->
+  {% if date_years %}
+  <div class="date-chips">
+    <span class="date-chips-label">Year</span>
+    <a href="?{% if current_q %}q={{ current_q }}&{% endif %}{% if current_status %}status={{ current_status }}{% endif %}"
+       class="chip {% if not current_year %}active{% endif %}">All</a>
+    {% for yr in date_years %}
+    <a href="?year={{ yr|date:'Y' }}{% if current_q %}&q={{ current_q }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}"
+       class="chip {% if current_year == yr|date:'Y' %}active{% endif %}">{{ yr|date:"Y" }}</a>
+    {% endfor %}
+
+    {% if current_year and date_months %}
+    <span class="chip-sep">|</span>
+    <span class="date-chips-label">Month</span>
+    <a href="?year={{ current_year }}{% if current_q %}&q={{ current_q }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}"
+       class="chip month-chip {% if not current_month %}active{% endif %}">All</a>
+    {% for mo in date_months %}
+    <a href="?year={{ current_year }}&month={{ mo|date:'n' }}{% if current_q %}&q={{ current_q }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}"
+       class="chip month-chip {% if current_month == mo|date:'n' %}active{% endif %}">{{ mo|date:"M" }}</a>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Table -->
+  <div class="inq-card">
+    <div style="overflow-x:auto">
+      <table class="inq-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th class="hide-mobile">Property</th>
+            <th class="hide-mobile">Message</th>
+            <th>Status</th>
+            <th class="hide-mobile sort-th">
+              <a href="?sort={% if current_sort == 'asc' %}desc{% else %}asc{% endif %}{% if current_q %}&amp;q={{ current_q }}{% endif %}{% if current_status %}&amp;status={{ current_status }}{% endif %}{% if current_year %}&amp;year={{ current_year }}{% endif %}{% if current_month %}&amp;month={{ current_month }}{% endif %}"
+                 style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px;">
+                Submitted
+                <span class="sort-arrow">{% if current_sort == 'asc' %}&#x25B2;{% else %}&#x25BC;{% endif %}</span>
+              </a>
+            </th>
+            <th>Update Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inq in inquiries %}
+          <tr>
+            <td class="id-col">{{ inq.id }}</td>
+
+            <td class="name-cell">
+              <strong>
+                <a href="{% url 'admin:properties_inquiry_change' inq.id %}">{{ inq.name }}</a>
+              </strong>
+            </td>
+
+            <td class="contact-cell">
+              <div class="email">{{ inq.email }}</div>
+            </td>
+
+            <td class="contact-cell">
+              {% if inq.phone %}<div class="phone">{{ inq.phone }}</div>
+              {% else %}<span style="color:var(--muted)">—</span>{% endif %}
+            </td>
+
+            <td class="prop-cell hide-mobile">
+              {% if inq.property %}{{ inq.property.title }}{% else %}<span style="color:var(--muted)">General</span>{% endif %}
+            </td>
+
+            <td class="msg-cell hide-mobile">
+              {% if inq.message %}
+                {% if inq.message|length > 80 %}
+                  <span class="msg-preview">{{ inq.message|truncatechars:80 }}</span>
+                  <span class="msg-full">{{ inq.message }}</span>
+                  <br><button type="button" class="toggle-msg" onclick="toggleMsg(this)">&#x25BC; more</button>
+                {% else %}
+                  <span class="msg-preview">{{ inq.message }}</span>
+                {% endif %}
+              {% else %}
+                <span style="color:var(--muted);font-style:italic">—</span>
+              {% endif %}
+            </td>
+
+            <td>
+              <span class="badge badge-{{ inq.status }}" id="badge-{{ inq.id }}">
+                {{ inq.get_status_display }}
+              </span>
+            </td>
+
+            <td class="date-cell hide-mobile">
+              {{ inq.created_at|date:"d M Y, H:i" }}
+            </td>
+
+            <td>
+              <select class="status-select" id="sel-{{ inq.id }}"
+                      onchange="setStatus({{ inq.id }}, this.value)">
+                {% for val, label in status_choices %}
+                <option value="{{ val }}" {% if inq.status == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">
+                <div class="empty-icon">&#x1F4CB;</div>
+                <strong>No inquiries found</strong>
+                {% if current_q or current_status %}
+                <p>Try adjusting your search or <a href="?" style="color:var(--gold)">clear filters</a>.</p>
+                {% else %}
+                <p>Inquiries submitted via the website will appear here.</p>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="inq-pagination">
+      <span class="pag-info">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        &nbsp;&middot;&nbsp; {{ page_obj.paginator.count }} total
+      </span>
+      <div class="pag-controls">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if current_q %}&q={{ current_q }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}" class="pag-btn">&#x2190; Prev</a>
+        {% else %}
+        <span class="pag-btn disabled">&#x2190; Prev</span>
+        {% endif %}
+
+        <span class="pag-current">{{ page_obj.number }}</span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if current_q %}&q={{ current_q }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}" class="pag-btn">Next &#x2192;</a>
+        {% else %}
+        <span class="pag-btn disabled">Next &#x2192;</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div id="inq-toast"></div>
+{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+<script>
+const CSRF = '{{ csrf_token }}';
+const SET_STATUS_URL = '{% url "admin:properties_inquiry_set_status" %}';
+
+function setStatus(id, status) {
+  const sel = document.getElementById('sel-' + id);
+  const badge = document.getElementById('badge-' + id);
+  sel.classList.add('saving');
+
+  fetch(SET_STATUS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
+    body: JSON.stringify({ id: id, status: status }),
+  })
+  .then(r => r.json())
+  .then(data => {
+    sel.classList.remove('saving');
+    if (data.ok) {
+      sel.classList.add('saved');
+      setTimeout(() => sel.classList.remove('saved'), 1800);
+      badge.className = 'badge badge-' + data.status;
+      badge.textContent = data.display;
+      toast('Status updated to ' + data.display, false);
+    } else {
+      toast('Error: ' + data.error, true);
+      location.reload();
+    }
+  })
+  .catch(() => {
+    sel.classList.remove('saving');
+    toast('Network error — please try again', true);
+  });
+}
+
+function filterStatus(status) {
+  const q = document.getElementById('search-input').value.trim();
+  let url = '?';
+  if (status) url += 'status=' + status;
+  if (q) url += (status ? '&' : '') + 'q=' + encodeURIComponent(q);
+  location.href = url;
+}
+
+function toggleMsg(btn) {
+  const cell = btn.closest('td');
+  const preview = cell.querySelector('.msg-preview');
+  const full = cell.querySelector('.msg-full');
+  const open = full.classList.toggle('open');
+  preview.style.display = open ? 'none' : '';
+  btn.textContent = open ? '▲ less' : '▼ more';
+}
+
+let _toastTimer;
+function toast(msg, isError) {
+  const el = document.getElementById('inq-toast');
+  el.textContent = msg;
+  el.className = 'show' + (isError ? ' error' : '');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+}
+
+// Search on Enter
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('search-form').submit(); }
+});
+</script>
+{% endblock %}

@@ -1,35 +1,15 @@
 import csv
+import json
 
 from django.contrib import admin
-from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.db import models as db_models
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.urls import path
 from django.utils import timezone
 
 from .models import ContactMessage, Inquiry, MaintenanceRequest, Property, PropertyPhoto, PropertyType, SupportTicket
-
-
-def export_inquiries_csv(modeladmin, request, queryset):
-    timestamp = timezone.now().strftime("%Y%m%d_%H%M")
-    response = HttpResponse(content_type="text/csv")
-    response["Content-Disposition"] = f'attachment; filename="inquiries_{timestamp}.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(["ID", "Name", "Email", "Phone", "Property", "Message", "Status", "Submitted"])
-
-    for inquiry in queryset.select_related("property"):
-        writer.writerow([
-            inquiry.id,
-            inquiry.name,
-            inquiry.email,
-            inquiry.phone,
-            inquiry.property.title if inquiry.property else "General",
-            inquiry.message,
-            inquiry.get_status_display(),
-            inquiry.created_at.strftime("%Y-%m-%d %H:%M"),
-        ])
-
-    return response
-
-export_inquiries_csv.short_description = "Export selected inquiries to CSV"
 
 
 @admin.register(PropertyType)
@@ -66,12 +46,145 @@ class PropertyPhotoAdmin(admin.ModelAdmin):
 
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = ["name", "email", "phone", "property", "status", "created_at"]
-    list_filter = ["status", "created_at"]
-    search_fields = ["name", "email", "phone", "property__title"]
-    date_hierarchy = "created_at"
+    change_list_template = "admin/properties/inquiry/change_list.html"
     readonly_fields = ["created_at", "updated_at"]
-    actions = [export_inquiries_csv]
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "set-status/",
+                self.admin_site.admin_view(self.set_status_view),
+                name="properties_inquiry_set_status",
+            ),
+            path(
+                "export-csv/",
+                self.admin_site.admin_view(self.export_csv_view),
+                name="properties_inquiry_export_csv",
+            ),
+        ]
+        return custom_urls + urls
+
+    def changelist_view(self, request, extra_context=None):
+        qs = Inquiry.objects.select_related("property")
+
+        q = request.GET.get("q", "").strip()
+        if q:
+            qs = qs.filter(
+                db_models.Q(name__icontains=q)
+                | db_models.Q(email__icontains=q)
+                | db_models.Q(phone__icontains=q)
+                | db_models.Q(message__icontains=q)
+            )
+
+        status_filter = request.GET.get("status", "")
+        if status_filter and status_filter in dict(Inquiry.STATUS_CHOICES):
+            qs = qs.filter(status=status_filter)
+
+        year_filter = request.GET.get("year", "")
+        month_filter = request.GET.get("month", "")
+        if year_filter.isdigit():
+            qs = qs.filter(created_at__year=int(year_filter))
+            if month_filter.isdigit():
+                qs = qs.filter(created_at__month=int(month_filter))
+
+        sort = request.GET.get("sort", "desc")
+        qs = qs.order_by("created_at" if sort == "asc" else "-created_at")
+        paginator = Paginator(qs, 25)
+        page_obj = paginator.get_page(request.GET.get("page", 1))
+
+        all_qs = Inquiry.objects.all()
+
+        # Build year chips from all data
+        years = (
+            all_qs.dates("created_at", "year", order="DESC")
+        )
+        months = []
+        if year_filter.isdigit():
+            months = all_qs.filter(created_at__year=int(year_filter)).dates(
+                "created_at", "month", order="ASC"
+            )
+
+        context = {
+            **self.admin_site.each_context(request),
+            "title": "Inquiries",
+            "opts": self.model._meta,
+            "has_add_permission": self.has_add_permission(request),
+            "inquiries": page_obj,
+            "paginator": paginator,
+            "page_obj": page_obj,
+            "stats": {
+                "total": all_qs.count(),
+                "pending": all_qs.filter(status="pending").count(),
+                "contacted": all_qs.filter(status="contacted").count(),
+                "closed": all_qs.filter(status="closed").count(),
+            },
+            "status_choices": Inquiry.STATUS_CHOICES,
+            "current_q": q,
+            "current_status": status_filter,
+            "current_year": year_filter,
+            "current_month": month_filter,
+            "current_sort": sort,
+            "date_years": years,
+            "date_months": months,
+        }
+        return render(request, self.change_list_template, context)
+
+    def set_status_view(self, request):
+        if request.method != "POST":
+            return JsonResponse({"ok": False, "error": "POST required"}, status=405)
+        try:
+            data = json.loads(request.body)
+            inquiry_id = int(data["id"])
+            new_status = data["status"]
+            if new_status not in dict(Inquiry.STATUS_CHOICES):
+                return JsonResponse({"ok": False, "error": "Invalid status"}, status=400)
+            Inquiry.objects.filter(pk=inquiry_id).update(
+                status=new_status,
+                updated_at=timezone.now(),
+            )
+            display = dict(Inquiry.STATUS_CHOICES)[new_status]
+            return JsonResponse({"ok": True, "status": new_status, "display": display})
+        except Exception as exc:
+            return JsonResponse({"ok": False, "error": str(exc)}, status=400)
+
+    def export_csv_view(self, request):
+        qs = Inquiry.objects.select_related("property")
+        q = request.GET.get("q", "").strip()
+        if q:
+            qs = qs.filter(
+                db_models.Q(name__icontains=q)
+                | db_models.Q(email__icontains=q)
+                | db_models.Q(phone__icontains=q)
+            )
+        status_filter = request.GET.get("status", "")
+        if status_filter and status_filter in dict(Inquiry.STATUS_CHOICES):
+            qs = qs.filter(status=status_filter)
+
+        year_filter = request.GET.get("year", "")
+        month_filter = request.GET.get("month", "")
+        if year_filter.isdigit():
+            qs = qs.filter(created_at__year=int(year_filter))
+            if month_filter.isdigit():
+                qs = qs.filter(created_at__month=int(month_filter))
+
+        timestamp = timezone.now().strftime("%Y%m%d_%H%M")
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f'attachment; filename="inquiries_{timestamp}.csv"'
+        writer = csv.writer(response)
+        writer.writerow(["ID", "Name", "Email", "Phone", "Property", "Message", "Status", "Submitted"])
+        for inq in qs.order_by("-created_at"):
+            writer.writerow([
+                inq.id,
+                inq.name,
+                inq.email,
+                inq.phone,
+                inq.property.title if inq.property else "General",
+                inq.message,
+                dict(Inquiry.STATUS_CHOICES)[inq.status],
+                inq.created_at.strftime("%Y-%m-%d %H:%M"),
+            ])
+        return response
 
 
 # @admin.register(MaintenanceRequest)

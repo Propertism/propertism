@@ -172,3 +172,63 @@ Added `is_open_for_signup` override to `AdminOnlySocialAccountAdapter`.
 
 - `realtor_project/settings.py` ✓
 - `users/adapters.py` ✓
+
+---
+
+## Session 2026-05-18 — Enterprise Inquiry Admin + SMTP + Dual-Email + WhatsApp
+
+**Date:** 2026-05-18
+**Branch:** main
+**Approved by Viji** — execution decisions
+
+### SCCB-DE-027 — EB Settings & SMTP Audit
+
+Confirmed EB uses `realtor_project.settings` (not `settings_production.py`) via `.ebextensions/01_django.config`.
+SMTP vars were absent from EB env — Viji added `EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `ADMIN_EMAIL` to EB console this session.
+
+### Email Routing — Dual Inbox
+
+**File:** `realtor_project/settings.py`
+Added `ADMIN_EMAILS = list({ADMIN_EMAIL, _extra_recipients})` — deduped set of `info@propertism.in` + `propertism.tamil@gmail.com`.
+Gmail SMTP configured; reads credentials from EB env vars.
+
+**File:** `content/views.py`
+Updated `send_admin_notification()`, `send_rfq_notification()`, `send_landing_lead_notification()` — all use `recipient_list=settings.ADMIN_EMAILS`.
+
+### WhatsApp Confirmed
+
+`send_rfq_notification()` already calls `send_whatsapp_notification()`. EB vars `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_ADMIN_PHONE`, `WHATSAPP_PHONE_ID` confirmed present. No code change needed.
+
+### Enterprise Inquiry Admin
+
+**File:** `properties/admin.py`
+Full `InquiryAdmin` rewrite:
+- `changelist_view()` — custom queryset with search (Q objects), status filter, year/month filter, sort asc/desc, pagination (25/page)
+- `set_status_view()` — AJAX POST endpoint; updates DB, returns `{ok, status, display}` JSON
+- `export_csv_view()` — streams CSV honouring all active filters
+- `get_urls()` — registers `set-status/` and `export-csv/` admin URLs
+
+**File:** `uilayers/templates/admin/properties/inquiry/change_list.html` (new)
+Enterprise custom admin template:
+- Header bar: title + Total/Pending/Contacted/Closed inline chips + search input + Export CSV + Add Inquiry
+- Year/Month filter chips from `all_qs.dates()`
+- Table: # / Name / Email / Phone / Property / Message / Status badge / Submitted (sort toggle ▲▼) / Update Status dropdown
+- AJAX status update via fetch POST + toast notification
+- Pagination controls
+- Mobile: `.hide-mobile` columns collapse at 900px
+
+### UI Fixes
+
+- Double title removed: `{% block content_title %}{% endblock %}`
+- Column headers: dark navy text on `#F1F5F9` light gray (not white-on-navy)
+- Phone as separate column
+- Single-row layout: `white-space: nowrap` on all `td`
+- Submitted: `d M Y, H:i` single line format
+- Sort toggle on Submitted `<th>`; `current_sort` passed in context
+- Stats cards moved from separate grid row into header bar inline chips
+- Search moved from separate toolbar into header bar; toolbar row removed
+
+### Code-Review Mirrors (2026-05-18)
+
+- `properties/admin.py` ✓
+- `inquiry_change_list.html` ✓
