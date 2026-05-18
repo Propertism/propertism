@@ -2479,11 +2479,9 @@
 }
 
 .world-clock-widget-title-flag {
-    width: 14px;
-    height: 10px;
     flex-shrink: 0;
-    border-radius: 1px;
-    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.12);
+    font-size: 1em;
+    line-height: 1;
 }
 
 .world-clock-widget-card-body {
@@ -2589,28 +2587,9 @@
     background: rgba(201, 169, 97, 0.85);
 }
 
-/* Country flags after name */
-.world-clock-widget-card[data-region="us"] .world-clock-widget-title-flag {
-    background: linear-gradient(180deg, #B22234 0 14%, #FFFFFF 14% 28%, #B22234 28% 42%, #FFFFFF 42% 56%, #B22234 56% 70%, #FFFFFF 70% 84%, #B22234 84% 100%);
-}
-
-.world-clock-widget-card[data-region="uk"] .world-clock-widget-title-flag {
-    background:
-        linear-gradient(90deg, transparent 41%, #FFFFFF 41% 59%, transparent 59%),
-        linear-gradient(transparent 36%, #FFFFFF 36% 64%, transparent 64%),
-        linear-gradient(90deg, transparent 45%, #C8102E 45% 55%, transparent 55%),
-        linear-gradient(transparent 42%, #C8102E 42% 58%, transparent 58%),
-        linear-gradient(180deg, #012169 0%, #012169 100%);
-}
-
-.world-clock-widget-card[data-region="india"] .world-clock-widget-title-flag {
-    background: linear-gradient(180deg, #FF9933 0 33.33%, #FFFFFF 33.33% 66.66%, #138808 66.66% 100%);
-}
-
-.world-clock-widget-card[data-region="gulf"] .world-clock-widget-title-flag {
-    background:
-        linear-gradient(90deg, #FF0000 0 26%, transparent 26%),
-        linear-gradient(180deg, #00732F 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+/* Country flags — emoji, no background needed */
+.world-clock-widget-card[data-region] .world-clock-widget-title-flag {
+    background: none;
 }
 
 .world-clock-widget-meta {
