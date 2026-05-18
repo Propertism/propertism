@@ -221,9 +221,6 @@
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    background: rgba(196, 156, 82, 0.05);
-    border: 1px solid var(--border-subtle);
     transition: all 0.3s ease;
     color: var(--text-main);
 }
@@ -263,10 +260,8 @@
 }
 
 .hf-icon-link:hover {
-    background: rgba(196, 156, 82, 0.12);
-    border-color: var(--brand-gold);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(196, 156, 82, 0.2);
+    opacity: 0.75;
 }
 
 /* 2. STATS TILE GRID (UNIFIED) */
