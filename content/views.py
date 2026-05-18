@@ -553,7 +553,7 @@ def send_whatsapp_notification(text):
         logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text} (API not configured)")
         return
 
-    url = f"https://graph.facebook.com/v17.0/{phone_id}/messages"
+    url = f"https://graph.facebook.com/v21.0/{phone_id}/messages"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
