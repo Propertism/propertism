@@ -74,24 +74,6 @@ class InquiryAdmin(admin.ModelAdmin):
     actions = [export_inquiries_csv]
 
 
-# @admin.register(MaintenanceRequest)
-# class MaintenanceRequestAdmin(admin.ModelAdmin):
-#     list_display = ["title", "property", "user", "priority", "status", "created_at"]
-#     list_filter = ["priority", "status", "created_at"]
-#     search_fields = ["title", "description", "property__title"]
-#     date_hierarchy = "created_at"
-#     readonly_fields = ["created_at", "updated_at"]
-
-
-# @admin.register(SupportTicket)
-# class SupportTicketAdmin(admin.ModelAdmin):
-#     list_display = ["id", "subject", "user", "priority", "status", "created_at"]
-#     list_filter = ["priority", "status", "created_at"]
-#     search_fields = ["subject", "description", "user__username"]
-#     date_hierarchy = "created_at"
-#     readonly_fields = ["created_at", "updated_at"]
-
-
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ["name", "email", "phone", "subject", "status", "created_at"]

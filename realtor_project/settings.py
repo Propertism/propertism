@@ -442,9 +442,13 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 # Default email addresses
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@propertism.in')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'info@propertism.in')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'propertism.tamil@gmail.com')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'propertism.tamil@gmail.com')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
+
+# Notification recipients — all inquiry/lead alerts go to both inboxes
+_extra_recipients = os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com')
+ADMIN_EMAILS = list({ADMIN_EMAIL, _extra_recipients})  # deduplicates if same address
 
 # Email timeout (seconds)
 EMAIL_TIMEOUT = 10
