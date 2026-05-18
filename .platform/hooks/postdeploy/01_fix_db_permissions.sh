@@ -3,7 +3,7 @@ set -euo pipefail
 
 if [ -f /opt/elasticbeanstalk/deployment/env ]; then
     set -a
-    . /opt/elasticbeanstalk/deployment/env
+    . /opt/elasticbeanstalk/deployment/env || true
     set +a
 fi
 
