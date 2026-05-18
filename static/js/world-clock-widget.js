@@ -44,7 +44,7 @@
         // Minimal analog dial - no ticks, no second hand
         card.innerHTML = [
             '<div class="world-clock-widget-card-header">',
-            '<span class="world-clock-widget-card-title"><span class="world-clock-widget-title-text">' + region.label + " (" + region.tzLabel + ')</span>' + (region.isoCode ? '<span class="fi fi-' + region.isoCode + ' world-clock-widget-title-flag" aria-hidden="true"></span>' : '') + '</span>',
+            '<span class="world-clock-widget-card-title"><span class="world-clock-widget-title-text">' + region.label + " (" + region.tzLabel + ')</span>' + (region.isoCode ? '<img src="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/' + region.isoCode + '.svg" class="world-clock-widget-title-flag" alt="" aria-hidden="true" loading="lazy">' : '') + '</span>',
             "</div>",
             '<div class="world-clock-widget-card-body">',
             '<div class="world-clock-widget-dial--mini" aria-hidden="true">',
