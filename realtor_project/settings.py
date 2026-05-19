@@ -382,10 +382,12 @@ CSRF_TRUSTED_ORIGINS = _get_csv_env('CSRF_TRUSTED_ORIGINS', default=[
     'http://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
 ])
 
-# Session Security
+# Session Security — SCCB-19052026-1
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_AGE = 86400  # 24 hours
+SESSION_COOKIE_AGE = 60 * 60 * 8       # 8 hours
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
 
 # Password validation - enforce strong passwords
 AUTH_PASSWORD_VALIDATORS = [

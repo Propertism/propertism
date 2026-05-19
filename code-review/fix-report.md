@@ -1,5 +1,242 @@
 # Fix Report — Propertism (01propertism)
-# Current State as of 2026-05-08
+# Current State as of 2026-05-19
+
+---
+
+## SCCB-002 - Inquiries Console UI Remediation (Desktop List View)
+
+**Date:** 2026-05-19  
+**Approval:** Approved by Viji - SCCB-002
+
+### Target page
+- /inquiries/ desktop list view only
+- Not the Django admin inquiries changelist
+
+### Files Modified
+- uilayers/templates/inquiries/dashboard.html
+  - Reworked the desktop list-view structure around SCCB-002 instead of the earlier mixed desktop/board chrome
+  - Hid the dead board toggle from the reviewed surface
+  - Rebuilt the listing header into a single panel header with title, scope text, result count, and updated timestamp
+  - Replaced the row <select> status control with an inline status trigger + anchored action menu
+  - Replaced input-like contact rendering with plain email/phone actions
+  - Made row actions permanently visible with icon-only buttons and disabled states
+  - Added loading shell markup, offline banner, improved empty states, and keyboard row hooks
+  - Replaced the public-site inquiries header treatment with a console-specific wordmark and explicit Sign out button
+- static/css/inquiries.css
+  - Rewrote the desktop inquiries console styling to match SCCB-002
+  - Compact stat row: reduced tile height, smaller numerals, consistent alignment
+  - Search field: corrected icon placement and input left padding
+  - Sidebar tree: Timeline label, clearer indentation, right-aligned counts, active-row treatment
+  - Table: denser row rhythm, full-row hover/focus state, proper ACTIONS column styling
+  - Status control: dot + text trigger, lightweight dropdown, no decorative filled pill
+  - Added loading shimmer rows, offline banner, bottom-right toast, and refined sign-out styling
+
+### SCCB-002 items addressed in this pass
+- #1 Exit button/sign-out treatment
+- #2 Stats chips reduced to compact stat row
+- #3 Search icon overlap bug
+- #4 Removed emoji from the reviewed desktop list surface
+- #5 Inline status editing via anchored dropdown
+- #6 Actions column always visible with header
+- #7 Status visual weight reduced to dot + text
+- #8 Tighter row density and row hover/focus states
+- #9 Removed input-field style contact rendering from table rows
+- #10 Sidebar hierarchy tightened and relabelled to Timeline
+- #11 Listing/table header structure unified
+- #12 Spacing/alignment pass across header, stats, chips, and rows
+- #13 Dead board toggle hidden from the reviewed page
+- #14 Added data freshness timestamp
+- #15 Added visible loading shell and offline/error surfaces
+- #16 Added keyboard support for /, Enter, Esc, ArrowUp, ArrowDown
+- #17 Added clearer empty-state copy and treatment
+
+### Verification
+- python manage.py check - passed
+- Browser verification against /inquiries/ is still pending in my session because the automation tab was redirected to /admin/login/?next=/inquiries/ when unauthenticated
+
+### Code-Review Mirrors
+- code-review/dashboard.html - synced
+- code-review/inquiries.css - synced
+
+### Follow-up: Header Branding Adjustment
+- Restored the Propertism logo in the `/inquiries/` header instead of text-only branding
+- Reduced the adjacent `Propertism · Inquiries` label size to sit closer to the home-page header standard
+- Kept the existing home-page logo image behavior and appended the inquiries label beside it
+
+### Follow-up: Move Page Context To Header
+- Moved `Inquiries / All inquiries / Showing N of M / Updated ...` into the fixed header area beside the logo
+- Removed the duplicated body-level listing header so the page context appears only once
+- Kept the `Updated ...` stamp bound to the same `inqUpdatedStamp` JS refresh point
+
+### Follow-up: Remove Header Brand Text
+- Removed the extra `Propertism · Inquiries` text beside the logo
+- Left the page context summary as the only header text in that area
+
+### Follow-up: Header Controls + Flat Surface Cleanup
+- Moved Refresh into the top-right header tools beside Sign out and removed the lower action-bar refresh control
+- Switched both header controls to icon-only treatment with no text label or boxed background
+- Corrected the search icon/input spacing so the lens no longer collides with the placeholder text
+- Flattened rectangular UI surfaces across the inquiries console by removing rounded corners from the search field, stat chips, table shell, dropdown panels, action buttons, detail cards, dialog, toast, and mobile utility buttons
+
+### Follow-up: Move Page Context Beside Metrics
+- Moved `Inquiries / All inquiries / Showing N of M / Updated ...` out of the logo/header area and into the action bar immediately beside the metric chips
+- Converted the context block from JS-injected header content to server-rendered action-bar markup
+- Kept `inqUpdatedStamp` unchanged so refresh/status updates still update the visible freshness label
+
+### Follow-up: Branded Staff Gate For Inquiries
+- Replaced Django admin login fallback with `/inquiries/login/` for the Inquiries console
+- Added `inquiry_staff_login` using Django `authenticate()`/`login()` while still requiring `is_staff`
+- Added a Propertism staff login page and Ctrl+I modal for non-staff/anonymous visitors
+- Kept the staff-only FAB + pending badge for already authenticated staff users
+- Verified anonymous `/inquiries/` now redirects to `/inquiries/login/?next=/inquiries/`, not `/admin/login/`
+
+### Follow-up: Remove Duplicate Chip Counts
+- Removed numeric counts from the status filter chips (`All`, `Pending`, `Contacted`, `Closed`)
+- Kept the metric chips as the single source for totals (`Total`, `Pending`, `Contact`, `This Wk`)
+
+### Follow-up: Align Status LOV
+- Updated the metric row to use the same inquiry status values as Django admin: `Pending`, `Contacted`, `Closed`
+- Replaced `This Wk` with `Closed` and renamed `Contact` to `Contacted`
+
+### Follow-up: Premium Mail Composer
+- Added an inline reply composer below the inquiries list for leads with an email address
+- Email links and email action buttons now populate the composer instead of launching a bare `mailto:` immediately
+- Composer pre-fills recipient, subject, and a Propertism Advisory response draft using the selected lead/property context
+- Added actions to open the draft in the local mail client, copy the complete draft, or clear the composer
+- Kept the visual treatment premium, quiet, and text-only with no emojis
+
+### Follow-up: Full Compose Surface
+- Reworked the composer to match a modern mail composition surface: `Recipient`, `CC`, `Subject`, `Content`, `Attachments`
+- Added recipient chip with initial, remove control, attachment tool row, Save Draft, Schedule, and Send actions
+- Save Draft stores the current draft in local browser storage; Schedule/attachment controls are staged with clear future-integration messaging
+- Send continues to launch the local mail client via `mailto:` until SMTP-backed sending is approved
+
+### Follow-up: SMTP Send + Focused Composer Mode
+- Composer is hidden by default and opens as the primary Zone C workspace only when an email action is clicked
+- Added `/inquiries/send-reply/` staff-only POST endpoint using Django `EmailMessage`, `DEFAULT_FROM_EMAIL`, and configured SMTP settings
+- Send now posts to Django and sends from the configured Propertism email instead of opening a local `mailto:` draft
+- Successful send marks a pending inquiry as `Contacted` and syncs the row/status UI
+- Verified endpoint with Django locmem email backend: one outbound message created with To and CC
+
+### Follow-up: Composer Send JSON/CSRF Hardening
+- Added a template-rendered CSRF token inside the composer form because CSRF cookies are HTTP-only in settings
+- Updated `getCsrf()` to prefer the hidden form token before falling back to the cookie
+- Hardened the Send fetch handler to parse response text safely and show a clear session/server error instead of `Unexpected token '<'`
+
+---
+
+## SCCB-19052026/A2 — Inquiries Lite (Mobile Surface)
+
+**Date:** 2026-05-19
+**Approval:** Approved by Viji — SCCB-19052026/A2
+
+### Files Modified
+- `static/css/inquiries.css`
+  - Replaced old mobile `@media (max-width:899px)` block: now hides `.inq-actionbar` + `.inq-body`, shows `.inq-lite`, sets `height:auto` + `overflow-y:auto` on `.main-content`
+  - Added full `.inq-lite-*` component system (chip bar, rows, expand, action buttons, empty state, SOP note)
+- `uilayers/templates/inquiries/dashboard.html`
+  - Inserted `.inq-lite` section (filter chips, row list, SOP note) between `/inq-body` and confirm dialog
+  - Inline redirect script: first mobile visit with no params → `?status=pending`
+  - New `<script>` block: `liteToggleExpand`, `liteDone`, `confirmStatusChange` override, `cancelStatusChange` override
+  - Reuses existing `postStatus`, `openWhatsApp`, confirm overlay, undo toast
+
+### Mobile Lite features (< 900px)
+- CSS-first split: desktop workspace hidden, lite view shown
+- Default filter: Pending (auto-redirect on first visit)
+- Chips: Pending / All
+- Row: status dot + name + property/time + email + expand-on-tap for message
+- Action buttons (44px): WhatsApp (via openWhatsApp JS), Call (tel:), Done/Close
+  - Phone null → WA + Call disabled at 40% opacity
+  - Pending → Done → contacted (optimistic + undo toast + row fades)
+  - Contacted → Close → confirm dialog → closed
+- SOP note: "For full inquiry management, open on desktop."
+- Empty states: "All clear. No pending inquiries." / "No inquiries yet."
+
+---
+
+## SCCB-19052026-1/A1 — Nav Suppression on Inquiries Console
+
+**Date:** 2026-05-19
+**Approval:** Approved by Viji — nav suppression directive
+
+### Files Modified
+- `static/css/inquiries.css` — added `body.inq-app` scoped rules to hide `.main-nav`, `.mobile-menu-toggle`, `.mobile-nav`, `.mobile-menu-backdrop`, `#typoToggle`, `.nav-profile-trigger-name`, `.nav-profile-chevron`; added `.inq-exit-btn` style (gold-border, light text, dark nav background)
+- `uilayers/templates/inquiries/dashboard.html` — added inline script that injects `<a class="inq-exit-btn" href="/">← Exit</a>` into `.header-v4-tools` before the profile wrapper
+
+### Result
+On `/inquiries/*`: all public nav links hidden; only the profile avatar/initial (click to sign out) and an Exit button remain visible in the header.
+
+---
+
+## SCCB-19052026-1 Phase 2 — Board View + Drag-and-Drop + Swipe
+
+**Date:** 2026-05-19
+**Approval:** Approved by Viji — SCCB-19052026-1 Phase 2
+
+### Files Modified
+- `properties/views.py` — added `board_columns` to context
+- `uilayers/templates/inquiries/dashboard.html` — added view toggle to Zone A, wrapped list in `#inqListView`, added `#inqBoardView` with three columns (Pending/Contacted/Closed) and draggable cards, added all Phase 2 JS (setView, drag-and-drop, board column counts, mobile swipe-right)
+- `static/css/inquiries.css` — added view toggle styles, board column and card styles, drag visual feedback, mobile swipe row transition
+
+### Phase 2 features
+- View toggle (☰ List / ▦ Board) in Zone A — desktop only
+- localStorage persistence: `propertism.inquiries.view`
+- Board: three columns, cards draggable with HTML5 DnD API
+- Drop → status POST + optimistic move + undo toast
+- Closed drop → confirmation dialog (same as table)
+- Mobile swipe-right on list row → Mark Contacted (pending rows only)
+- Board hidden on mobile (< 900px)
+
+---
+
+## SCCB-19052026-1/A1 — Inquiries Dashboard Amendment (Workspace Shell + Light Theme)
+
+**Date:** 2026-05-19
+**Approval:** Approved by Viji/Manthraa — SCCB-19052026-1/A1
+
+### Files Modified
+- `properties/views.py` — inquiries_dashboard fully rewritten: tree query (one GROUP BY query), date/q/status filters, tree_data nested dict built from TruncDate/ExtractYear/ExtractMonth
+- `properties/models.py` — added Meta.indexes: `inquiry_created_idx` + `inquiry_status_created_idx` (composite)
+- `uilayers/templates/base.html` — FAB guard updated: `{% if not request.path|slice:":11" == "/inquiries/" %}`, inline FAB CSS added so it works without loading inquiries.css on public pages
+
+### Files Created
+- `uilayers/templates/inquiries/base_app.html` — standalone workspace shell (does NOT extend public base.html); fonts, inquiries.css, top bar (Propertism · Inquiries wordmark + user + sign-out)
+- `static/css/inquiries.css` — complete rewrite: light theme tokens (--bg-canvas, --ink-primary, --accent-gold, --status-*-bg/ink), three-zone layout (CSS flex), Zone A/B/C, status as soft pill (not dark-navy bordered), mobile sidebar drawer
+- `uilayers/templates/inquiries/dashboard.html` — complete rewrite: extends base_app.html, Zone A (filter chips + search + refresh), Zone B (tree: year > month > date, server-rendered, collapse/expand JS), Zone C (stats + listing + detail panel sliding within Zone C)
+
+### Migration
+- `properties/migrations/0005_inquiry_indexes.py` — two non-breaking indexes
+
+### Key behaviour
+- Public propertism.in: dark navy + gold unchanged
+- /inquiries/* routes: standalone light workspace, no public chrome
+- URL state: ?status=pending&date=2026-03-18&q=john — fully shareable
+- Ctrl+I on inquiries page: focuses search input (not navigation)
+- FAB: hidden on /inquiries/* (guard in base.html)
+
+---
+
+## SCCB-19052026-1 — Inquiries Dashboard (Phase 1)
+
+**Date:** 2026-05-19
+**Approval:** Approved by Viji/Manthraa — SCCB-19052026-1
+
+### Files Modified
+- `realtor_project/settings.py` — SESSION_COOKIE_AGE → 8h, added SESSION_EXPIRE_AT_BROWSER_CLOSE + SESSION_SAVE_EVERY_REQUEST globally
+- `properties/views.py` — added `inquiries_dashboard`, `inquiry_status_update`, `inquiry_pending_count` views + imports
+- `realtor_project/urls.py` — added `path('inquiries/', include('properties.urls_inquiries'))`
+- `uilayers/templates/base.html` — added staff-only FAB (fixed bottom-right, gold envelope, pending badge) + Ctrl+I shortcut + 60s badge polling
+
+### Files Created
+- `properties/urls_inquiries.py` — 3 URL patterns: GET /inquiries/, POST /inquiries/<id>/status/, GET /inquiries/pending-count/
+- `static/css/inquiries.css` — full dashboard styles (dark navy, gold, Cormorant/Jost)
+- `uilayers/templates/inquiries/dashboard.html` — full Phase 1 dashboard template with stats strip, list table, detail slide-out, status workflow, quick actions, undo toast
+
+### Auth: @staff_member_required on all 3 views. FAB + Ctrl+I guarded by {% if user.is_staff %}.
+### Schema: ZERO migrations. Existing Inquiry model, no changes.
+
+---
+# Previous State as of 2026-05-08
 **Branch:** main | **Author:** Astra (Claude Code Sonnet 4.6)
 
 ---
@@ -232,3 +469,110 @@ Enterprise custom admin template:
 
 - `properties/admin.py` ✓
 - `inquiry_change_list.html` ✓
+
+---
+
+## Session 2026-05-18 (Evening) — EB Recovery, WhatsApp, UI, Flags, SEO Audit
+
+**Date:** 2026-05-18
+**Branch:** main
+**Approved by Viji** — execution decisions
+
+### Fix 1 — EB Deployment Restored (Health Red → Green)
+
+**Root cause A:** `collectstatic --clear` in `Procfile` ran as `webapp` user on root-owned static files → `PermissionError` killed gunicorn before it started.
+**Fix:** Removed collectstatic from `Procfile`. Now runs only in container_commands (root) and postdeploy hook.
+
+**Root cause B:** Corrupt `tflw` entry in `/opt/elasticbeanstalk/deployment/env` line 19 caused all 4 postdeploy hooks to fail under `set -euo pipefail`.
+**Fix:** Added `|| true` to env file sourcing line in all 4 hooks.
+
+**Files:** `Procfile`, `.platform/hooks/postdeploy/00_collectstatic_current.sh`, `01_fix_db_permissions.sh`, `02_bootstrap_if_db_looks_empty.sh`, `03_repair_stale_customer_reviews.sh`
+
+---
+
+### Fix 2 — WhatsApp API Version + Logging
+
+**File:** `content/views.py`
+Bumped Meta Cloud API `v17.0` → `v21.0` (v17.0 deprecated, ~2-year lifecycle).
+
+**File:** `realtor_project/settings.py`
+Added `content` logger to Django LOGGING config — WhatsApp errors from `send_whatsapp_notification` now surface in EB `web.stdout.log`.
+
+**Root cause confirmed from live logs:** Error code `190` (OAuthException) — expired access token.
+**Pending (no code change):** Viji to generate permanent System User token in Meta Business Suite → update `WHATSAPP_ACCESS_TOKEN` EB env var.
+
+---
+
+### Fix 3 — Contact Section Icon Cleanup
+
+**File:** `uilayers/templates/home/sections/_contact.html`
+Removed Facebook, Instagram, YouTube, Twitter/X icon blocks.
+
+**File:** `static/css/v4-contact.css`
+Removed `border-radius`, `background`, `border` from `.hf-icon-link` — circle backgrounds gone.
+Remaining icons: Maps, Phone, WhatsApp, LinkedIn.
+
+---
+
+### Fix 4 — World Clock Flag Icons
+
+**Investigation finding:** `_world_clock_widget.html` is never included in any page template — it is unused dead code. All flag attempts targeting it had no visible effect.
+
+**Actual widget:** Hardcoded `world-clock-strip` inside `_footer.html` (lines 84–134).
+
+**Fix:** Added `<img src="cdn.jsdelivr.net/.../XX.svg">` tags to 4 timezone label spans in `_footer.html`.
+**CSS:** Added `.world-clock-flag` (18×13px, border-radius, box-shadow) to `v4-footer.css`.
+**CSS:** Updated `.world-clock-label` to `display: flex; align-items: center; gap: 5px` for inline flag alignment.
+
+**Files:** `uilayers/templates/components/_footer.html`, `static/css/v4-footer.css`
+
+---
+
+### Audit — SEO Tags
+
+All implemented and confirmed live:
+- `seo_meta` tag (title, description, keywords, OG, Twitter Card, canonical) — on every page via `base.html`
+- `organization_schema` (RealEstateAgent JSON-LD) — every page
+- `property_schema` (Residence JSON-LD)
+- `service_schema` (Service JSON-LD on landing pages)
+- `faq_schema` (FAQPage JSON-LD)
+- `breadcrumb_schema` (BreadcrumbList JSON-LD)
+- `sitemap.xml` live at `propertism.in/sitemap.xml` (StaticViewSitemap, PropertySitemap, BlogSitemap, LandingPageSitemap)
+
+**Gap found:** Property URLs use `/properties/<pk>/` (not slug). SEO-weak. Model has `slug` field. Fix deferred to next session.
+
+---
+
+### Audit — GA4
+
+No Google Analytics tracking code in `base.html`. Zero data being collected.
+**Pending:** Viji to create GA4 property → share Measurement ID → Astra adds gtag snippet.
+
+---
+
+### Open Items Carried Forward
+
+1. WhatsApp: Update `WHATSAPP_ACCESS_TOKEN` in EB (expired token, code 190)
+2. Google Search Console: Add TXT record in GoDaddy DNS → verify
+3. GA4: Viji shares Measurement ID → Astra adds to `base.html`
+4. Property slug URLs: `/properties/<pk>/` → `/properties/<slug>/`
+5. Blog 500 errors: `/blog/NRI-Property-Sale-in-India/` — not investigated
+6. Company logo 404: `propertism-logo-official_A7SQorH.png` missing from EB
+7. `_world_clock_widget.html`: Unused template with dead code — archive or wire-up decision needed
+
+### Code-Review Mirrors (2026-05-18 Evening)
+
+- `Procfile` ✓
+- `00_collectstatic_current.sh` ✓
+- `01_fix_db_permissions.sh` ✓
+- `02_bootstrap_if_db_looks_empty.sh` ✓
+- `03_repair_stale_customer_reviews.sh` ✓
+- `content/views.py` ✓
+- `realtor_project/settings.py` ✓
+- `static/css/propertism-styles.css` ✓
+- `static/css/v4-contact.css` ✓
+- `static/css/v4-footer.css` ✓
+- `static/js/world-clock-widget.js` ✓
+- `uilayers/templates/components/_footer.html` ✓
+- `uilayers/templates/components/_world_clock_widget.html` ✓
+- `uilayers/templates/home/sections/_contact.html` ✓

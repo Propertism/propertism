@@ -2,13 +2,15 @@ import json
 from decimal import Decimal
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
+from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from content.templatetags.seo_tags import property_schema
 
-from .models import Property, PropertyPhoto, PropertyType
+from .models import Inquiry, Property, PropertyPhoto, PropertyType
 from .serializers import PropertySerializer
 
 
@@ -164,3 +166,104 @@ class PropertyCurrencyFormattingTests(TestCase):
         )
 
         self.assertEqual(property_obj.get_display_image_url(), "/media/properties/example.jpg")
+
+
+@override_settings(
+    EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+    DEFAULT_FROM_EMAIL="team@propertism.in",
+    ADMIN_EMAIL="info@propertism.in",
+)
+class InquiryReplyTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="inquiries-staff",
+            password="testpass123",
+            is_staff=True,
+        )
+        self.client.force_login(self.staff_user)
+        self.inquiry = Inquiry.objects.create(
+            name="Arun Kumar",
+            email="lead@example.com",
+            phone="9876543210",
+            message="Please share more details.",
+            status="pending",
+        )
+
+    def post_reply(self, payload):
+        return self.client.post(
+            reverse("inquiry_send_reply"),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+
+    def test_send_reply_sends_email_and_marks_inquiry_contacted(self):
+        response = self.post_reply(
+            {
+                "inquiry_id": self.inquiry.pk,
+                "to": self.inquiry.email,
+                "cc": "ops@example.com, sales@example.com",
+                "subject": "Re: Your inquiry",
+                "body": "Happy to help with the next steps.",
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.inquiry.refresh_from_db()
+        self.assertEqual(self.inquiry.status, "contacted")
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [self.inquiry.email])
+        self.assertEqual(mail.outbox[0].cc, ["ops@example.com", "sales@example.com"])
+        self.assertEqual(mail.outbox[0].reply_to, ["info@propertism.in"])
+
+    def test_send_reply_rejects_invalid_cc_addresses(self):
+        response = self.post_reply(
+            {
+                "inquiry_id": self.inquiry.pk,
+                "to": self.inquiry.email,
+                "cc": "ops@example.com, invalid-address",
+                "subject": "Re: Your inquiry",
+                "body": "Happy to help with the next steps.",
+            }
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertJSONEqual(
+            response.content,
+            {"error": "Enter valid CC email addresses: invalid-address"},
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_send_reply_rejects_mismatched_recipient(self):
+        response = self.post_reply(
+            {
+                "inquiry_id": self.inquiry.pk,
+                "to": "someoneelse@example.com",
+                "subject": "Re: Your inquiry",
+                "body": "Happy to help with the next steps.",
+            }
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertJSONEqual(
+            response.content,
+            {"error": "Recipient does not match this inquiry."},
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+    @override_settings(DEFAULT_FROM_EMAIL="", ADMIN_EMAIL="")
+    def test_send_reply_requires_configured_sender(self):
+        response = self.post_reply(
+            {
+                "inquiry_id": self.inquiry.pk,
+                "to": self.inquiry.email,
+                "subject": "Re: Your inquiry",
+                "body": "Happy to help with the next steps.",
+            }
+        )
+
+        self.assertEqual(response.status_code, 500)
+        self.assertJSONEqual(
+            response.content,
+            {"error": "Outbound email is not configured."},
+        )
+        self.assertEqual(len(mail.outbox), 0)

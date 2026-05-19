@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}Inquiries Access | Propertism{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inquiries.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="inq-login-page" aria-labelledby="inqLoginTitle">
+    <div class="inq-login-panel">
+        <p class="inq-login-eyebrow">Staff Access</p>
+        <h1 id="inqLoginTitle">Open Inquiries</h1>
+        <p class="inq-login-copy">Use your Propertism staff account to continue to the inquiry console.</p>
+
+        {% if error %}
+        <div class="inq-login-error" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{% url 'inquiries_login' %}" class="inq-login-form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <label>
+                <span>Username</span>
+                <input type="text" name="username" autocomplete="username" required autofocus>
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button type="submit">Open Inquiries</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

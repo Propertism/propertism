@@ -1,0 +1,21 @@
+<div class="world-clock-widget{% if hide_header %} world-clock-widget--no-header{% endif %}" data-world-clock-widget data-config-id="{{ widget_id }}-config">
+    {% if not hide_header %}
+    <div class="world-clock-widget-header">
+        <span class="world-clock-widget-kicker">{{ widget_heading|default:"Global Client Network" }}</span>
+        {% if widget_subtitle %}
+        <p class="world-clock-widget-subtitle">{{ widget_subtitle }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    <div class="world-clock-widget-grid" data-world-clock-grid></div>
+</div>
+{% if not hide_config %}
+<script id="{{ widget_id }}-config" type="application/json">
+[
+  { "label": "US", "tzLabel": "ET", "timeZone": "America/New_York", "region": "us", "city": "New York", "isoCode": "us" },
+  { "label": "UK", "tzLabel": "GMT", "timeZone": "Europe/London", "region": "uk", "city": "London", "isoCode": "gb" },
+  { "label": "INDIA", "tzLabel": "IST", "timeZone": "Asia/Kolkata", "region": "india", "city": "Chennai", "isoCode": "in" },
+  { "label": "GULF", "tzLabel": "GST", "timeZone": "Asia/Dubai", "region": "gulf", "city": "Dubai", "isoCode": "ae" }
+]
+</script>
+{% endif %}

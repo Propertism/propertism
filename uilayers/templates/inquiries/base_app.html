@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block meta_title %}Inquiries | Propertism{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/propertism-logo-tm.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/inquiries.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="inq-app">
+
+    <!-- Top Bar -->
+    <header class="inq-topbar">
+        <div class="inq-topbar-left">
+            <span class="inq-topbar-wordmark">Propertism</span>
+            <span class="inq-topbar-sep">&middot;</span>
+            <span class="inq-topbar-module">Inquiries</span>
+        </div>
+        <div class="inq-topbar-right">
+            {% if user.is_authenticated %}
+            <span class="inq-topbar-user">{{ user.get_full_name|default:user.email }}</span>
+            <a href="{% url 'logout' %}" class="inq-topbar-signout">Sign out</a>
+            {% endif %}
+        </div>
+    </header>
+
+    {% block workspace_content %}{% endblock %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

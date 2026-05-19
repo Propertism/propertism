@@ -1,0 +1,125 @@
+{% load static %}
+<!-- CONTACT SECTION V4 - NRI ADVISORY GATEWAY -->
+<link rel="stylesheet" href="{% static 'css/v4-contact.css' %}">
+
+<section id="contact-section" class="nri-contact-section">
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-kicker">
+                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.16a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.61.59A2 2 0 0 1 22 16.92Z" />
+                </svg>
+                {{ company.contact_section_eyebrow|default:"GET IN TOUCH" }}
+            </span>
+            <h2 class="section-title">{{ company.contact_section_title }}</h2>
+            <p class="section-subtitle">{{ company.contact_section_description }}</p>
+        </div>
+
+        <div class="contact-split-container">
+            <!-- LEFT CARD: CONTACT INFO (WHITE) -->
+            <div class="hf-narrative-card">
+                <div class="hf-office-grid">
+                    <div class="hf-office-item">
+                        <span class="hf-office-label">Chennai Headquarters</span>
+                        <p class="hf-office-address">{{ company.india_office_address|linebreaksbr }}</p>
+                        <span class="hf-office-phone">{{ company.india_phone_1 }}</span>
+                    </div>
+
+                    <div class="hf-office-item">
+                        <span class="hf-office-label">US Coordination</span>
+                        <p class="hf-office-address">{{ company.us_office_address|linebreaksbr }}<br>{{ company.us_office_city }}, {{ company.us_office_state }}</p>
+                        <span class="hf-office-phone">{{ company.us_phone }}</span>
+                    </div>
+                </div>
+
+                <div class="hf-contact-icons">
+                    <a href="https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="View on Google Maps">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5l13.813-20.219c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#1A73E8"/>
+                            <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5V4.5z" fill="#EA4335"/>
+                            <path d="M24 4.5v39L37.813 23.281c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#34A853"/>
+                            <circle cx="24" cy="19" r="7" fill="#FBBC04"/>
+                            <circle cx="24" cy="19" r="4.5" fill="#fff"/>
+                        </svg>
+                    </a>
+                    
+                    {% if company.india_phone_1 %}
+                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="hf-icon-link" title="Call Us">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    
+                    {% if company.whatsapp_url %}
+                    <a href="{{ company.whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="WhatsApp">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    
+                    
+
+                    {% if company.linkedin_url %}
+                    <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.268 6.81c0 .748-.607 1.354-1.354 1.354S5.56 7.558 5.56 6.81s.607-1.354 1.354-1.354 1.354.606 1.354 1.354zM5.7 9.5h2.4v8.5H5.7V9.5zm3.9 0h2.3v1.164h.033c.32-.607 1.103-1.246 2.27-1.246 2.428 0 2.877 1.597 2.877 3.674V18h-2.397v-4.59c0-.895-.016-2.047-1.247-2.047-1.248 0-1.439.975-1.439 1.982V18H9.6V9.5z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    
+                </div>
+            </div>
+
+            <!-- RIGHT CARD: HIGH-FIDELITY FORM -->
+            <div class="hf-form-card">
+                <span class="hf-office-label" style="color: var(--brand-gold) !important;">REQUEST A CONSULTATION</span>
+                <h1>Start your property <em>oversight journey</em></h1>
+
+                <div id="hf-theForm">
+                    <form action="{% url 'contact' %}" method="POST" id="propertism-hf-form">
+                        {% csrf_token %}
+                        <div class="hf-field-row">
+                            <div class="hf-field-group">
+                                <label class="hf-field-label">Full Name</label>
+                                <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required />
+                            </div>
+
+                            <div class="hf-field-group">
+                                <label class="hf-field-label">Email Address</label>
+                                <input class="hf-field-input" name="email" type="email" placeholder="email@example.com" required />
+                            </div>
+                        </div>
+
+                        <div class="hf-field-group">
+                            <label class="hf-field-label">Service Needed</label>
+                            <select class="hf-field-select" name="service" required>
+                                <option value="" disabled selected>Select Service Needed</option>
+                                {% for value, label in contact_service_choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="hf-field-row-submit">
+                            <div class="hf-field-group">
+                                <label class="hf-field-label">Message</label>
+                                <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required></textarea>
+                            </div>
+
+                            <button type="submit" class="hf-submit-btn">
+                                {{ company.contact_form_submit_text|default:"Send My Request" }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="hf-successMsg" {% if messages %}class="show"{% endif %}>
+                    <p class="hf-success-heading">Request Received</p>
+                    <p class="hf-success-body">We'll be in touch within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
