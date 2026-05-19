@@ -498,6 +498,23 @@ if (window.innerWidth < 900 && window.location.search === '') {
 }
 </script>
 
+    <div class="inq-lite-hero">
+        <p class="inq-lite-eyebrow">Staff Workspace</p>
+        <div class="inq-lite-hero-top">
+            <div>
+                <h1 class="inq-lite-title">Inquiries</h1>
+                <p class="inq-lite-copy">
+                    {% if active_filter %}{{ active_filter|capfirst }} queue{% else %}All inquiries{% endif %}
+                    {% if q %} - Search "{{ q }}"{% endif %}
+                </p>
+            </div>
+            <div class="inq-lite-summary">
+                <span>{{ inquiries|length }} shown</span>
+                <span>{{ stats.pending }} pending</span>
+            </div>
+        </div>
+    </div>
+
     <div class="inq-lite-chipbar">
         <a href="?status=pending" class="inq-lite-chip{% if active_filter == 'pending' %} active{% endif %}">
             Pending{% if stats.pending %} ({{ stats.pending }}){% endif %}
@@ -527,7 +544,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
                 </p>
             </div>
 
-            <div class="inq-lite-actions{% if inq.status == 'closed' %} two-col{% endif %}" onclick="event.stopPropagation()">
+            <div class="inq-lite-actions" onclick="event.stopPropagation()">
                 {% if inq.phone %}
                 <button class="inq-lite-btn inq-lite-btn-wa" onclick="openWhatsApp('{{ inq.phone|escapejs }}', '{{ inq.name|escapejs }}')">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -557,6 +574,17 @@ if (window.innerWidth < 900 && window.location.search === '') {
                     Call
                 </button>
                 {% endif %}
+                <button
+                    class="inq-lite-btn inq-lite-btn-email"
+                    onclick="openEmail('{{ inq.email|escapejs }}', '{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}', '{{ inq.name|escapejs }}', '{{ inq.id }}')"
+                    {% if not inq.email %}disabled{% endif %}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                        <polyline points="3 7 12 13 21 7"></polyline>
+                    </svg>
+                    Email
+                </button>
                 {% if inq.status != 'closed' %}
                 <button class="inq-lite-btn inq-lite-btn-done" data-id="{{ inq.pk }}" data-status="{{ inq.status }}" onclick="liteDone(this, event)">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -574,7 +602,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
         {% endfor %}
     </div>
 
-    <p class="inq-lite-sop">For full inquiry management, open on desktop.</p>
+    <p class="inq-lite-sop">Desktop keeps the full timeline and side-by-side detail workspace. Mobile now covers quick reply, call, WhatsApp, and status handling.</p>
 </div>
 
 <div class="inq-confirm-overlay" id="inqConfirmOverlay">
@@ -622,6 +650,15 @@ if (window.innerWidth < 900 && window.location.search === '') {
         return !!target.closest('button, a, input, select, textarea, label');
     }
 
+    function isMobileInquiriesViewport() {
+        return window.innerWidth < 900;
+    }
+
+    function setMobileComposerState(active) {
+        if (!document.body || !document.body.classList.contains('inq-app')) return;
+        document.body.classList.toggle('inq-mobile-composing', !!active);
+    }
+
     function cleanPhone(phone) {
         if (!phone) return '';
         var digits = phone.replace(/[^\d]/g, '');
@@ -641,6 +678,48 @@ if (window.innerWidth < 900 && window.location.search === '') {
             closed: 'Closed'
         };
         return labels[status] || cap(status);
+    }
+
+    function liteDoneMarkup(status) {
+        var label = status === 'pending' ? 'Done' : 'Close';
+        return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg> ' + label;
+    }
+
+    function syncLiteRowStatus(id, status) {
+        var row = document.querySelector('.inq-lite-row[data-id="' + id + '"]');
+        if (!row) return;
+
+        row.dataset.status = status;
+        row.classList.remove('inq-lite-row-fading');
+        row.classList.toggle('inq-lite-row-closed', status === 'closed');
+
+        var dot = row.querySelector('.inq-lite-dot');
+        if (dot) {
+            dot.className = 'inq-lite-dot inq-lite-dot-' + status;
+        }
+
+        var actions = row.querySelector('.inq-lite-actions');
+        var doneBtn = actions ? actions.querySelector('.inq-lite-btn-done') : null;
+
+        if (status === 'closed') {
+            if (doneBtn) {
+                doneBtn.remove();
+            }
+            return;
+        }
+
+        if (!doneBtn && actions) {
+            doneBtn = document.createElement('button');
+            doneBtn.className = 'inq-lite-btn inq-lite-btn-done';
+            doneBtn.setAttribute('onclick', 'liteDone(this, event)');
+            actions.appendChild(doneBtn);
+        }
+
+        if (doneBtn) {
+            doneBtn.dataset.id = id;
+            doneBtn.dataset.status = status;
+            doneBtn.innerHTML = liteDoneMarkup(status);
+        }
     }
 
     function propertyLabel(propertyTitle) {
@@ -742,6 +821,9 @@ if (window.innerWidth < 900 && window.location.search === '') {
         if (composer) {
             composer.hidden = false;
             composer.classList.add('active');
+        }
+        if (isMobileInquiriesViewport()) {
+            setMobileComposerState(true);
         }
         if (scroll) {
             scroll.classList.add('composing');
@@ -903,6 +985,8 @@ if (window.innerWidth < 900 && window.location.search === '') {
             }
             renderStatusMenu(row.querySelector('.inq-status-menu'), status);
         }
+
+        syncLiteRowStatus(id, status);
 
         if (panelId === String(id) || panelId === id) {
             var panelStatus = document.getElementById('panelStatusSelect');
@@ -1272,6 +1356,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
         if (list) {
             list.removeAttribute('aria-hidden');
         }
+        setMobileComposerState(false);
     };
 
     function copyText(text, successMessage) {
@@ -1373,6 +1458,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
         if (event.key === 'Escape') {
             closeStatusMenus();
             closeDetail();
+            closeMailComposer();
             return;
         }
 
@@ -1438,8 +1524,6 @@ if (window.innerWidth < 900 && window.location.search === '') {
             litePendingClose = null;
             document.getElementById('inqConfirmOverlay').classList.remove('active');
             if (change.row) change.row.classList.add('inq-lite-row-fading');
-            var actions = change.btn.closest('.inq-lite-actions');
-            if (actions) actions.style.display = 'none';
             postStatus(change.id, 'closed', change.btn.dataset.status);
             return;
         }
