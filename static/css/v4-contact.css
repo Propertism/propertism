@@ -72,7 +72,7 @@
     background: var(--bg-card) !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: 0 !important;
-    padding: 24px !important;
+    padding: 20px !important;
     display: flex;
     flex-direction: column;
     margin: 0 !important;
@@ -94,8 +94,8 @@
 .hf-office-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 16px;
+    gap: 18px;
+    margin-bottom: 6px;
     position: relative;
 }
 
@@ -120,12 +120,12 @@
     padding-left: 20px !important;
     border-left: 3px solid var(--brand-gold) !important;
     background: rgba(196, 156, 82, 0.03) !important;
-    padding: 16px !important;
-    padding-left: 16px !important;
+    padding: 12px !important;
+    padding-left: 14px !important;
 }
 
 .hf-office-item > * {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .hf-office-item > *:last-child {
@@ -135,6 +135,18 @@
 .hf-office-phone {
     grid-row: 3;
     align-self: end;
+}
+
+.hf-office-phone-stack {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.hf-office-phone-stack .hf-office-phone + .hf-office-phone {
+    padding-left: 0;
 }
 
 .hf-office-label {
@@ -148,8 +160,8 @@
 }
 
 .hf-office-address {
-    font-size: 1.05rem !important;
-    line-height: 1.6 !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
     color: var(--text-main) !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
@@ -161,10 +173,12 @@
 .hf-office-phone {
     font-weight: 400 !important;
     color: var(--brand-gold) !important;
-    font-size: 0.9rem !important;
-    margin-top: 12px !important;
+    font-size: 0.82rem !important;
+    margin-top: 0 !important;
     margin-bottom: 0 !important;
     display: block;
+    line-height: 1.45 !important;
+    white-space: nowrap;
 }
 
 .hf-maps-cta {
@@ -204,30 +218,74 @@
     flex-shrink: 0 !important;
 }
 
-/* Contact Icons Row */
-.hf-contact-icons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 20px;
-    padding: 16px 0;
+/* Contact Rail */
+.hf-contact-rail {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 10px 2px 0 16px;
     border-top: 1px solid var(--border-subtle);
+    border-left: 2px solid var(--brand-gold);
 }
 
 .hf-icon-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    transition: all 0.3s ease;
+    gap: 10px;
+    min-height: 30px;
+    width: 100%;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     color: var(--text-main);
 }
 
-.hf-icon-link svg {
-    width: 24px;
-    height: 24px;
+.hf-icon-badge {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hf-icon-badge svg {
+    width: 20px;
+    height: 20px;
+}
+
+.hf-icon-copy {
+    display: block;
+    min-width: 0;
+}
+
+.hf-icon-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-family: var(--sans-main);
+    font-size: 0.9rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    white-space: normal;
+}
+
+.hf-icon-head {
+    color: var(--brand-gold);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.hf-icon-divider {
+    width: 1px;
+    height: 0.9em;
+    background: rgba(184, 154, 74, 0.45);
+    flex-shrink: 0;
+}
+
+.hf-icon-tail {
+    color: inherit;
 }
 
 /* Brand-specific colors */
@@ -260,8 +318,8 @@
 }
 
 .hf-icon-link:hover {
-    transform: translateY(-2px);
-    opacity: 0.75;
+    transform: translateX(4px);
+    opacity: 0.82;
 }
 
 /* 2. STATS TILE GRID (UNIFIED) */
@@ -521,13 +579,17 @@ html[data-theme="dark"] body #contact-section .hf-maps-cta:hover {
 }
 
 /* Contact Icons - Dark mode */
-html[data-theme="dark"] .hf-contact-icons {
+html[data-theme="dark"] .hf-contact-rail {
     border-top-color: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--brand-gold);
 }
 
-html[data-theme="dark"] .hf-icon-link {
-    background: rgba(196, 156, 82, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
+html[data-theme="dark"] .hf-icon-line {
+    color: #E2E8F0;
+}
+
+html[data-theme="dark"] .hf-icon-head {
+    color: var(--brand-gold);
 }
 
 /* Keep brand colors in dark mode */
@@ -560,8 +622,7 @@ html[data-theme="dark"] .hf-icon-link[title="YouTube"] {
 }
 
 html[data-theme="dark"] .hf-icon-link:hover {
-    background: rgba(196, 156, 82, 0.15);
-    border-color: var(--brand-gold);
+    opacity: 1;
 }
 
 /* Stats grid border */
@@ -650,6 +711,33 @@ html[data-theme="dark"] body #contact-section .section-subtitle {
 
     .hf-office-grid::before {
         display: none !important;
+    }
+
+    .hf-office-phone-stack {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .hf-office-phone-stack .hf-office-phone + .hf-office-phone {
+        padding-left: 0;
+    }
+
+    .hf-office-phone-stack .hf-office-phone + .hf-office-phone::before {
+        display: none;
+    }
+
+    .hf-contact-rail {
+        padding-left: 14px;
+    }
+
+    .hf-icon-link {
+        align-items: flex-start;
+    }
+
+    .hf-icon-line {
+        font-size: 0.84rem;
+        gap: 8px;
     }
 
     .hf-field-row {

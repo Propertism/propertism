@@ -21,8 +21,16 @@
                 <div class="hf-office-grid">
                     <div class="hf-office-item">
                         <span class="hf-office-label">Chennai Headquarters</span>
-                        <p class="hf-office-address">{{ company.india_office_address|linebreaksbr }}</p>
-                        <span class="hf-office-phone">{{ company.india_phone_1 }}</span>
+                        <p class="hf-office-address">
+                            {{ company.india_office_address|linebreaksbr }}<br>
+                            {{ company.india_office_city }}, {{ company.india_office_state }} - {{ company.india_office_pincode }}
+                        </p>
+                        <div class="hf-office-phone-stack">
+                            <span class="hf-office-phone">{{ company.india_phone_1 }}</span>
+                            {% if company.india_phone_3 %}
+                            <span class="hf-office-phone">{{ company.india_phone_3 }}</span>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <div class="hf-office-item">
@@ -32,43 +40,60 @@
                     </div>
                 </div>
 
-                <div class="hf-contact-icons">
+                <div class="hf-contact-rail" aria-label="Quick contact links">
                     <a href="https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="View on Google Maps">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5l13.813-20.219c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#1A73E8"/>
-                            <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5V4.5z" fill="#EA4335"/>
-                            <path d="M24 4.5v39L37.813 23.281c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#34A853"/>
-                            <circle cx="24" cy="19" r="7" fill="#FBBC04"/>
-                            <circle cx="24" cy="19" r="4.5" fill="#fff"/>
-                        </svg>
+                        <span class="hf-icon-badge" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5l13.813-20.219c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#1A73E8"/>
+                                <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5V4.5z" fill="#EA4335"/>
+                                <path d="M24 4.5v39L37.813 23.281c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#34A853"/>
+                                <circle cx="24" cy="19" r="7" fill="#FBBC04"/>
+                                <circle cx="24" cy="19" r="4.5" fill="#fff"/>
+                            </svg>
+                        </span>
+                        <span class="hf-icon-copy">
+                            <span class="hf-icon-line"><span class="hf-icon-head">Google Maps</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">Open Chennai headquarters</span></span>
+                        </span>
                     </a>
-                    
-                    {% if company.india_phone_1 %}
-                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="hf-icon-link" title="Call Us">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
-                        </svg>
+
+                    {% if company.india_phone_3 %}
+                    <a href="tel:{{ company.india_phone_3|cut:' ' }}" class="hf-icon-link" title="Call Us">
+                        <span class="hf-icon-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                            </svg>
+                        </span>
+                        <span class="hf-icon-copy">
+                            <span class="hf-icon-line"><span class="hf-icon-head">Call Desk</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">{{ company.india_phone_3 }}</span></span>
+                        </span>
                     </a>
                     {% endif %}
-                    
+
                     {% if company.whatsapp_url %}
                     <a href="{{ company.whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="WhatsApp">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
+                        <span class="hf-icon-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </span>
+                        <span class="hf-icon-copy">
+                            <span class="hf-icon-line"><span class="hf-icon-head">WhatsApp</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">Chat with our advisory team</span></span>
+                        </span>
                     </a>
                     {% endif %}
-                    
-                    
 
                     {% if company.linkedin_url %}
                     <a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8.268 6.81c0 .748-.607 1.354-1.354 1.354S5.56 7.558 5.56 6.81s.607-1.354 1.354-1.354 1.354.606 1.354 1.354zM5.7 9.5h2.4v8.5H5.7V9.5zm3.9 0h2.3v1.164h.033c.32-.607 1.103-1.246 2.27-1.246 2.428 0 2.877 1.597 2.877 3.674V18h-2.397v-4.59c0-.895-.016-2.047-1.247-2.047-1.248 0-1.439.975-1.439 1.982V18H9.6V9.5z"/>
-                        </svg>
+                        <span class="hf-icon-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8.268 6.81c0 .748-.607 1.354-1.354 1.354S5.56 7.558 5.56 6.81s.607-1.354 1.354-1.354 1.354.606 1.354 1.354zM5.7 9.5h2.4v8.5H5.7V9.5zm3.9 0h2.3v1.164h.033c.32-.607 1.103-1.246 2.27-1.246 2.428 0 2.877 1.597 2.877 3.674V18h-2.397v-4.59c0-.895-.016-2.047-1.247-2.047-1.248 0-1.439.975-1.439 1.982V18H9.6V9.5z"/>
+                            </svg>
+                        </span>
+                        <span class="hf-icon-copy">
+                            <span class="hf-icon-line"><span class="hf-icon-head">LinkedIn</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">Follow Propertism updates</span></span>
+                        </span>
                     </a>
                     {% endif %}
-                    
                 </div>
             </div>
 
