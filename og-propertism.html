@@ -4,169 +4,307 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Propertism.in OG Thumbnail</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #F8F5F0;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
-        .font-cinzel    { font-family: 'Cinzel', serif; }
-        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
 
-        /* Left photo panel — gradient fades into site cream */
-        .bg-hero {
-            background-image:
-                linear-gradient(to right,
-                    rgba(10, 18, 44, 0.15) 50%,
-                    rgba(248, 245, 240, 1) 100%
-                ),
-                url('media/hero/8k_resolution_ultra_high_definition_cinematic_shot_of_chennai_s_modern_skyline.png');
+        .card {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* Full-bleed background photo */
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('media/hero/8k_resolution_ultra_high_definition_cinematic_shot_of_chennai_s_modern_skyline.png');
             background-size: cover;
-            background-position: center;
+            background-position: center 30%;
         }
 
-        /* Mission highlight — matches .about-mission-highlight exactly */
-        .mission-box {
-            background: rgba(184, 154, 74, 0.05);
-            border-left: 4px solid #C49C52;
-            padding: 16px 16px;
+        /* Multi-layer overlay — navy vignette + bottom warm fade */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(8, 12, 30, 0.72) 0%,
+                rgba(8, 12, 30, 0.52) 40%,
+                rgba(8, 12, 30, 0.38) 70%,
+                rgba(8, 12, 30, 0.60) 100%
+            );
         }
 
-        /* Divider — matches .about-divider exactly */
-        .site-divider {
-            height: 1px;
-            background-color: rgba(15, 23, 42, 0.12);
-            margin: 0;
+        /* Bottom gold gradient strip */
+        .card-overlay-bottom {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(160, 118, 40, 0.30) 0%,
+                rgba(160, 118, 40, 0.10) 18%,
+                transparent 35%
+            );
+        }
+
+        /* Content layer */
+        .card-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 52px 36px;
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-svg { height: 52px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+
+        .logo-text { display: flex; flex-direction: column; gap: 3px; }
+
+        .logo-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            color: #FFFFFF;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .logo-sub {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 9.5px;
+            letter-spacing: 0.20em;
+            color: #e8b82a;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .kicker {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .kicker-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #C49C52;
+            flex-shrink: 0;
+        }
+
+        .kicker-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: #C49C52;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* ── CENTRE HEADLINE ── */
+        .headline-block {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .headline {
+            font-family: 'Cinzel', serif;
+            font-size: 68px;
+            font-weight: 600;
+            line-height: 1.05;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.55);
+        }
+
+        .headline-gold {
+            color: #E4C36A;
+            display: block;
+            filter: brightness(1.1) saturate(1.08);
+            text-shadow:
+                0 2px 10px rgba(255,255,255,0.15),
+                0 0 28px rgba(228,195,106,0.45),
+                0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            font-weight: 400;
+            color: rgba(255,255,255,0.88);
+            line-height: 1.6;
+            max-width: 560px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .stats-strip {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .stat-item { display: flex; flex-direction: column; gap: 4px; }
+
+        .stat-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .stat-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: rgba(255,255,255,0.65);
+            text-transform: uppercase;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 36px;
+            background: rgba(196,156,82,0.4);
+        }
+
+        .bottom-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .phone {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .domain {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            color: #C49C52;
+            text-transform: uppercase;
+        }
+
+        /* Gold bottom rule */
+        .gold-rule {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent 0%, #C49C52 30%, #E4C36A 50%, #C49C52 70%, transparent 100%);
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
+    <div class="card">
+        <div class="card-bg"></div>
+        <div class="card-overlay"></div>
+        <div class="card-overlay-bottom"></div>
 
-    <div class="w-[1200px] h-[630px] flex overflow-hidden shadow-2xl relative" style="border: 1px solid rgba(15,23,42,0.12);">
+        <div class="card-content">
 
-        <!-- LEFT — Photo panel (42%) -->
-        <div class="w-[42%] bg-hero h-full relative flex-shrink-0">
-            <div class="absolute top-6 left-8 flex items-center gap-3">
-                <svg class="h-11 w-auto drop-shadow-lg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15,35 L62,17 L63,12 L70,14 L69,20 L92,27 L91,33 L18,41 Z" fill="#cda26b"/>
-                    <path d="M22,43 L40,40 L40,84 L22,91 Z" fill="#cda26b"/>
-                    <path d="M40,40 L74,35 L74,77 L40,84 Z" fill="#bfa173" opacity="0.85"/>
-                    <path d="M40,40 L40,84 M40,46 C59,44 61,61 40,64" stroke="#0a122c" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
-                    <path d="M34,44 L34,84" stroke="#ffffff" stroke-width="2.5" opacity="0.9"/>
-                </svg>
-                <div class="flex flex-col mt-1">
-                    <span class="text-[20px] font-bold tracking-[0.2em] text-white leading-tight drop-shadow-md" style="font-family:'Plus Jakarta Sans',sans-serif;">PROPERTISM</span>
-                    <span class="text-[9px] tracking-[0.22em] text-[#e8b82a] uppercase font-semibold mt-1 drop-shadow">Est. Chennai &middot; 10 Years</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- RIGHT — Cream content panel (58%) — bg-secondary #F8F5F0 -->
-        <div class="w-[58%] h-full flex flex-col justify-between bg-[#F8F5F0]" style="padding: 28px 32px 20px 28px;">
-
-            <!-- Section kicker — matches .section-kicker -->
-            <div class="flex items-center gap-2">
-                <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#C49C52]"></span>
-                <span style="font-size:10px; letter-spacing:0.1em; color:#C49C52; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">NRI Property Management</span>
-            </div>
-
-            <!-- Main content grid -->
-            <div class="flex gap-6 flex-1 mt-4 mb-4" style="padding-bottom:40px;">
-
-                <!-- LEFT col — tight flow, gap:10px -->
-                <div class="flex flex-col flex-1" style="border-right:1px solid rgba(15,23,42,0.12); padding-right:20px; gap:16px;">
-                    <h1 class="font-cinzel" style="font-size:34px; font-weight:600; line-height:1.2; letter-spacing:-0.01em; color:#0F172A; margin:0;">
-                        Realty Advisory<br><span style="color:#C49C52;">Redefined.</span>
-                    </h1>
-                    <div class="mission-box">
-                        <p class="font-cormorant" style="font-size:15px; line-height:1.75; color:#0F172A; font-style:italic; margin:0;">
-                            End-to-end asset management for NRIs — even if you're 10,000 km away. Transparent. On-ground. Results.
-                        </p>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:4px; margin-top:28px;">
-                        <div style="font-size:9px; letter-spacing:0.12em; color:#C49C52; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">
-                            Propertism Realty Advisors &nbsp;|&nbsp; NRI Property Management · Chennai
-                        </div>
-                        <p style="font-size:13px; line-height:1.85; color:#374151; font-family:'Plus Jakarta Sans',sans-serif; margin:0; font-weight:300;">
-                            Expert NRI property management in Chennai, India. Buy, sell, and manage your real estate investments with confidence — professional, transparent, on-ground.
-                        </p>
-                    </div>
-                    <div class="site-divider" style="margin-top:auto;"></div>
-                    <div class="flex gap-6">
-                        <div>
-                            <div style="font-size:20px; font-weight:700; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif;">50+</div>
-                            <div style="font-size:8px; letter-spacing:0.15em; color:#64748B; text-transform:uppercase; margin-top:2px; font-family:'Plus Jakarta Sans',sans-serif;">Properties</div>
-                        </div>
-                        <div>
-                            <div style="font-size:20px; font-weight:700; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif;">100+</div>
-                            <div style="font-size:8px; letter-spacing:0.15em; color:#64748B; text-transform:uppercase; margin-top:2px; font-family:'Plus Jakarta Sans',sans-serif;">NRI Clients</div>
-                        </div>
-                        <div>
-                            <div style="font-size:20px; font-weight:700; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif;">10+ Yrs</div>
-                            <div style="font-size:8px; letter-spacing:0.15em; color:#64748B; text-transform:uppercase; margin-top:2px; font-family:'Plus Jakarta Sans',sans-serif;">Built Trust</div>
-                        </div>
+            <!-- TOP -->
+            <div class="top-bar">
+                <div class="logo-block">
+                    <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15,35 L62,17 L63,12 L70,14 L69,20 L92,27 L91,33 L18,41 Z" fill="#cda26b"/>
+                        <path d="M22,43 L40,40 L40,84 L22,91 Z" fill="#cda26b"/>
+                        <path d="M40,40 L74,35 L74,77 L40,84 Z" fill="#bfa173" opacity="0.85"/>
+                        <path d="M40,40 L40,84 M40,46 C59,44 61,61 40,64" stroke="#0a122c" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+                        <path d="M34,44 L34,84" stroke="#ffffff" stroke-width="2.5" opacity="0.9"/>
+                    </svg>
+                    <div class="logo-text">
+                        <span class="logo-name">PROPERTISM</span>
+                        <span class="logo-sub">Est. Chennai &middot; 10 Years</span>
                     </div>
                 </div>
-
-                <!-- RIGHT col — tight flow, gap:8px -->
-                <div class="flex flex-col" style="width:200px; flex-shrink:0; gap:12px;">
-                    <div style="font-size:9px; letter-spacing:0.1em; color:#C49C52; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">Services for NRI Owners</div>
-                    <div class="mission-box">
-                        <p style="font-size:11px; line-height:1.5; color:#374151; font-family:'Plus Jakarta Sans',sans-serif; margin:0;">
-                            Buy, rent, maintain, and monitor property with one coordinated team in Chennai.
-                        </p>
-                    </div>
-                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px;">
-                        <li style="display:flex; align-items:center; gap:6px; font-size:11px; color:#64748B; font-family:'Plus Jakarta Sans',sans-serif;">
-                            <span style="color:#C49C52; font-size:9px;">▪</span> Portfolio Management
-                        </li>
-                        <li style="display:flex; align-items:center; gap:6px; font-size:11px; color:#64748B; font-family:'Plus Jakarta Sans',sans-serif;">
-                            <span style="color:#C49C52; font-size:9px;">▪</span> Rental &amp; Tenant Sourcing
-                        </li>
-                        <li style="display:flex; align-items:center; gap:6px; font-size:11px; color:#64748B; font-family:'Plus Jakarta Sans',sans-serif;">
-                            <span style="color:#C49C52; font-size:9px;">▪</span> Legal Due Diligence
-                        </li>
-                    </ul>
-                    <div style="border-top:1px solid #C49C52; padding-top:8px; margin-top:28px; display:flex; flex-direction:column; gap:5px;">
-                        <div style="font-size:8px; letter-spacing:0.15em; color:#C49C52; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">Serving NRIs From</div>
-                        <div style="display:flex; flex-direction:column; gap:4px;">
-                            <div style="display:flex; align-items:center; gap:7px;">
-                                <span style="background:#C49C52; color:#fff; font-size:7.5px; font-weight:700; padding:2px 4px; font-family:'Plus Jakarta Sans',sans-serif; min-width:22px; text-align:center;">US</span>
-                                <span style="font-size:11px; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif; font-weight:500;">United States</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:7px;">
-                                <span style="background:#C49C52; color:#fff; font-size:7.5px; font-weight:700; padding:2px 4px; font-family:'Plus Jakarta Sans',sans-serif; min-width:22px; text-align:center;">UK</span>
-                                <span style="font-size:11px; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif; font-weight:500;">United Kingdom</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:7px;">
-                                <span style="background:#C49C52; color:#fff; font-size:7.5px; font-weight:700; padding:2px 4px; font-family:'Plus Jakarta Sans',sans-serif; min-width:22px; text-align:center;">SG</span>
-                                <span style="font-size:11px; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif; font-weight:500;">Singapore</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:7px;">
-                                <span style="background:#C49C52; color:#fff; font-size:7.5px; font-weight:700; padding:2px 4px; font-family:'Plus Jakarta Sans',sans-serif; min-width:22px; text-align:center;">AE</span>
-                                <span style="font-size:11px; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif; font-weight:500;">UAE</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="site-divider" style="margin-top:auto;"></div>
-                    <div style="font-size:9px; letter-spacing:0.1em; color:#C49C52; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">Direct Advisory</div>
-                    <div style="font-size:13px; font-weight:600; color:#0F172A; font-family:'Plus Jakarta Sans',sans-serif;">+91 86670 20798</div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span class="kicker-text">NRI Property Management</span>
                 </div>
-
             </div>
 
-            <!-- Footer divider + branding -->
-            <div class="site-divider"></div>
-            <div style="padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:10px; letter-spacing:0.2em; color:#C49C52; font-weight:600; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">Propertism Realty Advisors LLP</span>
-                <span style="font-size:11px; letter-spacing:0.3em; color:#0F172A; font-weight:700; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif;">propertism.in</span>
+            <!-- CENTRE -->
+            <div class="headline-block">
+                <h1 class="headline">
+                    NRI Realty Advisory
+                    <span class="headline-gold">Redefined.</span>
+                </h1>
+                <p class="tagline">End-to-end asset management for NRIs — even if you&rsquo;re 10,000 km away.<br>Transparent. On-ground. Results.</p>
+            </div>
+
+            <!-- BOTTOM -->
+            <div class="bottom-bar">
+                <div class="stats-strip">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Properties</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">NRI Clients</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">10+ Yrs</span>
+                        <span class="stat-label">Built Trust</span>
+                    </div>
+                </div>
+                <div class="bottom-right">
+                    <span class="phone">+91 86670 20798</span>
+                    <span class="domain">propertism.in</span>
+                </div>
             </div>
 
         </div>
+
+        <div class="gold-rule"></div>
     </div>
-
 </body>
 </html>
