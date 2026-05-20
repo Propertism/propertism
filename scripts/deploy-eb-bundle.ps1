@@ -20,7 +20,11 @@ function Get-AwsCommand {
     }
 
     foreach ($candidate in @("aws", "aws.cmd", "aws.exe")) {
-        $resolved = @(where.exe $candidate 2>$null | Select-Object -First 1)
+        $resolved = @(
+            where.exe $candidate 2>$null |
+            Where-Object { $_ -and ($_ -notmatch '^INFO:') } |
+            Select-Object -First 1
+        )
         if ($resolved) {
             return $resolved[0].Trim()
         }
