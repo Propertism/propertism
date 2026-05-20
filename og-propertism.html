@@ -33,29 +33,30 @@
             background-image: url('media/hero/8k_resolution_ultra_high_definition_cinematic_shot_of_chennai_s_modern_skyline.png');
             background-size: cover;
             background-position: center 30%;
+            filter: none;
         }
 
-        /* Multi-layer overlay — navy vignette + bottom warm fade */
+        /* Multi-layer overlay: navy vignette + bottom warm fade */
         .card-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 135deg,
-                rgba(8, 12, 30, 0.82) 0%,
-                rgba(8, 12, 30, 0.62) 40%,
-                rgba(8, 12, 30, 0.48) 70%,
-                rgba(8, 12, 30, 0.72) 100%
+                rgba(8, 12, 30, 0.10) 0%,
+                rgba(8, 12, 30, 0.04) 45%,
+                rgba(8, 12, 30, 0.00) 72%,
+                rgba(8, 12, 30, 0.08) 100%
             );
         }
 
-        /* Left-side text scrim — ensures headline + tagline always readable */
+        /* Left-side text scrim to keep the copy readable */
         .card-overlay-left {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 to right,
-                rgba(8, 12, 30, 0.50) 0%,
-                rgba(8, 12, 30, 0.18) 55%,
+                rgba(8, 12, 30, 0.32) 0%,
+                rgba(8, 12, 30, 0.10) 48%,
                 transparent 75%
             );
         }
@@ -66,8 +67,8 @@
             inset: 0;
             background: linear-gradient(
                 to top,
-                rgba(160, 118, 40, 0.30) 0%,
-                rgba(160, 118, 40, 0.10) 18%,
+                rgba(160, 118, 40, 0.12) 0%,
+                rgba(160, 118, 40, 0.04) 18%,
                 transparent 35%
             );
         }
@@ -82,11 +83,11 @@
             padding: 40px 52px 36px;
         }
 
-        /* ── TOP BAR ── */
+        /* Top bar */
         .top-bar {
             display: flex;
             align-items: flex-start;
-            justify-content: space-between;
+            justify-content: flex-start;
         }
 
         .logo-block {
@@ -110,39 +111,15 @@
 
         .logo-sub {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.20em;
+            font-size: 10px;
+            letter-spacing: 0.14em;
             color: #e8b82a;
             font-weight: 700;
             text-transform: uppercase;
             text-shadow: 0 1px 6px rgba(0,0,0,0.7);
         }
 
-        .kicker {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .kicker-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #C49C52;
-            flex-shrink: 0;
-        }
-
-        .kicker-text {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px;
-            letter-spacing: 0.14em;
-            color: #E4C36A;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.75);
-        }
-
-        /* ── CENTRE HEADLINE ── */
+        /* Center headline */
         .headline-block {
             display: flex;
             flex-direction: column;
@@ -171,22 +148,23 @@
 
         .tagline {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 23px;
+            font-size: 22px;
             font-style: italic;
             font-weight: 600;
             color: #FFFFFF;
-            line-height: 1.55;
-            max-width: 580px;
+            line-height: 1.42;
+            max-width: 760px;
             text-shadow:
                 0 2px 12px rgba(0,0,0,0.80),
                 0 0 30px rgba(0,0,0,0.40);
         }
 
-        /* ── BOTTOM BAR ── */
+        /* Bottom bar */
         .bottom-bar {
             display: flex;
             align-items: flex-end;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 34px;
         }
 
         .stats-strip {
@@ -224,8 +202,9 @@
         .bottom-right {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 6px;
+            align-items: flex-start;
+            gap: 5px;
+            padding-bottom: 2px;
         }
 
         .phone {
@@ -278,12 +257,8 @@
                     </svg>
                     <div class="logo-text">
                         <span class="logo-name">PROPERTISM</span>
-                        <span class="logo-sub">Est. Chennai &middot; 10 Years</span>
+                        <span class="logo-sub">Est. Chennai &middot; 10 Years &middot; NRI Property Management</span>
                     </div>
-                </div>
-                <div class="kicker">
-                    <span class="kicker-dot"></span>
-                    <span class="kicker-text">NRI Property Management</span>
                 </div>
             </div>
 
@@ -293,7 +268,7 @@
                     NRI Realty Advisory
                     <span class="headline-gold">Redefined.</span>
                 </h1>
-                <p class="tagline">End-to-end asset management for NRIs — even if you&rsquo;re 10,000 km away.<br>Transparent. On-ground. Results.</p>
+                <p class="tagline">End-to-end asset management for NRIs &mdash; even if you're 10,000 km away. Transparent. On-ground. Results.</p>
             </div>
 
             <!-- BOTTOM -->
