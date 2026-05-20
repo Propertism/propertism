@@ -60,7 +60,7 @@ def seo_meta(
     default_description = "Expert NRI property management services in Chennai, India. Buy, sell, and manage your real estate investments with confidence. Professional rental management and property maintenance."
     default_image = _get_company_hero_url(company, site_url)
 
-    og_image = _make_absolute_url('/static/images/og-propertism.png', site_url)
+    og_image = _make_absolute_url('/static/images/og-propertism-v2.png', site_url)
     final_title = title or default_title
     final_description = description or default_description
     final_image = _make_absolute_url(image, site_url) if image else og_image
