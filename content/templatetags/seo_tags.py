@@ -22,6 +22,18 @@ def _make_absolute_url(url, site_url):
     return f"{site_url}{url}"
 
 
+def _get_public_site_url(request=None):
+    canonical_scheme = getattr(settings, "CANONICAL_SCHEME", "https") or "https"
+    canonical_host = getattr(settings, "CANONICAL_HOST", "") or ""
+
+    if not canonical_host and request:
+        canonical_host = request.get_host()
+    if not canonical_host:
+        canonical_host = "www.propertism.in"
+
+    return f"{canonical_scheme}://{canonical_host}"
+
+
 def _get_company_hero_url(company, site_url):
     hero_url = company.get_primary_hero_image_url() if company else None
     if hero_url:
@@ -48,18 +60,22 @@ def seo_meta(
     """
     request = context.get('request')
 
+    site_url = _get_public_site_url(request)
     if request:
-        current_url = request.build_absolute_uri()
-        site_url = f"{request.scheme}://{request.get_host()}"
+        current_url = f"{site_url}{request.path}"
     else:
-        current_url = settings.ALLOWED_HOSTS[0] if settings.ALLOWED_HOSTS else 'localhost'
-        site_url = current_url
+        current_url = site_url
 
     company = _get_company()
-    default_title = "Propertism Realty Advisors | NRI Property Management Chennai"
+    default_title = "Propertism | Chennai Property Management for NRIs"
     default_description = "Expert NRI property management services in Chennai, India. Buy, sell, and manage your real estate investments with confidence. Professional rental management and property maintenance."
     default_image = _get_company_hero_url(company, site_url)
 
+    social_title = "Propertism | NRI Property Management in Chennai"
+    social_description = (
+        "Trusted on-ground advisors for NRIs to buy, sell, rent, and manage Chennai "
+        "property with end-to-end support and transparent reporting."
+    )
     og_image = _make_absolute_url('/static/images/og-propertism-v2.png', site_url)
     final_title = title or default_title
     final_description = description or default_description
@@ -73,6 +89,8 @@ def seo_meta(
         'image': final_image,
         'url': current_url,
         'canonical_url': final_canonical,
+        'social_title': social_title,
+        'social_description': social_description,
         'site_url': site_url,
         'page_type': page_type,
         'site_name': company.company_name if company else 'Propertism Realty Advisors',
