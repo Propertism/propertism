@@ -19,18 +19,16 @@ function Get-AwsCommand {
         }
     }
 
-    foreach ($candidate in @("aws", "aws.cmd", "aws.exe")) {
-        $resolved = @(
-            where.exe $candidate 2>$null |
-            Where-Object { $_ -and ($_ -notmatch '^INFO:') } |
-            Select-Object -First 1
-        )
-        if ($resolved) {
-            return $resolved[0].Trim()
+    foreach ($path in @(
+        "C:\Program Files\Amazon\AWSCLIV2\aws.exe",
+        "C:\Program Files (x86)\Amazon\AWSCLIV2\aws.exe"
+    )) {
+        if (Test-Path $path) {
+            return $path
         }
     }
 
-    throw "AWS CLI was not found on PATH."
+    throw "AWS CLI was not found on PATH or in the standard AWS CLI install locations."
 }
 
 $aws = Get-AwsCommand
