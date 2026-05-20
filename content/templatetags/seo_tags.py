@@ -67,8 +67,8 @@ def seo_meta(
         current_url = site_url
 
     company = _get_company()
-    default_title = "Propertism | Chennai Property Management for NRIs"
-    default_description = "Expert NRI property management services in Chennai, India. Buy, sell, and manage your real estate investments with confidence. Professional rental management and property maintenance."
+    default_title = "Chennai Property Management for NRIs | Propertism"
+    default_description = "Trusted Chennai property management for NRIs. Buy, sell, rent and manage property from anywhere."
     default_image = _get_company_hero_url(company, site_url)
 
     social_title = "NRI Property Management Chennai | Propertism"
