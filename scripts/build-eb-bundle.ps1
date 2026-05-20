@@ -41,6 +41,7 @@ function Test-ExcludedPath {
         ".kiro",
         ".seed",
         ".session-tracker",
+        ".tmp-test-media",
         "__pycache__",
         ".pytest_cache",
         ".mypy_cache",
@@ -118,7 +119,7 @@ try {
     $archive = [System.IO.Compression.ZipArchive]::new($fileStream, [System.IO.Compression.ZipArchiveMode]::Create, $false)
 
     try {
-        $files = Get-ChildItem -LiteralPath $projectRoot -Recurse -Force -File | Where-Object {
+        $files = Get-ChildItem -LiteralPath $projectRoot -Recurse -Force -File -ErrorAction SilentlyContinue | Where-Object {
             $relative = [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri([System.Uri]::new($_.FullName)).ToString())
             -not (Test-ExcludedPath -RelativePath $relative)
         }
