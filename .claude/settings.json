@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.propertism.in)",
+      "Bash(copy \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\uilayers\\\\templates\\\\seo\\\\meta_tags.html\" \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\code-review\\\\meta_tags.html\")"
+    ]
+  }
+}
