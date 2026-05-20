@@ -74,7 +74,7 @@ def seo_meta(
     social_title = "NRI Property Management Chennai | Propertism"
     social_description = (
         "Buy, sell, rent, and manage Chennai property from anywhere with trusted "
-        "on-ground support."
+        "on-ground support, transparent updates, and dependable local execution."
     )
     og_image = _make_absolute_url('/static/images/og-propertism-v3.png', site_url)
     final_title = title or default_title
