@@ -286,6 +286,14 @@ def inquiry_status_update(request, inquiry_id):
 
 @inquiries_staff_required
 @require_POST
+def inquiry_delete(request, inquiry_id):
+    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
+    inquiry.delete()
+    return JsonResponse({"ok": True})
+
+
+@inquiries_staff_required
+@require_POST
 def inquiry_send_reply(request):
     try:
         data = json.loads(request.body)
