@@ -642,7 +642,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
         <p class="inq-confirm-text" id="inqConfirmText">Mark this inquiry as closed?</p>
         <div class="inq-confirm-actions">
             <button class="inq-confirm-cancel" type="button" onclick="cancelStatusChange()">Cancel</button>
-            <button class="inq-confirm-ok" type="button" onclick="confirmStatusChange()">Confirm</button>
+            <button class="inq-confirm-ok" id="inqConfirmOkBtn" type="button" onclick="confirmStatusChange()">Confirm</button>
         </div>
     </div>
 </div>
@@ -1446,23 +1446,45 @@ if (window.innerWidth < 900 && window.location.search === '') {
     };
 
     window.deleteInquiry = function (id, name) {
-        if (!window.confirm('Delete inquiry from ' + name + '?\n\nThis cannot be undone.')) return;
-        fetch('/inquiries/' + id + '/delete/', {
-            method: 'POST',
-            headers: { 'X-CSRFToken': getCsrf() }
-        }).then(function (r) {
-            return r.json();
-        }).then(function (data) {
-            if (!data.ok) throw new Error(data.error || 'Delete failed');
-            var row = document.querySelector('.inq-row[data-id="' + id + '"]');
-            if (row) row.remove();
-            var liteRow = document.querySelector('.inq-lite-row[data-id="' + id + '"]');
-            if (liteRow) liteRow.remove();
-            if (String(panelId) === String(id)) closeDetail();
-            showToast('Inquiry deleted.');
-        }).catch(function () {
-            showToast('Could not delete inquiry.', null, null, 'error');
-        });
+        var overlay = document.getElementById('inqConfirmOverlay');
+        var okBtn = document.getElementById('inqConfirmOkBtn');
+        var cancelBtn = overlay ? overlay.querySelector('.inq-confirm-cancel') : null;
+
+        document.getElementById('inqConfirmText').textContent = 'Delete inquiry from ' + name + '? This cannot be undone.';
+        if (okBtn) { okBtn.textContent = 'Delete'; okBtn.style.background = '#DC2626'; }
+
+        var prevOk = okBtn ? okBtn.onclick : null;
+        var prevCancel = cancelBtn ? cancelBtn.onclick : null;
+
+        function restore() {
+            overlay.classList.remove('active');
+            if (okBtn) { okBtn.textContent = 'Confirm'; okBtn.style.background = ''; okBtn.onclick = prevOk; }
+            if (cancelBtn) { cancelBtn.onclick = prevCancel; }
+        }
+
+        if (okBtn) {
+            okBtn.onclick = function () {
+                restore();
+                fetch('/inquiries/' + id + '/delete/', {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCsrf() }
+                }).then(function (r) {
+                    return r.json();
+                }).then(function (data) {
+                    if (!data.ok) throw new Error(data.error || 'Delete failed');
+                    var row = document.querySelector('.inq-row[data-id="' + id + '"]');
+                    if (row) row.remove();
+                    var liteRow = document.querySelector('.inq-lite-row[data-id="' + id + '"]');
+                    if (liteRow) liteRow.remove();
+                    if (String(panelId) === String(id)) closeDetail();
+                    showToast('Inquiry deleted.');
+                }).catch(function () {
+                    showToast('Could not delete inquiry.', null, null, 'error');
+                });
+            };
+        }
+        if (cancelBtn) { cancelBtn.onclick = function () { restore(); }; }
+        overlay.classList.add('active');
     };
 
     window.panelDelete = function () {
