@@ -1,25 +1,4 @@
 from django.db import migrations, models
-from django.utils.text import slugify
-
-
-def populate_slugs(apps, schema_editor):
-    Property = apps.get_model('properties', 'Property')
-    seen = set()
-    for prop in Property.objects.order_by('pk'):
-        base = slugify(prop.title) or 'property'
-        slug = base
-        counter = 1
-        while slug in seen:
-            slug = f'{base}-{counter}'
-            counter += 1
-        seen.add(slug)
-        prop.slug = slug
-        prop.save(update_fields=['slug'])
-
-
-def reverse_slugs(apps, schema_editor):
-    Property = apps.get_model('properties', 'Property')
-    Property.objects.update(slug='')
 
 
 class Migration(migrations.Migration):
@@ -29,20 +8,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='property',
-            name='slug',
-            field=models.SlugField(blank=True, default='', max_length=255),
-            preserve_default=False,
-        ),
-        migrations.RunPython(populate_slugs, reverse_slugs),
+        # One-shot cleanup for 2026-05-21 prod deploy drift.
+        # The _like index was orphaned by an earlier failed deploy attempt.
+        # IF EXISTS makes this a no-op on any clean environment.
         migrations.RunSQL(
             sql="DROP INDEX IF EXISTS properties_property_slug_f3b16024_like;",
             reverse_sql=migrations.RunSQL.noop,
         ),
-        migrations.AlterField(
+        migrations.AddField(
             model_name='property',
             name='slug',
-            field=models.SlugField(max_length=255, unique=True),
+            field=models.SlugField(blank=True, null=True, max_length=255),
         ),
     ]

@@ -33,7 +33,8 @@
 
 **Files modified:**
 - `properties/models.py` — added `slug = SlugField(max_length=255, unique=True, blank=True)`, `save()` override with uniqueness loop, `get_absolute_url()`
-- `properties/migrations/0006_property_slug.py` — 3-step: add field blank, populate from title via RunPython, make unique
+- `properties/migrations/0006_property_slug.py` — **SCCB-PROP-DEPLOY-01 rewrite** (see below)
+- `properties/migrations/0007_property_slug_unique.py` — **new file** (see below)
 - `properties/urls_web.py` — `<int:pk>/` → `property_detail_by_pk` (301 redirect); `<slug:slug>/` → canonical `property_detail`
 - `properties/views.py` — `property_detail(request, slug)` uses `get_object_or_404(Property, slug=slug)`; new `property_detail_by_pk` issues permanent redirect; `create_inquiry` redirect updated to slug
 - `content/sitemaps.py` — `PropertySitemap.location()` now returns `/properties/{obj.slug}/`
@@ -48,9 +49,32 @@
 All `{% url 'property_detail' property.pk %}` → `{% url 'property_detail' property.slug %}`.
 Hardcoded `/properties/{{ property.pk }}/` in `_lp_listings.html` also fixed to `{% url ... %}`.
 
-**Migration result:** `properties.0006_property_slug... OK` — all existing properties now have slugs.
+**Migration result (local):** `properties.0006_property_slug... OK`, `properties.0007_property_slug_unique` pending prod deploy.
 
 **Backward compatibility:** Old `/properties/<pk>/` URLs → 301 permanent redirect to `/properties/<slug>/`. External links and Google-indexed URLs will self-heal.
+
+---
+
+### SCCB-PROP-DEPLOY-01 — Deploy Failure + Migration Split
+
+**Date:** 2026-05-21
+**Approved by Viji/Manthraa — SCCB-PROP-DEPLOY-01**
+
+**Root cause (original):** Migration `0006_property_slug` added a `SlugField` (which has `db_index=True` by default) via `AddField` AND made it `unique=True` via `AlterField` in the same migration. Both operations independently appended a `CREATE INDEX _like` (varchar_pattern_ops) to `deferred_sql`. Django's `__exit__` executes deferred SQL sequentially — first creation succeeded, second creation raised `DuplicateTable`. This fails on any database state including clean. The `RunSQL DROP INDEX IF EXISTS` patch (commit `6bac2f4`) was diagnosing a DB state problem (orphaned index) that was real but secondary; the double-queue was the actual blocker.
+
+**Fix — split into two migrations:**
+
+`0006_property_slug.py` (rewritten):
+- `RunSQL("DROP INDEX IF EXISTS properties_property_slug_f3b16024_like;")` — one-shot cleanup for 2026-05-21 prod deploy drift, no-op on clean environments
+- `AddField(slug, blank=True, null=True)` — column only, no populate, no unique
+
+`0007_property_slug_unique.py` (new):
+- `RunPython(populate_slugs)` — verbatim from old 0006
+- `AlterField(slug, blank=True, unique=True)` — matches model definition
+
+**Why this works:** Each migration runs in its own transaction with its own `deferred_sql` list. 0006's `__exit__` creates the `_like` index once (from AddField). 0007's `AlterField` drops and recreates it as part of the db_index → unique transition — no double-queue.
+
+**Rollback trigger per SCCB:** If 0006 passes but 0007 fails on unique constraint (slug collision in real data) → do not patch and retry. Report colliding slugs. Fix is in `populate_slugs` logic, separate SCCB.
 
 ### Fix 4 — GA4 Wired
 
