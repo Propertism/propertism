@@ -71,12 +71,12 @@ def seo_meta(
     default_description = "Trusted Chennai property management for NRIs. Buy, sell, rent and manage property from anywhere."
     default_image = _get_company_hero_url(company, site_url)
 
-    social_title = "NRI Property Management Chennai | Propertism"
+    social_title = "Chennai Property Services for NRIs | Buy, Sell & Manage | Propertism"
     social_description = (
         "Buy, sell, rent, and manage Chennai property from anywhere with trusted "
         "on-ground support, transparent updates, and dependable local execution."
     )
-    og_image = _make_absolute_url('/static/images/og-propertism-v5.png', site_url)
+    og_image = _make_absolute_url('/static/images/og-propertism-v5.jpg', site_url)
     final_title = title or default_title
     final_description = description or default_description
     final_image = _make_absolute_url(image, site_url) if image else og_image
