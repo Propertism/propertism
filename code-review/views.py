@@ -96,8 +96,13 @@ def property_list(request):
     )
 
 
-def property_detail(request, pk):
+def property_detail_by_pk(request, pk):
     property_obj = get_object_or_404(Property, pk=pk)
+    return redirect('property_detail', slug=property_obj.slug, permanent=True)
+
+
+def property_detail(request, slug):
+    property_obj = get_object_or_404(Property, slug=slug)
     company = get_company_info()
     return render(
         request,
@@ -131,7 +136,7 @@ def create_inquiry(request):
             "There was an error submitting your inquiry. Please try again or call us directly.",
         )
 
-    return redirect("property_detail", pk=property_obj.pk)
+    return redirect("property_detail", slug=property_obj.slug)
 
 
 # ── SCCB-19052026-1 Inquiries Dashboard ──────────────────────────────────────

@@ -171,7 +171,7 @@
                                 data-phone="{{ inq.phone|escapejs }}"
                                 data-message="{{ inq.message|escapejs }}"
                                 data-property-title="{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}"
-                                data-property-url="{% if inq.property %}{% url 'property_detail' inq.property.pk %}{% endif %}"
+                                data-property-url="{% if inq.property %}{% url 'property_detail' inq.property.slug %}{% endif %}"
                 data-status="{{ inq.status }}"
                 data-created-at="{{ inq.created_at.isoformat }}"
                 data-updated-at="{{ inq.updated_at.isoformat }}"

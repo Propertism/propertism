@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}{{ post.title }} | Propertism{% endblock %}
+
+{% block seo_meta %}
+{% load seo_tags %}
+{% seo_meta title=post.title description=post.excerpt page_type="article" %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.blog-post-hero {
+    background: var(--bg-primary, #0b0f1a);
+    padding: 80px 0 40px;
+    border-bottom: 1px solid rgba(196,156,82,.15);
+}
+.blog-post-kicker {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #C49C52;
+    margin-bottom: 16px;
+}
+.blog-post-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 500;
+    color: #F5F0E8;
+    line-height: 1.2;
+    margin: 0 0 20px;
+}
+.blog-post-meta {
+    font-family: 'Jost', sans-serif;
+    font-size: .82rem;
+    color: rgba(245,240,232,.5);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.blog-post-meta span { display: flex; align-items: center; gap: 5px; }
+.blog-post-featured-image {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    margin: 40px 0 0;
+    border: 1px solid rgba(196,156,82,.12);
+}
+.blog-post-body {
+    padding: 60px 0 80px;
+}
+.blog-post-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 60px;
+    align-items: start;
+}
+.blog-post-content {
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-main, #1a1f2e);
+}
+.blog-post-content p { margin: 0 0 1.4em; }
+.blog-post-content h2, .blog-post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    margin: 2em 0 .6em;
+    color: var(--bg-primary, #0b0f1a);
+}
+.blog-post-content h2 { font-size: 1.6rem; }
+.blog-post-content h3 { font-size: 1.25rem; }
+.blog-post-sidebar { position: sticky; top: 80px; }
+.blog-sidebar-card {
+    background: #0b0f1a;
+    border: 1px solid rgba(196,156,82,.18);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+.blog-sidebar-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #C49C52;
+    margin: 0 0 16px;
+    letter-spacing: .04em;
+}
+.related-post-link {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(196,156,82,.1);
+    text-decoration: none;
+    color: rgba(245,240,232,.8);
+    font-family: 'Jost', sans-serif;
+    font-size: .875rem;
+    line-height: 1.4;
+    transition: color .2s;
+}
+.related-post-link:last-child { border-bottom: none; }
+.related-post-link:hover { color: #C49C52; }
+.related-post-cat {
+    display: block;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(196,156,82,.6);
+    margin-bottom: 4px;
+}
+.blog-cta-card {
+    background: linear-gradient(135deg, rgba(196,156,82,.08), rgba(196,156,82,.04));
+    border: 1px solid rgba(196,156,82,.3);
+    padding: 28px;
+    text-align: center;
+}
+.blog-cta-card p {
+    font-family: 'Jost', sans-serif;
+    font-size: .875rem;
+    color: rgba(245,240,232,.7);
+    margin: 0 0 16px;
+    line-height: 1.6;
+}
+.btn-blog-cta {
+    display: inline-block;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid #C49C52;
+    color: #C49C52;
+    font-family: 'Jost', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+}
+.btn-blog-cta:hover { background: rgba(196,156,82,.1); }
+.blog-post-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Jost', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(196,156,82,.7);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color .2s;
+}
+.blog-post-back:hover { color: #C49C52; }
+@media (max-width: 899px) {
+    .blog-post-grid { grid-template-columns: 1fr; }
+    .blog-post-sidebar { position: static; }
+    .blog-post-hero { padding: 60px 0 28px; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<article>
+    <div class="blog-post-hero">
+        <div class="section-inner">
+            <span class="blog-post-kicker">{{ post.get_category_display }}</span>
+            <h1 class="blog-post-title">{{ post.title }}</h1>
+            <div class="blog-post-meta">
+                <span>{{ post.author }}</span>
+                <span>{{ post.published_date|date:"j F Y" }}</span>
+            </div>
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-post-featured-image">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="blog-post-body">
+        <div class="section-inner">
+            <a href="/#blog-section" class="blog-post-back">&larr; Back to Insights</a>
+            <div class="blog-post-grid">
+                <div class="blog-post-content">
+                    {{ post.content|linebreaks }}
+                </div>
+
+                <aside class="blog-post-sidebar">
+                    {% if recent_posts %}
+                    <div class="blog-sidebar-card">
+                        <h3>More Insights</h3>
+                        {% for related in recent_posts %}
+                        <a href="{% url 'blog_post' related.slug %}" class="related-post-link">
+                            <span class="related-post-cat">{{ related.get_category_display }}</span>
+                            {{ related.title }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="blog-sidebar-card blog-cta-card">
+                        <h3>Need Property Guidance?</h3>
+                        <p>Our advisors support NRI owners across Chennai — property care, sale, and acquisition.</p>
+                        <a href="/contact/" class="btn-blog-cta">Speak to an Advisor</a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

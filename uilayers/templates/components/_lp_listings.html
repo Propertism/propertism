@@ -35,7 +35,7 @@
                             <span class="amount-words">{{ property.price_in_words_standard }}</span>
                         </div>
                         <div class="actions">
-                            <a href="/properties/{{ property.pk }}/" class="btn-view">Details</a>
+                            <a href="{% url 'property_detail' property.slug %}" class="btn-view">Details</a>
                             <button class="btn-whatsapp-sm whatsapp-cta" 
                                     data-message="Hi, I'm interested in {{ property.title }} in {{ property.location }}. Please share details.">
                                 WhatsApp

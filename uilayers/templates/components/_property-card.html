@@ -11,7 +11,7 @@
     </div>
     <div class="property-info">
         <h3 class="property-title">
-            <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="{% url 'property_detail' property.slug %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
         </h3>
         <p class="property-price">{{ property.formatted_price }}</p>
         <p class="property-price-words">{{ property.price_in_words_with_currency }}</p>

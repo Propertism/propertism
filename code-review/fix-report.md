@@ -1,5 +1,116 @@
 # Fix Report — Propertism (01propertism)
-# Current State as of 2026-05-19
+# Current State as of 2026-05-21
+
+---
+
+## Session 2026-05-21 (Afternoon) — Open Items Clearance
+
+**Date:** 2026-05-21
+**Branch:** main
+**Approved by Viji** — execution decisions
+
+### Fix 1 — Company Logo 404 (Header)
+
+**File:** `uilayers/templates/components/_header-english.html`
+- Added `{% static '...' as logo_fallback_url %}` at top of file
+- Dark logo `<img>` now uses conditional `src`: `company.logo.url` if set, else static fallback
+- Added `onerror` handler so browser-side 404 also falls back to `propertism-logo.png`
+- Handles both: empty logo field (no URL attempt), and missing file on EB (onerror recovery)
+
+### Fix 2 — Blog 500 (Missing Template)
+
+**Root cause:** `blog_post` view calls `render(request, "blog_post.html", context)` but template did not exist → `TemplateDoesNotExist` → 500.
+
+**File created:** `uilayers/templates/blog_post.html`
+- Extends `base.html`, dark navy/gold luxury aesthetic matching propertism.in design
+- Hero area: category kicker, title (Cormorant Garamond), author, published date, optional featured image
+- Two-column layout: article content (left) + sticky sidebar (right)
+- Sidebar: related posts list + Contact Advisor CTA
+- Mobile-first responsive (single column below 899px)
+- SEO: custom `{% block meta_title %}` and `{% block seo_meta %}` with post title/excerpt
+
+### Fix 3 — Property Slug URLs
+
+**Files modified:**
+- `properties/models.py` — added `slug = SlugField(max_length=255, unique=True, blank=True)`, `save()` override with uniqueness loop, `get_absolute_url()`
+- `properties/migrations/0006_property_slug.py` — 3-step: add field blank, populate from title via RunPython, make unique
+- `properties/urls_web.py` — `<int:pk>/` → `property_detail_by_pk` (301 redirect); `<slug:slug>/` → canonical `property_detail`
+- `properties/views.py` — `property_detail(request, slug)` uses `get_object_or_404(Property, slug=slug)`; new `property_detail_by_pk` issues permanent redirect; `create_inquiry` redirect updated to slug
+- `content/sitemaps.py` — `PropertySitemap.location()` now returns `/properties/{obj.slug}/`
+
+**Templates updated (5 files):**
+- `uilayers/templates/properties/list.html`
+- `uilayers/templates/components/_property-card.html`
+- `uilayers/templates/home/sections/_properties.html`
+- `uilayers/templates/components/_lp_listings.html`
+- `uilayers/templates/inquiries/dashboard.html`
+
+All `{% url 'property_detail' property.pk %}` → `{% url 'property_detail' property.slug %}`.
+Hardcoded `/properties/{{ property.pk }}/` in `_lp_listings.html` also fixed to `{% url ... %}`.
+
+**Migration result:** `properties.0006_property_slug... OK` — all existing properties now have slugs.
+
+**Backward compatibility:** Old `/properties/<pk>/` URLs → 301 permanent redirect to `/properties/<slug>/`. External links and Google-indexed URLs will self-heal.
+
+### Fix 4 — GA4 Wired
+
+**File:** `uilayers/templates/base.html`
+- Added Google Analytics GA4 gtag.js snippet in `<head>` above font preconnects
+- Measurement ID: `G-WZCH8BV34J`
+- All pages now tracked on every page load — page views, sessions, users, traffic sources
+
+**Code-Review Mirror:** `code-review/base.html` ✓
+
+### Open Items (deferred)
+
+1. **WhatsApp access token expired** — parked. Viji to generate permanent System User token in Meta Business Suite when ready.
+2. **Blog 500 errors** — fixed (missing template created). Monitor live.
+3. **fb:app_id** — optional. Create a Facebook App at developers.facebook.com → share App ID → 10-min code change. No functional loss without it.
+4. **Company logo 404 on EB** — code fallback applied. Underlying fix: re-upload logo at `/admin/content/companyinfo/`.
+
+### Code-Review Mirrors
+
+- `code-review/_header-english.html` ✓
+- `code-review/blog_post.html` ✓
+- `code-review/models.py` ✓
+- `code-review/0006_property_slug.py` ✓
+- `code-review/urls_web.py` ✓
+- `code-review/views.py` ✓
+- `code-review/sitemaps.py` ✓
+
+---
+
+## Session 2026-05-21 — OG v5, Inquiry Delete, Admin Tightening
+
+**Date:** 2026-05-21
+**Branch:** main
+**Approved by Viji** — execution decisions
+
+### OG Image v5 — LinkedIn & WhatsApp
+- `og-propertism-v5.png` (1200×630 Chennai skyline, Cinzel headline, proof pills) promoted as default OG image
+- `seo_tags.py` updated — `og_image` now points to `/static/images/og-propertism-v5.png`
+- Validated: Facebook Sharing Debugger (200, full card) + LinkedIn Post Inspector (full-bleed confirmed)
+- Deployed to EB + pushed to GitHub — commit `a8ff3cd`
+
+### Inquiry Delete — Staff Console + Django Admin
+- New view: `inquiry_delete` in `properties/views.py` (`@inquiries_staff_required`, `@require_POST`)
+- New URL: `/<id>/delete/` in `properties/urls_inquiries.py`
+- Staff console: trash button in table Actions column, detail panel, and mobile lite row
+- Confirm: uses `inq-confirm-overlay` (not browser native) — Delete button red `#DC2626`
+- Django admin: `delete_inquiry_view` + URL in `properties/admin.py`, trash icon per row in changelist
+- Commits: `e9ab0a2`, `5a776cf`
+
+### Admin Changelist — Table Tightening + Search Fix
+- `table-layout: fixed` with explicit column widths — horizontal scrollbar eliminated
+- Reduced padding, font sizes, truncation with ellipsis on name/email/property
+- Search icon: replaced `&#x1F50D;` emoji with 14px SVG lens — overlap with placeholder resolved
+- Commits: `ad8a4f7`, `5d47110`
+
+### Code-Review Mirrors
+- `code-review/seo_tags.py` ✓
+- `code-review/views.py` ✓
+- `code-review/urls_inquiries.py` ✓
+- `code-review/admin.py` ✓
 
 ---
 

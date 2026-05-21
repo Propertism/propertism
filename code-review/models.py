@@ -142,6 +142,7 @@ class Property(models.Model):
     ]
 
     title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=15, decimal_places=2)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default="INR")
@@ -155,6 +156,23 @@ class Property(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="available")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            base = slugify(self.title) or 'property'
+            slug = base
+            qs = Property.objects.exclude(pk=self.pk) if self.pk else Property.objects.all()
+            counter = 1
+            while qs.filter(slug=slug).exists():
+                slug = f'{base}-{counter}'
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('property_detail', kwargs={'slug': self.slug})
 
     def _normalize_image_reference(self, value):
         if not value:

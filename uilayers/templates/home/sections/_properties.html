@@ -38,7 +38,7 @@
                 </div>
                 <div class="property-details-hybrid">
                     <h3 class="property-title-hybrid">
-                        <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span
+                        <a href="{% url 'property_detail' property.slug %}">{{ property.title }}<span
                                 class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
                     </h3>
                     <div class="property-price-hybrid">{{ property.formatted_price }}</div>

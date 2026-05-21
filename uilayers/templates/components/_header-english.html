@@ -1,10 +1,11 @@
 {% load static socialaccount %}
+{% static 'images/propertism-logo.png' as logo_fallback_url %}
 <header class="site-header" id="site-header">
     <div class="container">
         <div class="header-content">
             <a href="{{ home_section_links.home }}" class="logo">
                 <!-- Dark Mode Logo (Default Dynamic) -->
-                <img src="{{ company.logo.url }}" alt="Propertism" class="logo-image logo-dark">
+                <img src="{% if company.logo %}{{ company.logo.url }}{% else %}{{ logo_fallback_url }}{% endif %}" alt="Propertism" class="logo-image logo-dark" onerror="this.onerror=null;this.src='{{ logo_fallback_url }}';">
                 <!-- Light Mode Logo (Gold + Dark Text) -->
                 <img src="{% static 'images/propertism-logo-tm.png' %}" alt="Propertism" class="logo-image logo-light">
             </a>

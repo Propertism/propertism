@@ -9,11 +9,20 @@
     <meta name="color-scheme" content="light">
     
     <!-- SEO Meta Tags -->
-    <title>{% block meta_title %}Propertism Realty Advisors | NRI Property Management Chennai{% endblock %}</title>
+    <title>{% block meta_title %}Chennai Property Management for NRIs | Propertism{% endblock %}</title>
     {% block seo_meta %}
     {% seo_meta %}
     {% endblock %}
     
+    <!-- Google Analytics GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZCH8BV34J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WZCH8BV34J');
+    </script>
+
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +34,7 @@
     
     <!-- Load premium fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
     <!-- V4 Design System Core -->
     <link rel="stylesheet" href="{% static 'css/v4-tokens.css' %}">

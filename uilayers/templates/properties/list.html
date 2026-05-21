@@ -270,7 +270,7 @@
                     <div class="property-item-body">
                         <span class="property-item-location">{{ property.location }}</span>
                         <h2 class="property-item-title">
-                            <a href="{% url 'property_detail' property.pk %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
+                            <a href="{% url 'property_detail' property.slug %}">{{ property.title }}<span class="property-link-arrow" aria-hidden="true">&rarr;</span></a>
                         </h2>
                         <div class="property-item-price">{{ property.formatted_price }}</div>
                         <div class="property-item-price-words">{{ property.price_in_words_with_currency }}</div>
