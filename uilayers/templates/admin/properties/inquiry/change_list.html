@@ -117,45 +117,55 @@
     background: var(--surface); border-radius: var(--radius);
     box-shadow: var(--shadow); overflow: hidden;
   }
-  .inq-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+  .inq-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; }
   .inq-table thead tr { background: #F1F5F9; border-bottom: 2px solid var(--border); }
   .inq-table thead th {
-    padding: 9px 12px; text-align: left; font-weight: 700;
-    font-size: .7rem; text-transform: uppercase; letter-spacing: .07em;
-    color: var(--navy); white-space: nowrap;
+    padding: 7px 8px; text-align: left; font-weight: 700;
+    font-size: .67rem; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--navy); white-space: nowrap; overflow: hidden;
   }
-  .inq-table thead th:first-child { color: var(--muted); width: 36px; }
+  .inq-table thead th:first-child { color: var(--muted); width: 32px; }
+  .inq-table thead th:nth-child(2)  { width: 100px; }  /* Name */
+  .inq-table thead th:nth-child(3)  { width: 130px; }  /* Email */
+  .inq-table thead th:nth-child(4)  { width: 90px;  }  /* Phone */
+  .inq-table thead th:nth-child(5)  { width: 80px;  }  /* Property */
+  .inq-table thead th:nth-child(6)  { width: 130px; }  /* Message */
+  .inq-table thead th:nth-child(7)  { width: 80px;  }  /* Status */
+  .inq-table thead th:nth-child(8)  { width: 110px; }  /* Submitted */
+  .inq-table thead th:nth-child(9)  { width: 110px; }  /* Update Status */
+  .inq-table thead th:nth-child(10) { width: 36px;  }  /* Delete */
   .inq-table tbody tr {
     border-bottom: 1px solid var(--border);
     transition: background .12s;
   }
   .inq-table tbody tr:last-child { border-bottom: none; }
   .inq-table tbody tr:hover { background: #F8FAFC; }
-  .inq-table td { padding: 9px 12px; vertical-align: middle; color: var(--text); white-space: nowrap; }
-  .inq-table td.id-col { color: var(--muted); font-size: .75rem; width: 36px; }
-  .inq-table td.msg-cell { white-space: normal; max-width: 180px; }
+  .inq-table td { padding: 7px 8px; vertical-align: middle; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .inq-table td.id-col { color: var(--muted); font-size: .72rem; width: 32px; }
+  .inq-table td.msg-cell { white-space: normal; max-width: 130px; }
 
   /* ── Name cell ── */
-  .name-cell strong { display: block; font-weight: 600; color: var(--navy); }
+  .name-cell { max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
+  .name-cell strong { display: block; font-weight: 600; color: var(--navy); overflow: hidden; text-overflow: ellipsis; }
   .name-cell a { color: var(--navy); text-decoration: none; }
   .name-cell a:hover { color: var(--gold); }
 
   /* ── Contact cell ── */
-  .contact-cell { white-space: nowrap; }
-  .contact-cell .email { color: var(--navy); font-size: .85rem; }
-  .contact-cell .phone { color: var(--muted); font-size: .8rem; margin-top: 3px; }
+  .contact-cell { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+  .contact-cell .email { color: var(--navy); font-size: .8rem; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .contact-cell .phone { color: var(--muted); font-size: .75rem; }
 
   /* ── Property cell ── */
-  .prop-cell { color: var(--muted); font-size: .82rem; max-width: 120px; }
+  .prop-cell { color: var(--muted); font-size: .78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
 
   /* ── Message cell ── */
-  .msg-cell { max-width: 200px; }
-  .msg-preview { color: var(--text); line-height: 1.45; }
-  .msg-full { display: none; color: var(--text); line-height: 1.45; }
+  .msg-cell { max-width: 130px; white-space: normal; }
+  .msg-preview { color: var(--text); line-height: 1.4; font-size: .78rem; }
+  .msg-full { display: none; color: var(--text); line-height: 1.4; font-size: .78rem; }
   .msg-full.open { display: block; }
   .toggle-msg {
     background: none; border: none; color: var(--gold);
-    font-size: .78rem; cursor: pointer; padding: 2px 0;
+    font-size: .72rem; cursor: pointer; padding: 1px 0;
     font-weight: 600;
   }
   .toggle-msg:hover { color: var(--gold-lt); }
@@ -163,8 +173,8 @@
   /* ── Status badge ── */
   .badge {
     display: inline-flex; align-items: center;
-    padding: 4px 10px; border-radius: 20px;
-    font-size: .75rem; font-weight: 700; letter-spacing: .03em;
+    padding: 3px 8px; border-radius: 20px;
+    font-size: .7rem; font-weight: 700; letter-spacing: .03em;
     white-space: nowrap;
   }
   .badge-pending  { background: var(--pending-bg);  color: var(--pending-fg); }
@@ -173,20 +183,20 @@
 
   /* ── Status select ── */
   .status-select {
-    padding: 6px 10px; border-radius: 6px;
+    padding: 4px 6px; border-radius: 5px;
     border: 1.5px solid var(--border); background: var(--bg);
-    font-size: .8rem; color: var(--text); cursor: pointer;
-    transition: border-color .18s;
+    font-size: .75rem; color: var(--text); cursor: pointer;
+    transition: border-color .18s; width: 100%;
   }
   .status-select:focus { outline: none; border-color: var(--gold); }
   .status-select.saving { opacity: .5; pointer-events: none; }
   .status-select.saved  { border-color: var(--closed-bd); }
 
   /* ── Date cell ── */
-  .date-cell { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+  .date-cell { color: var(--muted); font-size: .72rem; white-space: nowrap; }
   .sort-th { cursor: pointer; user-select: none; }
   .sort-th:hover { color: var(--gold); }
-  .sort-arrow { margin-left: 4px; font-size: .65rem; opacity: .7; }
+  .sort-arrow { margin-left: 4px; font-size: .62rem; opacity: .7; }
 
   /* ── Empty state ── */
   .empty-state {
@@ -356,7 +366,7 @@
 
   <!-- Table -->
   <div class="inq-card">
-    <div style="overflow-x:auto">
+    <div>
       <table class="inq-table">
         <thead>
           <tr>
