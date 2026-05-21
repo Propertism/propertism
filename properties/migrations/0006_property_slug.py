@@ -36,6 +36,10 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
         migrations.RunPython(populate_slugs, reverse_slugs),
+        migrations.RunSQL(
+            sql="DROP INDEX IF EXISTS properties_property_slug_f3b16024_like;",
+            reverse_sql=migrations.RunSQL.noop,
+        ),
         migrations.AlterField(
             model_name='property',
             name='slug',
