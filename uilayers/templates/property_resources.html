@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+{% load seo_tags %}
+
+{% block meta_title %}{{ meta_title }}{% endblock %}
+
+{% block seo_meta %}
+{% seo_meta title=meta_title description=meta_description canonical_override="/property-owner-resources/" page_type="website" %}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% breadcrumb_schema items=breadcrumbs %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/v4-property-resources.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="resources-page">
+    <!-- Header banner -->
+    <header class="resources-header">
+        <div class="container">
+            <h1>Tamil Nadu Property Owner Resources</h1>
+            <p>Official Government Services Directory & Essential Land Verification Tools for Property Owners and NRIs.</p>
+        </div>
+    </header>
+
+    <!-- Breadcrumb navigation -->
+    <nav class="resources-breadcrumbs">
+        {% for crumb in breadcrumbs %}
+            {% if not forloop.last %}
+                {% if crumb.url %}
+                    <a href="{{ crumb.url }}">{{ crumb.name }}</a>
+                {% else %}
+                    <span>{{ crumb.name }}</span>
+                {% endif %}
+                <span class="crumb-separator">/</span>
+            {% else %}
+                <span class="current-crumb">{{ crumb.name }}</span>
+            {% endif %}
+        {% endfor %}
+    </nav>
+
+    <!-- Interactive Filter Tabs -->
+    <div class="resources-tabs-container">
+        <button type="button" class="resource-tab-btn active" data-filter="all">All Services</button>
+        {% for cat in categories %}
+            <button type="button" class="resource-tab-btn" data-filter="{{ cat.id }}">{{ cat.title }}</button>
+        {% endfor %}
+    </div>
+
+    <!-- Responsive Card Grid -->
+    <div class="resources-grid-container">
+        <div class="resources-grid" id="resources-grid">
+            {% for cat in categories %}
+                {% for service in cat.services %}
+                    <article class="resource-card" data-category="{{ cat.id }}" data-service-id="{{ service.id }}">
+                        <div class="resource-card-meta">
+                            <span class="resource-card-category-tag">{{ cat.title }}</span>
+                            <span class="resource-card-badge">Government Portal</span>
+                        </div>
+                        <div class="resource-card-body">
+                            <div class="resource-card-title-row">
+                                <div class="resource-card-icon-wrapper">
+                                    {% if service.icon == "verify" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    {% elif service.icon == "doc" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    {% elif service.icon == "table" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM21 9H3M21 15H3M12 3v18"/></svg>
+                                    {% elif service.icon == "map" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                                    {% elif service.icon == "file-text" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                    {% elif service.icon == "clock" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    {% elif service.icon == "building" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="16"/><line x1="15" y1="22" x2="15" y2="16"/><line x1="9" y1="16" x2="15" y2="16"/><path d="M8 6h3v3H8zm5 0h3v3h-3zm-5 5h3v3H8zm5 0h3v3h-3z"/></svg>
+                                    {% elif service.icon == "shield" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    {% elif service.icon == "search" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    {% elif service.icon == "trending-up" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    {% elif service.icon == "briefcase" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                    {% elif service.icon == "credit-card" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                    {% elif service.icon == "droplet" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                    {% elif service.icon == "zap" %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    {% else %}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    {% endif %}
+                                </div>
+                                <h3 class="resource-card-title">{{ service.title }}</h3>
+                            </div>
+                            <p class="resource-card-description">{{ service.description }}</p>
+                        </div>
+                        <div class="resource-card-footer">
+                            <a href="{{ service.url }}" target="_blank" rel="noopener noreferrer" class="resource-card-action-btn js-resource-click" data-resource-title="{{ service.title }}" data-category-title="{{ cat.title }}">
+                                Access Portal
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Institutional Disclaimer Block -->
+    <div class="resources-disclaimer-wrapper">
+        <section class="resources-disclaimer" aria-labelledby="disclaimer-title">
+            <div class="resources-disclaimer-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="resources-disclaimer-content">
+                <h4 id="disclaimer-title">Legal Disclaimer</h4>
+                <p>Propertism provides links to official Tamil Nadu Government services solely for user convenience. Propertism does not own, operate, or control these government portals. Service availability, processes, and information are managed by the respective government departments.</p>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Client-side Category Filter Tabs
+    var tabButtons = document.querySelectorAll(".resource-tab-btn");
+    var cards = document.querySelectorAll(".resource-card");
+
+    tabButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            // Remove active class from all tabs
+            tabButtons.forEach(function (btn) { btn.classList.remove("active"); });
+            // Add active class to clicked tab
+            button.classList.add("active");
+
+            var filterValue = button.getAttribute("data-filter");
+
+            // Filter cards
+            cards.forEach(function (card) {
+                if (filterValue === "all" || card.getAttribute("data-category") === filterValue) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Track category engagement
+            if (typeof gtag !== "undefined") {
+                gtag("event", "resource_hub_category_engagement", {
+                    category_id: filterValue,
+                    category_name: button.textContent.trim()
+                });
+            }
+        });
+    });
+
+    // 2. Resource Card Click Tracking
+    var resourceLinks = document.querySelectorAll(".js-resource-click");
+    resourceLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+            var title = link.getAttribute("data-resource-title");
+            var category = link.getAttribute("data-category-title");
+
+            if (typeof gtag !== "undefined") {
+                gtag("event", "resource_hub_click", {
+                    resource_title: title,
+                    category_name: category
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

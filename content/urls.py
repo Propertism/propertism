@@ -12,6 +12,7 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.blog_post, name='blog_post'),
     path('contact/', views.contact, name='contact'),
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    path('property-owner-resources/', views.property_owner_resources, name='property_owner_resources'),
     path('api/landing-lead/', views.landing_lead_api, name='landing_lead_api'),
     path('api/landing-lead/followup/', views.landing_lead_followup_api, name='landing_lead_followup_api'),
     

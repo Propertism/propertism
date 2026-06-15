@@ -35,6 +35,7 @@ from .site_context import (
     get_hero_title_segments,
     get_home_section_links,
 )
+from .government_resources import GOVERNMENT_RESOURCE_CATEGORIES
 
 logger = logging.getLogger(__name__)
 RECOVERABLE_DB_ERRORS = (OperationalError, ProgrammingError)
@@ -267,7 +268,7 @@ def team_member_detail(request, slug):
         "team_member": team_member,
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "Management", "url": "/management/"},
+            {"name": "Management", "url": "/#management-section"},
             {"name": team_member.name, "url": None}
         ],
     })
@@ -637,3 +638,23 @@ def custom_404(request, exception=None):
 def custom_500(request):
     """Custom 500 error handler."""
     return render(request, "500.html", status=500)
+
+
+def property_owner_resources(request):
+    """View to display Tamil Nadu Property Owner Resources."""
+    context = get_company_context()
+    context.update({
+        "categories": GOVERNMENT_RESOURCE_CATEGORIES,
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "Resources", "url": None},
+            {"name": "Property Owner Resources", "url": None}
+        ],
+        "meta_title": "Tamil Nadu Property Owner Resources | Official Government Services",
+        "meta_description": (
+            "Official Tamil Nadu Government property services including Patta verification, "
+            "Chitta extracts, FMB sketches, TSLR records, Encumbrance Certificate services, "
+            "property tax portals, and other essential resources for property owners and NRIs."
+        ),
+    })
+    return render(request, "property_resources.html", context)

@@ -19,7 +19,7 @@
 
 .footer-content {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) 1.5fr !important;
+    grid-template-columns: repeat(4, 1fr) 1.5fr !important;
     gap: 24px !important;
     margin-bottom: 24px !important;
 }

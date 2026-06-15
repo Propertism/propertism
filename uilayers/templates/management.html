@@ -6,8 +6,6 @@
 {% block meta_description %}Structured property management for NRI owners in Chennai. On-ground execution, transparent reporting, and reliable coordination across time zones.{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/propertism-styles.css' %}">
-<link rel="stylesheet" href="{% static 'css/realtor-overrides.css' %}">>
 <style>
     /* Management Page Specific Styles */
     .management-hero {
@@ -123,11 +121,14 @@
     }
     
     .process-card li::before {
-        content: "✓";
+        content: "";
         position: absolute;
-        left: 0;
-        color: #B89A4A;
-        font-weight: 600;
+        left: 4px;
+        top: 13px;
+        width: 5px;
+        height: 5px;
+        background-color: #B89A4A;
+        transform: rotate(45deg);
     }
     
     /* How It Works Flow */
@@ -308,6 +309,7 @@
     .team-minimal-section {
         padding: 60px 24px;
         background: #F8FAFC;
+        scroll-margin-top: var(--nav-height, 92px);
     }
     
     .team-minimal-grid {
@@ -618,7 +620,7 @@
 
 <!-- Team Section (De-emphasized) -->
 {% if team_members %}
-<section class="team-minimal-section">
+<section class="team-minimal-section" id="team-section">
     <div class="container">
         <div class="section-header">
             <h2>Your Chennai Team</h2>

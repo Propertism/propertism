@@ -2213,7 +2213,7 @@ section {
 }
 
 .site-footer a:hover {
-    color: #111111 !important;
+    color: var(--brand-gold, #C49C52) !important;
 }
 
 /* Footer nav links */

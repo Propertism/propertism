@@ -16,6 +16,13 @@
                 <li><strong>Legal and POA Support</strong> - Documentation coordination for remote owners and advisor-led closure support</li>
                 <li><strong>Exit Clarity</strong> - Clear process ownership from first discussion to final handover</li>
             </ul>
+
+            <!-- Contextual Tamil Nadu Government Property Resources Hub CTA -->
+            <div class="lp-resource-callout" style="margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--brand-gold); background: rgba(196, 156, 82, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
+                <h4 style="font-family: var(--serif-main); font-size: 1.25rem; color: var(--text-main); margin: 0; font-weight: 500;">Official Tamil Nadu Government Property Services Directory</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0; line-height: 1.5;">Preparing to sell? Verify your Patta/Chitta land records, lookup guideline values, download FMB sketches, or search Encumbrance Certificates via official Government portals.</p>
+                <a href="{% url 'property_owner_resources' %}" style="color: var(--brand-gold); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 4px;">Access Official Government Resources &rarr;</a>
+            </div>
             {% elif config.intent_type == "management" %}
             <h3>Remote Property Operations for NRIs in {{ city.name }}</h3>
             <p>Property management is not just maintenance. It is a system for supervising tenants, rentals, inspections, compliance, and owner communication without forcing the owner into constant local coordination.</p>
@@ -26,6 +33,13 @@
                 <li><strong>Maintenance Decisions</strong> - Repair coordination backed by trusted local execution</li>
                 <li><strong>Owner Reporting</strong> - Practical updates so overseas owners stay informed without chasing details</li>
             </ul>
+
+            <!-- Contextual Tamil Nadu Government Property Resources Hub CTA -->
+            <div class="lp-resource-callout" style="margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--brand-gold); background: rgba(196, 156, 82, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
+                <h4 style="font-family: var(--serif-main); font-size: 1.25rem; color: var(--text-main); margin: 0; font-weight: 500;">Official Tamil Nadu Government Property Services Directory</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0; line-height: 1.5;">Managing your assets remotely? Verify land classification, retrieve Urban TSLR extracts, or access the Chennai Corporation property tax portal online.</p>
+                <a href="{% url 'property_owner_resources' %}" style="color: var(--brand-gold); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 4px;">Access Official Government Resources &rarr;</a>
+            </div>
             {% elif config.intent_type == "rental" %}
             <h3>Rental Continuity for Overseas Owners in {{ city.name }}</h3>
             <p>Rental management solves the everyday friction of leasing from abroad. The focus is not only finding a tenant, but keeping documentation, rent collection, renewals, and transitions predictable.</p>

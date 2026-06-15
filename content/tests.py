@@ -257,3 +257,57 @@ class LandingLeadApiTests(TestCase):
         self.assertEqual(lead.geo_origin, "dubai-uae")
         self.assertEqual(lead.qualification_data["selling_timeline"], "30-days")
         self.assertEqual(lead.lead_category, "hot")
+
+
+class PropertyOwnerResourcesTests(TestCase):
+    def setUp(self):
+        self.company = CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
+
+    def test_property_owner_resources_view_returns_200(self):
+        response = self.client.get(reverse("property_owner_resources"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Tamil Nadu Property Owner Resources")
+        self.assertContains(response, "Official Government Services Directory")
+        self.assertContains(response, "Legal Disclaimer")
+        self.assertContains(response, "Propertism provides links to official Tamil Nadu Government services")
+        # Check canonical URL override
+        self.assertContains(response, 'rel="canonical" href="https://www.propertism.in/property-owner-resources/"')
+
+
+class LinkRoutingTests(TestCase):
+    def setUp(self):
+        self.company = CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
+
+    def test_core_pages_route_correctly(self):
+        core_pages = [
+            ("home", {}),
+            ("services", {}),
+            ("about", {}),
+            ("management", {}),
+            ("contact", {}),
+            ("property_owner_resources", {}),
+            ("blog", {}),
+        ]
+        for name, kwargs in core_pages:
+            response = self.client.get(reverse(name, kwargs=kwargs))
+            self.assertIn(response.status_code, [200, 302], f"Page {name} failed with status {response.status_code}")
+
+    def test_city_hubs_route_correctly(self):
+        for city in ["chennai", "bangalore", "hyderabad"]:
+            response = self.client.get(reverse("city_hub", kwargs={"city_slug": city}))
+            self.assertEqual(response.status_code, 200, f"City hub /{city}/ failed with status {response.status_code}")
+
+    def test_seo_landing_pages_route_correctly(self):
+        # Test a few main intents for Chennai
+        intents = ["nri-sell-property", "nri-property-management", "nri-rental-management"]
+        for intent in intents:
+            response = self.client.get(reverse("landing_page", kwargs={"city_slug": "chennai", "intent_slug": intent}))
+            self.assertEqual(response.status_code, 200, f"Landing page /chennai/{intent}/ failed with status {response.status_code}")
+
+    def test_nri_landing_pages_route_correctly(self):
+        # Test a few NRI location pages
+        locations = ["new-york-usa", "london-uk", "dubai-uae", "toronto-canada"]
+        for loc in locations:
+            response = self.client.get(reverse("nri_landing_page", kwargs={"nri_location_slug": loc, "geo_slug": "chennai-nri-property-management"}))
+            self.assertEqual(response.status_code, 200, f"NRI page /{loc}/chennai-nri-property-management/ failed with status {response.status_code}")
+

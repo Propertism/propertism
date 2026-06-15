@@ -53,6 +53,17 @@
                 </ul>
             </div>
 
+            <!-- Property Resources -->
+            <div class="footer-section footer-resources-nav">
+                <h3>Property Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'property_owner_resources' %}">Resource Hub</a></li>
+                    <li><a href="https://eservices.tn.gov.in/eservices_html/index.html" target="_blank" rel="noopener noreferrer">Patta/Chitta Extract</a></li>
+                    <li><a href="https://tnreginet.gov.in/portal/" target="_blank" rel="noopener noreferrer">Encumbrance Search</a></li>
+                    <li><a href="https://onlinepayment.chennaicorporation.gov.in/" target="_blank" rel="noopener noreferrer">GCC Property Tax</a></li>
+                </ul>
+            </div>
+
             <!-- India Office -->
             <div class="footer-section footer-office">
                 <h3>Chennai Headquarters</h3>
@@ -75,7 +86,7 @@
                 <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-mini">
                     {% csrf_token %}
                     <input type="email" name="email" placeholder="Email Address" required>
-                    <button type="submit">JOIN</button>
+                    <button type="submit">{{ company.footer_newsletter_button_text|default:'JOIN' }}</button>
                 </form>
             </div>
 

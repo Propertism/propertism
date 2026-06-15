@@ -1,0 +1,364 @@
+/**
+ * PROPERTISM V4 - PROPERTY RESOURCES MODULE
+ * Premium institutional resources directory styling
+ * No emojis, no AI hype, pure corporate excellence.
+ */
+
+.resources-page {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    padding-bottom: 80px;
+    font-family: var(--sans-main), sans-serif;
+}
+
+/* Page Header - Resolves fixed navigation bar overlap */
+.resources-header {
+    background-color: var(--brand-navy);
+    background: radial-gradient(circle at center, #141f36 0%, #0b0f1a 100%);
+    color: var(--text-inverse);
+    padding: calc(var(--nav-height, 92px) + 68px) 24px 70px !important;
+    text-align: center;
+    border-bottom: 1px solid rgba(196, 156, 82, 0.25);
+    box-shadow: inset 0 -30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.resources-header h1 {
+    font-family: var(--serif-main), serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+}
+
+.resources-header p {
+    font-family: var(--sans-main), sans-serif;
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Breadcrumbs */
+.resources-breadcrumbs {
+    max-width: 1200px;
+    margin: 32px auto 0;
+    padding: 0 24px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resources-breadcrumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.resources-breadcrumbs a:hover {
+    color: var(--brand-gold);
+}
+
+.resources-breadcrumbs .crumb-separator {
+    color: var(--border-subtle);
+    opacity: 0.5;
+}
+
+.resources-breadcrumbs .current-crumb {
+    color: var(--brand-gold);
+}
+
+/* Premium Tabs Underline Selector */
+.resources-tabs-container {
+    max-width: 1200px;
+    margin: 40px auto 48px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 12px;
+}
+
+.resource-tab-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 4px 12px;
+    font-family: var(--sans-main), sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.25s ease;
+    border-radius: 0;
+}
+
+.resource-tab-btn:hover {
+    color: var(--brand-gold);
+}
+
+.resource-tab-btn.active {
+    color: var(--brand-gold);
+    font-weight: 700;
+}
+
+.resource-tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; /* aligns directly with the container border line */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--brand-gold);
+    transform: scaleX(0);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left;
+}
+
+.resource-tab-btn.active::after {
+    transform: scaleX(1);
+}
+
+/* Grid Container & Responsive Cards */
+.resources-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.resource-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 36px 28px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    border-top: 3px solid transparent;
+    border-radius: 4px;
+}
+
+.resource-card:hover {
+    border-color: var(--border-subtle);
+    border-top-color: var(--brand-gold);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    transform: translateY(-4px);
+}
+
+/* Card Metadata Row */
+.resource-card-meta {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.resource-card-category-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    padding-right: 120px; /* Prevent wrapping overlap with absolute badge on right */
+    line-height: 1.4;
+}
+
+.resource-card-badge {
+    position: absolute;
+    top: -18px; /* Move slightly up into top padding area */
+    right: -10px;
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+/* Title & Icon Row */
+.resource-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.resource-card-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-navy);
+    flex-shrink: 0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.resource-card:hover .resource-card-icon-wrapper {
+    border-color: rgba(196, 156, 82, 0.3);
+    color: var(--brand-gold);
+    background-color: rgba(196, 156, 82, 0.03);
+}
+
+.resource-card-title {
+    font-family: var(--serif-main), serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.resource-card-description {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+    flex-grow: 1;
+}
+
+/* Footer & CTA Link */
+.resource-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 20px;
+    margin-top: auto;
+}
+
+.resource-card-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--brand-gold);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color 0.2s ease;
+}
+
+.resource-card-action-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.resource-card-action-btn:hover {
+    color: var(--text-main);
+}
+
+.resource-card-action-btn:hover svg {
+    transform: translate(3px, -3px);
+}
+
+/* Legal Disclaimer */
+.resources-disclaimer-wrapper {
+    max-width: 1200px;
+    margin: 64px auto 0;
+    padding: 0 24px;
+}
+
+.resources-disclaimer {
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--brand-gold);
+    background-color: var(--bg-secondary);
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    box-shadow: none;
+    border-radius: 4px;
+}
+
+.resources-disclaimer-icon {
+    color: var(--brand-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.resources-disclaimer-content h4 {
+    font-family: var(--sans-main), sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.resources-disclaimer-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive Layouts */
+@media (max-width: 1024px) {
+    .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    .resources-header {
+        padding: calc(var(--nav-height) + 40px) 24px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .resources-tabs-container {
+        margin: 32px auto 32px;
+        gap: 6px 16px;
+    }
+
+    .resources-breadcrumbs {
+        margin: 24px auto 0;
+    }
+    
+    .resources-disclaimer {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+    }
+}

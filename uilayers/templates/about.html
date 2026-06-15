@@ -185,6 +185,14 @@
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2rem;
+            border-radius: 50%;
+        }
+
+        .value-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 2;
+            color: var(--color-white);
         }
 
         .value-card h3 {
@@ -447,17 +455,23 @@
             </div>
             {% empty %}
             <div class="value-card">
-                <div class="value-icon">✓</div>
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
                 <h3>Trust & Transparency</h3>
                 <p>We believe in complete transparency in all our dealings. Regular updates, detailed reports, and honest communication are the foundation of our service.</p>
             </div>
             <div class="value-card">
-                <div class="value-icon">★</div>
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                </div>
                 <h3>Excellence</h3>
                 <p>We strive for excellence in every aspect of property management, from tenant selection to maintenance, ensuring your property is in the best hands.</p>
             </div>
             <div class="value-card">
-                <div class="value-icon">◆</div>
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
                 <h3>Reliability</h3>
                 <p>Count on us to be there when you need us. Our team is dedicated to providing consistent, dependable service that you can trust.</p>
             </div>
