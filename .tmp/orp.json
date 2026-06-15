@@ -1,0 +1,28 @@
+﻿aws : File association not found for extension .py
+At line:1 char:1
++ aws cloudfront get-origin-request-policy --profile default --id "216a ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (File associatio...r extension .py:Str 
+   ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+{
+    "ETag": "E23ZP02F085DFQ",
+    "OriginRequestPolicy": {
+        "Id": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+        "LastModifiedTime": "1970-01-01T00:00:00Z",
+        "OriginRequestPolicyConfig": {
+            "Comment": "Policy to forward all parameters in viewer requests",
+            "Name": "Managed-AllViewer",
+            "HeadersConfig": {
+                "HeaderBehavior": "allViewer"
+            },
+            "CookiesConfig": {
+                "CookieBehavior": "all"
+            },
+            "QueryStringsConfig": {
+                "QueryStringBehavior": "all"
+            }
+        }
+    }
+}
