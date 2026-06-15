@@ -2,7 +2,23 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.propertism.in)",
-      "Bash(copy \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\uilayers\\\\templates\\\\seo\\\\meta_tags.html\" \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\code-review\\\\meta_tags.html\")"
+      "Bash(copy \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\uilayers\\\\templates\\\\seo\\\\meta_tags.html\" \"d:\\\\viji\\\\viji-olivine\\\\03rolledout\\\\01propertism\\\\code-review\\\\meta_tags.html\")",
+      "Bash(git commit -m ' *)",
+      "Bash(powershell -Command \"Expand-Archive -Path '.elasticbeanstalk/logs/260521_145735.zip' -DestinationPath '.elasticbeanstalk/logs/260521_145735_extracted' -Force\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" \"https://www.propertism.in/properties/9/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://www.propertism.in/properties/full-residential-building-for-rent/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://www.propertism.in/properties/3bhk-apartment-for-sale/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://www.propertism.in/properties/2bhk-apartment-for-rent/\")",
+      "Bash(curl -s \"https://www.propertism.in/properties/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://www.propertism.in/properties/builder-floor/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://www.propertism.in/properties/radiance-mandarin/\")",
+      "Bash(python manage.py shell -c ' *)",
+      "Bash(powershell -Command \"\\(Get-Item 'static/images/og-propertism-v5.png'\\).length / 1KB\")",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(copy \"content\\\\templatetags\\\\seo_tags.py\" \"code-review\\\\seo_tags.py\")",
+      "Bash(copy \"uilayers\\\\templates\\\\seo\\\\meta_tags.html\" \"code-review\\\\meta_tags.html\")",
+      "Bash(copy \"static\\\\images\\\\og-propertism-v5.jpg\" \"code-review\\\\og-propertism-v5.jpg\")"
     ]
   }
 }

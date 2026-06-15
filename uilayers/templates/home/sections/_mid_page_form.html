@@ -1,0 +1,180 @@
+{% load static %}
+<!-- MID-PAGE QUICK ENQUIRY FORM -->
+<style>
+    #mid-page-lead-section .hf-field-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 20px !important;
+    }
+    #mid-page-lead-section .intent-radios {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+        #mid-page-lead-section .hf-field-row {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+        #mid-page-lead-section .intent-radios {
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+        #mid-page-lead-section .hf-submit-btn {
+            max-width: 100% !important;
+        }
+    }
+</style>
+
+<section id="mid-page-lead-section" class="section-full" style="background-color: var(--brand-navy) !important; padding: 40px 0 !important; border-top: 1px solid var(--border-subtle) !important;">
+    <div class="container" style="max-width: 900px !important; margin: 0 auto !important; padding: 0 24px !important;">
+        <div class="hf-form-card" style="border: 1px solid rgba(196, 156, 82, 0.2) !important; padding: 32px !important; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;">
+            <span class="section-kicker" style="color: var(--brand-gold) !important; font-size: 0.75rem !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px !important; display: block;">
+                Quick Enquiry
+            </span>
+            <h2 class="section-title" style="font-family: var(--serif-main) !important; font-size: clamp(1.6rem, 3vw, 2.2rem) !important; font-weight: 500 !important; line-height: 1.1 !important; color: #FFFFFF !important; margin-bottom: 24px !important;">
+                Tell us about your property
+            </h2>
+
+            <form action="{% url 'contact' %}" method="POST" id="propertism-mid-page-form">
+                {% csrf_token %}
+                <input type="hidden" name="email" value="web-lead@propertism.in">
+                <input type="hidden" name="service" id="mid-page-service-hidden" value="consultation">
+                <textarea name="message" id="mid-page-message-hidden" style="display: none;"></textarea>
+
+                <div class="hf-field-row">
+                    <div class="hf-field-group" style="margin-bottom: 0 !important;">
+                        <label class="hf-field-label">Name</label>
+                        <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required style="height: 48px !important;" />
+                    </div>
+
+                    <div class="hf-field-group" style="margin-bottom: 0 !important;">
+                        <label class="hf-field-label">WhatsApp / Phone</label>
+                        <input class="hf-field-input" name="phone" type="text" placeholder="WhatsApp / Phone" required style="height: 48px !important;" />
+                    </div>
+
+                    <div class="hf-field-group" style="margin-bottom: 0 !important;">
+                        <label class="hf-field-label">City you live in</label>
+                        <input class="hf-field-input" name="city" type="text" placeholder="City of residence" required style="height: 48px !important;" />
+                    </div>
+                </div>
+
+                <div class="hf-field-group" style="margin-bottom: 24px !important;">
+                    <label class="hf-field-label" style="margin-bottom: 8px !important;">What do you want to do?</label>
+                    <div class="intent-radios">
+                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                            <input type="radio" name="intent_radio" value="buy-sell" required style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                            <span>I want to sell my Chennai property</span>
+                        </label>
+                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                            <input type="radio" name="intent_radio" value="rental" style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                            <span>I want to rent out my Chennai property</span>
+                        </label>
+                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                            <input type="radio" name="intent_radio" value="industrial" style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                            <span>I want someone to manage my property</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="hf-submit-btn" style="height: 52px !important; font-size: 0.8rem !important; letter-spacing: 0.15em !important; max-width: 400px; margin: 0 auto; display: flex !important;">
+                    Get a Free Callback Within 24 Hours
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const midForm = document.getElementById('propertism-mid-page-form');
+        if (midForm) {
+            midForm.addEventListener('submit', function(e) {
+                const name = this.querySelector('input[name="name"]').value;
+                const phone = this.querySelector('input[name="phone"]').value;
+                const city = this.querySelector('input[name="city"]').value;
+                const intentRadio = this.querySelector('input[name="intent_radio"]:checked');
+                
+                if (!intentRadio) {
+                    e.preventDefault();
+                    alert('Please select what you want to do with your property.');
+                    return;
+                }
+                
+                const intentValue = intentRadio.value;
+                const intentLabel = intentRadio.nextElementSibling.textContent;
+                
+                // Set the hidden service input to map directly to model SERVICE_CHOICES
+                document.getElementById('mid-page-service-hidden').value = intentValue;
+                
+                // Populate the hidden message field with city and selected intent
+                const messageContent = `City of Residence: ${city}\nSelected Intent: ${intentLabel}\nSubmitted via homepage mid-page callback form.`;
+                document.getElementById('mid-page-message-hidden').value = messageContent;
+            });
+
+            // Helper function to scroll with sticky header offset
+            const scrollToElementWithOffset = (elementId) => {
+                const target = document.getElementById(elementId);
+                if (!target) return;
+                
+                const nav = document.querySelector('.v4-nav-wrapper') || 
+                            document.querySelector('header') || 
+                            document.querySelector('.v4-nav') || 
+                            document.querySelector('.site-header');
+                const navHeight = nav ? nav.offsetHeight : 92;
+                
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + (window.scrollY || window.pageYOffset) - navHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            };
+
+            // Handle clicks on any link with data-select-intent attribute
+            document.querySelectorAll('a[data-select-intent]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const intentValue = this.getAttribute('data-select-intent');
+                    if (intentValue) {
+                        const targetRadio = midForm.querySelector(`input[name="intent_radio"][value="${intentValue}"]`);
+                        if (targetRadio) {
+                            targetRadio.checked = true;
+                        }
+                        
+                        e.preventDefault();
+                        scrollToElementWithOffset('mid-page-lead-section');
+                        history.pushState(null, null, '#mid-page-lead-section');
+                    }
+                });
+            });
+
+            // Handle intent query parameter or hash on page load
+            const checkUrlIntent = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                let intentValue = urlParams.get('intent');
+                
+                // Also check if it's in the hash format: #mid-page-lead-section?intent=xyz
+                if (!intentValue && window.location.hash.includes('?intent=')) {
+                    const hashParts = window.location.hash.split('?intent=');
+                    intentValue = hashParts[1];
+                }
+                
+                if (intentValue) {
+                    const targetRadio = midForm.querySelector(`input[name="intent_radio"][value="${intentValue}"]`);
+                    if (targetRadio) {
+                        targetRadio.checked = true;
+                        setTimeout(() => {
+                            scrollToElementWithOffset('mid-page-lead-section');
+                        }, 300);
+                    }
+                }
+            };
+            
+            checkUrlIntent();
+            window.addEventListener('hashchange', checkUrlIntent);
+        }
+    });
+</script>
+

@@ -1,4 +1,16 @@
 {% load static %}
+<style>
+    /* Spacing adjustments on desktop to fit all CTAs without viewport overflow */
+    @media (min-width: 769px) {
+        #home-section .hero-title-premium {
+            margin-bottom: 12px !important;
+        }
+        #home-section .hero-title-divider {
+            margin: 16px auto 20px !important;
+        }
+    }
+</style>
+
 <section id="home-section" class="hero-hybrid{% if hero_background_urls %} hero-hybrid-has-image{% endif %}">
     {% if hero_background_urls %}
     <div class="hero-hybrid-media" aria-hidden="true">
@@ -13,18 +25,38 @@
     {% endif %}
     <div class="container">
         <div class="hero-hybrid-content">
-            <h1 class="hero-title-premium">
-                We manage, protect & grow your <span class="highlight-gold">Chennai Property</span>
+            <h1 class="hero-title-premium" style="color: {% if company.hero_title_color|lower == '#0f172a' %}#FFFFFF{% else %}{{ company.hero_title_color|default:'#FFFFFF' }}{% endif %} !important;">
+                {% if hero_title_segments %}
+                    {% for segment in hero_title_segments %}
+                        {% if segment.accent %}
+                            <span class="highlight-gold">{{ segment.text }}</span>
+                        {% else %}
+                            {{ segment.text }}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {{ company.hero_title|default:"We manage, protect & grow your Chennai Property" }}
+                {% endif %}
             </h1>
             <div class="hero-title-divider"></div>
 
-            <p class="hero-description">
-                End-to-end management for NRIs — even if you’re 10,000 km away. Complete transparency, on-ground execution, and high-yield results.
+            <p class="hero-description" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 12px !important;">
+                Trusted by NRI owners across USA · UK · UAE · Canada · Singapore
             </p>
 
-            <div class="hero-actions">
+            <p class="hero-description" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 24px !important;">
+                {{ company.hero_description|default:"End-to-end management for NRIs — even if you’re 10,000 km away. Complete transparency, on-ground execution, and high-yield results." }}
+            </p>
+
+            <div class="hero-actions" style="margin-bottom: 16px !important;">
                 <a href="/#contact-section" class="btn-gold">Book Free NRI Consultation</a>
                 <a href="/#services-section" class="btn-outline-white">View Our Services</a>
+            </div>
+
+            <div class="hero-actions" style="margin-top: 0 !important; gap: 12px !important;">
+                <a href="/#mid-page-lead-section" data-select-intent="buy-sell" class="btn-outline-white">Sell My Property</a>
+                <a href="/#mid-page-lead-section" data-select-intent="rental" class="btn-outline-white">Rent Out My Property</a>
+                <a href="/#mid-page-lead-section" data-select-intent="industrial" class="btn-outline-white">Manage My Property</a>
             </div>
         </div>
     </div>

@@ -1,38 +1,42 @@
 /**
  * PROPERTISM V4 - TEAM MEMBER DETAIL MODULE
- * High-Density Professional Profile View
+ * Premium, clean, high-density biography profile layout (Viewport-fit Edition)
  */
 
 .team-detail-section {
-    background-color: var(--bg-surface) !important;
-    padding: var(--section-v-padding) 0 !important;
+    background-color: var(--bg-secondary) !important;
+    padding: calc(var(--nav-height) + 16px) 0 16px 0 !important;
     color: var(--text-main) !important;
-    min-height: 70vh;
+    min-height: calc(100vh - var(--nav-height) - 100px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .team-detail-section .section-inner {
-    max-width: 1400px !important;
+    max-width: 1100px !important;
     width: 100% !important;
     margin: 0 auto !important;
-    padding: 0 40px !important;
+    padding: 0 24px !important;
 }
 
-/* Breadcrumbs - Hardened */
+/* Breadcrumbs */
 .v4-breadcrumbs {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
-    margin-bottom: 40px !important;
-    font-size: 0.8rem !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    font-size: 0.7rem !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 0.08em !important;
+    font-family: var(--sans-main) !important;
 }
 
 .v4-breadcrumbs a {
     color: var(--text-muted) !important;
     text-decoration: none !important;
-    transition: color 0.3s ease !important;
+    transition: color 0.2s ease !important;
 }
 
 .v4-breadcrumbs a:hover {
@@ -47,29 +51,23 @@
     color: var(--brand-gold) !important;
 }
 
-/* Profile Layout - Sharp & Dense */
-.profile-grid-v4 {
+/* Two-Column Grid Layout - Compact */
+.profile-layout-v4 {
     display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 60px;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
     align-items: start;
+    width: 100%;
 }
 
-/* Portrait - Architectural Style */
+/* Left Column: Portrait */
 .portrait-wrapper-v4 {
     border: 1px solid var(--border-subtle) !important;
-    padding: 15px !important;
+    padding: 6px !important;
     background: var(--bg-card) !important;
     position: relative;
-}
-
-.portrait-wrapper-v4::after {
-    content: '';
-    position: absolute;
-    inset: -5px;
-    border: 1px solid var(--brand-gold);
-    pointer-events: none;
-    z-index: -1;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
 }
 
 .portrait-img-v4 {
@@ -77,6 +75,7 @@
     aspect-ratio: 4 / 5;
     object-fit: cover;
     display: block;
+    border-radius: 2px;
 }
 
 .portrait-fallback-v4 {
@@ -87,131 +86,179 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 5rem;
+    font-size: 4rem;
     font-family: var(--serif-main);
+    border-radius: 2px;
 }
 
-/* Profile Info */
-.profile-info-v4 .dept-tag {
-    display: inline-block;
-    padding: 4px 12px;
-    background: var(--bg-secondary);
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-subtle);
-}
-
-.profile-info-v4 h1 {
-    font-family: var(--serif-main) !important;
-    font-size: clamp(2.5rem, 6vw, 4.5rem) !important;
-    font-weight: 700 !important;
-    line-height: 1.05 !important;
-    color: var(--text-main) !important;
-    margin-bottom: 10px !important;
-    letter-spacing: -0.02em;
-}
-
-.profile-info-v4 .role-text {
-    font-size: 1.5rem !important;
-    color: var(--brand-gold) !important;
-    font-weight: 500 !important;
-    margin-bottom: 30px !important;
-}
-
-/* Expertise Area */
+/* Expertise / Skill Pills */
 .expertise-v4 {
-    margin-top: 40px;
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 30px;
+    margin-top: 12px;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    padding: 12px 16px !important;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02) !important;
 }
 
 .expertise-v4 h3 {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    margin-bottom: 20px;
+    font-family: var(--sans-main) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--text-muted) !important;
+    margin: 0 0 10px 0 !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    padding-bottom: 4px !important;
 }
 
 .skill-pills-v4 {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 6px;
 }
 
 .skill-pill-v4 {
-    padding: 6px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-main);
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: var(--sans-main) !important;
+    padding: 3px 8px !important;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-main) !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    border-radius: 4px;
+    transition: all 0.2s ease !important;
 }
 
-/* Bio Section */
+.skill-pill-v4:hover {
+    background: var(--brand-gold-glow) !important;
+    border-color: var(--brand-gold) !important;
+    color: var(--brand-gold) !important;
+}
+
+/* Right Column: Info & Typography */
+.profile-header-v4 {
+    margin-bottom: 12px;
+}
+
+.profile-header-v4 .dept-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--brand-gold-glow);
+    color: var(--brand-gold);
+    border: 1px solid rgba(196, 156, 82, 0.2);
+    font-family: var(--sans-main);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
+.profile-header-v4 h1 {
+    font-family: var(--serif-main) !important;
+    font-size: clamp(1.6rem, 3vw, 2.2rem) !important;
+    font-weight: 500 !important;
+    line-height: 1.15 !important;
+    color: var(--text-main) !important;
+    margin: 0 0 4px 0 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.profile-header-v4 .role-text {
+    font-family: var(--serif-main) !important;
+    font-size: 1.1rem !important;
+    font-style: italic !important;
+    color: var(--brand-gold) !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+}
+
+/* Bio Section: Compact panel */
 .bio-section-v4 {
-    margin-top: 60px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    padding: 50px;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-top: 3px solid var(--brand-gold) !important;
+    padding: 20px 24px !important;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
 }
 
 .bio-section-v4 h2 {
     font-family: var(--serif-main) !important;
-    font-size: 1.75rem !important;
-    margin-bottom: 30px !important;
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
     color: var(--text-main) !important;
+    margin: 0 0 12px 0 !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    padding-bottom: 6px !important;
 }
 
 .bio-content-v4 {
-    font-size: 1.1rem !important;
-    line-height: 1.9 !important;
+    font-family: var(--sans-main) !important;
+    font-size: 0.85rem !important;
+    line-height: 1.6 !important;
     color: var(--text-muted) !important;
     white-space: pre-line;
 }
 
-/* CTA - Back */
+/* CTA: Back Button (Integrated Under Bio) */
 .team-back-cta {
-    margin-top: 50px;
+    margin-top: 12px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .btn-v4-outline {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 15px 35px;
-    border: 1px solid var(--brand-gold);
-    color: var(--text-main);
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid var(--border-subtle) !important;
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
     text-decoration: none;
-    font-weight: 700;
+    font-family: var(--sans-main) !important;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.btn-v4-outline svg {
+    transition: transform 0.2s ease;
 }
 
 .btn-v4-outline:hover {
-    background: var(--brand-gold);
-    color: white;
+    border-color: var(--brand-gold) !important;
+    color: var(--brand-gold) !important;
+    background: var(--bg-primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Responsive */
+.btn-v4-outline:hover svg {
+    transform: translateX(-4px);
+}
+
+/* Responsive Grid styling */
 @media (max-width: 900px) {
-    .profile-grid-v4 {
+    .profile-layout-v4 {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
-    .portrait-wrapper-v4 {
-        max-width: 350px;
+    
+    .profile-sidebar-v4 {
+        max-width: 260px;
         margin: 0 auto;
+        width: 100%;
     }
+    
     .bio-section-v4 {
-        padding: 30px;
+        padding: 20px !important;
     }
 }

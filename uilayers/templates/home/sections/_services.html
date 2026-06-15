@@ -12,31 +12,66 @@
                 </svg>
                 SERVICES
             </span>
-            <h2 class="section-title">Services built for NRI ownership</h2>
+            <h2 class="section-title">{{ company.services_section_title|default:"Services built for NRI ownership" }}</h2>
             <p class="section-subtitle">
-                Buy, rent, maintain, and monitor property with one coordinated team in Chennai.
+                {{ company.services_section_description|default:"Buy, rent, maintain, and monitor property with one coordinated team in Chennai." }}
             </p>
         </div>
 
         <div class="grid-3">
-            {% for service in service_highlights %}
-            <div class="insight-card hf-service-card">
+            <!-- Card 1: Sell Your Chennai Property -->
+            <div id="sell" class="insight-card hf-service-card">
                 <div class="insight-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z" />
                         <path d="M9 21V12h6v9" />
                     </svg>
                 </div>
-                <h3 class="insight-title">{{ service.title }}</h3>
-                <p class="insight-description">{{ service.short_description|truncatewords:20 }}</p>
+                <h3 class="insight-title">Sell Your Chennai Property</h3>
+                <p class="insight-description">End-to-end property selling support for NRIs in Chennai. We handle pricing, buyer coordination, legal documentation, and closure while you stay abroad.</p>
                 <a href="{{ home_section_links.contact }}" class="service-depth-link">
-                    Discuss This Plan
+                    Start the Sale Process
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                 </a>
             </div>
-            {% endfor %}
+
+            <!-- Card 2: Rent Out Your Property -->
+            <div id="rent" class="insight-card hf-service-card">
+                <div class="insight-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z" />
+                        <path d="M9 21V12h6v9" />
+                    </svg>
+                </div>
+                <h3 class="insight-title">Rent Out Your Property</h3>
+                <p class="insight-description">Rent out and manage your property in Chennai without travel. We handle tenant sourcing, documentation, rent collection, and move-out coordination for NRIs.</p>
+                <a href="{{ home_section_links.contact }}" class="service-depth-link">
+                    Rent Out My Property
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Card 3: Full Property Management -->
+            <div id="manage" class="insight-card hf-service-card">
+                <div class="insight-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5Z" />
+                        <path d="M9 21V12h6v9" />
+                    </svg>
+                </div>
+                <h3 class="insight-title">Full Property Management</h3>
+                <p class="insight-description">Complete property management for NRIs in Chennai. We handle tenants, rent collection, inspections, compliance, and local coordination while you stay abroad.</p>
+                <a href="{{ home_section_links.contact }}" class="service-depth-link">
+                    Discuss Management Plan
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 </section>

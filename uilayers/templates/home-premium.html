@@ -9,14 +9,67 @@
 
     {% include "home/sections/_hero.html" %}
     {% include "home/sections/_trust_strip.html" %}
-{% include "home/sections/_services.html" %}
-{% include "home/sections/_about.html" %}
-{% include "home/sections/_management.html" %}
-{% include "home/sections/_reviews.html" %}
-{% include "home/sections/_properties.html" %}
-{% include "home/sections/_insights.html" %}
-{% include "home/sections/_contact.html" %}
-{% include "home/sections/_custom_cards.html" %}
+    {% include "home/sections/_services.html" %}
+    {% include "home/sections/_mid_page_form.html" %}
+    {% include "home/sections/_about.html" %}
+    {% include "home/sections/_management.html" %}
+    {% include "home/sections/_reviews.html" %}
+    {% include "home/sections/_properties.html" %}
+    {% include "home/sections/_insights.html" %}
+    {% include "home/sections/_contact.html" %}
+    {% include "home/sections/_custom_cards.html" %}
+
+    <!-- Sticky Advisor CTA (Phase 4) -->
+    <style>
+        .floating-advisor-cta {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #B89A4A !important;
+            color: #FFFFFF !important;
+            border: 1px solid #B89A4A !important;
+            padding: 12px 20px !important;
+            font-family: var(--sans-main), 'Jost', sans-serif !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.1em !important;
+            text-transform: uppercase !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer;
+        }
+        .floating-advisor-cta:hover {
+            background: #FFFFFF !important;
+            color: #0b0f1a !important;
+            border-color: #FFFFFF !important;
+            transform: translateY(-2px);
+        }
+        .floating-advisor-cta svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        @media (max-width: 900px) {
+            .floating-advisor-cta {
+                bottom: 80px !important; /* Positions above Staff Inquiries login FAB */
+                right: 16px !important;
+                padding: 10px 16px !important;
+                font-size: 0.7rem !important;
+            }
+        }
+    </style>
+
+    <a href="#contact-section" class="floating-advisor-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Talk to an Advisor</span>
+    </a>
 
 {% endblock %}
 

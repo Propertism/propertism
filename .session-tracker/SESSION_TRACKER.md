@@ -1,12 +1,15 @@
 # Propertism - Session Tracker
 
----
+| 30 | May 20 | **SOCIAL PREVIEW STABILIZATION & OG PLATFORM LOCK. Hardened crawler-visible metadata, refreshed OG image chain from v3 to v4, and locked final preview rendering across Facebook, LinkedIn, and WhatsApp.** | âœ… |
+| 31 | May 21 | **LINKEDIN OG CARD — v5 SKYLINE DESIGN. Promoted og-propertism-v5.png (1200x630 Chennai skyline, Cinzel headline, proof pills). Validated live on Facebook Sharing Debugger and LinkedIn Post Inspector. Card confirmed client-ready.** | âœ… |
+| 32 | May 21 | **OG V5 LOCK + METADATA RETUNE. Kept v5 approved, switched crawler image output to og-propertism-v5.jpg, aligned og:image:type to JPEG, locked new NRI buy/sell/manage OG title + description, ran local collectstatic, and pushed commit c8a5cb0 to trigger CI/CD.** | âœ… |
 
+---
 ## File Metadata
 
-**Last Updated By**: Antigravity (Astra)
-**Last Updated On**: May 02, 2026 (Midday)
-**Last Update**: SESSION 29 - SOCIAL ARCHITECTURE UNIFICATION. Astra unified the social media architecture for Propertism by transitioning from hardcoded links to a dynamic, model-driven system surgically restricted to the Contact Section. Added Instagram, WhatsApp, and YouTube fields to the CompanyInfo model and updated the Contact UI to be fully dynamic.
+**Last Updated By**: Codex (Astra)
+**Last Updated On**: May 21, 2026 (18:46 IST)
+**Last Update**: SESSION 32 - OG V5 LOCK + METADATA RETUNE. Kept v5 approved, switched crawler image output to og-propertism-v5.jpg, aligned JPEG metadata, locked the new OG title/description, and pushed commit c8a5cb0 to trigger CI/CD. Production verification pending.
 
 ---
 
@@ -17,7 +20,7 @@
 **Site:** https://www.propertism.in/
 **Admin:** https://www.propertism.in/admin/ — `admin / admin123`
 **GitHub:** https://github.com/Propertism/propertism (branch: main)
-**Latest Commit:** 288d3f7
+**Latest Commit:** c8a5cb0
 
 ---
 
@@ -32,7 +35,7 @@
 - **Platform:** Python 3.11 on Amazon Linux 2023
 - **CNAME:** propertism-prod-2026.us-east-1.elasticbeanstalk.com
 - **Health:** Green / Ready
-- **Latest Deployed Version:** app-d3fe-260410-admin-reset
+- **Latest Deployed Version:** gh-127-c3d0cdfb52551de0415590f03ce9b4e75f7a8f2c
 
 ### CloudFront
 - **Distribution ID:** E1GGPU208SQFFT
@@ -353,6 +356,9 @@ Now runs on every startup — full deploy, env-var restart, instance replacement
 3. Smoke test: https://www.propertism.in/ and https://www.propertism.in/admin/
 4. Check EB health: `eb status propertism-prod-2026`
 5. Verify section centering across all break-points (Mobile/Desktop).
+6. Review social image safe-area behavior across LinkedIn, Facebook, and WhatsApp.
+7. Treat any desired "full bleed" improvement as an image-composition task, not an OG metadata task.
+8. If more refinement is needed, create a draft image variant first and keep production metadata unchanged until approval.
 
 Quick recap of what's stable going into the next session:
 
