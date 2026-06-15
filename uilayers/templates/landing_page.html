@@ -2,18 +2,18 @@
 {% load static %}
 {% load seo_tags %}
 
-{% block meta_title %}{{ config.title }}{% endblock %}
+{% block meta_title %}{{ page_title }}{% endblock %}
 
 {% block seo_meta %}
-{% seo_meta title=config.title description=config.description keywords=config.keywords canonical_override=page_url page_type="website" %}
+{% seo_meta title=page_title description=page_description keywords=config.keywords canonical_override=page_url page_type="website" %}
 {% endblock %}
 
 {% block structured_data %}
 {% organization_schema %}
-{% if config.category == "service" %}
+{% if config.category == "service" or config.intent_type == "informational" %}
 {% service_schema config city page_url %}
 {% endif %}
-{% if config.intent_type == "sell" and faq_items %}
+{% if faq_items %}
 {% faq_schema faq_items %}
 {% endif %}
 {% breadcrumb_schema items=breadcrumbs %}
@@ -103,6 +103,62 @@
     {% include "components/_lp_faq.html" %}
 {% endif %}
 
+<!-- Why Propertism — E-E-A-T Trust Section -->
+{% if trust_points %}
+<section class="lp-trust" style="background:#f8f7f4;padding:56px 0;border-top:1px solid rgba(11,15,26,.07);">
+    <div class="container">
+        <p style="font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C49C52;margin:0 0 6px;">Why Propertism</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:500;color:#0b0f1a;margin:0 0 32px;">Trusted NRI Property Experts Since 2009</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;">
+            {% for point in trust_points %}
+            <div style="padding:20px 24px;border:1px solid rgba(196,156,82,.15);background:#fff;">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:#0b0f1a;margin:0 0 8px;">{{ point.heading }}</h3>
+                <p style="font-family:'Jost',sans-serif;font-size:.875rem;line-height:1.65;color:#475569;margin:0;">{{ point.body }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- FAQ Section — All Intents -->
+{% if faq_items %}
+<section class="lp-faq" style="padding:56px 0;border-top:1px solid rgba(11,15,26,.07);">
+    <div class="container">
+        <p style="font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C49C52;margin:0 0 6px;">Common Questions</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:500;color:#0b0f1a;margin:0 0 32px;">Frequently Asked Questions</h2>
+        <div style="max-width:760px;">
+            {% for item in faq_items %}
+            <details style="border-bottom:1px solid rgba(11,15,26,.08);padding:16px 0;" {% if forloop.first %}open{% endif %}>
+                <summary style="font-family:'Jost',sans-serif;font-size:.95rem;font-weight:600;color:#0b0f1a;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+                    {{ item.question }}
+                    <span style="color:#C49C52;font-size:1.2rem;flex-shrink:0;margin-left:12px;">&#43;</span>
+                </summary>
+                <p style="font-family:'Jost',sans-serif;font-size:.9rem;line-height:1.7;color:#475569;margin:12px 0 4px;">{{ item.answer }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Knowledge Hub — Internal Links -->
+{% if knowledge_hub_links %}
+<section class="lp-hub-links" style="background:#f8f7f4;padding:48px 0;border-top:1px solid rgba(11,15,26,.07);">
+    <div class="container">
+        <p style="font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C49C52;margin:0 0 6px;">NRI Property Guides</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:#0b0f1a;margin:0 0 20px;">Related Guides &amp; Resources</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for link in knowledge_hub_links %}
+            <a href="/blog/{{ link.slug }}/" style="font-family:'Jost',sans-serif;font-size:.82rem;font-weight:500;padding:8px 16px;border:1px solid rgba(196,156,82,.3);color:#0b0f1a;text-decoration:none;background:#fff;transition:border-color .2s;" onmouseover="this.style.borderColor='#C49C52'" onmouseout="this.style.borderColor='rgba(196,156,82,.3)'">
+                {{ link.label }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <!-- Floating WhatsApp -->
 <button id="floating-whatsapp" class="floating-wa" title="Chat on WhatsApp">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
@@ -131,5 +187,6 @@
 </div>
 
 <script src="{% static 'js/landing-conversion.js' %}"></script>
+<script src="{% static 'js/ga4-conversion.js' %}"></script>
 
 {% endblock %}

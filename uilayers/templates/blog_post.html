@@ -1,16 +1,81 @@
 {% extends "base.html" %}
 {% load static %}
+{% load seo_tags %}
 
 {% block meta_title %}{{ post.title }} | Propertism{% endblock %}
 
 {% block seo_meta %}
-{% load seo_tags %}
 {% seo_meta title=post.title description=post.excerpt page_type="article" %}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% article_schema post %}
+{% if post.faq_items %}
+{% faq_schema post.faq_items %}
+{% endif %}
+{% breadcrumb_schema items=breadcrumbs %}
 {% endblock %}
 
 {% block extra_css %}
 <style>
-.blog-post-hero {
+.blog-author-box {
+    margin: 48px 0 0;
+    padding: 24px;
+    border: 1px solid rgba(196,156,82,.18);
+    background: rgba(196,156,82,.03);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.blog-author-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0b0f1a;
+    border: 1px solid rgba(196,156,82,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: #C49C52;
+}
+.blog-author-info { flex: 1; }
+.blog-author-label {
+    font-family: 'Jost', sans-serif;
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #C49C52;
+    margin: 0 0 4px;
+}
+.blog-author-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--bg-primary, #0b0f1a);
+    margin: 0 0 4px;
+}
+.blog-author-role {
+    font-family: 'Jost', sans-serif;
+    font-size: .8rem;
+    color: #64748b;
+    margin: 0 0 8px;
+}
+.blog-author-bio {
+    font-family: 'Jost', sans-serif;
+    font-size: .875rem;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+}
+@media (max-width: 599px) {
+    .blog-author-box { flex-direction: column; gap: 12px; }
+}
+</style>
     background: var(--bg-primary, #0b0f1a);
     padding: 80px 0 40px;
     border-bottom: 1px solid rgba(196,156,82,.15);
@@ -173,7 +238,8 @@
                 <span>{{ post.published_date|date:"j F Y" }}</span>
             </div>
             {% if post.featured_image %}
-            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-post-featured-image">
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}"
+                class="blog-post-featured-image" loading="lazy" width="1200" height="480">
             {% endif %}
         </div>
     </div>
@@ -183,8 +249,35 @@
             <a href="/#blog-section" class="blog-post-back">&larr; Back to Insights</a>
             <div class="blog-post-grid">
                 <div class="blog-post-content">
-                    {{ post.content|linebreaks }}
+                    {{ post.content|safe }}
+
+                    <!-- E-E-A-T Author Attribution -->
+                    <div class="blog-author-box" itemscope itemtype="https://schema.org/Person">
+                        <div class="blog-author-avatar" aria-hidden="true">
+                            {{ post.author_profile.name|slice:":1"|upper }}
+                        </div>
+                        <div class="blog-author-info">
+                            <p class="blog-author-label">Written by</p>
+                            <p class="blog-author-name" itemprop="name">{{ post.author_profile.name }}</p>
+                            <p class="blog-author-role">
+                                <span itemprop="jobTitle">{{ post.author_profile.role }}</span>
+                                <span style="color: rgba(196,156,82,.4); margin: 0 6px;">•</span>
+                                <span style="font-weight: 500;">{{ post.author_profile.affiliation }}</span>
+                            </p>
+                            <p style="font-family: 'Jost', sans-serif; font-size: .8rem; color: #475569; margin: 0 0 8px;">
+                                <strong>Expertise:</strong> {{ post.author_profile.expertise }}
+                            </p>
+                            <p class="blog-author-bio" itemprop="description">{{ post.author_profile.bio }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Organizational Trust Statement -->
+                    <div class="org-trust-statement" style="margin-top: 24px; padding: 18px 24px; border-left: 3px solid #C49C52; background: rgba(196,156,82,0.02); font-family: 'Jost', sans-serif; font-size: 0.85rem; color: #475569; line-height: 1.6;">
+                        <strong>Institutional Oversight &amp; Compliance Trust Statement:</strong><br>
+                        Propertism is a registered real estate advisory and management platform. All content and insights published in our Knowledge Hub undergo rigorous peer review by senior real estate consultants, legal counsels, and property managers to ensure alignment with current real estate laws (including FEMA, RERA, and local municipal regulations).
+                    </div>
                 </div>
+
 
                 <aside class="blog-post-sidebar">
                     {% if recent_posts %}

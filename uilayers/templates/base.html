@@ -29,6 +29,7 @@
     
     <!-- Preload critical CSS -->
     <link rel="preload" href="{% static 'css/premium-styles.css' %}" as="style">
+    <link rel="preload" href="{% static 'images/propertism-hero-bg.webp' %}" as="image" type="image/webp">
     <link rel="icon" type="image/png" href="{% static 'images/propertism-logo-tm.png' %}">
     <link rel="apple-touch-icon" href="{% static 'images/propertism-logo-tm.png' %}">
     
@@ -101,6 +102,7 @@
     <script src="{% static 'js/utils.js' %}"></script>
     <script src="{% static 'js/chat-widget.js' %}"></script>
     <script src="{% static 'js/world-clock-widget.js' %}"></script>
+    <script src="{% static 'js/ga4-conversion.js' %}"></script>
     {% block extra_js %}{% endblock %}
 
     {% if user.is_staff %}

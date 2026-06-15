@@ -1,4 +1,5 @@
 {% load static %}
+{% load seo_tags %}
 <!-- MANAGEMENT SECTION V4 - ON-GROUND AUTHORITY -->
 <link rel="stylesheet" href="{% static 'css/v4-management.css' %}">
 
@@ -16,7 +17,7 @@
                     <span>{{ member.role }}</span>
                     {% if member.department %}<span>{{ member.department }}</span>{% endif %}
                 </div>
-                <h3>{{ member.name }}</h3>
+                <h3>{{ member.name|name_only }}{% if member.name|quals_only %} <span class="member-quals-inline">{{ member.name|quals_only }}</span>{% endif %}</h3>
                 <p>{{ member.bio|truncatewords:28 }}</p>
                 <a href="{% url 'team_member_detail' member.slug %}" class="management-link-sharp">
                     View Full Profile

@@ -349,6 +349,7 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = '/accounts/login/'
 ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
 # SCCB-SEC-PRT-1510: Close public signup — Google OAuth is the only registration path.

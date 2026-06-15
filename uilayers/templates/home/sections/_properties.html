@@ -23,9 +23,11 @@
                     {% with image_url=property.get_display_image_url %}
                     {% if image_url %}
                     <img src="{{ image_url }}" alt="{{ property.title }}"
-                        onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.jpg' %}';">
+                        loading="lazy" width="600" height="400"
+                        onerror="this.onerror=null;this.src='{% static 'images/placeholder-property.webp' %}';">
                     {% else %}
-                    <img src="{% static 'images/placeholder-property.jpg' %}" alt="{{ property.title }}">
+                    <img src="{% static 'images/placeholder-property.webp' %}" alt="{{ property.title }}"
+                        loading="lazy" width="600" height="400">
                     {% endif %}
                     {% endwith %}
                     <div class="property-badge-hybrid">Featured</div>

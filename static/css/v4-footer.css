@@ -47,8 +47,8 @@
 
 .footer-section h3 {
     font-family: var(--sans-main) !important;
-    font-size: 0.75rem !important;
-    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    font-weight: 800 !important;
     color: var(--brand-gold) !important;
     margin-bottom: 8px !important;
     text-transform: uppercase !important;
@@ -124,12 +124,47 @@
     letter-spacing: normal !important;
     text-transform: none !important;
     white-space: normal !important;
-    display: inline-block !important;
-    transition: color 0.3s ease;
+    display: inline-flex !important;
+    align-items: flex-start !important;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    position: relative !important;
+}
+
+.footer-links a::before {
+    content: "→" !important;
+    font-family: var(--sans-main) !important;
+    font-size: 0.8rem !important;
+    color: rgba(184, 154, 74, 0.6) !important; /* Gold with subtle opacity */
+    margin-right: 8px !important;
+    margin-top: 1px !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
+    flex-shrink: 0 !important;
+}
+
+.footer-links a::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 20px !important;
+    width: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, var(--brand-gold), #FFE082, transparent) !important;
+    transition: width 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+.footer-links a:hover::before {
+    transform: translateX(4px) !important;
+    color: #FFE082 !important;
+}
+
+.footer-links a:hover::after {
+    width: calc(100% - 20px) !important;
 }
 
 .footer-links a:hover {
-    color: var(--brand-gold) !important;
+    color: #FFE082 !important;
+    text-shadow: 0 0 8px rgba(184, 154, 74, 0.6) !important;
 }
 
 /* Override any conflicting styles from other CSS files */
@@ -146,7 +181,8 @@
     letter-spacing: normal !important;
     text-transform: none !important;
     white-space: normal !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: flex-start !important;
 }
 
 .footer-services .footer-links a {
@@ -156,7 +192,8 @@
     letter-spacing: normal !important;
     text-transform: none !important;
     white-space: normal !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: flex-start !important;
 }
 
 /* OFFICE ADDRESS STYLING */

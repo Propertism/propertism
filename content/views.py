@@ -296,6 +296,11 @@ def blog_post(request, slug):
                 lambda: BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3],
                 warning="Recent blog post table is unavailable.",
             ),
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Insights", "url": "/#blog-section"},
+                {"name": post.title, "url": None},
+            ],
         }
     )
     return render(request, "blog_post.html", context)

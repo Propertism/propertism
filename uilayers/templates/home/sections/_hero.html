@@ -17,6 +17,8 @@
         <div class="hero-hybrid-rotator">
             {% for hero_background_url in hero_background_urls %}
             <img src="{{ hero_background_url }}" alt=""
+                width="1920" height="1080"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
                 class="hero-hybrid-image{% if forloop.first %} is-active{% endif %}"
                 data-hero-image="{{ forloop.counter0 }}">
             {% endfor %}

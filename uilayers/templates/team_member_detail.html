@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load seo_tags %}
 
-{% block title %}{{ team_member.name }} - {{ team_member.role }} | {{ company.name }}{% endblock %}
+{% block title %}{{ team_member.name|name_only }} - {{ team_member.role }} | {{ company.name }}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/v4-team-detail.css' %}?v=4.0.5">
@@ -16,13 +17,13 @@
             <div class="profile-sidebar-v4">
                 <div class="portrait-wrapper-v4">
                     {% if team_member.photo %}
-                    <img src="{{ team_member.photo.url }}" alt="{{ team_member.name }}" class="portrait-img-v4" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <img src="{{ team_member.photo.url }}" alt="{{ team_member.name|name_only }}" class="portrait-img-v4" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="portrait-fallback-v4" style="display: none;">
-                        {{ team_member.name|first }}
+                        {{ team_member.name|name_only|first }}
                     </div>
                     {% else %}
                     <div class="portrait-fallback-v4">
-                        {{ team_member.name|first }}
+                        {{ team_member.name|name_only|first }}
                     </div>
                     {% endif %}
                 </div>
@@ -59,7 +60,7 @@
                     <span class="dept-tag">
                         {{ team_member.department }}
                     </span>
-                    <h1>{{ team_member.name }}</h1>
+                    <h1>{{ team_member.name|name_only }}{% if team_member.name|quals_only %} <span class="member-quals-inline">{{ team_member.name|quals_only }}</span>{% endif %}</h1>
                     <p class="role-text">{{ team_member.role }}</p>
                 </div>
 

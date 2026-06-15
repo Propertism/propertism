@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
+{% load seo_tags %}
 
-{% block title %}How We Manage Your Property in Chennai While You Live Abroad — {{ company.company_name }}{% endblock %}
+{% block meta_title %}How We Manage Your Property in Chennai While You Live Abroad — {{ company.company_name }}{% endblock %}
 
-{% block meta_description %}Structured property management for NRI owners in Chennai. On-ground execution, transparent reporting, and reliable coordination across time zones.{% endblock %}
+{% block seo_meta %}
+{% seo_meta title="NRI Property Management Chennai | Propertism" description="Structured property management for NRI owners in Chennai. On-ground execution, transparent reporting, and reliable coordination across time zones." %}
+{% endblock %}
+
+{% block structured_data %}
+{% organization_schema %}
+{% breadcrumb_schema items=breadcrumbs %}
+{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -630,7 +638,7 @@
         <div class="team-minimal-grid">
             {% for member in team_members|slice:":4" %}
             <div class="team-minimal-card">
-                <h4>{{ member.name }}</h4>
+                <h4>{{ member.name|name_only }}{% if member.name|quals_only %} <span class="member-quals-inline">{{ member.name|quals_only }}</span>{% endif %}</h4>
                 <p>{{ member.role }}</p>
                 <a href="{% url 'team_member_detail' member.slug %}">View Profile →</a>
             </div>

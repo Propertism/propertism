@@ -15,6 +15,7 @@ from .intent_mapping import (
     get_intent_config,
     resolve_geo_slug,
 )
+from .pseo_enrichment import build_enrichment_context
 
 
 def build_page_path(city_slug, intent_slug, nri_origin=None):
@@ -283,9 +284,38 @@ def landing_page(request, city_slug, intent_slug, nri_origin=None):
     sell_process_steps = build_sell_process_steps(city) if config.get("intent_type") == "sell" else []
     sell_reviews = get_sell_reviews() if config.get("intent_type") == "sell" else []
 
+    # Enrichment engine: differentiated H1, FAQs, trust block, knowledge hub links
+    enrichment = build_enrichment_context(config, city, nri_location=nri_location)
+
+    # Use differentiated H1 as hero_title; fall back to build_hero_copy subtitle
+    _, hero_subtitle = build_hero_copy(config, city, nri_location=nri_location)
+    hero_title = enrichment["differentiated_h1"]
+
+    # Merge enriched FAQs: sell pages keep their existing FAQs + get enriched ones;
+    # all other intents use enriched FAQs only.
+    if config.get("intent_type") == "sell":
+        faq_items = build_sell_faq_items(city, nri_location=nri_location)
+    else:
+        faq_items = enrichment["enriched_faq_items"]
+
+    lead_capture = build_lead_capture_context(config, city, nri_location=nri_location)
+    sell_process_steps = build_sell_process_steps(city) if config.get("intent_type") == "sell" else []
+    sell_reviews = get_sell_reviews() if config.get("intent_type") == "sell" else []
+
+    # Word count: config prose + enrichment content (FAQs + trust block)
+    _prose = " ".join(filter(None, [
+        config.get("intro", ""),
+        config.get("seo_content", ""),
+        config.get("description", ""),
+    ]))
+    _pseo_word_count = len(_prose.split()) + enrichment["enrichment_word_count"]
+
     context = {
         "config": config,
         "intent_title": config.get("property_type_label", "Property"),
+        "page_title": enrichment["page_title"],
+        "page_description": enrichment["page_description"],
+        "_pseo_word_count": _pseo_word_count,
         "properties": properties,
         "property_count": len(properties),
         "property_type_name": config.get("property_type_label", "Property"),
@@ -307,6 +337,8 @@ def landing_page(request, city_slug, intent_slug, nri_origin=None):
         "faq_items": faq_items,
         "sell_process_steps": sell_process_steps,
         "sell_reviews": sell_reviews,
+        "trust_points": enrichment["trust_points"],
+        "knowledge_hub_links": enrichment["knowledge_hub_links"],
         "whatsapp_number": "+918667020798",
         "whatsapp_message": f"Hi, I'm interested in {hero_title}. Please share details.",
     }

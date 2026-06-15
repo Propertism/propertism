@@ -1,0 +1,27 @@
+﻿aws : File association not found for extension .py
+At line:1 char:1
++ aws cloudfront create-invalidation --profile default --distribution-i ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (File associatio...r extension .py:Str 
+   ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+{
+    "Location": "https://cloudfront.amazonaws.com/2020-05-31/distribution/E1GGPU208SQFFT/invalidation/I6ATFOCDWDLBLHJ7YT6ZRAAFQU",
+    "Invalidation": {
+        "Id": "I6ATFOCDWDLBLHJ7YT6ZRAAFQU",
+        "Status": "InProgress",
+        "CreateTime": "2026-06-15T16:42:41.038Z",
+        "InvalidationBatch": {
+            "Paths": {
+                "Quantity": 3,
+                "Items": [
+                    "/robots.txt*",
+                    "/robots.txt",
+                    "/sitemap.xml"
+                ]
+            },
+            "CallerReference": "cli-1781541758-485693"
+        }
+    }
+}

@@ -6,8 +6,51 @@ from django import template
 from django.conf import settings
 import json
 from content.site_context import get_company_info
+from content.pseo_quality import PSEO_NOINDEX_WORD_COUNT, PSEO_MIN_WORD_COUNT, classify_page
 
 register = template.Library()
+
+
+@register.filter
+def name_only(value):
+    """
+    Returns only the name part from a combined name+qualifications string.
+    e.g. "Mr. Tamilselvan B.E, M.B.A." → "Mr. Tamilselvan"
+    Splits on first space-separated token that looks like a qualification
+    (contains a dot or is all uppercase letters).
+    Falls back to splitting on ' B.' as the qualifications marker.
+    If a pipe (|) is explicitly provided, it acts as the primary delimiter.
+    """
+    if not value:
+        return value
+    if '|' in value:
+        return value.split('|')[0].strip()
+    # Split on the qualification marker — first occurrence of " B." or ", "
+    for marker in [' B.', ' M.', ' Ph.', ', ']:
+        idx = value.find(marker)
+        if idx != -1:
+            return value[:idx].strip()
+    return value
+
+
+@register.filter
+def quals_only(value):
+    """
+    Returns only the qualifications part from a combined name+qualifications string.
+    e.g. "Mr. Tamilselvan B.E, M.B.A." → "B.E, M.B.A."
+    """
+    if not value:
+        return ''
+    if '|' in value:
+        parts = value.split('|', 1)
+        if len(parts) > 1:
+            return parts[1].strip()
+        return ''
+    for marker in [' B.', ' M.', ' Ph.', ', ']:
+        idx = value.find(marker)
+        if idx != -1:
+            return value[idx:].strip().lstrip(', ')
+    return ''
 
 
 def _get_company():
@@ -82,6 +125,16 @@ def seo_meta(
     final_image = _make_absolute_url(image, site_url) if image else og_image
     final_canonical = _make_absolute_url(canonical_override or current_url, site_url)
 
+    # Quality-driven noindex: only for landing pages with thin content.
+    # word_count is injected by landing_page view via context; absent on other pages.
+    word_count = context.get('_pseo_word_count', 0)
+    has_sd = bool(context.get('_pseo_has_structured_data', True))
+    has_can = bool(final_canonical)
+    internal_links = int(context.get('_pseo_internal_links', 99))
+    recommendation = 'INDEX'
+    if word_count:  # only evaluate when explicitly provided
+        recommendation, _ = classify_page(word_count, has_sd, has_can, internal_links)
+
     return {
         'title': final_title,
         'description': final_description,
@@ -95,6 +148,7 @@ def seo_meta(
         'page_type': page_type,
         'site_name': company.company_name if company else 'Propertism Realty Advisors',
         'twitter_handle': '@PropertismIndia',
+        'noindex': recommendation == 'NOINDEX',
     }
 
 
@@ -263,6 +317,52 @@ def service_schema(context, config, city, page_url=None):
         },
     }
 
+    return {'schema': json.dumps(schema, indent=2)}
+
+
+@register.inclusion_tag('seo/structured_data.html', takes_context=True)
+def article_schema(context, post):
+    """Generate Article schema for blog posts."""
+    request = context.get('request')
+    site_url = _get_public_site_url(request)
+    company = _get_company()
+
+    image_url = None
+    if post.featured_image:
+        image_url = _make_absolute_url(post.featured_image.url, site_url)
+    else:
+        image_url = _make_absolute_url('/static/images/og-propertism-v5.jpg', site_url)
+
+    author_name = post.author if post.author else (company.company_name if company else "Propertism Realty Advisors")
+    post_url = f"{site_url}/blog/{post.slug}/"
+
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": post.title,
+        "description": post.excerpt if post.excerpt else post.title,
+        "image": image_url,
+        "author": {
+            "@type": "Person",
+            "name": author_name,
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": company.company_name if company else "Propertism Realty Advisors",
+            "logo": {
+                "@type": "ImageObject",
+                "url": _make_absolute_url('/static/images/propertism-logo-tm.png', site_url),
+            }
+        },
+        "datePublished": post.published_date.isoformat() if post.published_date else None,
+        "dateModified": post.updated_date.isoformat() if post.updated_date else None,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": post_url,
+        },
+        "url": post_url,
+    }
+    schema = {k: v for k, v in schema.items() if v is not None}
     return {'schema': json.dumps(schema, indent=2)}
 
 

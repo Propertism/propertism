@@ -514,6 +514,48 @@ class BlogPost(models.Model):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    @property
+    def faq_items(self):
+        """Parse FAQ items from the content HTML.
+        
+        Look for questions in <strong> tags and answers in the following text
+        after 'Frequently Asked Questions'.
+        """
+        import re
+        from django.utils.html import strip_tags
+        
+        # Find the FAQ section
+        faq_match = re.search(r'<h2>Frequently Asked Questions</h2>(.*)', self.content, re.IGNORECASE | re.DOTALL)
+        if not faq_match:
+            return []
+            
+        faq_section = faq_match.group(1)
+        
+        # Find pairs of <strong>Question</strong> and the following answer text
+        # Since answers are paragraphs or text until the next <strong> or end
+        matches = re.findall(r'<strong>(.*?)</strong>(.*?)(?=<strong>|$)', faq_section, re.DOTALL)
+        
+        items = []
+        for q, a in matches:
+            q_clean = strip_tags(q).strip()
+            a_clean = strip_tags(a).strip()
+            # Clean up extra whitespace/newlines
+            q_clean = re.sub(r'\s+', ' ', q_clean)
+            a_clean = re.sub(r'\s+', ' ', a_clean)
+            if q_clean and a_clean:
+                items.append({
+                    "question": q_clean,
+                    "answer": a_clean
+                })
+        return items
+
+    @property
+    def author_profile(self):
+        """Return structured author profile for E-E-A-T signals."""
+        from .author_profiles import AUTHOR_PROFILES
+        return AUTHOR_PROFILES.get(self.author, AUTHOR_PROFILES["Propertism Advisory Team"])
+
+
 
 class Newsletter(models.Model):
     """Newsletter subscriptions"""

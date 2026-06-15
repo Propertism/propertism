@@ -311,3 +311,106 @@ class LinkRoutingTests(TestCase):
             response = self.client.get(reverse("nri_landing_page", kwargs={"nri_location_slug": loc, "geo_slug": "chennai-nri-property-management"}))
             self.assertEqual(response.status_code, 200, f"NRI page /{loc}/chennai-nri-property-management/ failed with status {response.status_code}")
 
+
+class SeoTagsFilterTests(TestCase):
+    def test_name_only_and_quals_only_with_pipe(self):
+        from content.templatetags.seo_tags import name_only, quals_only
+        self.assertEqual(name_only("Mr. Tamilselvan | BE, MBA"), "Mr. Tamilselvan")
+        self.assertEqual(quals_only("Mr. Tamilselvan | BE, MBA"), "BE, MBA")
+
+        self.assertEqual(name_only("Mr. Tamilselvan | BE"), "Mr. Tamilselvan")
+        self.assertEqual(quals_only("Mr. Tamilselvan | BE"), "BE")
+
+        self.assertEqual(name_only("Mr. Tamilselvan"), "Mr. Tamilselvan")
+        self.assertEqual(quals_only("Mr. Tamilselvan"), "")
+
+    def test_name_only_and_quals_only_fallback(self):
+        from content.templatetags.seo_tags import name_only, quals_only
+        self.assertEqual(name_only("Mr. Tamilselvan B.E, M.B.A."), "Mr. Tamilselvan")
+        self.assertEqual(quals_only("Mr. Tamilselvan B.E, M.B.A."), "B.E, M.B.A.")
+
+
+class PseoRemediationTests(TestCase):
+    def test_h1_differentiation_is_unique(self):
+        from content.pseo_enrichment import build_differentiated_h1
+        nri1 = {"name": "New York", "label": "New York, USA", "region": "USA"}
+        nri2 = {"name": "San Jose, CA", "label": "San Jose, CA", "region": "USA"}
+        
+        h1_1 = build_differentiated_h1("sell", "Chennai", "chennai", nri_location=nri1, intent_slug="nri-sell-property")
+        h1_2 = build_differentiated_h1("sell", "Chennai", "chennai", nri_location=nri2, intent_slug="nri-sell-property")
+        
+        self.assertNotEqual(h1_1, h1_2)
+        self.assertIn("New York", h1_1)
+        self.assertIn("San Jose", h1_2)
+
+    def test_title_differentiation_is_unique(self):
+        from content.pseo_enrichment import build_differentiated_title
+        config = {"intent_slug": "nri-property-management", "property_type_label": "Property Management"}
+        city = {"name": "Chennai"}
+        nri1 = {"name": "New York"}
+        nri2 = {"name": "London"}
+        
+        t1 = build_differentiated_title(config, city, nri1)
+        t2 = build_differentiated_title(config, city, nri2)
+        
+        self.assertNotEqual(t1, t2)
+        self.assertIn("New York", t1)
+        self.assertIn("London", t2)
+
+    def test_description_differentiation_fits_limit(self):
+        from content.pseo_enrichment import build_differentiated_description
+        config = {"intent_slug": "nri-property-management"}
+        city = {"name": "Chennai"}
+        nri = {"name": "New York"}
+        
+        desc = build_differentiated_description(config, city, nri)
+        self.assertTrue(140 <= len(desc) <= 160, f"Description length is {len(desc)}")
+
+
+class BlogPostEEATTests(TestCase):
+    def test_blog_post_author_profile_lookup(self):
+        post = BlogPost.objects.create(
+            title="Test Post",
+            slug="test-post-slug",
+            author="Propertism Advisory Team",
+            content="Hello world",
+            is_published=True,
+        )
+        self.assertEqual(post.author_profile["name"], "Propertism Advisory Team")
+        self.assertEqual(post.author_profile["role"], "Senior NRI Property Advisors")
+
+        # Fallback profile for unknown authors
+        post2 = BlogPost.objects.create(
+            title="Test Post 2",
+            slug="test-post-slug-2",
+            author="Unknown Author",
+            content="Hello world",
+            is_published=True,
+        )
+        self.assertEqual(post2.author_profile["name"], "Propertism Advisory Team")
+
+    def test_blog_post_faq_items_parsing(self):
+        post_content = """
+        This is some introduction text.
+        <h2>Frequently Asked Questions</h2>
+        <strong>What is the processing time?</strong>
+        It usually takes 3-5 business days depending on documentation verification.
+        <strong>Can I apply online?</strong>
+        Yes, you can apply using the online client portal.
+        """
+        post = BlogPost.objects.create(
+            title="Test Post 3",
+            slug="test-post-slug-3",
+            author="Propertism Team",
+            content=post_content,
+            is_published=True,
+        )
+        faqs = post.faq_items
+        self.assertEqual(len(faqs), 2)
+        self.assertEqual(faqs[0]["question"], "What is the processing time?")
+        self.assertEqual(faqs[0]["answer"], "It usually takes 3-5 business days depending on documentation verification.")
+        self.assertEqual(faqs[1]["question"], "Can I apply online?")
+        self.assertEqual(faqs[1]["answer"], "Yes, you can apply using the online client portal.")
+
+
+

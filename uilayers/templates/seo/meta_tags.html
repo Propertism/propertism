@@ -29,7 +29,11 @@
 {% if twitter_handle %}<meta name="twitter:site" content="{{ twitter_handle }}">{% endif %}
 
 <!-- Additional SEO -->
+{% if noindex %}
+<meta name="robots" content="noindex,follow">
+{% else %}
 <meta name="robots" content="index, follow">
+{% endif %}
 <meta name="language" content="English">
 <meta name="revisit-after" content="7 days">
 <meta name="author" content="{{ site_name }}">

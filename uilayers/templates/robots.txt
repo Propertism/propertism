@@ -6,7 +6,7 @@ Disallow: /*/admin/
 Disallow: /media/private/
 
 # Sitemap
-Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml
+Sitemap: https://www.propertism.in/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
