@@ -389,3 +389,22 @@ Session tracker is clean and current (Astra Handover).
 
 **Next Action:**
 - User will push current changes, check production, and return for either final wind-down or one more polish pass.
+
+---
+
+## Session 30 Checkpoint — June 15, 2026
+
+**Status:** Completed and verified locally. Ready for Git push to trigger automatic deployment via GitHub Actions.
+
+**Work Completed In This Session (Resource Hub & Premium UI Refinement):**
+- **Launched Tamil Nadu Government Property Services Resource Hub**: Created the dynamic directory page at `/property-owner-resources/` showing categorized official e-services.
+- **Card Look & Feel Softening**: Refined cards in the resource hub with a `6px` border-radius, soft grey borders, subtle shadow, and a gold-tinted capsule badge.
+- **Hover Micro-Animations**: Programmed custom hover transitions for the cards and interactive icon wrappers that change to full gold background with white icons.
+- **Robust JavaScript Event Binding**: Refactored resource hub client-side filtering script to prevent DOMContentLoaded race conditions.
+- **Government URL Mapping**: Migrated land records to the new active subpage (`/eservicesnew/home.html`), tnreginet links, Chennai corporation links, water tax (`cmwssb.tn.gov.in`), and electricity billing (`tnebnet.org/awp/login`).
+- **Chennai Hub Page Polish**: Cleared navigation overlaps, upgraded kicker tags, styled CTA links with arrows, and changed card button accents to brand gold.
+- **Premium About Us Page SVG Upgrades**: Replaced emoji characters (`✓`, `★`, `◆`) on the core values cards with premium inline SVGs.
+- **Premium Management Page Diamonds**: Replaced bullet characters with premium CSS rotated gold diamonds.
+- **Footer Polish**: Fixed the footer link hover visibility blackout issue by highlighting gold instead of near-black.
+- **Automated Tests**: Added comprehensive link routing tests in `content/tests.py` covering all core views, city hubs, intent landing pages, and NRI targeted routes. All 17 tests passed successfully.
+

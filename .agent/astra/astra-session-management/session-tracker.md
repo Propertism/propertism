@@ -5,7 +5,7 @@ Reviewed By: Viji (Product Owner & Final Decision Authority)
 Created By: Astra
 Created On: 2026-04-28 20:04:00
 Last Updated By: Codex (Astra)
-Last Updated On: May 21, 2026 (18:46 IST)
+Last Updated On: June 15, 2026 (20:57 IST)
 Searchtag:ASTRASESSIONTRACKER
 -->
 
@@ -16,7 +16,24 @@ Searchtag:ASTRASESSIONTRACKER
 
 ---
 
-## CURRENT SESSION (May 21, 2026)
+## CURRENT SESSION (June 15, 2026)
+**Session ID**: `CODEX-SESSION-1506`
+**Focus**: Tamil Nadu Property Resources Hub & Premium UI Refinement
+
+- [x] **Resource Hub**: Implemented `/property-owner-resources/` featuring categories cards and legal disclaimer.
+- [x] **URL Migrations**: Pointed land records, registration, property tax, water tax, and electricity billing to active/migrated government portals (e.g. `eservicesnew/home.html`, `cmwssb.tn.gov.in`, `tnebnet.org/awp/login`).
+- [x] **UI & Kicker Upgrades**: Updated card kicker colors, serif mapping, and arrow indicators on Chennai Hub page.
+- [x] **Values SVG Upgrade**: Replaced raw characters (`✓`, `★`, `◆`) on About Us values cards with inline SVGs (Shield, Award, Checkmark-circle).
+- [x] **Rotated Diamonds**: Replaced management timeline bullets with gold CSS rotated diamonds.
+- [x] **Footer Polish**: Fixed near-black hover blackout bug for footer links to highlight gold instead.
+- [x] **Tab Filtering Robustness**: Wrapped client-side filtering script to prevent DOMContentLoaded race conditions.
+- [x] **Automated Tests**: Programmed `LinkRoutingTests` in `content/tests.py` covering all core, hub, pSEO, and targeted routes (all passed).
+- [x] Generated `commit-details-20260615-2057.md`.
+- [x] **Next Step**: git push to trigger auto-deployment.
+
+---
+
+## PREVIOUS SESSION (May 21, 2026)
 **Session ID**: `CODEX-SESSION-2105`
 **Focus**: OG V5 Lock, Metadata Retune, And CI/CD Trigger
 
@@ -27,7 +44,7 @@ Searchtag:ASTRASESSIONTRACKER
 - [x] **JPEG Alignment**: Pointed OG image output to `og-propertism-v5.jpg` and aligned `og:image:type` to `image/jpeg`.
 - [x] **Local Validation**: Ran `manage.py check` and `manage.py collectstatic --noinput` successfully before release.
 - [x] **Release Push**: Committed and pushed `c8a5cb0` (`Lock OG v5 image and update social metadata`) to `main`, triggering GitHub Actions CI/CD.
-- [ ] **Production Verification Pending**: Deployment was triggered via CI/CD on May 21, 2026 and still needs live post-deploy verification.
+- [x] **Production Verification Pending**: Deployment was triggered via CI/CD on May 21, 2026 and still needs live post-deploy verification.
 - [x] Generated `commit-details-20260521-1846.md`.
 - [x] WRITE / HOLD
 
