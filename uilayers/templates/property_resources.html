@@ -127,54 +127,62 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // 1. Client-side Category Filter Tabs
-    var tabButtons = document.querySelectorAll(".resource-tab-btn");
-    var cards = document.querySelectorAll(".resource-card");
+(function() {
+    function initTabs() {
+        // 1. Client-side Category Filter Tabs
+        var tabButtons = document.querySelectorAll(".resource-tab-btn");
+        var cards = document.querySelectorAll(".resource-card");
 
-    tabButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            // Remove active class from all tabs
-            tabButtons.forEach(function (btn) { btn.classList.remove("active"); });
-            // Add active class to clicked tab
-            button.classList.add("active");
+        tabButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                // Remove active class from all tabs
+                tabButtons.forEach(function (btn) { btn.classList.remove("active"); });
+                // Add active class to clicked tab
+                button.classList.add("active");
 
-            var filterValue = button.getAttribute("data-filter");
+                var filterValue = button.getAttribute("data-filter");
 
-            // Filter cards
-            cards.forEach(function (card) {
-                if (filterValue === "all" || card.getAttribute("data-category") === filterValue) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
+                // Filter cards
+                cards.forEach(function (card) {
+                    if (filterValue === "all" || card.getAttribute("data-category") === filterValue) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                // Track category engagement
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "resource_hub_category_engagement", {
+                        category_id: filterValue,
+                        category_name: button.textContent.trim()
+                    });
                 }
             });
-
-            // Track category engagement
-            if (typeof gtag !== "undefined") {
-                gtag("event", "resource_hub_category_engagement", {
-                    category_id: filterValue,
-                    category_name: button.textContent.trim()
-                });
-            }
         });
-    });
 
-    // 2. Resource Card Click Tracking
-    var resourceLinks = document.querySelectorAll(".js-resource-click");
-    resourceLinks.forEach(function (link) {
-        link.addEventListener("click", function () {
-            var title = link.getAttribute("data-resource-title");
-            var category = link.getAttribute("data-category-title");
+        // 2. Resource Card Click Tracking
+        var resourceLinks = document.querySelectorAll(".js-resource-click");
+        resourceLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                var title = link.getAttribute("data-resource-title");
+                var category = link.getAttribute("data-category-title");
 
-            if (typeof gtag !== "undefined") {
-                gtag("event", "resource_hub_click", {
-                    resource_title: title,
-                    category_name: category
-                });
-            }
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "resource_hub_click", {
+                        resource_title: title,
+                        category_name: category
+                    });
+                }
+            });
         });
-    });
-});
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initTabs);
+    } else {
+        initTabs();
+    }
+})();
 </script>
 {% endblock %}

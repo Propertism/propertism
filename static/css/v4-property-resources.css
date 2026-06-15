@@ -146,7 +146,7 @@
 
 .resource-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid rgba(15, 23, 42, 0.08);
     padding: 36px 28px 28px 28px;
     display: flex;
     flex-direction: column;
@@ -154,14 +154,15 @@
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     border-top: 3px solid transparent;
-    border-radius: 4px;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
 }
 
 .resource-card:hover {
-    border-color: var(--border-subtle);
+    border-color: rgba(196, 156, 82, 0.25);
     border-top-color: var(--brand-gold);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(196, 156, 82, 0.04);
+    transform: translateY(-5px);
 }
 
 /* Card Metadata Row */
@@ -172,31 +173,31 @@
 }
 
 .resource-card-category-tag {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    color: var(--brand-gold);
+    color: #9c7834;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     display: block;
-    padding-right: 120px; /* Prevent wrapping overlap with absolute badge on right */
+    padding-right: 140px; /* Prevent wrapping overlap with absolute badge on right */
     line-height: 1.4;
 }
 
 .resource-card-badge {
     position: absolute;
-    top: -18px; /* Move slightly up into top padding area */
-    right: -10px;
+    top: 0;
+    right: 0;
     display: inline-flex;
     align-items: center;
-    background-color: rgba(15, 23, 42, 0.04);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    font-weight: 600;
+    background-color: rgba(196, 156, 82, 0.08);
+    border: 1px solid rgba(196, 156, 82, 0.25);
+    color: #b08735;
+    font-size: 0.58rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 2px 8px;
-    border-radius: 2px;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 99px;
     white-space: nowrap;
 }
 
@@ -215,23 +216,24 @@
 }
 
 .resource-card-icon-wrapper {
-    width: 36px;
-    height: 36px;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(15, 23, 42, 0.02);
+    border: 1px solid rgba(15, 23, 42, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--brand-navy);
     flex-shrink: 0;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .resource-card:hover .resource-card-icon-wrapper {
-    border-color: rgba(196, 156, 82, 0.3);
-    color: var(--brand-gold);
-    background-color: rgba(196, 156, 82, 0.03);
+    border-color: var(--brand-gold);
+    color: var(--text-inverse);
+    background-color: var(--brand-gold);
+    box-shadow: 0 4px 12px rgba(196, 156, 82, 0.2);
 }
 
 .resource-card-title {
@@ -257,7 +259,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
     padding-top: 20px;
     margin-top: auto;
 }
@@ -280,7 +282,7 @@
 }
 
 .resource-card-action-btn:hover {
-    color: var(--text-main);
+    color: #9c7834;
 }
 
 .resource-card-action-btn:hover svg {
