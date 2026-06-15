@@ -23,50 +23,73 @@
     <style>
         .floating-advisor-cta {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
             z-index: 999;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
             background: #B89A4A !important;
             color: #FFFFFF !important;
-            border: 1px solid #B89A4A !important;
-            padding: 12px 20px !important;
+            border: none !important;
+            height: 48px !important;
+            width: 48px !important;
+            padding: 0 !important;
             font-family: var(--sans-main), 'Jost', sans-serif !important;
             font-size: 0.75rem !important;
             font-weight: 700 !important;
             letter-spacing: 0.1em !important;
             text-transform: uppercase !important;
             text-decoration: none !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
-            transition: all 0.3s ease !important;
+            box-shadow: -2px 0 12px rgba(0, 0, 0, 0.25) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
             cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .floating-advisor-cta span {
+            max-width: 0;
+            opacity: 0;
+            margin-left: 0;
+            overflow: hidden;
+            transition: max-width 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
+            display: inline-block;
+            vertical-align: middle;
         }
         .floating-advisor-cta:hover {
-            background: #FFFFFF !important;
-            color: #0b0f1a !important;
-            border-color: #FFFFFF !important;
-            transform: translateY(-2px);
+            width: auto !important;
+            padding: 0 20px !important;
+            background: #0F172A !important;
+        }
+        .floating-advisor-cta:hover span {
+            max-width: 200px;
+            opacity: 1;
+            margin-left: 10px;
         }
         .floating-advisor-cta svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
         }
         @media (max-width: 900px) {
             .floating-advisor-cta {
-                bottom: 80px !important; /* Positions above Staff Inquiries login FAB */
-                right: 16px !important;
-                padding: 10px 16px !important;
-                font-size: 0.7rem !important;
+                top: auto !important;
+                bottom: 80px !important;
+                right: 0 !important;
+                transform: none !important;
             }
         }
     </style>
 
     <a href="#contact-section" class="floating-advisor-cta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        <svg viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
         </svg>
         <span>Talk to an Advisor</span>
     </a>
