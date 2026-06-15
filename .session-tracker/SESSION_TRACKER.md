@@ -1,15 +1,16 @@
 # Propertism - Session Tracker
 
-| 30 | May 20 | **SOCIAL PREVIEW STABILIZATION & OG PLATFORM LOCK. Hardened crawler-visible metadata, refreshed OG image chain from v3 to v4, and locked final preview rendering across Facebook, LinkedIn, and WhatsApp.** | âœ… |
-| 31 | May 21 | **LINKEDIN OG CARD — v5 SKYLINE DESIGN. Promoted og-propertism-v5.png (1200x630 Chennai skyline, Cinzel headline, proof pills). Validated live on Facebook Sharing Debugger and LinkedIn Post Inspector. Card confirmed client-ready.** | âœ… |
-| 32 | May 21 | **OG V5 LOCK + METADATA RETUNE. Kept v5 approved, switched crawler image output to og-propertism-v5.jpg, aligned og:image:type to JPEG, locked new NRI buy/sell/manage OG title + description, ran local collectstatic, and pushed commit c8a5cb0 to trigger CI/CD.** | âœ… |
+| 30 | May 20 | **SOCIAL PREVIEW STABILIZATION & OG PLATFORM LOCK. Hardened crawler-visible metadata, refreshed OG image chain from v3 to v4, and locked final preview rendering across Facebook, LinkedIn, and WhatsApp.** | ✅ |
+| 31 | May 21 | **LINKEDIN OG CARD — v5 SKYLINE DESIGN. Promoted og-propertism-v5.png (1200x630 Chennai skyline, Cinzel headline, proof pills). Validated live on Facebook Sharing Debugger and LinkedIn Post Inspector. Card confirmed client-ready.** | ✅ |
+| 32 | May 21 | **OG V5 LOCK + METADATA RETUNE. Kept v5 approved, switched crawler image output to og-propertism-v5.jpg, aligned og:image:type to JPEG, locked new NRI buy/sell/manage OG title + description, ran local collectstatic, and pushed commit c8a5cb0 to trigger CI/CD.** | ✅ |
+| 33 | June 15 | **TAMIL NADU RESOURCES HUB, PREMIUM UI REFINEMENT, & FOOTER WRAPPING. Launched Resources Hub directory with active government links, replaced emojis with vector icons/CSS diamonds, and refactored footer stylesheets to prevent horizontal link overlap through clean responsive wrapping.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Codex (Astra)
-**Last Updated On**: May 21, 2026 (18:46 IST)
-**Last Update**: SESSION 32 - OG V5 LOCK + METADATA RETUNE. Kept v5 approved, switched crawler image output to og-propertism-v5.jpg, aligned JPEG metadata, locked the new OG title/description, and pushed commit c8a5cb0 to trigger CI/CD. Production verification pending.
+**Last Updated On**: June 15, 2026 (21:40 IST)
+**Last Update**: SESSION 33 - TAMIL NADU RESOURCES HUB, PREMIUM UI REFINEMENT, & FOOTER WRAPPING. Launched Resources Hub directory with active government links, replaced emojis with vector icons/CSS diamonds, and refactored footer stylesheets to prevent horizontal link overlap through clean responsive wrapping.
 
 ---
 
@@ -392,7 +393,7 @@ Session tracker is clean and current (Astra Handover).
 
 ---
 
-## Session 30 Detail — June 15, 2026
+## Session 33 Detail — June 15, 2026
 
 **Session ID**: `CODEX-SESSION-1506`
 **Focus**: Tamil Nadu Property Resources Hub, Premium UI Refinement, and Technical SEO Validation
@@ -409,6 +410,7 @@ Session tracker is clean and current (Astra Handover).
 - **Values SVG Icons**: Replaced raw characters (`✓`, `★`, `◆`) on the About page values cards with custom inline SVG elements (Shield, Award, Checkmark-circle) on `about.html`.
 - **Rotated CSS Diamonds**: Replaced bullet characters in `management.html` process timeline with gold CSS rotated diamonds.
 - **Footer Overlay Fix**: Realigned Hero page paddings to clear headers and set the footer hover link state to highlight gold instead of blacking out.
+- **Footer Link Wrapping & Spacing**: Resolved column horizontal collision and text overlap under "SERVICE COVERAGE" and "PROPERTY RESOURCES" by disabling rigid nowrap settings, enabling natural wrapping, and introducing 8px margins on wrapped link list items.
 
 ### Part 3: Action Plan Status
 - **Step 1: Database Site Record Fix**: [Status: ⏳ PENDING ADMIN ACTION]
@@ -416,4 +418,5 @@ Session tracker is clean and current (Astra Handover).
 - **Step 3: Crawlability and Linking Architecture (Footer Link Hub)**: [Status: ✅ COMPLETED]
 - **Step 4: Page Speed Optimization (WebP Backgrounds)**: [Status: ⏳ PENDING]
 - **Step 5: Government Resource Hub & UI Polish**: [Status: ✅ COMPLETED]
+- **Step 6: Footer Grid Alignment & Link Wrapping**: [Status: ✅ COMPLETED]
 

@@ -66,13 +66,13 @@
     line-height: 1.4 !important;
     color: #FFFFFF !important;
     margin-bottom: 14px !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
 }
 
 /* Override any conflicting styles from other CSS files */
 .site-footer .footer-tagline {
     color: #FFFFFF !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
 }
 
 /* 1. SHARP SOCIALS */
@@ -111,7 +111,7 @@
 }
 
 .footer-links li {
-    margin-bottom: 0 !important;
+    margin-bottom: 8px !important;
     color: #FFFFFF !important;
 }
 
@@ -123,7 +123,8 @@
     line-height: 1.4 !important;
     letter-spacing: normal !important;
     text-transform: none !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    display: inline-block !important;
     transition: color 0.3s ease;
 }
 
@@ -133,6 +134,7 @@
 
 /* Override any conflicting styles from other CSS files */
 .site-footer .footer-links li {
+    margin-bottom: 8px !important;
     color: #FFFFFF !important;
 }
 
@@ -143,7 +145,8 @@
     line-height: 1.5 !important;
     letter-spacing: normal !important;
     text-transform: none !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    display: inline-block !important;
 }
 
 .footer-services .footer-links a {
@@ -152,7 +155,8 @@
     line-height: 1.5 !important;
     letter-spacing: normal !important;
     text-transform: none !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    display: inline-block !important;
 }
 
 /* OFFICE ADDRESS STYLING */
