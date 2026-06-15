@@ -4,6 +4,7 @@ from unittest.mock import patch
 from uuid import uuid4
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.utils import OperationalError
@@ -202,6 +203,35 @@ class SitemapTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "/blog/chennai-property-update/")
+
+    @override_settings(CANONICAL_HOST="www.propertism.in", CANONICAL_SCHEME="https")
+    def test_sitemap_uses_canonical_https_host_even_if_site_row_is_stale(self):
+        Site.objects.update_or_create(
+            id=settings.SITE_ID,
+            defaults={"domain": "example.com", "name": "example.com"},
+        )
+
+        response = self.client.get(reverse("django.contrib.sitemaps.views.sitemap"))
+        body = response.content.decode()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("https://www.propertism.in/", body)
+        self.assertNotIn("<loc>http://", body)
+        self.assertNotIn("example.com", body)
+
+    @override_settings(
+        ADMIN_URL="admin",
+        CANONICAL_HOST="www.propertism.in",
+        CANONICAL_SCHEME="https",
+    )
+    def test_robots_txt_uses_canonical_https_sitemap(self):
+        response = self.client.get(reverse("robots"))
+        body = response.content.decode()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Sitemap: https://www.propertism.in/sitemap.xml", body)
+        self.assertIn("Disallow: /admin/", body)
+        self.assertNotIn("http://", body)
 
 
 class LandingLeadApiTests(TestCase):

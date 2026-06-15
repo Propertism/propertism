@@ -53,7 +53,7 @@ urlpatterns = [
     path('inquiries/', include('properties.urls_inquiries')),
     path('', include('content.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
+    path('robots.txt', content_views.robots_txt, name='robots'),
 ]
 
 # Static and media files - serve in all environments (including production admin)

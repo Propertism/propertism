@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Prefetch
 from django.db.utils import OperationalError, ProgrammingError
-from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
@@ -68,8 +68,31 @@ def health(request):
     This endpoint bypasses Django's ALLOWED_HOSTS validation to ensure
     load balancer health checks always succeed regardless of Host header.
     """
-    from django.http import HttpResponse
     return HttpResponse("OK", content_type="text/plain", status=200)
+
+
+def robots_txt(request):
+    """Return robots.txt with the canonical sitemap URL."""
+    canonical_scheme = getattr(settings, "CANONICAL_SCHEME", "https") or "https"
+    canonical_host = getattr(settings, "CANONICAL_HOST", "www.propertism.in") or "www.propertism.in"
+    body = "\n".join(
+        [
+            "User-agent: *",
+            "Allow: /",
+            f"Disallow: /{settings.ADMIN_URL.strip('/')}/",
+            "Disallow: /api/",
+            "Disallow: /*/admin/",
+            "Disallow: /media/private/",
+            "",
+            "# Sitemap",
+            f"Sitemap: {canonical_scheme}://{canonical_host}/sitemap.xml",
+            "",
+            "# Crawl-delay for polite crawling",
+            "Crawl-delay: 1",
+            "",
+        ]
+    )
+    return HttpResponse(body, content_type="text/plain")
 
 
 def redirect_default_language(request, path=""):
