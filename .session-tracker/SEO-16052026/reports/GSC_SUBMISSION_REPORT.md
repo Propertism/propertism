@@ -37,3 +37,18 @@ The following 12 new URLs should be manually inspected and submitted in GSC:
 | 10 | `nri-property-checklist-chennai-owners-abroad` | `https://www.propertism.in/blog/nri-property-checklist-chennai-owners-abroad/` | Pending Submission |
 | 11 | `nri-property-management-guide-chennai` | `https://www.propertism.in/blog/nri-property-management-guide-chennai/` | Pending Submission |
 | 12 | `nri-property-ownership-challenges-chennai` | `https://www.propertism.in/blog/nri-property-ownership-challenges-chennai/` | Pending Submission |
+
+
+h, good catch! The error on that URL was caused by a typo in the report's target URL.
+
+The database slug is actually common-mistakes-nri-property-buyers-chennai (without the -make-in-).
+The correct URL to inspect is: 👉 https://www.propertism.in/blog/common-mistakes-nri-property-buyers-chennai/ (I have updated and committed this fix in the GSC_SUBMISSION_REPORT.md file).
+Quota Exceeded (Deferred to Tomorrow)
+Since Google Search Console has a daily limit of 10–15 manual indexing requests per day, hitting the quota is completely normal.
+
+The remaining 4 URLs can be manually submitted tomorrow:
+
+https://www.propertism.in/blog/nri-real-estate-investment-chennai-guide/
+https://www.propertism.in/blog/nri-property-checklist-chennai-owners-abroad/
+https://www.propertism.in/blog/nri-property-management-guide-chennai/
+https://www.propertism.in/blog/nri-property-ownership-challenges-chennai/
