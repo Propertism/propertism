@@ -16,7 +16,135 @@ Searchtag:ASTRASESSIONTRACKER
 
 ---
 
-## CURRENT SESSION (June 16, 2026) — SESSION D
+## CURRENT SESSION (June 16, 2026) — SESSION H
+**Session ID**: `CODEX-SESSION-1606-H`
+**Focus**: Phase B Authority Content Expansion — Full Article Creation & Publication
+
+### Part 1: Phase B Content Strategy ✅
+- [x] Defined 4 keyword clusters targeting: nri property chennai, nri real estate chennai, nri property services chennai, property advisor chennai nri
+- [x] Created 12 article outlines with H2/H3 hierarchy, FAQ sections, and CTAs
+- [x] Mapped internal linking strategy across clusters and existing Phase A articles
+- [x] Established 4-week publishing schedule (Jun 16 – Jul 13)
+
+### Part 2: Deliverables Generated ✅
+- [x] PHASE_B_CONTENT_CALENDAR.md — 4-week publishing schedule
+- [x] PHASE_B_ARTICLE_OUTLINES.md — Detailed outlines for all 12 articles
+- [x] PHASE_B_KEYWORD_MAPPING.md — Keyword-to-article mapping with ranking targets
+- [x] PHASE_B_INTERNAL_LINKING_PLAN.md — Cross-article and cross-cluster linking strategy
+- [x] PHASE_B_PUBLICATION_TRACKER.md — Status tracker for all 12 articles
+- [x] PHASE_B_EXECUTION_SUMMARY.md — Executive summary with expected outcomes
+
+### Part 3: Seed Command Implementation & Execution ✅
+- [x] Created `seed_knowledge_hub_phase_b.py` with all 12 full-length articles (1,500+ words each)
+- [x] Each article includes: H2/H3 hierarchy, FAQ sections, and internal CTAs, and category assignment
+- [x] Executed seed in 4 batches via scratch scripts (seed_batch_1.py through seed_batch_4.py)
+- [x] All 12 articles created and published successfully in local SQLite database
+- [x] Total Knowledge Hub articles: 25 (all published)
+- [x] Updated PHASE_B_PUBLICATION_TRACKER.md with correct slugs and Published status
+- [x] Created commit manifest: SCCB-PROP-SESSION-H-COMPLETION-1606.md
+
+### Constraints Observed
+- ❌ No pSEO engine modifications
+- ❌ No metadata generation framework changes
+- ❌ No canonical implementation changes
+- ❌ No sitemap architecture changes
+- ❌ No modifications to existing published articles
+- ❌ No new technical SEO changes
+- ✅ Content authority expansion only
+
+
+---
+
+## PREVIOUS SESSION (June 16, 2026) — SESSION G
+**Session ID**: `CODEX-SESSION-1606-G`
+**Focus**: Static Assets Production Validation & Knowledge Hub Delta Synchronization
+
+### Part 1: Static Assets Root Cause Analysis ✅
+- [x] Verified STATIC_URL/STATIC_ROOT in settings.py — correct.
+- [x] Verified WhiteNoise middleware — present and correctly positioned.
+- [x] Verified Nginx config — correctly serves `/static/` from `/var/app/current/staticfiles/`.
+- [x] Identified root cause: EB `config-deploy` wipes `/var/app/current/` and replaces with staging bundle (no `staticfiles/`). No `confighooks/postdeploy/` exists to recreate it.
+- [x] Applied immediate fix: manual `collectstatic` on production — CSS/JS now serving 200 OK.
+- [x] Created permanent fix: `.platform/confighooks/postdeploy/00_collectstatic_current.sh`.
+- [x] Generated `SCCB-PROP-STATIC-ASSETS-PRODUCTION-ROOT-CAUSE-1606.md`.
+
+### Part 2: Knowledge Hub Delta Synchronization ✅
+- [x] Phase 1: Verified both missing articles locally (IDs 2, 3, both published).
+- [x] Phase 2: Exported both articles to `missing_articles.json`.
+- [x] Phase 3: Confirmed articles don't exist in production (duplicate-safe).
+- [x] Phase 4: Imported both articles via safe delta import script.
+- [x] Phase 5: Post-import validation — 13 published articles, both delta articles present.
+- [x] Phase 6: URL validation — both URLs return HTTP 200 OK.
+- [x] Phase 7: Sitemap validation — both articles present in sitemap.xml.
+- [x] Generated all deliverable documents.
+
+---
+
+## PREVIOUS SESSION (June 16, 2026) — SESSION F
+
+**Session ID**: `CODEX-SESSION-1606-F`
+**Focus**: Production PostgreSQL Knowledge Hub Synchronization & Validation
+
+### Phase 1: Production PostgreSQL Inventory Validation ✅
+- [x] Confirmed production architecture: EB `propertism-prod-2026`, RDS `propertism-db-2026` (PostgreSQL 17.9).
+- [x] Validated Django settings module: `realtor_project.settings` (correct production config).
+- [x] Discovered correct production URL pattern: `/blog/{slug}/` (not `/knowledge-hub/{slug}/`).
+- [x] Validated all 13 article URLs against production — 11 OK, 2 missing.
+- [x] Generated `PRODUCTION_POSTGRES_ARTICLE_INVENTORY.md`.
+
+### Phase 2: Local vs Production Reconciliation ✅
+- [x] Queried local SQLite inventory: 13 articles, all published.
+- [x] Built reconciliation matrix: 11 present in both, 2 missing from production, 0 production-only.
+- [x] Generated `KNOWLEDGE_HUB_SYNC_MATRIX.md`.
+
+### Phase 3: Controlled Synchronization Preparation ✅
+- [x] Prepared Option A (targeted sync) — export JSON + import script.
+- [x] Uploaded artifacts to S3: `missing_knowledge_hub_articles.json` + `import_to_production.py`.
+- [x] Generated `KNOWLEDGE_HUB_SYNCHRONIZATION_REPORT.md`.
+
+### Phase 4: Production URL Validation ✅
+- [x] Tested 3 URL patterns: `/knowledge-hub/` (all 404), `/blog/` (11/13 OK), `/insights/` (all 404).
+- [x] Confirmed `/blog/` page accessible (200), `/insights/` not deployed (404).
+- [x] Generated `KNOWLEDGE_HUB_URL_VALIDATION.md`.
+
+### Phase 5: Sitemap Validation ✅
+- [x] Validated sitemap at `/sitemap.xml` — 200 OK, parseable.
+- [x] Confirmed 11 blog articles in sitemap, no duplicates, no malformed URLs.
+- [x] Generated `SITEMAP_CONTENT_VALIDATION.md`.
+
+### Phase 6: Executive Summary ✅
+- [x] Generated `SCCB-PROP-KNOWLEDGE-HUB-PRODUCTION-SYNC-SUMMARY-1606.md`.
+- [x] All success criteria met — controlled sync required from authorized SSH IP.
+
+
+---
+
+## PREVIOUS SESSION (June 16, 2026) — SESSION E
+**Session ID**: `CODEX-SESSION-1606-E`
+**Focus**: Knowledge Hub Missing Articles Remediation & Production Handoff
+
+### Part 1: Missing Articles Identification & Verification ✅
+- [x] Identified 2 Knowledge Hub articles missing from production (returning 404).
+- [x] Verified both articles exist locally (PK=2, PK=3) with published status.
+- [x] Confirmed root cause: articles created in local SQLite but never deployed to production PostgreSQL.
+
+### Part 2: Export & S3 Upload ✅
+- [x] Exported both articles as Django serialized JSON (`missing_knowledge_hub_articles.json`).
+- [x] Uploaded JSON to S3: `s3://olivine-site-673981388490/missing_knowledge_hub_articles.json`.
+- [x] Created safe import script (`import_to_production.py`) with duplicate checking.
+- [x] Uploaded import script to S3: `s3://olivine-site-673981388490/import_to_production.py`.
+
+### Part 3: Documentation & Handoff ✅
+- [x] Created SCCB handoff document with full import instructions.
+- [x] Noted that both articles have stub content (1-4 sentences) — need expansion.
+- [x] Documented SSH access restriction (must be done from authorized IP).
+
+
+---
+
+## PREVIOUS SESSION (June 16, 2026) — SESSION D
+
+
 **Session ID**: `CODEX-SESSION-1506-D`
 **Focus**: SEO Growth Operations, Knowledge Hub Publication, & LCP Optimization
 
@@ -42,6 +170,7 @@ Searchtag:ASTRASESSIONTRACKER
 ---
 
 ## PREVIOUS SESSION (June 16, 2026) — SESSION C
+
 **Session ID**: `CODEX-SESSION-1506-C`
 **Focus**: Programmatic SEO Duplication Elimination & Metadata Differentiation
 

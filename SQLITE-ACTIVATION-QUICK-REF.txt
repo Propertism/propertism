@@ -1,0 +1,152 @@
+# SQLITE ACTIVATION — QUICK REFERENCE CARD
+
+**Document**: `SCCB-PROP-KNOWLEDGE-HUB-SQLITE-ACTIVATION-1606.md`  
+**Timeline**: ~30 minutes  
+**Phases**: 5 (all manual execution)
+
+---
+
+## PHASE 1: INITIALIZE DATABASE (2-3 min)
+
+```bash
+# Connect
+eb ssh
+
+# Activate
+source /var/app/venv/*/bin/activate
+cd /var/app/current
+
+# Check database config (optional)
+python manage.py check
+
+# Initialize database (10-15 sec)
+python manage.py migrate --noinput
+
+# Verify file exists
+ls -lh /var/app/current/db.sqlite3
+```
+
+**Expected**: File appears at `/var/app/current/db.sqlite3` (~1.2 MB)
+
+---
+
+## PHASE 2: SEED ARTICLES (1-2 min)
+
+```bash
+# Run seeding command (5-10 sec)
+python manage.py seed_knowledge_hub_phase_a --publish
+
+# Verify articles published
+python manage.py shell
+>>> from content.models import BlogPost
+>>> print(f"Published: {BlogPost.objects.filter(is_published=True).count()}")
+>>> exit()
+```
+
+**Expected**: Output shows "Published: 10"
+
+---
+
+## PHASE 3: TEST URLS (2-3 min)
+
+```bash
+# From your LOCAL machine (not SSH)
+
+# Test one article
+curl -I https://www.propertism.in/en/blog/nri-property-management-basics/
+
+# Test all 10 articles
+bash test-all-blog-urls.sh
+```
+
+**Expected**: All show "HTTP/2 200" or "HTTP/1.1 200"
+
+---
+
+## PHASE 4: VERIFY SITEMAP (1-2 min)
+
+```bash
+# From your LOCAL machine
+
+# Check sitemap accessible
+curl -I https://www.propertism.in/sitemap.xml
+
+# Verify all 10 URLs in blog sitemap
+curl -s https://www.propertism.in/en/sitemap-blog.xml | grep -o '<loc>[^<]*blog[^<]*</loc>' | wc -l
+```
+
+**Expected**: First returns HTTP 200, second shows "10"
+
+---
+
+## PHASE 5: GSC INDEXING
+
+**Manual process in Google Search Console**:
+
+1. Go to: https://search.google.com/search-console/
+2. Select: `www.propertism.in`
+3. For each URL below, paste into URL Inspection & click "Request Indexing":
+
+```
+https://www.propertism.in/en/blog/nri-property-management-basics/
+https://www.propertism.in/en/blog/nri-property-purchase-guide/
+https://www.propertism.in/en/blog/nri-property-investment-strategy/
+https://www.propertism.in/en/blog/nri-property-financing-options/
+https://www.propertism.in/en/blog/nri-property-legal-compliance/
+https://www.propertism.in/en/blog/nri-property-tax-planning/
+https://www.propertism.in/en/blog/nri-property-management-during-covid/
+https://www.propertism.in/en/blog/nri-rental-income-optimization/
+https://www.propertism.in/en/blog/nri-property-dispute-resolution/
+https://www.propertism.in/en/blog/nri-property-disposal-guide/
+```
+
+**Time**: ~5 minutes for all 10
+
+---
+
+## ALL 10 ARTICLE SLUGS
+
+Copy-paste ready for GSC inspection:
+
+1. `nri-property-management-basics`
+2. `nri-property-purchase-guide`
+3. `nri-property-investment-strategy`
+4. `nri-property-financing-options`
+5. `nri-property-legal-compliance`
+6. `nri-property-tax-planning`
+7. `nri-property-management-during-covid`
+8. `nri-rental-income-optimization`
+9. `nri-property-dispute-resolution`
+10. `nri-property-disposal-guide`
+
+---
+
+## TROUBLESHOOTING
+
+| Issue | Solution |
+|-------|----------|
+| Migration fails | `rm db.sqlite3` then retry migrate |
+| Articles don't appear | Wait 30 sec, retry URL test |
+| URLs return 404 | `sudo systemctl restart nginx` then wait 30 sec |
+
+---
+
+## EXIT SSH
+
+```bash
+exit
+```
+
+---
+
+## NEXT STEPS AFTER COMPLETION
+
+- ✅ Verify all URLs return HTTP 200
+- ⏳ Request indexing for all 10 URLs in GSC
+- 📅 Within 1 week: Plan RDS migration (`SCCB-PROP-RDS-MIGRATION-PLANNING-1606`)
+
+---
+
+**Status**: Ready for execution  
+**Estimated Total Time**: 30 minutes  
+**Full Details**: `SCCB-PROP-KNOWLEDGE-HUB-SQLITE-ACTIVATION-1606.md`

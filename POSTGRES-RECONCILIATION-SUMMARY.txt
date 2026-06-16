@@ -1,0 +1,90 @@
+# 🚨 CRITICAL FINDING: PostgreSQL Misconfiguration
+
+## The Problem
+
+**Production is using SQLite instead of PostgreSQL due to wrong Django settings module.**
+
+```
+What should happen:
+  EB → Django settings_production.py → PostgreSQL (RDS)
+
+What actually happens:
+  EB → Django settings.py → SQLite (fallback)
+```
+
+---
+
+## Root Cause
+
+**EB Configuration Error** (`.ebextensions/01_django.config`):
+
+```yaml
+❌ WRONG:
+DJANGO_SETTINGS_MODULE: realtor_project.settings
+
+✅ CORRECT:
+DJANGO_SETTINGS_MODULE: realtor_project.settings_production
+```
+
+---
+
+## Evidence
+
+| Finding | Status |
+|---------|--------|
+| `settings_production.py` exists | ✅ YES |
+| `settings_production.py` configured for PostgreSQL | ✅ YES |
+| EB uses `settings_production.py` | ❌ NO (uses `settings.py` instead) |
+| `settings.py` includes SQLite fallback | ✅ YES |
+| Production database variables set | ❓ UNKNOWN |
+
+---
+
+## Two Paths Forward
+
+### ✅ RECOMMENDED: Fix Settings Module (2-4 hours)
+
+1. Change EB to use `settings_production.py`
+2. Configure PostgreSQL environment variables
+3. Deploy
+4. Seed Phase-A articles
+5. Ready for GSC
+
+**Pros**: Production-grade, no data loss, intended design  
+**Risk**: 🟢 Low
+
+---
+
+### ⚠️ ALTERNATIVE: Continue with SQLite (30 min)
+
+1. Initialize SQLite database
+2. Seed Phase-A articles
+3. Test URLs
+4. Submit to GSC
+
+**Pros**: Fast (Phase-5 validation only)  
+**Risk**: 🔴 CRITICAL (data loss if instance scales)  
+**Timeline**: Must migrate to PostgreSQL within 48 hours
+
+---
+
+## Your Decision
+
+**Which path do you choose?**
+
+1. **OPTION A**: Fix settings module → PostgreSQL (recommended)
+2. **OPTION B**: Use SQLite temporarily (accept data loss risk)
+
+See full report: `SCCB-PROP-POSTGRES-PRODUCTION-RECONCILIATION-1606.md`
+
+---
+
+## Key Points
+
+- 🔴 SQLite has **zero backup protection** on Elastic Beanstalk
+- 🔴 Auto-scaling **will destroy all data** in SQLite
+- ✅ PostgreSQL has **AWS RDS backups** and **high availability**
+- ⚠️ Settings module mismatch is **easily fixable**
+- ⏱️ PostgreSQL setup takes **2-4 hours** vs 30 minutes for SQLite
+
+**Recommendation**: Fix the settings module. It's the correct architecture.

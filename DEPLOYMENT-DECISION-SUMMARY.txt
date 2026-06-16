@@ -1,0 +1,133 @@
+# DEPLOYMENT ARCHITECTURE DECISION — EXECUTIVE SUMMARY
+
+**Based on Official Deployment Documents Analysis**
+
+---
+
+## What Happened
+
+| Timeline | Event | Database |
+|----------|-------|----------|
+| March 7, 2026 | Initial production deployment | SQLite (us-west-2) |
+| Post-March 2026 | Created migration guide (AWS_EB_RDS_REDEPLOY_2026.md) | PostgreSQL RDS (us-east-1) planned |
+| June 16, 2026 | Current state | SQLite (us-east-1) — **migration incomplete** |
+
+---
+
+## The Problem
+
+**Production moved to us-east-1 but database is still SQLite instead of PostgreSQL.**
+
+**Why**: The redeploy guide's Step 1 was never executed:
+
+```
+AWS_EB_RDS_REDEPLOY_2026.md says:
+
+Step 1: "Create a PostgreSQL instance in us-east-1"
+        ↓
+        NEVER HAPPENED
+
+Result: Production still using SQLite fallback
+```
+
+---
+
+## Two Database Strategies
+
+### Strategy A: PostgreSQL RDS (OFFICIAL/RECOMMENDED) ⭐
+
+**From**: `documents/AWS_EB_RDS_REDEPLOY_2026.md`
+
+**For**:
+- ✅ Production (long-term)
+- ✅ Data protection needed
+- ✅ Have 2-4 hours
+
+**Setup**: Create RDS instance + set DATABASE_URL + deploy
+
+**Result**: Production-grade database with AWS backups
+
+**Risk**: 🟢 None (data is protected)
+
+**Cost**: ~$15-20/month
+
+---
+
+### Strategy B: SQLite (TEMPORARY ONLY) ⚠️
+
+**For**:
+- ⚠️ Phase-5 validation only (next 2 hours)
+- ⚠️ Accept data loss risk
+- ⚠️ Must migrate to PostgreSQL within 48 hours
+
+**Setup**: Initialize SQLite + seed articles
+
+**Result**: Blog URLs live but data unprotected
+
+**Risk**: 🔴 CRITICAL (auto-scaling = data loss)
+
+**Cost**: $0
+
+---
+
+## Official Guidance from Documents
+
+### AWS_EB_RDS_REDEPLOY_2026.md Says
+
+```
+"The old SQLite-on-instance EB pattern has been removed from the deployment hooks"
+
+"The postdeploy hooks now assume PostgreSQL via DATABASE_URL or 
+EB-provided DB env vars"
+```
+
+**Translation**: SQLite is not the intended production database.
+
+---
+
+## Your Decision
+
+### Which database for production?
+
+```
+[ ] PostgreSQL RDS (recommended - follows AWS_EB_RDS_REDEPLOY_2026.md)
+    - Create RDS instance in us-east-1
+    - Set DATABASE_URL environment variable
+    - Deploy with eb deploy
+    - Seed articles
+    - Timeline: 2-4 hours
+    - Risk: None
+
+[ ] SQLite temporary (Phase-5 validation only)
+    - Initialize SQLite database
+    - Seed articles
+    - Timeline: 30 minutes
+    - Risk: Data loss if instance auto-scales
+    - Must migrate to PostgreSQL within 48 hours
+```
+
+---
+
+## Supporting Documents
+
+| Document | Use Case |
+|----------|----------|
+| `SCCB-PROP-DEPLOYMENT-HISTORY-ANALYSIS-1606.md` | Full timeline analysis |
+| `SCCB-PROP-POSTGRES-PRODUCTION-RECONCILIATION-1606.md` | Settings module mismatch |
+| `SCCB-PROP-DEFINITIVE-ACTION-PLAN-1606.md` | Step-by-step execution plan |
+| `documents/AWS_EB_RDS_REDEPLOY_2026.md` | Official migration guide (PostgreSQL) |
+| `SCCB-PROP-KNOWLEDGE-HUB-SQLITE-ACTIVATION-1606.md` | SQLite initialization (if temporary) |
+
+---
+
+## Bottom Line
+
+**PostgreSQL is the planned production database.**
+
+The redeploy guide was created but never executed.
+
+**Follow AWS_EB_RDS_REDEPLOY_2026.md to complete the intended migration.**
+
+---
+
+**Awaiting your decision** ⏳

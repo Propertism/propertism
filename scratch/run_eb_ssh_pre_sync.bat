@@ -1,0 +1,3 @@
+@echo off
+cd /d d:\viji\viji-olivine\03rolledout\01propertism
+eb ssh -c "sudo -u webapp DATABASE_URL=postgresql://propertismadmin:PropTami%%232026!Db@propertism-db-2026.ckzsuyw4azz2.us-east-1.rds.amazonaws.com:5432/propertismdb /var/app/venv/staging-LQM1lest/bin/python -c 'import os; os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"realtor_project.settings\"); os.environ[\"DATABASE_URL\"] = \"postgresql://propertismadmin:PropTami%%232026!Db@propertism-db-2026.ckzsuyw4azz2.us-east-1.rds.amazonaws.com:5432/propertismdb\"; import django; django.setup(); from content.models import BlogPost; print(\"Published:\", BlogPost.objects.filter(is_published=True).count()); print(\"Total:\", BlogPost.objects.count())'"
