@@ -9,7 +9,7 @@ django.setup()
 
 from content.models import BlogPost
 
-JSON_DATA = '''[
+JSON_DATA = r'''[
     {
         "title": "NRI Property Legal Compliance in Chennai: What You Must Know",
         "slug": "nri-property-legal-compliance-chennai",
