@@ -1,6 +1,7 @@
 # Self-contained import script for Phase B blog posts
 import os
 import django
+import json
 from django.utils.dateparse import parse_datetime
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realtor_project.settings')
@@ -8,7 +9,7 @@ django.setup()
 
 from content.models import BlogPost
 
-DATA = [
+JSON_DATA = '''[
     {
         "title": "NRI Property Legal Compliance in Chennai: What You Must Know",
         "slug": "nri-property-legal-compliance-chennai",
@@ -129,7 +130,8 @@ DATA = [
         "category": "nri",
         "published_date": "2026-06-16T09:23:30.925984+00:00"
     }
-]
+]'''
+DATA = json.loads(JSON_DATA)
 
 created_count = 0
 skipped_count = 0
