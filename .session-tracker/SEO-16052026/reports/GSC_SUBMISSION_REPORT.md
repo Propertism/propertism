@@ -31,7 +31,7 @@ The following 12 new URLs should be manually inspected and submitted in GSC:
 | 4 | `end-to-end-nri-property-services-chennai` | `https://www.propertism.in/blog/end-to-end-nri-property-services-chennai/` | Pending Submission |
 | 5 | `how-propertism-simplifies-nri-property-ownership` | `https://www.propertism.in/blog/how-propertism-simplifies-nri-property-ownership/` | Pending Submission |
 | 6 | `nri-property-services-chennai-guide` | `https://www.propertism.in/blog/nri-property-services-chennai-guide/` | Pending Submission |
-| 7 | `common-mistakes-nri-property-buyers-chennai` | `https://www.propertism.in/blog/common-mistakes-nri-property-buyers-make-in-chennai/` | Pending Submission |
+| 7 | `common-mistakes-nri-property-buyers-chennai` | `https://www.propertism.in/blog/common-mistakes-nri-property-buyers-chennai/` | Pending Submission |
 | 8 | `nri-property-buying-process-chennai` | `https://www.propertism.in/blog/nri-property-buying-process-chennai/` | Pending Submission |
 | 9 | `nri-real-estate-investment-chennai-guide` | `https://www.propertism.in/blog/nri-real-estate-investment-chennai-guide/` | Pending Submission |
 | 10 | `nri-property-checklist-chennai-owners-abroad` | `https://www.propertism.in/blog/nri-property-checklist-chennai-owners-abroad/` | Pending Submission |
