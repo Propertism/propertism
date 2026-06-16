@@ -1,0 +1,40 @@
+# QUICK FIX - COPY & PASTE
+
+## For AWS Elastic Beanstalk (Your Setup)
+
+### STEP 1: Connect to Production
+```bash
+eb ssh
+```
+
+### STEP 2: Once Connected (paste all at once)
+```bash
+cd /var/app/current && source /var/app/venv/*/bin/activate && python manage.py seed_knowledge_hub_phase_a --publish && python manage.py migrate --no-input
+```
+
+### STEP 3: Exit and Restart
+```bash
+exit
+```
+
+Then from your **local machine**:
+```bash
+eb restart
+```
+
+**Wait 1-2 minutes.**
+
+### STEP 4: Verify URLs Work
+```bash
+curl -I https://www.propertism.in/blog/nri-property-management-chennai-complete-guide/
+```
+
+Should show: **HTTP/2 200**
+
+---
+
+## That's it! 
+
+Once you see **200 OK**, the blog URLs are fixed and ready for GSC submission.
+
+**Total time:** 5-10 minutes
