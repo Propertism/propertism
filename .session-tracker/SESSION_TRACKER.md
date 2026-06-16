@@ -621,4 +621,17 @@ Continue from this checkpoint tomorrow.
 | PostgreSQL Database Sync | COMPLETE (25 Articles) |
 | URL Routing Check | COMPLETE (25 / 25 resolved 200 OK) |
 | Sitemap Check | COMPLETE (25 Unique Blog URLs, Dups: 0) |
-| GSC Indexing Checklist | COMPLETE (GSC_SUBMISSION_REPORT.md) |
+| GSC Indexing Checklist | COMPLETE (GSC_SUBMISSION_REPORT.md) |
+
+---
+
+## NEXT SESSION PLAN
+**Focus**: Google Search Console Indexing & Monitoring
+- [x] Submit sitemap `https://www.propertism.in/sitemap.xml` to GSC (Success: 780 pages discovered).
+- [ ] Inspect and request indexing for the remaining 4 Phase B URLs (deferred due to GSC daily limit):
+  - `https://www.propertism.in/blog/nri-real-estate-investment-chennai-guide/`
+  - `https://www.propertism.in/blog/nri-property-checklist-chennai-owners-abroad/`
+  - `https://www.propertism.in/blog/nri-property-management-guide-chennai/`
+  - `https://www.propertism.in/blog/nri-property-ownership-challenges-chennai/`
+- [ ] Monitor indexing status for all 12 new Phase B URLs.
+- [ ] Monitor GA4 conversion goals (`whatsapp_click`, `phone_call_click`, `contact_form_submit`).
