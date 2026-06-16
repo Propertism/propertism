@@ -6,14 +6,17 @@
 | 33 | June 15 | **TAMIL NADU RESOURCES HUB, PREMIUM UI REFINEMENT, & FOOTER WRAPPING. Launched Resources Hub directory with active government links, replaced emojis with vector icons/CSS diamonds, and refactored footer stylesheets to prevent horizontal link overlap through clean responsive wrapping.** | ✅ |
 | 34 | June 15 | **SEO AUTHORITY & CONVERSION EXECUTION. pSEO quality audit framework (audit_pseo_quality + analyse_pseo_config commands), configurable noindex hardening via pseo_quality.py, GA4 conversion tracking (5 events), Knowledge Hub Phase-A (10 articles seeded via seed_knowledge_hub_phase_a), NRI Knowledge Hub Roadmap, SEO Blocker Assessment, and Monthly Monitoring Framework.** | ✅ |
 | 35 | June 16 | **PSEO DUPLICATION ELIMINATION & METADATA DIFFERENTIATION. Re-engineered H1 differentiation framework with intent_slug based templates and location-aware dynamic H1 formatting. Implemented dynamic page_title and page_description builders that eliminate duplicate titles/meta descriptions. Fixed rendering audit bug, added unit tests, and verified INDEX Candidates increased to 765.** | ✅ |
-| 36 | June 16 | **SEO GROWTH OPERATIONS, KNOWLEDGE HUB PUBLICATION & LCP OPTIMIZATION. Published all 10 Phase-A blog articles with dynamic author profiles, dynamic FAQ parsing (JSON-LD FAQPage support), and E-E-A-T compliance trust statements. Optimized all five 1.6MB–2.0MB hero images to WebP format, achieving ~90% size reduction. Verified Site ID configuration, established [Month-0 SEO Baseline & Operations Dashboard](file:///d:/viji/viji-olivine/03rolledout/01propertism/reports/MONTH_0_SEO_BASELINE_AND_OPERATIONS_DASHBOARD.md), and generated the [Phase 8 Commit Manifest](file:///d:/viji/viji-olivine/03rolledout/01propertism/.agent/astra/astra-session-management/commit-details/SCCB-PROP-SEO-OPERATIONS-PHASE8-1506.md) alongside the Phase-B roadmap.** | ✅ |
+| 36 | June 16 | **SEO GROWTH OPERATIONS, KNOWLEDGE HUB PUBLICATION & LCP OPTIMIZATION. Published all 10 Phase-A blog articles with dynamic author profiles, dynamic FAQ parsing (JSON-LD FAQPage support), and E-E-A-T compliance trust statements. Optimized all five 1.6MB–2.0MB hero images to WebP format, achieving ~90% size reduction. Verified Site ID configuration, established [Month-0 SEO Baseline & Operations Dashboard](file:///d:/viji/viji-olivine/03rolledout/01propertism/reports/MONTH_0_SEO_BASELINE_AND_OPERATIONS_DASHBOARD.md), and generated the [Phase 8 Commit Manifest](file:///d:/viji/viji-olivine/03rolledout/01propertism/.agent/astra/astra-session-management/commit-details/SCCB-PROP-SEO-OPERATIONS-PHASE8-1506.md).** | ✅ |
+| 37 | June 16 | **STATIC ASSETS PRODUCTION VALIDATION & KNOWLEDGE HUB DELTA SYNCHRONIZATION. Identified root cause of static assets 404 on config-deploy (EB wipes /var/app/current/). Applied immediate fix (manual collectstatic) and permanent fix (.platform/confighooks/postdeploy/00_collectstatic_current.sh). Synchronized 2 missing Knowledge Hub articles to production PostgreSQL. Validated all 13 article URLs returning HTTP 200 and present in sitemap.xml. Generated 6 validation reports in D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026.** | ✅ |
+| 38 | June 16 | **PHASE B AUTHORITY CONTENT EXPANSION. Created 12 full-length Knowledge Hub articles (1,500+ words each) across 4 keyword clusters: NRI Property Chennai, NRI Real Estate Chennai, NRI Property Services Chennai, Property Advisor Chennai NRI. Generated all strategy deliverables (content calendar, article outlines, keyword mapping, internal linking plan, publication tracker, execution summary). Seeded and published all 12 articles locally. Total Knowledge Hub articles: 25 (all published).** | ✅ |
+| 39 | June 16 | **PHASE B PRODUCTION DEPLOYMENT & VALIDATION. Synchronized 12 Phase B articles to production PostgreSQL RDS via safe import script. Verified database status (25 published articles) and validated all 25 URLs return HTTP 200 OK. Confirmed sitemap.xml has all 25 unique blog URLs with zero duplicates. Generated 6 validation reports under D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: June 16, 2026
-**Last Update**: SESSION 36 - SEO GROWTH OPERATIONS, KNOWLEDGE HUB PUBLICATION & LCP OPTIMIZATION. Published all 10 Phase-A blog articles with dynamic author profiles, dynamic FAQ parsing, and E-E-A-T compliance trust statements. Optimized all five 1.6MB–2.0MB hero images to WebP format, achieving ~90% size reduction. Verified Site ID configuration, established [Month-0 SEO Baseline & Operations Dashboard](file:///d:/viji/viji-olivine/03rolledout/01propertism/reports/MONTH_0_SEO_BASELINE_AND_OPERATIONS_DASHBOARD.md), and generated the [Phase 8 Commit Manifest](file:///d:/viji/viji-olivine/03rolledout/01propertism/.agent/astra/astra-session-management/commit-details/SCCB-PROP-SEO-OPERATIONS-PHASE8-1506.md).
+**Last Updated On**: June 16, 2026 (16:18 IST)
+**Last Update**: SESSION 39 - PHASE B PRODUCTION DEPLOYMENT & VALIDATION. Synchronized 12 Phase B articles to production PostgreSQL RDS, verified 25 live articles (200 OK), confirmed sitemap.xml is updated and correct. Generated 6 validation reports under D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports.
 
 
 ---
@@ -25,7 +28,7 @@
 **Site:** https://www.propertism.in/
 **Admin:** https://www.propertism.in/admin/ — `admin / admin123`
 **GitHub:** https://github.com/Propertism/propertism (branch: main)
-**Latest Commit:** c8a5cb0
+**Latest Commit:** b33e0b5
 
 ---
 
@@ -513,6 +516,7 @@ Save as: Month-0 SEO Baseline
 ---
 
 ## IMPORTANT
+
 DO NOT:
 ❌ Create new pSEO pages
 ❌ Modify pSEO engine
@@ -538,4 +542,83 @@ Growth & Authority Phase → ACTIVE
 
 Continue from this checkpoint tomorrow.
 
+---
 
+## Session 37 Detail — June 16, 2026
+
+**Session ID**: `CODEX-SESSION-1606-G`
+**Focus**: Static Assets Production Validation & Knowledge Hub Delta Synchronization
+
+### Part 1: Static Assets Root Cause Analysis ✅
+- Identified root cause: EB `config-deploy` wipes `/var/app/current/` and replaces with staging bundle (no `staticfiles/`). No `confighooks/postdeploy/` existed to recreate it.
+- Applied immediate fix: manual `collectstatic` on production — CSS/JS now serving 200 OK.
+- Created permanent fix: `.platform/confighooks/postdeploy/00_collectstatic_current.sh`.
+- Generated `SCCB-PROP-STATIC-ASSETS-PRODUCTION-ROOT-CAUSE-1606.md`.
+
+### Part 2: Knowledge Hub Delta Synchronization ✅
+- Pre-Sync: Local SQLite had 13 published articles, Production PostgreSQL had 11.
+- Missing: `rental-readiness-for-absentee-owners`, `why-reporting-matters-for-nri-property-management`
+- Exported both articles as Django serialized JSON, validated no duplicates in production.
+- Imported via safe delta import script (duplicate-safe logic).
+- Post-import validation: 13 published articles in production.
+- Both URLs return HTTP 200 OK and present in sitemap.xml.
+- Generated 6 validation reports in `D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports`.
+
+### Status Summary
+| Area | Status |
+|------|--------|
+| Production Stability | COMPLETE |
+| Knowledge Hub Synchronization | COMPLETE |
+| SEO Infrastructure | COMPLETE |
+| Growth Monitoring | ACTIVE |
+
+---
+
+## Session 38 Detail — June 16, 2026
+
+**Session ID**: `CODEX-SESSION-1606-H`
+**Focus**: Phase B Authority Content Expansion — Full Article Creation & Publication
+
+### Part 1: Phase B Content Strategy ✅
+- Defined 4 keyword clusters targeting: nri property chennai, nri real estate chennai, nri property services chennai, property advisor chennai nri
+- Created 12 article outlines with H2/H3 hierarchy, FAQ sections, and CTAs
+- Mapped internal linking strategy across clusters and existing Phase A articles
+- Established 4-week publishing schedule (Jun 16 – Jul 13)
+
+### Part 2: Deliverables Generated ✅
+- PHASE_B_CONTENT_CALENDAR.md — 4-week publishing schedule
+- PHASE_B_ARTICLE_OUTLINES.md — Detailed outlines for all 12 articles
+- PHASE_B_KEYWORD_MAPPING.md — Keyword-to-article mapping with ranking targets
+- PHASE_B_INTERNAL_LINKING_PLAN.md — Cross-article and cross-cluster linking strategy
+- PHASE_B_PUBLICATION_TRACKER.md — Status tracker for all 12 articles
+- PHASE_B_EXECUTION_SUMMARY.md — Executive summary with expected outcomes
+
+### Part 3: Seed Command Implementation & Execution ✅
+- Created `seed_knowledge_hub_phase_b.py` with all 12 full-length articles (1,500+ words each)
+- Each article includes: H2/H3 hierarchy, FAQ sections, and internal CTAs, and category assignment
+
+---
+
+## Session 39 Detail — June 16, 2026
+
+**Session ID**: `CODEX-SESSION-1606-I`
+**Focus**: Phase B Production Deployment & Validation
+
+### Part 1: Deployment & Synchronization ✅
+- Verified successful environment deployment of version `gh-155-6648b846904c622eb6b752fb431b369205c21b9d` containing our raw string JSON seeder fix.
+- Ran `scripts/safe_import_phase_b.py` via SSH on Elastic Beanstalk to import the 12 new Phase B articles to PostgreSQL RDS (`propertism-db-2026`).
+- Verified database count: 25 published articles in production.
+- Verified idempotency: running import script a second time skipped all 12 articles cleanly.
+
+### Part 2: Production Site Validation ✅
+- Verified all 25 blog post URLs return HTTP 200 OK on production site (`https://www.propertism.in`).
+- Verified sitemap at `https://www.propertism.in/sitemap.xml` correctly contains all 25 unique blog posts with no duplicates.
+- Generated 6 validation reports and moved them to `D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports`.
+
+### Status Summary
+| Area | Status |
+|------|--------|
+| PostgreSQL Database Sync | COMPLETE (25 Articles) |
+| URL Routing Check | COMPLETE (25 / 25 resolved 200 OK) |
+| Sitemap Check | COMPLETE (25 Unique Blog URLs, Dups: 0) |
+| GSC Indexing Checklist | COMPLETE (GSC_SUBMISSION_REPORT.md) |

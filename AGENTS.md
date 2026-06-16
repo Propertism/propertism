@@ -10,8 +10,7 @@ This repository defines stable chat-level startup/closure commands for the Prope
 ## Astra Startup Behavior (`/start`)
 On `/start`, load and enforce:
 1. `.agent/antigravity-memory.md`
-2. `.agent/astra/astra-session-management/session-tracker.md`
-3. `.session-tracker/SESSION_TRACKER.md` (Legacy)
+2. `.session-tracker/SESSION_TRACKER.md`
 
 Then return:
 - Status: READY
@@ -20,7 +19,6 @@ Then return:
 
 ## Astra Closure Behavior (`/end`)
 On `/end`, follow `.agent/workflows/end.md` and update:
-- `.agent/astra/astra-session-management/session-tracker.md`
 - `.session-tracker/SESSION_TRACKER.md`
 - Create commit manifest in `.agent/astra/astra-session-management/commit-details/`
 

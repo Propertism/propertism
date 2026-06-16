@@ -6,7 +6,7 @@ Initialize the Astra session for Propertism by loading the necessary context.
 ## 1. Load Core Memory & Session Context
 Read the following files:
 - `.agent/antigravity-memory.md`
-- `.agent/astra/astra-session-management/session-tracker.md`
+- `.session-tracker/SESSION_TRACKER.md`
 
 ## 2. Verify Infrastructure
 Check the latest deployment status and health.
