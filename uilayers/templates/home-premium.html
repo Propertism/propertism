@@ -19,80 +19,141 @@
     {% include "home/sections/_contact.html" %}
     {% include "home/sections/_custom_cards.html" %}
 
-    <!-- Sticky Advisor CTA (Phase 4) -->
+    <!-- Floating Social Quick-Access Rail -->
     <style>
-        .floating-advisor-cta {
+        .floating-social-rail {
             position: fixed;
             top: 50%;
             right: 0;
             transform: translateY(-50%);
             z-index: 999;
             display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .floating-social-rail .fsr-link {
+            display: flex;
             align-items: center;
             justify-content: center;
-            background: #B89A4A !important;
             color: #FFFFFF !important;
             border: none !important;
-            height: 48px !important;
-            width: 48px !important;
+            height: 44px !important;
+            width: 44px !important;
             padding: 0 !important;
-            font-family: var(--sans-main), 'Jost', sans-serif !important;
-            font-size: 0.75rem !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.1em !important;
-            text-transform: uppercase !important;
             text-decoration: none !important;
-            box-shadow: -2px 0 12px rgba(0, 0, 0, 0.25) !important;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2) !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
             cursor: pointer;
-            overflow: hidden;
-            white-space: nowrap;
+            position: relative;
         }
-        .floating-advisor-cta span {
-            max-width: 0;
-            opacity: 0;
-            margin-left: 0;
-            overflow: hidden;
-            transition: max-width 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
-            display: inline-block;
-            vertical-align: middle;
+        .floating-social-rail .fsr-link.fsr-phone {
+            background: #B89A4A !important;
         }
-        .floating-advisor-cta:hover {
-            width: auto !important;
-            padding: 0 20px !important;
-            background: #0F172A !important;
+        .floating-social-rail .fsr-link.fsr-whatsapp {
+            background: #25D366 !important;
         }
-        .floating-advisor-cta:hover span {
-            max-width: 200px;
-            opacity: 1;
-            margin-left: 10px;
+        .floating-social-rail .fsr-link.fsr-linkedin {
+            background: #0A66C2 !important;
         }
-        .floating-advisor-cta svg {
+        .floating-social-rail .fsr-link.fsr-maps {
+            background: #EA4335 !important;
+        }
+        .floating-social-rail .fsr-link svg {
             width: 20px;
             height: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
             flex-shrink: 0;
+            transition: transform 0.2s ease;
         }
+        .floating-social-rail .fsr-link:hover {
+            background: #0F172A !important;
+            width: auto !important;
+            padding: 0 14px 0 10px !important;
+        }
+        .floating-social-rail .fsr-link:hover svg {
+            transform: scale(1.1);
+        }
+        .floating-social-rail .fsr-link .fsr-label {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: var(--sans-main), 'Jost', sans-serif !important;
+            font-size: 0.7rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            transition: max-width 0.3s ease, opacity 0.2s ease, margin 0.2s ease;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        .floating-social-rail .fsr-link:hover .fsr-label {
+            max-width: 160px;
+            opacity: 1;
+            margin-left: 8px;
+        }
+        .floating-social-rail .fsr-link.fsr-phone svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .floating-social-rail .fsr-link.fsr-whatsapp svg { fill: currentColor; stroke: none; }
+        .floating-social-rail .fsr-link.fsr-linkedin svg { fill: currentColor; stroke: none; }
+        .floating-social-rail .fsr-link.fsr-maps svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         @media (max-width: 900px) {
-            .floating-advisor-cta {
+            .floating-social-rail {
                 top: auto !important;
                 bottom: 80px !important;
                 right: 0 !important;
                 transform: none !important;
+                flex-direction: row;
+                gap: 1px;
+            }
+            .floating-social-rail .fsr-link {
+                width: 40px !important;
+                height: 40px !important;
+            }
+            .floating-social-rail .fsr-link:hover {
+                width: auto !important;
+                padding: 0 10px 0 8px !important;
+            }
+            .floating-social-rail .fsr-link svg {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
 
-    <a href="#contact-section" class="floating-advisor-cta">
-        <svg viewBox="0 0 24 24">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        <span>Talk to an Advisor</span>
-    </a>
+    <div class="floating-social-rail">
+        <!-- Phone -->
+        <a href="tel:+9198418444452" class="fsr-link fsr-phone" title="Call Us">
+            <svg viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span class="fsr-label">Call Us</span>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/918667020798" target="_blank" rel="noopener noreferrer" class="fsr-link fsr-whatsapp" title="WhatsApp">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span class="fsr-label">WhatsApp</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com/company/propertism" target="_blank" rel="noopener noreferrer" class="fsr-link fsr-linkedin" title="LinkedIn">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.268 6.81c0 .748-.607 1.354-1.354 1.354S5.56 7.558 5.56 6.81s.607-1.354 1.354-1.354 1.354.606 1.354 1.354zM5.7 9.5h2.4v8.5H5.7V9.5zm3.9 0h2.3v1.164h.033c.32-.607 1.103-1.246 2.27-1.246 2.428 0 2.877 1.597 2.877 3.674V18h-2.397v-4.59c0-.895-.016-2.047-1.247-2.047-1.248 0-1.439.975-1.439 1.982V18H9.6V9.5z"/>
+            </svg>
+            <span class="fsr-label">LinkedIn</span>
+        </a>
+
+        <!-- Google Maps -->
+        <a href="https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai" target="_blank" rel="noopener noreferrer" class="fsr-link fsr-maps" title="Google Maps">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span class="fsr-label">Maps</span>
+        </a>
+    </div>
 
 {% endblock %}
 
