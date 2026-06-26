@@ -24,7 +24,7 @@ from rest_framework.response import Response
 
 from content.site_context import get_company_info, get_home_section_links
 
-from .models import Inquiry, Property
+from .models import Inquiry, InquiryReply, Property
 from .serializers import PropertySerializer
 
 logger = logging.getLogger(__name__)
@@ -352,6 +352,17 @@ def inquiry_send_reply(request):
     except Exception:
         logger.exception("Inquiry reply email failed")
         return JsonResponse({"error": "Could not send email. Check SMTP configuration."}, status=500)
+
+    # ── Persist the reply for audit trail ─────────────────────────────────────
+    if inquiry:
+        InquiryReply.objects.create(
+            inquiry=inquiry,
+            sent_by=request.user if request.user.is_authenticated else None,
+            to_email=to_email,
+            cc=", ".join(cc_list),
+            subject=subject,
+            body=body,
+        )
 
     updated_at = None
     if inquiry and inquiry.status == "pending":

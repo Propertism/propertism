@@ -309,6 +309,37 @@ class Inquiry(models.Model):
         ]
 
 
+class InquiryReply(models.Model):
+    """Stores every reply email sent to an inquiry from the dashboard."""
+
+    inquiry = models.ForeignKey(
+        Inquiry,
+        on_delete=models.CASCADE,
+        related_name="replies",
+    )
+    sent_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="Staff member who sent the reply.",
+    )
+    to_email = models.EmailField()
+    cc = models.CharField(max_length=500, blank=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply to {self.inquiry} — {self.sent_at:%Y-%m-%d %H:%M}"
+
+    class Meta:
+        verbose_name = "Inquiry Reply"
+        verbose_name_plural = "Inquiry Replies"
+        ordering = ["-sent_at"]
+
+
+
 class MaintenanceRequest(models.Model):
     PRIORITY_CHOICES = [
         ("low", "Low"),

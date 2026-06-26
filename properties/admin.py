@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import path
 from django.utils import timezone
 
-from .models import ContactMessage, Inquiry, MaintenanceRequest, Property, PropertyPhoto, PropertyType, SupportTicket
+from .models import ContactMessage, Inquiry, InquiryReply, MaintenanceRequest, Property, PropertyPhoto, PropertyType, SupportTicket
 
 
 @admin.register(PropertyType)
@@ -44,10 +44,21 @@ class PropertyPhotoAdmin(admin.ModelAdmin):
     search_fields = ["property__title", "caption"]
 
 
+class InquiryReplyInline(admin.TabularInline):
+    model = InquiryReply
+    extra = 0
+    readonly_fields = ["sent_by", "to_email", "cc", "subject", "body", "sent_at"]
+    can_delete = False
+    show_change_link = False
+    verbose_name = "Sent Reply"
+    verbose_name_plural = "Sent Replies"
+
+
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):
     change_list_template = "admin/properties/inquiry/change_list.html"
     readonly_fields = ["created_at", "updated_at"]
+    inlines = [InquiryReplyInline]
 
     def get_urls(self):
         urls = super().get_urls()
@@ -199,6 +210,21 @@ class InquiryAdmin(admin.ModelAdmin):
                 inq.created_at.strftime("%Y-%m-%d %H:%M"),
             ])
         return response
+
+
+@admin.register(InquiryReply)
+class InquiryReplyAdmin(admin.ModelAdmin):
+    list_display = ["inquiry", "to_email", "subject", "sent_by", "sent_at"]
+    list_filter = ["sent_at", "sent_by"]
+    search_fields = ["to_email", "subject", "body", "inquiry__name"]
+    readonly_fields = ["inquiry", "sent_by", "to_email", "cc", "subject", "body", "sent_at"]
+    date_hierarchy = "sent_at"
+
+    def has_add_permission(self, request):
+        return False  # Replies are created only programmatically
+
+    def has_change_permission(self, request, obj=None):
+        return False  # Read-only audit log
 
 
 # @admin.register(MaintenanceRequest)
