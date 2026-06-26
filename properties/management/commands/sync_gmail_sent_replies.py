@@ -103,12 +103,16 @@ class Command(BaseCommand):
                     "Invalid --since date. Use YYYY-MM-DD format."
                 )
 
-        app_pass = os.environ.get("GMAIL_APP_PASS", "")
+        # Accept GMAIL_APP_PASS or fall back to EMAIL_HOST_PASSWORD (same App Password)
+        app_pass = (
+            os.environ.get("GMAIL_APP_PASS")
+            or os.environ.get("EMAIL_HOST_PASSWORD", "")
+        )
         if not app_pass:
             raise CommandError(
-                "GMAIL_APP_PASS env var not set.\n"
-                "  $env:GMAIL_APP_PASS = 'xxxx-xxxx-xxxx-xxxx'\n"
-                "  Generate at: myaccount.google.com/apppasswords"
+                "No Gmail App Password found.\n"
+                "Set GMAIL_APP_PASS or EMAIL_HOST_PASSWORD env var.\n"
+                "Generate at: myaccount.google.com/apppasswords"
             )
 
         # 1. Load inquiries from DB
