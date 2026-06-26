@@ -7,5 +7,6 @@ urlpatterns = [
     path("send-reply/", views.inquiry_send_reply, name="inquiry_send_reply"),
     path("<int:inquiry_id>/status/", views.inquiry_status_update, name="inquiry_status_update"),
     path("<int:inquiry_id>/delete/", views.inquiry_delete, name="inquiry_delete"),
+    path("<int:inquiry_id>/replies/", views.inquiry_replies, name="inquiry_replies"),
     path("pending-count/", views.inquiry_pending_count, name="inquiry_pending_count"),
 ]

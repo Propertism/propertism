@@ -1928,3 +1928,69 @@ body.inq-app .header-v4-tools {
         justify-content: center;
     }
 }
+
+/* Inquiry Replies / Audit Trail styles */
+.inq-detail-replies {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.inq-detail-replies-loading,
+.inq-detail-replies-empty,
+.inq-detail-replies-error {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    padding: 0.5rem 0;
+}
+
+.inq-detail-replies-error {
+    color: #8a3b2f;
+}
+
+.inq-detail-reply-item {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-hairline);
+    padding: 0.85rem 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.inq-detail-reply-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.45rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px dashed var(--border-hairline);
+}
+
+.rep-by {
+    font-weight: 600;
+    color: var(--ink-primary);
+    text-transform: capitalize;
+}
+
+.rep-date {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+}
+
+.rep-subject,
+.rep-cc {
+    font-size: 0.78rem;
+    color: var(--ink-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.rep-body {
+    color: var(--ink-primary);
+    margin-top: 0.45rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: var(--font-sans);
+}
+

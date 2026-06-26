@@ -267,3 +267,35 @@ class InquiryReplyTests(TestCase):
             {"error": "Outbound email is not configured."},
         )
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_inquiry_replies_returns_sent_replies_json(self):
+        from .models import InquiryReply
+        InquiryReply.objects.create(
+            inquiry=self.inquiry,
+            sent_by=self.staff_user,
+            to_email=self.inquiry.email,
+            cc="ops@example.com",
+            subject="Re: Your inquiry",
+            body="Hello body text."
+        )
+
+        response = self.client.get(
+            reverse("inquiry_replies", args=[self.inquiry.pk])
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("replies", data)
+        self.assertEqual(len(data["replies"]), 1)
+        self.assertEqual(data["replies"][0]["to_email"], self.inquiry.email)
+        self.assertEqual(data["replies"][0]["cc"], "ops@example.com")
+        self.assertEqual(data["replies"][0]["subject"], "Re: Your inquiry")
+        self.assertEqual(data["replies"][0]["body"], "Hello body text.")
+        self.assertEqual(data["replies"][0]["sent_by"], self.staff_user.username)
+
+    def test_inquiry_replies_requires_staff(self):
+        self.client.logout()
+        response = self.client.get(
+            reverse("inquiry_replies", args=[self.inquiry.pk])
+        )
+        self.assertEqual(response.status_code, 302)
+

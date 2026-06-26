@@ -322,8 +322,8 @@ EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@propertism.com')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'server@propertism.com')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@propertism.in')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'info@propertism.in')
 
 # ==============================================================================
 # ADMIN SECURITY

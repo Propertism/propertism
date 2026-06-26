@@ -298,6 +298,31 @@ def inquiry_delete(request, inquiry_id):
 
 
 @inquiries_staff_required
+def inquiry_replies(request, inquiry_id):
+    """Return all sent replies for a given inquiry as JSON."""
+    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
+    replies = (
+        InquiryReply.objects
+        .filter(inquiry=inquiry)
+        .order_by("sent_at")
+        .values("id", "to_email", "cc", "subject", "body", "sent_at", "sent_by__username")
+    )
+    data = [
+        {
+            "id": r["id"],
+            "to_email": r["to_email"],
+            "cc": r["cc"],
+            "subject": r["subject"],
+            "body": r["body"],
+            "sent_at": r["sent_at"].strftime("%d %b %Y, %H:%M") if r["sent_at"] else "",
+            "sent_by": r["sent_by__username"] or "system",
+        }
+        for r in replies
+    ]
+    return JsonResponse({"replies": data})
+
+
+@inquiries_staff_required
 @require_POST
 def inquiry_send_reply(request):
     try:

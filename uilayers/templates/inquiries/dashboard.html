@@ -466,6 +466,9 @@
                     <option value="closed">Closed</option>
                 </select>
 
+                <div class="inq-detail-section-label">Replies Sent</div>
+                <div class="inq-detail-replies" id="panelRepliesBlock"></div>
+
                 <div class="inq-detail-activity">
                     <div class="inq-detail-activity-item">
                         <span class="inq-detail-activity-label">Received</span>
@@ -670,6 +673,15 @@ if (window.innerWidth < 900 && window.location.search === '') {
         if (input && input.value) return input.value;
         var match = document.cookie.match(/csrftoken=([^;]+)/);
         return match ? match[1] : '';
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#039;');
     }
 
     function isTextField(el) {
@@ -1227,8 +1239,42 @@ if (window.innerWidth < 900 && window.location.search === '') {
         document.getElementById('panelCreated').textContent = fmtDate(data.createdAt);
         document.getElementById('panelUpdated').textContent = fmtDate(data.updatedAt);
         document.getElementById('panelWaBtn').disabled = !cleanPhone(data.phone);
+        loadPanelReplies(data.id);
         document.getElementById('inqDetailPanel').classList.add('active');
     };
+
+    function loadPanelReplies(inquiryId) {
+        var repliesBlock = document.getElementById('panelRepliesBlock');
+        if (!repliesBlock) return;
+        repliesBlock.innerHTML = '<div class="inq-detail-replies-loading">Loading replies...</div>';
+        fetch('/inquiries/' + inquiryId + '/replies/')
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (panelId !== String(inquiryId)) return;
+                var replies = res.replies || [];
+                if (replies.length === 0) {
+                    repliesBlock.innerHTML = '<div class="inq-detail-replies-empty">No replies sent yet.</div>';
+                    return;
+                }
+                repliesBlock.innerHTML = replies.map(function(rep) {
+                    var bodyHtml = escapeHtml(rep.body).replace(/\n/g, '<br>');
+                    var ccHtml = rep.cc ? '<div class="rep-cc"><strong>CC:</strong> ' + escapeHtml(rep.cc) + '</div>' : '';
+                    return '<div class="inq-detail-reply-item">' +
+                        '<div class="inq-detail-reply-meta">' +
+                            '<span class="rep-by">' + escapeHtml(rep.sent_by) + '</span>' +
+                            '<span class="rep-date">' + escapeHtml(rep.sent_at) + '</span>' +
+                        '</div>' +
+                        '<div class="rep-subject"><strong>Subject:</strong> ' + escapeHtml(rep.subject) + '</div>' +
+                        ccHtml +
+                        '<div class="rep-body">' + bodyHtml + '</div>' +
+                    '</div>';
+                }).join('');
+            })
+            .catch(function(err) {
+                if (panelId !== String(inquiryId)) return;
+                repliesBlock.innerHTML = '<div class="inq-detail-replies-error">Failed to load replies.</div>';
+            });
+    }
 
     window.closeDetail = function () {
         document.getElementById('inqDetailPanel').classList.remove('active');
@@ -1312,6 +1358,9 @@ if (window.innerWidth < 900 && window.location.search === '') {
         }).then(function (data) {
             if (inquiryId && data.status) {
                 syncStatus(inquiryId, data.status, data.updated_at);
+            }
+            if (inquiryId && panelId === String(inquiryId)) {
+                loadPanelReplies(inquiryId);
             }
             clearSavedDraft({ inquiryId: inquiryId, to: email });
             updateFreshnessStamp(new Date());
