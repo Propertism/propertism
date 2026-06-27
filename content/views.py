@@ -360,6 +360,7 @@ def send_admin_notification(subject, message_lines, whatsapp_text):
 
 def send_rfq_notification(inquiry):
     """Send email and whatsapp notification when RFQ is submitted."""
+    from django.utils import timezone
     subject = f"🚀 New Propertism Lead: {inquiry.name}"
     
     # Build email body
@@ -369,11 +370,16 @@ def send_rfq_notification(inquiry):
         f"Name: {inquiry.name}",
         f"Email: {inquiry.email}",
         f"Phone: {inquiry.phone or 'Not provided'}",
+    ]
+    if hasattr(inquiry, 'property') and inquiry.property:
+        message_lines.append(f"Property: {inquiry.property.title}")
+        
+    message_lines.extend([
         f"Message: {inquiry.message}",
         f"",
-        f"Submitted: {inquiry.created_at.strftime('%B %d, %Y at %I:%M %p')}",
+        f"Submitted: {inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')}",
         f"Admin View: https://propertism.in/admin/properties/inquiry/{inquiry.id}/change/",
-    ]
+    ])
     
     message = "\n".join(message_lines)
     
@@ -389,7 +395,12 @@ def send_rfq_notification(inquiry):
         logger.error(f"Email notification failed: {e}")
 
     # Trigger WhatsApp
-    send_whatsapp_notification(f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}\nMsg: {inquiry.message}")
+    whatsapp_text = f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}"
+    if hasattr(inquiry, 'property') and inquiry.property:
+        whatsapp_text += f"\nAsset: {inquiry.property.title}"
+    whatsapp_text += f"\nMsg: {inquiry.message}"
+    
+    send_whatsapp_notification(whatsapp_text)
 
 
 def send_landing_lead_notification(lead):

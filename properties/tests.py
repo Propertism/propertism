@@ -299,3 +299,68 @@ class InquiryReplyTests(TestCase):
         )
         self.assertEqual(response.status_code, 302)
 
+
+class InquiryNotificationTests(TestCase):
+    def setUp(self):
+        self.property_type = PropertyType.objects.create(name="Villa", slug="villa")
+        self.property_obj = Property.objects.create(
+            title="Premium Beach Villa",
+            description="Gorgeous villa on ECR",
+            price=Decimal("45000000.00"),
+            currency="INR",
+            property_type=self.property_type,
+            status="available",
+        )
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        EXTRA_NOTIFICATION_EMAIL="propertism.tamil@gmail.com",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    def test_create_inquiry_sends_email_and_whatsapp(self, mock_send_whatsapp):
+        # Initial inquiry count
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        # Clear mail outbox
+        mail.outbox = []
+
+        # Make client POST to create_inquiry
+        response = self.client.post(
+            reverse("create_inquiry"),
+            data={
+                "property_id": self.property_obj.id,
+                "name": "Viji Buyer",
+                "email": "buyer@example.com",
+                "phone": "+919876543210",
+                "message": "Is this ECR villa open for visits?",
+            },
+        )
+
+        # Inquiry should be created
+        self.assertEqual(Inquiry.objects.count(), 1)
+        inquiry = Inquiry.objects.first()
+        self.assertEqual(inquiry.name, "Viji Buyer")
+        self.assertEqual(inquiry.property, self.property_obj)
+
+        # Response should redirect to property detail page
+        self.assertRedirects(response, reverse("property_detail", kwargs={"slug": self.property_obj.slug}))
+
+        # Email should be sent to both ADMIN_EMAIL and EXTRA_NOTIFICATION_EMAIL
+        expected_recipients = set(["info@propertism.in", "propertism.tamil@gmail.com"])
+        
+        self.assertEqual(len(mail.outbox), 1)
+        sent_email = mail.outbox[0]
+        self.assertEqual(set(sent_email.to), expected_recipients)
+        self.assertIn("Viji Buyer", sent_email.subject)
+        self.assertIn("Premium Beach Villa", sent_email.body)
+        self.assertIn("ECR villa open for visits?", sent_email.body)
+
+        # WhatsApp mock should be called with correct details
+        mock_send_whatsapp.assert_called_once()
+        whatsapp_call_args = mock_send_whatsapp.call_args[0][0]
+        self.assertIn("Viji Buyer", whatsapp_call_args)
+        self.assertIn("Premium Beach Villa", whatsapp_call_args)
+        self.assertIn("+919876543210", whatsapp_call_args)
+

@@ -122,13 +122,21 @@ def create_inquiry(request):
     property_obj = get_object_or_404(Property, pk=property_id)
 
     try:
-        Inquiry.objects.create(
+        inquiry = Inquiry.objects.create(
             property=property_obj,
             name=request.POST.get("name", "").strip(),
             email=request.POST.get("email", "").strip(),
             phone=request.POST.get("phone", "").strip(),
             message=request.POST.get("message", "").strip(),
         )
+        
+        # Send notifications (emails to both ids, and WhatsApp notification)
+        try:
+            from content.views import send_rfq_notification
+            send_rfq_notification(inquiry)
+        except Exception as email_exc:
+            logger.error("Failed to send notification: %s", email_exc)
+
         messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
     except Exception:
         messages.error(
