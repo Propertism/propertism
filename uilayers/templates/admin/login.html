@@ -53,6 +53,20 @@
             gap: 16px;
         }
 
+        .sap-brand-logo {
+            height: 28px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+        }
+
+        .sap-header-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
         .sap-header-icon {
             display: flex;
             align-items: center;
@@ -353,13 +367,10 @@
         <!-- SAP Header -->
         <div class="sap-header">
             <div class="sap-header-left">
-                <div id="sap-header-icon">
-                    <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        <circle cx="12" cy="16" r="1.5" fill="currentColor"></circle>
-                    </svg>
+                <div id="sap-header-brand">
+                    <img src="{% static 'images/propertism-logo-white-tm.png' %}" alt="Propertism" class="sap-brand-logo">
                 </div>
+                <div class="sap-header-divider"></div>
                 <div class="sap-header-text">
                     <div class="sap-header-subtitle">MULTI-FACTOR AUTHENTICATION</div>
                     <div class="sap-header-title" id="sap-header-title">Login</div>
@@ -519,7 +530,6 @@
             var stepLogin = document.getElementById("sap-step-login");
             var step2fa = document.getElementById("sap-step-2fa");
             var headerTitle = document.getElementById("sap-header-title");
-            var headerIcon = document.getElementById("sap-header-icon");
             var otpField = document.getElementById("sap-otp");
             var statusBox = document.getElementById("sap-2fa-status-box");
             var statusText = document.getElementById("sap-2fa-status-text");
@@ -530,9 +540,6 @@
             step2fa.classList.add("active");
             headerTitle.textContent = "2-Factor Authentication";
             actionBtn.textContent = "VERIFY";
-
-            // Keypad Grid Icon SVG
-            headerIcon.innerHTML = '<svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><circle cx="6" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>';
 
             // Await manual user input
             otpField.value = "";
