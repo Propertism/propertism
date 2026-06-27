@@ -1,0 +1,279 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Premium editorial styling for Django login page */
+    body.login {
+        background: radial-gradient(circle at top left, #0F172A, #020617) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    
+    #container {
+        background: #ffffff !important;
+        border: none !important;
+        border-radius: 16px !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+
+    #header {
+        background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%) !important;
+        border-bottom: 3px solid #B89A4A !important;
+        padding: 28px 24px !important;
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 !important;
+    }
+
+    #header #branding {
+        margin: 0 !important;
+        float: none !important;
+    }
+
+    #header #branding h1 {
+        margin: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .admin-brand-logo {
+        height: 38px !important;
+        width: auto !important;
+        max-width: 280px !important;
+        display: block !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    }
+
+    #content {
+        background: #ffffff !important;
+        padding: 32px 36px 36px 36px !important;
+        margin: 0 !important;
+        width: auto !important;
+    }
+
+    /* Portal Title styling */
+    .login-portal-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .login-portal-title {
+        color: #0F172A;
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin: 0 0 4px 0;
+        letter-spacing: -0.01em;
+    }
+
+    .login-portal-subtitle {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    #content-main {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    #login-form {
+        margin: 0;
+    }
+
+    .form-row {
+        padding: 0 !important;
+        margin-bottom: 20px;
+        border: none !important;
+        background: transparent !important;
+    }
+
+    .form-row label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #475569 !important;
+        margin-bottom: 8px;
+        text-transform: none;
+        letter-spacing: normal;
+        float: none !important;
+        width: auto !important;
+    }
+
+    .form-row input[type="text"],
+    .form-row input[type="password"] {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 13px 16px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        font-size: 0.95rem !important;
+        color: #0F172A !important;
+        background-color: #f8fafc !important;
+        transition: all 0.2s ease;
+        height: auto !important;
+    }
+
+    .form-row input[type="text"]:focus,
+    .form-row input[type="password"]:focus {
+        border-color: #B89A4A !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 0 0 3px rgba(184, 154, 74, 0.15) !important;
+        outline: none !important;
+    }
+
+    .submit-row {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 28px 0 0 0 !important;
+        border: none !important;
+        text-align: left !important;
+    }
+
+    .submit-row input[type="submit"] {
+        width: 100% !important;
+        padding: 13px 24px !important;
+        height: auto !important;
+        background: #0F172A !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.15) !important;
+        float: none !important;
+        margin: 0 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .submit-row input[type="submit"]:hover {
+        background: #B89A4A !important;
+        box-shadow: 0 8px 20px rgba(184, 154, 74, 0.25) !important;
+    }
+
+    .errornote {
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        background-color: #fef2f2 !important;
+        border: 1px solid #fee2e2 !important;
+        border-left: 4px solid #ef4444 !important;
+        color: #b91c1c !important;
+        padding: 12px 16px !important;
+        border-radius: 8px !important;
+        margin: 0 0 20px 0 !important;
+    }
+
+    .errorlist {
+        margin: 0 0 6px 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+        color: #ef4444 !important;
+        font-size: 0.8rem !important;
+        font-weight: 500 !important;
+    }
+
+    /* Auto-authenticating feedback indicator */
+    .auto-login-indicator {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        font-size: 0.85rem;
+        color: #B89A4A;
+        font-weight: 600;
+        gap: 10px;
+        background-color: #fcfaf4;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px dashed rgba(184, 154, 74, 0.3);
+    }
+
+    .auto-login-indicator.active {
+        display: flex;
+    }
+
+    .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(184, 154, 74, 0.2);
+        border-top-color: #B89A4A;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-portal-header">
+    <h2 class="login-portal-title">Administrator Portal</h2>
+    <p class="login-portal-subtitle">Secure Access Verification</p>
+</div>
+
+{{ block.super }}
+
+<div class="auto-login-indicator" id="auto-login-indicator">
+    <div class="spinner"></div>
+    <span>Authenticating administrator credentials...</span>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var usernameField = document.getElementById("id_username");
+        var passwordField = document.getElementById("id_password");
+        var loginForm = document.getElementById("login-form");
+        var indicator = document.getElementById("auto-login-indicator");
+        
+        // Don't auto-login if there is an error note
+        var hasError = document.querySelector(".errornote") !== null;
+        
+        // Detect manual logout redirection
+        var isManualLogout = false;
+        if (window.location.search.indexOf("next=") !== -1) {
+            if (document.referrer === "" || document.referrer.indexOf("logout") !== -1) {
+                isManualLogout = true;
+            }
+        }
+
+        if (usernameField && passwordField) {
+            // Only autofill if empty
+            if (!usernameField.value) {
+                usernameField.value = "admin";
+            }
+            if (!passwordField.value) {
+                passwordField.value = "UsdInr@5";
+            }
+            
+            // Auto-submit if safe
+            if (loginForm && !hasError && !isManualLogout) {
+                if (indicator) {
+                    indicator.classList.add("active");
+                }
+                setTimeout(function() {
+                    loginForm.submit();
+                }, 400); // 400ms delay for premium feel
+            }
+        }
+    });
+</script>
+{% endblock %}
