@@ -30,6 +30,8 @@ urlpatterns = [
         'favicon.ico',
         RedirectView.as_view(url=f'{settings.STATIC_URL}images/propertism-logo-tm.png', permanent=True),
     ),
+    path(f'{settings.ADMIN_URL}/send-otp/', content_views.send_otp_view, name='admin_send_otp'),
+    path(f'{settings.ADMIN_URL}/verify-otp/', content_views.verify_otp_view, name='admin_verify_otp'),
     path(f'{settings.ADMIN_URL}/', admin.site.urls),
     # Google OAuth + allauth
     path('accounts/', include('allauth.urls')),

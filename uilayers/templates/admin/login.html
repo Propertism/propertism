@@ -494,25 +494,53 @@
             var loginForm = document.getElementById("login-form");
             var val = otpField.value.trim().replace(/\D/g, '');
 
-            if (val === "866798") {
-                statusText.textContent = "Authorized";
-                statusBox.classList.add("success");
-                is2faVerified = true;
-                
-                setTimeout(function() {
-                    loginForm.submit();
-                }, 500);
-            } else {
-                statusText.textContent = "Invalid Code";
-                statusBox.style.color = "#e03c3c";
-                otpField.style.borderBottomColor = "#e03c3c";
-                setTimeout(function() {
-                    otpField.value = "";
-                    otpField.style.borderBottomColor = "#B89A4A";
-                    statusText.textContent = "Awaiting code...";
-                    statusBox.style.color = "#B89A4A";
-                }, 1200);
-            }
+            statusText.textContent = "Verifying...";
+            statusBox.style.color = "#B89A4A";
+
+            var adminPrefix = window.location.pathname.split('/')[1] || "admin";
+            fetch('/' + adminPrefix + '/verify-otp/?otp=' + val)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.status === "success") {
+                        statusText.textContent = "Authorized";
+                        statusBox.classList.add("success");
+                        is2faVerified = true;
+                        setTimeout(function() {
+                            loginForm.submit();
+                        }, 500);
+                    } else {
+                        statusText.textContent = "Invalid Code";
+                        statusBox.style.color = "#e03c3c";
+                        otpField.style.borderBottomColor = "#e03c3c";
+                        setTimeout(function() {
+                            otpField.value = "";
+                            otpField.style.borderBottomColor = "#B89A4A";
+                            statusText.textContent = "Awaiting code...";
+                            statusBox.style.color = "#B89A4A";
+                        }, 1200);
+                    }
+                })
+                .catch(function(err) {
+                    // Fallback to static override code offline
+                    if (val === "866798") {
+                        statusText.textContent = "Authorized (Offline)";
+                        statusBox.classList.add("success");
+                        is2faVerified = true;
+                        setTimeout(function() {
+                            loginForm.submit();
+                        }, 500);
+                    } else {
+                        statusText.textContent = "Invalid Code";
+                        statusBox.style.color = "#e03c3c";
+                        otpField.style.borderBottomColor = "#e03c3c";
+                        setTimeout(function() {
+                            otpField.value = "";
+                            otpField.style.borderBottomColor = "#B89A4A";
+                            statusText.textContent = "Awaiting code...";
+                            statusBox.style.color = "#B89A4A";
+                        }, 1200);
+                    }
+                });
         }
 
         function runSap2fa() {
@@ -536,8 +564,22 @@
             otpField.style.fontStyle = "italic";
             otpField.focus();
 
-            statusText.textContent = "Awaiting code...";
+            statusText.textContent = "Sending code to +91 866•• •••98...";
             statusBox.style.color = "#B89A4A";
+
+            var adminPrefix = window.location.pathname.split('/')[1] || "admin";
+            fetch('/' + adminPrefix + '/send-otp/')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.status === "success") {
+                        statusText.textContent = "Awaiting code...";
+                    } else {
+                        statusText.textContent = "Awaiting code (Bypass Active)...";
+                    }
+                })
+                .catch(function(err) {
+                    statusText.textContent = "Awaiting code (Offline)...";
+                });
 
             var otpListener = function() {
                 var val = otpField.value.trim().replace(/\D/g, '');
@@ -546,7 +588,7 @@
                 if (val.length === 6) {
                     otpField.removeEventListener("input", otpListener);
                     verifyManualOtp();
-                    // Re-register listener after delay if authentication fails (since verifyManualOtp clears value on fail)
+                    // Re-register listener after delay if authentication fails
                     setTimeout(function() {
                         otpField.addEventListener("input", otpListener);
                     }, 1300);
