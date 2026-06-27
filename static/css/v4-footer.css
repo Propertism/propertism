@@ -522,18 +522,18 @@
     }
 }
 
-/* Premium Unified Footer Phone CTAs */
+/* Premium Unified Footer Phone CTAs (Solid Gold Default, Navy Hover Inversion) */
 body .site-footer .footer-office-phones .footer-phone-item {
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: var(--brand-gold) !important;
+    border: 1px solid var(--brand-gold) !important;
     border-radius: 8px !important;
     padding: 6px 14px !important;
-    color: #ffffff !important;
+    color: #0F172A !important; /* Navy text on Gold */
     font-size: 0.85rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     text-decoration: none !important;
     margin-bottom: 8px !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -541,11 +541,11 @@ body .site-footer .footer-office-phones .footer-phone-item {
 }
 
 body .site-footer .footer-office-phones .footer-phone-item:hover {
-    background: rgba(196, 156, 82, 0.12) !important;
+    background: transparent !important;
     border-color: var(--brand-gold) !important;
     color: var(--brand-gold) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 15px rgba(196, 156, 82, 0.15) !important;
+    box-shadow: 0 4px 12px var(--brand-gold-glow) !important;
     opacity: 1 !important;
 }
 
