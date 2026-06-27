@@ -477,9 +477,41 @@
                 usernameField.value = sapUser;
                 passwordField.value = sapPass;
                 
-                if (!is2faVerified) {
+                var stepLogin = document.getElementById("sap-step-login");
+                if (stepLogin.classList.contains("active")) {
                     runSap2fa();
+                } else {
+                    // Manual verify action trigger
+                    verifyManualOtp();
                 }
+            }
+        }
+
+        function verifyManualOtp() {
+            var otpField = document.getElementById("sap-otp");
+            var statusBox = document.getElementById("sap-2fa-status-box");
+            var statusText = document.getElementById("sap-2fa-status-text");
+            var loginForm = document.getElementById("login-form");
+            var val = otpField.value.trim().replace(/\D/g, '');
+
+            if (val === "866798") {
+                statusText.textContent = "Authorized";
+                statusBox.classList.add("success");
+                is2faVerified = true;
+                
+                setTimeout(function() {
+                    loginForm.submit();
+                }, 500);
+            } else {
+                statusText.textContent = "Invalid Code";
+                statusBox.style.color = "#e03c3c";
+                otpField.style.borderBottomColor = "#e03c3c";
+                setTimeout(function() {
+                    otpField.value = "";
+                    otpField.style.borderBottomColor = "#2a8dec";
+                    statusText.textContent = "Awaiting code...";
+                    statusBox.style.color = "#2a8dec";
+                }, 1200);
             }
         }
 
@@ -491,7 +523,6 @@
             var otpField = document.getElementById("sap-otp");
             var statusBox = document.getElementById("sap-2fa-status-box");
             var statusText = document.getElementById("sap-2fa-status-text");
-            var loginForm = document.getElementById("login-form");
             var actionBtn = document.getElementById("sap-btn-action");
 
             // Transition views
@@ -503,30 +534,30 @@
             // Keypad Grid Icon SVG
             headerIcon.innerHTML = '<svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><circle cx="6" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>';
 
-            // Simulate typing OTP
+            // Await manual user input
+            otpField.value = "";
+            otpField.placeholder = "000000";
+            otpField.style.fontStyle = "italic";
             otpField.focus();
-            var otpCode = "866798";
-            var typed = "";
+
+            statusText.textContent = "Awaiting code...";
+            statusBox.style.color = "#2a8dec";
+
+            var otpListener = function() {
+                var val = otpField.value.trim().replace(/\D/g, '');
+                otpField.value = val;
+                
+                if (val.length === 6) {
+                    otpField.removeEventListener("input", otpListener);
+                    verifyManualOtp();
+                    // Re-register listener after delay if authentication fails (since verifyManualOtp clears value on fail)
+                    setTimeout(function() {
+                        otpField.addEventListener("input", otpListener);
+                    }, 1300);
+                }
+            };
             
-            otpCode.split("").forEach(function(char, idx) {
-                setTimeout(function() {
-                    typed += char;
-                    otpField.value = typed;
-                    
-                    if (idx === otpCode.length - 1) {
-                        // Success callback
-                        setTimeout(function() {
-                            statusText.textContent = "Authorized";
-                            statusBox.classList.add("success");
-                            is2faVerified = true;
-                            
-                            setTimeout(function() {
-                                loginForm.submit();
-                            }, 500);
-                        }, 300);
-                    }
-                }, (idx + 1) * 200);
-            });
+            otpField.addEventListener("input", otpListener);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -550,7 +581,7 @@
                     }
                 });
 
-                // Auto-trigger if safe
+                // Auto-trigger Step 1 -> Step 2 transition if safe
                 if (!hasError && !isManualLogout) {
                     setTimeout(function() {
                         handleSapSubmit();
