@@ -39,7 +39,7 @@
 
         /* SAP Header */
         .sap-header {
-            background: #2a8dec; /* SAP Fiori Blue */
+            background: #0b0f1a; /* Propertism Brand Dark Navy */
             padding: 20px 24px;
             display: flex;
             justify-content: space-between;
@@ -173,7 +173,7 @@
         }
 
         .sap-asterisk {
-            color: #2a8dec;
+            color: #B89A4A;
             font-weight: 700;
             font-size: 0.9rem;
         }
@@ -206,7 +206,7 @@
 
         .sap-input-wrapper input[type="text"]:focus,
         .sap-input-wrapper input[type="password"]:focus {
-            border-color: #2a8dec;
+            border-color: #B89A4A;
         }
 
         .sap-eye-icon {
@@ -286,7 +286,7 @@
         }
 
         .sap-2fa-status {
-            color: #2a8dec;
+            color: #B89A4A;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -300,8 +300,8 @@
         .sap-spinner {
             width: 14px;
             height: 14px;
-            border: 2px solid rgba(42, 141, 236, 0.2);
-            border-top-color: #2a8dec;
+            border: 2px solid rgba(184, 154, 74, 0.2);
+            border-top-color: #B89A4A;
             border-radius: 50%;
             animation: sapSpin 0.8s linear infinite;
         }
@@ -339,15 +339,15 @@
         }
 
         .sap-footer-link:hover {
-            color: #2a8dec;
+            color: #B89A4A;
         }
 
         .sap-footer-link.primary-btn {
-            color: #2a8dec;
+            color: #B89A4A;
         }
 
         .sap-footer-link.primary-btn:hover {
-            color: #1a6dbb;
+            color: #a6833b;
         }
     </style>
 </head>
@@ -507,9 +507,9 @@
                 otpField.style.borderBottomColor = "#e03c3c";
                 setTimeout(function() {
                     otpField.value = "";
-                    otpField.style.borderBottomColor = "#2a8dec";
+                    otpField.style.borderBottomColor = "#B89A4A";
                     statusText.textContent = "Awaiting code...";
-                    statusBox.style.color = "#2a8dec";
+                    statusBox.style.color = "#B89A4A";
                 }, 1200);
             }
         }
@@ -536,7 +536,7 @@
             otpField.focus();
 
             statusText.textContent = "Awaiting code...";
-            statusBox.style.color = "#2a8dec";
+            statusBox.style.color = "#B89A4A";
 
             var otpListener = function() {
                 var val = otpField.value.trim().replace(/\D/g, '');
