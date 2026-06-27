@@ -10,13 +10,15 @@
 | 37 | June 16 | **STATIC ASSETS PRODUCTION VALIDATION & KNOWLEDGE HUB DELTA SYNCHRONIZATION. Identified root cause of static assets 404 on config-deploy (EB wipes /var/app/current/). Applied immediate fix (manual collectstatic) and permanent fix (.platform/confighooks/postdeploy/00_collectstatic_current.sh). Synchronized 2 missing Knowledge Hub articles to production PostgreSQL. Validated all 13 article URLs returning HTTP 200 and present in sitemap.xml. Generated 6 validation reports in D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026.** | ✅ |
 | 38 | June 16 | **PHASE B AUTHORITY CONTENT EXPANSION. Created 12 full-length Knowledge Hub articles (1,500+ words each) across 4 keyword clusters: NRI Property Chennai, NRI Real Estate Chennai, NRI Property Services Chennai, Property Advisor Chennai NRI. Generated all strategy deliverables (content calendar, article outlines, keyword mapping, internal linking plan, publication tracker, execution summary). Seeded and published all 12 articles locally. Total Knowledge Hub articles: 25 (all published).** | ✅ |
 | 39 | June 16 | **PHASE B PRODUCTION DEPLOYMENT & VALIDATION. Synchronized 12 Phase B articles to production PostgreSQL RDS via safe import script. Verified database status (25 published articles) and validated all 25 URLs return HTTP 200 OK. Confirmed sitemap.xml has all 25 unique blog URLs with zero duplicates. Generated 6 validation reports under D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports.** | ✅ |
+| 40 | June 27 | **WHATSAPP OTP CONFIGURATION & PRODUCTION SETTINGS SYNC. Diagnosed WhatsApp OTP delivery failure (OAuth Exception Code 190 / 401 Authentication Error due to expired Meta access token). Synchronized production settings by updating `settings_production.py` to match `settings.py`'s `INSTALLED_APPS` and `MIDDLEWARE` arrays and adding the missing `WHATSAPP_PHONE_ID`, `WHATSAPP_ACCESS_TOKEN`, and `WHATSAPP_ADMIN_PHONE` environment configuration.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: June 16, 2026 (16:18 IST)
-**Last Update**: SESSION 39 - PHASE B PRODUCTION DEPLOYMENT & VALIDATION. Synchronized 12 Phase B articles to production PostgreSQL RDS, verified 25 live articles (200 OK), confirmed sitemap.xml is updated and correct. Generated 6 validation reports under D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports.
+**Last Updated On**: June 27, 2026 (11:48 IST)
+**Last Update**: SESSION 40 - WHATSAPP OTP CONFIGURATION & PRODUCTION SETTINGS SYNC. Diagnosed WhatsApp OTP failure (expired Meta token, code 190). Updated settings_production.py to include missing WhatsApp API configuration and synchronized INSTALLED_APPS/MIDDLEWARE arrays to resolve production/development configuration mismatches.
+
 
 
 ---

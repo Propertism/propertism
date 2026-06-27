@@ -38,7 +38,7 @@ except Exception:
 
 # Application definition
 INSTALLED_APPS = [
-    'modeltranslation',
+    'modeltranslation',  # Must be before django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,27 +46,41 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',  # For SEO sitemap generation
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'properties',
-    'users',
-    'search',
-    'uilayers',
-    'content',
+    # django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # Project apps
+    'properties.apps.PropertiesConfig',
+    'users.apps.UsersConfig',
+    'search.apps.SearchConfig',
+    'uilayers.apps.UilayersConfig',
+    'content.apps.ContentConfig',
+    'chat.apps.ChatConfig',
+    'nri_assist.apps.NriAssistConfig',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'content.middleware.HealthCheckMiddleware',  # Handle health checks before ALLOWED_HOSTS
+    'content.middleware.CanonicalDomainRedirectMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files efficiently
+    'django.middleware.gzip.GZipMiddleware',  # Enable gzip compression
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'content.middleware.AdminAccessMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
@@ -378,3 +392,9 @@ if not DEBUG:
             'django.template.loaders.app_directories.Loader',
         ]),
     ]
+
+# WhatsApp Cloud API Configuration
+WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
+WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
+WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +
+
