@@ -11,13 +11,14 @@
 | 38 | June 16 | **PHASE B AUTHORITY CONTENT EXPANSION. Created 12 full-length Knowledge Hub articles (1,500+ words each) across 4 keyword clusters: NRI Property Chennai, NRI Real Estate Chennai, NRI Property Services Chennai, Property Advisor Chennai NRI. Generated all strategy deliverables (content calendar, article outlines, keyword mapping, internal linking plan, publication tracker, execution summary). Seeded and published all 12 articles locally. Total Knowledge Hub articles: 25 (all published).** | ✅ |
 | 39 | June 16 | **PHASE B PRODUCTION DEPLOYMENT & VALIDATION. Synchronized 12 Phase B articles to production PostgreSQL RDS via safe import script. Verified database status (25 published articles) and validated all 25 URLs return HTTP 200 OK. Confirmed sitemap.xml has all 25 unique blog URLs with zero duplicates. Generated 6 validation reports under D:\viji\viji-olivine\03rolledout\01propertism\SEO-16052026\reports.** | ✅ |
 | 40 | June 27 | **WHATSAPP OTP CONFIGURATION & PRODUCTION SETTINGS SYNC. Diagnosed WhatsApp OTP delivery failure (OAuth Exception Code 190 / 401 Authentication Error due to expired Meta access token). Synchronized production settings by updating `settings_production.py` to match `settings.py`'s `INSTALLED_APPS` and `MIDDLEWARE` arrays and adding the missing `WHATSAPP_PHONE_ID`, `WHATSAPP_ACCESS_TOKEN`, and `WHATSAPP_ADMIN_PHONE` environment configuration.** | ✅ |
+| 41 | June 27 | **WHATSAPP NOTIFICATION INTEGRATION & FRONTEND LAYOUT POLISH. Updated expired Meta token in local .env and AWS production. Expanded send_rfq_notification to include asset-specific details and send email/WhatsApp. Aligned contact section phone numbers, allowing removal of duplicates. Updated callback copy to "Our Team Will Contact You Within 24 Hours". All 24 unit tests pass.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: June 27, 2026 (11:48 IST)
-**Last Update**: SESSION 40 - WHATSAPP OTP CONFIGURATION & PRODUCTION SETTINGS SYNC. Diagnosed WhatsApp OTP failure (expired Meta token, code 190). Updated settings_production.py to include missing WhatsApp API configuration and synchronized INSTALLED_APPS/MIDDLEWARE arrays to resolve production/development configuration mismatches.
+**Last Updated On**: June 27, 2026 (16:35 IST)
+**Last Update**: SESSION 41 - WHATSAPP NOTIFICATION INTEGRATION & FRONTEND LAYOUT POLISH. Aligned contact section, resolved token expiry, updated callback copy, and enabled asset-specific quick inquiry notifications.
 
 
 
@@ -624,6 +625,32 @@ Continue from this checkpoint tomorrow.
 | URL Routing Check | COMPLETE (25 / 25 resolved 200 OK) |
 | Sitemap Check | COMPLETE (25 Unique Blog URLs, Dups: 0) |
 | GSC Indexing Checklist | COMPLETE (GSC_SUBMISSION_REPORT.md) |
+
+---
+
+## Session 41 Detail — June 27, 2026
+
+**Session ID**: `CODEX-SESSION-2706-A`
+**Focus**: WhatsApp Notification Integration, Duplication Fix & Handoff Preparation
+
+### Part 1: WhatsApp Notification Verification & Token Updates ✅
+- Meta Graph API diagnostics completed. Verified delivery of WhatsApp messages after token update (received `200 OK` from Facebook endpoints).
+- Configured access token manually in development `.env` and production AWS Elastic Beanstalk configuration.
+- Expanded `send_rfq_notification()` in `content/views.py` to support asset-specific property info.
+- Modified `create_inquiry()` in `properties/views.py` to trigger notification dispatches upon database record creation.
+- Programmed and ran `InquiryNotificationTests` in `properties/tests.py` verifying full notification delivery logic (24/24 tests passing).
+
+### Part 2: Contact Section & CTA Copy Enhancements ✅
+- Fixed phone layout issue in `uilayers/templates/home/sections/_contact.html` by basing block visibility on `india_phone_1` instead of `india_phone_3`. This permits the user to leave `india_phone_3` blank without causing the entire contact rail to disappear.
+- Updated mid-page quick inquiry callback button copy in `uilayers/templates/home/sections/_mid_page_form.html` from "Get a Free Callback Within 24 Hours" to "Our Team Will Contact You Within 24 Hours" for a more committed, professional tone.
+
+### Status Summary
+| Area | Status |
+|------|--------|
+| WhatsApp API Token | COMPLETE (Meta Access Token updated in dev and production) |
+| Asset Inquiries | COMPLETE (WhatsApp + 2 Emails active on submission) |
+| Contact Section | COMPLETE (Layout fixed, duplicates resolved) |
+| CTA Copy Unification | COMPLETE (Button updated per preference) |
 
 ---
 
