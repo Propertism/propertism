@@ -577,16 +577,18 @@ body .site-footer .footer-office-phones .footer-phone-item svg {
     display: inline-block !important;
 }
 
-/* Bold Gold/Mustard Column Headings */
+/* Gold/Mustard Column Headings (Aligned with Quick Contact Rail Labels) */
 body .site-footer .footer-section h3 {
-    font-size: 1.0rem !important; /* ~1px extra compared to 0.85rem-0.9rem */
-    font-weight: 900 !important; /* Extra Bold */
-    color: #B89A4A !important; /* Branded Mustard Gold */
+    font-family: var(--sans-main) !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: var(--brand-gold) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2 !important;
     background: none !important;
     -webkit-background-clip: unset !important;
     background-clip: unset !important;
     -webkit-text-fill-color: initial !important;
     text-shadow: none !important;
-    letter-spacing: 0.15em !important;
-    text-transform: uppercase !important;
 }
