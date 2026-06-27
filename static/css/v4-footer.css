@@ -576,3 +576,17 @@ body .site-footer .footer-office-phones .footer-phone-item svg {
     flex-shrink: 0 !important;
     display: inline-block !important;
 }
+
+/* Bold Gold/Mustard Column Headings */
+body .site-footer .footer-section h3 {
+    font-size: 1.0rem !important; /* ~1px extra compared to 0.85rem-0.9rem */
+    font-weight: 900 !important; /* Extra Bold */
+    color: #B89A4A !important; /* Branded Mustard Gold */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: initial !important;
+    text-shadow: none !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+}
