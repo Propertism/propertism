@@ -4,7 +4,7 @@
 {% block extrastyle %}
 {{ block.super }}
 <style>
-    /* Premium editorial styling for Django login page */
+    /* SAP Corporate UI Styling for Django Login */
     body.login {
         background: radial-gradient(circle at top left, #0F172A, #020617) !important;
         display: flex;
@@ -12,391 +12,517 @@
         justify-content: center;
         min-height: 100vh;
         margin: 0;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
     #container {
         background: #ffffff !important;
-        border: none !important;
-        border-radius: 16px !important;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+        border: 1px solid #dcdcdc !important;
+        border-radius: 4px !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
         width: 100%;
-        max-width: 440px;
+        max-width: 580px;
         margin: 0 auto;
         padding: 0 !important;
         overflow: hidden;
     }
 
     #header {
-        background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%) !important;
-        border-bottom: 3px solid #B89A4A !important;
-        padding: 28px 24px !important;
-        display: flex;
-        justify-content: center !important;
-        align-items: center !important;
-        margin: 0 !important;
+        display: none !important; /* Hide default django header */
     }
 
-    #header #branding {
-        margin: 0 !important;
-        float: none !important;
-    }
-
-    #header #branding h1 {
-        margin: 0 !important;
+    /* Custom SAP Header */
+    #sap-header {
+        background: #2a8dec; /* SAP Fiori Blue */
+        padding: 20px 24px !important;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+        color: #ffffff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .admin-brand-logo {
-        height: 38px !important;
-        width: auto !important;
-        max-width: 280px !important;
-        display: block !important;
-        object-fit: contain !important;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    .sap-header-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
-    #content {
-        background: #ffffff !important;
-        padding: 32px 36px 36px 36px !important;
-        margin: 0 !important;
-        width: auto !important;
+    #sap-header-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        opacity: 0.95;
     }
 
-    /* Portal Title styling */
-    .login-portal-header {
-        text-align: center;
-        margin-bottom: 24px;
+    .sap-header-text {
         display: flex;
         flex-direction: column;
-        align-items: center;
     }
 
-    .twofa-controlled-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(184, 154, 74, 0.08);
-        border: 1px solid rgba(184, 154, 74, 0.25);
-        color: #B89A4A;
-        font-size: 0.72rem;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 20px;
-        margin-bottom: 12px;
-        letter-spacing: 0.05em;
+    .sap-header-subtitle {
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2px;
     }
 
-    .login-portal-title {
-        color: #0F172A;
-        font-size: 1.3rem;
-        font-weight: 800;
-        margin: 0 0 4px 0;
+    .sap-header-title {
+        font-size: 1.45rem;
+        font-weight: 300; /* Clean, light appearance */
         letter-spacing: -0.01em;
     }
 
-    .login-portal-subtitle {
-        color: #64748b;
-        font-size: 0.85rem;
-        margin: 0;
-        font-weight: 500;
+    .sap-header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: rgba(255, 255, 255, 0.8);
     }
 
-    #content-main {
-        width: 100% !important;
+    .sap-control {
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+    }
+    
+    .sap-control:hover {
+        color: #ffffff;
+    }
+
+    /* Content Area */
+    #content {
+        background: #ffffff !important;
+        padding: 32px 36px 28px 36px !important;
         margin: 0 !important;
-    }
-
-    #login-form {
-        margin: 0;
-    }
-
-    .form-row {
-        padding: 0 !important;
-        margin-bottom: 20px;
-        border: none !important;
-        background: transparent !important;
-    }
-
-    .form-row label {
-        display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #475569 !important;
-        margin-bottom: 8px;
-        text-transform: none;
-        letter-spacing: normal;
-        float: none !important;
         width: auto !important;
     }
 
-    .form-row input[type="text"],
-    .form-row input[type="password"] {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        padding: 13px 16px !important;
-        border: 1.5px solid #cbd5e1 !important;
-        border-radius: 10px !important;
-        font-size: 0.95rem !important;
-        color: #0F172A !important;
-        background-color: #f8fafc !important;
-        transition: all 0.2s ease;
-        height: auto !important;
+    /* SAP Error Banner */
+    .sap-error-banner {
+        background: #fff5f5;
+        border-left: 4px solid #e03c3c;
+        color: #e03c3c;
+        padding: 12px 16px;
+        font-size: 0.82rem;
+        margin-bottom: 24px;
+        font-weight: 500;
+        border-radius: 2px;
+        text-align: left;
     }
 
-    .form-row input[type="text"]:focus,
-    .form-row input[type="password"]:focus {
-        border-color: #B89A4A !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 0 0 3px rgba(184, 154, 74, 0.15) !important;
-        outline: none !important;
-    }
-
-    .submit-row {
-        background: transparent !important;
-        padding: 0 !important;
-        margin: 28px 0 0 0 !important;
-        border: none !important;
-        text-align: left !important;
-    }
-
-    .submit-row input[type="submit"] {
-        width: 100% !important;
-        padding: 13px 24px !important;
-        height: auto !important;
-        background: #0F172A !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 10px !important;
-        font-size: 0.95rem !important;
-        font-weight: 700 !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.15) !important;
-        float: none !important;
-        margin: 0 !important;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .submit-row input[type="submit"]:hover {
-        background: #B89A4A !important;
-        box-shadow: 0 8px 20px rgba(184, 154, 74, 0.25) !important;
-    }
-
-    .errornote {
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        background-color: #fef2f2 !important;
-        border: 1px solid #fee2e2 !important;
-        border-left: 4px solid #ef4444 !important;
-        color: #b91c1c !important;
-        padding: 12px 16px !important;
-        border-radius: 8px !important;
-        margin: 0 0 20px 0 !important;
-    }
-
-    .errorlist {
-        margin: 0 0 6px 0 !important;
-        padding: 0 !important;
-        list-style: none !important;
-        color: #ef4444 !important;
-        font-size: 0.8rem !important;
-        font-weight: 500 !important;
-    }
-
-    /* 2FA Container Styling */
-    .twofa-container {
+    /* Form Step System */
+    .sap-step {
         display: none;
         flex-direction: column;
+    }
+
+    .sap-step.active {
+        display: flex;
+        animation: sapFadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes sapFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Horizontal Form Grid */
+    .sap-form-row {
+        display: flex;
         align-items: center;
-        text-align: center;
         padding: 10px 0;
-        animation: fadeIn 0.3s ease-in-out;
-    }
-    
-    .twofa-container.active {
-        display: flex;
+        border-bottom: 1px solid #f2f2f2;
     }
 
-    .twofa-shield {
-        width: 64px;
-        height: 64px;
-        background: rgba(184, 154, 74, 0.1);
-        border: 2px solid #B89A4A;
-        border-radius: 50%;
+    .sap-form-row:last-child {
+        border-bottom: none;
+    }
+
+    .sap-label {
+        width: 38%;
+        font-size: 0.85rem;
+        color: #666666;
+        font-weight: 500;
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-bottom: 16px;
-        color: #B89A4A;
+        gap: 4px;
+    }
+
+    .sap-asterisk {
+        color: #2a8dec; /* SAP Accent Blue Asterisk */
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .sap-input-wrapper {
+        width: 62%;
         position: relative;
+        display: flex;
+        align-items: center;
     }
 
-    .twofa-shield-pulse {
+    .sap-input-wrapper.flex-end {
+        justify-content: flex-end;
+    }
+
+    /* Borderless Inputs with Bottom-Border highlight */
+    .sap-input-wrapper input[type="text"],
+    .sap-input-wrapper input[type="password"] {
+        width: 100% !important;
+        border: none !important;
+        border-bottom: 1.5px solid #cccccc !important;
+        background: transparent !important;
+        padding: 6px 0 !important;
+        font-size: 0.92rem !important;
+        color: #111111 !important;
+        outline: none !important;
+        transition: border-color 0.2s ease;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        height: auto !important;
+    }
+
+    .sap-input-wrapper input[type="text"]:focus,
+    .sap-input-wrapper input[type="password"]:focus {
+        border-color: #2a8dec !important; /* Focused Bottom Border */
+    }
+
+    .sap-eye-icon {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border: 2px solid #B89A4A;
-        animation: pulse-ring 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+        right: 4px;
+        color: #888;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+    }
+
+    .sap-eye-icon:hover {
+        color: #111111;
+    }
+
+    /* SAP Toggle Switch */
+    .sap-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+    }
+
+    .sap-switch input {
         opacity: 0;
+        width: 0;
+        height: 0;
     }
 
-    @keyframes pulse-ring {
-        0% { transform: scale(0.95); opacity: 0.8; }
-        100% { transform: scale(1.3); opacity: 0; }
+    .sap-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ffffff;
+        border: 2px solid #cccccc;
+        transition: .3s;
+        border-radius: 24px;
     }
 
-    .twofa-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #0F172A;
-        margin: 0 0 6px 0;
-    }
-
-    .twofa-subtitle {
-        font-size: 0.85rem;
-        color: #64748b;
-        margin-bottom: 24px;
-        line-height: 1.4;
-    }
-
-    .twofa-otp-inputs {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    .otp-box {
-        width: 42px;
-        height: 46px;
-        border: 2px solid #cbd5e1;
-        border-radius: 8px;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #0f172a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f8fafc;
-        transition: all 0.2s ease;
-    }
-
-    .otp-box.filled {
-        border-color: #B89A4A;
-        background: #ffffff;
-        box-shadow: 0 0 0 3px rgba(184, 154, 74, 0.15);
-    }
-
-    .otp-box.verified {
-        border-color: #22c55e !important;
-        background: #f0fdf4 !important;
-        color: #15803d !important;
-    }
-
-    .twofa-status {
-        font-size: 0.85rem;
-        color: #B89A4A;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 10px;
-        background-color: #fcfaf4;
-        padding: 8px 16px;
-        border-radius: 8px;
-        border: 1px dashed rgba(184, 154, 74, 0.3);
-        transition: all 0.2s ease;
-    }
-
-    .twofa-status.success {
-        color: #15803d;
-        background-color: #f0fdf4;
-        border-color: rgba(34, 197, 94, 0.3);
-    }
-
-    .spinner {
-        width: 16px;
-        height: 16px;
-        border: 2px solid rgba(184, 154, 74, 0.2);
-        border-top-color: #B89A4A;
+    .sap-slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 2px;
+        bottom: 2px;
+        background-color: #888888;
+        transition: .3s;
         border-radius: 50%;
-        animation: spin 0.8s linear infinite;
     }
 
-    .twofa-status.success .spinner {
+    .sap-switch input:checked + .sap-slider {
+        background-color: #f0fdf4;
+        border-color: #22c55e;
+    }
+
+    .sap-switch input:checked + .sap-slider:before {
+        transform: translateX(22px);
+        background-color: #22c55e;
+    }
+
+    /* 2FA Info Row */
+    .sap-2fa-info {
+        font-size: 0.8rem;
+        color: #666666;
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f2f2f2;
+        padding-top: 14px;
+        font-weight: 500;
+    }
+
+    .sap-2fa-status {
+        color: #2a8dec;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+    }
+
+    .sap-2fa-status.success {
+        color: #22c55e;
+    }
+
+    .sap-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(42, 141, 236, 0.2);
+        border-top-color: #2a8dec;
+        border-radius: 50%;
+        animation: sapSpin 0.8s linear infinite;
+    }
+
+    .sap-2fa-status.success .sap-spinner {
         display: none;
     }
 
-    @keyframes spin {
+    @keyframes sapSpin {
         to { transform: rotate(360deg); }
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    /* SAP Footer */
+    #sap-footer {
+        background: #f3f3f3;
+        border-top: 1px solid #e5e5e5;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .sap-footer-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .sap-footer-link {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #555555;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: color 0.2s;
+    }
+
+    .sap-footer-link:hover {
+        color: #2a8dec;
+    }
+
+    .sap-footer-link.primary-btn {
+        color: #2a8dec;
+    }
+
+    .sap-footer-link.primary-btn:hover {
+        color: #1a6dbb;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div id="login-form-wrapper">
-    <div class="login-portal-header">
-        <div class="twofa-controlled-badge">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-            </svg>
-            <span>@2FA SECURE SESSION</span>
-        </div>
-        <h2 class="login-portal-title">Administrator Portal</h2>
-        <p class="login-portal-subtitle">Secure Access Verification</p>
-    </div>
-
+<!-- Standard Django Login Form (Hidden, handled by JS) -->
+<div style="display: none;">
     {{ block.super }}
 </div>
 
-<!-- SAP style 2FA Authentication Overlay -->
-<div class="twofa-container" id="twofa-container">
-    <div class="twofa-shield">
-        <div class="twofa-shield-pulse"></div>
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-    </div>
-    <h3 class="twofa-title">2FA Security Verification</h3>
-    <p class="twofa-subtitle">
-        A One-Time Verification Passcode (OTP)<br>
-        has been dispatched to: <strong>+91 866•• •••98</strong>
-    </p>
-    
-    <div class="twofa-otp-inputs">
-        <div class="otp-box"></div>
-        <div class="otp-box"></div>
-        <div class="otp-box"></div>
-        <div class="otp-box"></div>
-        <div class="otp-box"></div>
-        <div class="otp-box"></div>
+<div id="container">
+    <!-- SAP Styled Header -->
+    <div id="sap-header">
+        <div class="sap-header-left">
+            <div id="sap-header-icon">
+                <!-- SVG Padlock -->
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    <circle cx="12" cy="16" r="1.5" fill="currentColor"></circle>
+                </svg>
+            </div>
+            <div class="sap-header-text">
+                <div class="sap-header-subtitle">MULTI-FACTOR AUTHENTICATION</div>
+                <div class="sap-header-title" id="sap-header-title">Login</div>
+            </div>
+        </div>
+        <div class="sap-header-right">
+            <span class="sap-control">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
+                </svg>
+            </span>
+            <span class="sap-control">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+            </span>
+            <span class="sap-control" style="font-size: 1.1rem; line-height: 1;">✕</span>
+        </div>
     </div>
 
-    <div class="twofa-status" id="twofa-status-box">
-        <div class="spinner"></div>
-        <span id="twofa-status-text">Verifying security token...</span>
+    <!-- Content Block -->
+    <div id="sap-content">
+        {% if form.errors %}
+        <div class="sap-error-banner">
+            Please enter the correct username and password. Note that both fields are case-sensitive.
+        </div>
+        {% endif %}
+
+        <!-- Step 1: Login Form -->
+        <div id="sap-step-login" class="sap-step active">
+            <div class="sap-form-row">
+                <div class="sap-label"><span class="sap-asterisk">*</span> User Name</div>
+                <div class="sap-input-wrapper">
+                    <input type="text" id="sap-username" value="admin" autocomplete="off">
+                </div>
+            </div>
+            
+            <div class="sap-form-row">
+                <div class="sap-label"><span class="sap-asterisk">*</span> Password</div>
+                <div class="sap-input-wrapper">
+                    <input type="password" id="sap-password" value="UsdInr@5" autocomplete="off">
+                    <span class="sap-eye-icon" onclick="togglePasswordVisibility()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="sap-form-row">
+                <div class="sap-label"><span class="sap-asterisk">*</span> Remember me next time</div>
+                <div class="sap-input-wrapper flex-end">
+                    <label class="sap-switch">
+                        <input type="checkbox" id="sap-remember" checked>
+                        <span class="sap-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: 2FA Verification Form -->
+        <div id="sap-step-2fa" class="sap-step">
+            <div class="sap-form-row">
+                <div class="sap-label">Verification Code</div>
+                <div class="sap-input-wrapper">
+                    <input type="text" id="sap-otp" placeholder="000000" maxlength="6" autocomplete="off" style="font-style: italic; letter-spacing: 0.1em;">
+                </div>
+            </div>
+            <div class="sap-2fa-info">
+                <span>Verification OTP dispatched to +91 866•• •••98</span>
+                <div class="sap-2fa-status" id="sap-2fa-status-box">
+                    <div class="sap-spinner"></div>
+                    <span id="sap-2fa-status-text">Verifying...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAP Styled Footer -->
+    <div id="sap-footer">
+        <div class="sap-footer-links">
+            <span class="sap-footer-link primary-btn" id="sap-btn-action" onclick="handleSapSubmit()">LOGIN</span>
+            <span class="sap-footer-link">SIGN UP NOW</span>
+            <span class="sap-footer-link">FORGOT YOUR PASSWORD?</span>
+        </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    function togglePasswordVisibility() {
+        var pw = document.getElementById("sap-password");
+        var icon = document.querySelector(".sap-eye-icon svg");
+        if (pw.type === "password") {
+            pw.type = "text";
+            icon.innerHTML = '<path d="M17.6 17.6A8 8 0 0 1 12 20c-7 0-11-8-11-8a19.4 19.4 0 0 1 3.5-4.6M12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.1M1 1l22 22"></path><circle cx="12" cy="12" r="3"></circle>';
+        } else {
+            pw.type = "password";
+            icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        }
+    }
+
+    var is2faVerified = false;
+
+    function handleSapSubmit() {
+        var loginForm = document.getElementById("login-form");
         var usernameField = document.getElementById("id_username");
         var passwordField = document.getElementById("id_password");
+        var sapUser = document.getElementById("sap-username").value;
+        var sapPass = document.getElementById("sap-password").value;
+
+        if (usernameField && passwordField && loginForm) {
+            usernameField.value = sapUser;
+            passwordField.value = sapPass;
+            
+            if (!is2faVerified) {
+                runSap2fa();
+            }
+        }
+    }
+
+    function runSap2fa() {
+        var stepLogin = document.getElementById("sap-step-login");
+        var step2fa = document.getElementById("sap-step-2fa");
+        var headerTitle = document.getElementById("sap-header-title");
+        var headerIcon = document.getElementById("sap-header-icon");
+        var otpField = document.getElementById("sap-otp");
+        var statusBox = document.getElementById("sap-2fa-status-box");
+        var statusText = document.getElementById("sap-2fa-status-text");
         var loginForm = document.getElementById("login-form");
+        var actionBtn = document.getElementById("sap-btn-action");
+
+        // Transition views
+        stepLogin.classList.remove("active");
+        step2fa.classList.add("active");
+        headerTitle.textContent = "2-Factor Authentication";
+        actionBtn.textContent = "VERIFY";
+
+        // Keypad Grid Icon SVG
+        headerIcon.innerHTML = '<svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><circle cx="6" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>';
+
+        // Simulate typing OTP
+        otpField.focus();
+        var otpCode = "866798";
+        var typed = "";
         
-        // Don't auto-login if there is an error note on screen
-        var hasError = document.querySelector(".errornote") !== null;
+        otpCode.split("").forEach(function(char, idx) {
+            setTimeout(function() {
+                typed += char;
+                otpField.value = typed;
+                
+                if (idx === otpCode.length - 1) {
+                    // Success callback
+                    setTimeout(function() {
+                        statusText.textContent = "Authorized";
+                        statusBox.classList.add("success");
+                        is2faVerified = true;
+                        
+                        setTimeout(function() {
+                            loginForm.submit();
+                        }, 500);
+                    }, 300);
+                }
+            }, (idx + 1) * 200);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var loginForm = document.getElementById("login-form");
+        var hasError = document.querySelector(".sap-error-banner") !== null;
         
         // Detect manual logout redirection
         var isManualLogout = false;
@@ -406,68 +532,20 @@
             }
         }
 
-        var is2faVerified = false;
-
-        function run2faVerification() {
-            var wrapper = document.getElementById("login-form-wrapper");
-            var twofa = document.getElementById("twofa-container");
-            var otpBoxes = document.querySelectorAll(".otp-box");
-            var statusBox = document.getElementById("twofa-status-box");
-            var statusText = document.getElementById("twofa-status-text");
-            
-            wrapper.style.display = "none";
-            twofa.classList.add("active");
-            
-            var otpCode = "866798";
-            var delay = 150;
-            
-            otpCode.split("").forEach(function(char, idx) {
-                setTimeout(function() {
-                    otpBoxes[idx].textContent = char;
-                    otpBoxes[idx].classList.add("filled");
-                    
-                    if (idx === otpCode.length - 1) {
-                        // Verification complete - transition to success
-                        setTimeout(function() {
-                            otpBoxes.forEach(function(box) {
-                                box.classList.add("verified");
-                            });
-                            statusText.textContent = "2FA Verification Successful";
-                            statusBox.classList.add("success");
-                            
-                            is2faVerified = true;
-                            
-                            setTimeout(function() {
-                                loginForm.submit();
-                            }, 500);
-                        }, 300);
-                    }
-                }, (idx + 1) * delay);
-            });
-        }
-
-        if (usernameField && passwordField && loginForm) {
-            // Populate credentials
-            if (!usernameField.value) {
-                usernameField.value = "admin";
-            }
-            if (!passwordField.value) {
-                passwordField.value = "UsdInr@5";
-            }
-            
-            // Handle manual login submit
+        if (loginForm) {
+            // Listen for manual form submit
             loginForm.addEventListener("submit", function(e) {
                 if (!is2faVerified && !hasError) {
                     e.preventDefault();
-                    run2faVerification();
+                    handleSapSubmit();
                 }
             });
-            
-            // Auto-submit if safe
+
+            // Auto-trigger if safe
             if (!hasError && !isManualLogout) {
                 setTimeout(function() {
-                    run2faVerification();
-                }, 400); // 400ms delay for transition feel
+                    handleSapSubmit();
+                }, 400); // 400ms delay for visual feel
             }
         }
     });
