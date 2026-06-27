@@ -667,15 +667,33 @@ def property_owner_resources(request):
 
 def send_otp_view(request):
     """
-    Generates a 6-digit OTP, stores it in session, and sends via WhatsApp Cloud API.
+    Generates a 6-digit OTP, stores it in session, and sends via WhatsApp and Email.
     """
     import random
+    from django.core.mail import send_mail
+    from django.conf import settings
+    
     otp = str(random.randint(100000, 999999))
     request.session['admin_otp'] = otp
     request.session.modified = True
     
     msg = f"🔒 Propertism Admin Verification Code: {otp}. This code is valid for 10 minutes."
+    
+    # 1. Send via WhatsApp Cloud API
     send_whatsapp_notification(msg)
+    
+    # 2. Send via Email to configured recipients
+    recipient_list = getattr(settings, 'ADMIN_EMAILS', [getattr(settings, 'ADMIN_EMAIL', 'info@propertism.in')])
+    try:
+        send_mail(
+            subject="🔒 Propertism Admin 2FA Passcode",
+            message=f"Your Propertism Admin 2FA verification passcode is: {otp}\n\nThis code is valid for 10 minutes.",
+            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'info@propertism.in'),
+            recipient_list=recipient_list,
+            fail_silently=True
+        )
+    except Exception as e:
+        logger.error(f"Failed to send 2FA email: {e}")
     
     return JsonResponse({"status": "success", "message": "OTP sent successfully"})
 
