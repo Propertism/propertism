@@ -522,13 +522,16 @@
     }
 }
 
-/* Premium Footer Phone CTAs */
+/* Premium Unified Footer Phone CTAs */
 body .site-footer .footer-office-phones .footer-phone-item {
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: 8px !important;
     padding: 6px 14px !important;
+    color: #ffffff !important;
     font-size: 0.85rem !important;
     font-weight: 600 !important;
     text-decoration: none !important;
@@ -537,35 +540,12 @@ body .site-footer .footer-office-phones .footer-phone-item {
     letter-spacing: 0.03em !important;
 }
 
-/* Primary Number: WhatsApp Green */
-body .site-footer .footer-office-phones .footer-phone-item.footer-phone-primary {
-    background: rgba(37, 211, 102, 0.08) !important;
-    border: 1px solid rgba(37, 211, 102, 0.25) !important;
-    color: #25D366 !important;
-}
-
-body .site-footer .footer-office-phones .footer-phone-item.footer-phone-primary:hover {
-    background: #25D366 !important;
-    border-color: #25D366 !important;
-    color: #ffffff !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
-    opacity: 1 !important;
-}
-
-/* Secondary Number: Gold */
-body .site-footer .footer-office-phones .footer-phone-item.footer-phone-secondary {
-    background: rgba(184, 154, 74, 0.08) !important;
-    border: 1px solid rgba(184, 154, 74, 0.25) !important;
-    color: #B89A4A !important;
-}
-
-body .site-footer .footer-office-phones .footer-phone-item.footer-phone-secondary:hover {
-    background: #B89A4A !important;
-    border-color: #B89A4A !important;
-    color: #0F172A !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(184, 154, 74, 0.3) !important;
+body .site-footer .footer-office-phones .footer-phone-item:hover {
+    background: rgba(196, 156, 82, 0.12) !important;
+    border-color: var(--brand-gold) !important;
+    color: var(--brand-gold) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(196, 156, 82, 0.15) !important;
     opacity: 1 !important;
 }
 
