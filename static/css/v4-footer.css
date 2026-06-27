@@ -521,3 +521,38 @@
         gap: 14px;
     }
 }
+
+/* Premium Footer Phone CTAs */
+body .site-footer .footer-office-phones .footer-phone-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: rgba(184, 154, 74, 0.08) !important;
+    border: 1px solid rgba(184, 154, 74, 0.25) !important;
+    border-radius: 8px !important;
+    padding: 6px 14px !important;
+    color: #ffffff !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    margin-bottom: 8px !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    letter-spacing: 0.03em !important;
+}
+
+body .site-footer .footer-office-phones .footer-phone-item:hover {
+    background: #B89A4A !important;
+    border-color: #B89A4A !important;
+    color: #0F172A !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(184, 154, 74, 0.25) !important;
+    opacity: 1 !important;
+}
+
+body .site-footer .footer-office-phones .footer-phone-item svg {
+    width: 14px !important;
+    height: 14px !important;
+    fill: currentColor !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+}
