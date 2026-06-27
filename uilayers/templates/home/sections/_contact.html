@@ -27,6 +27,9 @@
                         </p>
                         <div class="hf-office-phone-stack">
                             <span class="hf-office-phone">{{ company.india_phone_1 }}</span>
+                            {% if company.india_phone_2 %}
+                            <span class="hf-office-phone">{{ company.india_phone_2 }}</span>
+                            {% endif %}
                             {% if company.india_phone_3 %}
                             <span class="hf-office-phone">{{ company.india_phone_3 }}</span>
                             {% endif %}
@@ -56,7 +59,7 @@
                         </span>
                     </a>
 
-                    {% if company.india_phone_3 %}
+                    {% if company.india_phone_1 %}
                     <div class="hf-icon-link" title="Call Us" style="cursor: default; transform: none !important; opacity: 1 !important;">
                         <span class="hf-icon-badge" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -68,10 +71,14 @@
                                 <span class="hf-icon-head">Call Desk</span>
                                 <span class="hf-icon-divider" aria-hidden="true"></span>
                                 <span class="hf-icon-tail">
-                                    <a href="tel:{{ company.india_phone_3|cut:' ' }}" class="hf-phone-link" title="Call primary number">{{ company.india_phone_3 }}</a>
+                                    <a href="tel:{{ company.india_phone_1|cut:' ' }}" class="hf-phone-link" title="Call primary number">{{ company.india_phone_1 }}</a>
                                     {% if company.india_phone_2 %}
                                     <span class="hf-phone-dot">&bull;</span>
                                     <a href="tel:{{ company.india_phone_2|cut:' ' }}" class="hf-phone-link" title="Call secondary number">{{ company.india_phone_2 }}</a>
+                                    {% endif %}
+                                    {% if company.india_phone_3 %}
+                                    <span class="hf-phone-dot">&bull;</span>
+                                    <a href="tel:{{ company.india_phone_3|cut:' ' }}" class="hf-phone-link" title="Call tertiary number">{{ company.india_phone_3 }}</a>
                                     {% endif %}
                                 </span>
                             </span>
