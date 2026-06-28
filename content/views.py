@@ -178,7 +178,7 @@ def home(request):
                 warning="Homepage featured properties table is unavailable.",
             ),
             "team_highlights": _safe_list(
-                lambda: TeamMember.objects.filter(is_active=True)[:3],
+                lambda: TeamMember.objects.filter(is_active=True)[:4],
                 warning="Homepage team member table is unavailable.",
             ),
             "recent_posts": _safe_list(
@@ -257,6 +257,22 @@ def management(request):
 
 def team_member_detail(request, slug):
     """Team member profile detail page."""
+    if slug == "viji-munuswamy":
+        team_member = _safe_first(
+            lambda: TeamMember.objects.filter(slug=slug, is_active=True),
+            warning="Team member detail table is unavailable.",
+        )
+        context = get_company_context()
+        context.update({
+            "team_member": team_member,
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Management", "url": "/management/"},
+                {"name": "Viji Munuswamy", "url": None}
+            ]
+        })
+        return render(request, "viji_profile.html", context)
+
     team_member = _safe_first(
         lambda: TeamMember.objects.filter(slug=slug, is_active=True),
         warning="Team member detail table is unavailable.",

@@ -3,10 +3,15 @@
     /* Spacing adjustments on desktop to fit all CTAs without viewport overflow */
     @media (min-width: 769px) {
         #home-section .hero-title-premium {
-            margin-bottom: 12px !important;
+            margin-bottom: 6px !important;
         }
         #home-section .hero-title-divider {
-            margin: 16px auto 20px !important;
+            margin: 8px auto 10px !important;
+        }
+        #home-section .hero-description-single-line {
+            white-space: nowrap !important;
+            flex-wrap: nowrap !important;
+            max-width: 1200px !important;
         }
     }
 </style>
@@ -42,15 +47,15 @@
             </h1>
             <div class="hero-title-divider"></div>
 
-            <p class="hero-description" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 12px !important;">
-                Trusted by NRI owners across USA · UK · UAE · Canada · Singapore
+            <p class="hero-description hero-description-single-line" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 8px !important; display: flex; align-items: baseline; justify-content: center; gap: 6px; flex-wrap: wrap; line-height: 1.2 !important;">
+                Trusted by <span class="highlight-gold" style="color: #E4C36A !important; font-family: 'Cinzel', serif !important; font-weight: 700; font-size: 1.7rem !important; background: rgba(14, 42, 71, 0.85) !important; padding: 2px 10px !important; border: 1px solid rgba(228, 195, 106, 0.3) !important; text-shadow: 0 2px 14px rgba(255, 255, 255, 0.28), 0 0 20px rgba(228, 195, 106, 0.5) !important; display: inline-block; line-height: 1; vertical-align: baseline; margin-bottom: -2px;">NRI</span> owners across USA · UK · UAE · Canada · Singapore
             </p>
 
-            <p class="hero-description" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 24px !important;">
+            <p class="hero-description" style="color: {% if company.hero_description_color|lower == '#475569' %}#FFFFFF{% else %}{{ company.hero_description_color|default:'#FFFFFF' }}{% endif %} !important; margin: 0 auto 16px !important;">
                 {{ company.hero_description|default:"End-to-end management for NRIs — even if you’re 10,000 km away. Complete transparency, on-ground execution, and high-yield results." }}
             </p>
 
-            <div class="hero-actions" style="margin-bottom: 16px !important;">
+            <div class="hero-actions" style="margin-bottom: 12px !important;">
                 <a href="/#contact-section" class="btn-gold">Book Free NRI Consultation</a>
                 <a href="/#services-section" class="btn-outline-white">View Our Services</a>
             </div>

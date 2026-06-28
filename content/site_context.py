@@ -38,14 +38,23 @@ def get_hero_title_segments(title):
         return []
 
     lower_val = normalized.lower()
-    if lower_val == "nri property management services in chennai, india":
-        return [
-            {"text": "NRI Property", "accent": False},
-            {"text": "Management", "accent": False},
-            {"text": "Services", "accent": True},
-            {"text": "In Chennai, India", "accent": False},
-        ]
+    
+    # Highlight "nri" (case-insensitive) if present
+    target_phrase_nri = "nri"
+    if target_phrase_nri in lower_val:
+        idx = lower_val.find(target_phrase_nri)
+        part1 = normalized[:idx]
+        part2 = normalized[idx:idx + len(target_phrase_nri)]
+        part3 = normalized[idx + len(target_phrase_nri):]
+        segments = []
+        if part1:
+            segments.append({"text": part1, "accent": False})
+        segments.append({"text": part2, "accent": True})
+        if part3:
+            segments.append({"text": part3, "accent": False})
+        return segments
 
+    # Highlight "chennai property" if present
     target_phrase = "chennai property"
     if target_phrase in lower_val:
         idx = lower_val.find(target_phrase)

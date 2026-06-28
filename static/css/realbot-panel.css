@@ -1,0 +1,213 @@
+/* realBOT Sliding AI Panel Stylesheet - Polished UI Only */
+
+/* Panel Overlay Backdrop */
+.realbot-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.18); /* 18% Dark transparent overlay */
+    z-index: 9900;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1), visibility 280ms;
+}
+
+.realbot-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sliding Panel Container */
+.realbot-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 540px; /* Default desktop width: 520px - 560px */
+    max-width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: -8px 0 32px rgba(15, 23, 42, 0.08); /* Subtle luxury elevation */
+    z-index: 9910;
+    transform: translateX(100%);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Open State */
+.realbot-panel.active {
+    transform: translateX(0);
+}
+
+/* Custom Scrollbars */
+.realbot-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.realbot-scrollbar::-webkit-scrollbar-track {
+    background: #F7F8FA;
+}
+
+.realbot-scrollbar::-webkit-scrollbar-thumb {
+    background: #0E2A47;
+}
+
+.realbot-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #0E2A47 #F7F8FA;
+}
+
+/* Chip scrollbar hide */
+.realbot-no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.realbot-no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Suggestion Chips Style Guidelines */
+.realbot-chip {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', sans-serif;
+    color: #0E2A47;
+    background-color: #FFFFFF;
+    border: 1px solid #0E2A47;
+    border-radius: 0px !important; /* Sharp corners */
+    height: 36px;
+    line-height: 18px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    flex-shrink: 0; /* Prevent chip width text truncation */
+}
+
+.realbot-chip:hover {
+    background-color: #C89B2B !important;
+    border-color: #C89B2B !important;
+    color: #FFFFFF !important;
+}
+
+/* Global button reset inside panel when preflight is disabled */
+.realbot-panel button {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Floating Trigger Button Wrapper & Ripple Glow Effects                      */
+/* -------------------------------------------------------------------------- */
+
+.realbot-trigger-wrapper {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 56px;
+    height: 56px;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Circular Logo Trigger Button */
+.realbot-trigger-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50% !important; /* Circular icon */
+    background-color: #0E2A47;
+    border: 2px solid #C89B2B;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(14, 42, 71, 0.3);
+    transition: transform 200ms ease-in-out;
+    outline: none !important;
+}
+
+.realbot-trigger-btn:hover {
+    transform: scale(1.05);
+}
+
+/* 3 Hairline Glowing Gold Ripple Rings */
+.realbot-ripple-ring {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1.2px solid rgba(200, 155, 43, 0.85); /* More prominent hairline gold border */
+    box-shadow: 0 0 10px rgba(200, 155, 43, 0.45); /* Enhanced glowing effect */
+    pointer-events: none;
+    z-index: 1;
+    animation: realbot-ripple 3s cubic-bezier(0.25, 0, 0, 1) infinite;
+    opacity: 0;
+}
+
+.realbot-ripple-ring.ring-1 {
+    animation-delay: 0s;
+}
+.realbot-ripple-ring.ring-2 {
+    animation-delay: 1s;
+}
+.realbot-ripple-ring.ring-3 {
+    animation-delay: 2s;
+}
+
+@keyframes realbot-ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.7);
+        opacity: 0;
+    }
+}
+
+/* Content block overrides */
+.realbot-content-block {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+    /* Tablet & Mobile Fullscreen Mode */
+    .realbot-panel {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .realbot-trigger-wrapper {
+        right: 16px;
+        bottom: 16px;
+        height: 48px;
+        width: 48px;
+    }
+    .realbot-trigger-btn {
+        height: 48px;
+        width: 48px;
+    }
+    .realbot-ripple-ring {
+        height: 48px;
+        width: 48px;
+    }
+}

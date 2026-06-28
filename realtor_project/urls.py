@@ -10,6 +10,7 @@ from content import views as content_views
 from content.sitemaps import StaticViewSitemap, PropertySitemap, BlogSitemap, LandingPageSitemap
 from users import views as user_views
 from uilayers import views as uilayers_views
+from chat import views as chat_views
 
 # Sitemap configuration
 sitemaps = {
@@ -41,6 +42,7 @@ urlpatterns = [
     path('nri-assist/', include('nri_assist.urls')),
     path('properties/', include('properties.urls_web')),
     path('chat/', include('chat.urls')),
+    path('realbot/', chat_views.realbot_view, name='realbot'),
     path('api/', include('properties.urls')),
     path('api/', include('users.urls')),
     path('api/', include('search.urls')),
