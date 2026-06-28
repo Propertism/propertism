@@ -140,13 +140,13 @@
     <!-- SCCB-19052026-1/A1: Inquiries FAB — hidden on /inquiries/* routes -->
     {% if not request.path|slice:":11" == "/inquiries/" %}
     <style>
-    .inq-fab{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));right:calc(1.5rem + env(safe-area-inset-right,0px));width:56px;height:56px;border-radius:50%;background:#0b0f1a;border:1px solid #C49C52;color:#C49C52;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .2s}
+    .inq-fab{position:fixed;bottom:calc(5.75rem + env(safe-area-inset-bottom,0px));right:calc(1.5rem + env(safe-area-inset-right,0px));width:56px;height:56px;border-radius:50%;background:#0b0f1a;border:1px solid #C49C52;color:#C49C52;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .2s}
     .inq-fab:hover{background:rgba(196,156,82,.1);box-shadow:0 4px 20px rgba(196,156,82,.18)}
     .inq-fab-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;background:#0b0f1a;border:1px solid #C49C52;border-radius:10px;font-family:'Jost',sans-serif;font-size:.625rem;font-weight:600;color:#C49C52;display:none;align-items:center;justify-content:center;line-height:1}
     .inq-fab-badge.visible{display:flex}
     .inq-fab-label{display:none}
     @media (max-width:899px){
-    .inq-fab{width:auto;min-width:56px;height:52px;padding:0 .95rem;border-radius:999px;gap:.55rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));right:calc(1rem + env(safe-area-inset-right,0px))}
+    .inq-fab{width:auto;min-width:56px;height:52px;padding:0 .95rem;border-radius:999px;gap:.55rem;bottom:calc(5rem + env(safe-area-inset-bottom,0px));right:calc(1rem + env(safe-area-inset-right,0px))}
     .inq-fab-label{display:inline;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
     .inq-fab-badge{top:-5px;right:-3px}
     }

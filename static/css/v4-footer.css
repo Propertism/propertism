@@ -434,6 +434,23 @@
     color: #64748B !important;
 }
 
+.footer-powered-by {
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+    font-family: var(--sans-main), sans-serif !important;
+}
+
+.footer-powered-by a {
+    color: var(--brand-gold) !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    transition: opacity 0.3s ease;
+}
+
+.footer-powered-by a:hover {
+    opacity: 0.85 !important;
+}
+
 .footer-bottom-links {
     display: flex;
     gap: 16px;
