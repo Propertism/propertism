@@ -5,13 +5,30 @@ from django.db import migrations
 
 def seed_viji(apps, schema_editor):
     TeamMember = apps.get_model("content", "TeamMember")
+    name_val = "Mr. Viji Munuswamy | D.C.T, M.COM."
+    role_val = "Technology Consultant & Systems Architect"
+    dept_val = "AI Systems & Enterprise Architecture"
+    bio_val = "Enterprise Systems Architect leading AI-driven property management workflows, enterprise ERP system architecture, and Propertism's technology integration vision."
+    
     TeamMember.objects.update_or_create(
         slug="viji-munuswamy",
         defaults={
-            "name": "Mr. Viji Munuswamy | D.C.T, M.COM.",
-            "role": "Technology Consultant & Systems Architect",
-            "department": "AI Systems & Enterprise Architecture",
-            "bio": "Enterprise Systems Architect leading AI-driven property management workflows, enterprise ERP system architecture, and Propertism's technology integration vision.",
+            "name": name_val,
+            "name_en": name_val,
+            "name_ta": name_val,
+            "name_hi": name_val,
+            "role": role_val,
+            "role_en": role_val,
+            "role_ta": role_val,
+            "role_hi": role_val,
+            "department": dept_val,
+            "department_en": dept_val,
+            "department_ta": dept_val,
+            "department_hi": dept_val,
+            "bio": bio_val,
+            "bio_en": bio_val,
+            "bio_ta": bio_val,
+            "bio_hi": bio_val,
             "expertise": "Enterprise Architecture, AI Orchestration, ERP Integration, Systems Engineering, Property Technology Vision",
             "order": 99,
             "is_active": True
