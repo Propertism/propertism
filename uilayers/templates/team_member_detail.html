@@ -29,15 +29,59 @@
                 </div>
                 
                 {% if team_member.expertise %}
-                <div class="expertise-v4">
+                <div class="expertise-v4{% if team_member.slug == 'mr-tamilselvan' %} expertise-centered{% endif %}">
                     <h3>Areas of Expertise</h3>
-                    <div class="skill-pills-v4">
+                    <div class="skill-pills-v4{% if team_member.slug == 'mr-tamilselvan' %} skill-pills-centered{% endif %}">
                         {% for skill in team_member.get_expertise_list %}
                         <span class="skill-pill-v4">
                             {{ skill }}
                         </span>
                         {% endfor %}
                     </div>
+                    
+                    {% if team_member.slug == 'mr-tamilselvan' %}
+                    <h3 style="margin-top: 15px !important;">Contact Details</h3>
+                    <ul class="profile-card-details details-centered">
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:{{ tamilselvan_email_1 }}">{{ tamilselvan_email_1 }}</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:{{ tamilselvan_email_2 }}">{{ tamilselvan_email_2 }}</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            <a href="https://www.linkedin.com/in/stamilselvan/" target="_blank">LinkedIn Profile</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            <a href="https://www.linkedin.com/company/propertism/?viewAsMember=true" target="_blank">Propertism LinkedIn</a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                {% elif team_member.slug == 'mr-tamilselvan' %}
+                <div class="expertise-v4 expertise-centered">
+                    <h3>Contact Details</h3>
+                    <ul class="profile-card-details details-centered">
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:{{ tamilselvan_email_1 }}">{{ tamilselvan_email_1 }}</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:{{ tamilselvan_email_2 }}">{{ tamilselvan_email_2 }}</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            <a href="https://www.linkedin.com/in/stamilselvan/" target="_blank">LinkedIn Profile</a>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            <a href="https://www.linkedin.com/company/propertism/?viewAsMember=true" target="_blank">Propertism LinkedIn</a>
+                        </li>
+                    </ul>
                 </div>
                 {% endif %}
             </div>

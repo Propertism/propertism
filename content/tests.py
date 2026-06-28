@@ -413,4 +413,35 @@ class BlogPostEEATTests(TestCase):
         self.assertEqual(faqs[1]["answer"], "Yes, you can apply using the online client portal.")
 
 
+class TamilselvanContactDetailsTests(TestCase):
+    def setUp(self):
+        # Create company info which is needed for the team view
+        CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
+        
+    def test_tamilselvan_contact_details_render(self):
+        from content.models import TeamMember
+        # Create a TeamMember for Tamilselvan
+        TeamMember.objects.create(
+            name="Mr. Tamilselvan",
+            slug="mr-tamilselvan",
+            role="Managing Partner",
+            department="Property Acquisition & Management",
+            bio="Test bio info",
+            expertise="Land Acquisitions, Property Management",
+            is_active=True
+        )
+        
+        # Test rendering of contact info
+        with self.settings(
+            TAMILSELVAN_EMAIL_1="info@propertism.in",
+            TAMILSELVAN_EMAIL_2="propertism.tamil@gmail.com"
+        ):
+            response = self.client.get(reverse("team_member_detail", kwargs={"slug": "mr-tamilselvan"}))
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, "info@propertism.in")
+            self.assertContains(response, "propertism.tamil@gmail.com")
+            self.assertContains(response, "https://www.linkedin.com/in/stamilselvan/")
+            self.assertContains(response, "https://www.linkedin.com/company/propertism/?viewAsMember=true")
+
+
 

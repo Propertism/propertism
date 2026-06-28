@@ -14,13 +14,15 @@
 | 41 | June 27 | **WHATSAPP NOTIFICATION INTEGRATION & FRONTEND LAYOUT POLISH. Updated expired Meta token in local .env and AWS production. Expanded send_rfq_notification to include asset-specific details and send email/WhatsApp. Aligned contact section phone numbers, allowing removal of duplicates. Updated callback copy to "Our Team Will Contact You Within 24 Hours". All 24 unit tests pass.** | ✅ |
 | 42 | June 27 | **realBOT FUNCTIONAL IMPLEMENTATION & UI POLISH. Implemented realBOT session database logger, abstract AI Service layer calling DeepSeek API with fallbacks, REST endpoints (/chat/session/init/ and /chat/query/), un-shrinkable suggestion chips, transparent header with Close (X) button, and gold glowing ripple circular FAB trigger.** | ✅ |
 | 43 | June 28 | **realBOT HOME PAGE TEASER LOCK. Enabled the glowing circular realBOT trigger logo globally as a visual teaser on all pages with custom hover titles, disabled chatbot launch action on the main page to show an elegant, custom navy-and-gold "Coming Soon" notification toast, and preserved the full interactive panel preview on the /realbot/ URL.** | ✅ |
+| 44 | June 28 | **SCCB-PROP-MGMT-M1.1-PROFILE-001: VIJI MUNUSWAMY PROFILE INTEGRATION & LAYOUT POLISH. Added Viji Munuswamy as Technology Consultant & Systems Architect to the Management section, created custom high-fidelity profile template, mapped production-safe model data migrations supporting django-modeltranslation, styled footer to include Olivine branding, and resolved Inquiries/chatbot floating action button overlap.** | ✅ |
+| 45 | June 28 | **TAMILSELVAN PROFILE CONTACT INTEGRATION. Integrated contact details (two emails, personal LinkedIn, and company LinkedIn) into Tamilselvan's profile page. Configured primary and secondary emails to be loaded from environment variables (TAMILSELVAN_EMAIL_1 and TAMILSELVAN_EMAIL_2) with clean fallback defaults. Added corresponding CSS styling to v4-team-detail.css. Added unit tests verifying correct rendering of the contact info.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: June 28, 2026 (19:45 IST)
-**Last Update**: SESSION 43 - realBOT HOME PAGE TEASER LOCK. Restructured trigger to show a Coming Soon notification on the main page while maintaining the interactive sliding panel on /realbot/.
+**Last Updated On**: June 28, 2026 (21:40 IST)
+**Last Update**: SESSION 45 - TAMILSELVAN PROFILE CONTACT INTEGRATION. Integrated contact details (primary/secondary email from env, personal LinkedIn, company LinkedIn) into Tamilselvan's profile page and stylesheet.
 
 ---
 
@@ -663,4 +665,4 @@ Continue from this checkpoint tomorrow.
   - `https://www.propertism.in/blog/nri-property-management-guide-chennai/`
   - `https://www.propertism.in/blog/nri-property-ownership-challenges-chennai/`
 - [ ] Monitor indexing status for all 12 new Phase B URLs.
-- [ ] Monitor GA4 conversion goals (`whatsapp_click`, `phone_call_click`, `contact_form_submit`).
+- [ ] Monitor GA4 conversion goals (`whatsapp_click`, `phone_call_click`, `contact_form_submit`).

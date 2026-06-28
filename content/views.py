@@ -280,8 +280,13 @@ def team_member_detail(request, slug):
     if not team_member:
         raise Http404
     context = get_company_context()
+    from django.conf import settings
+    tamilselvan_email_1 = getattr(settings, 'TAMILSELVAN_EMAIL_1', 'info@propertism.in')
+    tamilselvan_email_2 = getattr(settings, 'TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
     context.update({
         "team_member": team_member,
+        "tamilselvan_email_1": tamilselvan_email_1,
+        "tamilselvan_email_2": tamilselvan_email_2,
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
             {"name": "Management", "url": "/#management-section"},

@@ -398,3 +398,7 @@ WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
 WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
 WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +
 
+# Tamilselvan Profile Contact Settings
+TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
+TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
+

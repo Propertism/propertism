@@ -5,7 +5,7 @@
 
 .team-detail-section {
     background-color: var(--bg-secondary) !important;
-    padding: calc(var(--nav-height) + 48px) 0 80px 0 !important;
+    padding: calc(var(--nav-height) + 16px) 0 80px 0 !important;
     color: var(--text-main) !important;
     min-height: calc(100vh - var(--nav-height));
     box-sizing: border-box;
@@ -272,4 +272,50 @@
     .bio-section-v4 {
         padding: 20px !important;
     }
+}
+
+/* Profile Card Contact Details (Executive-Premium style) */
+.profile-card-details {
+    margin-top: 15px;
+    font-family: var(--sans-main);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    list-style: none;
+    padding: 0;
+}
+.profile-card-details li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-start;
+}
+.profile-card-details li svg {
+    color: var(--brand-gold);
+    flex-shrink: 0;
+}
+.profile-card-details a {
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    word-break: break-all;
+}
+.profile-card-details a:hover {
+    color: var(--brand-gold);
+}
+
+/* Centered profile alignments */
+.expertise-centered {
+    text-align: center !important;
+}
+.expertise-centered h3 {
+    text-align: center !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    padding-bottom: 4px !important;
+}
+.skill-pills-centered {
+    justify-content: center !important;
+}
+.details-centered li {
+    justify-content: center !important;
 }

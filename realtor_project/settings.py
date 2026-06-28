@@ -543,6 +543,10 @@ DEEPSEEK_TEMPERATURE = float(os.environ.get('DEEPSEEK_TEMPERATURE', '0.2'))
 DEEPSEEK_MAX_TOKENS = int(os.environ.get('DEEPSEEK_MAX_TOKENS', '2000'))
 DEEPSEEK_TIMEOUT = int(os.environ.get('DEEPSEEK_TIMEOUT', '15'))
 
+# Tamilselvan Profile Contact Settings
+TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
+TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
+
 # ===== SCCB: SURGICAL STORAGE OVERRIDE =====
 # This MUST be at the very end to override any previous storage settings
 
