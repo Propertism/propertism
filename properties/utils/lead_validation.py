@@ -130,7 +130,7 @@ class LeadValidator:
             if '@' not in email or '.' not in email.split('@')[-1]:
                 self.score -= self.config.get('PENALTY_INVALID_EMAIL', 15)
                 self.validation_summary.append({'text': 'Invalid Email Format', 'type': 'danger'})
-        else:
+        elif self.data.get('form_source') != 'Quick Inquiry':
             self.validation_summary.append({'text': 'Email Not Provided', 'type': 'warning'})
 
     def _compute_final_status(self):

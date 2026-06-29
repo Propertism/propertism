@@ -200,16 +200,14 @@
                 <span class="info-label">Phone</span>
                 <span class="info-value">{{ inquiry.phone|default:"Not Provided" }}</span>
             </div>
+            {% if inquiry.email %}
             <div class="info-group">
                 <span class="info-label">Email</span>
                 <span class="info-value">
-                    {% if inquiry.email %}
-                        <a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a>
-                    {% else %}
-                        Not Provided
-                    {% endif %}
+                    <a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a>
                 </span>
             </div>
+            {% endif %}
             {% if inquiry.city %}
             <div class="info-group">
                 <span class="info-label">City</span>
@@ -220,14 +218,14 @@
     </div>
 
     <!-- 4. Property Requirement -->
-    <div class="exec-section-title">Property Intent</div>
+    <div class="exec-section-title">Source</div>
     <span class="requirement-badge">
         {% if inquiry.property %}
             {{ inquiry.property.title }}
         {% elif inquiry.service %}
             {{ inquiry.service|title }}
         {% else %}
-            Source: {{ inquiry.form_source|default:"General Inquiry" }}
+            {{ inquiry.form_source|default:"General Inquiry" }}
         {% endif %}
     </span>
 
