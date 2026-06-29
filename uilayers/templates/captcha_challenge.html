@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Security Verification - Propertism{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 100px auto; padding: 40px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid var(--brand-gold);">
+    <h2 style="font-family: var(--serif-main); color: var(--brand-navy); margin-bottom: 20px;">Security Verification</h2>
+    <p style="color: var(--text-muted); margin-bottom: 30px;">
+        To protect our clients from spam, we need to verify that you are human before submitting your inquiry.
+    </p>
+
+    <form method="POST" action="{{ request.path }}">
+        {% csrf_token %}
+        
+        <!-- Preserve original POST data -->
+        {% for key, value in original_post.items %}
+            {% if key != 'csrfmiddlewaretoken' and key != 'captcha_answer' %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+
+        <div class="form-group" style="margin-bottom: 24px; padding: 20px; background: #F8F5F0; border-radius: 4px;">
+            <label for="captcha_answer" style="display: block; font-weight: 600; margin-bottom: 12px; color: var(--brand-navy);">
+                What is {{ request.session.captcha_question }}?
+            </label>
+            <input type="number" name="captcha_answer" id="captcha_answer" required class="form-control" 
+                   style="width: 100%; max-width: 200px; padding: 12px; border: 1px solid #C49C52; border-radius: 4px;" autofocus>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div style="color: #ef4444; margin-top: 8px; font-size: 14px;">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="background-color: var(--brand-navy); color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+            Verify and Submit
+        </button>
+    </form>
+</div>
+{% endblock %}

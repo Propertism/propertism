@@ -1,0 +1,464 @@
+/* 08-LeadEmailReview/review.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@400;500;600&display=swap');
+
+:root {
+    /* Propertism Brand Tokens */
+    --brand-navy: #0b0f1a;
+    --brand-gold: #C49C52;
+    --brand-gold-glow: rgba(196, 156, 82, 0.3);
+    
+    --bg-primary: #FDFDFB; /* Advisor White */
+    --bg-secondary: #F8F5F0; /* Trust Beige */
+    --bg-card: #FFFFFF;
+    
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+    
+    --border-subtle: rgba(15, 23, 42, 0.12);
+    --border-gold-subtle: rgba(196, 156, 82, 0.2);
+    
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Jost', sans-serif;
+    
+    /* System Tokens for Review UI */
+    --review-bg: #E2E8F0;
+    --review-sidebar: #1E293B;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--review-bg);
+    color: var(--text-main);
+}
+
+/* =========================================
+   REVIEW WORKSPACE UI
+   ========================================= */
+.review-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.review-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background-color: var(--review-sidebar);
+    color: white;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    
+    /* Make it stick to the viewport */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.review-sidebar h2 {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--brand-gold);
+    margin: 0;
+    font-weight: 600;
+}
+
+.scenario-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scenario-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #94A3B8;
+    padding: 12px 16px;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.scenario-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: white;
+}
+
+.scenario-btn.active {
+    background: var(--brand-navy);
+    color: white;
+    border-color: var(--brand-gold);
+    border-left: 3px solid var(--brand-gold);
+}
+
+.viewport-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: rgba(0,0,0,0.2);
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.viewport-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 4px;
+}
+
+.viewport-btn.active {
+    background: var(--brand-gold);
+    color: var(--brand-navy);
+    font-weight: 600;
+}
+
+.review-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    background-color: var(--review-bg);
+    padding: 40px;
+}
+
+.preview-container {
+    width: 600px; /* Desktop default */
+    background: transparent;
+    transition: width 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.preview-container.tablet { width: 480px; }
+.preview-container.mobile { width: 375px; }
+
+/* =========================================
+   EMAIL TEMPLATE DESIGN (Propertism Brand)
+   ========================================= */
+
+.exec-email {
+    background-color: var(--bg-primary);
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid var(--border-subtle);
+    font-family: var(--font-sans);
+    color: var(--text-main);
+}
+
+/* 1. Premium Header */
+.exec-header {
+    background-color: var(--brand-navy);
+    padding: 24px 40px; /* Tightened padding */
+    border-bottom: 4px solid var(--brand-gold);
+    color: var(--text-inverse);
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Tightened gap between the 2 rows */
+}
+
+.exec-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items horizontally */
+}
+
+.exec-logo {
+    font-family: var(--font-serif);
+    font-size: 24px; /* Slightly smaller to fit tight 2-line */
+    font-weight: 600;
+    color: var(--brand-gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.exec-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
+
+.exec-ref {
+    font-size: 13px;
+    color: #CBD5E1; /* Slightly brighter for better contrast against navy */
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
+.exec-priority-badge {
+    background-color: rgba(196, 156, 82, 0.15);
+    color: var(--brand-gold);
+    border: 1px solid var(--brand-gold-glow);
+    padding: 4px 10px;
+    border-radius: 12px; /* Pill shape */
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+/* Content Wrapper */
+.exec-body {
+    padding: 32px 40px;
+    background-color: var(--bg-primary);
+}
+
+/* 2. Lead Quality Assessment */
+.exec-assessment {
+    display: flex;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+
+.assessment-score {
+    flex: 0 0 100px;
+    text-align: center;
+    border-right: 1px solid var(--border-subtle);
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.score-value {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--brand-navy);
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.score-value.warning { color: #D97706; }
+.score-value.danger { color: #DC2626; }
+
+.assessment-details {
+    flex: 1;
+}
+
+.assessment-status {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-navy);
+    margin-bottom: 12px;
+}
+
+.validation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.val-item {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.val-item.success { color: #059669; }
+.val-item.warning { color: #D97706; }
+.val-item.danger { color: #DC2626; }
+
+/* 3. Customer Summary (Information Card) */
+.exec-section-title {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--brand-gold);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.exec-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--brand-navy);
+}
+
+.info-value a {
+    color: var(--brand-navy);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* 4. Inquiry Summary & Requirement */
+.requirement-badge {
+    display: inline-block;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-gold-subtle);
+    color: var(--brand-navy);
+    padding: 8px 16px;
+    border-radius: 2px;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+/* 5. Customer Message */
+.exec-message {
+    background-color: var(--bg-secondary);
+    border-left: 3px solid var(--brand-gold);
+    padding: 24px;
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.exec-message::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-family: var(--font-serif);
+    font-size: 40px;
+    color: var(--brand-gold-glow);
+    line-height: 1;
+}
+
+.message-content {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-main);
+    white-space: pre-line;
+    position: relative;
+    z-index: 1;
+}
+
+.message-empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* 6. Lead Timeline */
+.timeline-block {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.timeline-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.timeline-value {
+    font-size: 13px;
+    color: var(--brand-navy);
+    font-weight: 500;
+}
+
+/* 7. Quick Actions */
+.exec-actions {
+    background-color: var(--bg-secondary);
+    padding: 24px 40px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    gap: 16px;
+}
+
+.btn {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--brand-gold);
+    color: var(--brand-navy) !important;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #b38b45;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--brand-navy);
+    border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+    border-color: var(--brand-navy);
+    background-color: rgba(11, 15, 26, 0.02);
+}
+
+/* Mobile Adjustments */
+.preview-container.mobile .exec-header { padding: 24px 20px; }
+.preview-container.mobile .exec-body { padding: 24px 20px; }
+.preview-container.mobile .info-grid { grid-template-columns: 1fr; gap: 16px; }
+.preview-container.mobile .validation-grid { grid-template-columns: 1fr; }
+.preview-container.mobile .exec-actions { padding: 20px; flex-direction: column; }

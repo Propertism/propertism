@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Email Review - Propertism</title>
+    <link rel="stylesheet" href="review.css">
+</head>
+<body>
+
+<div class="review-layout">
+    
+    <!-- Sidebar Controls -->
+    <div class="review-sidebar">
+        <h2>Executive Email Prototype</h2>
+        <p style="font-size: 12px; color: #94A3B8; margin-top: -16px; line-height: 1.4;">Select a scenario below to preview the responsive HTML email behavior.</p>
+        
+        <div class="viewport-controls">
+            <button class="viewport-btn active" data-view="desktop">Desktop</button>
+            <button class="viewport-btn" data-view="tablet">Tablet</button>
+            <button class="viewport-btn" data-view="mobile">Mobile</button>
+        </div>
+
+        <div class="scenario-list" id="scenario-list">
+            <!-- Buttons injected by JS -->
+        </div>
+    </div>
+
+    <!-- Main Preview Area -->
+    <div class="review-main">
+        
+        <div class="preview-container desktop" id="preview-container">
+            
+            <!-- THE EMAIL TEMPLATE -->
+            <div class="exec-email">
+                
+                <!-- 1. Header -->
+                <div class="exec-header">
+                    <div class="exec-header-row">
+                        <div class="exec-logo">PROPERTISM</div>
+                        <span class="exec-priority-badge" id="exec-priority">Priority</span>
+                    </div>
+                    <div class="exec-header-row">
+                        <h1 class="exec-title">Property Lead Notification</h1>
+                        <div class="exec-ref">Ref: <span id="exec-ref">LEAD-0000</span></div>
+                    </div>
+                </div>
+
+                <div class="exec-body">
+                    
+                    <!-- 2. Lead Quality Assessment -->
+                    <div class="exec-assessment">
+                        <div class="assessment-score">
+                            <div class="score-value" id="score-value">--</div>
+                            <div class="score-label">Confidence</div>
+                        </div>
+                        <div class="assessment-details">
+                            <div class="assessment-status" id="assessment-status">Assessment Status</div>
+                            <div class="validation-grid" id="validation-grid">
+                                <!-- Validation items injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Customer Summary -->
+                    <div class="exec-section-title">Customer Information</div>
+                    <div class="exec-card">
+                        <div class="info-grid">
+                            <div class="info-group">
+                                <span class="info-label">Name</span>
+                                <span class="info-value" id="val-name">--</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Phone</span>
+                                <span class="info-value" id="val-phone">--</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Email</span>
+                                <span class="info-value" id="val-email">--</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">City / Country</span>
+                                <span class="info-value" id="val-city">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Property Requirement -->
+                    <div class="exec-section-title">Property Intent</div>
+                    <span class="requirement-badge" id="req-badge">--</span>
+
+                    <!-- 5. Customer Message -->
+                    <div class="exec-section-title">Customer Message</div>
+                    <div class="exec-message">
+                        <div class="message-content" id="message-content">--</div>
+                    </div>
+
+                    <!-- 6. Timeline -->
+                    <div class="timeline-block">
+                        <div class="timeline-item">
+                            <span class="timeline-label">Received</span>
+                            <span class="timeline-value" id="time-received">--</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Source Channel</span>
+                            <span class="timeline-value" id="val-source">--</span>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- 7. Quick Actions -->
+                <div class="exec-actions">
+                    <a href="#" class="btn btn-primary" onclick="return false;">Open Dashboard</a>
+                    <a href="#" class="btn btn-secondary" onclick="return false;">Reply to Lead</a>
+                    <a href="#" class="btn btn-secondary" onclick="return false;">Call Customer</a>
+                </div>
+
+            </div>
+            <!-- END EMAIL TEMPLATE -->
+
+        </div>
+
+    </div>
+</div>
+
+<script src="review.js"></script>
+</body>
+</html>

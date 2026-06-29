@@ -122,6 +122,8 @@
                 <div id="hf-theForm">
                     <form action="{% url 'contact' %}" method="POST" id="propertism-hf-form">
                         {% csrf_token %}
+                        {% include 'includes/_form_validation_fields.html' %}
+                        <input type="hidden" name="form_source" value="General Inquiry">
                         <div class="hf-field-row">
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Full Name</label>

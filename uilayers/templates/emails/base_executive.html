@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block window_title %}Propertism Executive Notification{% endblock %}</title>
+    <style>
+        /* Propertism Brand Tokens */
+        :root {
+            --brand-navy: {{ config.COLORS.BRAND_NAVY|default:"#0b0f1a" }};
+            --brand-gold: {{ config.COLORS.BRAND_GOLD|default:"#C49C52" }};
+            --brand-gold-glow: rgba(196, 156, 82, 0.3);
+            
+            --bg-primary: {{ config.COLORS.BG_PRIMARY|default:"#FDFDFB" }};
+            --bg-secondary: {{ config.COLORS.BG_SECONDARY|default:"#F8F5F0" }};
+            --bg-card: #FFFFFF;
+            
+            --text-main: #0F172A;
+            --text-muted: {{ config.COLORS.TEXT_MUTED|default:"#64748B" }};
+            --text-inverse: #FFFFFF;
+            
+            --border-subtle: rgba(15, 23, 42, 0.12);
+            --border-gold-subtle: rgba(196, 156, 82, 0.2);
+            
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Jost', Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Jost', Arial, sans-serif;
+            background-color: #E2E8F0;
+            color: #0F172A;
+        }
+
+        .exec-email {
+            background-color: #FDFDFB;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            font-family: 'Jost', Arial, sans-serif;
+            color: #0F172A;
+        }
+
+        /* 1. Premium Header */
+        .exec-header {
+            background-color: #0b0f1a;
+            padding: 24px 40px;
+            border-bottom: 4px solid #C49C52;
+            color: #FFFFFF;
+        }
+
+        .exec-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .exec-logo {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #C49C52;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .exec-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+            color: white;
+        }
+
+        .exec-ref {
+            font-size: 13px;
+            color: #CBD5E1;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .exec-priority-badge {
+            background-color: rgba(196, 156, 82, 0.15);
+            color: #C49C52;
+            border: 1px solid rgba(196, 156, 82, 0.3);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            float: right;
+        }
+        
+        .exec-priority-badge.high {
+            color: #DC2626; /* Red for high priority */
+            border-color: rgba(220, 38, 38, 0.3);
+            background-color: rgba(220, 38, 38, 0.1);
+        }
+        
+        .exec-priority-badge.low {
+            color: #64748B; /* Slate for low priority */
+            border-color: rgba(100, 116, 139, 0.3);
+            background-color: rgba(100, 116, 139, 0.1);
+        }
+
+        /* Content Wrapper */
+        .exec-body {
+            padding: 32px 40px;
+            background-color: #FDFDFB;
+        }
+
+        /* Reusable UI Components */
+        .exec-section-title {
+            font-family: 'Jost', Arial, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #C49C52;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .exec-card {
+            background-color: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        /* Quick Actions */
+        .exec-actions {
+            background-color: #F8F5F0;
+            padding: 24px 40px;
+            border-top: 1px solid rgba(15, 23, 42, 0.12);
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            font-family: 'Jost', Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #C49C52;
+            color: #0b0f1a !important;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #0b0f1a;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+        }
+        
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+
+<div style="padding: 20px;">
+    <div class="exec-email">
+        <!-- 1. Header -->
+        <div class="exec-header">
+            <div class="exec-header-row">
+                <div class="exec-logo">PROPERTISM</div>
+                {% block email_header_badge %}
+                <span class="exec-priority-badge">Notification</span>
+                {% endblock %}
+            </div>
+            <div class="exec-header-row" style="margin-bottom: 0;">
+                <h1 class="exec-title">{% block email_title %}Executive Notification{% endblock %}</h1>
+                <div class="exec-ref">{% block email_ref %}{% endblock %}</div>
+            </div>
+        </div>
+
+        <div class="exec-body">
+            {% block email_body %}
+            {% endblock %}
+        </div>
+
+        <!-- 7. Quick Actions -->
+        {% block email_actions %}
+        <div class="exec-actions">
+            <a href="{{ config.DASHBOARD_URL|default:'https://propertism.in/admin/' }}" class="btn btn-primary">Open Dashboard</a>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

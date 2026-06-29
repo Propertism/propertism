@@ -78,6 +78,8 @@
                     <h3>Enquire about this asset</h3>
                     <form method="post" action="{% url 'create_inquiry' %}" class="v4-form">
                         {% csrf_token %}
+                        {% include 'includes/_form_validation_fields.html' %}
+                        <input type="hidden" name="form_source" value="Property Detail Form">
                         <input type="hidden" name="property_id" value="{{ property.id }}">
 
                         <div class="v4-form-group">

@@ -120,6 +120,40 @@ def create_inquiry(request):
 
     property_id = request.POST.get("property_id")
     property_obj = get_object_or_404(Property, pk=property_id)
+    
+    from properties.utils.lead_validation import LeadValidator
+    from content.views import send_rfq_notification
+    from realtor_project.features import is_feature_enabled
+    
+    validator = LeadValidator(request, request.POST)
+    assessment = validator.validate()
+    
+    # Check CAPTCHA
+    captcha_answer = request.POST.get('captcha_answer')
+    expected_answer = request.session.get('captcha_expected_answer')
+    
+    captcha_enabled = is_feature_enabled('CAPTCHA_ENABLE', default=True)
+    
+    if captcha_enabled and assessment['confidence_score'] < validator.config.get('CAPTCHA_THRESHOLD', 70):
+        if not (expected_answer and captcha_answer and str(captcha_answer) == str(expected_answer)):
+            if captcha_answer:
+                messages.error(request, "Incorrect security answer. Please try again.")
+            # Generate new CAPTCHA challenge
+            import random
+            num1 = random.randint(1, 10)
+            num2 = random.randint(1, 10)
+            request.session['captcha_question'] = f"{num1} + {num2}"
+            request.session['captcha_expected_answer'] = str(num1 + num2)
+            
+            return render(request, "captcha_challenge.html", {
+                "original_post": request.POST
+            })
+        else:
+            # CAPTCHA Passed!
+            assessment['confidence_score'] = max(assessment['confidence_score'], 75)
+            assessment['assessment_status'] = "Genuine (Verified by CAPTCHA)"
+            request.session.pop('captcha_expected_answer', None)
+            request.session.pop('captcha_question', None)
 
     try:
         inquiry = Inquiry.objects.create(
@@ -128,12 +162,15 @@ def create_inquiry(request):
             email=request.POST.get("email", "").strip(),
             phone=request.POST.get("phone", "").strip(),
             message=request.POST.get("message", "").strip(),
+            form_source=request.POST.get("form_source", "Unknown Form"),
+            confidence_score=assessment['confidence_score'],
+            assessment_status=assessment['assessment_status'],
+            validation_summary=assessment['validation_summary']
         )
         
         # Send notifications (emails to both ids, and WhatsApp notification)
         try:
-            from content.views import send_rfq_notification
-            send_rfq_notification(inquiry)
+            send_rfq_notification(inquiry, form_source=form_source)
         except Exception as email_exc:
             logger.error("Failed to send notification: %s", email_exc)
 

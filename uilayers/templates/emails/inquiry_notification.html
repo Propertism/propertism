@@ -1,0 +1,265 @@
+{% extends "emails/base_executive.html" %}
+
+{% block window_title %}Propertism Property Lead Notification{% endblock %}
+
+{% block extra_css %}
+        /* Specific components for Lead Emails */
+        .exec-assessment {
+            display: flex;
+            background-color: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+
+        .assessment-score {
+            flex: 0 0 100px;
+            text-align: center;
+            border-right: 1px solid rgba(15, 23, 42, 0.12);
+            padding-right: 20px;
+            margin-right: 20px;
+        }
+
+        .score-value {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #0b0f1a;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748B;
+            margin-top: 8px;
+        }
+
+        .score-value.warning { color: #D97706; }
+        .score-value.danger { color: #DC2626; }
+
+        .assessment-details {
+            flex: 1;
+        }
+
+        .assessment-status {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0b0f1a;
+            margin-bottom: 12px;
+        }
+
+        .validation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .val-item {
+            font-size: 13px;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .val-item.success { color: #059669; }
+        .val-item.warning { color: #D97706; }
+        .val-item.danger { color: #DC2626; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: #0b0f1a;
+        }
+
+        .requirement-badge {
+            display: inline-block;
+            background-color: #F8F5F0;
+            border: 1px solid rgba(196, 156, 82, 0.2);
+            color: #0b0f1a;
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .exec-message {
+            background-color: #F8F5F0;
+            border-left: 3px solid #C49C52;
+            padding: 24px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .message-content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #0F172A;
+            white-space: pre-line;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-block {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(15, 23, 42, 0.12);
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .timeline-label {
+            font-size: 11px;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-value {
+            font-size: 13px;
+            color: #0b0f1a;
+            font-weight: 500;
+        }
+{% endblock %}
+
+{% block email_header_badge %}
+    <span class="exec-priority-badge {% if priority_level == 'High' %}high{% elif priority_level == 'Low' %}low{% endif %}">
+        {{ priority_level|default:"Medium" }} Priority
+    </span>
+{% endblock %}
+
+{% block email_title %}Property Lead Notification{% endblock %}
+
+{% block email_ref %}Ref: LEAD-{{ inquiry.id|default:"XXXX" }}{% endblock %}
+
+{% block email_body %}
+    <!-- 2. Lead Quality Assessment -->
+    <div class="exec-assessment">
+        <div class="assessment-score">
+            <div class="score-value {% if inquiry.confidence_score < config.THRESHOLDS.MEDIUM_PRIORITY_MIN %}danger{% elif inquiry.confidence_score < config.THRESHOLDS.HIGH_PRIORITY_MIN %}warning{% endif %}">
+                {{ inquiry.confidence_score|default:"--" }}
+            </div>
+            <div class="score-label">Confidence</div>
+        </div>
+        <div class="assessment-details">
+            <div class="assessment-status">{{ classification_label|default:"Pending Validation" }}</div>
+            
+            {% if inquiry.validation_summary %}
+            <div class="validation-grid">
+                {% for item in inquiry.validation_summary %}
+                    <div class="val-item {{ item.type }}">
+                        {% if item.type == 'success' %}✓{% elif item.type == 'warning' %}!{% else %}✗{% endif %} 
+                        {{ item.text }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 3. Customer Summary -->
+    <div class="exec-section-title">Customer Information</div>
+    <div class="exec-card">
+        <div class="info-grid">
+            <div class="info-group">
+                <span class="info-label">Name</span>
+                <span class="info-value">{{ inquiry.name|default:"Not Provided" }}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">Phone</span>
+                <span class="info-value">{{ inquiry.phone|default:"Not Provided" }}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">Email</span>
+                <span class="info-value">
+                    {% if inquiry.email %}
+                        <a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a>
+                    {% else %}
+                        Not Provided
+                    {% endif %}
+                </span>
+            </div>
+            {% if inquiry.city %}
+            <div class="info-group">
+                <span class="info-label">City</span>
+                <span class="info-value">{{ inquiry.city }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 4. Property Requirement -->
+    <div class="exec-section-title">Property Intent</div>
+    <span class="requirement-badge">
+        {% if inquiry.property %}
+            {{ inquiry.property.title }}
+        {% elif inquiry.service %}
+            {{ inquiry.service|title }}
+        {% else %}
+            General Inquiry
+        {% endif %}
+    </span>
+
+    <!-- 5. Customer Message -->
+    <div class="exec-section-title">Customer Message</div>
+    <div class="exec-message">
+        <div class="message-content">
+            {{ inquiry.message|default:"Not Provided"|linebreaksbr }}
+        </div>
+    </div>
+
+    <!-- 6. Timeline -->
+    <div class="timeline-block">
+        <div class="timeline-item">
+            <span class="timeline-label">Received</span>
+            <span class="timeline-value">{{ submission_time }}</span>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-label">Source Channel</span>
+            <span class="timeline-value">{{ form_source|default:"Website Form" }}</span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block email_actions %}
+    <div class="exec-actions">
+        <a href="{{ config.DASHBOARD_URL|default:'https://propertism.in/admin/' }}" class="btn btn-primary">Open Dashboard</a>
+        {% if inquiry.email %}
+            <a href="mailto:{{ inquiry.email }}" class="btn btn-secondary">Reply to Lead</a>
+        {% endif %}
+        {% if inquiry.phone %}
+            <a href="tel:{{ inquiry.phone }}" class="btn btn-secondary">Call Customer</a>
+        {% endif %}
+    </div>
+{% endblock %}

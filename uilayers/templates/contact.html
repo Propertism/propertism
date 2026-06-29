@@ -422,6 +422,7 @@
             <h2>Request a Quote</h2>
             <form action="{% url 'contact' %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="form_source" value="General Inquiry">
                 
                 {% if messages %}
                 <div style="margin-bottom: 1.5rem;">

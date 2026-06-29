@@ -326,10 +326,50 @@ def blog_post(request, slug):
     )
     return render(request, "blog_post.html", context)
 
+def is_spam_inquiry(message):
+    if not message:
+        return False
+    msg_lower = message.lower()
+    spam_indicators = ["http://", "https://", "www."]
+    return any(indicator in msg_lower for indicator in spam_indicators)
+
 
 def contact(request):
     """Homepage quote form handler."""
     if request.method == "POST":
+        from properties.utils.lead_validation import LeadValidator
+        from realtor_project.features import is_feature_enabled
+        
+        validator = LeadValidator(request, request.POST)
+        assessment = validator.validate()
+        
+        # Check CAPTCHA
+        captcha_answer = request.POST.get('captcha_answer')
+        expected_answer = request.session.get('captcha_expected_answer')
+        
+        captcha_enabled = is_feature_enabled('CAPTCHA_ENABLE', default=True)
+        
+        if captcha_enabled and assessment['confidence_score'] < validator.config.get('CAPTCHA_THRESHOLD', 70):
+            if not (expected_answer and captcha_answer and str(captcha_answer) == str(expected_answer)):
+                if captcha_answer:
+                    messages.error(request, "Incorrect security answer. Please try again.")
+                # Generate new CAPTCHA challenge
+                import random
+                num1 = random.randint(1, 10)
+                num2 = random.randint(1, 10)
+                request.session['captcha_question'] = f"{num1} + {num2}"
+                request.session['captcha_expected_answer'] = str(num1 + num2)
+                
+                return render(request, "captcha_challenge.html", {
+                    "original_post": request.POST
+                })
+            else:
+                # CAPTCHA Passed!
+                assessment['confidence_score'] = max(assessment['confidence_score'], 75)
+                assessment['assessment_status'] = "Genuine (Verified by CAPTCHA)"
+                request.session.pop('captcha_expected_answer', None)
+                request.session.pop('captcha_question', None)
+
         try:
             inquiry = PropertyInquiry.objects.create(
                 name=request.POST.get("name"),
@@ -337,13 +377,19 @@ def contact(request):
                 phone=request.POST.get("phone", ""),
                 message=request.POST.get("message"),
                 property=None,  # Quote form doesn't link to specific property
-                status='pending'
+                status='pending',
+                form_source=request.POST.get("form_source", "Unknown Form"),
+                confidence_score=assessment['confidence_score'],
+                assessment_status=assessment['assessment_status'],
+                validation_summary=assessment['validation_summary']
             )
             logger.info("Quote inquiry received from %s", inquiry.email)
             
+            form_source = inquiry.form_source
+            
             # Send email notification to admin
             try:
-                send_rfq_notification(inquiry)
+                send_rfq_notification(inquiry, form_source=form_source)
             except Exception as email_exc:
                 logger.error("Failed to send email notification: %s", email_exc)
                 # Don't fail the request if email fails
@@ -379,38 +425,57 @@ def send_admin_notification(subject, message_lines, whatsapp_text):
     send_whatsapp_notification(whatsapp_text)
 
 
-def send_rfq_notification(inquiry):
+def send_rfq_notification(inquiry, form_source="Website Form"):
     """Send email and whatsapp notification when RFQ is submitted."""
     from django.utils import timezone
+    from django.template.loader import render_to_string
+    from django.utils.html import strip_tags
+    from django.conf import settings
+
     subject = f"🚀 New Propertism Lead: {inquiry.name}"
     
-    # Build email body
-    message_lines = [
-        f"You have a new inquiry from the website:",
-        f"",
-        f"Name: {inquiry.name}",
-        f"Email: {inquiry.email}",
-        f"Phone: {inquiry.phone or 'Not provided'}",
-    ]
-    if hasattr(inquiry, 'property') and inquiry.property:
-        message_lines.append(f"Property: {inquiry.property.title}")
-        
-    message_lines.extend([
-        f"Message: {inquiry.message}",
-        f"",
-        f"Submitted: {inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')}",
-        f"Admin View: https://propertism.in/admin/properties/inquiry/{inquiry.id}/change/",
-    ])
+    # Render HTML email
+    submission_time = inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')
     
-    message = "\n".join(message_lines)
+    config = getattr(settings, 'EXECUTIVE_EMAIL_CONFIG', {})
+    thresholds = config.get('THRESHOLDS', {})
+    labels = config.get('CLASSIFICATION_LABELS', {})
+    
+    score = inquiry.confidence_score or 0
+    if score >= thresholds.get('HIGH_PRIORITY_MIN', 80):
+        priority_level = 'High'
+        classification_label = labels.get('HIGH', 'Likely Genuine')
+    elif score >= thresholds.get('MEDIUM_PRIORITY_MIN', 40):
+        priority_level = 'Medium'
+        classification_label = labels.get('MEDIUM', 'Review Recommended')
+    else:
+        priority_level = 'Low'
+        classification_label = labels.get('LOW', 'Likely Spam')
+        
+    # If the validator already gave a status, prefer that for classification_label
+    if inquiry.assessment_status:
+        classification_label = inquiry.assessment_status
+    
+    context = {
+        'inquiry': inquiry,
+        'form_source': form_source,
+        'submission_time': submission_time,
+        'config': config,
+        'priority_level': priority_level,
+        'classification_label': classification_label,
+    }
+    
+    html_message = render_to_string('emails/inquiry_notification.html', context)
+    plain_message = strip_tags(html_message)
     
     try:
         send_mail(
             subject=subject,
-            message=message,
+            message=plain_message,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=settings.ADMIN_EMAILS,
             fail_silently=False,
+            html_message=html_message,
         )
     except Exception as e:
         logger.error(f"Email notification failed: {e}")

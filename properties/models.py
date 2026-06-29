@@ -294,6 +294,14 @@ class Inquiry(models.Model):
     phone = models.CharField(max_length=20)
     message = models.TextField(blank=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="pending")
+    form_source = models.CharField(max_length=100, default="Unknown Form")
+    
+    # Lead Validation Engine Fields
+    confidence_score = models.IntegerField(null=True, blank=True, help_text="Lead Validation Score (0-100)")
+    spam_score = models.IntegerField(default=0, help_text="Calculated Spam Penalty Points")
+    assessment_status = models.CharField(max_length=50, blank=True, default="Pending Validation")
+    validation_summary = models.JSONField(default=list, blank=True, help_text="List of rules triggered")
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

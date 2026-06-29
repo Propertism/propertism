@@ -547,6 +547,82 @@ DEEPSEEK_TIMEOUT = int(os.environ.get('DEEPSEEK_TIMEOUT', '15'))
 TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
 TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
 
+# ==============================================================================
+# LEAD VALIDATION & SPAM INTELLIGENCE (SCCB-DMP-LEAD-M1.4)
+# ==============================================================================
+
+LEAD_VALIDATION_CONFIG = {
+    # Layer 1: Honeypot & Timing
+    'HONEYPOT_FIELD_NAME': 'website_url_check',  # The hidden field name
+    'MIN_SUBMISSION_TIME_SECONDS': 2,            # Fast submissions (<2s) are highly suspicious
+    
+    # Layer 2: Rate Limiting
+    'RATE_LIMIT_MAX_REQUESTS': 5,
+    'RATE_LIMIT_WINDOW_SECONDS': 600,            # 10 minutes
+    
+    # Layer 3: Content Heuristics
+    'SPAM_KEYWORDS': [
+        'seo', 'ranking', 'casino', 'viagra', 'crypto', 'bitcoin', 'investment plan',
+        'guaranteed return', 'hacker', 'lottery', 'inheritance', 'dating', 'sex'
+    ],
+    'PROMO_KEYWORDS': [
+        'marketing', 'digital agency', 'grow your business', 'free audit', 'cheap traffic'
+    ],
+    'MAX_HYPERLINKS': 1,
+    
+    # Layer 4: Business Relevance
+    'BUSINESS_KEYWORDS': [
+        'buy', 'sell', 'rent', 'lease', 'apartment', 'villa', 'plot',
+        'nri', 'property management', 'chennai', 'tenant', 'owner',
+        'bhk', 'sqft', 'budget', 'location'
+    ],
+    'CONTACT_VALIDATION_STRICT': True,
+    
+    # Confidence Score Configuration
+    'BASE_SCORE': 100,
+    'PENALTY_HONEYPOT': 80,
+    'PENALTY_FAST_SUBMISSION': 40,
+    'PENALTY_RATE_LIMIT': 30,
+    'PENALTY_SPAM_KEYWORD': 30,
+    'PENALTY_PROMO_KEYWORD': 15,
+    'PENALTY_MULTIPLE_URLS': 40,
+    'PENALTY_INVALID_PHONE': 15,
+    'PENALTY_INVALID_EMAIL': 15,
+    'BONUS_BUSINESS_RELEVANCE': 10,
+    
+    # Layer 6 & 7: Assessment Ranges
+    'RANGES': {
+        'LIKELY_GENUINE': 90,
+        'GENUINE': 70,
+        'REVIEW_RECOMMENDED': 40,
+        # Below 40 is Likely Spam
+    },
+    
+    # Layer 9: Conditional CAPTCHA
+    'CAPTCHA_THRESHOLD': 70,                     # Scores below this require Math CAPTCHA
+}
+
+# --- EXECUTIVE LEAD EMAIL NOTIFICATION SETTINGS (SCCB-DMP-LEAD-M1.5) ---
+EXECUTIVE_EMAIL_CONFIG = {
+    'COLORS': {
+        'BRAND_NAVY': '#0b0f1a',
+        'BRAND_GOLD': '#C49C52',
+        'BG_PRIMARY': '#FDFDFB',
+        'BG_SECONDARY': '#F8F5F0',
+        'TEXT_MUTED': '#64748B',
+    },
+    'THRESHOLDS': {
+        'HIGH_PRIORITY_MIN': 80,
+        'MEDIUM_PRIORITY_MIN': 40,
+    },
+    'CLASSIFICATION_LABELS': {
+        'HIGH': 'Likely Genuine',
+        'MEDIUM': 'Review Recommended',
+        'LOW': 'Likely Spam',
+    },
+    'DASHBOARD_URL': 'https://propertism.in/admin/properties/inquiry/',
+}
+
 # ===== SCCB: SURGICAL STORAGE OVERRIDE =====
 # This MUST be at the very end to override any previous storage settings
 
