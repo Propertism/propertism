@@ -40,7 +40,7 @@
             <form action="{% url 'contact' %}" method="POST" id="propertism-mid-page-form">
                 {% csrf_token %}
                 {% include 'includes/_form_validation_fields.html' %}
-                <input type="hidden" name="email" value="info@propertism.in">
+                <input type="hidden" name="email" value="">
                 <input type="hidden" name="form_source" value="Quick Inquiry">
                 <input type="hidden" name="service" id="mid-page-service-hidden" value="consultation">
                 <textarea name="message" id="mid-page-message-hidden" style="display: none;"></textarea>

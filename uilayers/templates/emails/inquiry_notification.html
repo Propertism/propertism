@@ -227,7 +227,7 @@
         {% elif inquiry.service %}
             {{ inquiry.service|title }}
         {% else %}
-            General Inquiry
+            Source: {{ inquiry.form_source|default:"General Inquiry" }}
         {% endif %}
     </span>
 
