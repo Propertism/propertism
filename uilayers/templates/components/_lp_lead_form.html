@@ -24,7 +24,7 @@
                     <div class="lead-form-step" data-step="1">
                         <div class="lead-field">
                             <label for="lead-phone">Phone Number</label>
-                            <input id="lead-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+91 98XXXXXXXX" required>
+                            <input id="lead-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+91 98XXXXXXXX" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)">
                             <small data-error-for="phone"></small>
                         </div>
 
@@ -48,7 +48,7 @@
 
                             <div class="lead-field">
                                 <label for="lead-email">Email</label>
-                                <input id="lead-email" type="email" name="email" autocomplete="email" placeholder="Optional">
+                                <input id="lead-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Please enter a valid email address">
                             </div>
                         </div>
 

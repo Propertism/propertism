@@ -53,12 +53,22 @@
 
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">WhatsApp / Phone</label>
-                        <input class="hf-field-input" name="phone" type="text" placeholder="WhatsApp / Phone" required style="height: 48px !important;" />
+                        <input class="hf-field-input" name="phone" type="text" placeholder="WhatsApp / Phone" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)" style="height: 48px !important;" />
                     </div>
 
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
-                        <label class="hf-field-label">City you live in</label>
-                        <input class="hf-field-input" name="city" type="text" placeholder="City of residence" required style="height: 48px !important;" />
+                        <label class="hf-field-label">Country Code</label>
+                        <select class="hf-field-input" name="country_code" required style="height: 48px !important; appearance: none; background: #0b0f1a url('data:image/svg+xml;utf8,<svg fill=\'%23ffffff\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>') no-repeat right 8px center; padding-right: 32px; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <option value="+91" selected style="background: #0b0f1a; color: #ffffff;">India (+91)</option>
+                            <option value="+971" style="background: #0b0f1a; color: #ffffff;">UAE (+971)</option>
+                            <option value="+1" style="background: #0b0f1a; color: #ffffff;">USA/Canada (+1)</option>
+                            <option value="+44" style="background: #0b0f1a; color: #ffffff;">UK (+44)</option>
+                            <option value="+65" style="background: #0b0f1a; color: #ffffff;">Singapore (+65)</option>
+                            <option value="+61" style="background: #0b0f1a; color: #ffffff;">Australia (+61)</option>
+                            <option value="+966" style="background: #0b0f1a; color: #ffffff;">Saudi Arabia (+966)</option>
+                            <option value="+974" style="background: #0b0f1a; color: #ffffff;">Qatar (+974)</option>
+                            <option value="+60" style="background: #0b0f1a; color: #ffffff;">Malaysia (+60)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -94,8 +104,17 @@
         if (midForm) {
             midForm.addEventListener('submit', function(e) {
                 const name = this.querySelector('input[name="name"]').value;
-                const phone = this.querySelector('input[name="phone"]').value;
-                const city = this.querySelector('input[name="city"]').value;
+                const phoneInput = this.querySelector('input[name="phone"]');
+                const countrySelect = this.querySelector('select[name="country_code"]');
+                const countryCode = countrySelect.value;
+                const countryName = countrySelect.options[countrySelect.selectedIndex].text.split('(')[0].trim();
+                
+                // Prepend country code to phone number before submitting
+                let rawPhone = phoneInput.value;
+                if (!rawPhone.startsWith('+')) {
+                    phoneInput.value = countryCode + " " + rawPhone;
+                }
+                
                 const intentRadio = this.querySelector('input[name="intent_radio"]:checked');
                 
                 if (!intentRadio) {
@@ -110,8 +129,8 @@
                 // Set the hidden service input to map directly to model SERVICE_CHOICES
                 document.getElementById('mid-page-service-hidden').value = intentValue;
                 
-                // Populate the hidden message field with city and selected intent
-                const messageContent = `City of Residence: ${city}\nSelected Intent: ${intentLabel}\nSubmitted via homepage mid-page callback form.`;
+                // Populate the hidden message field with country and selected intent
+                const messageContent = `Country of Residence: ${countryName} (${countryCode})\nSelected Intent: ${intentLabel}\nSubmitted via homepage mid-page callback form.`;
                 document.getElementById('mid-page-message-hidden').value = messageContent;
             });
 

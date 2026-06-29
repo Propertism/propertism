@@ -432,7 +432,23 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
     from django.utils.html import strip_tags
     from django.conf import settings
 
-    subject = f"🚀 New Propertism Lead: {inquiry.name}"
+    intent_tag = "● LEAD |"
+    msg_lower = (inquiry.message or "").lower()
+    
+    if getattr(inquiry, 'confidence_score', 100) < 50:
+        intent_tag = "⚠ SPAM |"
+    elif 'sell' in msg_lower:
+        intent_tag = "⚑ SELL |"
+    elif 'buy' in msg_lower or 'purchase' in msg_lower:
+        intent_tag = "✦ BUY |"
+    elif 'rent' in msg_lower or 'lease' in msg_lower:
+        intent_tag = "✧ RENT |"
+    elif 'manage' in msg_lower:
+        intent_tag = "■ MANAGE |"
+    elif getattr(inquiry, 'property', None):
+        intent_tag = "❖ PROPERTY |"
+        
+    subject = f"{intent_tag} New Propertism Lead: {inquiry.name}"
     
     # Render HTML email
     submission_time = inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')
