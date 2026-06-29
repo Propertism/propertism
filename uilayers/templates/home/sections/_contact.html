@@ -126,29 +126,42 @@
                         <input type="hidden" name="form_source" value="General Inquiry">
                         <div class="hf-field-row">
                             <div class="hf-field-group">
-                                <label class="hf-field-label">Full Name</label>
+                                <label class="hf-field-label">Full Name <span style="color: #ff4d4d;">*</span></label>
                                 <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required />
                             </div>
 
                             <div class="hf-field-group">
-                                <label class="hf-field-label">Email Address</label>
+                                <label class="hf-field-label">Email Address <span style="color: #ff4d4d;">*</span></label>
                                 <input class="hf-field-input" name="email" type="email" placeholder="email@example.com" required />
                             </div>
                         </div>
 
-                        <div class="hf-field-group">
-                            <label class="hf-field-label">Service Needed</label>
-                            <select class="hf-field-select" name="service" required>
-                                <option value="" disabled selected>Select Service Needed</option>
-                                {% for value, label in contact_service_choices %}
-                                <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="hf-field-row" style="display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; gap: 16px;">
+                            <div class="hf-field-group" style="position: relative; z-index: 9999;">
+                                <label class="hf-field-label">Country Code <span style="color: #ff4d4d;">*</span></label>
+                                <select class="hf-field-input" name="contact_country_code" id="contact_country_code" required style="height: 48px !important;">
+<option value="">Select Country...</option>
+<option value="+91" data-iso="in">India (+91)</option>
+                                </select>
+                            </div>
+                            <div class="hf-field-group">
+                                <label class="hf-field-label">Phone Number <span style="color: #ff4d4d;">*</span></label>
+                                <input class="hf-field-input" name="phone" type="tel" placeholder="Phone Number" required pattern="^[0-9\-\+\s](7, 15)$" title="Please enter a valid phone number (7-15 digits)" style="height: 48px !important;" />
+                            </div>
+                            <div class="hf-field-group">
+                                <label class="hf-field-label">Service Needed <span style="color: #ff4d4d;">*</span></label>
+                                <select class="hf-field-select" name="service" required style="height: 48px !important;">
+                                    <option value="" disabled selected>Select Service Needed</option>
+                                    {% for value, label in contact_service_choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
 
                         <div class="hf-field-row-submit">
                             <div class="hf-field-group">
-                                <label class="hf-field-label">Message</label>
+                                <label class="hf-field-label">Message <span style="color: #ff4d4d;">*</span></label>
                                 <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required></textarea>
                             </div>
 
