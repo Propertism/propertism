@@ -91,7 +91,7 @@ def validate_production_endpoints():
     print("PRIORITY 2: PRODUCTION VALIDATION CHECKS")
     print("="*80)
     
-    client = Client()
+    client = Client(HTTP_HOST='localhost')
     validation_results = {}
     
     # Test 1: Sitemap

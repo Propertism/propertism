@@ -16,13 +16,18 @@
 | 43 | June 28 | **realBOT HOME PAGE TEASER LOCK. Enabled the glowing circular realBOT trigger logo globally as a visual teaser on all pages with custom hover titles, disabled chatbot launch action on the main page to show an elegant, custom navy-and-gold "Coming Soon" notification toast, and preserved the full interactive panel preview on the /realbot/ URL.** | ✅ |
 | 44 | June 28 | **SCCB-PROP-MGMT-M1.1-PROFILE-001: VIJI MUNUSWAMY PROFILE INTEGRATION & LAYOUT POLISH. Added Viji Munuswamy as Technology Consultant & Systems Architect to the Management section, created custom high-fidelity profile template, mapped production-safe model data migrations supporting django-modeltranslation, styled footer to include Olivine branding, and resolved Inquiries/chatbot floating action button overlap.** | ✅ |
 | 45 | June 28 | **TAMILSELVAN PROFILE CONTACT INTEGRATION. Integrated contact details (two emails, personal LinkedIn, and company LinkedIn) into Tamilselvan's profile page. Configured primary and secondary emails to be loaded from environment variables (TAMILSELVAN_EMAIL_1 and TAMILSELVAN_EMAIL_2) with clean fallback defaults. Added corresponding CSS styling to v4-team-detail.css. Added unit tests verifying correct rendering of the contact info.** | ✅ |
+| 46 | June 29 | **QUICK INQUIRY & CONTACT FORM REFINEMENTS. Improved country selection dropdown UX, added custom autofocus, reorganized field layout, and marked mandatory fields.** | ✅ |
+| 47 | June 29 | **PRODUCTION MEDIA PERSISTENCE ANALYSIS & EMAIL NOTIFICATION POLISH. Documented AWS ephemeral storage media loss in AWS-post-deploy-fixes.md, suppressed missing email warnings for Quick Inquiry leads, and synchronized Country Code LOV across forms.** | ✅ |
+| 48 | June 30 | **INLINE CAPTCHA INTEGRATION & USER INPUT PRESERVATION. Refactored the math CAPTCHA verification to render inline inside Quick Inquiry, General Contact, and Property Detail Sidebar forms. Used a show-hide replacement logic that hides the message/intent elements and shows the CAPTCHA block in their place (passing variables as hidden inputs) to avoid layout shifts. Configured forms to use instant jump viewport anchors and initialized TomSelect on the General Contact country code dropdown. Registered CAPTCHA_ENABLE and CAPTCHA_TEST_MODE flags in feature_flags.json (both disabled by default).** | ✅ |
+| 49 | June 30 | **PROPERTISM GROWTH AUDIT, RELATED LINKS CONTEXT PRESERVATION, CLARITY INTEGRATION, GBP LOCAL BUSINESS SCHEMA & WHATSAPP TOKEN AUTO-REFRESH. Completed growth audit delivering 19 reports, fixed production email alerts block via ADMIN_EMAIL configuration, corrected dynamic related links builder to preserve geo-targeted nri_origin context on NRI target pages, enabled production CDN cache headers (1-year duration), integrated Microsoft Clarity telemetry with dev local exclusions, expanded LocalBusiness/RealEstateAgent schema structured metadata, implemented a cached WhatsApp token auto-renewal (fb_exchange_token) flow with admin email warnings on OAuth expiry, verified active AWS EB / CloudFront CDN infrastructure, and added tests with all 46 unit test runs successfully passing.** | ✅ |
+| 50 | July 02 | **GODADDY AIRO REMOVAL & AWS PRODUCTION RESTORATION. Resolved production-blocking override of propertism.in routing. Removed GoDaddy Website Builder (Airo) associations, configured root domain forwarding to canonical www subdomain, and verified AWS CloudFront CDN / Elastic Beanstalk routing. Validated live sitemap XML, robots.txt, and JSON-LD schema markup.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: June 29, 2026 (14:23 IST)
-**Last Update**: SESSION 46 - QUICK INQUIRY & CONTACT FORM REFINEMENTS. Improved country selection dropdown UX, added custom autofocus, reorganized field layout, and marked mandatory fields.
+**Last Updated On**: July 02, 2026 (17:35 IST)
+**Last Update**: SESSION 50 - GODADDY AIRO REMOVAL & AWS PRODUCTION RESTORATION.
 
 ---
 
@@ -656,9 +661,33 @@ Continue from this checkpoint tomorrow.
 
 ---
 
+---
+
+## Session 50 Detail — July 02, 2026
+
+**Session ID**: `CODEX-SESSION-0207-A`
+**Focus**: GoDaddy Airo Removal & AWS Production Restoration
+
+### Part 1: Production Hijack Investigation & Analysis ✅
+- Investigated DNS resolution for propertism.in which resolved to AWS Global Accelerator IPs (`76.223.105.230` and `13.248.243.5`) owned by GoDaddy DPS (Website Builder / Airo), serving a "Launching Soon" template.
+- Checked direct AWS CloudFront domain `d1yv5od4i0bho.cloudfront.net` with Host headers, confirming the backend Django application on Elastic Beanstalk was 100% healthy and accessible.
+
+### Part 2: DNS & Domain Forwarding Restoration ✅
+- Guided the removal of GoDaddy Airo Website Builder associations.
+- Configured a permanent 301 redirect on GoDaddy from `propertism.in` to `https://www.propertism.in` (forwarding via HTTPS, Forward Only).
+- Verified `www.propertism.in` CNAME propagation resolves directly to `d1yv5od4i0bho.cloudfront.net` (AWS CloudFront IPs) globally.
+
+### Part 3: Live Verification & Smoke Testing ✅
+- Validated that `http://propertism.in` GET requests successfully redirect to `https://www.propertism.in/` and load the homepage content.
+- Smoke tested the live website, confirming the premium navy-and-gold layout, interactive callback/contact forms, and realBOT are fully operational.
+- Verified `/sitemap.xml` (containing 805 URLs) and `/robots.txt` return HTTP 200 OK.
+- Inspected rendered blog posts to confirm `BreadcrumbList`, `Article`, and `FAQPage` JSON-LD schemas load correctly.
+
+---
+
 ## NEXT SESSION PLAN
 **Focus**: Google Search Console Indexing & Monitoring
-- [x] Submit sitemap `https://www.propertism.in/sitemap.xml` to GSC (Success: 780 pages discovered).
+- [x] Submit sitemap `https://www.propertism.in/sitemap.xml` to GSC (Success: 805 pages discovered).
 - [ ] Inspect and request indexing for the remaining 4 Phase B URLs (deferred due to GSC daily limit):
   - `https://www.propertism.in/blog/nri-real-estate-investment-chennai-guide/`
   - `https://www.propertism.in/blog/nri-property-checklist-chennai-owners-abroad/`
