@@ -152,6 +152,10 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Whitenoise Static Caching Headers (CloudFront Edge caching)
+WHITENOISE_MAX_AGE = 31536000  # 1 year cache duration
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+
 # Media files — SCCB HARD OVERRIDE FOR LOCAL STORAGE
 if USE_LOCAL_STORAGE:
     # FORCE local storage - NO S3 AT ALL
@@ -181,7 +185,7 @@ else:
         AWS_DEFAULT_ACL = None
         AWS_S3_FILE_OVERWRITE = False
         AWS_QUERYSTRING_AUTH = False
-        AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+        AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=31536000, public, immutable'}
         MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
         MEDIA_ROOT = ''
     else:
@@ -338,6 +342,22 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@propertism.in')
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'info@propertism.in')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
+
+# Notification recipients — all inquiry/lead alerts go to both inboxes in production
+_extra_recipients = os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com')
+ADMIN_EMAILS = list({ADMIN_EMAIL, _extra_recipients})
+
+# Canonical host configurations
+CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'www.propertism.in')
+CANONICAL_SCHEME = os.environ.get('CANONICAL_SCHEME', 'https')
+CANONICAL_REDIRECT_HOSTS = os.environ.get(
+    'CANONICAL_REDIRECT_HOSTS',
+    'propertism.in,propertism.com,www.propertism.com'
+).split(',')
+
+# Microsoft Clarity Project ID
+CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')
 
 # ==============================================================================
 # ADMIN SECURITY
@@ -397,6 +417,8 @@ if not DEBUG:
 WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
 WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
 WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +
+WHATSAPP_APP_ID = os.environ.get('WHATSAPP_APP_ID', '')
+WHATSAPP_APP_SECRET = os.environ.get('WHATSAPP_APP_SECRET', '')
 
 # Tamilselvan Profile Contact Settings
 TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')

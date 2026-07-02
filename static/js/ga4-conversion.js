@@ -20,6 +20,10 @@
   };
 
   function fire(eventName, extra) {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      console.log("Local analytics event bypassed:", eventName, extra);
+      return;
+    }
     if (typeof gtag !== "function") return;
     gtag("event", eventName, Object.assign({}, PAGE_CONTEXT, {
       event_timestamp: new Date().toISOString(),
@@ -44,10 +48,11 @@
   document.addEventListener("submit", function (e) {
     var form = e.target;
     if (!form || form.tagName !== "FORM") return;
-    // Match lead forms, contact forms, NRI assist forms
+    // Match lead forms, contact forms, NRI assist forms, and home page inquiries
     var isLead = form.matches(
       "#lead-form, .lead-form, #contact-form, .contact-form, " +
-      "[data-form='lead'], [data-form='contact'], .js-lead-form"
+      "[data-form='lead'], [data-form='contact'], .js-lead-form, " +
+      "#propertism-hf-form, #propertism-mid-page-form"
     );
     if (!isLead) return;
     var formType = form.dataset.form || form.id || "contact";

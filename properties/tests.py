@@ -10,8 +10,8 @@ from django.urls import reverse
 
 from content.templatetags.seo_tags import property_schema
 
-from .models import Inquiry, Property, PropertyPhoto, PropertyType
-from .serializers import PropertySerializer
+from properties.models import Inquiry, Property, PropertyPhoto, PropertyType
+from properties.serializers import PropertySerializer
 
 
 class PropertyCurrencyFormattingTests(TestCase):
@@ -28,10 +28,10 @@ class PropertyCurrencyFormattingTests(TestCase):
             property_type=self.property_type,
         )
 
-        self.assertEqual(property_obj.formatted_price_value, "15,00,000.00")
-        self.assertEqual(property_obj.formatted_price, "₹15,00,000.00")
-        self.assertEqual(property_obj.price_in_words, "Fifteen Lakh")
-        self.assertEqual(property_obj.price_in_words_with_currency, "Fifteen Lakh Indian Rupees")
+        self.assertEqual(property_obj.formatted_price_value, "15,00,000")
+        self.assertEqual(property_obj.formatted_price, "₹15,00,000")
+        self.assertEqual(property_obj.price_in_words, "Fifteen Lakhs")
+        self.assertEqual(property_obj.price_in_words_with_currency, "Fifteen Lakhs Indian Rupees")
 
     def test_usd_price_uses_international_grouping_and_words(self):
         property_obj = Property.objects.create(
@@ -95,9 +95,22 @@ class PropertyCurrencyFormattingTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "$250,000.00")
         self.assertContains(response, "Two Hundred Fifty Thousand US Dollars")
-        self.assertContains(response, "Guide Price")
-        self.assertContains(response, "Back to Properties")
-        self.assertContains(response, "css/premium-styles.css")
+        self.assertContains(response, "Back to Asset Portfolio")
+
+    @override_settings(CLARITY_PROJECT_ID="test_clarity_id_123")
+    def test_clarity_script_rendered_when_configured(self):
+        property_obj = Property.objects.create(
+            title="Clarity Test Property",
+            description="Clarity verification",
+            price=Decimal("150000.00"),
+            currency="INR",
+            location="Chennai",
+            property_type=self.property_type,
+        )
+        response = self.client.get(reverse("property_detail", args=[property_obj.pk]), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "test_clarity_id_123")
+        self.assertContains(response, "https://www.clarity.ms/tag/")
 
     def test_homepage_featured_properties_render_formatted_price(self):
         property_obj = Property.objects.create(
@@ -269,7 +282,7 @@ class InquiryReplyTests(TestCase):
         self.assertEqual(len(mail.outbox), 0)
 
     def test_inquiry_replies_returns_sent_replies_json(self):
-        from .models import InquiryReply
+        from properties.models import InquiryReply
         InquiryReply.objects.create(
             inquiry=self.inquiry,
             sent_by=self.staff_user,

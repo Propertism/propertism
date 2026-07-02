@@ -37,9 +37,9 @@
                 Tell us about your property
             </h2>
 
-            <form action="{% url 'contact' %}" method="POST" id="propertism-mid-page-form">
+            <form action="{% url 'contact' %}#mid-page-lead-section" method="POST" id="propertism-mid-page-form">
                 {% csrf_token %}
-                {% include 'includes/_form_validation_fields.html' %}
+                {% include 'includes/_form_validation_fields_hidden.html' %}
                 <input type="hidden" name="email" value="">
                 <input type="hidden" name="form_source" value="Quick Inquiry">
                 <input type="hidden" name="service" id="mid-page-service-hidden" value="consultation">
@@ -48,7 +48,7 @@
                 <div class="hf-field-row">
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">Name <span style="color: #ff4d4d;">*</span></label>
-                        <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required style="height: 48px !important;" />
+                        <input class="hf-field-input" name="name" type="text" placeholder="Your Name" value="{{ prefilled_name|default:'' }}" required autocomplete="name" style="height: 48px !important;" />
                     </div>
 
 <div class="hf-field-group" style="margin-bottom: 0 !important; position: relative; z-index: 9999;">
@@ -307,29 +307,34 @@
 </select>
                     </div>
 
-<div class="hf-field-group" style="margin-bottom: 0 !important;">
+                    <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">WhatsApp / Phone <span style="color: #ff4d4d;">*</span></label>
-                        <input class="hf-field-input" name="phone" type="text" placeholder="WhatsApp / Phone" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)" style="height: 48px !important;" />
+                        <input class="hf-field-input" name="phone" type="tel" placeholder="WhatsApp / Phone" value="{{ prefilled_phone|default:'' }}" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)" autocomplete="tel" style="height: 48px !important;" />
                     </div>
                 </div>
 
-                <div class="hf-field-group" style="margin-bottom: 24px !important;">
-                    <label class="hf-field-label" style="margin-bottom: 8px !important;">What do you want to do? <span style="color: #ff4d4d;">*</span></label>
-                    <div class="intent-radios">
-                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
-                            <input type="radio" name="intent_radio" value="buy-sell" required style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
-                            <span>I want to sell my Chennai property</span>
-                        </label>
-                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
-                            <input type="radio" name="intent_radio" value="rental" style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
-                            <span>I want to rent out my Chennai property</span>
-                        </label>
-                        <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
-                            <input type="radio" name="intent_radio" value="industrial" style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
-                            <span>I want someone to manage my property</span>
-                        </label>
+                {% if show_captcha_mid %}
+                    <input type="hidden" name="intent_radio" value="{{ intent_radio_val|default:'industrial' }}">
+                    {% include 'includes/_form_validation_fields_captcha.html' with show_captcha=show_captcha_mid %}
+                {% else %}
+                    <div class="hf-field-group" style="margin-bottom: 24px !important;">
+                        <label class="hf-field-label" style="margin-bottom: 8px !important;">What do you want to do? <span style="color: #ff4d4d;">*</span></label>
+                        <div class="intent-radios">
+                            <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                                <input type="radio" name="intent_radio" value="buy-sell" required {% if intent_radio_val == "buy-sell" %}checked{% endif %} style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                                <span>I want to sell my Chennai property</span>
+                            </label>
+                            <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                                <input type="radio" name="intent_radio" value="rental" {% if intent_radio_val == "rental" %}checked{% endif %} style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                                <span>I want to rent out my Chennai property</span>
+                            </label>
+                            <label class="radio-label" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans-main); font-size: 0.9rem; color: #FFFFFF; cursor: pointer;">
+                                <input type="radio" name="intent_radio" value="industrial" {% if intent_radio_val == "industrial" or not intent_radio_val %}checked{% endif %} style="accent-color: var(--brand-gold); width: 16px; height: 16px;" />
+                                <span>I want someone to manage my property</span>
+                            </label>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 <button type="submit" class="hf-submit-btn" style="height: 52px !important; font-size: 0.8rem !important; letter-spacing: 0.15em !important; max-width: 400px; margin: 0 auto; display: flex !important;">
                     Our Team Will Contact You Within 24 Hours
@@ -510,7 +515,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var el = document.querySelector('select[name="country_code"]');
     if (el) {
-        new TomSelect(el, {
+        var control = new TomSelect(el, {
             create: false,
             dropdownParent: "body",
             sortField: { field: "text", direction: "asc" },
@@ -527,6 +532,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        {% if prefilled_country_code %}
+        control.setValue("{{ prefilled_country_code }}");
+        {% endif %}
     }
 });
 </script>
+
+{% if show_captcha_mid %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const formSection = document.getElementById("mid-page-lead-section");
+        if (formSection) {
+            formSection.scrollIntoView();
+        }
+    });
+</script>
+{% endif %}

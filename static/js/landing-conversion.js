@@ -28,6 +28,10 @@ function getPageContext() {
 }
 
 function trackLandingEvent(eventName, extraPayload = {}) {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        console.log("[landing-track-bypass] Local development:", eventName, extraPayload);
+        return;
+    }
     const context = getPageContext();
     const payload = {
         intent_type: context.intentType,
@@ -426,6 +430,9 @@ function toggleChatbot() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Track landing page visit event on page load
+    trackLandingEvent("landing_page_visit");
+
     setTimeout(() => {
         showBotPrompt();
     }, 5000);

@@ -115,8 +115,8 @@ def redirect_to_home_section(request, section_name):
     return redirect(get_home_section_links()[section_name])
 
 
-def home(request):
-    """Homepage view."""
+def get_homepage_context(request):
+    """Generates the context dict for the homepage."""
     context = get_company_context()
     company = context["company"]
     all_services = get_active_services()
@@ -196,7 +196,16 @@ def home(request):
             "breadcrumbs": [{"name": "Home", "url": None}],
         }
     )
+    from realtor_project.features import is_feature_enabled
+    context["captcha_test_mode"] = is_feature_enabled("CAPTCHA_TEST_MODE", default=False)
+    return context
+
+
+def home(request):
+    """Homepage view."""
+    context = get_homepage_context(request)
     return render(request, "home-premium.html", context)
+
 
 
 def services(request):
@@ -360,9 +369,20 @@ def contact(request):
                 request.session['captcha_question'] = f"{num1} + {num2}"
                 request.session['captcha_expected_answer'] = str(num1 + num2)
                 
-                return render(request, "captcha_challenge.html", {
-                    "original_post": request.POST
+                captcha_form_source = request.POST.get("form_source", "Unknown Form")
+                context = get_homepage_context(request)
+                context.update({
+                    "show_captcha_mid": captcha_form_source == "Quick Inquiry",
+                    "show_captcha_contact": captcha_form_source == "General Inquiry",
+                    "prefilled_name": request.POST.get("name", ""),
+                    "prefilled_email": request.POST.get("email", ""),
+                    "prefilled_phone": request.POST.get("phone", ""),
+                    "prefilled_country_code": request.POST.get("country_code", "") or request.POST.get("contact_country_code", ""),
+                    "prefilled_service": request.POST.get("service", ""),
+                    "prefilled_message": request.POST.get("message", ""),
+                    "intent_radio_val": request.POST.get("intent_radio", ""),
                 })
+                return render(request, "home-premium.html", context)
             else:
                 # CAPTCHA Passed!
                 assessment['confidence_score'] = max(assessment['confidence_score'], 75)
@@ -371,11 +391,33 @@ def contact(request):
                 request.session.pop('captcha_question', None)
 
         try:
+            # Capture UTM parameters, Referrer, and Landing page for attribution
+            utm_source = request.POST.get("utm_source", "").strip()
+            utm_medium = request.POST.get("utm_medium", "").strip()
+            utm_campaign = request.POST.get("utm_campaign", "").strip()
+            utm_term = request.POST.get("utm_term", "").strip()
+            utm_content = request.POST.get("utm_content", "").strip()
+            referrer = request.POST.get("referrer", "").strip()
+            landing_page = request.POST.get("landing_page", "").strip()
+
+            msg_body = request.POST.get("message", "") or ""
+            attribution_lines = []
+            if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
+            if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
+            if utm_campaign: attribution_lines.append(f"UTM Campaign: {utm_campaign}")
+            if utm_term: attribution_lines.append(f"UTM Term: {utm_term}")
+            if utm_content: attribution_lines.append(f"UTM Content: {utm_content}")
+            if referrer: attribution_lines.append(f"Referrer: {referrer}")
+            if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
+
+            if attribution_lines:
+                msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+
             inquiry = PropertyInquiry.objects.create(
                 name=request.POST.get("name"),
                 email=request.POST.get("email"),
                 phone=request.POST.get("phone", ""),
-                message=request.POST.get("message"),
+                message=msg_body,
                 property=None,  # Quote form doesn't link to specific property
                 status='pending',
                 form_source=request.POST.get("form_source", "Unknown Form"),
@@ -391,7 +433,7 @@ def contact(request):
             try:
                 send_rfq_notification(inquiry, form_source=form_source)
             except Exception as email_exc:
-                logger.error("Failed to send email notification: %s", email_exc)
+                logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
                 # Don't fail the request if email fails
             
             messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
@@ -515,6 +557,16 @@ def send_landing_lead_notification(lead):
         extras.append(f"Occupancy: {qualification['occupancy_status']}")
     if qualification.get("expected_rent"):
         extras.append(f"Expected rent: {qualification['expected_rent']}")
+    if qualification.get("utm_source"):
+        extras.append(f"UTM Source: {qualification['utm_source']}")
+    if qualification.get("utm_medium"):
+        extras.append(f"UTM Medium: {qualification['utm_medium']}")
+    if qualification.get("utm_campaign"):
+        extras.append(f"UTM Campaign: {qualification['utm_campaign']}")
+    if qualification.get("referrer"):
+        extras.append(f"Referrer: {qualification['referrer']}")
+    if qualification.get("landing_page"):
+        extras.append(f"Landing Page: {qualification['landing_page']}")
     if lead.expected_price_range:
         extras.append(f"Expected price range: {lead.expected_price_range}")
     if lead.preferred_contact_time:
@@ -536,7 +588,7 @@ def send_landing_lead_notification(lead):
     ]
 
     if extras:
-        message_lines.extend(["", "Qualification:"])
+        message_lines.extend(["", "Qualification & Attribution:"])
         message_lines.extend(extras)
 
     message_lines.extend(
@@ -556,7 +608,7 @@ def send_landing_lead_notification(lead):
             fail_silently=False,
         )
     except Exception as exc:
-        logger.error("Landing lead email notification failed: %s", exc)
+        logger.exception("Landing lead email notification failed")
 
     whatsapp_lines = [
         "Landing Lead",
@@ -567,7 +619,7 @@ def send_landing_lead_notification(lead):
     if lead.geo_origin:
         whatsapp_lines.append(f"Geo: {lead.geo_origin}")
     if extras:
-        whatsapp_lines.extend(extras[:2])
+        whatsapp_lines.extend(extras[:3])
     send_whatsapp_notification("\n".join(whatsapp_lines))
 
 
@@ -615,7 +667,20 @@ def landing_lead_api(request):
     if expected_rent:
         qualification_data["expected_rent"] = expected_rent
 
-    lead_stage = "qualified" if qualification_data else "initiated"
+    # Capture UTM and Referrer parameters
+    utm_source = request.POST.get("utm_source", "").strip()
+    utm_medium = request.POST.get("utm_medium", "").strip()
+    utm_campaign = request.POST.get("utm_campaign", "").strip()
+    referrer = request.POST.get("referrer", "").strip()
+    landing_page = request.POST.get("landing_page", "").strip()
+
+    if utm_source: qualification_data["utm_source"] = utm_source
+    if utm_medium: qualification_data["utm_medium"] = utm_medium
+    if utm_campaign: qualification_data["utm_campaign"] = utm_campaign
+    if referrer: qualification_data["referrer"] = referrer
+    if landing_page: qualification_data["landing_page"] = landing_page
+
+    lead_stage = "qualified" if (selling_timeline or occupancy_status or expected_rent) else "initiated"
 
     lead = LandingLead.objects.create(
         name=name,
@@ -632,7 +697,7 @@ def landing_lead_api(request):
     try:
         send_landing_lead_notification(lead)
     except Exception as exc:
-        logger.error("Failed to send landing lead notification: %s", exc)
+        logger.exception("Failed to send landing lead notification")
 
     return JsonResponse(
         {
@@ -683,13 +748,21 @@ def landing_lead_followup_api(request):
 def send_whatsapp_notification(text):
     """
     Sends a WhatsApp message via the Meta official Cloud API.
-    Required ENV vars: WHATSAPP_PHONE_ID, WHATSAPP_ACCESS_TOKEN, WHATSAPP_ADMIN_PHONE
+    Uses cached/renewed token if available to prevent recurring expiry.
     """
     import requests
+    from django.core.cache import cache
+    from django.core.mail import send_mail
     
     phone_id = getattr(settings, 'WHATSAPP_PHONE_ID', None)
-    token = getattr(settings, 'WHATSAPP_ACCESS_TOKEN', None)
     admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', None)
+    
+    # Retrieve active token from cache (allows dynamic updates/exchanges without redeployment)
+    token = cache.get("whatsapp_access_token")
+    if not token:
+        token = getattr(settings, 'WHATSAPP_ACCESS_TOKEN', None)
+        if token:
+            cache.set("whatsapp_access_token", token, timeout=None) # cache permanently until updated/invalidated
 
     if not all([phone_id, token, admin_phone]):
         logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text} (API not configured)")
@@ -711,10 +784,81 @@ def send_whatsapp_notification(text):
         response = requests.post(url, json=payload, headers=headers, timeout=5)
         if response.status_code == 200:
             logger.info("WhatsApp notification sent successfully.")
+            return
+
+        # Check if the error is due to token expiry (OAuth error code 190)
+        try:
+            res_data = response.json()
+            error_info = res_data.get("error", {})
+            error_code = error_info.get("code")
+            error_msg = error_info.get("message", "")
+        except Exception:
+            error_info = {}
+            error_code = None
+            error_msg = ""
+        
+        is_token_expired = (response.status_code == 401 or error_code == 190 or "token" in error_msg.lower())
+        
+        if is_token_expired:
+            logger.error("WhatsApp Access Token is expired or invalid. Attempting refresh...")
+            
+            # Check if App ID and App Secret are configured for automatic token renewal
+            app_id = getattr(settings, 'WHATSAPP_APP_ID', '')
+            app_secret = getattr(settings, 'WHATSAPP_APP_SECRET', '')
+            
+            refreshed = False
+            if app_id and app_secret:
+                # Exchange the current short-lived token for a long-lived 60-day token
+                exchange_url = "https://graph.facebook.com/v21.0/oauth/access_token"
+                params = {
+                    "grant_type": "fb_exchange_token",
+                    "client_id": app_id,
+                    "client_secret": app_secret,
+                    "fb_exchange_token": token
+                }
+                try:
+                    exc_resp = requests.get(exchange_url, params=params, timeout=5)
+                    if exc_resp.status_code == 200:
+                        new_token = exc_resp.json().get("access_token")
+                        if new_token:
+                            cache.set("whatsapp_access_token", new_token, timeout=None)
+                            logger.info("WhatsApp access token renewed successfully.")
+                            # Retry sending the message with the new token
+                            headers["Authorization"] = f"Bearer {new_token}"
+                            retry_resp = requests.post(url, json=payload, headers=headers, timeout=5)
+                            if retry_resp.status_code == 200:
+                                logger.info("WhatsApp notification sent successfully after token refresh.")
+                                refreshed = True
+                except Exception as exc:
+                    logger.exception("Failed to exchange WhatsApp token")
+
+            if not refreshed:
+                # If auto-refresh failed or was not configured, send a proactive warning email to the administrator
+                logger.error("Auto-refresh not configured or failed. Alerting administrator via email.")
+                admin_email = getattr(settings, 'ADMIN_EMAIL', 'info@propertism.in')
+                try:
+                    send_mail(
+                        subject="⚠️ Action Required: Propertism WhatsApp Access Token Expired",
+                        message=(
+                            "Hello Administrator,\n\n"
+                            "The WhatsApp access token configured for lead notifications has expired or is invalid.\n"
+                            f"Meta API Error: {error_msg if error_msg else 'Unknown Error'}\n\n"
+                            "Please perform one of the following:\n"
+                            "1. Generate a permanent System User Token in your Meta Business Suite (Settings -> System Users) that never expires, and configure it as WHATSAPP_ACCESS_TOKEN.\n"
+                            "2. If you are using temporary tokens, configure WHATSAPP_APP_ID and WHATSAPP_APP_SECRET in settings to enable automatic 60-day token renewal.\n\n"
+                            "Regards,\nPropertism Platform Integration"
+                        ),
+                        from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'info@propertism.in'),
+                        recipient_list=[admin_email],
+                        fail_silently=True
+                    )
+                except Exception as email_exc:
+                    logger.exception("Failed to send token expiry email alert")
         else:
             logger.error(f"WhatsApp API Error {response.status_code}: {response.text}")
+
     except Exception as e:
-        logger.error(f"Failed to send WhatsApp notification: {e}")
+        logger.exception("Failed to send WhatsApp notification")
 
 
 def newsletter_subscribe(request):

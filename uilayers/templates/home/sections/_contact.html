@@ -120,23 +120,23 @@
                 <h1>Start your property <em>oversight journey</em></h1>
 
                 <div id="hf-theForm">
-                    <form action="{% url 'contact' %}" method="POST" id="propertism-hf-form">
+                    <form action="{% url 'contact' %}#contact-section" method="POST" id="propertism-hf-form">
                         {% csrf_token %}
-                        {% include 'includes/_form_validation_fields.html' %}
+                        {% include 'includes/_form_validation_fields_hidden.html' %}
                         <input type="hidden" name="form_source" value="General Inquiry">
                         <div class="hf-field-row">
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Full Name <span style="color: #ff4d4d;">*</span></label>
-                                <input class="hf-field-input" name="name" type="text" placeholder="Your Name" required />
+                                <input class="hf-field-input" name="name" type="text" placeholder="Your Name" value="{{ prefilled_name|default:'' }}" required autocomplete="name" />
                             </div>
 
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Email Address <span style="color: #ff4d4d;">*</span></label>
-                                <input class="hf-field-input" name="email" type="email" placeholder="email@example.com" required />
+                                <input class="hf-field-input" name="email" type="email" placeholder="email@example.com" value="{{ prefilled_email|default:'' }}" required autocomplete="email" />
                             </div>
                         </div>
 
-                        <div class="hf-field-row" style="display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; gap: 16px;">
+                        <div class="hf-field-row" style="display: grid; grid-template-columns: 1.4fr 1.1fr 1.5fr; gap: 16px;">
                             <div class="hf-field-group" style="position: relative; z-index: 9999;">
                                 <label class="hf-field-label">Country Code <span style="color: #ff4d4d;">*</span></label>
                                 <select class="hf-field-input" name="contact_country_code" id="contact_country_code" required style="height: 48px !important;">
@@ -393,24 +393,31 @@
                             </div>
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Phone Number <span style="color: #ff4d4d;">*</span></label>
-                                <input class="hf-field-input" name="phone" type="tel" placeholder="Phone Number" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)" style="height: 48px !important;" />
+                                <input class="hf-field-input" name="phone" type="tel" placeholder="Phone Number" value="{{ prefilled_phone|default:'' }}" required pattern="^[0-9\-\+\s]{7,15}$" title="Please enter a valid phone number (7-15 digits)" autocomplete="tel" style="height: 48px !important;" />
                             </div>
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Service Needed <span style="color: #ff4d4d;">*</span></label>
                                 <select class="hf-field-select" name="service" required style="height: 48px !important;">
-                                    <option value="" disabled selected>Select Service Needed</option>
+                                    <option value="" disabled {% if not prefilled_service %}selected{% endif %}>Select Service Needed</option>
                                     {% for value, label in contact_service_choices %}
-                                    <option value="{{ value }}">{{ label }}</option>
+                                    <option value="{{ value }}" {% if prefilled_service == value %}selected{% endif %}>{{ label }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
 
                         <div class="hf-field-row-submit">
-                            <div class="hf-field-group">
-                                <label class="hf-field-label">Message <span style="color: #ff4d4d;">*</span></label>
-                                <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required></textarea>
-                            </div>
+                            {% if show_captcha_contact %}
+                                <input type="hidden" name="message" value="{{ prefilled_message }}">
+                                <div style="flex: 1;">
+                                    {% include 'includes/_form_validation_fields_captcha.html' with show_captcha=show_captcha_contact %}
+                                </div>
+                            {% else %}
+                                <div class="hf-field-group" style="flex: 1;">
+                                    <label class="hf-field-label">Message <span style="color: #ff4d4d;">*</span></label>
+                                    <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required>{{ prefilled_message|default:'' }}</textarea>
+                                </div>
+                            {% endif %}
 
                             <button type="submit" class="hf-submit-btn">
                                 {{ company.contact_form_submit_text|default:"Send My Request" }}
@@ -418,6 +425,45 @@
                         </div>
                     </form>
                 </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var el = document.getElementById('contact_country_code');
+                    if (el) {
+                        var control = new TomSelect(el, {
+                            create: false,
+                            dropdownParent: "body",
+                            sortField: { field: "text", direction: "asc" },
+                            render: {
+                                option: function(data, escape) {
+                                    var iso = data.$option.getAttribute('data-iso');
+                                    var flagHtml = iso ? '<img src="https://flagcdn.com/w20/' + escape(iso) + '.png" style="width:20px; margin-right:8px; vertical-align:middle;">' : '';
+                                    return '<div>' + flagHtml + escape(data.text) + '</div>';
+                                },
+                                item: function(data, escape) {
+                                    var iso = data.$option.getAttribute('data-iso');
+                                    var flagHtml = iso ? '<img src="https://flagcdn.com/w20/' + escape(iso) + '.png" style="width:20px; margin-right:8px; vertical-align:middle;">' : '';
+                                    return '<div>' + flagHtml + escape(data.text) + '</div>';
+                                }
+                            }
+                        });
+                        {% if prefilled_country_code %}
+                        control.setValue("{{ prefilled_country_code }}");
+                        {% endif %}
+                    }
+                });
+                </script>
+
+                {% if show_captcha_contact %}
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const formSection = document.getElementById("contact-section");
+                        if (formSection) {
+                            formSection.scrollIntoView();
+                        }
+                    });
+                </script>
+                {% endif %}
 
                 <div id="hf-successMsg" {% if messages %}class="show"{% endif %}>
                     <p class="hf-success-heading">Request Received</p>

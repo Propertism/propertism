@@ -444,4 +444,174 @@ class TamilselvanContactDetailsTests(TestCase):
             self.assertContains(response, "https://www.linkedin.com/company/propertism/?viewAsMember=true")
 
 
+class CaptchaVerificationTests(TestCase):
+    def setUp(self):
+        # Create company info which is needed for the homepage and redirection logic
+        from content.models import CompanyInfo
+        CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        EXTRA_NOTIFICATION_EMAIL="propertism.tamil@gmail.com",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_low_score_triggers_captcha_and_correct_resolution_submits(self, mock_is_feature_enabled, mock_send_whatsapp):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else False
+        # 1. Post a lead that triggers captcha (e.g. Honeypot populated)
+        from properties.models import Inquiry
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        response = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Spam Bot",
+                "email": "spam@example.com",
+                "phone": "+919876543210",
+                "message": "Cheap traffic and viagra",
+                "website_url_check": "http://spam-website.com",  # Honeypot filled
+                "form_source": "General Inquiry",
+            }
+        )
+
+        # It should render home-premium.html (status code 200) instead of redirecting
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "home-premium.html")
+        self.assertTrue(response.context.get("show_captcha_contact"))
+        self.assertFalse(response.context.get("show_captcha_mid"))
+        self.assertIn("captcha_expected_answer", self.client.session)
+        self.assertIn("captcha_question", self.client.session)
+
+        expected_answer = self.client.session["captcha_expected_answer"]
+
+        # 2. Post incorrect captcha answer
+        response_failed = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Spam Bot",
+                "email": "spam@example.com",
+                "phone": "+919876543210",
+                "message": "Cheap traffic and viagra",
+                "website_url_check": "http://spam-website.com",
+                "form_source": "General Inquiry",
+                "captcha_answer": str(int(expected_answer) + 1),  # Incorrect answer
+            }
+        )
+
+        # Still should be on the home-premium page with an error
+        self.assertEqual(response_failed.status_code, 200)
+        self.assertTemplateUsed(response_failed, "home-premium.html")
+        self.assertTrue(response_failed.context.get("show_captcha_contact"))
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        # 3. Post correct captcha answer (get new expected_answer since it was regenerated in step 2)
+        new_expected_answer = self.client.session["captcha_expected_answer"]
+        response_success = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Spam Bot",
+                "email": "spam@example.com",
+                "phone": "+919876543210",
+                "message": "Cheap traffic and viagra",
+                "website_url_check": "http://spam-website.com",
+                "form_source": "General Inquiry",
+                "captcha_answer": new_expected_answer,  # Correct answer
+            }
+        )
+
+
+        # Should successfully submit, create the inquiry, and redirect
+        self.assertEqual(response_success.status_code, 302)
+        self.assertEqual(Inquiry.objects.count(), 1)
+        inquiry = Inquiry.objects.first()
+        self.assertEqual(inquiry.name, "Spam Bot")
+        self.assertEqual(inquiry.confidence_score, 75)
+        self.assertEqual(inquiry.assessment_status, "Genuine (Verified by CAPTCHA)")
+
+
+class LocalBusinessSchemaTests(TestCase):
+    def test_organization_schema_includes_local_business_and_gbp_details(self):
+        from content.templatetags.seo_tags import organization_schema
+        import json
+        
+        # Test rendering the organization_schema tag
+        context = {}
+        result = organization_schema(context)
+        schema = json.loads(result['schema'])
+        
+        # Assert type, coordinates, map query, and working hours
+        self.assertEqual(schema["@context"], "https://schema.org")
+        self.assertEqual(schema["@type"], ["LocalBusiness", "RealEstateAgent"])
+        self.assertEqual(schema["geo"]["latitude"], "13.0531")
+        self.assertEqual(schema["geo"]["longitude"], "80.2094")
+        self.assertEqual(schema["hasMap"], "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai")
+        self.assertEqual(schema["openingHours"], "Mo-Sa 09:00-18:00")
+        self.assertEqual(schema["priceRange"], "$$")
+
+
+class RelatedLinksTests(TestCase):
+    def test_related_links_preserves_nri_origin_for_nri_targets(self):
+        # Visit the geo-targeted url
+        response = self.client.get('/dubai-uae/chennai-villas-for-sale/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        
+        # Check context
+        related_intents = response.context['related_intents']
+        
+        # Find 'nri-sell-property' in related_intents
+        sell_link = next((item for item in related_intents if item['slug'] == 'nri-sell-property'), None)
+        self.assertIsNotNone(sell_link)
+        self.assertEqual(sell_link['url'], '/dubai-uae/chennai-nri-sell-property/')
+        
+        # Find a domestic intent 'flats-for-sale'
+        flats_link = next((item for item in related_intents if item['slug'] == 'flats-for-sale'), None)
+        if flats_link:
+            self.assertEqual(flats_link['url'], '/chennai/flats-for-sale/')
+
+
+class WhatsAppNotificationTests(TestCase):
+    @patch('requests.post')
+    @patch('django.core.mail.send_mail')
+    def test_send_whatsapp_notification_sends_email_on_expired_token(self, mock_send_mail, mock_post):
+        from content.views import send_whatsapp_notification
+        from django.conf import settings
+        from django.core.cache import cache
+        from unittest.mock import MagicMock
+        
+        # Configure settings mock
+        settings.WHATSAPP_PHONE_ID = 'test-phone'
+        settings.WHATSAPP_ACCESS_TOKEN = 'test-token'
+        settings.WHATSAPP_ADMIN_PHONE = '1234567890'
+        settings.ADMIN_EMAIL = 'admin@example.com'
+        
+        # Clear cache first
+        cache.delete("whatsapp_access_token")
+        
+        # Mock requests.post to return 401 with OAuth expiry payload
+        mock_response = MagicMock()
+        mock_response.status_code = 401
+        mock_response.json.return_value = {
+            "error": {
+                "message": "Error validating access token: Session has expired",
+                "type": "OAuthException",
+                "code": 190,
+                "error_subcode": 463
+            }
+        }
+        mock_post.return_value = mock_response
+        
+        # Run notification
+        send_whatsapp_notification("Test message")
+        
+        # Verify that send_mail was called to alert administrator
+        mock_send_mail.assert_called_once()
+        args, kwargs = mock_send_mail.call_args
+        self.assertIn("Action Required: Propertism WhatsApp Access Token Expired", kwargs['subject'])
+        self.assertIn("admin@example.com", kwargs['recipient_list'])
+
+
+
+
 

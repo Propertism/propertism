@@ -248,7 +248,7 @@ def landing_page(request, city_slug, intent_slug, nri_origin=None):
                     "url": build_page_path(
                         city_slug,
                         rel_config["canonical_intent_slug"],
-                        nri_origin=nri_origin if config["is_nri"] else None,
+                        nri_origin=nri_origin if rel_config.get("is_nri") else None,
                     ),
                 }
             )
@@ -270,7 +270,7 @@ def landing_page(request, city_slug, intent_slug, nri_origin=None):
                     "url": build_page_path(
                         city_slug,
                         fallback_config["canonical_intent_slug"],
-                        nri_origin=nri_origin if config["is_nri"] else None,
+                        nri_origin=nri_origin if fallback_config.get("is_nri") else None,
                     ),
                 }
             )

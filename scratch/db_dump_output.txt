@@ -1,0 +1,566 @@
+--- INQUIRIES ---
+Total Inquiries: 20
+
+1. Inquiry ID: 1
+   Name: Viji
+   Email: vijaymgs@gmail.com
+   Phone: 
+   Source: Unknown Form
+   Status: pending
+   Confidence Score: None
+   Spam Score: 0
+   Assessment Status: Pending Validation
+   Validation Summary: []
+   Message: Connect
+   Created At: 2026-04-11 10:06:03.544144+00:00
+
+2. Inquiry ID: 2
+   Name: Tamil Selvan
+   Email: propertism.tamil@gmail.com
+   Phone: 
+   Source: Unknown Form
+   Status: pending
+   Confidence Score: None
+   Spam Score: 0
+   Assessment Status: Pending Validation
+   Validation Summary: []
+   Message: ssss
+   Created At: 2026-04-11 12:02:51.307971+00:00
+
+3. Inquiry ID: 3
+   Name: Tamil Selvan
+   Email: propertism.tamil@gmail.com
+   Phone: 
+   Source: Unknown Form
+   Status: pending
+   Confidence Score: None
+   Spam Score: 0
+   Assessment Status: Pending Validation
+   Validation Summary: []
+   Message: t
+   Created At: 2026-04-11 12:09:01.651789+00:00
+
+4. Inquiry ID: 4
+   Name: Viji
+   Email: vijaymgs@gmail.com
+   Phone: 
+   Source: Unknown Form
+   Status: contacted
+   Confidence Score: None
+   Spam Score: 0
+   Assessment Status: Pending Validation
+   Validation Summary: []
+   Message: Connecting for an inquiry
+   Created At: 2026-04-11 12:59:31.739852+00:00
+
+5. Inquiry ID: 5
+   Name: Test Lead
+   Email: web-lead@propertism.in
+   Phone: 1234567890
+   Source: Unknown Form
+   Status: pending
+   Confidence Score: None
+   Spam Score: 0
+   Assessment Status: Pending Validation
+   Validation Summary: []
+   Message: City of Residence: Dallas
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-15 07:29:45.492874+00:00
+
+6. Inquiry ID: 6
+   Name: Viji
+   Email: info@propertism.in
+   Phone: 8778651851
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: City of Residence: Chennai
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-29 07:26:53.262356+00:00
+
+7. Inquiry ID: 7
+   Name: Viji
+   Email: info@propertism.in
+   Phone: 8778651851
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: City of Residence: Chennai
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-29 07:29:12.459824+00:00
+
+8. Inquiry ID: 8
+   Name: Viji42234234243
+   Email: vijaymgs@gmail.com
+   Phone: +91 866234234
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 11:45:06.737048+00:00
+
+9. Inquiry ID: 9
+   Name: Viji
+   Email: 
+   Phone: +91 87788651851
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 11:53:38.488256+00:00
+
+10. Inquiry ID: 10
+   Name: Viji
+   Email: 
+   Phone: +91 232342342234
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 11:58:41.278617+00:00
+
+11. Inquiry ID: 11
+   Name: Viji
+   Email: 
+   Phone: +91 9840612375
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:00:40.001950+00:00
+
+12. Inquiry ID: 12
+   Name: Test User
+   Email: 
+   Phone: +91 9876543210
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want someone to manage my property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:05:02.554421+00:00
+
+13. Inquiry ID: 13
+   Name: Tester
+   Email: 
+   Phone: +91 9876543210
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want someone to manage my property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:12:26.553889+00:00
+
+14. Inquiry ID: 14
+   Name: Tester
+   Email: 
+   Phone: +91 9876543210
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:18:06.335360+00:00
+
+15. Inquiry ID: 15
+   Name: Tester
+   Email: 
+   Phone: +91 9876543210
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 75
+   Spam Score: 0
+   Assessment Status: Genuine (Verified by CAPTCHA)
+   Validation Summary: [{"text": "Hidden field populated (Bot Behavior)", "type": "danger"}, {"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:19:22.366433+00:00
+
+16. Inquiry ID: 16
+   Name: Tester
+   Email: 
+   Phone: +91 9876543210
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: India (+91)
+Selected Intent: I want someone to manage my property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 12:43:42.618058+00:00
+
+17. Inquiry ID: 17
+   Name: viji
+   Email: vijay@spam.com
+   Phone: 90142342323
+   Source: General Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: t
+   Created At: 2026-06-30 12:48:21.567870+00:00
+
+18. Inquiry ID: 18
+   Name: Viji
+   Email: xys@gmail.com
+   Phone: 9013213422
+   Source: General Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Test message text
+   Created At: 2026-06-30 13:01:45.409684+00:00
+
+19. Inquiry ID: 19
+   Name: Viji
+   Email: xys@gmail.com
+   Phone: 9013213422
+   Source: General Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Vague Intent", "type": "warning"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Test message text
+   Created At: 2026-06-30 13:09:08.797841+00:00
+
+20. Inquiry ID: 20
+   Name: Vijiu
+   Email: 
+   Phone: +355 3434344
+   Source: Quick Inquiry
+   Status: pending
+   Confidence Score: 100
+   Spam Score: 0
+   Assessment Status: Likely Genuine
+   Validation Summary: [{"text": "No Suspicious URLs", "type": "success"}, {"text": "No Spam Keywords", "type": "success"}, {"text": "Relevant Property Intent", "type": "success"}, {"text": "Human Name Format", "type": "success"}, {"text": "Valid Phone Format", "type": "success"}]
+   Message: Country of Residence: Albania (+355)
+Selected Intent: I want to sell my Chennai property
+Submitted via homepage mid-page callback form.
+   Created At: 2026-06-30 13:15:22.476775+00:00
+
+--- CONTACT MESSAGES ---
+Total Contact Messages: 2
+
+1. Message ID: 1
+   Name: Viji
+   Email: vijiaymgs@gmail.com
+   Phone: 
+   Subject: 
+   Status: pending
+   Message: Call
+   Created At: 2026-03-29 04:03:59.831538+00:00
+
+2. Message ID: 2
+   Name: Smoke Test
+   Email: smoke@example.com
+   Phone: 1234567890
+   Subject: 
+   Status: pending
+   Message: Smoke test message
+   Created At: 2026-04-01 02:27:39.011110+00:00
+
+--- REALBOT SESSIONS ---
+Total Sessions: 4
+
+Session 1: ID: a06cd04b-56cd-4040-b8a5-82573316b955 | Created: 2026-06-28 16:37:43.155324+00:00 | Updated: 2026-06-28 16:37:43.155324+00:00
+   Messages count: 1
+     [assistant]: Welcome to **realBOT**, the premium advisory portal for **Propertism**.
+As your digital private wealth manager, I provide institutional-grade advisory on luxury real estate assets in Chennai and key markets.
+
+How may I assist you with your property portfolio today?
+
+Session 2: ID: e63ae709-e278-4da6-8b63-0d33c15fc8fb | Created: 2026-06-28 14:09:54.914162+00:00 | Updated: 2026-06-28 14:09:54.914453+00:00
+   Messages count: 1
+     [assistant]: Welcome to **realBOT**, the premium advisory portal for **Propertism**.
+As your digital private wealth manager, I provide institutional-grade advisory on luxury real estate assets in Chennai and key markets.
+
+How may I assist you with your property portfolio today?
+
+Session 3: ID: 19f34993-85fc-4352-9c35-ae7457595d75 | Created: 2026-06-27 13:20:14.279666+00:00 | Updated: 2026-06-27 13:20:14.279666+00:00
+   Messages count: 1
+     [assistant]: Welcome to **realBOT**, the premium advisory portal for **Propertism**.
+As your digital private wealth manager, I provide institutional-grade advisory on luxury real estate assets in Chennai and key markets.
+
+How may I assist you with your property portfolio today?
+
+Session 4: ID: 2288bcdd-e1a6-4dfa-b119-3d59edf53076 | Created: 2026-06-27 12:48:12.659654+00:00 | Updated: 2026-06-27 12:48:12.659654+00:00
+   Messages count: 9
+     [assistant]: Welcome to **realBOT**, the premium advisory portal for **Propertism**.
+As your digital private wealth manager, I provide institutional-grade advisory on luxury real estate assets in Chennai and key markets.
+
+How may I assist you with your property portfolio today?
+     [user]: NRI Investment
+     [user]: villas
+     [user]: villas
+     [assistant]: I have retrieved our prime listing in the luxury villa segment located in Chennai ECR:
+     [user]: NRI Investment
+     [assistant]: For NRI investors, commercial real estate allocations in Chennai deliver high yield stability [1].
+
+### Capital Yield Averages
+- **Chennai ECR Villas**: 3.2% - 3.8% gross [2].
+- **OMR IT Corridors**: 4.2% - 4.8% gross [3].
+     [user]: Filter by Budget
+     [assistant]: Here is our curated apartment listing matching your budget criteria:
+
+--- NRI ASSIST EVENTS ---
+Total Events: 105
+Event Types Breakdown: {'PAGE_VISIT': 98, 'GOOGLE_LOGIN': 4, 'CTA_CLICK': 3}
+
+1. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-15 13:48:47.924084+00:00
+
+2. Event: GOOGLE_LOGIN | Category:  | IP: 127.0.0.1 | Metadata: {"provider": "google"} | Time: 2026-05-15 13:48:47.899073+00:00
+
+3. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-15 10:35:51.073513+00:00
+
+4. Event: GOOGLE_LOGIN | Category:  | IP: 127.0.0.1 | Metadata: {"provider": "google"} | Time: 2026-05-15 10:35:51.039002+00:00
+
+5. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:51:29.559601+00:00
+
+6. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:42:40.405818+00:00
+
+7. Event: GOOGLE_LOGIN | Category:  | IP: 127.0.0.1 | Metadata: {"provider": "google"} | Time: 2026-05-10 09:42:40.380544+00:00
+
+8. Event: CTA_CLICK | Category: PROPERTY_CARE | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:27:15.611403+00:00
+
+9. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:27:12.987060+00:00
+
+10. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:27:08.943120+00:00
+
+11. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:25:41.919475+00:00
+
+12. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:25:38.636317+00:00
+
+13. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:25:36.203101+00:00
+
+14. Event: CTA_CLICK | Category: SALE | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:11:29.903671+00:00
+
+15. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:06:20.001194+00:00
+
+16. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:06:05.116906+00:00
+
+17. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:06:01.138021+00:00
+
+18. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-10 09:05:52.390540+00:00
+
+19. Event: GOOGLE_LOGIN | Category:  | IP: 127.0.0.1 | Metadata: {"provider": "google"} | Time: 2026-05-10 09:05:52.358540+00:00
+
+20. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-09 11:47:00.394727+00:00
+
+21. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:10:26.804665+00:00
+
+22. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:18.419056+00:00
+
+23. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:18.149509+00:00
+
+24. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:17.918296+00:00
+
+25. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:16.981398+00:00
+
+26. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:16.781038+00:00
+
+27. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:16.633469+00:00
+
+28. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 15:00:16.381027+00:00
+
+29. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:39.768427+00:00
+
+30. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:22.339686+00:00
+
+31. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:22.140036+00:00
+
+32. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.964325+00:00
+
+33. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.763212+00:00
+
+34. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.579378+00:00
+
+35. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.399344+00:00
+
+36. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.213381+00:00
+
+37. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:21.039631+00:00
+
+38. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:20.856820+00:00
+
+39. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:20.682631+00:00
+
+40. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:20.486341+00:00
+
+41. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:20.287712+00:00
+
+42. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:20.100281+00:00
+
+43. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:19.910660+00:00
+
+44. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:19.724262+00:00
+
+45. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:19.522916+00:00
+
+46. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:19.334841+00:00
+
+47. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:19.138125+00:00
+
+48. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:18.971096+00:00
+
+49. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:18.763794+00:00
+
+50. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:18.569210+00:00
+
+51. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:18.383168+00:00
+
+52. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:18.170151+00:00
+
+53. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:17.955358+00:00
+
+54. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:17.631916+00:00
+
+55. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:17.334871+00:00
+
+56. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:16.351225+00:00
+
+57. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:16.100104+00:00
+
+58. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:15.882910+00:00
+
+59. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:15.676854+00:00
+
+60. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:15.421157+00:00
+
+61. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:15.168269+00:00
+
+62. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:14.926801+00:00
+
+63. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:13.838511+00:00
+
+64. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:13.633300+00:00
+
+65. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:42:13.435870+00:00
+
+66. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:41:52.846587+00:00
+
+67. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:41:04.946088+00:00
+
+68. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:40:59.549989+00:00
+
+69. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:16.664736+00:00
+
+70. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:16.479103+00:00
+
+71. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:16.304187+00:00
+
+72. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:16.120307+00:00
+
+73. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.949126+00:00
+
+74. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.776686+00:00
+
+75. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.580292+00:00
+
+76. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.408100+00:00
+
+77. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.220674+00:00
+
+78. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:15.019457+00:00
+
+79. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:14.827881+00:00
+
+80. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:14.633122+00:00
+
+81. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:14.438689+00:00
+
+82. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:14.230515+00:00
+
+83. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:14.015621+00:00
+
+84. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:13.798787+00:00
+
+85. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:13.594476+00:00
+
+86. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:37:11.418365+00:00
+
+87. Event: CTA_CLICK | Category: PROPERTY_CARE | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:36:22.411967+00:00
+
+88. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:36:11.420721+00:00
+
+89. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:42.849724+00:00
+
+90. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:42.664638+00:00
+
+91. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:42.466692+00:00
+
+92. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:42.278042+00:00
+
+93. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:42.059176+00:00
+
+94. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:41.855847+00:00
+
+95. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:41.091279+00:00
+
+96. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:40.883473+00:00
+
+97. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:35:11.657545+00:00
+
+98. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:32:57.276684+00:00
+
+99. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:32:57.027662+00:00
+
+100. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:32:56.827776+00:00
+
+101. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:32:56.590004+00:00
+
+102. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:32:53.278720+00:00
+
+103. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:31:53.161063+00:00
+
+104. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:31:48.230520+00:00
+
+105. Event: PAGE_VISIT | Category:  | IP: 127.0.0.1 | Metadata: {} | Time: 2026-05-08 14:31:39.995196+00:00

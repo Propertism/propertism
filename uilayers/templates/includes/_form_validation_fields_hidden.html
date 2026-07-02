@@ -1,0 +1,15 @@
+<!-- Honeypot Field -->
+{% if captcha_test_mode %}
+<div style="background: #fee2e2; border: 1px solid #f87171; padding: 12px; margin-bottom: 16px; border-radius: 4px;">
+    <label for="website_url_check" style="color: #991b1b; font-weight: bold; display: block; margin-bottom: 6px;">[TEST MODE] Type anything in this box to trigger CAPTCHA:</label>
+    <input type="text" name="website_url_check" id="website_url_check" autocomplete="off" value="" style="width: 100%; max-width: 250px; padding: 8px; border: 1px solid #f87171; border-radius: 4px;">
+</div>
+{% else %}
+<div style="position: absolute; left: -9999px; display: none !important;" aria-hidden="true">
+    <label for="website_url_check">Leave this field empty</label>
+    <input type="text" name="website_url_check" id="website_url_check" tabindex="-1" autocomplete="off" value="">
+</div>
+{% endif %}
+
+<!-- Timing Tracking -->
+<input type="hidden" name="form_render_time" value="{% now 'U' %}">

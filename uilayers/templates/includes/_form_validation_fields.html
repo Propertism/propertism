@@ -1,24 +1,2 @@
-<!-- Invisible Honeypot Field -->
-<div style="position: absolute; left: -9999px; display: none !important;" aria-hidden="true">
-    <label for="website_url_check">Leave this field empty</label>
-    <input type="text" name="website_url_check" id="website_url_check" tabindex="-1" autocomplete="off" value="">
-</div>
-
-<!-- Timing Tracking -->
-<input type="hidden" name="form_render_time" value="{% now 'U' %}">
-
-<!-- Conditional CAPTCHA -->
-{% if show_captcha %}
-<div class="captcha-container" style="background-color: #F8F5F0; border-left: 3px solid #C49C52; padding: 16px; margin-bottom: 20px;">
-    <div style="font-weight: 600; color: #0b0f1a; margin-bottom: 8px; font-family: 'Jost', sans-serif;">
-        <span style="color: #D97706;">⚠</span> Additional Verification Required
-    </div>
-    <label for="captcha_answer" style="display: block; font-size: 14px; color: #475569; margin-bottom: 8px; font-family: 'Jost', sans-serif;">
-        Please answer this simple math question to proceed: <br>
-        <strong>What is {{ request.session.captcha_question }}?</strong>
-    </label>
-    <input type="number" name="captcha_answer" id="captcha_answer" required 
-           style="width: 100%; max-width: 200px; padding: 10px; border: 1px solid rgba(15, 23, 42, 0.12); border-radius: 4px;"
-           placeholder="Enter answer">
-</div>
-{% endif %}
+{% include 'includes/_form_validation_fields_hidden.html' %}
+{% include 'includes/_form_validation_fields_captcha.html' %}

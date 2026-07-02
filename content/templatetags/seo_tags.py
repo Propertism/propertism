@@ -154,7 +154,7 @@ def seo_meta(
 
 @register.inclusion_tag('seo/structured_data.html', takes_context=True)
 def organization_schema(context):
-    """Generate Organization schema for RealEstateAgent"""
+    """Generate Organization schema for LocalBusiness and RealEstateAgent"""
     request = context.get('request')
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
     company = _get_company()
@@ -167,7 +167,7 @@ def organization_schema(context):
 
     schema = {
         "@context": "https://schema.org",
-        "@type": "RealEstateAgent",
+        "@type": ["LocalBusiness", "RealEstateAgent"],
         "name": company.company_name,
         "description": company.tagline,
         "url": site_url,
@@ -185,9 +185,14 @@ def organization_schema(context):
         },
         "geo": {
             "@type": "GeoCoordinates",
-            "latitude": "13.0827",
-            "longitude": "80.2707"
+            "latitude": "13.0531",
+            "longitude": "80.2094"
         },
+        "hasMap": "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai",
+        "openingHours": "Mo-Sa 09:00-18:00",
+        "priceRange": "$$",
+        "paymentAccepted": "Cash, Credit Card, Wire Transfer",
+        "currenciesAccepted": "INR, USD",
         "areaServed": {
             "@type": "City",
             "name": "Chennai"

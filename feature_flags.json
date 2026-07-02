@@ -1,3 +1,4 @@
 {
-  "CAPTCHA_ENABLE": false
+  "CAPTCHA_ENABLE": false,
+  "CAPTCHA_TEST_MODE": false
 }

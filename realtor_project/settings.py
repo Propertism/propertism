@@ -449,6 +449,9 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@propertism.in')
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'info@propertism.in')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
 
+# Microsoft Clarity Project ID
+CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')
+
 # Notification recipients — all inquiry/lead alerts go to both inboxes
 _extra_recipients = os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com')
 ADMIN_EMAILS = list({ADMIN_EMAIL, _extra_recipients})  # deduplicates if same address
@@ -535,6 +538,8 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 WHATSAPP_PHONE_ID = os.environ.get('WHATSAPP_PHONE_ID', '')
 WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
 WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country code, no +
+WHATSAPP_APP_ID = os.environ.get('WHATSAPP_APP_ID', '')
+WHATSAPP_APP_SECRET = os.environ.get('WHATSAPP_APP_SECRET', '')
 
 # realBOT AI Assistant Configurations
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')

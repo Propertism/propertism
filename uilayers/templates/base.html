@@ -14,14 +14,79 @@
     {% seo_meta %}
     {% endblock %}
     
-    <!-- Google Analytics GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZCH8BV34J"></script>
+    <!-- Google Analytics GA4 & Traffic Attribution -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WZCH8BV34J');
+      (function() {
+        var isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        
+        if (!isDev) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = "https://www.googletagmanager.com/gtag/js?id=G-WZCH8BV34J";
+          document.head.appendChild(script);
+
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-WZCH8BV34J');
+        } else {
+          window.gtag = function() {
+            console.log("[GA4 DEV STUB]:", arguments);
+          };
+        }
+
+        // Attribution capturing script
+        function captureAttribution() {
+          var urlParams = new URLSearchParams(window.location.search);
+          var attribution = {
+            utm_source: urlParams.get('utm_source') || '',
+            utm_medium: urlParams.get('utm_medium') || '',
+            utm_campaign: urlParams.get('utm_campaign') || '',
+            utm_term: urlParams.get('utm_term') || '',
+            utm_content: urlParams.get('utm_content') || '',
+            referrer: document.referrer || '',
+            landing_page: window.location.href
+          };
+
+          document.querySelectorAll('form').forEach(function(form) {
+            Object.keys(attribution).forEach(function(key) {
+              var input = form.querySelector('input[name="' + key + '"]');
+              if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                form.appendChild(input);
+              }
+              if (!input.value) {
+                input.value = attribution[key];
+              }
+            });
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', captureAttribution);
+        } else {
+          captureAttribution();
+        }
+        window.captureAttribution = captureAttribution;
+      })();
     </script>
+
+    {% if clarity_project_id %}
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          console.log("[Clarity DEV STUB]: bypassed tracking for ID:", i);
+          return;
+        }
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "{{ clarity_project_id }}");
+    </script>
+    {% endif %}
 
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
