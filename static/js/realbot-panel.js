@@ -32,18 +32,12 @@
             document.body.insertAdjacentHTML('beforeend', triggerHTML);
         }
 
-        // Add event listener to trigger button based on URL path
-        if (window.location.pathname.includes('/realbot/')) {
-            document.getElementById('realbotTriggerBtn').addEventListener('click', togglePanel);
-            setTimeout(openPanel, 400);
-        } else {
-            // Set teaser tooltip and handle teaser behavior for main page
-            const triggerBtn = document.getElementById('realbotTriggerBtn');
-            if (triggerBtn) {
-                triggerBtn.setAttribute('title', 'realBOT AI Advisor (Coming Soon)');
-                triggerBtn.setAttribute('aria-label', 'realBOT AI Advisor (Coming Soon)');
-                triggerBtn.addEventListener('click', showComingSoonToast);
-            }
+        // Set teaser tooltip and handle teaser behavior globally (Coming Soon)
+        const triggerBtn = document.getElementById('realbotTriggerBtn');
+        if (triggerBtn) {
+            triggerBtn.setAttribute('title', 'realBOT AI Advisor (Coming Soon)');
+            triggerBtn.setAttribute('aria-label', 'realBOT AI Advisor (Coming Soon)');
+            triggerBtn.addEventListener('click', showComingSoonToast);
         }
 
         // Global ESC key listener to close panel
