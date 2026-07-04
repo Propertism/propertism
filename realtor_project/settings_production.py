@@ -340,14 +340,12 @@ EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'tamil@propertism.in')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'tamil@propertism.in')
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
+DEFAULT_FROM_EMAIL = 'tamil@propertism.in'
+SERVER_EMAIL = 'tamil@propertism.in'
+ADMIN_EMAIL = 'info@propertism.in'
 
 # Notification recipients — all inquiry/lead alerts go to both inboxes in production
-_extra_recipients = os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in')
-_extra_list = [email.strip() for email in _extra_recipients.split(',') if email.strip()]
-ADMIN_EMAILS = list({ADMIN_EMAIL} | set(_extra_list))
+ADMIN_EMAILS = ['info@propertism.in', 'propertism.tamil@gmail.com', 'tamil@propertism.in']
 
 # Canonical host configurations
 CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'www.propertism.in')
