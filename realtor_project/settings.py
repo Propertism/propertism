@@ -446,8 +446,8 @@ EMAIL_HOST_USER = 'tamil@propertism.in'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 # Default email addresses
-DEFAULT_FROM_EMAIL = 'tamil@propertism.in'
-SERVER_EMAIL = 'tamil@propertism.in'
+DEFAULT_FROM_EMAIL = 'Propertism Admin <tamil@propertism.in>'
+SERVER_EMAIL = 'Propertism Admin <tamil@propertism.in>'
 ADMIN_EMAIL = 'info@propertism.in'
 
 # Microsoft Clarity Project ID

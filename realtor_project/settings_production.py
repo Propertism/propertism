@@ -341,8 +341,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tamil@propertism.in'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'tamil@propertism.in'
-SERVER_EMAIL = 'tamil@propertism.in'
+DEFAULT_FROM_EMAIL = 'Propertism Admin <tamil@propertism.in>'
+SERVER_EMAIL = 'Propertism Admin <tamil@propertism.in>'
 ADMIN_EMAIL = 'info@propertism.in'
 
 # Notification recipients — all inquiry/lead alerts go to both inboxes in production
