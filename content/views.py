@@ -510,6 +510,11 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
     if inquiry.assessment_status:
         classification_label = inquiry.assessment_status
 
+    # Clean message to strip traffic attribution parameters for customer notifications
+    clean_message = inquiry.message
+    if clean_message and "--- Traffic Attribution Parameters ---" in clean_message:
+        clean_message = clean_message.split("--- Traffic Attribution Parameters ---")[0].strip()
+
     # Send Customer Email Acknowledgement
     if inquiry.email:
         try:
@@ -518,7 +523,7 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
                 recipient=inquiry.email,
                 context={
                     'name': inquiry.name,
-                    'message': inquiry.message,
+                    'message': clean_message,
                     'form_source': form_source,
                     'submission_time': submission_time
                 },
@@ -536,7 +541,7 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
                 recipient=inquiry.phone,
                 context={
                     'name': inquiry.name,
-                    'message': inquiry.message,
+                    'message': clean_message,
                     'form_source': form_source,
                     'submission_time': submission_time
                 },
