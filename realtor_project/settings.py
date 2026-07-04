@@ -151,6 +151,7 @@ INSTALLED_APPS = [
     'content.apps.ContentConfig',
     'chat.apps.ChatConfig',
     'nri_assist.apps.NriAssistConfig',
+    'communications.apps.CommunicationsConfig',
 ]
 
 SITE_ID = 1
@@ -430,12 +431,12 @@ if not DEBUG:
 # ==============================================================================
 
 # Email backend configuration
-if DEBUG:
-    # Console backend for development (prints emails to console)
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
+if os.environ.get('EMAIL_BACKEND_FORCE_SMTP', '') == 'True' or not DEBUG:
     # SMTP backend for production
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    # Console backend for development (prints emails to console)
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Gmail SMTP Configuration
 # GoDaddy Titan SMTP configuration

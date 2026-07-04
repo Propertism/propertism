@@ -470,9 +470,8 @@ def send_admin_notification(subject, message_lines, whatsapp_text):
 def send_rfq_notification(inquiry, form_source="Website Form"):
     """Send email and whatsapp notification when RFQ is submitted."""
     from django.utils import timezone
-    from django.template.loader import render_to_string
-    from django.utils.html import strip_tags
     from django.conf import settings
+    from communications.services import AcknowledgementService
 
     intent_tag = "● LEAD |"
     msg_lower = (inquiry.message or "").lower()
@@ -491,8 +490,6 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
         intent_tag = "❖ PROPERTY |"
         
     subject = f"{intent_tag} New Propertism Lead: {inquiry.name}"
-    
-    # Render HTML email
     submission_time = inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')
     
     config = getattr(settings, 'EXECUTIVE_EMAIL_CONFIG', {})
@@ -510,41 +507,95 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
         priority_level = 'Low'
         classification_label = labels.get('LOW', 'Likely Spam')
         
-    # If the validator already gave a status, prefer that for classification_label
     if inquiry.assessment_status:
         classification_label = inquiry.assessment_status
-    
-    context = {
-        'inquiry': inquiry,
-        'form_source': form_source,
-        'submission_time': submission_time,
-        'config': config,
-        'priority_level': priority_level,
-        'classification_label': classification_label,
-    }
-    
-    html_message = render_to_string('emails/inquiry_notification.html', context)
-    plain_message = strip_tags(html_message)
-    
-    try:
-        send_mail(
-            subject=subject,
-            message=plain_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=settings.ADMIN_EMAILS,
-            fail_silently=False,
-            html_message=html_message,
-        )
-    except Exception as e:
-        logger.error(f"Email notification failed: {e}")
 
-    # Trigger WhatsApp
+    # Send Customer Email Acknowledgement
+    if inquiry.email:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='inquiry_received',
+                recipient=inquiry.email,
+                context={
+                    'name': inquiry.name,
+                    'message': inquiry.message,
+                    'form_source': form_source,
+                    'submission_time': submission_time
+                },
+                channels=['email'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send customer email acknowledgement")
+
+    # Send Customer WhatsApp Acknowledgement
+    if inquiry.phone:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='inquiry_received',
+                recipient=inquiry.phone,
+                context={
+                    'name': inquiry.name,
+                    'message': inquiry.message,
+                    'form_source': form_source,
+                    'submission_time': submission_time
+                },
+                channels=['whatsapp'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send customer WhatsApp acknowledgement")
+
+    # Send Admin notifications
+    from django.template.loader import render_to_string
+    from django.utils.html import strip_tags
+    admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
     whatsapp_text = f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}"
     if hasattr(inquiry, 'property') and inquiry.property:
         whatsapp_text += f"\nAsset: {inquiry.property.title}"
     whatsapp_text += f"\nMsg: {inquiry.message}"
-    
-    send_whatsapp_notification(whatsapp_text)
+
+    admin_context = {
+        'inquiry': inquiry,
+        'form_source': form_source,
+        'submission_time': submission_time,
+        'priority_level': priority_level,
+        'classification_label': classification_label,
+    }
+    html_message = render_to_string('emails/inquiry_notification.html', admin_context)
+    plain_message = strip_tags(html_message)
+
+    for admin_email in admin_emails:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='admin_lead_alert',
+                recipient=admin_email,
+                context={
+                    'subject': subject,
+                    'body': plain_message,
+                    'html_body': html_message
+                },
+                channels=['email'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send admin notification to %s", admin_email)
+            
+    # Send Admin WhatsApp notification (routed via dispatcher)
+    try:
+        admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
+        AcknowledgementService.send(
+            communication_type_key='admin_lead_alert',
+            recipient=admin_phone,
+            context={
+                'subject': 'Admin Lead WhatsApp Alert',
+                'body': whatsapp_text
+            },
+            channels=['whatsapp'],
+            module=form_source
+        )
+    except Exception as exc:
+        logger.exception("Failed to send WhatsApp notification to admin")
 
 
 def send_landing_lead_notification(lead):
@@ -745,7 +796,7 @@ def landing_lead_followup_api(request):
     )
 
 
-def send_whatsapp_notification(text):
+def send_whatsapp_notification(text, recipient=None):
     """
     Sends a WhatsApp message via the Meta official Cloud API.
     Uses cached/renewed token if available to prevent recurring expiry.
@@ -755,7 +806,7 @@ def send_whatsapp_notification(text):
     from django.core.mail import send_mail
     
     phone_id = getattr(settings, 'WHATSAPP_PHONE_ID', None)
-    admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', None)
+    admin_phone = recipient or getattr(settings, 'WHATSAPP_ADMIN_PHONE', None)
     
     # Retrieve active token from cache (allows dynamic updates/exchanges without redeployment)
     token = cache.get("whatsapp_access_token")
@@ -870,18 +921,44 @@ def newsletter_subscribe(request):
                 sub, created = Newsletter.objects.get_or_create(email=email)
                 if created:
                     messages.success(request, "Thank you for subscribing to our newsletter!")
-                    # Notify admin via email
+                    from communications.services import AcknowledgementService
+                    # Send customer welcome/acknowledgement
                     try:
-                        send_mail(
-                            subject="📩 New Newsletter Subscriber",
-                            message=f"User {email} has subscribed to the newsletter.",
-                            from_email=settings.DEFAULT_FROM_EMAIL,
-                            recipient_list=[settings.ADMIN_EMAIL],
-                            fail_silently=False,
+                        AcknowledgementService.send(
+                            communication_type_key='newsletter',
+                            recipient=email,
+                            context={'email': email},
+                            module='newsletter'
                         )
-                    except Exception: pass
-                    # Notify admin via WhatsApp
-                    send_whatsapp_notification(f"📩 *Newsletter*: {email} has subscribed.")
+                    except Exception:
+                        pass
+
+                    # Notify admin via email & WhatsApp
+                    admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
+                    admin_msg = f"User {email} has subscribed to the newsletter."
+                    for admin_email in admin_emails:
+                        try:
+                            AcknowledgementService.send(
+                                communication_type_key='inquiry_received',
+                                recipient=admin_email,
+                                context={'message': admin_msg, 'subject': "📩 New Newsletter Subscriber"},
+                                channels=['email'],
+                                module='newsletter'
+                            )
+                        except Exception:
+                            pass
+                    
+                    try:
+                        admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
+                        AcknowledgementService.send(
+                            communication_type_key='inquiry_received',
+                            recipient=admin_phone,
+                            context={'message': f"📩 *Newsletter*: {email} has subscribed."},
+                            channels=['whatsapp'],
+                            module='newsletter'
+                        )
+                    except Exception:
+                        pass
                 else:
                     messages.info(request, "You are already subscribed. Thank you!")
             except Exception:

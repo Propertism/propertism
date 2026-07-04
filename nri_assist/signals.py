@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 
 try:
-    from allauth.account.signals import user_logged_in
+    from allauth.account.signals import user_logged_in, user_signed_up
 
     @receiver(user_logged_in)
     def on_google_login(sender, request, user, **kwargs):
@@ -23,6 +23,24 @@ try:
                 )
         except Exception:
             logger.exception('NRIAssistEvent Google login log failed')
+
+    @receiver(user_signed_up)
+    def on_user_signed_up(request, user, **kwargs):
+        try:
+            from communications.services import AcknowledgementService
+            name = user.get_full_name() or user.username
+            AcknowledgementService.send(
+                communication_type_key='welcome',
+                recipient=user.email,
+                context={
+                    'name': name,
+                    'email': user.email
+                },
+                channels=['email'],
+                module='nri_assist_signup'
+            )
+        except Exception:
+            logger.exception('Failed to send welcome email for registered user %s', user.email)
 
 except ImportError:
     pass

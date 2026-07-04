@@ -25,4 +25,4 @@ echo.
 echo ========================================
 echo.
 
-python manage.py runserver 8001
+call .\scripts\django.cmd runserver 8001

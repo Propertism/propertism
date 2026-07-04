@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/', include('properties.urls')),
     path('api/', include('users.urls')),
     path('api/', include('search.urls')),
+    path('api/v1/communications/', include('communications.urls')),
     # Auth routes (must precede catch-all slug routes in content.urls)
     path('login/', uilayers_views.user_login, name='login'),
     path('register/', uilayers_views.user_register, name='register'),

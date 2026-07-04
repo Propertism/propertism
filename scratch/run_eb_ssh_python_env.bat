@@ -1,3 +1,0 @@
-@echo off
-cd /d d:\viji\viji-olivine\03rolledout\01propertism
-eb ssh -c "sudo /var/app/venv/staging-LQM1lest/bin/python -c \"import os,re; data=open('/opt/elasticbeanstalk/deployment/env').read(); [os.environ.__setitem__(k,v) for k,v in re.findall(r'^([A-Z_]+)=(.*)$',data,re.M)]; os.environ.setdefault('DJANGO_SETTINGS_MODULE','realtor_project.settings'); import sys; sys.path.insert(0,'/var/app/current'); import django; django.setup(); from content.models import BlogPost; p=BlogPost.objects.filter(is_published=True); print('Published:',p.count()); [print(' ',s) for s in p.values_list('slug',flat=True)]\"" 2>&1
