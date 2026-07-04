@@ -336,7 +336,7 @@ LOGGING = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # GoDaddy Titan SMTP configuration in production
-EMAIL_HOST = 'smtp.titan.email'
+EMAIL_HOST = 'smtpout.secureserver.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tamil@propertism.in'
