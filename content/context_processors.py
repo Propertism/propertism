@@ -10,6 +10,12 @@ def site_content(request):
         "footer_services": footer_services,
         "home_section_links": get_home_section_links(),
         "clarity_project_id": getattr(settings, "CLARITY_PROJECT_ID", ""),
+        "google_business_profile_map_url": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_URL", ""),
+        "google_business_profile_map_embed_url": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_EMBED_URL", ""),
+        "google_business_profile_directions_url": getattr(settings, "GOOGLE_BUSINESS_PROFILE_DIRECTIONS_URL", ""),
+        "google_maps_api_key": getattr(settings, "GOOGLE_MAPS_API_KEY", ""),
+        "google_maps_countries": getattr(settings, "GOOGLE_MAPS_AUTOCOMPLETE_COUNTRIES", ["in"]),
+        "google_maps_default_country": getattr(settings, "GOOGLE_MAPS_DEFAULT_COUNTRY", "in"),
         "chat_widget_content": {
             "title": company.chat_window_title or "Leave a message",
             "subtitle": company.chat_window_subtitle or "We'll get back to you soon",

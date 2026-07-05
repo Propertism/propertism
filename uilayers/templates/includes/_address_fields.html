@@ -1,0 +1,95 @@
+{% load static %}
+<div class="address-autocomplete-group" data-address-group style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
+    <div class="field-group" style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="address_search_input" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-gold, #B89A4A);">
+            Street Address / Location *
+        </label>
+        <!-- Clipping wrapper prevents password-manager extension overlay elements from spilling visually -->
+        <div style="position: relative; width: 100%;">
+            <input 
+                type="text" 
+                id="address_search_input" 
+                name="address_search"
+                class="address-search-input" 
+                placeholder="Start typing your address (e.g. Saligramam, Chennai)..." 
+                data-address-autocomplete
+                data-api-key="{{ google_maps_api_key }}"
+                data-countries="{{ google_maps_countries|join:',' }}"
+                data-default-country="{{ google_maps_default_country }}"
+                autocomplete="off"
+                role="searchbox"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                data-lpignore="true"
+                data-1p-ignore
+                data-bwi-ignore
+                data-form-type="other"
+                style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(15, 23, 42, 0.15); background-color: var(--bg-card, #fff); color: var(--text-main, #0f172a); font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s ease; position: relative; z-index: 1;"
+            />
+        </div>
+    </div>
+
+    <!-- Hidden metadata fields populated automatically by framework -->
+    <input type="hidden" name="address_latitude" data-address-field="latitude" />
+    <input type="hidden" name="address_longitude" data-address-field="longitude" />
+    <input type="hidden" name="address_place_id" data-address-field="place_id" />
+    <input type="hidden" name="address_city" data-address-field="city" />
+    <input type="hidden" name="address_state" data-address-field="state" />
+    <input type="hidden" name="address_country" data-address-field="country" />
+    <input type="hidden" name="address_postal_code" data-address-field="postal_code" />
+    <input type="hidden" name="address_formatted" data-address-field="formatted_address" />
+
+    <!-- Visual Confirmation Box (debug/validation preview) -->
+    <div class="address-metadata-preview" style="display: none; padding: 12px; border: 1px dashed rgba(184, 154, 74, 0.3); background-color: rgba(184, 154, 74, 0.03); font-size: 0.8rem; color: var(--text-muted, #64748b);">
+        <p style="margin: 0 0 4px 0;"><strong>Place ID:</strong> <span data-address-field="place_id">-</span></p>
+        <p style="margin: 0 0 4px 0;"><strong>Coordinates:</strong> <span data-address-field="latitude">-</span>, <span data-address-field="longitude">-</span></p>
+        <p style="margin: 0 0 4px 0;"><strong>City:</strong> <span data-address-field="city">-</span> | <strong>State:</strong> <span data-address-field="state">-</span></p>
+        <p style="margin: 0 0 4px 0;"><strong>Country:</strong> <span data-address-field="country">-</span> | <strong>Postal Code:</strong> <span data-address-field="postal_code">-</span></p>
+        <p style="margin: 0;"><strong>Standardized Address:</strong> <span data-address-field="formatted_address">-</span></p>
+    </div>
+
+    <!-- CSS: Suppress password-manager extension overlays near address inputs -->
+    <style>
+    /* Prevent password-manager extensions (Bitwarden, LastPass, etc.) from injecting
+       visible badge/overlay elements adjacent to or inside the address input wrapper */
+    [data-address-group] div[style*="position: relative"] > *:not(input) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    /* Ensure the input itself stays fully visible */
+    [data-address-group] input.address-search-input {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-text-security: none !important;
+        text-security: none !important;
+    }
+    </style>
+
+    <!-- Script assets inclusion -->
+    <script src="{% static 'js/address-autocomplete.js' %}?v={% now 'U' %}" defer></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('address_search_input');
+        if (input) {
+            input.addEventListener('address-selected', function(e) {
+                const group = input.closest('[data-address-group]');
+                const preview = group.querySelector('.address-metadata-preview');
+                if (preview) {
+                    preview.style.display = 'block';
+                }
+            });
+            // Focus styling
+            input.addEventListener('focus', function() {
+                input.style.borderColor = 'var(--brand-gold, #B89A4A)';
+            });
+            input.addEventListener('blur', function() {
+                input.style.borderColor = 'rgba(15, 23, 42, 0.15)';
+            });
+        }
+    });
+    </script>
+</div>

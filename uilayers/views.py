@@ -36,6 +36,10 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+def address_test(request):
+    return render(request, 'address_test.html')
+
+
 def user_login(request):
     """Redirect to allauth login for unified auth experience (Google Sign-In)."""
     return redirect('account_login')

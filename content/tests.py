@@ -546,7 +546,8 @@ class LocalBusinessSchemaTests(TestCase):
         self.assertEqual(schema["@type"], ["LocalBusiness", "RealEstateAgent"])
         self.assertEqual(schema["geo"]["latitude"], "13.0531")
         self.assertEqual(schema["geo"]["longitude"], "80.2094")
-        self.assertEqual(schema["hasMap"], "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai")
+        from django.conf import settings
+        self.assertEqual(schema["hasMap"], settings.GOOGLE_BUSINESS_PROFILE_MAP_URL)
         self.assertEqual(schema["openingHours"], "Mo-Sa 09:00-18:00")
         self.assertEqual(schema["priceRange"], "$$")
 
@@ -610,6 +611,27 @@ class WhatsAppNotificationTests(TestCase):
         args, kwargs = mock_send_mail.call_args
         self.assertIn("Action Required: Propertism WhatsApp Access Token Expired", kwargs['subject'])
         self.assertIn("admin@example.com", kwargs['recipient_list'])
+
+
+class AddressAutocompleteFrameworkTests(TestCase):
+    def test_settings_load_google_maps_credentials(self):
+        from django.conf import settings
+        self.assertTrue(hasattr(settings, 'GOOGLE_MAPS_API_KEY'))
+        self.assertEqual(settings.GOOGLE_MAPS_API_KEY, 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
+        self.assertEqual(settings.GOOGLE_MAPS_DEFAULT_COUNTRY, 'in')
+        self.assertEqual(settings.GOOGLE_MAPS_AUTOCOMPLETE_COUNTRIES, ['in'])
+
+    def test_context_processor_exposes_autocomplete_config(self):
+        from django.test import RequestFactory
+        from content.context_processors import site_content
+        
+        request = RequestFactory().get('/')
+        context = site_content(request)
+        
+        self.assertIn('google_maps_api_key', context)
+        self.assertEqual(context['google_maps_api_key'], 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
+        self.assertEqual(context['google_maps_countries'], ['in'])
+        self.assertEqual(context['google_maps_default_country'], 'in')
 
 
 

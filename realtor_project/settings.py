@@ -542,6 +542,37 @@ WHATSAPP_ADMIN_PHONE = os.environ.get('WHATSAPP_ADMIN_PHONE', '') # with country
 WHATSAPP_APP_ID = os.environ.get('WHATSAPP_APP_ID', '')
 WHATSAPP_APP_SECRET = os.environ.get('WHATSAPP_APP_SECRET', '')
 
+# Centralized Google Maps / Business Profile URLs
+GOOGLE_BUSINESS_PROFILE_MAP_URL = os.environ.get(
+    'GOOGLE_BUSINESS_PROFILE_MAP_URL',
+    'https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai'
+)
+GOOGLE_BUSINESS_PROFILE_MAP_EMBED_URL = os.environ.get(
+    'GOOGLE_BUSINESS_PROFILE_MAP_EMBED_URL',
+    'https://maps.google.com/maps?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed'
+)
+# Directions URL — separate from MAP_URL so Place ID migration can update
+# this independently. When Place ID is available, set env var to:
+# https://www.google.com/maps/dir/?api=1&destination_place_id=<PLACE_ID>
+GOOGLE_BUSINESS_PROFILE_DIRECTIONS_URL = os.environ.get(
+    'GOOGLE_BUSINESS_PROFILE_DIRECTIONS_URL',
+    'https://www.google.com/maps/dir/?api=1&destination=No.+30+SSR+Pankajam+Towers+Arunachalam+Road+Saligramam+Chennai'
+)
+
+# Google Maps Platform Autocomplete Configuration
+GOOGLE_MAPS_API_KEY = os.environ.get(
+    'GOOGLE_MAPS_API_KEY',
+    'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0'
+)
+GOOGLE_MAPS_AUTOCOMPLETE_COUNTRIES = os.environ.get(
+    'GOOGLE_MAPS_AUTOCOMPLETE_COUNTRIES',
+    'in'
+).split(',')
+GOOGLE_MAPS_DEFAULT_COUNTRY = os.environ.get(
+    'GOOGLE_MAPS_DEFAULT_COUNTRY',
+    'in'
+)
+
 # realBOT AI Assistant Configurations
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
 DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-chat')

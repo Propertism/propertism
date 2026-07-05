@@ -15,7 +15,7 @@
             <p class="section-subtitle">{{ company.contact_section_description }}</p>
         </div>
 
-        <div class="contact-split-container">
+        <div class="contact-split-container" style="padding-bottom: 20px !important;">
             <!-- LEFT CARD: CONTACT INFO (WHITE) -->
             <div class="hf-narrative-card">
                 <div class="hf-office-grid">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="hf-contact-rail" aria-label="Quick contact links">
-                    <a href="https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="View on Google Maps">
+                    <a href="{{ google_business_profile_map_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" title="View on Google Maps">
                         <span class="hf-icon-badge" aria-hidden="true">
                             <svg viewBox="0 0 48 48" fill="none">
                                 <path d="M24 4.5C15.992 4.5 9.5 10.992 9.5 19c0 1.5.25 2.938.688 4.281L24 43.5l13.813-20.219c.437-1.343.687-2.781.687-4.281 0-8.008-6.492-14.5-14.5-14.5z" fill="#1A73E8"/>
@@ -58,6 +58,19 @@
                             <span class="hf-icon-line"><span class="hf-icon-head">Google Maps</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">Open Chennai headquarters</span></span>
                         </span>
                     </a>
+
+                    {% if google_business_profile_directions_url %}
+                    <a href="{{ google_business_profile_directions_url }}" target="_blank" rel="noopener noreferrer" class="hf-icon-link" id="get-directions-link" title="Get Directions to Propertism Office">
+                        <span class="hf-icon-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                            </svg>
+                        </span>
+                        <span class="hf-icon-copy">
+                            <span class="hf-icon-line"><span class="hf-icon-head">Get Directions</span><span class="hf-icon-divider" aria-hidden="true"></span><span class="hf-icon-tail">Navigate to our Chennai office</span></span>
+                        </span>
+                    </a>
+                    {% endif %}
 
                     {% if company.india_phone_1 %}
                     <div class="hf-icon-link" title="Call Us" style="cursor: default; transform: none !important; opacity: 1 !important;">
@@ -470,6 +483,22 @@
                     <p class="hf-success-body">We'll be in touch within 24 hours.</p>
                 </div>
             </div>
+        </div>
+
+        <!-- Google Maps Location — continuation of Contact section -->
+        <div class="section-header" style="margin-top: 0 !important;">
+            <span class="section-kicker">
+                <svg class="section-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                OUR LOCATION
+            </span>
+            <h2 class="section-title" style="white-space: normal !important;">Visit Our Chennai Headquarters</h2>
+            <p class="section-subtitle">Conveniently located in Saligramam, Chennai. Plan your visit or get directions instantly.</p>
+        </div>
+        <div class="contact-map-wrapper" style="margin-top: 0; border: none !important;">
+            {% include "includes/google_map_embed.html" %}
         </div>
     </div>
 </section>

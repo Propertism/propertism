@@ -188,7 +188,7 @@ def organization_schema(context):
             "latitude": "13.0531",
             "longitude": "80.2094"
         },
-        "hasMap": "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai",
+        "hasMap": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_URL", "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai"),
         "openingHours": "Mo-Sa 09:00-18:00",
         "priceRange": "$$",
         "paymentAccepted": "Cash, Credit Card, Wire Transfer",

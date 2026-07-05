@@ -48,6 +48,8 @@ urlpatterns = [
     path('api/', include('search.urls')),
     path('api/v1/communications/', include('communications.urls')),
     # Auth routes (must precede catch-all slug routes in content.urls)
+    path('contact-test/', uilayers_views.contact, name='contact_test'),
+    path('address-test/', uilayers_views.address_test, name='address_test'),
     path('login/', uilayers_views.user_login, name='login'),
     path('register/', uilayers_views.user_register, name='register'),
     path('logout/', uilayers_views.user_logout, name='logout'),

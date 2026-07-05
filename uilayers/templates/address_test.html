@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Google Places Address Autocomplete Validation - Propertism{% endblock %}
+
+{% block content %}
+<section class="address-test-section" style="max-width: 800px; margin: 5rem auto; padding: 3rem 2rem; background-color: var(--bg-card, #ffffff); border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);">
+    <div class="test-header" style="margin-bottom: 2rem; border-bottom: 1px solid rgba(15, 23, 42, 0.08); padding-bottom: 1.5rem;">
+        <span class="test-kicker" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-gold, #B89A4A); display: block; margin-bottom: 0.5rem;">
+            PLATFORM INTEGRATION FOUNDATION
+        </span>
+        <h1 class="test-title" style="font-family: var(--serif-main), serif; font-size: 2rem; font-weight: 700; color: var(--text-main, #0f172a); margin: 0 0 0.5rem 0;">
+            Google Places Autocomplete
+        </h1>
+        <p class="test-desc" style="font-size: 0.95rem; color: var(--text-muted, #64748b); margin: 0; line-height: 1.5;">
+            Visual verification showcase for <strong>SCCB-PROP-M2.X-ADDRESS-AUTOCOMPLETE-FRAMEWORK-001</strong>. This form leverages the dynamic address selection framework.
+        </p>
+    </div>
+
+    <form method="POST" action="" onsubmit="event.preventDefault(); alert('Form validation check successful! Address parsed and loaded.');" style="display: flex; flex-direction: column; gap: 2rem;">
+        {% csrf_token %}
+        
+        <!-- Reusable Address Autocomplete Component Group -->
+        {% include "includes/_address_fields.html" %}
+        
+        <!-- Standard fields to verify layout harmony -->
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="field-group" style="display: flex; flex-direction: column; gap: 6px;">
+                <label for="test_name" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted, #64748b);">
+                    Full Name
+                </label>
+                <input 
+                    type="text" 
+                    id="test_name" 
+                    placeholder="Enter name..." 
+                    style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(15, 23, 42, 0.15); background-color: var(--bg-card, #fff); color: var(--text-main, #0f172a); font-size: 0.95rem; outline: none;"
+                />
+            </div>
+            <div class="field-group" style="display: flex; flex-direction: column; gap: 6px;">
+                <label for="test_email" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted, #64748b);">
+                    Email Address
+                </label>
+                <input 
+                    type="email" 
+                    id="test_email" 
+                    placeholder="you@example.com" 
+                    style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(15, 23, 42, 0.15); background-color: var(--bg-card, #fff); color: var(--text-main, #0f172a); font-size: 0.95rem; outline: none;"
+                />
+            </div>
+        </div>
+
+        <button 
+            type="submit" 
+            style="height: 50px; background-color: var(--brand-gold, #B89A4A); color: #fff; border: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: background-color 0.2s ease;"
+            onmouseover="this.style.backgroundColor='#9B7D33'"
+            onmouseout="this.style.backgroundColor='var(--brand-gold, #B89A4A)'"
+        >
+            Validate & Submit Form
+        </button>
+    </form>
+</section>
+{% endblock %}
