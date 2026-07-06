@@ -128,42 +128,45 @@ def create_inquiry(request):
     from content.views import send_rfq_notification
     from realtor_project.features import is_feature_enabled
     
+    from content.security.spam_protection import SpamProtectionService
+    
+    # Run centralized spam protection service
+    spam_service = SpamProtectionService(request)
+    spam_result = spam_service.validate(form_source)
+    
+    if not spam_result.passed:
+        if spam_result.rate_limited:
+            from django.http import HttpResponse
+            return HttpResponse("Too Many Requests", status=429)
+        
+        if spam_result.error_message:
+            messages.error(request, spam_result.error_message)
+            
+        return render(request, "properties/detail.html", {
+            "property": property_obj,
+            "company": get_company_info(),
+            "prefilled_name": request.POST.get("name", ""),
+            "prefilled_email": request.POST.get("email", ""),
+            "prefilled_phone": request.POST.get("phone", ""),
+            "prefilled_message": request.POST.get("message", ""),
+        })
+        
     validator = LeadValidator(request, request.POST)
     assessment = validator.validate()
     
-    # Check CAPTCHA
-    captcha_answer = request.POST.get('captcha_answer')
-    expected_answer = request.session.get('captcha_expected_answer')
-    
-    captcha_enabled = is_feature_enabled('CAPTCHA_ENABLE', default=True)
-    
-    if captcha_enabled and assessment['confidence_score'] < validator.config.get('CAPTCHA_THRESHOLD', 70):
-        if not (expected_answer and captcha_answer and str(captcha_answer) == str(expected_answer)):
-            if captcha_answer:
-                messages.error(request, "Incorrect security answer. Please try again.")
-            # Generate new CAPTCHA challenge
-            import random
-            num1 = random.randint(1, 10)
-            num2 = random.randint(1, 10)
-            request.session['captcha_question'] = f"{num1} + {num2}"
-            request.session['captcha_expected_answer'] = str(num1 + num2)
-            
-            return render(request, "properties/detail.html", {
-                "property": property_obj,
-                "company": get_company_info(),
-                "show_captcha": True,
-                "captcha_test_mode": is_feature_enabled("CAPTCHA_TEST_MODE", default=False),
-                "prefilled_name": request.POST.get("name", ""),
-                "prefilled_email": request.POST.get("email", ""),
-                "prefilled_phone": request.POST.get("phone", ""),
-                "prefilled_message": request.POST.get("message", ""),
-            })
+    # Apply captcha confidence boost if successfully passed
+    if spam_result.confidence_boost:
+        assessment['confidence_score'] = max(0, min(100, assessment['confidence_score'] + spam_result.confidence_boost))
+        ranges = validator.config.get('RANGES', {})
+        score = assessment['confidence_score']
+        if score >= ranges.get('LIKELY_GENUINE', 90):
+            assessment['assessment_status'] = "Likely Genuine"
+        elif score >= ranges.get('GENUINE', 70):
+            assessment['assessment_status'] = "Genuine"
+        elif score >= ranges.get('REVIEW_RECOMMENDED', 40):
+            assessment['assessment_status'] = "Review Recommended"
         else:
-            # CAPTCHA Passed!
-            assessment['confidence_score'] = max(assessment['confidence_score'], 75)
-            assessment['assessment_status'] = "Genuine (Verified by CAPTCHA)"
-            request.session.pop('captcha_expected_answer', None)
-            request.session.pop('captcha_question', None)
+            assessment['assessment_status'] = "Likely Spam"
 
     try:
         # Capture UTM parameters, Referrer, and Landing page for attribution

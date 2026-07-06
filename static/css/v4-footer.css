@@ -20,8 +20,9 @@
 .footer-content {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) 1.5fr !important;
-    gap: 24px !important;
-    margin-bottom: 24px !important;
+    column-gap: 24px !important;
+    row-gap: 6px !important;
+    margin-bottom: 12px !important;
 }
 
 .footer-section {
@@ -38,8 +39,8 @@
 
 .footer-presence-column {
     grid-column: 1 / -1 !important;
-    margin-top: 16px !important;
-    padding-top: 16px !important;
+    margin-top: 0 !important;
+    padding-top: 6px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
     border-left: none !important; /* Clocks don't get the vertical bar as they are a full-width row */
     padding-left: 0 !important;
@@ -422,20 +423,73 @@
 
 /* 5. FOOTER BOTTOM */
 .footer-bottom {
-    padding-top: 18px;
+    padding: 12px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 8px;
 }
 
 .footer-bottom p {
+    font-size: 0.62rem !important;
+    color: #64748B !important;
+    margin: 0 !important;
+}
+
+.footer-bottom-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-bottom-nav a {
     font-size: 0.75rem !important;
     color: #64748B !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom-nav a:hover {
+    color: var(--brand-gold) !important;
+}
+
+.footer-trust-line {
+    font-size: 0.72rem !important;
+    color: #475569 !important;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.footer-legal-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer-legal-links a {
+    font-size: 0.68rem !important;
+    color: #475569 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-legal-links a:hover {
+    color: var(--brand-gold) !important;
+}
+
+.footer-copyright {
+    font-size: 0.63rem !important;
+    color: #C49C52 !important;
+    margin: 0 !important;
 }
 
 .footer-powered-by {
-    font-size: 0.75rem !important;
+    font-size: 0.62rem !important;
     color: #64748B !important;
     font-family: var(--sans-main), sans-serif !important;
 }
@@ -443,28 +497,12 @@
 .footer-powered-by a {
     color: var(--brand-gold) !important;
     text-decoration: none !important;
-    font-weight: bold !important;
+    font-weight: 500 !important;
     transition: opacity 0.3s ease;
 }
 
 .footer-powered-by a:hover {
     opacity: 0.85 !important;
-}
-
-.footer-bottom-links {
-    display: flex;
-    gap: 16px;
-}
-
-.footer-bottom-links a {
-    font-size: 0.75rem !important;
-    color: #64748B !important;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-bottom-links a:hover {
-    color: var(--brand-gold) !important;
 }
 
 /* ============================================

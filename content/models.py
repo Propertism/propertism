@@ -685,3 +685,51 @@ class LandingLead(models.Model):
         self.lead_score = self._compute_lead_score()
         self.lead_category = self._lead_category_for(self.lead_score)
         return super().save(*args, **kwargs)
+
+
+# ─────────────────────────────────────────────────────────────────────────── #
+# SCCB-PROP-SEC-001 — Spam Protection Audit Log                               #
+# ─────────────────────────────────────────────────────────────────────────── #
+
+class SpamLog(models.Model):
+    """
+    Security audit log for all spam protection events.
+    Created by SpamProtectionService for every rejected submission.
+    Visible in Django Admin for security monitoring and future DMC dashboards.
+    """
+
+    FAILURE_REASON_CHOICES = [
+        ('honeypot-triggered', 'Honeypot Triggered'),
+        ('rate-limit-exceeded', 'Rate Limit Exceeded'),
+        ('submission-too-fast', 'Submission Too Fast'),
+        ('captcha-failed', 'reCAPTCHA Failed'),
+        ('captcha-network-error-fail-open', 'reCAPTCHA Network Error (Fail-Open)'),
+        ('hostname-mismatch', 'reCAPTCHA Hostname Mismatch'),
+        ('captcha-disabled', 'CAPTCHA Disabled'),
+    ]
+
+    timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+    ip_address = models.GenericIPAddressField(db_index=True)
+    user_agent = models.TextField(blank=True)
+    form_name = models.CharField(max_length=100, blank=True, db_index=True)
+    request_path = models.CharField(max_length=200, blank=True)
+    referer = models.CharField(max_length=200, blank=True)
+    failure_reason = models.CharField(max_length=200, blank=True, db_index=True)
+    google_error_code = models.CharField(max_length=100, blank=True)
+    confidence_score = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['-timestamp']
+        verbose_name = 'Spam Log'
+        verbose_name_plural = 'Spam Logs'
+        indexes = [
+            models.Index(fields=['-timestamp', 'form_name']),
+            models.Index(fields=['ip_address', '-timestamp']),
+        ]
+
+    def __str__(self):
+        return (
+            f'[{self.timestamp.strftime("%Y-%m-%d %H:%M")}] '
+            f'{self.ip_address} — {self.failure_reason} — {self.form_name}'
+        )
+

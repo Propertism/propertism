@@ -209,9 +209,8 @@
             }());
         </script>
 
-        <!-- NRI Property Support Network (SEO Internal Linking Hub) -->
-        <div class="footer-seo-network" style="border-top: 1px solid rgba(255, 255, 255, 0.08) !important; padding: 1.5rem 0 !important; margin-top: 1.5rem !important; text-align: center !important; font-size: 0.8rem !important; font-family: var(--sans-main), sans-serif !important;">
-            <strong style="color: rgba(255, 255, 255, 0.9) !important; display: block !important; margin-bottom: 0.75rem !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; font-weight: 600 !important;">NRI Property Support Network</strong>
+        <div class="footer-seo-network" style="border-top: 1px solid rgba(255, 255, 255, 0.08) !important; padding: 10px 0 !important; margin-top: 12px !important; text-align: center !important; font-size: 0.8rem !important; font-family: var(--sans-main), sans-serif !important;">
+            <strong style="color: rgba(255, 255, 255, 0.9) !important; display: block !important; margin-bottom: 0.4rem !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; font-weight: 600 !important;">NRI Property Support Network</strong>
             <div style="display: flex !important; justify-content: center !important; flex-wrap: wrap !important; gap: 8px 24px !important;">
                 <a href="/new-york-usa/chennai-nri-property-management/" style="color: rgba(255, 255, 255, 0.75) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='#B89A4A'" onmouseout="this.style.color='rgba(255, 255, 255, 0.75)'">NRIs in USA</a>
                 <a href="/london-uk/chennai-nri-sell-property/" style="color: rgba(255, 255, 255, 0.75) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='#B89A4A'" onmouseout="this.style.color='rgba(255, 255, 255, 0.75)'">NRIs in UK</a>
@@ -226,16 +225,35 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 {{ company.company_name }}. Institutional Oversight.</p>
-            <div class="footer-powered-by">
-                Powered by <a href="https://www.olivine.co.in/" target="_blank">Olivine</a>
+            <!-- Row 1: Primary site navigation -->
+            <!-- Note: Links point to homepage section anchors, not separate pages -->
+            <div class="footer-bottom-nav">
+                <a href="/#about-section">About</a>
+                <a href="/#blog-section">Blog/Insights</a>
+                <a href="/#contact-section">Contact</a>
+                <a href="/#management-section">Management</a>
+                <a href="#nri-auth" data-open-auth-drawer>NRI Assist</a>
             </div>
-            <div class="footer-bottom-links">
-                <a href="{{ home_section_links.about }}">About</a>
-                <a href="{{ home_section_links.blog }}">Blog</a>
-                <a href="{{ home_section_links.contact }}">Contact</a>
-                <a href="{{ home_section_links.management }}">Management</a>
-                <a href="/nri-assist/">NRI Assist</a>
+
+            <!-- Trust Line (Subtle & Centered, immediately above the legal row) -->
+            <div class="footer-trust-line">
+                Trusted Property Management for NRIs &bull; Chennai &bull; Since 2017
+            </div>
+
+            <!-- Row 2: Legal navigation -->
+            <div class="footer-legal-links">
+                <a href="{% url 'terms' %}">Terms &amp; Conditions</a>
+                <a href="{% url 'privacy' %}">Privacy Policy</a>
+                <a href="{% url 'disclaimer' %}">Disclaimer</a>
+                <a href="{% url 'sitemap_guide' %}">Sitemap</a>
+            </div>
+
+            <!-- Row 3: Copyright (Smallest typography in the footer) -->
+            <p class="footer-copyright" style="color: #C49C52 !important; font-size: 0.70rem !important;">&copy; 2026 Propertism Realty Advisors LLP. All Rights Reserved.</p>
+
+            <!-- Row 4: Powered By -->
+            <div class="footer-powered-by">
+                Powered by <a href="https://www.olivine.co.in/" target="_blank">Olivine Enterprise Platform</a>
             </div>
         </div>
     </div>

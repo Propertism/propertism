@@ -1,0 +1,261 @@
+SCCB-PROP-SEC-001
+Contact Form Spam Protection Framework
+
+SCCB ID: SCCB-PROP-SEC-001
+
+Module: Website Security
+
+Application: Propertism.in
+
+Priority: High
+
+Risk Level: Low
+
+Implementation Type: Enhancement
+
+Version: 1.0.0
+
+Status: Approved for Development
+
+1. Objective
+
+Replace the existing arithmetic-based captcha with a modern, user-friendly, enterprise-grade spam protection framework that improves the enquiry experience while significantly reducing automated spam submissions.
+
+2. Business Justification
+
+The current arithmetic captcha requires users to solve simple mathematical expressions before submitting an enquiry.
+
+Although functional, this introduces unnecessary friction, particularly for:
+
+NRI customers
+International buyers
+Senior citizens
+Mobile users
+Premium clientele
+
+Modern spambots can also solve simple arithmetic expressions with ease, making the existing implementation less effective.
+
+Google reCAPTCHA provides a globally recognized, low-friction verification mechanism with significantly stronger bot detection capabilities.
+
+3. Scope
+
+This SCCB applies to all public-facing enquiry forms including:
+
+Contact Us
+Property Enquiry
+Schedule Site Visit
+Request Callback
+Sell Property
+Rent Property
+Future Lead Capture Forms
+4. Functional Changes
+4.1 Remove Existing Expression Captcha
+
+Remove:
+
+Arithmetic question generation
+Session storage
+Expression validation
+Frontend expression display
+Backend arithmetic verification
+4.2 Integrate Google reCAPTCHA v2 Checkbox
+
+Replace with:
+
+☑ I'm not a robot
+
+Features:
+
+Official Google widget
+Responsive layout
+Mobile compatible
+Accessible
+Theme compatible
+4.3 Server-side Verification
+
+Every submission shall:
+
+Receive Google verification token.
+Send token securely to Google Verification API.
+Verify authenticity.
+Accept only verified requests.
+
+No enquiry shall be processed without successful verification.
+
+4.4 Failure Handling
+
+If verification fails:
+
+Display:
+
+Please complete the security verification before submitting your enquiry.
+
+No enquiry shall be stored.
+
+No email shall be generated.
+
+No lead shall be created.
+
+5. Additional Spam Protection Layers
+Layer 1
+
+Google reCAPTCHA v2 Checkbox
+
+Purpose:
+
+Primary human verification.
+
+Layer 2
+
+Hidden Honeypot Field
+
+Purpose:
+
+Trap automated bots that populate hidden inputs.
+
+Human users never interact with this field.
+
+Layer 3
+
+IP Rate Limiting
+
+Recommended limits:
+
+Maximum 5 submissions
+Per IP
+Within 10 minutes
+
+Excess requests shall receive:
+
+HTTP 429 (Too Many Requests)
+
+Layer 4
+
+Minimum Submission Time
+
+Reject submissions completed unrealistically quickly.
+
+Recommended threshold:
+
+2–3 seconds minimum
+
+Purpose:
+
+Prevent scripted instant submissions.
+
+Layer 5
+
+Server-side Validation
+
+All validation shall remain server-side.
+
+Client-side validation shall never be considered authoritative.
+
+Layer 6
+
+Spam Event Logging
+
+Log:
+
+Timestamp
+IP Address
+User Agent
+Requested Form
+Failure Reason
+
+Logs shall support future analysis and tuning.
+
+6. Configuration
+
+Environment variables:
+
+RECAPTCHA_SITE_KEY=
+
+RECAPTCHA_SECRET_KEY=
+
+No credentials shall be hardcoded.
+
+7. User Experience
+
+Previous Experience
+
+Name
+
+Email
+
+7 + 2 = ?
+
+Submit
+
+New Experience
+
+Name
+
+Email
+
+☐ I'm not a robot
+
+Submit
+
+Benefits:
+
+Reduced cognitive effort
+Faster completion
+Familiar interface
+Higher trust
+Better mobile usability
+Premium appearance
+8. Security Considerations
+
+Implementation shall ensure:
+
+Server-side token verification
+CSRF protection retained
+HTTPS-only communication
+No bypass through client manipulation
+Expiring verification tokens
+Secure environment variable storage
+9. Acceptance Criteria
+Existing arithmetic captcha completely removed.
+Google reCAPTCHA v2 Checkbox successfully integrated.
+Server-side verification mandatory.
+Invalid verification prevents submission.
+Honeypot protection implemented.
+Rate limiting operational.
+Spam events logged.
+Mobile responsive.
+Accessible keyboard navigation.
+No regression in existing enquiry workflow.
+10. Testing Requirements
+
+Functional Tests
+
+Successful human submission.
+Missing captcha.
+Invalid token.
+Expired token.
+Multiple rapid submissions.
+Honeypot triggered.
+Rate limit exceeded.
+Network failure to Google API.
+Mobile device verification.
+Cross-browser compatibility.
+11. Rollback Plan
+
+If required:
+
+Disable reCAPTCHA via configuration.
+Restore previous captcha implementation.
+Preserve enquiry workflow.
+
+No database changes are required.
+
+12. Expected Outcome
+Significant reduction in automated spam enquiries.
+Improved user experience for domestic and NRI customers.
+Industry-standard security aligned with modern web practices.
+Reduced administrative overhead from spam email handling.
+Enhanced trust and professionalism for Propertism's public-facing forms.
+Implementation Recommendation
+
+This SCCB should be implemented as a reusable Spam Protection Framework rather than a one-off contact form enhancement. The verification component should be encapsulated as a shared module so that every current and future public-facing form (Contact, Property Enquiry, Site Visit, Callback, Sell/Rent Property, Newsletter, etc.) can adopt the same protection with minimal additional development. This ensures consistent security, easier maintenance, and centralized configuration across the Propertism platform.

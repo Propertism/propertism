@@ -1,0 +1,164 @@
+/**
+ * PROPERTISM V4 — LEGAL PAGES SHARED STYLESHEET
+ * Consistent with main site editorial design language.
+ * Applies to: Terms, Privacy Policy, Disclaimer
+ */
+
+/* ── Page Shell ─────────────────────────────────────────────── */
+.legal-page {
+    background: var(--bg-secondary, #F8F5F0);
+    min-height: 100vh;
+    padding-bottom: 6rem;
+}
+
+/* ── Hero Banner (Navy — matches site header / section kicker tone) ─ */
+.legal-hero {
+    background: var(--brand-navy, #0b0f1a);
+    padding: 7rem 1.5rem 3.5rem;
+    text-align: left;
+    border-bottom: 2px solid var(--brand-gold, #C49C52);
+}
+
+.legal-hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Kicker — same pattern as section kickers on main page */
+.legal-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brand-gold, #C49C52);
+    margin-bottom: 1rem;
+}
+
+.legal-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--brand-gold, #C49C52);
+}
+
+/* Title — Cormorant Garamond, matches section-title on homepage */
+.legal-title {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.15;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+}
+
+/* Meta line */
+.legal-meta {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0;
+}
+
+/* ── Content Card ─────────────────────────────────────────────── */
+.legal-card-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.legal-container {
+    background: #fff;
+    padding: 3.5rem;
+    margin-top: -2rem; /* Overlap hero slightly for premium depth */
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 12px 48px rgba(15, 23, 42, 0.06);
+    position: relative;
+    z-index: 1;
+}
+
+/* Back link */
+.legal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    color: var(--brand-gold, #C49C52);
+    text-decoration: none;
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+}
+
+.legal-back:hover {
+    opacity: 0.75;
+}
+
+.legal-back svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.legal-back:hover svg {
+    transform: translateX(-3px);
+}
+
+/* ── Article Typography ─────────────────────────────────────── */
+.legal-content {
+    font-family: var(--sans-main, 'Jost', sans-serif);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #334155;
+}
+
+.legal-content > p:first-child {
+    font-size: 1.05rem;
+    color: #1e293b;
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+/* h2 — gold left-bar accent, Cormorant heading, same as section sub-headers */
+.legal-content h2 {
+    font-family: var(--serif-main, 'Cormorant Garamond', serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--brand-navy, #0b0f1a);
+    margin: 2.5rem 0 0.9rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--brand-gold, #C49C52);
+    line-height: 1.25;
+}
+
+.legal-content p {
+    margin-bottom: 1.25rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .legal-hero {
+        padding: 6rem 1.25rem 3rem;
+    }
+
+    .legal-container {
+        padding: 2rem 1.5rem;
+        margin-top: -1.25rem;
+    }
+
+    .legal-card-wrap {
+        padding: 0 1rem;
+    }
+}

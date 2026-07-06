@@ -1,96 +1,54 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block meta_title %}Privacy Policy — Propertism{% endblock %}
+{% block meta_title %}Privacy Policy — Propertism Realty Advisors LLP{% endblock %}
 
 {% block extra_css %}
-<style>
-    .legal-page {
-        padding: 8rem 1.5rem 6rem;
-        background: #fdfcf9;
-        min-height: 100vh;
-    }
-    .legal-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: #fff;
-        padding: 4rem 3.5rem;
-        border: 1px solid rgba(15,23,42,0.06);
-        box-shadow: 0 10px 40px rgba(15,23,42,0.04);
-    }
-    .legal-header {
-        border-bottom: 1px solid #f1f5f9;
-        margin-bottom: 3rem;
-        padding-bottom: 2rem;
-    }
-    .legal-title {
-        font-family: var(--serif-main, serif);
-        font-size: 2.5rem;
-        color: #0f172a;
-        margin-bottom: 0.5rem;
-    }
-    .legal-meta {
-        font-family: var(--sans-main, sans-serif);
-        font-size: 0.85rem;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-    .legal-content {
-        font-family: var(--sans-main, sans-serif);
-        line-height: 1.8;
-        color: #334155;
-    }
-    .legal-content h2 {
-        font-family: var(--serif-main, serif);
-        font-size: 1.5rem;
-        color: #0f172a;
-        margin: 2.5rem 0 1rem;
-    }
-    .legal-content p {
-        margin-bottom: 1.25rem;
-    }
-    .legal-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-        color: #C49C52;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/v4-legal.css' %}">
 {% endblock %}
 
 {% block content %}
-<main class="legal-page">
-    <div class="legal-container">
-        <a href="/" class="legal-back">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            Back to Home
-        </a>
-        
-        <header class="legal-header">
+<div class="legal-page">
+
+    <!-- Navy Hero Banner -->
+    <div class="legal-hero">
+        <div class="legal-hero-inner">
+            <span class="legal-kicker">Legal</span>
             <h1 class="legal-title">Privacy Policy</h1>
-            <p class="legal-meta">Last Updated: May 2026</p>
-        </header>
-
-        <article class="legal-content">
-            <p>At Propertism, your privacy is our highest priority. This policy outlines how we collect, protect, and use your personal information.</p>
-
-            <h2>1. Information Collection</h2>
-            <p>We collect information when you register for NRI Assist, sign in via Google, or interact with our property concierge services. This includes name, email, and property preferences.</p>
-
-            <h2>2. Data Usage</h2>
-            <p>Your data is used strictly to provide personalized real estate guidance, coordinate with property care partners, and enhance your experience on our platform.</p>
-
-            <h2>3. Security</h2>
-            <p>All data transmitted through our platform is encrypted and stored in secure environments. We implement high-grade industrial security protocols to protect your portfolio information.</p>
-
-            <h2>4. Third Parties</h2>
-            <p>We do not sell your personal data. Information is only shared with verified partners (e.g., legal counsel, property managers) with your explicit consent for service fulfillment.</p>
-        </article>
+            <p class="legal-meta">Effective Date: May 2026 &nbsp;·&nbsp; Propertism Realty Advisors LLP</p>
+        </div>
     </div>
-</main>
+
+    <!-- Content Card -->
+    <div class="legal-card-wrap">
+        <div class="legal-container">
+
+            <a href="/" class="legal-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back to Home
+            </a>
+
+            <article class="legal-content">
+                <p>At Propertism, your privacy is our highest priority. This policy outlines how we collect, protect, and use your personal information when you interact with our platform and advisory services.</p>
+
+                <h2>1. Information We Collect</h2>
+                <p>We collect information when you register for NRI Assist, sign in via Google, submit a property inquiry, or interact with our property concierge services. This includes name, email address, phone number, country of residence, and property preferences. We do not collect sensitive financial data directly.</p>
+
+                <h2>2. How We Use Your Data</h2>
+                <p>Your data is used strictly to provide personalized real estate guidance, coordinate with verified property care partners, and enhance your experience on our platform. We may send advisory updates and property alerts if you have opted in to our newsletter.</p>
+
+                <h2>3. Data Security</h2>
+                <p>All data transmitted through our platform is encrypted using industry-standard TLS protocols and stored in secure cloud environments (AWS). We implement high-grade security measures to protect your portfolio information from unauthorized access, disclosure, or loss.</p>
+
+                <h2>4. Third-Party Sharing</h2>
+                <p>We do not sell your personal data. Information is only shared with verified partners — such as legal counsel, property managers, or maintenance coordinators — with your explicit consent and solely for the purpose of service fulfillment.</p>
+
+                <h2>5. Your Rights</h2>
+                <p>You may request a copy of the data we hold, ask us to correct inaccuracies, or request deletion of your account and associated data at any time by contacting us through our <a href="/#contact-section" style="color: var(--brand-gold, #C49C52); text-decoration: none; font-weight: 600;">Contact section</a>.</p>
+            </article>
+
+        </div>
+    </div>
+
+</div>
 {% endblock %}

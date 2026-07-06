@@ -1,4 +1,5 @@
 {
-  "CAPTCHA_ENABLE": false,
+  "CAPTCHA_ENABLE": true,
+  "CAPTCHA_PROVIDER": "google_v2",
   "CAPTCHA_TEST_MODE": false
 }

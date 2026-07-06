@@ -1,96 +1,51 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block meta_title %}Terms of Service — Propertism{% endblock %}
+{% block meta_title %}Terms of Service — Propertism Realty Advisors LLP{% endblock %}
 
 {% block extra_css %}
-<style>
-    .legal-page {
-        padding: 8rem 1.5rem 6rem;
-        background: #fdfcf9;
-        min-height: 100vh;
-    }
-    .legal-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: #fff;
-        padding: 4rem 3.5rem;
-        border: 1px solid rgba(15,23,42,0.06);
-        box-shadow: 0 10px 40px rgba(15,23,42,0.04);
-    }
-    .legal-header {
-        border-bottom: 1px solid #f1f5f9;
-        margin-bottom: 3rem;
-        padding-bottom: 2rem;
-    }
-    .legal-title {
-        font-family: var(--serif-main, serif);
-        font-size: 2.5rem;
-        color: #0f172a;
-        margin-bottom: 0.5rem;
-    }
-    .legal-meta {
-        font-family: var(--sans-main, sans-serif);
-        font-size: 0.85rem;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-    .legal-content {
-        font-family: var(--sans-main, sans-serif);
-        line-height: 1.8;
-        color: #334155;
-    }
-    .legal-content h2 {
-        font-family: var(--serif-main, serif);
-        font-size: 1.5rem;
-        color: #0f172a;
-        margin: 2.5rem 0 1rem;
-    }
-    .legal-content p {
-        margin-bottom: 1.25rem;
-    }
-    .legal-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-        color: #C49C52;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/v4-legal.css' %}">
 {% endblock %}
 
 {% block content %}
-<main class="legal-page">
-    <div class="legal-container">
-        <a href="/" class="legal-back">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            Back to Home
-        </a>
-        
-        <header class="legal-header">
+<div class="legal-page">
+
+    <!-- Navy Hero Banner (consistent with site header / section tone) -->
+    <div class="legal-hero">
+        <div class="legal-hero-inner">
+            <span class="legal-kicker">Legal</span>
             <h1 class="legal-title">Terms of Service</h1>
-            <p class="legal-meta">Last Updated: May 2026</p>
-        </header>
-
-        <article class="legal-content">
-            <p>Welcome to Propertism. By accessing our platform and utilizing our NRI Advisory services, you agree to comply with and be bound by the following terms and conditions.</p>
-
-            <h2>1. Service Scope</h2>
-            <p>Propertism provides premium real estate advisory, property management coordination, and concierge services specifically tailored for Non-Resident Indians (NRIs).</p>
-
-            <h2>2. User Obligations</h2>
-            <p>Users must provide accurate information regarding their property interests and identity. All interactions with advisors are subject to professional conduct standards.</p>
-
-            <h2>3. Privacy & Data</h2>
-            <p>We prioritize your privacy. Data shared via our "NRI Assist" drawer and other platform features is handled in accordance with our Privacy Policy.</p>
-
-            <h2>4. Disclaimers</h2>
-            <p>Propertism acts as an advisory platform. While we coordinate with verified partners, final investment and legal decisions rest with the user.</p>
-        </article>
+            <p class="legal-meta">Effective Date: May 2026 &nbsp;·&nbsp; Propertism Realty Advisors LLP</p>
+        </div>
     </div>
-</main>
+
+    <!-- Content Card -->
+    <div class="legal-card-wrap">
+        <div class="legal-container">
+
+            <a href="/" class="legal-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back to Home
+            </a>
+
+            <article class="legal-content">
+                <p>Welcome to Propertism. By accessing our platform and utilizing our NRI Advisory services, you agree to comply with and be bound by the following terms and conditions.</p>
+
+                <h2>1. Service Scope</h2>
+                <p>Propertism provides premium real estate advisory, property management coordination, and concierge services specifically tailored for Non-Resident Indians (NRIs). Our services are designed to assist overseas property owners in managing, selling, or acquiring residential and commercial real estate in Chennai and surrounding areas.</p>
+
+                <h2>2. User Obligations</h2>
+                <p>Users must provide accurate information regarding their property interests and identity. All interactions with our advisors are subject to professional conduct standards. Propertism reserves the right to discontinue services if false or misleading information is provided.</p>
+
+                <h2>3. Privacy &amp; Data</h2>
+                <p>We prioritize your privacy. Data shared via our "NRI Assist" feature and other platform interactions is handled in accordance with our <a href="{% url 'privacy' %}" style="color: var(--brand-gold, #C49C52); text-decoration: none; font-weight: 600;">Privacy Policy</a>. We do not sell, rent, or share your personal information with third parties without your consent.</p>
+
+                <h2>4. Disclaimers</h2>
+                <p>Propertism acts as an advisory and coordination platform. While we work with verified partners and qualified professionals, final investment and legal decisions rest with the user. We strongly recommend obtaining independent legal and financial counsel before completing any property transaction.</p>
+            </article>
+
+        </div>
+    </div>
+
+</div>
 {% endblock %}

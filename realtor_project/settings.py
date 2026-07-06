@@ -634,10 +634,25 @@ LEAD_VALIDATION_CONFIG = {
         'REVIEW_RECOMMENDED': 40,
         # Below 40 is Likely Spam
     },
-    
-    # Layer 9: Conditional CAPTCHA
-    'CAPTCHA_THRESHOLD': 70,                     # Scores below this require Math CAPTCHA
+
+    # Layer 9: Conditional CAPTCHA (deprecated — reCAPTCHA now handles this via CAPTCHA_ENABLE)
+    'CAPTCHA_THRESHOLD': 70,
 }
+
+# ─────────────────────────────────────────────────────────────────────────── #
+# SCCB-PROP-SEC-001 — Google reCAPTCHA v2 Configuration                       #
+# ─────────────────────────────────────────────────────────────────────────── #
+# Keys MUST be set via environment variables only. Never hardcode.
+# Register at: https://www.google.com/recaptcha/admin/create
+#   - Type: reCAPTCHA v2 → "I'm not a robot" Checkbox
+#   - Domains: propertism.in, www.propertism.in, localhost
+
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')      # Public — safe in templates
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')  # Private — never expose
+
+# Fail-open: if True, allows enquiries through when Google's API is unreachable.
+# Set to False in production for strict enforcement.
+RECAPTCHA_FAIL_OPEN = _get_bool_env('RECAPTCHA_FAIL_OPEN', default=True)
 
 # --- EXECUTIVE LEAD EMAIL NOTIFICATION SETTINGS (SCCB-DMP-LEAD-M1.5) ---
 EXECUTIVE_EMAIL_CONFIG = {

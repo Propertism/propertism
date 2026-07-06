@@ -1,6 +1,29 @@
 {% load static %}
 <!-- CONTACT SECTION V4 - NRI ADVISORY GATEWAY -->
 <link rel="stylesheet" href="{% static 'css/v4-contact.css' %}">
+<style>
+    #contact-section .captcha-cta-row {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        margin-top: 24px;
+        width: 100%;
+    }
+    #contact-section .recaptcha-container {
+        margin: 0 !important;
+    }
+    @media (max-width: 768px) {
+        #contact-section .captcha-cta-row {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 16px !important;
+        }
+        #contact-section .hf-submit-btn {
+            width: 100% !important;
+            margin: 0 auto !important;
+        }
+    }
+</style>
 
 <section id="contact-section" class="nri-contact-section">
     <div class="section-inner">
@@ -419,20 +442,16 @@
                             </div>
                         </div>
 
-                        <div class="hf-field-row-submit">
-                            {% if show_captcha_contact %}
-                                <input type="hidden" name="message" value="{{ prefilled_message }}">
-                                <div style="flex: 1;">
-                                    {% include 'includes/_form_validation_fields_captcha.html' with show_captcha=show_captcha_contact %}
-                                </div>
-                            {% else %}
-                                <div class="hf-field-group" style="flex: 1;">
-                                    <label class="hf-field-label">Message <span style="color: #ff4d4d;">*</span></label>
-                                    <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required>{{ prefilled_message|default:'' }}</textarea>
-                                </div>
-                            {% endif %}
+                        <div class="hf-field-row-submit" style="grid-template-columns: 1fr; gap: 16px;">
+                            <div class="hf-field-group" style="margin-bottom: 0 !important; width: 100%;">
+                                <label class="hf-field-label">Message <span style="color: #ff4d4d;">*</span></label>
+                                <textarea class="hf-field-textarea" name="message" placeholder="Briefly describe your property management needs..." rows="3" required>{{ prefilled_message|default:'' }}</textarea>
+                            </div>
+                        </div>
 
-                            <button type="submit" class="hf-submit-btn">
+                        <div class="captcha-cta-row">
+                            {% include 'includes/_form_validation_fields_captcha.html' %}
+                            <button type="submit" class="hf-submit-btn" style="margin: 0 !important; flex: 1 !important; height: 78px !important; font-size: 1.1rem !important; font-weight: 700 !important; letter-spacing: 0.05em !important; display: flex !important; align-items: center; justify-content: center;">
                                 {{ company.contact_form_submit_text|default:"Send My Request" }}
                             </button>
                         </div>
@@ -477,11 +496,6 @@
                     });
                 </script>
                 {% endif %}
-
-                <div id="hf-successMsg" {% if messages %}class="show"{% endif %}>
-                    <p class="hf-success-heading">Request Received</p>
-                    <p class="hf-success-body">We'll be in touch within 24 hours.</p>
-                </div>
             </div>
         </div>
 

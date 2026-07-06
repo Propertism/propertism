@@ -1,5 +1,6 @@
 from django.conf import settings
 from .site_context import get_active_services, get_company_info, get_home_section_links
+from content.security.captcha_provider import get_site_key
 
 
 def site_content(request):
@@ -16,6 +17,7 @@ def site_content(request):
         "google_maps_api_key": getattr(settings, "GOOGLE_MAPS_API_KEY", ""),
         "google_maps_countries": getattr(settings, "GOOGLE_MAPS_AUTOCOMPLETE_COUNTRIES", ["in"]),
         "google_maps_default_country": getattr(settings, "GOOGLE_MAPS_DEFAULT_COUNTRY", "in"),
+        "recaptcha_site_key": get_site_key(),
         "chat_widget_content": {
             "title": company.chat_window_title or "Leave a message",
             "subtitle": company.chat_window_subtitle or "We'll get back to you soon",
@@ -25,3 +27,4 @@ def site_content(request):
             "successMessage": company.chat_success_message or "Thanks for reaching out. We'll get back to you within 24 hours.",
         },
     }
+

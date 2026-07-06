@@ -10,7 +10,7 @@ from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry,
     CustomerReviewSection, CustomerReview, HomepageCardSection, HomepageCard,
-    HeroBackgroundImage, LandingLead,
+    HeroBackgroundImage, LandingLead, SpamLog,
 )
 
 
@@ -429,3 +429,35 @@ try:
 except admin.sites.NotRegistered:
     pass
 admin.site.register(User, PropertismUserAdmin)
+
+
+# ─────────────────────────────────────────────────────────────────────────── #
+# SCCB-PROP-SEC-001 — Spam Log Admin (Read-Only Audit Log)
+# ─────────────────────────────────────────────────────────────────────────── #
+
+@admin.register(SpamLog)
+class SpamLogAdmin(admin.ModelAdmin):
+    """Read-only admin view for spam protection audit events."""
+
+    list_display = (
+        'timestamp', 'ip_address', 'form_name',
+        'failure_reason', 'google_error_code', 'confidence_score',
+    )
+    list_filter = ('failure_reason', 'form_name')
+    search_fields = ('ip_address', 'user_agent', 'failure_reason', 'request_path')
+    date_hierarchy = 'timestamp'
+    ordering = ('-timestamp',)
+    readonly_fields = (
+        'timestamp', 'ip_address', 'user_agent', 'form_name',
+        'request_path', 'referer', 'failure_reason',
+        'google_error_code', 'confidence_score',
+    )
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

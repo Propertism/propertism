@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}Legal Disclaimer — Propertism Realty Advisors LLP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/v4-legal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+
+    <!-- Navy Hero Banner -->
+    <div class="legal-hero">
+        <div class="legal-hero-inner">
+            <span class="legal-kicker">Legal</span>
+            <h1 class="legal-title">Legal Disclaimer</h1>
+            <p class="legal-meta">Effective Date: July 2026 &nbsp;·&nbsp; Propertism Realty Advisors LLP</p>
+        </div>
+    </div>
+
+    <!-- Content Card -->
+    <div class="legal-card-wrap">
+        <div class="legal-container">
+
+            <a href="/" class="legal-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back to Home
+            </a>
+
+            <article class="legal-content">
+                <p>This disclaimer governs the use of Propertism's website and all services offered under Propertism Realty Advisors LLP. By utilizing our services, you accept this disclaimer in full.</p>
+
+                <h2>1. Advisory Role</h2>
+                <p>Propertism provides premium property management advisory, concierge facilitation, and NRI support coordination. We do not act as registered legal or financial advisors. Any material or consultation provided does not constitute formal tax, legal, investment, or regulatory counsel. We strongly recommend consulting qualified legal and financial professionals for all property transactions.</p>
+
+                <h2>2. Limitation of Liability</h2>
+                <p>While we make reasonable efforts to verify the properties, tenants, and service providers — including maintenance, construction, and legal experts — Propertism shall not be held liable for any damages, transaction delays, or financial loss resulting from third-party services or local developer agreements.</p>
+
+                <h2>3. Information Accuracy</h2>
+                <p>Information on this website, including local compliance guides, municipal tax rates, property details, and market valuations, is compiled for convenience and is subject to change without notice. Users are advised to independently verify all property deeds and documentation through appropriate legal channels before finalising any transaction agreements.</p>
+
+                <h2>4. Third-Party Links</h2>
+                <p>For convenience, our <a href="{% url 'property_owner_resources' %}" style="color: var(--brand-gold, #C49C52); text-decoration: none; font-weight: 600;">Resource Hub</a> links to external government websites (e.g., TNREGInet, GCC property tax portal, Patta/Chitta services). Propertism does not endorse, verify, or assume responsibility for the uptime, security, or accuracy of these external platforms.</p>
+            </article>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

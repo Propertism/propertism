@@ -24,13 +24,16 @@
 | 51 | July 02 | **SCCB-PROP-AUDIT-POST-PRODUCTION-001: POST PRODUCTION SEO, ANALYTICS & CRO AUDIT. Completed non-invasive post-production audit validating robots.txt, sitemap XML, canonical tags, GSC coverage, GA4 measurement and event tracking, 404 links, CRO CTA components, Knowledge Hub BlogPost databases, and static image/LCP performance optimizations. Verified all systems pass with zero regressions.** | ✅ |
 | 52 | July 04 | **CENTRALIZED COMMUNICATIONS AND ACKNOWLEDGEMENT FRAMEWORK. Designed and implemented the core 'communications' Django application. Stabilized background transactions via on_commit, added pre-rendered template support for admin notifications, and updated settings to force SMTP for local/dev verification.** | ✅ |
 | 53 | July 05 | **MAP VISUAL ALIGNMENT, TYPOGRAPHY HARDENING & GOLD BORDER INTEGRATION. Unified homepage map section-header layout using canonical `.section-header` and `.section-title` CSS styles for alignment and typography. Reduced vertical spacing to 20px, removed duplicate outer borders, and integrated a flat 2px gold border around the responsive map component.** | ✅ |
+| 55 | July 05 | **FOOTER VIEWPORT COMPACTION — DEAD ZONE ELIMINATION. Resolved two red-bordered dead-space zones in the footer: (1) collapsed ~48px gap between column CTA row and world clocks strip by splitting CSS Grid gap into column-gap:24px / row-gap:6px and zeroing footer-presence-column margin-top; (2) compressed footer-bottom padding-top from 24px→12px, margin-top 16px→8px, and gap 12px→8px. Also reduced .site-footer top/bottom padding (40px/24px → 28px/16px), dark-theme h3 margin-bottom (1.25rem → 10px), .world-clock-strip top padding (2.5rem → 0), clock cell padding (14px 22px → 8px 14px), and clock typography sizes. Total ~85px of vertical dead space reclaimed. All changes verified: Django check 0 issues.** | ✅ |
+| 56 | July 06 | **FOOTER NAV ANCHORING, BRAND GOLD ENHANCEMENT, SITE MAP GUIDE & ENTERPRISE reCAPTCHA FRAMEWORK. Configured footer links to homepage section anchors. Rebuilt legal pages (Terms, Privacy, Disclaimer) with full V4 editorial design using shared `v4-legal.css`. Standardized Sitemap footer link to a human-friendly HTML `/sitemap-guide/`. Corrected copyright color overrides to brand gold (#C49C52) at 0.70rem across all pages. Implemented provider-agnostic Spam Protection Framework (Google reCAPTCHA v2 checkbox, rate-limiting, honeypots, minimum submission timing, and read-only database logging).** | ✅ |
+| 57 | July 06 | **RECAPTCHA & CTA COMPONENT LAYOUT HARMONIZATION. Aligned radio button controls into a responsive grid, shortened labels, unified Captcha and CTA elements side-by-side on desktop with a cohesive gap and flex alignment, pixel-matched submit buttons to 78px height with bold 1.1rem text size, and improved vertical spacing margins.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 05, 2026 (18:45 IST)
-**Last Update**: SESSION 53 - MAP VISUAL ALIGNMENT, TYPOGRAPHY HARDENING & GOLD BORDER INTEGRATION.
+**Last Updated On**: July 06, 2026 (15:20 IST)
+**Last Update**: SESSION 57 — RECAPTCHA & CTA COMPONENT LAYOUT HARMONIZATION.
 
 ---
 
@@ -740,8 +743,70 @@ Continue from this checkpoint tomorrow.
 
 ---
 
-## NEXT SESSION PLAN (July 06, 2026)
-**Focus**: realBOT Integration Foundation & Phase M2.1 Environment Setup
-- [ ] Review realBOT discovery and final integration architecture.
-- [ ] Deploy local/production changes to live servers.
-- [ ] Initialize phase configuration.
+## Session 54 Detail — July 05, 2026
+
+**Session ID**: `CODEX-SESSION-0507-B`
+**Focus**: Footer Legal & Copyright Standardization & GBP Crop-Safe Cover Banner
+
+### Part 1: Website Footer Legal Standardization (SCCB-PROP-FOOTER-LEGAL-001) ✅
+- Restructured the footer bottom layout (`_footer.html`) to support a clean, centered 4-row system:
+  - **Row 1:** Primary site navigation links (About, Blog/Insights, Contact, Management, NRI Assist).
+  - **Trust Line:** Subtle, uppercase trust tag (`Trusted Property Management for NRIs • Chennai • Since 2017`).
+  - **Row 2:** Dedicated Legal navigation links (Terms & Conditions, Privacy Policy, Disclaimer, Sitemap) using the Django routing framework.
+  - **Row 3:** Copyright (`© 2026 Propertism Realty Advisors LLP. All Rights Reserved.`) using the smallest typography size in the footer.
+  - **Row 4:** Technology Credit (`Powered by Olivine Enterprise Platform`).
+- Configured a new `/disclaimer/` route (`realtor_project/urls.py`) and created the matching template (`disclaimer.html`) adhering to the editorial design guidelines.
+- Standardized the standalone templates `about.html` and `contact.html` by applying matching inline styles to isolate their footers and ensure consistent branding.
+
+### Part 2: GBP Crop-Safe Cover Banner Optimization ✅
+- Resolved the double-cropping layout issues by generating a native **16:9 aspect ratio cover banner (1024 × 576 pixels)**.
+- Scaled down central content to **70%** (fitting safely within a `560 × 420` box) to provide wide crop buffers (78px vertically, 232px horizontally).
+- Added a soft bilinear vignette mask to **dim the bright skyline and cityscape by 45%–55%** on the corners/sides, increasing typography contrast and readability.
+
+---
+
+## Session 56 Detail — July 06, 2026
+
+**Session ID**: `CODEX-SESSION-0607-A`
+**Focus**: Footer Nav Anchoring, Brand Gold Enhancement, HTML Sitemap Guide, & Enterprise reCAPTCHA integration
+
+### Part 1: Footer Navigation Anchoring & Brand Gold Customization ✅
+- Refactored the homepage footer links (About, Blog/Insights, Contact, Management) from separate pages to direct section anchors (`/#about-section`, etc.) so clicking them scrolls the main homepage layout.
+- NRI Assist footer link configured with the `data-open-auth-drawer` trigger, launching the sliding security overlay directly instead of redirecting.
+- Rebuilt `terms.html`, `privacy.html`, and `disclaimer.html` with a shared stylesheet `v4-legal.css`, applying the Propertism V4 editorial design: navy background hero banner, Cormorant Garamond serif headings, Jost sans body copy, and gold-tinted kicker bands.
+- Standardized the Sitemap link in the footer to load `/sitemap-guide/`, a fully styled HTML grid directory of all pages categorized by segment. Replaced/removed the technical search engine XML description block from the footer.
+- Overrode copyright text elements across all views (`about.html`, `contact.html`, and `_footer.html`) to enforce brand gold (`#C49C52`) and slightly increased the size to `0.70rem` to override style sheet cascade blocks.
+
+### Part 2: Enterprise Spam Protection Framework Deployed ✅
+- Implemented a unified security layer in `content/security/` containing Google reCAPTCHA v2 checkbox validation (`google_recaptcha.py`), provider abstraction support (`captcha_provider.py`), honeypot, rate limiting, minimum submission duration check rules (`validators.py`), and a high-level service class (`spam_protection.py`).
+- Added the `SpamLog` Django model and registered a read-only admin log panel supporting security auditing.
+- Swapped arithmetic maths CAPTCHA includes with the reCAPTCHA v2 checkbox widget inside the General Contact form, Quick Inquiry callback form, and property detail sidebar enquiry form.
+- Wrote full unit tests (`CaptchaVerificationTests`) covering enabled, disabled, and invalid token scenarios. Checked that all 34 Django tests pass cleanly.
+
+---
+
+## Session 57 Detail — July 06, 2026
+
+**Session ID**: `CODEX-SESSION-0607-B`
+**Focus**: reCAPTCHA & CTA Component Layout Harmonization
+
+### Part 1: Quick Inquiry Grid Refactoring ✅
+- Aligned mid-page form radio option fields into a responsive layout using dynamic CSS grid (`grid-template-columns: repeat(3, 1fr)`). Added stacking layout below `768px`.
+- Shortened option button text (e.g. "Sell my Chennai property") to remove prefix clutter and ensure high readability.
+- Added `36px` margins above and below the radio area to prevent form vertical crowding.
+
+### Part 2: reCAPTCHA & CTA Placement Alignment ✅
+- Placed the reCAPTCHA checkbox widget and CTA button side-by-side on desktop with a cohesive `32px` gap.
+- Configured CTA buttons to automatically grow (`flex: 1`) to fill the remaining width in the row, ensuring perfect alignment with the rightmost edges of the fields above them.
+- Standardized heights of CTA buttons on both forms to `78px` (matching the checkbox widget dimensions).
+- Enlarged CTA button font-size to `1.1rem` bold and shortened the mid-page text to `REQUEST CALLBACK` to keep it clean, single-line, and premium.
+- Verified zero rendering syntax errors or broken tags across active views.
+
+---
+
+## NEXT SESSION PLAN (July 07, 2026)
+**Focus**: Final Localhost Review & Git Push Synchronization
+- [ ] Connect with Viji to finalize local review of the unified layout on `http://localhost:8000/`.
+- [ ] Push staging changes to `main` branch once validated.
+- [ ] Deploy and verify production environment variables.
+

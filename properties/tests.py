@@ -329,7 +329,9 @@ class InquiryNotificationTests(TestCase):
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
         DEFAULT_FROM_EMAIL="info@propertism.in",
         ADMIN_EMAIL="info@propertism.in",
+        ADMIN_EMAILS=["info@propertism.in", "propertism.tamil@gmail.com"],
         EXTRA_NOTIFICATION_EMAIL="propertism.tamil@gmail.com",
+        COMMUNICATIONS_ASYNC=False,
     )
     @patch("content.views.send_whatsapp_notification")
     def test_create_inquiry_sends_email_and_whatsapp(self, mock_send_whatsapp):
@@ -340,16 +342,17 @@ class InquiryNotificationTests(TestCase):
         mail.outbox = []
 
         # Make client POST to create_inquiry
-        response = self.client.post(
-            reverse("create_inquiry"),
-            data={
-                "property_id": self.property_obj.id,
-                "name": "Viji Buyer",
-                "email": "buyer@example.com",
-                "phone": "+919876543210",
-                "message": "Is this ECR villa open for visits?",
-            },
-        )
+        with self.captureOnCommitCallbacks(execute=True):
+            response = self.client.post(
+                reverse("create_inquiry"),
+                data={
+                    "property_id": self.property_obj.id,
+                    "name": "Viji Buyer",
+                    "email": "buyer@example.com",
+                    "phone": "+919876543210",
+                    "message": "Is this ECR villa open for visits?",
+                },
+            )
 
         # Inquiry should be created
         self.assertEqual(Inquiry.objects.count(), 1)
@@ -360,20 +363,33 @@ class InquiryNotificationTests(TestCase):
         # Response should redirect to property detail page
         self.assertRedirects(response, reverse("property_detail", kwargs={"slug": self.property_obj.slug}))
 
-        # Email should be sent to both ADMIN_EMAIL and EXTRA_NOTIFICATION_EMAIL
-        expected_recipients = set(["info@propertism.in", "propertism.tamil@gmail.com"])
+        # Email should be sent to both ADMIN_EMAILS and the buyer
+        expected_admin_recipients = set(["info@propertism.in", "propertism.tamil@gmail.com"])
         
-        self.assertEqual(len(mail.outbox), 1)
-        sent_email = mail.outbox[0]
-        self.assertEqual(set(sent_email.to), expected_recipients)
-        self.assertIn("Viji Buyer", sent_email.subject)
-        self.assertIn("Premium Beach Villa", sent_email.body)
-        self.assertIn("ECR villa open for visits?", sent_email.body)
+        self.assertEqual(len(mail.outbox), 3)
+        
+        # Verify customer acknowledgement
+        customer_email = next(m for m in mail.outbox if "buyer@example.com" in m.to)
+        self.assertIn("Viji Buyer", customer_email.body)
+        
+        # Verify admin notifications
+        admin_emails_sent = [m for m in mail.outbox if m.to[0] in expected_admin_recipients]
+        self.assertEqual(len(admin_emails_sent), 2)
+        for sent_email in admin_emails_sent:
+            self.assertIn("Viji Buyer", sent_email.subject)
+            self.assertIn("Premium Beach Villa", sent_email.body)
+            self.assertIn("ECR villa open for visits?", sent_email.body)
 
-        # WhatsApp mock should be called with correct details
-        mock_send_whatsapp.assert_called_once()
-        whatsapp_call_args = mock_send_whatsapp.call_args[0][0]
-        self.assertIn("Viji Buyer", whatsapp_call_args)
-        self.assertIn("Premium Beach Villa", whatsapp_call_args)
-        self.assertIn("+919876543210", whatsapp_call_args)
+        # WhatsApp mock should be called with correct details (one for customer, one for admin)
+        self.assertEqual(mock_send_whatsapp.call_count, 2)
+
+        # Verify customer notification
+        customer_call = next(c for c in mock_send_whatsapp.call_args_list if c[0][1] == '919876543210')
+        self.assertIn("Viji Buyer", customer_call[0][0])
+        self.assertIn("Is this ECR villa open for visits?", customer_call[0][0])
+
+        # Verify admin notification
+        admin_call = next(c for c in mock_send_whatsapp.call_args_list if c[0][1] == '918667020798')
+        self.assertIn("Viji Buyer", admin_call[0][0])
+        self.assertIn("Premium Beach Villa", admin_call[0][0])
 

@@ -97,15 +97,12 @@
                             <input type="tel" name="phone" class="v4-input" required placeholder="Include country code" autocomplete="tel" value="{{ prefilled_phone|default:'' }}">
                         </div>
 
-                        {% if show_captcha %}
-                             <input type="hidden" name="message" value="{{ prefilled_message }}">
-                             {% include 'includes/_form_validation_fields_captcha.html' with show_captcha=show_captcha %}
-                         {% else %}
-                             <div class="v4-form-group">
-                                 <label class="v4-label">Enquiry Details</label>
-                                 <textarea name="message" class="v4-input" rows="4" placeholder="How can we assist you?">{{ prefilled_message|default:'' }}</textarea>
-                             </div>
-                         {% endif %}
+                        <div class="v4-form-group">
+                            <label class="v4-label">Enquiry Details</label>
+                            <textarea name="message" class="v4-input" rows="4" placeholder="How can we assist you?">{{ prefilled_message|default:'' }}</textarea>
+                        </div>
+
+                        {% include 'includes/_form_validation_fields_captcha.html' %}
 
                         <button type="submit" class="btn-v4-primary">Send Secure Inquiry</button>
                     </form>

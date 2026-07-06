@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}Site Map — Propertism Realty Advisors LLP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/v4-legal.css' %}">
+<style>
+    /* Sitemap-specific enhancements */
+    .sitemap-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .sitemap-group {
+        padding: 0;
+    }
+
+    .sitemap-group-title {
+        font-family: var(--sans-main, 'Jost', sans-serif);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand-gold, #C49C52);
+        margin: 0 0 0.85rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(196, 156, 82, 0.2);
+    }
+
+    .sitemap-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .sitemap-links li a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--sans-main, 'Jost', sans-serif);
+        font-size: 0.88rem;
+        color: #334155;
+        text-decoration: none;
+        transition: color 0.2s ease, gap 0.2s ease;
+    }
+
+    .sitemap-links li a::before {
+        content: '→';
+        font-size: 0.75rem;
+        color: rgba(196, 156, 82, 0.5);
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .sitemap-links li a:hover {
+        color: var(--brand-gold, #C49C52);
+    }
+
+    .sitemap-links li a:hover::before {
+        color: var(--brand-gold, #C49C52);
+        transform: translateX(3px);
+    }
+
+    .sitemap-xml-note {
+        margin-top: 3rem;
+        padding: 1.25rem 1.5rem;
+        background: #F8F5F0;
+        border-left: 3px solid var(--brand-gold, #C49C52);
+        font-family: var(--sans-main, 'Jost', sans-serif);
+        font-size: 0.82rem;
+        color: #64748b;
+        line-height: 1.6;
+    }
+
+    .sitemap-xml-note a {
+        color: var(--brand-gold, #C49C52);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+        .sitemap-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+
+    <!-- Navy Hero Banner -->
+    <div class="legal-hero">
+        <div class="legal-hero-inner">
+            <span class="legal-kicker">Navigation</span>
+            <h1 class="legal-title">Site Map</h1>
+            <p class="legal-meta">All pages &amp; sections &nbsp;·&nbsp; Propertism Realty Advisors LLP</p>
+        </div>
+    </div>
+
+    <!-- Content Card -->
+    <div class="legal-card-wrap">
+        <div class="legal-container">
+
+            <a href="/" class="legal-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back to Home
+            </a>
+
+            <div class="sitemap-grid">
+
+                <!-- Main Sections -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Main Page Sections</p>
+                    <ul class="sitemap-links">
+                        <li><a href="/">Homepage</a></li>
+                        <li><a href="/#about-section">About Propertism</a></li>
+                        <li><a href="/#services-section">Our Services</a></li>
+                        <li><a href="/#management-section">Management Team</a></li>
+                        <li><a href="/#reviews-section">Client Reviews</a></li>
+                        <li><a href="/#properties-section">Featured Properties</a></li>
+                        <li><a href="/#blog-section">Insights &amp; Blog</a></li>
+                        <li><a href="/#contact-section">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services & Advisory -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Services</p>
+                    <ul class="sitemap-links">
+                        <li><a href="/chennai/nri-property-management/">NRI Property Management</a></li>
+                        <li><a href="/chennai/nri-sell-property/">Sell Property — Chennai</a></li>
+                        <li><a href="/chennai/nri-property-management/">NRI Advisory</a></li>
+                        <li><a href="/nri-assist/">NRI Assist Drawer</a></li>
+                        <li><a href="/realbot/">realBOT Assistant</a></li>
+                    </ul>
+                </div>
+
+                <!-- Properties -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Properties</p>
+                    <ul class="sitemap-links">
+                        <li><a href="/properties/">All Properties</a></li>
+                        <li><a href="/#properties-section">Featured on Homepage</a></li>
+                    </ul>
+                </div>
+
+                <!-- Knowledge Hub -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Knowledge Hub</p>
+                    <ul class="sitemap-links">
+                        <li><a href="/#blog-section">Insights Overview</a></li>
+                        <li><a href="/blog/nri-property-management-chennai-complete-guide/">NRI Property Guide</a></li>
+                        <li><a href="/blog/how-nris-can-sell-property-in-india-from-abroad/">Selling Property Abroad</a></li>
+                        <li><a href="/blog/power-of-attorney-for-nris-complete-guide/">Power of Attorney</a></li>
+                        <li><a href="/blog/patta-transfer-process-explained/">Patta Transfer Process</a></li>
+                        <li><a href="/blog/capital-gains-tax-property-sale-nris/">Capital Gains Tax</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Resources</p>
+                    <ul class="sitemap-links">
+                        <li><a href="{% url 'property_owner_resources' %}">Tamil Nadu Resource Hub</a></li>
+                        <li><a href="https://eservices.tn.gov.in/eservicesnew/home.html" target="_blank" rel="noopener noreferrer">Patta/Chitta Extract</a></li>
+                        <li><a href="https://tnreginet.gov.in" target="_blank" rel="noopener noreferrer">Encumbrance Search</a></li>
+                        <li><a href="https://chennaicorporation.gov.in" target="_blank" rel="noopener noreferrer">GCC Property Tax</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal & Company -->
+                <div class="sitemap-group">
+                    <p class="sitemap-group-title">Legal &amp; Company</p>
+                    <ul class="sitemap-links">
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'disclaimer' %}">Legal Disclaimer</a></li>
+                        <li><a href="/#contact-section">Contact &amp; Office</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -446,9 +446,10 @@ class TamilselvanContactDetailsTests(TestCase):
 
 class CaptchaVerificationTests(TestCase):
     def setUp(self):
-        # Create company info which is needed for the homepage and redirection logic
         from content.models import CompanyInfo
         CompanyInfo.objects.create(company_name="Propertism Realty Advisors LLP")
+        from django.core.cache import cache
+        cache.clear()
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
@@ -458,77 +459,128 @@ class CaptchaVerificationTests(TestCase):
     )
     @patch("content.views.send_whatsapp_notification")
     @patch("realtor_project.features.is_feature_enabled")
-    def test_low_score_triggers_captcha_and_correct_resolution_submits(self, mock_is_feature_enabled, mock_send_whatsapp):
-        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else False
-        # 1. Post a lead that triggers captcha (e.g. Honeypot populated)
+    def test_captcha_disabled_submits_normally(self, mock_is_feature_enabled, mock_send_whatsapp):
+        # When CAPTCHA is disabled, form should submit without reCAPTCHA tokens
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
+        
         from properties.models import Inquiry
         self.assertEqual(Inquiry.objects.count(), 0)
 
         response = self.client.post(
             reverse("contact"),
             data={
-                "name": "Spam Bot",
-                "email": "spam@example.com",
+                "name": "Genuine User",
+                "email": "genuine@example.com",
                 "phone": "+919876543210",
-                "message": "Cheap traffic and viagra",
-                "website_url_check": "http://spam-website.com",  # Honeypot filled
+                "message": "Interested in properties in OMR",
                 "form_source": "General Inquiry",
             }
         )
 
-        # It should render home-premium.html (status code 200) instead of redirecting
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "home-premium.html")
-        self.assertTrue(response.context.get("show_captcha_contact"))
-        self.assertFalse(response.context.get("show_captcha_mid"))
-        self.assertIn("captcha_expected_answer", self.client.session)
-        self.assertIn("captcha_question", self.client.session)
-
-        expected_answer = self.client.session["captcha_expected_answer"]
-
-        # 2. Post incorrect captcha answer
-        response_failed = self.client.post(
-            reverse("contact"),
-            data={
-                "name": "Spam Bot",
-                "email": "spam@example.com",
-                "phone": "+919876543210",
-                "message": "Cheap traffic and viagra",
-                "website_url_check": "http://spam-website.com",
-                "form_source": "General Inquiry",
-                "captcha_answer": str(int(expected_answer) + 1),  # Incorrect answer
-            }
-        )
-
-        # Still should be on the home-premium page with an error
-        self.assertEqual(response_failed.status_code, 200)
-        self.assertTemplateUsed(response_failed, "home-premium.html")
-        self.assertTrue(response_failed.context.get("show_captcha_contact"))
-        self.assertEqual(Inquiry.objects.count(), 0)
-
-        # 3. Post correct captcha answer (get new expected_answer since it was regenerated in step 2)
-        new_expected_answer = self.client.session["captcha_expected_answer"]
-        response_success = self.client.post(
-            reverse("contact"),
-            data={
-                "name": "Spam Bot",
-                "email": "spam@example.com",
-                "phone": "+919876543210",
-                "message": "Cheap traffic and viagra",
-                "website_url_check": "http://spam-website.com",
-                "form_source": "General Inquiry",
-                "captcha_answer": new_expected_answer,  # Correct answer
-            }
-        )
-
-
-        # Should successfully submit, create the inquiry, and redirect
-        self.assertEqual(response_success.status_code, 302)
+        self.assertEqual(response.status_code, 302)  # Successful submit redirects
         self.assertEqual(Inquiry.objects.count(), 1)
         inquiry = Inquiry.objects.first()
-        self.assertEqual(inquiry.name, "Spam Bot")
-        self.assertEqual(inquiry.confidence_score, 75)
-        self.assertEqual(inquiry.assessment_status, "Genuine (Verified by CAPTCHA)")
+        self.assertEqual(inquiry.name, "Genuine User")
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_captcha_enabled_missing_token_fails(self, mock_is_feature_enabled, mock_send_whatsapp):
+        # When CAPTCHA is enabled, missing or invalid token should fail validation
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from properties.models import Inquiry
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        response = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Anonymous User",
+                "email": "anon@example.com",
+                "phone": "+919876543210",
+                "message": "Testing reCAPTCHA validation",
+                "form_source": "General Inquiry",
+            }
+        )
+
+        # It should render the page with an error instead of redirecting
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "home-premium.html")
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        # Check that SpamLog is created for the failure
+        from content.models import SpamLog
+        self.assertEqual(SpamLog.objects.count(), 1)
+        spam_log = SpamLog.objects.first()
+        self.assertEqual(spam_log.failure_reason, "captcha-failed")
+        self.assertIn("missing-input-response", spam_log.google_error_code)
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    @patch("content.security.google_recaptcha.GoogleRecaptchaV2.verify")
+    def test_captcha_enabled_valid_token_submits(self, mock_verify, mock_is_feature_enabled, mock_send_whatsapp):
+        # Mock reCAPTCHA verification to pass
+        from content.security.google_recaptcha import RecaptchaResult
+        mock_verify.return_value = RecaptchaResult(success=True, hostname="localhost")
+        
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from properties.models import Inquiry
+        self.assertEqual(Inquiry.objects.count(), 0)
+
+        response = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Genuine Human",
+                "email": "human@example.com",
+                "phone": "+919876543210",
+                "message": "Interested in properties in OMR",
+                "form_source": "General Inquiry",
+                "g-recaptcha-response": "valid-token-mock",
+            }
+        )
+
+        self.assertEqual(response.status_code, 302)  # Successful submit redirects
+        self.assertEqual(Inquiry.objects.count(), 1)
+        inquiry = Inquiry.objects.first()
+        self.assertEqual(inquiry.name, "Genuine Human")
+
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_honeypot_triggers_silent_reject(self, mock_is_feature_enabled):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from properties.models import Inquiry
+        from content.models import SpamLog
+        self.assertEqual(Inquiry.objects.count(), 0)
+        self.assertEqual(SpamLog.objects.count(), 0)
+
+        response = self.client.post(
+            reverse("contact"),
+            data={
+                "name": "Spammer",
+                "email": "spam@example.com",
+                "phone": "+919876543210",
+                "message": "Viagra cheap pills",
+                "website_url_check": "triggered-honeypot",  # Honeypot filled
+                "form_source": "General Inquiry",
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Inquiry.objects.count(), 0)
+        self.assertEqual(SpamLog.objects.count(), 1)
+        self.assertEqual(SpamLog.objects.first().failure_reason, "honeypot-triggered")
 
 
 class LocalBusinessSchemaTests(TestCase):

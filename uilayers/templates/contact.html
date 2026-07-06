@@ -264,16 +264,15 @@
         .site-footer {
             background: var(--color-black);
             color: var(--color-white);
-            padding: 4rem 2rem 2rem;
+            padding: 2.5rem 2rem 2rem;
         }
 
         .footer-content {
             max-width: 1400px;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 3rem;
-            margin-bottom: 3rem;
         }
 
         .footer-section h3 {
@@ -569,8 +568,38 @@
             </div>
         </div>
         
-        <div class="footer-bottom">
-            <p>&copy; 2026 Propertism Realty Advisors LLP. All rights reserved.</p>
+        <div class="footer-bottom" style="display: flex !important; flex-direction: column !important; gap: 12px !important; align-items: center !important; text-align: center !important; padding-top: 2rem !important; border-top: 1px solid rgba(255, 255, 255, 0.1) !important;">
+            <!-- Row 1: Primary site navigation -->
+            <div class="footer-bottom-nav" style="display: flex !important; justify-content: center !important; gap: 20px !important; flex-wrap: wrap !important;">
+                <a href="{% url 'home' %}" style="font-size: 0.75rem !important; color: rgba(255, 255, 255, 0.7) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'">Home</a>
+                <a href="{% url 'property_list' %}" style="font-size: 0.75rem !important; color: rgba(255, 255, 255, 0.7) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'">Properties</a>
+                <a href="{% url 'services' %}" style="font-size: 0.75rem !important; color: rgba(255, 255, 255, 0.7) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'">Services</a>
+                <a href="{% url 'about' %}" style="font-size: 0.75rem !important; color: rgba(255, 255, 255, 0.7) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'">About Us</a>
+                <a href="{% url 'contact' %}" style="font-size: 0.75rem !important; color: rgba(255, 255, 255, 0.7) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'">Contact</a>
+            </div>
+
+            <!-- Trust Line -->
+            <div class="footer-trust-line" style="font-size: 0.72rem !important; color: rgba(255, 255, 255, 0.5) !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; font-weight: 500 !important;">
+                Trusted Property Management for NRIs &bull; Chennai &bull; Since 2017
+            </div>
+
+            <!-- Row 2: Legal navigation -->
+            <div class="footer-legal-links" style="display: flex !important; justify-content: center !important; gap: 16px !important; flex-wrap: wrap !important;">
+                <a href="{% url 'terms' %}" style="font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.5) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Terms &amp; Conditions</a>
+                <a href="{% url 'privacy' %}" style="font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.5) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Privacy Policy</a>
+                <a href="{% url 'disclaimer' %}" style="font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.5) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Disclaimer</a>
+                <a href="{% url 'django.contrib.sitemaps.views.sitemap' %}" target="_blank" style="font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.5) !important; text-decoration: none !important; transition: color 0.3s !important;" onmouseover="this.style.color='var(--color-gold)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Sitemap</a>
+            </div>
+
+            <!-- Row 3: Copyright -->
+            <p class="footer-copyright" style="font-size: 0.70rem !important; color: #C49C52 !important; margin: 0 !important; letter-spacing: 0.02em !important;">
+                &copy; 2026 Propertism Realty Advisors LLP. All Rights Reserved.
+            </p>
+
+            <!-- Row 4: Powered By -->
+            <div class="footer-powered-by" style="font-size: 0.62rem !important; color: rgba(255, 255, 255, 0.35) !important; letter-spacing: 0.02em !important;">
+                Powered by <a href="https://www.olivine.co.in/" target="_blank" style="color: var(--color-gold) !important; text-decoration: none !important; font-weight: 500 !important;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Olivine Enterprise Platform</a>
+            </div>
         </div>
     </footer>
 </body>

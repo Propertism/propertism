@@ -56,6 +56,9 @@ urlpatterns = [
     # Legal Pages
     path('terms/', TemplateView.as_view(template_name='legal/terms.html'), name='terms'),
     path('privacy/', TemplateView.as_view(template_name='legal/privacy.html'), name='privacy'),
+    path('disclaimer/', TemplateView.as_view(template_name='legal/disclaimer.html'), name='disclaimer'),
+    # Human-readable HTML sitemap (distinct from the XML sitemap for crawlers)
+    path('sitemap-guide/', TemplateView.as_view(template_name='legal/sitemap_guide.html'), name='sitemap_guide'),
     
     path('inquiries/', include('properties.urls_inquiries')),
     path('', include('content.urls')),
