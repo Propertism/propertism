@@ -211,3 +211,331 @@
         width: 48px;
     }
 }
+
+/* Premium Refined Header & Footer Elements */
+.realbot-status-bar {
+    background-color: #0B1D33;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    box-sizing: border-box;
+    height: 30px;
+    shrink-0: 0;
+}
+
+.realbot-status-bar .brand-text {
+    color: #FFFFFF;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.realbot-status-bar .divider {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 6px;
+}
+
+.realbot-status-bar .channel-desc {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    text-transform: none;
+    font-style: normal;
+}
+
+.realbot-status-bar .status-secure {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #67AE60;
+    font-weight: 700;
+}
+
+.realbot-status-bar .status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #67AE60;
+    border-radius: 50%;
+    display: inline-block;
+    animation: realbot-pulse 1.5s infinite;
+}
+
+@keyframes realbot-pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(103, 174, 96, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(103, 174, 96, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(103, 174, 96, 0); }
+}
+
+.realbot-app-bar {
+    height: 64px;
+    border-bottom: 1px solid rgba(200, 162, 74, 0.2);
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0B1D33;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    flex-shrink: 0;
+}
+
+.realbot-app-bar .left-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.realbot-app-bar .logo-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 14px;
+}
+
+.realbot-app-bar .text-group {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.realbot-app-bar .title-text {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.realbot-app-bar .title-text .realbot-real {
+    color: #FFFFFF;
+    font-weight: 300;
+}
+
+.realbot-app-bar .title-text .realbot-bot {
+    color: #C8A24A;
+    font-weight: 800;
+}
+
+.realbot-app-bar .subtitle-text {
+    color: #C8A24A;
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    margin: 3px 0 0 0;
+    padding: 0;
+}
+
+.realbot-app-bar .right-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.realbot-app-bar button.control-btn {
+    color: #FFFFFF !important;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer !important;
+    transition: color 200ms ease;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.realbot-app-bar button.control-btn:hover {
+    color: #C8A24A !important;
+}
+
+.realbot-bottom-nav {
+    height: 56px;
+    border-top: 1px solid rgba(14, 42, 71, 0.1);
+    padding: 0 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    flex-shrink: 0;
+}
+
+.realbot-bottom-nav button.nav-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: transparent !important;
+    border: none !important;
+    border-top: 2px solid transparent !important;
+    outline: none !important;
+    cursor: pointer !important;
+    color: #9ca3af !important; /* text-gray-400 */
+    transition: all 200ms ease;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.realbot-bottom-nav button.nav-tab.active {
+    border-top-color: #C89B2B !important; /* gold */
+    color: #C89B2B !important;
+}
+
+.realbot-bottom-nav button.nav-tab:hover {
+    color: #0E2A47 !important;
+}
+
+.realbot-bottom-nav button.nav-tab span {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Suggestion Chips as Pills inline near message (Propertism Gold Outline Styling) */
+.realbot-chip-pill {
+    display: inline-block !important;
+    width: fit-content !important;
+    height: auto !important; /* Reset global theme button heights */
+    min-height: 0 !important; /* Reset global theme min-heights */
+    line-height: 1.2 !important; /* Ensure tight vertical centering */
+    padding: 5px 12px !important; /* Slim compact padding */
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', sans-serif;
+    color: #C8A24A !important; /* Gold text */
+    background-color: #FFFFFF !important; /* White background */
+    border: 1px solid #C8A24A !important; /* Gold outline */
+    border-radius: 9999px !important; /* Pill shape */
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+.realbot-chip-pill:hover {
+    background-color: #C8A24A !important; /* Solid Gold fill on hover */
+    border-color: #C8A24A !important;
+    color: #FFFFFF !important; /* White text on hover */
+}
+
+.realbot-disclaimer {
+    font-size: 10px;
+    color: #9CA3AF;
+    text-align: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.realbot-app-bar .title-text .beta-badge {
+    font-size: 7px;
+    font-weight: 800;
+    color: #C8A24A; /* Gold text */
+    border: 1px solid #C8A24A; /* Gold border */
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+/* ── realBOT Panel Toast Notification ── */
+.realbot-toast {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: rgba(14, 42, 71, 0.95); /* Semi-transparent Navy */
+    color: #FFFFFF;
+    border: 1px solid rgba(200, 155, 43, 0.3); /* Soft Gold border */
+    padding: 10px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    z-index: 9950;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 250ms ease, transform 250ms ease, visibility 250ms;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.realbot-toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ── Enhanced Input Box ── */
+.realbot-input-box {
+    border: 1px solid rgba(14, 42, 71, 0.15) !important;
+    background-color: #F8FAFC !important;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.realbot-input-box:focus-within {
+    border-color: #C89B2B !important; /* Gold border on focus */
+    box-shadow: 0 0 0 2px rgba(200, 155, 43, 0.15);
+    background-color: #FFFFFF !important;
+}
+
+/* ── Lucide SVG Icons Alignment and Styling ── */
+.lucide-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    stroke-width: 2px;
+}
+
+/* Suggestion Chips Icons spacing */
+.realbot-chip-pill .lucide-icon {
+    margin-right: 6px;
+    color: inherit; /* will inherit mustard gold color from chip */
+    flex-shrink: 0;
+}
+
+.realbot-chip-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: 28px !important; /* consistent height */
+}
+
+/* Section Headings Icons spacing */
+.realbot-panel h3 .lucide-icon {
+    margin-right: 8px;
+    color: inherit; /* will inherit navy color from h3 */
+    flex-shrink: 0;
+}
+
+
+

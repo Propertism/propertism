@@ -181,3 +181,9 @@ __marimo__/
 # Local safety archives
 .archive/
 .aider*
+
+# Generated knowledge documents (rebuilt from master knowledge base propertism-knowledge-base.md)
+chat/knowledge_docs/company-policies.md
+chat/knowledge_docs/service-fee-structure.md
+chat/knowledge_docs/terms-and-conditions.md
+chat/knowledge_docs/terms.md

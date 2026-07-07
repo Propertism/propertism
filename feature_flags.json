@@ -1,5 +1,7 @@
 {
   "CAPTCHA_ENABLE": true,
   "CAPTCHA_PROVIDER": "google_v2",
-  "CAPTCHA_TEST_MODE": false
+  "CAPTCHA_TEST_MODE": false,
+  "REALBOT_INTEGRATION_ENABLED": true,
+  "REALBOT_AI_ENABLED": false
 }

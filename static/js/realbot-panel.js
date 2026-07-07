@@ -32,12 +32,12 @@
             document.body.insertAdjacentHTML('beforeend', triggerHTML);
         }
 
-        // Set teaser tooltip and handle teaser behavior globally (Coming Soon)
+        // Set teaser tooltip and handle teaser behavior globally
         const triggerBtn = document.getElementById('realbotTriggerBtn');
         if (triggerBtn) {
-            triggerBtn.setAttribute('title', 'realBOT AI Advisor (Coming Soon)');
-            triggerBtn.setAttribute('aria-label', 'realBOT AI Advisor (Coming Soon)');
-            triggerBtn.addEventListener('click', showComingSoonToast);
+            triggerBtn.setAttribute('title', 'Open realBOT AI Workspace');
+            triggerBtn.setAttribute('aria-label', 'Open realBOT');
+            triggerBtn.addEventListener('click', togglePanel);
         }
 
         // Global ESC key listener to close panel
@@ -98,6 +98,10 @@
     function initializeSession() {
         // Check sessionStorage
         sessionId = sessionStorage.getItem('realbot_session_id');
+        if (sessionId === 'undefined' || sessionId === 'null') {
+            sessionId = null;
+            sessionStorage.removeItem('realbot_session_id');
+        }
         
         let url = '/chat/session/init/';
         if (sessionId) {
@@ -110,10 +114,10 @@
                 return response.json();
             })
             .then(data => {
-                if (data.success) {
-                    sessionId = data.session_id;
+                if (data.success && data.data) {
+                    sessionId = data.data.session_id;
                     sessionStorage.setItem('realbot_session_id', sessionId);
-                    messages = data.messages;
+                    messages = data.data.messages || [];
                     renderMessages();
                 }
             })
@@ -124,7 +128,7 @@
                     id: Date.now(),
                     sender: 'assistant',
                     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    text: "Welcome to **realBOT** (advisory channel). Session synchronization failed, but I am ready to advise you locally.",
+                    text: "Welcome to **realBOT** (advisory channel). Connection failed. Please verify that the local server is running and database migrations have been applied.",
                     metadata: {
                         chips: ['Luxury Villas', 'Apartments', 'NRI Investment']
                     }
@@ -133,14 +137,25 @@
             });
     }
 
-    // Show elegant Coming Soon teaser toast message
-    function showComingSoonToast() {
-        if (document.getElementById('realbotComingSoonToast')) return;
+    // Clear chat session and messages history to start fresh
+    function clearChat() {
+        sessionStorage.removeItem('realbot_session_id');
+        sessionId = null;
+        messages = [];
+        initializeSession();
+    }
 
-        const toast = document.createElement('div');
+    // Show elegant Coming Soon teaser toast message
+    function showComingSoonToast(message) {
+        let toast = document.getElementById('realbotComingSoonToast');
+        if (toast) {
+            toast.remove();
+        }
+
+        toast = document.createElement('div');
         toast.id = 'realbotComingSoonToast';
         toast.className = 'realbot-coming-soon-toast';
-        toast.innerText = 'realBOT AI Advisor is coming soon to Propertism NRI clients.';
+        toast.innerText = message || 'realBOT AI Advisor is coming soon to Propertism NRI clients.';
         
         if (!document.getElementById('realbotToastStyles')) {
             const style = document.createElement('style');
@@ -235,7 +250,7 @@
 
         area.innerHTML = '';
 
-        messages.forEach(msg => {
+        messages.forEach((msg, idx) => {
             const now = msg.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             const renderTextWithBold = (txt) => {
@@ -245,9 +260,48 @@
 
             const paragraphs = msg.text.split('\n\n').map(p => {
                 if (p.startsWith('### ')) {
-                    return `<h3 class="text-[11px] font-bold text-navy uppercase tracking-wider mt-4 first:mt-0 font-sans border-b border-navy/5 pb-1">${p.replace('### ', '')}</h3>`;
+                    let headerText = p.replace('### ', '').trim();
+                    let subHeader = '';
+                    if (headerText.includes(' — ')) {
+                        const parts = headerText.split(' — ');
+                        headerText = parts[0].trim();
+                        subHeader = `<span class="block text-[11px] font-semibold text-gray-400 normal-case mt-0.5">${parts[1].trim()}</span>`;
+                    } else if (headerText.includes(' - ')) {
+                        const parts = headerText.split(' - ');
+                        headerText = parts[0].trim();
+                        subHeader = `<span class="block text-[11px] font-semibold text-gray-400 normal-case mt-0.5">${parts[1].trim()}</span>`;
+                    }
+                    
+                    let iconSVG = '';
+                    const ht_lower = headerText.toLowerCase();
+                    if (ht_lower.includes('nri assist') || ht_lower.includes('nri')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+                    } else if (ht_lower.includes('overview') || ht_lower.includes('about')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>';
+                    } else if (ht_lower.includes('objective') || ht_lower.includes('mission')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>';
+                    } else if (ht_lower.includes('audience') || ht_lower.includes('client')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+                    } else if (ht_lower.includes('contact') || ht_lower.includes('phone') || ht_lower.includes('email') || ht_lower.includes('support')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+                    } else if (ht_lower.includes('location') || ht_lower.includes('locality') || ht_lower.includes('address') || ht_lower.includes('office')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/></svg>';
+                    } else if (ht_lower.includes('price') || ht_lower.includes('pricing') || ht_lower.includes('budget') || ht_lower.includes('fee')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>';
+                    } else if (ht_lower.includes('document') || ht_lower.includes('file') || ht_lower.includes('brochure') || ht_lower.includes('policy') || ht_lower.includes('compliance')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>';
+                    } else if (ht_lower.includes('services') || ht_lower.includes('features')) {
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
+                    }
+                    
+                    return `
+                        <div class="mt-4 first:mt-0 pb-1 border-b border-navy/5">
+                            <h3 class="text-[16px] font-bold text-navy uppercase tracking-tight font-sans flex items-center">${iconSVG}${headerText}</h3>
+                            ${subHeader}
+                        </div>
+                    `;
                 }
-                return `<p class="text-xs text-gray-600">${renderTextWithBold(p)}</p>`;
+                return `<p class="text-[15px] text-gray-600 font-sans leading-relaxed">${renderTextWithBold(p)}</p>`;
             }).join('');
 
             // Render property card
@@ -339,21 +393,84 @@
 
             // Error styling
             const isError = msg.sender === 'error';
-            const bodyBg = isError ? 'bg-red-50/70 border-red-200' : 'bg-white border-navy/10';
             const headerLabel = isError ? 'SYSTEM ERROR' : (msg.sender === 'user' ? 'CLIENT CONSULTANT' : 'realBOT ADVISOR');
 
-            const msgHTML = `
-                <div class="flex flex-col mb-4 select-text">
-                    <div class="flex justify-between items-center text-[9px] text-gray-400 font-semibold tracking-wider uppercase mb-1.5 px-1 font-sans select-none">
-                        <span>${headerLabel}</span>
-                        <span>${now}</span>
+            // Avatar for realBOT Advisor welcome and subsequent messages
+            let avatarHTML = '';
+            if (msg.sender === 'assistant') {
+                avatarHTML = `
+                    <div class="w-5 h-5 rounded-full bg-[#0E2A47] border border-[#C89B2B] flex items-center justify-center text-[7px] font-extrabold text-[#C89B2B] shrink-0 select-none font-sans mr-2" style="box-shadow: 0 1px 3px rgba(15,23,42,0.15)">
+                        rB
                     </div>
-                    <div class="${bodyBg} border p-5 text-xs font-sans text-gray-800 space-y-3">
+                `;
+            }
+
+            // Distinct classes per card type: user vs assistant (incorporates gold accent left border)
+            let cardClasses = '';
+            if (isError) {
+                cardClasses = 'bg-red-50/70 border-red-200';
+            } else if (msg.sender === 'user') {
+                cardClasses = 'bg-[#F2F5F8] border-navy/5 rounded-sm';
+            } else {
+                cardClasses = 'bg-white border-navy/10 border-l-4 border-l-[#C89B2B] rounded-sm';
+            }
+
+            // Chips/Pills block inline with Lucide SVG outline icons
+            let inlineChipsHTML = '';
+            const isLastMsg = (idx === messages.length - 1);
+            if (isLastMsg && msg.sender !== 'user' && msg.metadata && msg.metadata.chips && msg.metadata.chips.length > 0) {
+                const chipsList = msg.metadata.chips.map(chip => {
+                    let iconSVG = '';
+                    const chip_lower = chip.toLowerCase();
+                    if (chip_lower.includes('villa')) {
+                        // [House]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+                    } else if (chip_lower.includes('apartment') || chip_lower.includes('rent')) {
+                        // [Building2]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>';
+                    } else if (chip_lower.includes('plot') || chip_lower.includes('land')) {
+                        // [MapPinned]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/></svg>';
+                    } else if (chip_lower.includes('nri') || chip_lower.includes('investment') || chip_lower.includes('global')) {
+                        // [Globe]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>';
+                    } else if (chip_lower.includes('rental') || chip_lower.includes('key')) {
+                        // [KeyRound]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3h3v-3h-3Z"/></svg>';
+                    } else if (chip_lower.includes('compare') || chip_lower.includes('git')) {
+                        // [GitCompareArrows]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="m12 14 2-2 2 2"/><path d="M14 12V4a2 2 0 0 1 2-2h3"/><path d="m12 10-2 2-2-2"/><path d="M10 12v8a2 2 0 0 1-2 2H5"/></svg>';
+                    } else if (chip_lower.includes('talk') || chip_lower.includes('advisor') || chip_lower.includes('contact') || chip_lower.includes('phone')) {
+                        // [Phone]
+                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+                    }
+                    return `
+                        <button onclick="window.realbotControl.triggerChip('${chip}')" class="realbot-chip-pill">
+                            ${iconSVG}
+                            <span>${chip}</span>
+                        </button>
+                    `;
+                }).join('');
+                inlineChipsHTML = `
+                    <div class="flex flex-wrap gap-2 mt-2 px-1 select-none">
+                        ${chipsList}
+                    </div>
+                `;
+            }
+
+            const msgHTML = `
+                <div class="flex flex-col mb-3 select-text">
+                    <div class="flex items-center text-[9px] text-gray-400 font-bold tracking-wider uppercase mb-1 px-1 font-sans select-none">
+                        ${avatarHTML}
+                        <span>${headerLabel}<span class="opacity-60 font-normal lowercase ml-2.5" style="font-variant: small-caps;">${now}</span></span>
+                    </div>
+                    <div class="${cardClasses} border py-3.5 px-4 text-[15px] font-sans text-gray-800 space-y-3">
                         ${paragraphs}
                         ${propertyCardHTML}
                         ${tableHTML}
                         ${citationsHTML}
                     </div>
+                    ${inlineChipsHTML}
                 </div>
             `;
             area.insertAdjacentHTML('beforeend', msgHTML);
@@ -367,28 +484,12 @@
         scrollToBottom();
     }
 
-    // Render suggestion chips dynamically
+    // Render suggestion chips dynamically (Deprecated in favor of inline message pills)
     function renderSuggestionChips(chipsArray) {
         const chipsContainer = document.getElementById('realbotChipsContainer');
-        if (!chipsContainer) return;
-
-        chipsContainer.innerHTML = '';
-        
-        if (!chipsArray || chipsArray.length === 0) {
+        if (chipsContainer) {
             chipsContainer.parentElement.classList.add('hidden');
-            return;
         }
-
-        chipsContainer.parentElement.classList.remove('hidden');
-
-        chipsArray.forEach(chip => {
-            const btnHTML = `
-                <button onclick="window.realbotControl.triggerChip('${chip}')" class="realbot-chip">
-                    ${chip}
-                </button>
-            `;
-            chipsContainer.insertAdjacentHTML('beforeend', btnHTML);
-        });
     }
 
     // Handle Send Button or Enter
@@ -440,11 +541,11 @@
         })
         .then(data => {
             if (indicator) indicator.classList.add('hidden');
-            if (data.success) {
-                messages.push(data.message);
+            if (data.success && data.data) {
+                messages.push(data.data.message);
                 renderMessages();
             } else {
-                showAPIError(data.error || "The advisor is currently offline. Please try again.");
+                showAPIError((data.error && data.error.message) || "The advisor is currently offline. Please try again.");
             }
         })
         .catch(error => {
@@ -484,10 +585,45 @@
         return cookieValue;
     }
 
+    let toastTimeout = null;
+    function showComingSoonToast(message) {
+        // Ensure panel instance exists in DOM
+        ensurePanelInDOM();
+        if (!panelInstance) return;
+
+        let toastEl = document.getElementById('realbotToast');
+        if (!toastEl) {
+            toastEl = document.createElement('div');
+            toastEl.id = 'realbotToast';
+            toastEl.className = 'realbot-toast';
+            panelInstance.appendChild(toastEl);
+        }
+
+        toastEl.textContent = message || "Coming soon.";
+        toastEl.classList.add('show');
+
+        if (toastTimeout) {
+            clearTimeout(toastTimeout);
+        }
+
+        toastTimeout = setTimeout(function() {
+            toastEl.classList.remove('show');
+        }, 3000);
+    }
+
     // Expose control hook triggers on global scope for inline HTML callbacks
     window.realbotControl = {
         triggerChip: function(text) {
             triggerResponseSequence(text);
+        },
+        clearChat: function() {
+            clearChat();
+        },
+        togglePanel: function() {
+            togglePanel();
+        },
+        showToast: function(message) {
+            showComingSoonToast(message);
         }
     };
 

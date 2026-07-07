@@ -55,9 +55,9 @@ All governance and discovery deliverables for SCCB-RBOT-M2.0 are located under [
 
 | Role | Name | Status | Signature/Date |
 | :--- | :--- | :--- | :--- |
-| **Product Owner** | Viji Munuswamy | **Awaiting Review** | *Pending* |
-| **Final Review Authority** | Mindra | **Awaiting Review** | *Pending* |
-| **Authorized Agent** | Antigravity | **Approved** | *Antigravity | 2026-07-05* |
+| **Product Owner** | Viji Munuswamy | **Approved** | *Viji Munuswamy | 2026-07-06* |
+| **Final Review Authority** | Mindra | **Approved** | *Mindra | 2026-07-06* |
+| **Authorized Agent** | Antigravity | **Approved** | *Antigravity | 2026-07-06* |
 
 ---
-*Maintained by Antigravity | 2026-07-05 14:10 IST*
+*Maintained by Antigravity | 2026-07-06 18:37 IST*

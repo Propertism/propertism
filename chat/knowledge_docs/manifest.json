@@ -1,0 +1,40 @@
+{
+  "documents": [
+    {
+      "file": "terms-and-conditions.md",
+      "title": "Terms and Conditions",
+      "doc_slug": "terms-and-conditions",
+      "source_type": "Terms",
+      "category": "General",
+      "language": "en",
+      "tags": "terms, conditions, legal, agreement, service"
+    },
+    {
+      "file": "service-fee-structure.md",
+      "title": "Service Fee Structure",
+      "doc_slug": "service-fee-structure",
+      "source_type": "FeeStructure",
+      "category": "Service",
+      "language": "en",
+      "tags": "fees, pricing, charges, service, commission"
+    },
+    {
+      "file": "company-policies.md",
+      "title": "Company Policies",
+      "doc_slug": "company-policies",
+      "source_type": "Policy",
+      "category": "General",
+      "language": "en",
+      "tags": "policy, policies, refund, cancellation, communication, leadership, team, tamilselvan, viji, management"
+    },
+    {
+      "file": "terms.md",
+      "title": "Property Asset Management Term Sheet",
+      "doc_slug": "terms",
+      "source_type": "Terms",
+      "category": "Agreement",
+      "language": "en",
+      "tags": "termsheet, term sheet, agreement, owner, landlord, lease, exclusivity"
+    }
+  ]
+}

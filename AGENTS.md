@@ -26,3 +26,5 @@ On `/end`, follow `.agent/workflows/end.md` and update:
 - Use command-driven execution style.
 - Maintain READ-ONLY access to `erp-main`.
 - Focus exclusively on Propertism stabilization.
+- For every SCCB received, create a dedicated folder to save the SCCB document, create the subsequent implementation report document within that same folder upon completion, and create the future recommendations document (FUTURE_RECOMMENDATIONS.md) in the same folder as the outcome of the implementation review.
+- Git operations (commits, pushes, deployments) are handled exclusively by the Product Owner (Viji). The agent shall not execute git commit, git push, or deployment pipelines.

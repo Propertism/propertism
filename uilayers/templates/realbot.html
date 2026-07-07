@@ -304,9 +304,13 @@
                     </div>
                 </div>
 
-                <!-- Suggestion Chips -->
-                <div class="px-4 py-2 bg-white border-t border-navy/10 shrink-0">
-                    <div class="flex gap-2 overflow-x-auto py-1 no-scrollbar select-none">
+                <!-- Suggestion Chips Container -->
+                <div id="chipsContainer" class="px-4 py-2 bg-white border-t border-navy/10 shrink-0">
+                    <div id="chipsStrip" class="flex gap-2 overflow-x-auto py-1 no-scrollbar select-none">
+                        <!-- Primary: Talk to Human Advisor -->
+                        <button id="chipHumanHandover" onclick="requestHumanHandover()" class="px-3 py-1.5 border-2 border-gold bg-gold text-white text-[9px] font-bold uppercase tracking-wider whitespace-nowrap hover:bg-gold-dark hover:border-gold-dark transition-all rounded-none duration-150" aria-label="Talk to Human Advisor">
+                            Talk to Human Advisor
+                        </button>
                         <button onclick="sendChipMessage('Premium Villas')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider whitespace-nowrap bg-white hover:bg-gold hover:border-gold hover:text-white transition-all rounded-none duration-150">
                             Premium Villas
                         </button>
@@ -323,7 +327,7 @@
                             Ready to Move
                         </button>
                         <button onclick="sendChipMessage('Budget < ₹75L')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider whitespace-nowrap bg-white hover:bg-gold hover:border-gold hover:text-white transition-all rounded-none duration-150">
-                            Budget &lt; ₹75L
+                            Budget < ₹75L
                         </button>
                         <button onclick="sendChipMessage('Luxury Homes')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider whitespace-nowrap bg-white hover:bg-gold hover:border-gold hover:text-white transition-all rounded-none duration-150">
                             Luxury Homes
@@ -337,6 +341,63 @@
                         <button onclick="sendChipMessage('Loan Assistance')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider whitespace-nowrap bg-white hover:bg-gold hover:border-gold hover:text-white transition-all rounded-none duration-150">
                             Loan Assistance
                         </button>
+                    </div>
+                </div>
+                <!-- Handover Status Card (hidden by default) -->
+                <div id="handoverStatusCard" class="hidden px-4 py-3 bg-white border-t border-navy/10 shrink-0">
+                    <div id="handoverStatusContent" class="bg-secondaryBg border border-navy/10 p-3 text-center">
+                        <div id="handoverStatusIcon" class="text-gold mb-1">
+                            <svg class="inline-block w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <div id="handoverStatusTitle" class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans">Human Assistance</div>
+                        <div id="handoverStatusText" class="text-[10px] text-gray-600 mt-1 font-sans">A Propertism advisor can continue this conversation. Choose one of the options below.</div>
+                        <div id="handoverStatusTimer" class="hidden text-[10px] text-gold font-bold mt-1 font-mono">00:00:00</div>
+                        <div id="handoverStatusActions" class="flex gap-2 justify-center mt-2">
+                            <button onclick="requestHumanHandover()" class="px-3 py-1.5 bg-gold text-white text-[9px] font-bold uppercase tracking-wider border border-gold hover:bg-gold-dark transition-all rounded-none duration-150" aria-label="Talk to Human Advisor">Talk to Human Advisor</button>
+                            <button onclick="sendChipMessage('Call Now')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">Call Now</button>
+                            <button onclick="sendChipMessage('WhatsApp')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">WhatsApp</button>
+                            <button onclick="sendChipMessage('Request Callback')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">Request Callback</button>
+                            <button onclick="sendChipMessage('Email')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">Email</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Waiting for Advisor Card (hidden by default) -->
+                <div id="waitingCard" class="hidden px-4 py-3 bg-white border-t border-navy/10 shrink-0">
+                    <div class="bg-amber-50 border border-amber-200 p-3 text-center">
+                        <div class="flex justify-center items-center gap-2 mb-1">
+                            <svg class="animate-spin w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            <span id="waitingTitle" class="text-[11px] font-bold text-amber-700 uppercase tracking-wider font-sans">Waiting for a Propertism Advisor</span>
+                        </div>
+                        <div id="waitingTimer" class="text-[10px] text-amber-600 font-bold font-mono">00:00:00</div>
+                        <div class="text-[9px] text-gray-500 mt-1 font-sans">Your request has been received. An advisor will join shortly.</div>
+                    </div>
+                </div>
+                <!-- Advisor Connected Card (hidden by default) -->
+                <div id="advisorConnectedCard" class="hidden px-4 py-3 bg-white border-t border-navy/10 shrink-0">
+                    <div class="bg-green-50 border border-green-200 p-3 text-center">
+                        <div class="flex justify-center items-center gap-2 mb-1">
+                            <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span id="advisorName" class="text-[11px] font-bold text-green-700 uppercase tracking-wider font-sans">Propertism Advisor Joined</span>
+                        </div>
+                        <div class="text-[9px] text-gray-500 mt-1 font-sans">A Propertism advisor has joined the conversation.</div>
+                        <div id="advisorConnectedActions" class="flex gap-2 justify-center mt-2">
+                            <button onclick="endHumanConversation()" class="px-3 py-1.5 bg-red-600 text-white text-[9px] font-bold uppercase tracking-wider border border-red-600 hover:bg-red-700 transition-all rounded-none duration-150" aria-label="End Conversation">End Conversation</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Conversation Closed Card (hidden by default) -->
+                <div id="closedCard" class="hidden px-4 py-3 bg-white border-t border-navy/10 shrink-0">
+                    <div class="bg-gray-50 border border-gray-200 p-3 text-center">
+                        <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider font-sans">Conversation Closed</div>
+                        <div class="text-[9px] text-gray-400 mt-1 font-sans">Thank you for using Propertism advisory services.</div>
                     </div>
                 </div>
 
@@ -608,10 +669,53 @@ export default function PropertyCard({
         {{ db_properties|json_script:"db_properties_raw" }}
     </script>
 
-    <!-- Client-Side Simulation Script -->
+    <!-- Client-Side Script: Human Handover Frontend Integration -->
     <script>
-        // Load raw React contents directly into DOM elements to display
+        // =========================================================================
+        // M2.17.2 — Human Handover Frontend Integration & Customer Experience
+        // =========================================================================
+        // Conversation States:
+        //   BOT_ACTIVE → HANDOVER_REQUESTED → WAITING_FOR_ADVISOR → ADVISOR_CONNECTED
+        //   → HUMAN_CONVERSATION → CHAT_END_REQUESTED → CHAT_CLOSED
+        // =========================================================================
+
+        // --- Configuration ---
+        const HANDOVER_POLL_INTERVAL_MS = 5000; // Poll every 5 seconds
+        const API_BASE = '/chat/inquiry/handover';
+
+        // --- State ---
+        let conversationState = 'BOT_ACTIVE';
+        let handoverId = null;
+        let sessionId = null;
+        let pollingTimer = null;
+        let waitingTimerInterval = null;
+        let waitingStartTime = null;
+
+        // --- DOM References ---
+        const chatHistory = document.getElementById('chatHistory');
+        const chatInput = document.getElementById('chatInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const chipsContainer = document.getElementById('chipsContainer');
+        const chipsStrip = document.getElementById('chipsStrip');
+        const chipHumanHandover = document.getElementById('chipHumanHandover');
+        const handoverStatusCard = document.getElementById('handoverStatusCard');
+        const handoverStatusTitle = document.getElementById('handoverStatusTitle');
+        const handoverStatusText = document.getElementById('handoverStatusText');
+        const handoverStatusTimer = document.getElementById('handoverStatusTimer');
+        const handoverStatusActions = document.getElementById('handoverStatusActions');
+        const waitingCard = document.getElementById('waitingCard');
+        const waitingTimer = document.getElementById('waitingTimer');
+        const advisorConnectedCard = document.getElementById('advisorConnectedCard');
+        const advisorName = document.getElementById('advisorName');
+        const closedCard = document.getElementById('closedCard');
+
+        let currentCodeTab = 'guide';
+
+        // =========================================================================
+        // Initialization
+        // =========================================================================
         window.addEventListener('DOMContentLoaded', () => {
+            // Load React code for display
             fetch('/static/react/RealBot.jsx')
                 .then(r => r.text())
                 .then(code => {
@@ -625,6 +729,9 @@ export default function PropertyCard({
                     const el = document.getElementById('propertyCardJSXContent');
                     if (el && code) el.textContent = code;
                 }).catch(e => console.log("React code load skipped, using fallback static template."));
+
+            // Initialize session
+            initRealBotSession();
         });
 
         // Safe extraction of DB properties
@@ -641,81 +748,286 @@ export default function PropertyCard({
             console.log("Could not parse DB properties, using fallback.", e);
         }
 
-        // Active workspace references
-        const chatHistory = document.getElementById('chatHistory');
-        const chatInput = document.getElementById('chatInput');
-        const typingIndicator = document.getElementById('typingIndicator');
-        let currentCodeTab = 'guide';
-
-        // Tab Switching for Code Panel
-        function changeCodeTab(tabId) {
-            currentCodeTab = tabId;
-            // Hide all tabs
-            document.getElementById('codeView-guide').classList.add('hidden');
-            document.getElementById('codeView-realbot-code').classList.add('hidden');
-            document.getElementById('codeView-card-code').classList.add('hidden');
-            
-            // Remove active classes
-            document.getElementById('tabBtn-guide').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
-            document.getElementById('tabBtn-realbot-code').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
-            document.getElementById('tabBtn-card-code').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
-            
-            // Show target
-            document.getElementById('codeView-' + tabId).classList.remove('hidden');
-            
-            // Set active class
-            document.getElementById('tabBtn-' + tabId).className = "text-xs uppercase tracking-widest font-bold text-gold border-b-2 border-gold pb-1 px-1 transition-all";
+        // =========================================================================
+        // Session Initialization
+        // =========================================================================
+        function initRealBotSession() {
+            fetch('/chat/session/init/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() },
+                body: JSON.stringify({})
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    sessionId = data.data.session_id;
+                    console.log('realBOT session initialized:', sessionId);
+                }
+            })
+            .catch(err => console.warn('Session init failed, using demo mode:', err));
         }
 
-        // Code Copy Engine
-        function copyCurrentCode() {
-            let contentText = "";
-            if (currentCodeTab === 'guide') {
-                alert('Select RealBot.jsx or PropertyCard.jsx tabs to copy components.');
-                return;
-            } else if (currentCodeTab === 'realbot-code') {
-                contentText = document.getElementById('realbotJSXContent').innerText;
-            } else if (currentCodeTab === 'card-code') {
-                contentText = document.getElementById('propertyCardJSXContent').innerText;
+        function getCSRFToken() {
+            const name = 'csrftoken';
+            const cookies = document.cookie.split(';');
+            for (let c of cookies) {
+                c = c.trim();
+                if (c.startsWith(name + '=')) return decodeURIComponent(c.substring(name.length + 1));
+            }
+            return '';
+        }
+
+        // =========================================================================
+        // UI State Management
+        // =========================================================================
+        function setConversationState(newState) {
+            conversationState = newState;
+            console.log('Conversation state:', newState);
+
+            // Hide all handover-related cards
+            handoverStatusCard.classList.add('hidden');
+            waitingCard.classList.add('hidden');
+            advisorConnectedCard.classList.add('hidden');
+            closedCard.classList.add('hidden');
+            chipsContainer.classList.remove('hidden');
+
+            switch (newState) {
+                case 'BOT_ACTIVE':
+                    // Show chips with "Talk to Human Advisor" as primary
+                    chipsContainer.classList.remove('hidden');
+                    chipHumanHandover.classList.remove('hidden');
+                    chipHumanHandover.textContent = 'Talk to Human Advisor';
+                    chipHumanHandover.onclick = requestHumanHandover;
+                    break;
+
+                case 'HANDOVER_REQUESTED':
+                case 'WAITING_FOR_ADVISOR':
+                    // Hide chips, show waiting card
+                    chipsContainer.classList.add('hidden');
+                    waitingCard.classList.remove('hidden');
+                    waitingStartTime = Date.now();
+                    startWaitingTimer();
+                    // Start polling for status
+                    startPolling();
+                    break;
+
+                case 'ADVISOR_CONNECTED':
+                case 'HUMAN_CONVERSATION':
+                    // Stop polling and waiting timer
+                    stopPolling();
+                    stopWaitingTimer();
+                    // Hide chips and waiting, show advisor connected
+                    chipsContainer.classList.add('hidden');
+                    waitingCard.classList.add('hidden');
+                    advisorConnectedCard.classList.remove('hidden');
+                    break;
+
+                case 'CHAT_END_REQUESTED':
+                case 'CHAT_CLOSED':
+                    stopPolling();
+                    stopWaitingTimer();
+                    chipsContainer.classList.add('hidden');
+                    waitingCard.classList.add('hidden');
+                    advisorConnectedCard.classList.add('hidden');
+                    closedCard.classList.remove('hidden');
+                    break;
+            }
+        }
+
+        // =========================================================================
+        // Human Handover Request
+        // =========================================================================
+        function requestHumanHandover() {
+            // Demo mode: generate a fallback session ID if backend is unavailable
+            if (!sessionId) {
+                sessionId = 'DEMO-' + Date.now().toString(36).toUpperCase();
+                console.log('Demo mode: using fallback session ID:', sessionId);
             }
 
-            navigator.clipboard.writeText(contentText).then(() => {
-                alert('Copied to clipboard successfully.');
-            }).catch(err => {
-                console.error('Copy failure: ', err);
-            });
-        }
+            // Show handover status card with loading
+            chipsContainer.classList.add('hidden');
+            handoverStatusCard.classList.remove('hidden');
+            handoverStatusTitle.textContent = 'Requesting Human Advisor...';
+            handoverStatusText.textContent = 'Please wait while we connect you with a Propertism advisor.';
+            handoverStatusActions.innerHTML = `
+                <div class="flex justify-center">
+                    <svg class="animate-spin w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                </div>
+            `;
 
-        // Tab Switching for Mobile Bottom Nav
-        function changeMockTab(tabId) {
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                if (tab.getAttribute('data-tab') === tabId) {
-                    tab.className = "nav-tab flex flex-col items-center gap-1.5 py-1 px-3 border-t-2 border-gold text-gold";
+            // Append user message indicating handover request
+            appendUserMessage('I would like to speak with a human advisor.');
+
+            // Call the backend API
+            fetch(API_BASE + '/request/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() },
+                body: JSON.stringify({
+                    session_id: sessionId,
+                    reason: 'Customer requested human assistance'
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    handoverId = data.data.handover_id;
+                    setConversationState('WAITING_FOR_ADVISOR');
+                    appendSystemMessage('Your request has been received. A Propertism advisor has been notified and will continue this conversation shortly.');
                 } else {
-                    tab.className = "nav-tab flex flex-col items-center gap-1.5 py-1 px-3 border-t-2 border-transparent text-gray-400 hover:text-navy";
+                    // Request failed
+                    handleHandoverError(data.error_message || 'Unable to request a human advisor.');
                 }
+            })
+            .catch(err => {
+                console.error('Handover request error:', err);
+                handleHandoverError('Unable to request a human advisor. Please try again.');
             });
-            alert('Navigation panel switched to: ' + tabId.toUpperCase());
         }
 
-        // Click on suggestion chips
-        function sendChipMessage(text) {
-            appendUserMessage(text);
-            triggerAdvisorResponse(text);
+        function handleHandoverError(message) {
+            handoverStatusCard.classList.remove('hidden');
+            handoverStatusTitle.textContent = 'Unable to Connect';
+            handoverStatusText.textContent = message;
+            handoverStatusActions.innerHTML = `
+                <button onclick="retryHandover()" class="px-3 py-1.5 bg-gold text-white text-[9px] font-bold uppercase tracking-wider border border-gold hover:bg-gold-dark transition-all rounded-none duration-150">Try Again</button>
+                <button onclick="sendChipMessage('Call Now')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">Call Now</button>
+                <button onclick="sendChipMessage('WhatsApp')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">WhatsApp</button>
+                <button onclick="sendChipMessage('Email')" class="px-3 py-1.5 border border-navy text-navy text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-navy hover:text-white transition-all rounded-none duration-150">Email</button>
+                <button onclick="dismissHandoverCard()" class="px-3 py-1.5 border border-gray-400 text-gray-600 text-[9px] font-bold uppercase tracking-wider bg-white hover:bg-gray-100 transition-all rounded-none duration-150">Continue with realBOT</button>
+            `;
         }
 
-        // Clicking Send Button or Enter
-        function handleSendBtn() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            
-            appendUserMessage(text);
-            chatInput.value = '';
-            triggerAdvisorResponse(text);
+        function retryHandover() {
+            handoverStatusCard.classList.add('hidden');
+            requestHumanHandover();
         }
 
-        // Append user prompt inside clean container
+        function dismissHandoverCard() {
+            handoverStatusCard.classList.add('hidden');
+            chipsContainer.classList.remove('hidden');
+            setConversationState('BOT_ACTIVE');
+        }
+
+        // =========================================================================
+        // Polling for Handover Status
+        // =========================================================================
+        function startPolling() {
+            stopPolling();
+            pollingTimer = setInterval(pollHandoverStatus, HANDOVER_POLL_INTERVAL_MS);
+        }
+
+        function stopPolling() {
+            if (pollingTimer) {
+                clearInterval(pollingTimer);
+                pollingTimer = null;
+            }
+        }
+
+        function pollHandoverStatus() {
+            if (!handoverId) return;
+
+            fetch(API_BASE + '/status/?handover_id=' + encodeURIComponent(handoverId), {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    const status = data.data.status;
+                    if (status === 'assigned' || status === 'in_progress') {
+                        const advisor = data.data.advisor_name || 'Propertism Advisor';
+                        setConversationState('ADVISOR_CONNECTED');
+                        advisorName.textContent = advisor + ' Joined';
+                        appendSystemMessage(advisor + ' has joined the conversation. You are now speaking with a human advisor.');
+                    } else if (status === 'closed' || status === 'resolved') {
+                        setConversationState('CHAT_CLOSED');
+                        appendSystemMessage('This conversation has been closed. Thank you for using Propertism advisory services.');
+                    }
+                    // If still 'pending', keep waiting (no action needed)
+                }
+            })
+            .catch(err => console.warn('Polling error:', err));
+        }
+
+        // =========================================================================
+        // Waiting Timer
+        // =========================================================================
+        function startWaitingTimer() {
+            stopWaitingTimer();
+            waitingTimerInterval = setInterval(updateWaitingTimer, 1000);
+        }
+
+        function stopWaitingTimer() {
+            if (waitingTimerInterval) {
+                clearInterval(waitingTimerInterval);
+                waitingTimerInterval = null;
+            }
+        }
+
+        function updateWaitingTimer() {
+            if (!waitingStartTime) return;
+            const elapsed = Math.floor((Date.now() - waitingStartTime) / 1000);
+            const hrs = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+            const secs = String(elapsed % 60).padStart(2, '0');
+            waitingTimer.textContent = hrs + ':' + mins + ':' + secs;
+        }
+
+        // =========================================================================
+        // End Human Conversation
+        // =========================================================================
+        function endHumanConversation() {
+            if (!handoverId) {
+                setConversationState('CHAT_CLOSED');
+                return;
+            }
+
+            fetch(API_BASE + '/close/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() },
+                body: JSON.stringify({
+                    handover_id: handoverId,
+                    reason: 'Customer ended conversation'
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                setConversationState('CHAT_CLOSED');
+                appendSystemMessage('Thank you for using Propertism advisory services. Your conversation has been closed.');
+            })
+            .catch(err => {
+                console.error('Close conversation error:', err);
+                setConversationState('CHAT_CLOSED');
+                appendSystemMessage('Thank you for using Propertism advisory services.');
+            });
+        }
+
+        // =========================================================================
+        // System Message Helper
+        // =========================================================================
+        function appendSystemMessage(text) {
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const msgHtml = `
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-center text-[10px] text-gray-400 font-semibold tracking-wider uppercase mb-1.5 px-1 font-sans">
+                        <span>SYSTEM</span>
+                        <span>${now}</span>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 p-4 text-amber-800 text-xs leading-relaxed font-sans">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            chatHistory.insertAdjacentHTML('beforeend', msgHtml);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        // =========================================================================
+        // User Message Helper
+        // =========================================================================
         function appendUserMessage(text) {
             const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const userMsgHtml = `
@@ -733,17 +1045,97 @@ export default function PropertyCard({
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
-        // Simulated AI response selector
+        // =========================================================================
+        // Human Handover Functions
+        // =========================================================================
+        function requestHumanHandover() {
+            // Hide the handover status card, show waiting card
+            document.getElementById('handoverStatusCard').classList.add('hidden');
+            document.getElementById('waitingCard').classList.remove('hidden');
+
+            // Generate a fallback session ID for demo mode
+            const sessionId = 'HHO-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+            const handoverData = {
+                session_id: sessionId,
+                timestamp: new Date().toISOString(),
+                mode: 'demo'
+            };
+
+            // Store handover session in window for potential backend integration
+            window.__handoverSession = handoverData;
+
+            // Start waiting timer
+            let seconds = 0;
+            const timerEl = document.getElementById('waitingTimer');
+            window.__handoverTimer = setInterval(function() {
+                seconds++;
+                const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
+                timerEl.textContent = h + ':' + m + ':' + s;
+            }, 1000);
+
+            // Simulate advisor connection after 5 seconds (demo mode)
+            window.__handoverTimeout = setTimeout(function() {
+                clearInterval(window.__handoverTimer);
+                document.getElementById('waitingCard').classList.add('hidden');
+                document.getElementById('advisorConnectedCard').classList.remove('hidden');
+                document.getElementById('advisorName').textContent = 'Propertism Advisor (Demo)';
+            }, 5000);
+        }
+
+        function endHumanConversation() {
+            // Clean up any running timers
+            if (window.__handoverTimer) {
+                clearInterval(window.__handoverTimer);
+                window.__handoverTimer = null;
+            }
+            if (window.__handoverTimeout) {
+                clearTimeout(window.__handoverTimeout);
+                window.__handoverTimeout = null;
+            }
+
+            // Hide advisor connected card, show closed card
+            document.getElementById('advisorConnectedCard').classList.add('hidden');
+            document.getElementById('closedCard').classList.remove('hidden');
+
+            // After 3 seconds, reset to normal chat mode
+            setTimeout(function() {
+                document.getElementById('closedCard').classList.add('hidden');
+                document.getElementById('chipsContainer').classList.remove('hidden');
+                document.getElementById('handoverStatusCard').classList.add('hidden');
+                document.getElementById('waitingCard').classList.add('hidden');
+                document.getElementById('advisorConnectedCard').classList.add('hidden');
+            }, 3000);
+        }
+
+        // =========================================================================
+        // Suggestion Chips & Send
+        // =========================================================================
+        function sendChipMessage(text) {
+            appendUserMessage(text);
+            triggerAdvisorResponse(text);
+        }
+
+        function handleSendBtn() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            appendUserMessage(text);
+            chatInput.value = '';
+            triggerAdvisorResponse(text);
+        }
+
+        // =========================================================================
+        // Simulated AI Response (preserved from original)
+        // =========================================================================
         function triggerAdvisorResponse(userInput) {
-            // Show Typing State
             typingIndicator.classList.remove('hidden');
             chatHistory.scrollTop = chatHistory.scrollHeight;
-            
+
             const query = userInput.toLowerCase();
             setTimeout(() => {
-                // Hide Typing State
                 typingIndicator.classList.add('hidden');
-                
+
                 const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 let msgHtml = `
                     <div class="flex flex-col">
@@ -755,7 +1147,6 @@ export default function PropertyCard({
                 `;
 
                 if (query.includes('villa') || query.includes('luxury') || query.includes('villas')) {
-                    // Try to construct using real DB properties if available, fallback to mock ECR beach villa
                     let targetProp = {
                         name: 'The Oceanfront Manor',
                         location: 'VGP Layout, ECR, Chennai',
@@ -786,14 +1177,10 @@ export default function PropertyCard({
                     msgHtml += `
                         <p>I have retrieved our prime listing in the luxury villa segment located in Chennai ECR:</p>
                         <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans border-b border-navy/5 pb-1">Recommended Luxury Villa</h3>
-                        
-                        <!-- Embedded Property Card -->
                         <div class="border border-navy/10 bg-white flex flex-col relative transition-all duration-300 hover:border-gold/40 text-left">
                             <div class="relative w-full aspect-[16/9] overflow-hidden bg-secondaryBg">
                                 <img src="${targetProp.imageUrl}" alt="Villa" class="w-full h-full object-cover" />
-                                <div class="absolute top-0 left-0 bg-gold text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1 font-sans">
-                                    ${targetProp.badge}
-                                </div>
+                                <div class="absolute top-0 left-0 bg-gold text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1 font-sans">${targetProp.badge}</div>
                             </div>
                             <div class="p-4 flex flex-col justify-between bg-white">
                                 <div>
@@ -833,30 +1220,18 @@ export default function PropertyCard({
                                 </div>
                             </div>
                         </div>
-
                         <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">Strategic Highlights</h3>
                         <ul class="space-y-1.5 pl-1.5">
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Location:</strong> Prime ECR Beachfront property.</p>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Yield:</strong> Potential rental yield of 4.1% [1].</p>
-                            </li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Location:</strong> Prime ECR Beachfront property.</p></li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Yield:</strong> Potential rental yield of 4.1% [1].</p></li>
                         </ul>
                         <hr class="border-t border-navy/5 pt-1.5" />
-                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic">
-                            <span>[1] Propertism Premium Yield Index 2026.</span>
-                        </div>
+                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic"><span>[1] Propertism Premium Yield Index 2026.</span></div>
                     `;
                 } else if (query.includes('nri') || query.includes('investment') || query.includes('investments')) {
                     msgHtml += `
                         <p>For NRI investors seeking stable capital preservation and high capital growth, the commercial and premium residential segments in Chennai are performing optimally [1].</p>
-                        
-                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">
-                            NRI Investment Performance Matrix
-                        </h3>
+                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">NRI Investment Performance Matrix</h3>
                         <div class="overflow-x-auto border border-navy/10 bg-white">
                             <table class="w-full text-left text-[11px] font-sans">
                                 <thead>
@@ -868,82 +1243,39 @@ export default function PropertyCard({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-navy/5">
-                                        <td class="p-2 font-semibold">Commercial Office</td>
-                                        <td class="p-2 text-gray-600">8.5%</td>
-                                        <td class="p-2 text-gray-600">7.2% - 8.5%</td>
-                                        <td class="p-2 text-gray-600">High (Pre-leased)</td>
-                                    </tr>
-                                    <tr class="border-b border-navy/5">
-                                        <td class="p-2 font-semibold">Premium ECR Villas</td>
-                                        <td class="p-2 text-gray-600">12.0%</td>
-                                        <td class="p-2 text-gray-600">3.5% - 4.2%</td>
-                                        <td class="p-2 text-gray-600">Medium (RERA Complete)</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="p-2 font-semibold">OMR Apartments</td>
-                                        <td class="p-2 text-gray-600">6.0%</td>
-                                        <td class="p-2 text-gray-600">4.5% - 5.0%</td>
-                                        <td class="p-2 text-gray-600">High (Ready to Move)</td>
-                                    </tr>
+                                    <tr class="border-b border-navy/5"><td class="p-2 font-semibold">Commercial Office</td><td class="p-2 text-gray-600">8.5%</td><td class="p-2 text-gray-600">7.2% - 8.5%</td><td class="p-2 text-gray-600">High (Pre-leased)</td></tr>
+                                    <tr class="border-b border-navy/5"><td class="p-2 font-semibold">Premium ECR Villas</td><td class="p-2 text-gray-600">12.0%</td><td class="p-2 text-gray-600">3.5% - 4.2%</td><td class="p-2 text-gray-600">Medium (RERA Complete)</td></tr>
+                                    <tr><td class="p-2 font-semibold">OMR Apartments</td><td class="p-2 text-gray-600">6.0%</td><td class="p-2 text-gray-600">4.5% - 5.0%</td><td class="p-2 text-gray-600">High (Ready to Move)</td></tr>
                                 </tbody>
                             </table>
                         </div>
-
-                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">
-                            Recommended Action Steps
-                        </h3>
+                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">Recommended Action Steps</h3>
                         <ul class="space-y-1.5 pl-1.5">
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Tax Planning:</strong> Utilize NRE accounts for tax-exempt repatriation [2].</p>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Due Diligence:</strong> Obtain a digital title report through Propertism Legal Desk [3].</p>
-                            </li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Tax Planning:</strong> Utilize NRE accounts for tax-exempt repatriation [2].</p></li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Due Diligence:</strong> Obtain a digital title report through Propertism Legal Desk [3].</p></li>
                         </ul>
                         <hr class="border-t border-navy/5 pt-1.5" />
-                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic">
-                            <span>[1] Chennai Investment Bulletin Q1 2026.</span>
-                            <span>[2] Reserve Bank of India (RBI) Repatriation Guidelines.</span>
-                            <span>[3] Propertism Legal Compliance Team.</span>
-                        </div>
+                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic"><span>[1] Chennai Investment Bulletin Q1 2026.</span><span>[2] Reserve Bank of India (RBI) Repatriation Guidelines.</span><span>[3] Propertism Legal Compliance Team.</span></div>
                     `;
                 } else if (query.includes('budget') || query.includes('75l') || query.includes('apartments') || query.includes('plots')) {
                     msgHtml += `
                         <p>Here is an assessment of premium high-rise apartments in key connectivity corridors within the ₹75L range:</p>
-                        
                         <div class="border border-navy/10 bg-white flex flex-col relative transition-all duration-300 hover:border-gold/40 text-left">
                             <div class="relative w-full aspect-[16/9] overflow-hidden bg-secondaryBg">
                                 <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="Apartment" class="w-full h-full object-cover" />
-                                <div class="absolute top-0 left-0 bg-gold text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1 font-sans">
-                                    VALUE PORTFOLIO
-                                </div>
+                                <div class="absolute top-0 left-0 bg-gold text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1 font-sans">VALUE PORTFOLIO</div>
                             </div>
                             <div class="p-4 flex flex-col justify-between bg-white">
                                 <div>
                                     <div class="flex justify-between items-start gap-2 mb-2">
-                                        <div>
-                                            <h4 class="text-sm font-bold text-navy font-sans tracking-tight uppercase">Meridian Heights</h4>
-                                            <p class="text-[10px] text-gray-500 font-sans tracking-wide">Medavakkam, Chennai</p>
-                                        </div>
+                                        <div><h4 class="text-sm font-bold text-navy font-sans tracking-tight uppercase">Meridian Heights</h4><p class="text-[10px] text-gray-500 font-sans tracking-wide">Medavakkam, Chennai</p></div>
                                         <div class="text-sm font-bold text-gold font-sans whitespace-nowrap">₹72 Lakhs</div>
                                     </div>
                                     <hr class="border-t border-navy/5 my-2.5" />
                                     <div class="grid grid-cols-3 gap-2 text-left mb-3">
-                                        <div class="border-r border-navy/5 pr-1">
-                                            <span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Config</span>
-                                            <span class="block text-[10px] font-semibold text-navy truncate font-sans">2.5 BHK</span>
-                                        </div>
-                                        <div class="border-r border-navy/5 px-1">
-                                            <span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Area</span>
-                                            <span class="block text-[10px] font-semibold text-navy truncate font-sans">1,280 Sq.Ft.</span>
-                                        </div>
-                                        <div class="pl-1">
-                                            <span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Builder</span>
-                                            <span class="block text-[10px] font-semibold text-navy truncate font-sans">Meridian Builders</span>
-                                        </div>
+                                        <div class="border-r border-navy/5 pr-1"><span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Config</span><span class="block text-[10px] font-semibold text-navy truncate font-sans">2.5 BHK</span></div>
+                                        <div class="border-r border-navy/5 px-1"><span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Area</span><span class="block text-[10px] font-semibold text-navy truncate font-sans">1,280 Sq.Ft.</span></div>
+                                        <div class="pl-1"><span class="block text-[8px] uppercase tracking-wider text-gray-400 font-sans">Builder</span><span class="block text-[10px] font-semibold text-navy truncate font-sans">Meridian Builders</span></div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-navy/5">
@@ -953,58 +1285,75 @@ export default function PropertyCard({
                                 </div>
                             </div>
                         </div>
-
                         <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans mt-3">Connectivity & Infrastructure</h3>
                         <ul class="space-y-1.5 pl-1.5">
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Transit:</strong> Located 10 mins from upcoming Medavakkam Metro Hub [1].</p>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Appreciation:</strong> Expected 15% growth upon project delivery in Dec 2027 [2].</p>
-                            </li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Transit:</strong> Located 10 mins from upcoming Medavakkam Metro Hub [1].</p></li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Appreciation:</strong> Expected 15% growth upon project delivery in Dec 2027 [2].</p></li>
                         </ul>
                         <hr class="border-t border-navy/5 pt-1.5" />
-                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic">
-                            <span>[1] Chennai Metro Rail Phase II Map.</span>
-                            <span>[2] Propertism Feasibility Study.</span>
-                        </div>
+                        <div class="flex flex-col gap-0.5 text-[9px] text-gray-400 font-sans italic"><span>[1] Chennai Metro Rail Phase II Map.</span><span>[2] Propertism Feasibility Study.</span></div>
                     `;
                 } else {
                     msgHtml += `
                         <p>Thank you for your inquiry about properties on Propertism.</p>
-                        
-                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans border-b border-navy/5 pb-1">
-                            Advisory Framework
-                        </h3>
+                        <h3 class="text-[11px] font-bold text-navy uppercase tracking-wider font-sans border-b border-navy/5 pb-1">Advisory Framework</h3>
                         <ul class="space-y-1.5 pl-1.5">
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Asset Acquisition:</strong> Custom search parameters across 14 checkpoints.</p>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Portfolio Management:</strong> Complete NRI compliance and physical verification.</p>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-gold font-bold text-sm leading-none mt-0.5">•</span>
-                                <p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Valuation Desk:</strong> Real-time CMA reports for sellers.</p>
-                            </li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Asset Acquisition:</strong> Custom search parameters across 14 checkpoints.</p></li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Portfolio Management:</strong> Complete NRI compliance and physical verification.</p></li>
+                            <li class="flex items-start gap-2"><span class="text-gold font-bold text-sm leading-none mt-0.5">•</span><p class="text-[11px] text-gray-600"><strong class="text-navy font-semibold">Valuation Desk:</strong> Real-time CMA reports for sellers.</p></li>
                         </ul>
-                        
                         <p>Our property advisors have been alerted to your query: <strong class="text-navy font-medium">"${userInput}"</strong>. They will retrieve specific details and contact you shortly.</p>
                     `;
                 }
 
-                msgHtml += `
-                        </div>
-                    </div>
-                `;
-                
+                msgHtml += `</div></div>`;
                 chatHistory.insertAdjacentHTML('beforeend', msgHtml);
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }, 1200);
+        }
+
+        // =========================================================================
+        // Code Panel Tab Switching
+        // =========================================================================
+        function changeCodeTab(tabId) {
+            currentCodeTab = tabId;
+            document.getElementById('codeView-guide').classList.add('hidden');
+            document.getElementById('codeView-realbot-code').classList.add('hidden');
+            document.getElementById('codeView-card-code').classList.add('hidden');
+            document.getElementById('tabBtn-guide').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
+            document.getElementById('tabBtn-realbot-code').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
+            document.getElementById('tabBtn-card-code').className = "text-xs uppercase tracking-widest font-bold text-white/50 hover:text-white border-b-2 border-transparent pb-1 px-1 transition-all";
+            document.getElementById('codeView-' + tabId).classList.remove('hidden');
+            document.getElementById('tabBtn-' + tabId).className = "text-xs uppercase tracking-widest font-bold text-gold border-b-2 border-gold pb-1 px-1 transition-all";
+        }
+
+        function copyCurrentCode() {
+            let contentText = "";
+            if (currentCodeTab === 'guide') {
+                alert('Select RealBot.jsx or PropertyCard.jsx tabs to copy components.');
+                return;
+            } else if (currentCodeTab === 'realbot-code') {
+                contentText = document.getElementById('realbotJSXContent').innerText;
+            } else if (currentCodeTab === 'card-code') {
+                contentText = document.getElementById('propertyCardJSXContent').innerText;
+            }
+            navigator.clipboard.writeText(contentText).then(() => {
+                alert('Copied to clipboard successfully.');
+            }).catch(err => {
+                console.error('Copy failure: ', err);
+            });
+        }
+
+        function changeMockTab(tabId) {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.className = "nav-tab flex flex-col items-center gap-1.5 py-1 px-3 border-t-2 border-gold text-gold";
+                } else {
+                    tab.className = "nav-tab flex flex-col items-center gap-1.5 py-1 px-3 border-t-2 border-transparent text-gray-400 hover:text-navy";
+                }
+            });
+            alert('Navigation panel switched to: ' + tabId.toUpperCase());
         }
     </script>
 </body>

@@ -514,10 +514,13 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
     if inquiry.assessment_status:
         classification_label = inquiry.assessment_status
 
-    # Clean message to strip traffic attribution parameters for customer notifications
+    # Clean message to strip traffic attribution parameters and chatbot debug metadata for customer notifications
     clean_message = inquiry.message
-    if clean_message and "--- Traffic Attribution Parameters ---" in clean_message:
-        clean_message = clean_message.split("--- Traffic Attribution Parameters ---")[0].strip()
+    if clean_message:
+        if "--- Traffic Attribution Parameters ---" in clean_message:
+            clean_message = clean_message.split("--- Traffic Attribution Parameters ---")[0].strip()
+        if "--- Submitted via realBOT ---" in clean_message:
+            clean_message = clean_message.split("--- Submitted via realBOT ---")[0].strip()
 
     # Send Customer Email Acknowledgement
     if inquiry.email:

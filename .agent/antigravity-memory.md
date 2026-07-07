@@ -5,7 +5,7 @@ Reviewed By: Viji (Product Owner & Final Decision Authority)
 Created By: Astra
 Created On: 2026-04-28 20:00:00
 Last Updated By: Astra
-Last Updated On: 2026-04-28 20:00:00
+Last Updated On: 2026-07-07 10:15:00
 Searchtag:ANTIGRAVITYMEMORY
 -->
 
@@ -39,6 +39,7 @@ Propertism is an NRI Property Management platform focused on the Chennai market.
 - Complete work, don't redesign.
 - Reliability over brilliance.
 - Every finished step = real progress.
+- Git commits, pushes, and deployments are handled exclusively by Viji.
 
 ### Initialization Protocol
 When `/start` is invoked, Astra MUST load:
@@ -64,6 +65,7 @@ When `/start` is invoked, Astra MUST load:
 - **NEVER** set `ENABLE_HTTPS=True` in EB.
 - **NEVER** modify `realtor-web/` (legacy directory).
 - **NEVER** commit live credentials.
+- **NEVER** perform git commit, git push, or deployment pipelines (delegated to Viji).
 
 ### 4. Development Workflow Protocol (Trace & Touch)
 - **Root-to-Leaf Trace:** Trace every dependency starting from the base template downward. Audit all legacy files to ensure no external overrides hijack the intended architecture.
@@ -72,5 +74,9 @@ When `/start` is invoked, Astra MUST load:
 - **Structural Verification:** Pinpoint exact line counts and surrounding code structure before executing any multi-line replacements.
 - **Report Before Touch:** Document the exact math, constraint conflicts, and file dependencies. Await clearance before committing code changes.
 
+### 5. SCCB & Implementation Governance
+- For every SCCB received, create a dedicated folder to save the SCCB document, create the subsequent implementation report document within that same folder upon completion, and create the future recommendations document (FUTURE_RECOMMENDATIONS.md) in the same folder as the outcome of the implementation review.
+
 ---
-*Maintained by Astra | 2026-05-02 13:00 IST*
+*Maintained by Astra | 2026-07-07 14:30 IST*
+

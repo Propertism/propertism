@@ -158,6 +158,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'content.middleware.HealthCheckMiddleware',  # Handle health checks before ALLOWED_HOSTS
+    'chat.middleware.CorrelationIdMiddleware',
     'content.middleware.CanonicalDomainRedirectMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files efficiently
@@ -475,9 +476,14 @@ ADMIN_URL = os.environ.get('ADMIN_URL', 'admin')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'correlation': {
+            '()': 'chat.logging.CorrelationFilter',
+        },
+    },
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
+            'format': '{levelname} {asctime} {module} [Correlation ID: {correlation_id}] {message}',
             'style': '{',
         },
         'simple': {
@@ -489,7 +495,8 @@ LOGGING = {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'verbose',
+            'filters': ['correlation'],
         },
     },
     'loggers': {
@@ -504,6 +511,11 @@ LOGGING = {
             'propagate': False,
         },
         'content': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'chat': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
@@ -574,11 +586,23 @@ GOOGLE_MAPS_DEFAULT_COUNTRY = os.environ.get(
 )
 
 # realBOT AI Assistant Configurations
+REALBOT_AI_ENABLED = os.environ.get('REALBOT_AI_ENABLED', 'False').lower() in ('true', '1', 'yes')
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
 DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-chat')
 DEEPSEEK_TEMPERATURE = float(os.environ.get('DEEPSEEK_TEMPERATURE', '0.2'))
 DEEPSEEK_MAX_TOKENS = int(os.environ.get('DEEPSEEK_MAX_TOKENS', '2000'))
 DEEPSEEK_TIMEOUT = int(os.environ.get('DEEPSEEK_TIMEOUT', '15'))
+
+# realBOT Integration Settings (Milestones M2.1 & M2.2)
+REALBOT_INTEGRATION_ENABLED = os.environ.get('REALBOT_INTEGRATION_ENABLED', 'False').lower() in ('true', '1', 'yes')
+REALBOT_BASE_URL = os.environ.get('REALBOT_BASE_URL', 'http://127.0.0.1:8010')
+REALBOT_API_KEY = os.environ.get('REALBOT_API_KEY', '')
+REALBOT_TENANT = os.environ.get('REALBOT_TENANT', 'propertism')
+REALBOT_PRODUCT = os.environ.get('REALBOT_PRODUCT', 'propertism.in')
+REALBOT_DOMAIN = os.environ.get('REALBOT_DOMAIN', 'real_estate')
+REALBOT_ENVIRONMENT = os.environ.get('REALBOT_ENVIRONMENT', 'development')
+REALBOT_WIDGET_URL = os.environ.get('REALBOT_WIDGET_URL', 'http://127.0.0.1:8010')
+REALBOT_API_VERSION = os.environ.get('REALBOT_API_VERSION', 'v1')
 
 # Tamilselvan Profile Contact Settings
 TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
