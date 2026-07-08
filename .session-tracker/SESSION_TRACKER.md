@@ -43,13 +43,14 @@
 | 71 | July 07 | **ZERO RUNTIME AI DEPENDENCY POLICY (ARCH-AI). Established policy restricting external LLM provider API executions during customer message handling. Added REALBOT_AI_ENABLED toggle config to settings.py (defaulting to False) and guarded views.py AIService instantiation. Ensured all conversations execute deterministically on local rule engines and indexed knowledge. Validated all 303/303 tests passing.** | ✅ |
 | 72 | July 07 | **realBOT PRODUCTION FALLBACK RESOLUTION. Diagnosed production chatbot fallback issue caused by empty tables on the AWS RDS PostgreSQL database. Developed and executed a secure remote python script on the EC2 instance to run all 6 Django seeders, trigger the Unified Knowledge Indexer, and run the Website Conversational Q&A Extraction framework. Restored 29 intent rules, 14 service profiles, 68 knowledge articles, and 115 Q&A candidates to production.** | ✅ |
 | 73 | July 08 | **realBOT HARDENING (OBSERVATIONS 1, 2, 3). Hardened email configuration dynamically, normalized phone numbers to include country prefix contexts automatically, and matched clicked suggestion display texts to bypass standard classifier queries.** | ✅ |
+| 74 | July 08 | **realBOT TEASER REBRANDING & GLASSMORPHIC STYLING. Developed a premium, glassmorphic bouncing teaser speech bubble (`realbot-teaser-bubble`) styled with a translucent background, compact borders, centered horizontal layout, and mixed-case `"realBOT"` logo. Removed the `"BETA"` badge from the header and teaser card, and set the teaser to be permanently visible and toggle state in sync with the chatbot panel.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 08, 2026 (11:05 IST)
-**Last Update**: SESSION 73 — realBOT HARDENING (OBSERVATIONS 1, 2, 3).
+**Last Updated On**: July 08, 2026 (12:45 IST)
+**Last Update**: SESSION 74 — realBOT TEASER REBRANDING & GLASSMORPHIC STYLING.
 
 ---
 
@@ -1086,6 +1087,33 @@ Continue from this checkpoint tomorrow.
 * Hardened `properties/tests.py` to prevent setting mutations from leaking.
 * Verified that all 28 suggestion chips pass intent routing checks.
 * Verified that all 366 tests pass cleanly.
+
+---
+
+## Session 74 Detail — July 08, 2026
+
+**Session ID**: `CODEX-SESSION-0708-B`
+**Focus**: realBOT Teaser Rebranding & Glassmorphic Styling
+
+### Part 1: Glassmorphic Teaser Bubble Styling ✅
+* Configured a premium, glassmorphic bouncing speech bubble (`realbot-teaser-bubble`) positioned directly above the floating FAB trigger icon in [static/css/realbot-panel.css](file:///d:/viji/viji-olivine/03rolledout/01propertism/static/css/realbot-panel.css#L544).
+* Set backdrop blur filter (`blur(8px)`), a thin translucent gold border, dark navy background transparency (`rgba(14, 42, 71, 0.85)`), and reduced width (`150px`) centered horizontally relative to the trigger.
+* Centered the down-arrow indicator pointer (`right: 70px;`).
+
+### Part 2: Logo and Branding Integration ✅
+* Embedded the official Propertism gold house logo icon SVG inside the teaser bubble in [static/js/realbot-panel.js](file:///d:/viji/viji-olivine/03rolledout/01propertism/static/js/realbot-panel.js#L18).
+* Formatted the text as mixed-case `"realBOT"` and `"by Propertism"` using Outfit and Inter typography styles, aligning exactly with the main chat header branding.
+
+### Part 3: Persistent Call-Out & Toggle Visibility ✅
+* Removed the session storage dismissal check to make the teaser bubble persistently visible for all first-time and returning visitors.
+* Removed the close button (`×`) to make it a fixed feature of the floating icon.
+* Programmed the open/close panel functions to toggle classes instead of deleting the DOM elements, ensuring the teaser bubble always reappears when the chatbot panel is closed.
+
+### Part 4: BETA Badge Removal ✅
+* Removed all `"BETA"` badge references from both the main chat panel header in [uilayers/templates/base.html](file:///d:/viji/viji-olivine/03rolledout/01propertism/uilayers/templates/base.html#L384) and the new teaser card.
+
+### Part 5: Verification ✅
+* Ran Django regression and content tests: verified all **366 tests passed successfully**.
 
 ---
 

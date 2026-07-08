@@ -14,8 +14,25 @@
     function init() {
         // Create trigger FAB if it doesn't exist
         if (!document.getElementById('realbotTriggerWrapper')) {
+            const teaserHTML = `
+                <div class="realbot-teaser-bubble" id="realbotTeaserBubble">
+                    <div class="logo-group">
+                        <svg width="24" height="24" viewBox="0 0 100 100" fill="none" class="shrink-0" xmlns="http://www.w3.org/2000/svg" style="color: #C89B2B;">
+                            <path d="M22 45 L50 21 L78 45" stroke="currentColor" stroke-width="7" stroke-linecap="square" />
+                            <path d="M49 13 L86 38" stroke="currentColor" stroke-width="7" stroke-linecap="square" />
+                            <path d="M30 46 L46 46 M38 46 L38 80" stroke="currentColor" stroke-width="7" stroke-linecap="square" />
+                            <path d="M54 46 L54 80 M54 46 H68 C74 46 76 50 76 56 C76 62 74 65 68 65 H54" stroke="currentColor" stroke-width="7" stroke-linecap="square" />
+                        </svg>
+                        <div class="text-group">
+                            <span class="title-text"><span class="realbot-real">real</span><span class="realbot-bot">BOT</span></span>
+                            <span class="subtitle-text">by Propertism</span>
+                        </div>
+                    </div>
+                </div>
+            `;
             const triggerHTML = `
                 <div class="realbot-trigger-wrapper" id="realbotTriggerWrapper">
+                    ${teaserHTML}
                     <div class="realbot-ripple-ring ring-1"></div>
                     <div class="realbot-ripple-ring ring-2"></div>
                     <div class="realbot-ripple-ring ring-3"></div>
@@ -30,6 +47,13 @@
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', triggerHTML);
+
+            const teaserBubble = document.getElementById('realbotTeaserBubble');
+            if (teaserBubble) {
+                teaserBubble.addEventListener('click', function() {
+                    togglePanel();
+                });
+            }
         }
 
         // Set teaser tooltip and handle teaser behavior globally
@@ -222,6 +246,9 @@
         const wrapper = document.getElementById('realbotTriggerWrapper');
         if (wrapper) wrapper.classList.add('hidden'); // Hide wrapper containing ripples
         
+        const teaser = document.getElementById('realbotTeaserBubble');
+        if (teaser) teaser.classList.add('hidden');
+        
         // Focus input
         setTimeout(() => {
             const input = document.getElementById('realbotInput');
@@ -235,6 +262,9 @@
         panelInstance.classList.remove('active');
         const wrapper = document.getElementById('realbotTriggerWrapper');
         if (wrapper) wrapper.classList.remove('hidden'); // Show wrapper containing ripples
+        
+        const teaser = document.getElementById('realbotTeaserBubble');
+        if (teaser) teaser.classList.remove('hidden');
     }
 
     // Scroll chat scroll area to base

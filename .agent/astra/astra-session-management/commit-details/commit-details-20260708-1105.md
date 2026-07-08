@@ -13,7 +13,7 @@
 Implemented key bug fixes and hardening configurations addressing three direct observations:
 - **Observation 1 (Email Routing):** Updated email configurations to dynamically retrieve recipient lists (`ADMIN_EMAIL` and `EXTRA_NOTIFICATION_EMAIL`) from environment variables, preventing hardcoded references. Updated transcript dispatcher to fall back to `settings.ADMIN_EMAILS` when no explicit list is defined.
 - **Observation 2 (Phone Validation):** Enabled auto-normalization of phone input strings by dynamically prepending the dialing prefix of the selected country context prior to execution, preventing validation failure re-prompts.
-- **Observation 3 (Suggestion Chips Fallback):** Implemented an exact-match Suggestion Chip intent router intercepting click queries and routing them directly to their configured `business_intent` rule with `1.0` confidence. Added the `'Talk to Advisor'` chip to the welcome greeting and catch-all fallback messages. Integrated frontend interception for human handover keywords and chip clicks in the realBOT advisor workspace view.
+- **Observation 3 (Suggestion Chips Fallback):** Implemented an exact-match Suggestion Chip intent router intercepting click queries and routing them directly to their configured `business_intent` rule with `1.0` confidence. Added the `'Talk to Advisor'` chip to the welcome greeting and catch-all fallback messages. Integrated frontend interception for human handover keywords and chip clicks in the realBOT advisor workspace view. Added a dynamic, permanently fixed glassmorphic teaser speech bubble (`realbot-teaser-bubble`) styled with translucent background, compact borders, centered horizontal layouts, and mixed-case `"realBOT by Propertism"` typography. Removed all `"BETA"` badge references from chatbot header bar and teaser bubble.
 - **Test Hardening:** Added mock settings isolation for `WHATSAPP_ADMIN_PHONE` and mocked `is_feature_enabled` to dynamically bypass CAPTCHA checks in properties unit tests.
 
 ---
@@ -28,7 +28,11 @@ Implemented key bug fixes and hardening configurations addressing three direct o
 - [chat/rule_engine.py](file:///d:/viji/viji-olivine/03rolledout/01propertism/chat/rule_engine.py) - Direct intent interceptor for suggestion chips.
 - [chat/views.py](file:///d:/viji/viji-olivine/03rolledout/01propertism/chat/views.py) - Added 'Talk to Advisor' chip to initial session welcome message.
 - [chat/rules_config.py](file:///d:/viji/viji-olivine/03rolledout/01propertism/chat/rules_config.py) - Added 'Talk to Advisor' chip to fallback message configuration.
+- [chat/suggestions_config.py](file:///d:/viji/viji-olivine/03rolledout/01propertism/chat/suggestions_config.py) - Configured Contact Advisor chip to map to human_assistance intent.
 - [uilayers/templates/realbot.html](file:///d:/viji/viji-olivine/03rolledout/01propertism/uilayers/templates/realbot.html) - Integrated frontend handover click/message interception.
+- [uilayers/templates/base.html](file:///d:/viji/viji-olivine/03rolledout/01propertism/uilayers/templates/base.html) - Removed BETA badge from header.
+- [static/js/realbot-panel.js](file:///d:/viji/viji-olivine/03rolledout/01propertism/static/js/realbot-panel.js) - Integrated dismissible teaser speech bubble markup and click toggles.
+- [static/css/realbot-panel.css](file:///d:/viji/viji-olivine/03rolledout/01propertism/static/css/realbot-panel.css) - Embedded teaser bubble bouncing animation and close layout styling.
 - [properties/tests.py](file:///d:/viji/viji-olivine/03rolledout/01propertism/properties/tests.py) - Added test mocks isolation.
 - [.session-tracker/SESSION_TRACKER.md](file:///d:/viji/viji-olivine/03rolledout/01propertism/.session-tracker/SESSION_TRACKER.md) - Updated session tracker records.
 
