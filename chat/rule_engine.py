@@ -72,32 +72,53 @@ class RuleEngine:
         
         # Check if the query is an exact match for an active suggestion display text (case-insensitive)
         from chat.models import SuggestionDefinition, BusinessRule
-        suggestion = SuggestionDefinition.objects.filter(display_text__iexact=query.strip(), status='active').first()
-        if suggestion and suggestion.business_intent:
-            rule = BusinessRule.objects.filter(intent=suggestion.business_intent, is_enabled=True).first()
-            if rule:
-                execution_time_ms = int((time.time() - start_time) * 1000)
-                log_entry = RuleExecutionLog.objects.create(
-                    session_id=session_id,
-                    query=query,
-                    matched_rule=rule,
-                    resolved_intent=rule.intent,
-                    confidence_score=1.0,
-                    rules_evaluated=1,
-                    outcome='resolved',
-                    execution_time_ms=execution_time_ms
-                )
-                return IntentResult(
-                    intent=rule.intent,
-                    rule_id=rule.rule_id,
-                    confidence=1.0,
-                    action_type=rule.action_type,
-                    action_config=rule.action_config,
-                    outcome='resolved',
-                    clarification_question='',
-                    rules_evaluated=1,
-                    matched_rule=rule
-                )
+        
+        HARDCODED_CHIPS = {
+            'talk to advisor': 'human_assistance',
+            'contact advisor': 'human_assistance',
+            'ask for advisor': 'human_assistance',
+            'talk to support': 'human_assistance',
+            'contact us': 'contact_information',
+            'luxury villas': 'buy_property',
+            'apartments': 'buy_property',
+            'plots': 'land_plot',
+            'nri investment': 'nri_assist',
+        }
+        
+        display_text_clean = query.strip().lower()
+        matched_intent = HARDCODED_CHIPS.get(display_text_clean)
+        
+        rule = None
+        if matched_intent:
+            rule = BusinessRule.objects.filter(intent=matched_intent, is_enabled=True).first()
+        else:
+            suggestion = SuggestionDefinition.objects.filter(display_text__iexact=query.strip(), status='active').first()
+            if suggestion and suggestion.business_intent:
+                rule = BusinessRule.objects.filter(intent=suggestion.business_intent, is_enabled=True).first()
+                
+        if rule:
+            execution_time_ms = int((time.time() - start_time) * 1000)
+            log_entry = RuleExecutionLog.objects.create(
+                session_id=session_id,
+                query=query,
+                matched_rule=rule,
+                resolved_intent=rule.intent,
+                confidence_score=1.0,
+                rules_evaluated=1,
+                outcome='resolved',
+                execution_time_ms=execution_time_ms
+            )
+            return IntentResult(
+                intent=rule.intent,
+                rule_id=rule.rule_id,
+                confidence=1.0,
+                action_type=rule.action_type,
+                action_config=rule.action_config,
+                outcome='resolved',
+                clarification_question='',
+                rules_evaluated=1,
+                matched_rule=rule
+            )
         
         # Normalize query
         normalized_query = query.strip().lower()

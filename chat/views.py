@@ -157,7 +157,7 @@ def init_session(request):
                 "How may I assist you with your property portfolio today?"
             )
             welcome_metadata = {
-                "chips": ['Luxury Villas', 'Apartments', 'Plots', 'NRI Investment', 'Rental Homes', 'Compare Projects']
+                "chips": ['Luxury Villas', 'Apartments', 'Plots', 'NRI Investment', 'Talk to Advisor']
             }
             RealBotMessage.objects.create(
                 session=session,

@@ -561,7 +561,7 @@ SEED_RULES = [
         'min_confidence': 0.0,
         'action_type': 'fallback_response',
         'action_config': {
-            'chips': ['Buy Property', 'Sell Property', 'NRI Services', 'Contact Us'],
+            'chips': ['Buy Property', 'Sell Property', 'NRI Services', 'Talk to Advisor'],
         },
         'clarification_question': '',
     },

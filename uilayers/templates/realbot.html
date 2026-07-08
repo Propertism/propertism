@@ -1113,26 +1113,44 @@ export default function PropertyCard({
         // Suggestion Chips & Send
         // =========================================================================
         function sendChipMessage(text) {
-            appendUserMessage(text);
-            triggerAdvisorResponse(text);
+            const t = text.toLowerCase().trim();
+            if (t === 'contact advisor' || t === 'talk to advisor' || t === 'talk to support' || t === 'ask for advisor') {
+                requestHumanHandover();
+            } else {
+                appendUserMessage(text);
+                triggerAdvisorResponse(text);
+            }
         }
 
         function handleSendBtn() {
             const text = chatInput.value.trim();
             if (!text) return;
-            appendUserMessage(text);
-            chatInput.value = '';
-            triggerAdvisorResponse(text);
+            
+            const t = text.toLowerCase();
+            if (t === 'contact advisor' || t === 'talk to advisor' || t === 'talk to support' || t === 'ask for advisor') {
+                requestHumanHandover();
+                chatInput.value = '';
+            } else {
+                appendUserMessage(text);
+                chatInput.value = '';
+                triggerAdvisorResponse(text);
+            }
         }
 
         // =========================================================================
         // Simulated AI Response (preserved from original)
         // =========================================================================
         function triggerAdvisorResponse(userInput) {
+            const query = userInput.toLowerCase().trim();
+            if (query === 'contact advisor' || query === 'talk to advisor' || query === 'talk to support' || query === 'ask for advisor') {
+                requestHumanHandover();
+                return;
+            }
+
             typingIndicator.classList.remove('hidden');
             chatHistory.scrollTop = chatHistory.scrollHeight;
 
-            const query = userInput.toLowerCase();
+            const query_lower = userInput.toLowerCase();
             setTimeout(() => {
                 typingIndicator.classList.add('hidden');
 
