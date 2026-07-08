@@ -332,9 +332,12 @@ class InquiryNotificationTests(TestCase):
         ADMIN_EMAILS=["info@propertism.in", "propertism.tamil@gmail.com"],
         EXTRA_NOTIFICATION_EMAIL="propertism.tamil@gmail.com",
         COMMUNICATIONS_ASYNC=False,
+        WHATSAPP_ADMIN_PHONE="918667020798",
     )
-    @patch("content.views.send_whatsapp_notification")
-    def test_create_inquiry_sends_email_and_whatsapp(self, mock_send_whatsapp):
+    @patch("realtor_project.features.is_feature_enabled")
+    @patch("communications.providers.send_whatsapp_notification")
+    def test_create_inquiry_sends_email_and_whatsapp(self, mock_send_whatsapp, mock_is_feature_enabled):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
         # Initial inquiry count
         self.assertEqual(Inquiry.objects.count(), 0)
 

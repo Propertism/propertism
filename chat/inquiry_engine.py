@@ -225,7 +225,26 @@ class InquiryConversationEngine:
         value = raw_message.strip()
 
         if current_field == 'mobile_number':
-            passed, error_msg = self._validator.validate_phone(value, context['country'])
+            # Pre-normalize: if value doesn't start with '+', but country is known, prepend prefix
+            normalized_value = value
+            if not value.startswith('+'):
+                import re
+                digits = re.sub(r'[^\d]', '', value)
+                country_val = context.get('country', '')
+                from chat.inquiry_validator import COUNTRY_SPEC_ALIAS, COUNTRY_PHONE_SPECS
+                country_key = COUNTRY_SPEC_ALIAS.get(country_val.lower().strip())
+                if country_key:
+                    spec = COUNTRY_PHONE_SPECS.get(country_key)
+                    if spec:
+                        prefix = spec[0]  # e.g. '+91'
+                        prefix_digits = re.sub(r'[^\d]', '', prefix)
+                        if digits.startswith(prefix_digits):
+                            normalized_value = '+' + digits
+                        else:
+                            normalized_value = prefix + digits
+            passed, error_msg = self._validator.validate_phone(normalized_value, context['country'])
+            if passed:
+                value = normalized_value
         else:
             method = getattr(self._validator, f'validate_{current_field}',
                              self._validator.validate_free_text)

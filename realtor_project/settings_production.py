@@ -343,10 +343,11 @@ EMAIL_HOST_USER = 'tamil@propertism.in'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'Propertism Admin <tamil@propertism.in>'
 SERVER_EMAIL = 'Propertism Admin <tamil@propertism.in>'
-ADMIN_EMAIL = 'info@propertism.in'
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
 
 # Notification recipients — all inquiry/lead alerts go to both inboxes in production
-ADMIN_EMAILS = ['info@propertism.in', 'propertism.tamil@gmail.com', 'tamil@propertism.in']
+extra_emails = [e.strip() for e in os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in').split(',') if e.strip()]
+ADMIN_EMAILS = list({ADMIN_EMAIL} | set(extra_emails))
 
 # Canonical host configurations
 CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'www.propertism.in')

@@ -41,13 +41,15 @@
 | 69 | July 07 | **realBOT KNOWLEDGE ADMINISTRATION FRAMEWORK (M2.15). Extended KnowledgeArticle (8 fields) and KnowledgeDocument (8 fields) with lifecycle administration metadata. Created KnowledgeVersionHistory (KVH######) immutable snapshots and KnowledgeLifecycleAuditLog (KLA######) append-only audit trail. Implemented 5-component knowledge_manager.py (QualityValidator, VersionManager, PublishingFramework, ReindexFramework, AdministrationManager). Hardened search engine to filter status='published' and increment usage_count. Registered 6 REST endpoints and 4 Django Admin panels. Validated all 17 knowledge admin tests and 294/294 total tests passing.** | ✅ |
 | 70 | July 07 | **realBOT ANALYTICS & CUSTOMER INSIGHTS FRAMEWORK (M2.16). Implemented read-only Business Intelligence layer (chat/insights_manager.py) querying PlatformEvent and MetricAggregate telemetry logs. Built 8 dedicated business dashboards (Executive, Journey, Inquiry, Knowledge, Service, Conversation, Search, Conversion). Integrated heuristic-based automated insight recommendation engine and CSV metrics export generator. Registered 4 REST API endpoints (/api/v1/realbot/inquiry/insights/...). Validated 9 new tests and all 303/303 total tests passing.** | ✅ |
 | 71 | July 07 | **ZERO RUNTIME AI DEPENDENCY POLICY (ARCH-AI). Established policy restricting external LLM provider API executions during customer message handling. Added REALBOT_AI_ENABLED toggle config to settings.py (defaulting to False) and guarded views.py AIService instantiation. Ensured all conversations execute deterministically on local rule engines and indexed knowledge. Validated all 303/303 tests passing.** | ✅ |
+| 72 | July 07 | **realBOT PRODUCTION FALLBACK RESOLUTION. Diagnosed production chatbot fallback issue caused by empty tables on the AWS RDS PostgreSQL database. Developed and executed a secure remote python script on the EC2 instance to run all 6 Django seeders, trigger the Unified Knowledge Indexer, and run the Website Conversational Q&A Extraction framework. Restored 29 intent rules, 14 service profiles, 68 knowledge articles, and 115 Q&A candidates to production.** | ✅ |
+| 73 | July 08 | **realBOT HARDENING (OBSERVATIONS 1, 2, 3). Hardened email configuration dynamically, normalized phone numbers to include country prefix contexts automatically, and matched clicked suggestion display texts to bypass standard classifier queries.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 07, 2026 (15:00 IST)
-**Last Update**: SESSION 71 — ZERO RUNTIME AI DEPENDENCY POLICY (ARCH-AI).
+**Last Updated On**: July 08, 2026 (11:05 IST)
+**Last Update**: SESSION 73 — realBOT HARDENING (OBSERVATIONS 1, 2, 3).
 
 ---
 
@@ -1045,9 +1047,51 @@ Continue from this checkpoint tomorrow.
 
 ---
 
-## NEXT SESSION PLAN (July 08, 2026)
+## Session 72 Detail — July 07, 2026
+
+**Session ID**: `CODEX-SESSION-0707-M`
+**Focus**: realBOT Production Seeding & Unified Indexing
+
+### Part 1: Production Database Diagnostics ✅
+* Audited counts on the live AWS RDS PostgreSQL database.
+* Identified that realBOT config, rule, and knowledge tables were completely unseeded (count = 0), which caused all incoming production queries to trigger the fallback response.
+
+### Part 2: Production Seeding & Indexing Executed ✅
+* Executed remote Python scripts within the EC2 instance using secure environment injection.
+* Successfully ran all 6 Django seeders: configurations, actions, rules, services, suggestions, and responses.
+* Ran the unified content and document indexers, populating **68** `KnowledgeArticle` records.
+* Ran the website conversational Q&A extraction framework to extract and reconcile **115** conversational Q&A candidates.
+
+### Part 3: Verification ✅
+* Audited live PostgreSQL counts post-seeding, confirming complete parity with the local environment.
+
+---
+
+## Session 73 Detail — July 08, 2026
+
+**Session ID**: `CODEX-SESSION-0708-A`
+**Focus**: realBOT Hardening (Observations 1, 2, 3)
+
+### Part 1: Email Routing & Configurations Hardening ✅
+* Modified `realtor_project/settings.py` and `realtor_project/settings_production.py` to pull notification recipients (`ADMIN_EMAIL` and `EXTRA_NOTIFICATION_EMAIL`) dynamically from the environment.
+* Configured `chat/handover_manager.py` to dynamically fall back to settings when dispatching email transcripts.
+
+### Part 2: Phone Prefix Normalization ✅
+* Programmed `chat/inquiry_engine.py` to auto-normalize phone values by prepending country prefixes (e.g. `+91`) during collects if the user inputs digits without them.
+
+### Part 3: Suggestion Chips Exact Intent Interceptor ✅
+* Programmed `chat/rule_engine.py` to match suggestions display labels case-insensitively and route them with 1.0 confidence.
+
+### Part 4: Verification ✅
+* Hardened `properties/tests.py` to prevent setting mutations from leaking.
+* Verified that all 28 suggestion chips pass intent routing checks.
+* Verified that all 366 tests pass cleanly.
+
+---
+
+## NEXT SESSION PLAN (July 09, 2026)
 **Focus**: Testing & Production Readiness (M2.17)
-- [ ] Connect with Viji to review insights dashboard analytics.
+- [ ] Connect with Viji to review production chatbot answers after deployment.
 - [ ] Begin planning the M2.17 Testing & Production Readiness integration.
 - [ ] Map out stress tests and system verification checks.
 

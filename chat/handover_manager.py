@@ -538,9 +538,12 @@ class TranscriptEmailDispatcher:
             }
 
         if not recipients:
-            recipients = DEFAULT_TRANSCRIPT_EMAIL_RECIPIENTS
-
-        recipient_list = [r.strip() for r in recipients.split(',') if r.strip()]
+            if hasattr(settings, 'ADMIN_EMAILS') and settings.ADMIN_EMAILS:
+                recipient_list = settings.ADMIN_EMAILS
+            else:
+                recipient_list = [r.strip() for r in DEFAULT_TRANSCRIPT_EMAIL_RECIPIENTS.split(',') if r.strip()]
+        else:
+            recipient_list = [r.strip() for r in recipients.split(',') if r.strip()]
         if not recipient_list:
             return {
                 'success': False,

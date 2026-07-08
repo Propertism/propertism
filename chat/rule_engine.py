@@ -70,6 +70,35 @@ class RuleEngine:
     def evaluate(self, query: str, session_id=None) -> IntentResult:
         start_time = time.time()
         
+        # Check if the query is an exact match for an active suggestion display text (case-insensitive)
+        from chat.models import SuggestionDefinition, BusinessRule
+        suggestion = SuggestionDefinition.objects.filter(display_text__iexact=query.strip(), status='active').first()
+        if suggestion and suggestion.business_intent:
+            rule = BusinessRule.objects.filter(intent=suggestion.business_intent, is_enabled=True).first()
+            if rule:
+                execution_time_ms = int((time.time() - start_time) * 1000)
+                log_entry = RuleExecutionLog.objects.create(
+                    session_id=session_id,
+                    query=query,
+                    matched_rule=rule,
+                    resolved_intent=rule.intent,
+                    confidence_score=1.0,
+                    rules_evaluated=1,
+                    outcome='resolved',
+                    execution_time_ms=execution_time_ms
+                )
+                return IntentResult(
+                    intent=rule.intent,
+                    rule_id=rule.rule_id,
+                    confidence=1.0,
+                    action_type=rule.action_type,
+                    action_config=rule.action_config,
+                    outcome='resolved',
+                    clarification_question='',
+                    rules_evaluated=1,
+                    matched_rule=rule
+                )
+        
         # Normalize query
         normalized_query = query.strip().lower()
         # Clean punctuation for keyword matching but keep spaces for phrase matching

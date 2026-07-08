@@ -450,13 +450,14 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 # Default email addresses
 DEFAULT_FROM_EMAIL = 'Propertism Admin <tamil@propertism.in>'
 SERVER_EMAIL = 'Propertism Admin <tamil@propertism.in>'
-ADMIN_EMAIL = 'info@propertism.in'
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
 
 # Microsoft Clarity Project ID
 CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')
 
 # Notification recipients — all inquiry/lead alerts go to both inboxes
-ADMIN_EMAILS = ['info@propertism.in', 'propertism.tamil@gmail.com', 'tamil@propertism.in']
+extra_emails = [e.strip() for e in os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in').split(',') if e.strip()]
+ADMIN_EMAILS = list({ADMIN_EMAIL} | set(extra_emails))
 
 # Email timeout (seconds)
 EMAIL_TIMEOUT = 10
