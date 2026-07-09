@@ -90,11 +90,16 @@
             <!-- Newsletter -->
             <div class="footer-section footer-newsletter-mini">
                 <h3>Advisory Insights</h3>
-                <p>Curated property management updates for owners abroad.</p>
-                <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-mini">
+                <p>Curate property management updates for NRIs.</p>
+                <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-v4">
                     {% csrf_token %}
-                    <input type="email" name="email" placeholder="Email Address" required>
-                    <button type="submit">{{ company.footer_newsletter_button_text|default:'JOIN' }}</button>
+                    <div class="footer-newsletter-row-email">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="footer-newsletter-row-captcha">
+                        {% include 'includes/_form_validation_fields_captcha.html' %}
+                        <button type="submit" class="footer-newsletter-submit-btn">{{ company.footer_newsletter_button_text|default:'JOIN' }}</button>
+                    </div>
                 </form>
             </div>
 
@@ -256,6 +261,5 @@
                 Powered by <a href="https://www.olivine.co.in/" target="_blank">Olivine Enterprise Platform</a>
             </div>
         </div>
-    </div>
     </div>
 </footer>

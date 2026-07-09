@@ -96,6 +96,9 @@
                             </div>
                         </div>
 
+                        {% include 'includes/_form_validation_fields_captcha.html' %}
+                        <small data-error-for="captcha" style="color: #ef4444; margin-bottom: 8px; display: block;"></small>
+
                         <div class="lead-form-actions">
                             <button type="button" class="btn-secondary js-lead-back">Back</button>
                             <button type="submit" class="btn-primary js-lead-submit" data-default-label="{{ primary_cta_label }}">{{ primary_cta_label }}</button>

@@ -124,6 +124,7 @@ CANONICAL_REDIRECT_HOSTS = _get_csv_env(
     'CANONICAL_REDIRECT_HOSTS',
     default=['propertism.in', 'propertism.com', 'www.propertism.com'],
 )
+SITE_URL = os.environ.get('SITE_URL') or f"{CANONICAL_SCHEME}://{CANONICAL_HOST}"
 
 INSTALLED_APPS = [
     'modeltranslation',  # Must be before django.contrib.admin
@@ -616,7 +617,7 @@ TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gm
 LEAD_VALIDATION_CONFIG = {
     # Layer 1: Honeypot & Timing
     'HONEYPOT_FIELD_NAME': 'website_url_check',  # The hidden field name
-    'MIN_SUBMISSION_TIME_SECONDS': 2,            # Fast submissions (<2s) are highly suspicious
+    'MIN_SUBMISSION_TIME_SECONDS': 1,            # Fast submissions (<1s) are highly suspicious
     
     # Layer 2: Rate Limiting
     'RATE_LIMIT_MAX_REQUESTS': 5,

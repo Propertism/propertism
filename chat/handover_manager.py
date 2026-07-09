@@ -481,19 +481,13 @@ class TranscriptGenerator:
         """
         html_content = TranscriptGenerator.generate_html_transcript(session, handover)
 
-        # Find or create archive
-        archive, _ = ConversationArchive.objects.get_or_create(
-            session=session,
-            handover=handover,
-            defaults={
-                'conversation_data': {
-                    'session_id': str(session.session_id),
-                    'handover_id': handover.handover_id if handover else None,
-                    'generated_at': timezone.now().isoformat(),
-                },
-                'closure_reason': CLOSURE_SYSTEM,
-            }
-        )
+        # Retrieve existing archive or create one using the manager to populate all details
+        archive = ConversationArchive.objects.filter(session=session).first()
+        if not archive:
+            archive_result = ConversationArchiveManager.archive_conversation(
+                session, closure_reason=CLOSURE_SYSTEM, closed_by='system'
+            )
+            archive = ConversationArchive.objects.get(archive_id=archive_result['archive_id'])
 
         transcript = TranscriptRecord.objects.create(
             archive=archive,
@@ -628,19 +622,36 @@ class ConversationArchiveManager:
     def archive_conversation(session, closure_reason=CLOSURE_SYSTEM, closed_by='system'):
         """
         Archive a completed conversation.
-        Gathers all messages and creates an immutable archive record.
+        Gathers all messages and creates or updates the archive record.
         """
-        # Check if already archived
-        if ConversationArchive.objects.filter(session=session).exists():
-            return {
-                'success': False,
-                'error_code': ERR_ARCHIVE_FAILED,
-                'error_message': 'Conversation is already archived.',
-            }
-
         # Gather conversation data
         history = AdvisorConversationManager.get_conversation_history(session)
         handover = HandoverRequest.objects.filter(session=session).first()
+
+        bot_messages = RealBotMessage.objects.filter(session=session).order_by('created_at')
+        advisor_messages = AdvisorMessage.objects.filter(session=session).order_by('created_at')
+
+        bot_transcript = []
+        for msg in bot_messages:
+            bot_transcript.append({
+                'sender': msg.sender,
+                'text': msg.text,
+                'metadata': msg.metadata,
+                'created_at': msg.created_at.isoformat(),
+            })
+
+        advisor_transcript = []
+        for msg in advisor_messages:
+            advisor_name = msg.advisor.display_name if msg.advisor else 'Advisor'
+            advisor_transcript.append({
+                'sender': advisor_name,
+                'text': msg.message_text,
+                'created_at': msg.created_at.isoformat(),
+            })
+
+        start_time = session.created_at
+        end_time = timezone.now()
+        duration_seconds = int((end_time - start_time).total_seconds())
 
         conversation_data = {
             'session_id': str(session.session_id),
@@ -650,16 +661,37 @@ class ConversationArchiveManager:
             'message_count': len(history),
             'messages': history,
             'handover_id': handover.handover_id if handover else None,
-            'archived_at': timezone.now().isoformat(),
+            'archived_at': end_time.isoformat(),
         }
 
-        archive = ConversationArchive.objects.create(
-            session=session,
-            handover=handover,
-            conversation_data=conversation_data,
-            closure_reason=closure_reason,
-            closed_by=closed_by,
-        )
+        # Check if already exists
+        archive = ConversationArchive.objects.filter(session=session).first()
+        if archive:
+            archive.handover = handover
+            archive.bot_transcript = bot_transcript
+            archive.advisor_transcript = advisor_transcript
+            archive.full_transcript = history
+            archive.conversation_data = conversation_data
+            archive.start_time = start_time
+            archive.end_time = end_time
+            archive.duration_seconds = duration_seconds
+            archive.closure_reason = closure_reason
+            archive.closed_by = closed_by
+            archive.save()
+        else:
+            archive = ConversationArchive.objects.create(
+                session=session,
+                handover=handover,
+                bot_transcript=bot_transcript,
+                advisor_transcript=advisor_transcript,
+                full_transcript=history,
+                conversation_data=conversation_data,
+                start_time=start_time,
+                end_time=end_time,
+                duration_seconds=duration_seconds,
+                closure_reason=closure_reason,
+                closed_by=closed_by,
+            )
 
         HandoverAuditLog.objects.create(
             session=session,
@@ -698,8 +730,10 @@ class ConversationArchiveManager:
                 'closure_reason': archive.closure_reason,
                 'closed_by': archive.closed_by,
                 'message_count': len(archive.conversation_data.get('messages', [])),
-                'archived_at': archive.archived_at.isoformat(),
-                'summary': archive.summary,
+                'archived_at': archive.created_at.isoformat(),
+                'start_time': archive.start_time.isoformat() if archive.start_time else None,
+                'end_time': archive.end_time.isoformat() if archive.end_time else None,
+                'duration_seconds': archive.duration_seconds,
             }
         }
 
@@ -754,7 +788,57 @@ class ConversationLifecycleManager:
         # Step 2: Get the handover
         handover = HandoverRequest.objects.get(handover_id=result['handover_id'])
 
-        # Step 3: Assign advisor
+        # Step 3: Send Admin notifications (routed via AcknowledgementService)
+        from django.conf import settings
+        from communications.services import AcknowledgementService
+        
+        domain = getattr(settings, 'SITE_URL', 'https://propertism.in').rstrip('/')
+        chat_link = f"{domain}/realbot/?session_id={session.session_id}"
+        
+        subject = f"⚠️ Human Advisor Request from {customer_name or 'Customer'}"
+        whatsapp_text = (
+            f"⚠️ *Human Advisor Request*\n"
+            f"Customer: {customer_name or 'Anonymous'}\n"
+            f"Phone: {customer_phone or 'Not provided'}\n"
+            f"Email: {customer_email or 'Not provided'}\n"
+            f"Reason: {reason or 'Not provided'}\n\n"
+            f"Link to continue: {chat_link}"
+        )
+        
+        # Email to admin
+        admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
+        for admin_email in admin_emails:
+            try:
+                AcknowledgementService.send(
+                    communication_type_key='admin_lead_alert',
+                    recipient=admin_email,
+                    context={
+                        'subject': subject,
+                        'body': whatsapp_text,
+                    },
+                    channels=['email'],
+                    module='realbot_handover'
+                )
+            except Exception as exc:
+                logger.exception("Failed to send admin handover email to %s", admin_email)
+                
+        # WhatsApp to admin
+        try:
+            admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
+            AcknowledgementService.send(
+                communication_type_key='admin_lead_alert',
+                recipient=admin_phone,
+                context={
+                    'subject': 'Admin Handover WhatsApp Alert',
+                    'body': whatsapp_text
+                },
+                channels=['whatsapp'],
+                module='realbot_handover'
+            )
+        except Exception as exc:
+            logger.exception("Failed to send admin handover WhatsApp alert")
+
+        # Step 4: Assign advisor
         assign_result = self.advisor_queue.assign_advisor(handover)
         if not assign_result['success']:
             # Handover is created but no advisor available — stays in 'requested' state

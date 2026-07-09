@@ -274,7 +274,7 @@ SEED_SUGGESTIONS = [
         'category': 'Completion',
         'trigger_condition': {'inquiry_state': 'submitted'},
         'business_intent': 'general_information',
-        'target_action': '/dashboard/inquiries',
+        'target_action': '/inquiries/',
         'display_priority': 5,
         'icon': 'activity',
         'display_order': 1,

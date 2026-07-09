@@ -44,13 +44,15 @@
 | 72 | July 07 | **realBOT PRODUCTION FALLBACK RESOLUTION. Diagnosed production chatbot fallback issue caused by empty tables on the AWS RDS PostgreSQL database. Developed and executed a secure remote python script on the EC2 instance to run all 6 Django seeders, trigger the Unified Knowledge Indexer, and run the Website Conversational Q&A Extraction framework. Restored 29 intent rules, 14 service profiles, 68 knowledge articles, and 115 Q&A candidates to production.** | ✅ |
 | 73 | July 08 | **realBOT HARDENING (OBSERVATIONS 1, 2, 3). Hardened email configuration dynamically, normalized phone numbers to include country prefix contexts automatically, and matched clicked suggestion display texts to bypass standard classifier queries.** | ✅ |
 | 74 | July 08 | **realBOT TEASER REBRANDING & GLASSMORPHIC STYLING. Developed a premium, glassmorphic bouncing teaser speech bubble (`realbot-teaser-bubble`) styled with a translucent background, compact borders, centered horizontal layout, and mixed-case `"realBOT"` logo. Removed the `"BETA"` badge from the header and teaser card, and set the teaser to be permanently visible and toggle state in sync with the chatbot panel.** | ✅ |
+| 75 | July 09 | **realBOT HARDENING & FOOTER COMPACTNESS. Integrated Google reCAPTCHA v2 checkbox validation into the footer newsletter form and dynamic landing page lead form (lp_lead_form). Formatted the footer layout to render the email field full-width and aligned the reCAPTCHA widget and submit CTA side-by-side (78px matching heights) to preserve viewport compactness. Normalized tagline copy, corrected tag nesting, adjusted margins/padding to reclaim vertical white space, and verified all 358 unit tests passing successfully.** | ✅ |
+| 76 | July 09 | **realBOT INQUIRY CHIP FIX & SITE_URL HARDENING. Fixed the Track Inquiry Status suggestion chip target_action route from /dashboard/inquiries to /inquiries/ to prevent 404 errors. Hardened SITE_URL configuration in settings.py and settings_production.py to read from environment variables with fallback to canonical domain, adding it to .env and .env.example for local developer compatibility. Verified all 315 tests passing successfully.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 08, 2026 (12:45 IST)
-**Last Update**: SESSION 74 — realBOT TEASER REBRANDING & GLASSMORPHIC STYLING.
+**Last Updated On**: July 09, 2026 (10:40 IST)
+**Last Update**: SESSION 76 — realBOT INQUIRY CHIP FIX & SITE_URL HARDENING.
 
 ---
 

@@ -1776,8 +1776,13 @@ class ConversationArchive(models.Model):
         max_length=20, unique=True, blank=True, db_index=True,
         help_text="Stable, immutable archive identifier e.g. ARC000001.",
     )
+    session = models.ForeignKey(
+        'RealBotSession', on_delete=models.SET_NULL, null=True, blank=True, related_name='archives',
+        help_text="The realBOT session this archive belongs to"
+    )
     handover = models.OneToOneField(
         HandoverRequest, on_delete=models.CASCADE, related_name='archive',
+        null=True, blank=True,
         help_text="The handover request this archive belongs to"
     )
     bot_transcript = models.JSONField(
@@ -1792,6 +1797,15 @@ class ConversationArchive(models.Model):
         default=list, blank=True,
         help_text="Combined full transcript of the entire conversation"
     )
+    conversation_data = models.JSONField(
+        default=dict, blank=True,
+        help_text="Full conversation structured data"
+    )
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    duration_seconds = models.IntegerField(default=0)
+    closure_reason = models.CharField(max_length=50, blank=True)
+    closed_by = models.CharField(max_length=50, blank=True)
     metadata = models.JSONField(
         default=dict, blank=True,
         help_text="Additional metadata about the conversation"
@@ -1821,7 +1835,7 @@ class ConversationArchive(models.Model):
         return f"ARC{seq:06d}"
 
     def __str__(self):
-        return f"[{self.archive_id}] Handover: {self.handover.handover_id}"
+        return f"[{self.archive_id}] Handover: {self.handover.handover_id if self.handover else 'None'}"
 
 
 class TranscriptRecord(models.Model):

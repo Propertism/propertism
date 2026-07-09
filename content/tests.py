@@ -235,7 +235,9 @@ class SitemapTests(TestCase):
 
 
 class LandingLeadApiTests(TestCase):
-    def test_landing_lead_api_stores_qualified_sell_lead(self):
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_landing_lead_api_stores_qualified_sell_lead(self, mock_is_feature_enabled):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
         response = self.client.post(
             reverse("landing_lead_api"),
             {
@@ -555,6 +557,174 @@ class CaptchaVerificationTests(TestCase):
         self.assertEqual(Inquiry.objects.count(), 1)
         inquiry = Inquiry.objects.first()
         self.assertEqual(inquiry.name, "Genuine Human")
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_newsletter_captcha_disabled_submits_normally(self, mock_is_feature_enabled, mock_send_whatsapp):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import Newsletter
+        Newsletter.objects.filter(email='newsletter@example.com').delete()
+        
+        response = self.client.post(
+            reverse("newsletter_subscribe"),
+            data={"email": "newsletter@example.com"}
+        )
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Newsletter.objects.filter(email='newsletter@example.com').exists())
+        Newsletter.objects.filter(email='newsletter@example.com').delete()
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_newsletter_captcha_enabled_missing_token_fails(self, mock_is_feature_enabled, mock_send_whatsapp):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import Newsletter
+        Newsletter.objects.filter(email='newsletter@example.com').delete()
+        
+        response = self.client.post(
+            reverse("newsletter_subscribe"),
+            data={"email": "newsletter@example.com"}
+        )
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Newsletter.objects.filter(email='newsletter@example.com').exists())
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_whatsapp_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    @patch("content.security.google_recaptcha.GoogleRecaptchaV2.verify")
+    def test_newsletter_captcha_enabled_valid_token_submits(self, mock_verify, mock_is_feature_enabled, mock_send_whatsapp):
+        from content.security.google_recaptcha import RecaptchaResult
+        mock_verify.return_value = RecaptchaResult(success=True, hostname="localhost")
+        
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import Newsletter
+        Newsletter.objects.filter(email='newsletter@example.com').delete()
+        
+        response = self.client.post(
+            reverse("newsletter_subscribe"),
+            data={
+                "email": "newsletter@example.com",
+                "g-recaptcha-response": "valid-token-mock",
+            }
+        )
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Newsletter.objects.filter(email='newsletter@example.com').exists())
+        Newsletter.objects.filter(email='newsletter@example.com').delete()
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+    )
+    @patch("content.views.send_landing_lead_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_landing_lead_captcha_disabled_submits_normally(self, mock_is_feature_enabled, mock_send_notif):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import LandingLead
+        initial_count = LandingLead.objects.count()
+        
+        response = self.client.post(
+            reverse("landing_lead_api"),
+            data={
+                "phone": "+919876543210",
+                "property_city": "Chennai",
+                "intent_type": "sell",
+                "property_type": "villa",
+                "selling_timeline": "immediate",
+                "name": "Genuine Human",
+                "email": "human@example.com",
+            }
+        )
+        
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(LandingLead.objects.count(), initial_count + 1)
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_landing_lead_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_landing_lead_captcha_enabled_missing_token_fails(self, mock_is_feature_enabled, mock_send_notif):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import LandingLead
+        initial_count = LandingLead.objects.count()
+        
+        response = self.client.post(
+            reverse("landing_lead_api"),
+            data={
+                "phone": "+919876543210",
+                "property_city": "Chennai",
+                "intent_type": "sell",
+                "property_type": "villa",
+                "selling_timeline": "immediate",
+                "name": "Anonymous User",
+                "email": "anon@example.com",
+            }
+        )
+        
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(LandingLead.objects.count(), initial_count)
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        RECAPTCHA_SECRET_KEY="dummy-secret",
+    )
+    @patch("content.views.send_landing_lead_notification")
+    @patch("realtor_project.features.is_feature_enabled")
+    @patch("content.security.google_recaptcha.GoogleRecaptchaV2.verify")
+    def test_landing_lead_captcha_enabled_valid_token_submits(self, mock_verify, mock_is_feature_enabled, mock_send_notif):
+        from content.security.google_recaptcha import RecaptchaResult
+        mock_verify.return_value = RecaptchaResult(success=True, hostname="localhost")
+        
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else True
+        
+        from content.models import LandingLead
+        initial_count = LandingLead.objects.count()
+        
+        response = self.client.post(
+            reverse("landing_lead_api"),
+            data={
+                "phone": "+919876543210",
+                "property_city": "Chennai",
+                "intent_type": "sell",
+                "property_type": "villa",
+                "selling_timeline": "immediate",
+                "name": "Genuine Human",
+                "email": "human@example.com",
+                "g-recaptcha-response": "valid-token-mock",
+            }
+        )
+        
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(LandingLead.objects.count(), initial_count + 1)
 
     @patch("realtor_project.features.is_feature_enabled")
     def test_honeypot_triggers_silent_reject(self, mock_is_feature_enabled):

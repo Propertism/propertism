@@ -418,9 +418,9 @@ def contact(request):
                 msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
 
             inquiry = PropertyInquiry.objects.create(
-                name=request.POST.get("name"),
-                email=request.POST.get("email"),
-                phone=request.POST.get("phone", ""),
+                name=request.POST.get("name") or "",
+                email=request.POST.get("email") or "",
+                phone=request.POST.get("phone", "") or "",
                 message=msg_body,
                 property=None,  # Quote form doesn't link to specific property
                 status='pending',
@@ -521,6 +521,8 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
             clean_message = clean_message.split("--- Traffic Attribution Parameters ---")[0].strip()
         if "--- Submitted via realBOT ---" in clean_message:
             clean_message = clean_message.split("--- Submitted via realBOT ---")[0].strip()
+        if "--- Additional Details ---" in clean_message:
+            clean_message = clean_message.split("--- Additional Details ---")[0].strip()
 
     # Send Customer Email Acknowledgement
     if inquiry.email:
@@ -689,6 +691,18 @@ def send_landing_lead_notification(lead):
 @require_POST
 def landing_lead_api(request):
     """Store leads submitted from landing pages."""
+    from content.security.spam_protection import SpamProtectionService
+    
+    # Run centralized spam protection service
+    spam_service = SpamProtectionService(request)
+    spam_result = spam_service.validate(form_name='Landing Page Inquiry')
+    
+    if not spam_result.passed:
+        if spam_result.rate_limited:
+            return JsonResponse({"ok": False, "errors": {"__all__": "Too many requests. Please try again later."}}, status=429)
+        err_msg = spam_result.error_message or "Security verification failed."
+        return JsonResponse({"ok": False, "errors": {"captcha": err_msg}}, status=400)
+
     phone = (request.POST.get("phone") or "").strip()
     property_city = (request.POST.get("property_city") or "").strip()
     intent_type = (request.POST.get("intent_type") or "").strip()
@@ -927,6 +941,22 @@ def send_whatsapp_notification(text, recipient=None):
 def newsletter_subscribe(request):
     """Newsletter subscription handler with Admin notification."""
     if request.method == "POST":
+        from content.security.spam_protection import SpamProtectionService
+        
+        # Run centralized spam protection service
+        spam_service = SpamProtectionService(request)
+        spam_result = spam_service.validate(form_name='Newsletter Subscription')
+        
+        if not spam_result.passed:
+            if spam_result.rate_limited:
+                from django.http import HttpResponse
+                return HttpResponse("Too Many Requests", status=429)
+            
+            if spam_result.error_message:
+                messages.error(request, spam_result.error_message)
+            
+            return redirect(request.META.get("HTTP_REFERER") or get_home_section_links()["blog"])
+
         email = request.POST.get("email")
         if email:
             try:

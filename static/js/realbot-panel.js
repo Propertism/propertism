@@ -118,13 +118,25 @@
         isInitialized = true;
     }
 
-    // Initialize or load existing session from sessionStorage
+    // Initialize or load existing session from sessionStorage or URL query params
     function initializeSession() {
-        // Check sessionStorage
-        sessionId = sessionStorage.getItem('realbot_session_id');
-        if (sessionId === 'undefined' || sessionId === 'null') {
-            sessionId = null;
-            sessionStorage.removeItem('realbot_session_id');
+        const urlParams = new URLSearchParams(window.location.search);
+        let urlSessionId = urlParams.get('session_id');
+        if (urlSessionId) {
+            sessionId = urlSessionId;
+            sessionStorage.setItem('realbot_session_id', sessionId);
+            setTimeout(() => {
+                const trigger = document.getElementById('realbotTriggerBtn');
+                if (trigger && !panelInstance.classList.contains('active')) {
+                    trigger.click();
+                }
+            }, 500);
+        } else {
+            sessionId = sessionStorage.getItem('realbot_session_id');
+            if (sessionId === 'undefined' || sessionId === 'null') {
+                sessionId = null;
+                sessionStorage.removeItem('realbot_session_id');
+            }
         }
         
         let url = '/chat/session/init/';
@@ -163,6 +175,9 @@
 
     // Clear chat session and messages history to start fresh
     function clearChat() {
+        if (sessionId) {
+            endSessionAndArchive();
+        }
         sessionStorage.removeItem('realbot_session_id');
         sessionId = null;
         messages = [];
@@ -258,6 +273,9 @@
 
     function closePanel() {
         if (!isInitialized) return;
+        if (sessionId) {
+            endSessionAndArchive();
+        }
         overlayInstance.classList.remove('active');
         panelInstance.classList.remove('active');
         const wrapper = document.getElementById('realbotTriggerWrapper');
@@ -265,6 +283,11 @@
         
         const teaser = document.getElementById('realbotTeaserBubble');
         if (teaser) teaser.classList.remove('hidden');
+
+        // Start fresh next time
+        sessionStorage.removeItem('realbot_session_id');
+        sessionId = null;
+        messages = [];
     }
 
     // Scroll chat scroll area to base
@@ -448,53 +471,68 @@
             // Chips/Pills block inline with Lucide SVG outline icons
             let inlineChipsHTML = '';
             const isLastMsg = (idx === messages.length - 1);
-            if (isLastMsg && msg.sender !== 'user' && msg.metadata && msg.metadata.chips && msg.metadata.chips.length > 0) {
-                const chipsList = msg.metadata.chips.map(chip => {
-                    let iconSVG = '';
-                    const chip_lower = chip.toLowerCase();
-                    if (chip_lower.includes('villa')) {
-                        // [House]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
-                    } else if (chip_lower.includes('apartment') || chip_lower.includes('rent')) {
-                        // [Building2]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>';
-                    } else if (chip_lower.includes('plot') || chip_lower.includes('land')) {
-                        // [MapPinned]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/></svg>';
-                    } else if (chip_lower.includes('nri') || chip_lower.includes('investment') || chip_lower.includes('global')) {
-                        // [Globe]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>';
-                    } else if (chip_lower.includes('rental') || chip_lower.includes('key')) {
-                        // [KeyRound]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3h3v-3h-3Z"/></svg>';
-                    } else if (chip_lower.includes('compare') || chip_lower.includes('git')) {
-                        // [GitCompareArrows]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="m12 14 2-2 2 2"/><path d="M14 12V4a2 2 0 0 1 2-2h3"/><path d="m12 10-2 2-2-2"/><path d="M10 12v8a2 2 0 0 1-2 2H5"/></svg>';
-                    } else if (chip_lower.includes('talk') || chip_lower.includes('advisor') || chip_lower.includes('contact') || chip_lower.includes('phone')) {
-                        // [Phone]
-                        iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
-                    }
-                    return `
-                        <button onclick="window.realbotControl.triggerChip('${chip}')" class="realbot-chip-pill">
-                            ${iconSVG}
-                            <span>${chip}</span>
-                        </button>
+            if (isLastMsg && msg.sender !== 'user' && msg.metadata) {
+                const suggestions = msg.metadata.suggestions || [];
+                const chips = msg.metadata.chips || [];
+                
+                let normalizedSuggestions = [];
+                if (suggestions.length > 0) {
+                    normalizedSuggestions = suggestions;
+                } else if (chips.length > 0) {
+                    normalizedSuggestions = chips.map(c => ({
+                        display_text: c,
+                        action: c === 'Talk to Advisor' || c === 'Contact Advisor' ? 'phone_call' : ''
+                    }));
+                }
+                
+                if (normalizedSuggestions.length > 0) {
+                    const chipsList = normalizedSuggestions.map(sug => {
+                        const chip = sug.display_text;
+                        const action = sug.action || '';
+                        let iconSVG = '';
+                        const chip_lower = chip.toLowerCase();
+                        if (chip_lower.includes('villa')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+                        } else if (chip_lower.includes('apartment') || chip_lower.includes('rent')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>';
+                        } else if (chip_lower.includes('plot') || chip_lower.includes('land')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/></svg>';
+                        } else if (chip_lower.includes('nri') || chip_lower.includes('investment') || chip_lower.includes('global')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>';
+                        } else if (chip_lower.includes('rental') || chip_lower.includes('key')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3h3v-3h-3Z"/></svg>';
+                        } else if (chip_lower.includes('compare') || chip_lower.includes('git')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="m12 14 2-2 2 2"/><path d="M14 12V4a2 2 0 0 1 2-2h3"/><path d="m12 10-2 2-2-2"/><path d="M10 12v8a2 2 0 0 1-2 2H5"/></svg>';
+                        } else if (chip_lower.includes('talk') || chip_lower.includes('advisor') || chip_lower.includes('contact') || chip_lower.includes('phone') || chip_lower.includes('call')) {
+                            iconSVG = '<svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+                        }
+                        
+                        const escapedChip = chip.replace(/'/g, "\\'");
+                        const escapedAction = action.replace(/'/g, "\\'");
+                        
+                        return `
+                            <button onclick="window.realbotControl.triggerChip('${escapedChip}', '${escapedAction}')" class="realbot-chip-pill">
+                                ${iconSVG}
+                                <span>${chip}</span>
+                            </button>
+                        `;
+                    }).join('');
+                    
+                    inlineChipsHTML = `
+                        <div class="flex flex-wrap gap-2 mt-2 px-1 select-none">
+                            ${chipsList}
+                        </div>
                     `;
-                }).join('');
-                inlineChipsHTML = `
-                    <div class="flex flex-wrap gap-2 mt-2 px-1 select-none">
-                        ${chipsList}
-                    </div>
-                `;
+                }
             }
 
             const msgHTML = `
-                <div class="flex flex-col mb-3 select-text">
+                <div class="flex flex-col mb-2 select-text">
                     <div class="flex items-center text-[9px] text-gray-400 font-bold tracking-wider uppercase mb-1 px-1 font-sans select-none">
                         ${avatarHTML}
                         <span>${headerLabel}<span class="opacity-60 font-normal lowercase ml-2.5" style="font-variant: small-caps;">${now}</span></span>
                     </div>
-                    <div class="${cardClasses} border py-3.5 px-4 text-[15px] font-sans text-gray-800 space-y-3">
+                    <div class="${cardClasses} border py-2.5 px-3.5 text-[15px] font-sans text-gray-800 space-y-2">
                         ${paragraphs}
                         ${propertyCardHTML}
                         ${tableHTML}
@@ -641,10 +679,45 @@
         }, 3000);
     }
 
+    // Helper to send end of session archive request
+    function endSessionAndArchive() {
+        if (!sessionId) return;
+        const currentSessionId = sessionId;
+        fetch('/chat/inquiry/handover/customer/end/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken') || ''
+            },
+            body: JSON.stringify({
+                session_id: currentSessionId,
+                send_email: false
+            })
+        }).then(res => {
+            if (res.ok) {
+                console.log("Session archived successfully:", currentSessionId);
+            }
+        }).catch(err => {
+            console.error("Error archiving session:", err);
+        });
+    }
+
     // Expose control hook triggers on global scope for inline HTML callbacks
     window.realbotControl = {
-        triggerChip: function(text) {
-            triggerResponseSequence(text);
+        triggerChip: function(text, action) {
+            action = action || '';
+            const action_lower = action.toLowerCase();
+            if (action.startsWith('/') || action.startsWith('http')) {
+                window.location.href = action;
+            } else if (action_lower === 'phone_call' || action_lower === 'phone') {
+                window.location.href = 'tel:+918667020798';
+            } else if (action_lower === 'whatsapp') {
+                window.location.href = 'https://wa.me/918667020798';
+            } else if (action_lower === 'restart' || action_lower === 'clear') {
+                clearChat();
+            } else {
+                triggerResponseSequence(text);
+            }
         },
         clearChat: function() {
             clearChat();

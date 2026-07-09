@@ -37,7 +37,7 @@ def validate_honeypot(request) -> tuple[bool, str]:
 # Submission Timing Validator (Layer 4)
 # --------------------------------------------------------------------------- #
 
-MINIMUM_SUBMISSION_SECONDS = 2
+MINIMUM_SUBMISSION_SECONDS = 1
 
 
 def validate_submission_time(request) -> tuple[bool, str]:

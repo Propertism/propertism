@@ -119,6 +119,7 @@ class InquiryConversationEngine:
         if opening_message:
             extraction_result = self._extractor.extract(opening_message, ics)
             extraction_ack = self._apply_extraction(ics, extraction_result, opening_message)
+            self._backfill_phone_from_history(ics)
 
         # Check if all mandatory fields are already satisfied
         if self._all_mandatory_collected(ics):
@@ -199,6 +200,9 @@ class InquiryConversationEngine:
 
         # Apply extraction results
         ack = self._apply_extraction(ics_session, extraction_result, raw_message)
+
+        # Backfill phone if country is now known
+        self._backfill_phone_from_history(ics_session)
 
         # Handle conflicts before continuing
         if extraction_result.conflicts:
@@ -519,6 +523,44 @@ class InquiryConversationEngine:
             chips=['Our Services', 'Contact Us', 'Start Inquiry'],
             metadata={'ics_state': 'cancelled'},
         )
+
+    def _backfill_phone_from_history(self, ics_session: InquiryConversationSession) -> None:
+        """
+        If country is known but mobile_number is missing, scan previous user messages
+        in this session to see if we can extract a valid phone number retrospectively.
+        """
+        country = ics_session.collected_data.get('country', '')
+        if not country or 'mobile_number' in ics_session.collected_data:
+            return
+
+        from chat.models import RealBotMessage
+        user_msgs = RealBotMessage.objects.filter(
+            session=ics_session.realbot_session,
+            sender='user'
+        ).order_by('created_at')
+
+        for msg in user_msgs:
+            phone_val = self._extractor._extract_phone(msg.text, msg.text.lower(), country)
+            if phone_val:
+                passed, _ = self._validator.validate_phone(phone_val, country)
+                if passed:
+                    data = dict(ics_session.collected_data)
+                    data['mobile_number'] = phone_val
+                    ics_session.collected_data = data
+                    ics_session.save()
+                    _log_event(
+                        ics_session, 'field_extracted',
+                        field_name='mobile_number',
+                        raw_input=msg.text,
+                        extracted_value=phone_val,
+                        notes='extracted retrospectively from history'
+                    )
+                    _log_event(
+                        ics_session, 'validation_passed',
+                        field_name='mobile_number',
+                        extracted_value=phone_val
+                    )
+                    break
 
     # ── Optional field skip ────────────────────────────────────────────────────
 

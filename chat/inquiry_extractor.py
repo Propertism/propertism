@@ -105,18 +105,25 @@ class InquiryFieldExtractor:
 
         msg_lower = message.lower()
 
+        # 1. Extract country first to provide context for phone extraction
+        country_val = self._extract_country(message, msg_lower)
+        if country_val:
+            passed, _ = self._validator.validate_country(country_val)
+            if passed:
+                context['country'] = country_val
+
         # Run all extractors
         extractors = [
-            ('customer_name',         self._extract_name),
-            ('country',               self._extract_country),
-            ('mobile_number',         self._extract_phone),
-            ('email_address',         self._extract_email),
-            ('service_required',      self._extract_service),
-            ('property_type',         self._extract_property_type),
-            ('preferred_location',    self._extract_location),
-            ('budget',                self._extract_budget),
-            ('timeline',              self._extract_timeline),
-            ('preferred_contact_time', self._extract_contact_time),
+            ('customer_name',         lambda m, ml: self._extract_name(m, ml)),
+            ('country',               lambda m, ml: context.get('country') or country_val),
+            ('mobile_number',         lambda m, ml: self._extract_phone(m, ml, context.get('country', ''))),
+            ('email_address',         lambda m, ml: self._extract_email(m, ml)),
+            ('service_required',      lambda m, ml: self._extract_service(m, ml)),
+            ('property_type',         lambda m, ml: self._extract_property_type(m, ml)),
+            ('preferred_location',    lambda m, ml: self._extract_location(m, ml)),
+            ('budget',                lambda m, ml: self._extract_budget(m, ml)),
+            ('timeline',              lambda m, ml: self._extract_timeline(m, ml)),
+            ('preferred_contact_time', lambda m, ml: self._extract_contact_time(m, ml)),
         ]
 
         for field_name, extractor_fn in extractors:
@@ -190,8 +197,9 @@ class InquiryFieldExtractor:
 
         return None
 
-    def _extract_phone(self, message: str, msg_lower: str):
+    def _extract_phone(self, message: str, msg_lower: str, country: str = ''):
         """Extract the first E.164-style phone number found in the message."""
+        # 1. Try standard E.164 search first
         m = _RE_PHONE.search(message)
         if m:
             raw = m.group(0).strip()
@@ -199,6 +207,31 @@ class InquiryFieldExtractor:
             digits = re.sub(r'[^\d]', '', raw)
             if raw.startswith('+') and len(digits) >= 7:
                 return raw
+
+        # 2. If country is known, try country-specific digit extraction
+        if country:
+            from chat.inquiry_validator import COUNTRY_SPEC_ALIAS, COUNTRY_PHONE_SPECS
+            country_key = COUNTRY_SPEC_ALIAS.get(country.lower().strip())
+            if country_key:
+                spec = COUNTRY_PHONE_SPECS.get(country_key)
+                if spec:
+                    prefix = spec[0]
+                    if len(spec) == 3:
+                        exact = spec[1]
+                        min_d, max_d = exact, exact
+                    else:
+                        min_d, max_d = spec[2], spec[3]
+
+                    # Split words to find any digit sequence of matching length
+                    words = re.split(r'[\s\-\(\)\.,\+]+', message)
+                    for word in words:
+                        digits = re.sub(r'[^\d]', '', word)
+                        if min_d <= len(digits) <= max_d:
+                            prefix_digits = re.sub(r'[^\d]', '', prefix)
+                            if digits.startswith(prefix_digits):
+                                return '+' + digits
+                            else:
+                                return prefix + digits
         return None
 
     def _extract_email(self, message: str, msg_lower: str):

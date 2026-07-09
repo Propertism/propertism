@@ -132,17 +132,41 @@ class ConversationArchiveAdmin(admin.ModelAdmin):
     """
     M2.17 — Admin panel for conversation archives.
     """
-    list_display = ['archive_id', 'handover', 'created_at']
-    list_filter = ['created_at']
-    search_fields = ['archive_id']
-    readonly_fields = ['archive_id', 'created_at']
+    list_display = ['archive_id', 'session', 'handover', 'duration_seconds', 'closure_reason', 'created_at']
+    list_filter = ['closure_reason', 'created_at']
+    search_fields = ['archive_id', 'session__session_id']
+    readonly_fields = ['archive_id', 'session', 'handover', 'start_time', 'end_time', 'duration_seconds', 'closure_reason', 'closed_by', 'rendered_transcript', 'created_at']
+    fields = ['archive_id', 'session', 'handover', 'start_time', 'end_time', 'duration_seconds', 'closure_reason', 'closed_by', 'rendered_transcript', 'created_at']
     ordering = ['-created_at']
+
+    def rendered_transcript(self, obj):
+        import json
+        from django.utils.safestring import mark_safe
+        transcript_json = json.dumps(obj.full_transcript or [])
+        return mark_safe(f'<div id="admin-chat-viewer-root" data-transcript=\'{transcript_json}\'></div>')
+    rendered_transcript.short_description = "Visual Chat History"
+
+    class Media:
+        js = (
+            'https://unpkg.com/react@18/umd/react.production.min.js',
+            'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+            'js/admin_chat_viewer.js',
+        )
 
     def has_add_permission(self, request):
         return False
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+from chat.models import RealBotSession
+
+@admin.register(RealBotSession)
+class RealBotSessionAdmin(admin.ModelAdmin):
+    list_display = ['session_id', 'conversation_id', 'created_at']
+    search_fields = ['session_id', 'conversation_id']
+    readonly_fields = ['session_id', 'conversation_id', 'created_at']
 
 
 @admin.register(TranscriptRecord)

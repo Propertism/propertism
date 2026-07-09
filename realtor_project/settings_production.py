@@ -356,6 +356,7 @@ CANONICAL_REDIRECT_HOSTS = os.environ.get(
     'CANONICAL_REDIRECT_HOSTS',
     'propertism.in,propertism.com,www.propertism.com'
 ).split(',')
+SITE_URL = os.environ.get('SITE_URL') or f"{CANONICAL_SCHEME}://{CANONICAL_HOST}"
 
 # Microsoft Clarity Project ID
 CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')

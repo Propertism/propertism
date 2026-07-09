@@ -428,8 +428,8 @@
     white-space: nowrap;
     cursor: pointer;
     transition: all 150ms ease-in-out;
-    margin-top: 6px;
-    margin-bottom: 4px;
+    margin-top: 3px;
+    margin-bottom: 2px;
 }
 
 .realbot-chip-pill:hover {

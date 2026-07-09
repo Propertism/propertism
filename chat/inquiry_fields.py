@@ -49,7 +49,7 @@ INQUIRY_FIELD_CONFIG = {
     },
     'mobile_number': {
         'label':     'Mobile Number',
-        'prompt':    "Please share your mobile number with country code (e.g. +91 9876543210):",
+        'prompt':    "Please share your mobile number.",
         'validation': 'phone',
         'mandatory': True,
         'order':     3,

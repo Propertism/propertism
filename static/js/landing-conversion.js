@@ -219,6 +219,9 @@ async function submitLeadForm(event) {
         if (!response.ok || !payload.ok) {
             showLeadErrors(form, payload.errors || {});
             showLeadFeedback(form, "Please correct the highlighted fields and try again.", "error");
+            if (typeof grecaptcha !== 'undefined') {
+                grecaptcha.reset();
+            }
             return;
         }
 
