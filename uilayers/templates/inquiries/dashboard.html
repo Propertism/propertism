@@ -152,12 +152,12 @@
                     <table class="inq-table">
                         <thead>
                             <tr>
-                                <th>Status</th>
-                                <th>Name</th>
-                                <th>Property</th>
-                                <th>When</th>
-                                <th>Contact</th>
-                                <th>Actions</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-name">Name</th>
+                                <th class="col-property">Property</th>
+                                <th class="col-when">Time</th>
+                                <th class="col-contact">Contact</th>
+                                <th class="col-actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -177,7 +177,7 @@
                 data-updated-at="{{ inq.updated_at.isoformat }}"
                 onclick="handleRowClick(event, this)"
                             >
-                                <td class="inq-col-status">
+                                <td class="col-status inq-col-status">
                                     <div class="inq-status-menu" data-id="{{ inq.id }}" data-status="{{ inq.status }}">
                                         <button
                                             type="button"
@@ -205,20 +205,20 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="inq-col-name">
+                                <td class="col-name inq-col-name">
                                     <span class="inq-name">{{ inq.name }}</span>
                                 </td>
-                                <td class="inq-col-property">
+                                <td class="col-property inq-col-property">
                                     {% if inq.property %}
                                     <span class="inq-property-ref">{{ inq.property.title }}</span>
                                     {% else %}
                                     <span class="inq-general">General inquiry</span>
                                     {% endif %}
                                 </td>
-                                <td class="inq-col-when">
+                                <td class="col-when inq-col-when">
                                     <span class="inq-time">{{ inq.created_at|timesince }} ago</span>
                                 </td>
-                                <td class="inq-col-contact">
+                                <td class="col-contact inq-col-contact">
                                     <div class="inq-contact-stack">
                                         {% if inq.email %}
                                         <a
@@ -240,7 +240,7 @@
                                         {% endif %}
                                     </div>
                                 </td>
-                                <td class="inq-col-actions">
+                                <td class="col-actions inq-col-actions">
                                     <div class="inq-quick-actions">
                                         <button
                                             type="button"

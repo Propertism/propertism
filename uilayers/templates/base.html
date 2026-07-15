@@ -168,8 +168,15 @@
                     }
                 }
             }
-        }
+        };
     </script>
+    <style>
+        /* Fix native select option visibility across browsers */
+        select option {
+            color: #333333 !important;
+            background-color: #ffffff !important;
+        }
+    </style>
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
     {% include "components/_header-english.html" %}

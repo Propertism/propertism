@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Property, PropertyType
+from .models import Inquiry, Property, PropertyType
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -38,3 +38,37 @@ class PropertyTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyType
         fields = "__all__"
+
+
+class InquirySerializer(serializers.ModelSerializer):
+    property_title = serializers.SerializerMethodField()
+    property_location = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Inquiry
+        fields = [
+            "id",
+            "name",
+            "email",
+            "phone",
+            "message",
+            "status",
+            "property",
+            "property_title",
+            "property_location",
+            "form_source",
+            "service_needed",
+            "property_type",
+            "locality",
+            "user_role",
+            "nri_status",
+            "created_at",
+            "updated_at",
+        ]
+
+    def get_property_title(self, obj):
+        return obj.property.title if obj.property else None
+
+    def get_property_location(self, obj):
+        return obj.property.location if obj.property else None
+

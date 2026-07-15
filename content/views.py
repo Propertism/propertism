@@ -404,7 +404,51 @@ def contact(request):
             referrer = request.POST.get("referrer", "").strip()
             landing_page = request.POST.get("landing_page", "").strip()
 
+            # Parse structured lead capture fields
+            service_needed = request.POST.get("service", "").strip()
+            intent_radio = request.POST.get("intent_radio", "").strip()
+            if not service_needed or service_needed == "consultation":
+                if intent_radio:
+                    service_needed = intent_radio
+            property_type = request.POST.get("property_type", "").strip()
+            locality = request.POST.get("locality", "").strip()
+            user_role = request.POST.get("user_role", "").strip()
+            nri_status = request.POST.get("nri_status", "").strip()
+
             msg_body = request.POST.get("message", "") or ""
+            
+            additional_lines = []
+            if service_needed:
+                from .models import ContactInquiry
+                service_map = dict(ContactInquiry.SERVICE_CHOICES)
+                service_label = service_map.get(service_needed, service_needed)
+                additional_lines.append(f"Service Required: {service_label}")
+            if property_type:
+                from .models import ContactInquiry
+                property_map = dict(ContactInquiry.PROPERTY_CHOICES)
+                property_label = property_map.get(property_type, property_type)
+                additional_lines.append(f"Property Type: {property_label}")
+            if locality:
+                from .site_context import get_contact_locality_choices
+                locality_map = dict(get_contact_locality_choices())
+                locality_label = locality_map.get(locality, locality)
+                additional_lines.append(f"Locality/Area: {locality_label}")
+            
+            role_map = {
+                "owner": "Property Owner",
+                "buyer": "Buyer / Tenant",
+                "broker": "Agent / Broker"
+            }
+            if user_role:
+                role_label = role_map.get(user_role, user_role)
+                additional_lines.append(f"User Role: {role_label}")
+            if nri_status:
+                additional_lines.append(f"NRI Status: {nri_status}")
+
+            if additional_lines:
+                msg_body += "\n\n--- Additional Details ---\n" + "\n".join(additional_lines)
+
+            msg_body_with_attribution = msg_body
             attribution_lines = []
             if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
             if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
@@ -415,16 +459,21 @@ def contact(request):
             if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
 
             if attribution_lines:
-                msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+                msg_body_with_attribution += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
 
             inquiry = PropertyInquiry.objects.create(
                 name=request.POST.get("name") or "",
                 email=request.POST.get("email") or "",
                 phone=request.POST.get("phone", "") or "",
-                message=msg_body,
+                message=msg_body_with_attribution,
                 property=None,  # Quote form doesn't link to specific property
                 status='pending',
                 form_source=request.POST.get("form_source", "Unknown Form"),
+                service_needed=service_needed,
+                property_type=property_type,
+                locality=locality,
+                user_role=user_role,
+                nri_status=nri_status,
                 confidence_score=assessment['confidence_score'],
                 assessment_status=assessment['assessment_status'],
                 validation_summary=assessment['validation_summary']

@@ -98,6 +98,30 @@
                         </div>
 
                         <div class="v4-form-group">
+                            <label class="v4-label">I am the *</label>
+                            <select name="user_role" class="v4-input" required style="height: 48px; background-color: var(--card-bg); color: var(--text); border: 1px solid var(--border);">
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="owner">Property Owner</option>
+                                <option value="buyer">Buyer / Tenant</option>
+                                <option value="broker">Agent / Broker</option>
+                            </select>
+                        </div>
+
+                        <div class="v4-form-group">
+                            <label class="v4-label">Preferred Contact Mode *</label>
+                            <select name="contact_preference" class="v4-input" required style="height: 48px; background-color: var(--card-bg); color: var(--text); border: 1px solid var(--border);">
+                                <option value="whatsapp">WhatsApp Message</option>
+                                <option value="phone">Direct Phone Call</option>
+                                <option value="email">Email Only</option>
+                            </select>
+                        </div>
+
+                        <div class="v4-form-group" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+                            <input type="checkbox" name="nri_status" id="nri_status_detail" value="Yes" style="width: 18px; height: 18px; cursor: pointer;">
+                            <label for="nri_status_detail" class="v4-label" style="margin-bottom: 0 !important; cursor: pointer; font-weight: normal; font-size: 0.9rem;">I am an NRI / Overseas Resident</label>
+                        </div>
+
+                        <div class="v4-form-group">
                             <label class="v4-label">Enquiry Details</label>
                             <textarea name="message" class="v4-input" rows="4" placeholder="How can we assist you?">{{ prefilled_message|default:'' }}</textarea>
                         </div>

@@ -296,6 +296,13 @@ class Inquiry(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="pending")
     form_source = models.CharField(max_length=100, default="Unknown Form")
     
+    # Structured intake fields
+    service_needed = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. buy-sell, rental, industrial")
+    property_type = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. apartment, villa, plot, commercial")
+    locality = models.CharField(max_length=255, null=True, blank=True, help_text="e.g. adyar, velachery")
+    user_role = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. owner, buyer, broker")
+    nri_status = models.CharField(max_length=10, null=True, blank=True, help_text="Yes/No or raw status")
+    
     # Lead Validation Engine Fields
     confidence_score = models.IntegerField(null=True, blank=True, help_text="Lead Validation Score (0-100)")
     spam_score = models.IntegerField(default=0, help_text="Calculated Spam Penalty Points")

@@ -118,7 +118,7 @@
     background: var(--surface); border-radius: var(--radius);
     box-shadow: var(--shadow); overflow: hidden;
   }
-  .inq-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; }
+  .inq-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; min-width: 1370px; }
   .inq-table thead tr { background: #F1F5F9; border-bottom: 2px solid var(--border); }
   .inq-table thead th {
     padding: 7px 8px; text-align: left; font-weight: 700;
@@ -126,15 +126,20 @@
     color: var(--navy); white-space: nowrap; overflow: hidden;
   }
   .inq-table thead th:first-child { color: var(--muted); width: 32px; }
-  .inq-table thead th:nth-child(2)  { width: 100px; }  /* Name */
+  .inq-table thead th:nth-child(2)  { width: 110px; }  /* Name */
   .inq-table thead th:nth-child(3)  { width: 130px; }  /* Email */
-  .inq-table thead th:nth-child(4)  { width: 90px;  }  /* Phone */
+  .inq-table thead th:nth-child(4)  { width: 110px; }  /* Phone */
   .inq-table thead th:nth-child(5)  { width: 80px;  }  /* Property */
-  .inq-table thead th:nth-child(6)  { width: 130px; }  /* Message */
-  .inq-table thead th:nth-child(7)  { width: 80px;  }  /* Status */
-  .inq-table thead th:nth-child(8)  { width: 110px; }  /* Submitted */
-  .inq-table thead th:nth-child(9)  { width: 110px; }  /* Update Status */
-  .inq-table thead th:nth-child(10) { width: 36px;  }  /* Delete */
+  .inq-table thead th:nth-child(6)  { width: 75px;  }  /* Intent */
+  .inq-table thead th:nth-child(7)  { width: 100px; }  /* Locality */
+  .inq-table thead th:nth-child(8)  { width: 85px;  }  /* Type */
+  .inq-table thead th:nth-child(9)  { width: 80px;  }  /* Role */
+  .inq-table thead th:nth-child(10) { width: 50px;  }  /* NRI */
+  .inq-table thead th:nth-child(11) { width: 180px; }  /* Message */
+  .inq-table thead th:nth-child(12) { width: 80px;  }  /* Status */
+  .inq-table thead th:nth-child(13) { width: 115px; }  /* Submitted */
+  .inq-table thead th:nth-child(14) { width: 110px; }  /* Update Status */
+  .inq-table thead th:nth-child(15) { width: 36px;  }  /* Delete */
   .inq-table tbody tr {
     border-bottom: 1px solid var(--border);
     transition: background .12s;
@@ -143,7 +148,7 @@
   .inq-table tbody tr:hover { background: #F8FAFC; }
   .inq-table td { padding: 7px 8px; vertical-align: middle; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .inq-table td.id-col { color: var(--muted); font-size: .72rem; width: 32px; }
-  .inq-table td.msg-cell { white-space: normal; max-width: 130px; }
+  .inq-table td.msg-cell { white-space: normal; max-width: 180px; }
 
   /* ── Name cell ── */
   .name-cell { max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
@@ -160,7 +165,7 @@
   .prop-cell { color: var(--muted); font-size: .78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
 
   /* ── Message cell ── */
-  .msg-cell { max-width: 130px; white-space: normal; }
+  .msg-cell { max-width: 180px; white-space: normal; }
   .msg-preview { color: var(--text); line-height: 1.4; font-size: .78rem; }
   .msg-full { display: none; color: var(--text); line-height: 1.4; font-size: .78rem; }
   .msg-full.open { display: block; }
@@ -335,7 +340,7 @@
         {% if current_q or current_status or current_year %}
         <a href="?" class="btn btn-outline" style="padding:8px 14px;font-size:.8rem">&#x2715; Clear</a>
         {% endif %}
-        <a href="{% url 'admin:properties_inquiry_export_csv' %}?{% if current_q %}q={{ current_q }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_year %}year={{ current_year }}&{% endif %}{% if current_month %}month={{ current_month }}{% endif %}"
+        <a href="{% url 'admin:properties_inquiry_export_csv' %}?{% if current_q %}q={{ current_q }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_year %}year={{ current_year }}&{% endif %}{% if current_month %}month={{ current_month }}&{% endif %}{% if current_service %}service_needed={{ current_service }}&{% endif %}{% if current_property_type %}property_type={{ current_property_type }}&{% endif %}{% if current_locality %}locality={{ current_locality }}&{% endif %}{% if current_user_role %}user_role={{ current_user_role }}&{% endif %}{% if current_nri_status %}nri_status={{ current_nri_status }}{% endif %}"
            class="btn btn-outline">
           &#x2193; Export CSV
         </a>
@@ -348,7 +353,7 @@
 
   <!-- Date filter chips -->
   {% if date_years %}
-  <div class="date-chips">
+  <div class="date-chips" style="margin-bottom: 12px;">
     <span class="date-chips-label">Year</span>
     <a href="?{% if current_q %}q={{ current_q }}&{% endif %}{% if current_status %}status={{ current_status }}{% endif %}"
        class="chip {% if not current_year %}active{% endif %}">All</a>
@@ -370,9 +375,55 @@
   </div>
   {% endif %}
 
+  <!-- Meta Filters -->
+  <div class="meta-filters" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; align-items: center; background: #FFF8ED; padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--border);">
+    <span class="date-chips-label" style="font-weight: 700; color: var(--navy); margin-right: 4px;">FILTERS:</span>
+    
+    <!-- Service Needed Filter -->
+    <select class="status-select" id="filter-service" onchange="applyMetaFilter('service_needed', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All Services</option>
+      <option value="buy-sell" {% if current_service == "buy-sell" %}selected{% endif %}>Sell</option>
+      <option value="rental" {% if current_service == "rental" %}selected{% endif %}>Rent</option>
+      <option value="industrial" {% if current_service == "industrial" %}selected{% endif %}>Manage</option>
+    </select>
+    
+    <!-- Property Type Filter -->
+    <select class="status-select" id="filter-prop-type" onchange="applyMetaFilter('property_type', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All Property Types</option>
+      <option value="apartment" {% if current_property_type == "apartment" %}selected{% endif %}>Apartment</option>
+      <option value="villa" {% if current_property_type == "villa" %}selected{% endif %}>Villa</option>
+      <option value="plot" {% if current_property_type == "plot" %}selected{% endif %}>Plot</option>
+      <option value="commercial" {% if current_property_type == "commercial" %}selected{% endif %}>Commercial</option>
+      <option value="industrial" {% if current_property_type == "industrial" %}selected{% endif %}>Industrial Land</option>
+    </select>
+
+    <!-- Locality Filter -->
+    <select class="status-select" id="filter-locality" onchange="applyMetaFilter('locality', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All Localities</option>
+      {% for loc in locality_options %}
+      <option value="{{ loc }}" {% if current_locality == loc %}selected{% endif %}>{{ loc|title }}</option>
+      {% endfor %}
+    </select>
+
+    <!-- User Role Filter -->
+    <select class="status-select" id="filter-user-role" onchange="applyMetaFilter('user_role', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All Roles</option>
+      <option value="owner" {% if current_user_role == "owner" %}selected{% endif %}>Owner</option>
+      <option value="buyer" {% if current_user_role == "buyer" %}selected{% endif %}>Buyer</option>
+      <option value="broker" {% if current_user_role == "broker" %}selected{% endif %}>Broker</option>
+    </select>
+
+    <!-- NRI Status Filter -->
+    <select class="status-select" id="filter-nri" onchange="applyMetaFilter('nri_status', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All NRI Statuses</option>
+      <option value="Yes" {% if current_nri_status == "Yes" %}selected{% endif %}>NRI / Overseas Resident</option>
+      <option value="No" {% if current_nri_status == "No" %}selected{% endif %}>Domestic Resident</option>
+    </select>
+  </div>
+
   <!-- Table -->
   <div class="inq-card">
-    <div>
+    <div style="overflow-x: auto;">
       <table class="inq-table">
         <thead>
           <tr>
@@ -381,6 +432,11 @@
             <th>Email</th>
             <th>Phone</th>
             <th class="hide-mobile">Property</th>
+            <th class="hide-mobile">Intent</th>
+            <th class="hide-mobile">Locality</th>
+            <th class="hide-mobile">Type</th>
+            <th class="hide-mobile">Role</th>
+            <th class="hide-mobile">NRI</th>
             <th class="hide-mobile">Message</th>
             <th>Status</th>
             <th class="hide-mobile sort-th">
@@ -416,6 +472,42 @@
 
             <td class="prop-cell hide-mobile">
               {% if inq.property %}{{ inq.property.title }}{% else %}<span style="color:var(--muted)">General</span>{% endif %}
+            </td>
+
+            <td class="hide-mobile">
+              {% if inq.service_needed %}
+                <span class="badge" style="background: rgba(184, 154, 74, 0.12); color: var(--gold); border: 1.5px solid rgba(184, 154, 74, 0.25); padding: 4px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                  {% if inq.service_needed == 'buy-sell' %}Sell
+                  {% elif inq.service_needed == 'rental' %}Rent
+                  {% elif inq.service_needed == 'industrial' %}Manage
+                  {% else %}{{ inq.service_needed|title }}
+                  {% endif %}
+                </span>
+              {% else %}
+                <span style="color:var(--muted)">—</span>
+              {% endif %}
+            </td>
+
+            <td class="hide-mobile" style="font-weight: 600; color: var(--navy);">
+              {% if inq.locality %}{{ inq.locality|title }}{% else %}<span style="color:var(--muted)">—</span>{% endif %}
+            </td>
+
+            <td class="hide-mobile">
+              {% if inq.property_type %}{{ inq.property_type|title }}{% else %}<span style="color:var(--muted)">—</span>{% endif %}
+            </td>
+
+            <td class="hide-mobile" style="font-weight: 600;">
+              {% if inq.user_role %}{{ inq.user_role|title }}{% else %}<span style="color:var(--muted)">—</span>{% endif %}
+            </td>
+
+            <td class="hide-mobile">
+              {% if inq.nri_status %}
+                <span class="badge" style="{% if inq.nri_status == 'Yes' %}background: rgba(220, 38, 38, 0.08); color: #dc2626; border: 1.5px solid rgba(220, 38, 38, 0.2);{% else %}background: rgba(75, 85, 99, 0.08); color: #4b5563; border: 1.5px solid rgba(75, 85, 99, 0.2);{% endif %} padding: 4px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
+                  {{ inq.nri_status }}
+                </span>
+              {% else %}
+                <span style="color:var(--muted)">—</span>
+              {% endif %}
             </td>
 
             <td class="msg-cell hide-mobile">
@@ -463,11 +555,11 @@
           </tr>
           {% empty %}
           <tr>
-            <td colspan="9">
+            <td colspan="14">
               <div class="empty-state">
                 <div class="empty-icon">&#x1F4CB;</div>
                 <strong>No inquiries found</strong>
-                {% if current_q or current_status %}
+                {% if current_q or current_status or current_service or current_property_type or current_locality or current_user_role or current_nri_status %}
                 <p>Try adjusting your search or <a href="?" style="color:var(--gold)">clear filters</a>.</p>
                 {% else %}
                 <p>Inquiries submitted via the website will appear here.</p>
@@ -595,5 +687,16 @@ function deleteAdminInquiry(id, name) {
 document.getElementById('search-input').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); document.getElementById('search-form').submit(); }
 });
+
+function applyMetaFilter(name, value) {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (value) {
+    urlParams.set(name, value);
+  } else {
+    urlParams.delete(name);
+  }
+  urlParams.delete('page');
+  window.location.search = urlParams.toString();
+}
 </script>
 {% endblock %}

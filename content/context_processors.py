@@ -1,5 +1,12 @@
 from django.conf import settings
-from .site_context import get_active_services, get_company_info, get_home_section_links
+from .site_context import (
+    get_active_services,
+    get_company_info,
+    get_home_section_links,
+    get_contact_locality_choices,
+    get_contact_property_choices,
+    get_contact_service_choices
+)
 from content.security.captcha_provider import get_site_key
 
 
@@ -10,6 +17,9 @@ def site_content(request):
         "company": company,
         "footer_services": footer_services,
         "home_section_links": get_home_section_links(),
+        "contact_locality_choices": get_contact_locality_choices(),
+        "contact_property_choices": get_contact_property_choices(),
+        "contact_service_choices": get_contact_service_choices(),
         "clarity_project_id": getattr(settings, "CLARITY_PROJECT_ID", ""),
         "google_business_profile_map_url": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_URL", ""),
         "google_business_profile_map_embed_url": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_EMBED_URL", ""),

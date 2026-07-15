@@ -104,6 +104,26 @@ class InquiryAdmin(admin.ModelAdmin):
             if month_filter.isdigit():
                 qs = qs.filter(created_at__month=int(month_filter))
 
+        service_filter = request.GET.get("service_needed", "").strip()
+        if service_filter:
+            qs = qs.filter(service_needed=service_filter)
+
+        prop_type_filter = request.GET.get("property_type", "").strip()
+        if prop_type_filter:
+            qs = qs.filter(property_type=prop_type_filter)
+
+        locality_filter = request.GET.get("locality", "").strip()
+        if locality_filter:
+            qs = qs.filter(locality=locality_filter)
+
+        user_role_filter = request.GET.get("user_role", "").strip()
+        if user_role_filter:
+            qs = qs.filter(user_role=user_role_filter)
+
+        nri_status_filter = request.GET.get("nri_status", "").strip()
+        if nri_status_filter:
+            qs = qs.filter(nri_status=nri_status_filter)
+
         sort = request.GET.get("sort", "desc")
         qs = qs.order_by("created_at" if sort == "asc" else "-created_at")
         paginator = Paginator(qs, 25)
@@ -120,6 +140,8 @@ class InquiryAdmin(admin.ModelAdmin):
             months = all_qs.filter(created_at__year=int(year_filter)).dates(
                 "created_at", "month", order="ASC"
             )
+
+        localities = list(Inquiry.objects.exclude(locality__isnull=True).exclude(locality='').values_list('locality', flat=True).distinct())
 
         context = {
             **self.admin_site.each_context(request),
@@ -140,6 +162,12 @@ class InquiryAdmin(admin.ModelAdmin):
             "current_status": status_filter,
             "current_year": year_filter,
             "current_month": month_filter,
+            "current_service": service_filter,
+            "current_property_type": prop_type_filter,
+            "current_locality": locality_filter,
+            "current_user_role": user_role_filter,
+            "current_nri_status": nri_status_filter,
+            "locality_options": sorted(localities),
             "current_sort": sort,
             "date_years": years,
             "date_months": months,
@@ -193,11 +221,31 @@ class InquiryAdmin(admin.ModelAdmin):
             if month_filter.isdigit():
                 qs = qs.filter(created_at__month=int(month_filter))
 
+        service_filter = request.GET.get("service_needed", "").strip()
+        if service_filter:
+            qs = qs.filter(service_needed=service_filter)
+
+        prop_type_filter = request.GET.get("property_type", "").strip()
+        if prop_type_filter:
+            qs = qs.filter(property_type=prop_type_filter)
+
+        locality_filter = request.GET.get("locality", "").strip()
+        if locality_filter:
+            qs = qs.filter(locality=locality_filter)
+
+        user_role_filter = request.GET.get("user_role", "").strip()
+        if user_role_filter:
+            qs = qs.filter(user_role=user_role_filter)
+
+        nri_status_filter = request.GET.get("nri_status", "").strip()
+        if nri_status_filter:
+            qs = qs.filter(nri_status=nri_status_filter)
+
         timestamp = timezone.now().strftime("%Y%m%d_%H%M")
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = f'attachment; filename="inquiries_{timestamp}.csv"'
         writer = csv.writer(response)
-        writer.writerow(["ID", "Name", "Email", "Phone", "Property", "Message", "Status", "Submitted"])
+        writer.writerow(["ID", "Name", "Email", "Phone", "Property", "Intent", "Locality", "Prop Type", "Role", "NRI Status", "Message", "Status", "Submitted"])
         for inq in qs.order_by("-created_at"):
             writer.writerow([
                 inq.id,
@@ -205,6 +253,11 @@ class InquiryAdmin(admin.ModelAdmin):
                 inq.email,
                 inq.phone,
                 inq.property.title if inq.property else "General",
+                inq.service_needed or "",
+                inq.locality or "",
+                inq.property_type or "",
+                inq.user_role or "",
+                inq.nri_status or "",
                 inq.message,
                 dict(Inquiry.STATUS_CHOICES)[inq.status],
                 inq.created_at.strftime("%Y-%m-%d %H:%M"),

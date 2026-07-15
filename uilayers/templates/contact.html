@@ -455,12 +455,11 @@
 
                 <div class="form-group">
                     <label for="service">SERVICE NEEDED *</label>
-                    <select id="service" name="service" required>
+                    <select id="service" name="service" required style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; background: white;">
                         <option value="">Select a service</option>
-                        <option value="buy-sell">Real Estate Buy & Sell</option>
-                        <option value="rental">Rental & Maintenance</option>
-                        <option value="industrial">Industrial Land Services</option>
-                        <option value="consultation">General Consultation</option>
+                        {% for value, label in contact_service_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -474,6 +473,31 @@
                         <option value="commercial">Commercial</option>
                         <option value="industrial">Industrial Land</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locality">LOCALITY / AREA *</label>
+                    <select id="locality" name="locality" required style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; background: white;">
+                        <option value="" disabled selected>Select Locality / Area</option>
+                        {% for value, label in contact_locality_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-role">I AM THE *</label>
+                    <select id="user-role" name="user_role" required>
+                        <option value="">Select role</option>
+                        <option value="owner">Property Owner</option>
+                        <option value="buyer">Buyer / Tenant</option>
+                        <option value="broker">Agent / Broker</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem;">
+                    <input type="checkbox" name="nri_status" id="nri_status_contact" value="Yes" style="width: 18px; height: 18px; cursor: pointer;">
+                    <label for="nri_status_contact" style="margin-bottom: 0 !important; cursor: pointer; font-weight: normal; font-size: 0.95rem;">I am an NRI (Non-Resident Indian) / Overseas Resident</label>
                 </div>
 
                 <div class="form-group">

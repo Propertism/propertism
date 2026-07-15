@@ -18,14 +18,15 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from content.site_context import get_company_info, get_home_section_links
 
-from .models import Inquiry, Property
-from .serializers import PropertySerializer
+from .models import Inquiry, InquiryReply, Property
+from .serializers import InquirySerializer, PropertySerializer
 
 logger = logging.getLogger(__name__)
 
@@ -104,12 +105,14 @@ def property_detail_by_pk(request, pk):
 def property_detail(request, slug):
     property_obj = get_object_or_404(Property, slug=slug)
     company = get_company_info()
+    from realtor_project.features import is_feature_enabled
     return render(
         request,
         "properties/detail.html",
         {
             "property": property_obj,
             "company": company,
+            "captcha_test_mode": is_feature_enabled("CAPTCHA_TEST_MODE", default=False),
         },
     )
 
@@ -120,17 +123,97 @@ def create_inquiry(request):
 
     property_id = request.POST.get("property_id")
     property_obj = get_object_or_404(Property, pk=property_id)
+    form_source = request.POST.get("form_source", "Unknown Form")
+    
+    from properties.utils.lead_validation import LeadValidator
+    from content.views import send_rfq_notification
+    from realtor_project.features import is_feature_enabled
+    
+    from content.security.spam_protection import SpamProtectionService
+    
+    # Run centralized spam protection service
+    spam_service = SpamProtectionService(request)
+    spam_result = spam_service.validate(form_source)
+    
+    if not spam_result.passed:
+        if spam_result.rate_limited:
+            from django.http import HttpResponse
+            return HttpResponse("Too Many Requests", status=429)
+        
+        if spam_result.error_message:
+            messages.error(request, spam_result.error_message)
+            
+        return render(request, "properties/detail.html", {
+            "property": property_obj,
+            "company": get_company_info(),
+            "prefilled_name": request.POST.get("name", ""),
+            "prefilled_email": request.POST.get("email", ""),
+            "prefilled_phone": request.POST.get("phone", ""),
+            "prefilled_message": request.POST.get("message", ""),
+        })
+        
+    validator = LeadValidator(request, request.POST)
+    assessment = validator.validate()
+    
+    # Apply captcha confidence boost if successfully passed
+    if spam_result.confidence_boost:
+        assessment['confidence_score'] = max(0, min(100, assessment['confidence_score'] + spam_result.confidence_boost))
+        ranges = validator.config.get('RANGES', {})
+        score = assessment['confidence_score']
+        if score >= ranges.get('LIKELY_GENUINE', 90):
+            assessment['assessment_status'] = "Likely Genuine"
+        elif score >= ranges.get('GENUINE', 70):
+            assessment['assessment_status'] = "Genuine"
+        elif score >= ranges.get('REVIEW_RECOMMENDED', 40):
+            assessment['assessment_status'] = "Review Recommended"
+        else:
+            assessment['assessment_status'] = "Likely Spam"
 
     try:
-        Inquiry.objects.create(
+        # Capture UTM parameters, Referrer, and Landing page for attribution
+        utm_source = request.POST.get("utm_source", "").strip()
+        utm_medium = request.POST.get("utm_medium", "").strip()
+        utm_campaign = request.POST.get("utm_campaign", "").strip()
+        utm_term = request.POST.get("utm_term", "").strip()
+        utm_content = request.POST.get("utm_content", "").strip()
+        referrer = request.POST.get("referrer", "").strip()
+        landing_page = request.POST.get("landing_page", "").strip()
+
+        msg_body = request.POST.get("message", "").strip()
+        attribution_lines = []
+        if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
+        if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
+        if utm_campaign: attribution_lines.append(f"UTM Campaign: {utm_campaign}")
+        if utm_term: attribution_lines.append(f"UTM Term: {utm_term}")
+        if utm_content: attribution_lines.append(f"UTM Content: {utm_content}")
+        if referrer: attribution_lines.append(f"Referrer: {referrer}")
+        if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
+
+        if attribution_lines:
+            msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+
+        inquiry = Inquiry.objects.create(
             property=property_obj,
             name=request.POST.get("name", "").strip(),
             email=request.POST.get("email", "").strip(),
             phone=request.POST.get("phone", "").strip(),
-            message=request.POST.get("message", "").strip(),
+            message=msg_body,
+            form_source=form_source,
+            confidence_score=assessment['confidence_score'],
+            assessment_status=assessment['assessment_status'],
+            validation_summary=assessment['validation_summary']
         )
+        
+        # Send notifications (emails to both ids, and WhatsApp notification)
+        try:
+            send_rfq_notification(inquiry, form_source=form_source)
+        except Exception as email_exc:
+            logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
+            # Don't fail the request if email fails
+
         messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
-    except Exception:
+    except Exception as exc:
+        logger.exception("Error processing property inquiry: %s", exc)
         messages.error(
             request,
             "There was an error submitting your inquiry. Please try again or call us directly.",
@@ -298,6 +381,31 @@ def inquiry_delete(request, inquiry_id):
 
 
 @inquiries_staff_required
+def inquiry_replies(request, inquiry_id):
+    """Return all sent replies for a given inquiry as JSON."""
+    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
+    replies = (
+        InquiryReply.objects
+        .filter(inquiry=inquiry)
+        .order_by("sent_at")
+        .values("id", "to_email", "cc", "subject", "body", "sent_at", "sent_by__username")
+    )
+    data = [
+        {
+            "id": r["id"],
+            "to_email": r["to_email"],
+            "cc": r["cc"],
+            "subject": r["subject"],
+            "body": r["body"],
+            "sent_at": r["sent_at"].strftime("%d %b %Y, %H:%M") if r["sent_at"] else "",
+            "sent_by": r["sent_by__username"] or "system",
+        }
+        for r in replies
+    ]
+    return JsonResponse({"replies": data})
+
+
+@inquiries_staff_required
 @require_POST
 def inquiry_send_reply(request):
     try:
@@ -353,6 +461,17 @@ def inquiry_send_reply(request):
         logger.exception("Inquiry reply email failed")
         return JsonResponse({"error": "Could not send email. Check SMTP configuration."}, status=500)
 
+    # ── Persist the reply for audit trail ─────────────────────────────────────
+    if inquiry:
+        InquiryReply.objects.create(
+            inquiry=inquiry,
+            sent_by=request.user if request.user.is_authenticated else None,
+            to_email=to_email,
+            cc=", ".join(cc_list),
+            subject=subject,
+            body=body,
+        )
+
     updated_at = None
     if inquiry and inquiry.status == "pending":
         inquiry.status = "contacted"
@@ -370,3 +489,19 @@ def inquiry_send_reply(request):
 def inquiry_pending_count(request):
     count = Inquiry.objects.filter(status="pending").count()
     return JsonResponse({"count": count})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def inquiry_list_api(request):
+    """API endpoint for retrieving Sell inquiries."""
+    from django.db.models import Q
+    queryset = Inquiry.objects.filter(
+        Q(property__price_type="sale") |
+        Q(property__isnull=True, message__icontains="sell")
+    ).order_by("-created_at")
+    serializer = InquirySerializer(queryset, many=True)
+    return Response({
+        "items": serializer.data,
+        "total": len(serializer.data)
+    })

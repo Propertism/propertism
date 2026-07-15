@@ -46,13 +46,14 @@
 | 74 | July 08 | **realBOT TEASER REBRANDING & GLASSMORPHIC STYLING. Developed a premium, glassmorphic bouncing teaser speech bubble (`realbot-teaser-bubble`) styled with a translucent background, compact borders, centered horizontal layout, and mixed-case `"realBOT"` logo. Removed the `"BETA"` badge from the header and teaser card, and set the teaser to be permanently visible and toggle state in sync with the chatbot panel.** | ✅ |
 | 75 | July 09 | **realBOT HARDENING & FOOTER COMPACTNESS. Integrated Google reCAPTCHA v2 checkbox validation into the footer newsletter form and dynamic landing page lead form (lp_lead_form). Formatted the footer layout to render the email field full-width and aligned the reCAPTCHA widget and submit CTA side-by-side (78px matching heights) to preserve viewport compactness. Normalized tagline copy, corrected tag nesting, adjusted margins/padding to reclaim vertical white space, and verified all 358 unit tests passing successfully.** | ✅ |
 | 76 | July 09 | **realBOT INQUIRY CHIP FIX & SITE_URL HARDENING. Fixed the Track Inquiry Status suggestion chip target_action route from /dashboard/inquiries to /inquiries/ to prevent 404 errors. Hardened SITE_URL configuration in settings.py and settings_production.py to read from environment variables with fallback to canonical domain, adding it to .env and .env.example for local developer compatibility. Verified all 315 tests passing successfully.** | ✅ |
+| 77 | July 14 | **DEAL ENGINE INQUIRIES MODULE & BUYER DISCOVERY MODE SWITCH. Added Inquiries sidebar nav, dedicated view, and data table fetching Sell inquiries from Deal Engine REST API. Implemented AI Discovered / Web Inquiries radio toggle with independent lead/inquiry selectors, lead grid view (cards), and inquiry grid view (cards). Built inquiry-aware lead selection (inquiry: prefix), automatic buyer discovery search on inquiry selection, and synced dropdown state. Refactored buyer discovery results to responsive table with category badges, contact info, status dropdown, and action icons. Added buyer details modal overlay. Moved Serper quota indicator from community-discovery header to sidebar widget with collapse support.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 09, 2026 (10:40 IST)
-**Last Update**: SESSION 76 — realBOT INQUIRY CHIP FIX & SITE_URL HARDENING.
+**Last Updated On**: July 14, 2026 (11:45 IST)
+**Last Update**: SESSION 77 — DEAL ENGINE INQUIRIES MODULE & BUYER DISCOVERY MODE SWITCH.
 
 ---
 

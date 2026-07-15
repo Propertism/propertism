@@ -579,10 +579,9 @@ class ContactInquiry(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     
     SERVICE_CHOICES = [
-        ('buy-sell', 'Sell my Chennai property'),
-        ('rental', 'Rent it out and earn income'),
-        ('industrial', 'Full property management'),
-        ('consultation', 'I need advice first (not sure)'),
+        ('buy-sell', 'Sell'),
+        ('rental', 'Rent'),
+        ('industrial', 'Manage'),
     ]
     service = models.CharField(max_length=20, choices=SERVICE_CHOICES, blank=True)
     

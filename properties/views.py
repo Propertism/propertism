@@ -18,14 +18,15 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from content.site_context import get_company_info, get_home_section_links
 
 from .models import Inquiry, InquiryReply, Property
-from .serializers import PropertySerializer
+from .serializers import InquirySerializer, PropertySerializer
 
 logger = logging.getLogger(__name__)
 
@@ -178,7 +179,36 @@ def create_inquiry(request):
         referrer = request.POST.get("referrer", "").strip()
         landing_page = request.POST.get("landing_page", "").strip()
 
+        user_role = request.POST.get("user_role", "").strip()
+        nri_status = request.POST.get("nri_status", "").strip()
+        contact_preference = request.POST.get("contact_preference", "").strip()
+
         msg_body = request.POST.get("message", "").strip()
+        
+        additional_lines = []
+        role_map = {
+            "owner": "Property Owner",
+            "buyer": "Buyer / Tenant",
+            "broker": "Agent / Broker"
+        }
+        if user_role:
+            role_label = role_map.get(user_role, user_role)
+            additional_lines.append(f"User Role: {role_label}")
+        if nri_status:
+            additional_lines.append(f"NRI Status: {nri_status}")
+        if contact_preference:
+            pref_map = {
+                "whatsapp": "WhatsApp Message",
+                "phone": "Direct Phone Call",
+                "email": "Email Only"
+            }
+            pref_label = pref_map.get(contact_preference, contact_preference)
+            additional_lines.append(f"Preferred Contact Mode: {pref_label}")
+            
+        if additional_lines:
+            msg_body += "\n\n--- Additional Details ---\n" + "\n".join(additional_lines)
+
+        msg_body_with_attribution = msg_body
         attribution_lines = []
         if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
         if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
@@ -189,15 +219,20 @@ def create_inquiry(request):
         if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
 
         if attribution_lines:
-            msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+            msg_body_with_attribution += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
 
         inquiry = Inquiry.objects.create(
             property=property_obj,
             name=request.POST.get("name", "").strip(),
             email=request.POST.get("email", "").strip(),
             phone=request.POST.get("phone", "").strip(),
-            message=msg_body,
+            message=msg_body_with_attribution,
             form_source=form_source,
+            service_needed="buy-sell" if property_obj.price_type == "sale" else "rental",
+            property_type=property_obj.property_type.slug if property_obj.property_type else "",
+            locality=property_obj.location,
+            user_role=user_role,
+            nri_status=nri_status,
             confidence_score=assessment['confidence_score'],
             assessment_status=assessment['assessment_status'],
             validation_summary=assessment['validation_summary']
@@ -488,3 +523,21 @@ def inquiry_send_reply(request):
 def inquiry_pending_count(request):
     count = Inquiry.objects.filter(status="pending").count()
     return JsonResponse({"count": count})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def inquiry_list_api(request):
+    """API endpoint for retrieving Sell inquiries."""
+    from django.db.models import Q
+    queryset = Inquiry.objects.filter(
+        Q(property__price_type="sale") |
+        Q(property__isnull=True, message__icontains="sell") |
+        Q(message__icontains="rent") |
+        Q(message__icontains="manage")
+    ).order_by("-created_at")
+    serializer = InquirySerializer(queryset, many=True)
+    return Response({
+        "items": serializer.data,
+        "total": len(serializer.data)
+    })
