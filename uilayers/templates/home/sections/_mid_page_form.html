@@ -348,16 +348,20 @@
                 <div class="hf-field-row" style="margin-top: 20px;">
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">Locality / Area <span style="color: #ff4d4d;">*</span></label>
-                        <select class="hf-field-input" name="locality" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
-                            <option value="" disabled selected>Select Locality / Area</option>
-                            {% for value, label in contact_locality_choices %}
-                            <option value="{{ value }}">{{ label }}</option>
-                            {% endfor %}
-                        </select>
+                        <select class="hf-field-select" name="locality" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
+                                                    <option value="" disabled selected>Select Locality / Area</option>
+                                                    {% for group_name, group_choices in contact_locality_choices %}
+                                                    <optgroup label="{{ group_name }}">
+                                                        {% for value, label in group_choices %}
+                                                        <option value="{{ value }}">{{ label }}</option>
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                    {% endfor %}
+                                                </select>
                     </div>
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">Property Type <span style="color: #ff4d4d;">*</span></label>
-                        <select class="hf-field-input" name="property_type" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
+                        <select class="hf-field-select" name="property_type" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                             <option value="" disabled selected>Select Type</option>
                             <option value="apartment">Apartment</option>
                             <option value="villa">Villa</option>
@@ -368,7 +372,7 @@
                     </div>
                     <div class="hf-field-group" style="margin-bottom: 0 !important;">
                         <label class="hf-field-label">I am the <span style="color: #ff4d4d;">*</span></label>
-                        <select class="hf-field-input" name="user_role" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
+                        <select class="hf-field-select" name="user_role" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                             <option value="" disabled selected>Select Role</option>
                             <option value="owner">Property Owner</option>
                             <option value="buyer">Buyer / Tenant</option>

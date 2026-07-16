@@ -429,8 +429,8 @@ def contact(request):
                 property_label = property_map.get(property_type, property_type)
                 additional_lines.append(f"Property Type: {property_label}")
             if locality:
-                from .site_context import get_contact_locality_choices
-                locality_map = dict(get_contact_locality_choices())
+                from content.locality_registry import get_dropdown_choices
+                locality_map = dict(get_dropdown_choices())
                 locality_label = locality_map.get(locality, locality)
                 additional_lines.append(f"Locality/Area: {locality_label}")
             

@@ -286,17 +286,11 @@ PROPERTY_TYPE_KEYWORDS = {
 
 # ── Chennai area / preferred location keywords ────────────────────────────────
 
-CHENNAI_LOCATION_KEYWORDS = [
-    'anna nagar', 't.nagar', 't nagar', 'tnagar', 'adyar', 'omr', 'ecr',
-    'velachery', 'porur', 'perambur', 'mylapore', 'triplicane', 'nungambakkam',
-    'kilpauk', 'egmore', 'royapettah', 'alwarpet', 'boat club', 'poes garden',
-    'kotturpuram', 'besant nagar', 'thiruvanmiyur', 'sholinganallur',
-    'perungudi', 'taramani', 'medavakkam', 'pallikaranai', 'chromepet',
-    'tambaram', 'pallavaram', 'guindy', 'saidapet', 'vadapalani',
-    'koyambedu', 'ambattur', 'avadi', 'poonamallee', 'maduravoyal',
-    'mogappair', 'kolathur', 'villivakkam', 'madhavaram', 'manali',
-    'thiruvottiyur', 'ennore', 'tondiarpet', 'royapuram', 'washermanpet',
-]
+from content.locality_registry import get_extraction_keywords
+
+# CHENNAI_LOCATION_KEYWORDS is now derived from LOCALITY_REGISTRY (canonical source).
+# DO NOT hardcode locality lists here — edit content/locality_registry.py instead.
+CHENNAI_LOCATION_KEYWORDS = get_extraction_keywords()
 
 # ── Timeline keywords ─────────────────────────────────────────────────────────
 

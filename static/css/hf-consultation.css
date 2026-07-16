@@ -170,9 +170,17 @@
   color: rgba(240,234,216,0.28) !important;
 }
 .hf-field-select.has-value { color: #f0ead8 !important; }
+.hf-field-input option,
 .hf-field-select option {
   background: #121829 !important;
   color: #f0ead8 !important;
+}
+.hf-field-input optgroup,
+.hf-field-select optgroup {
+  background: #121829 !important;
+  color: #d8b56a !important;
+  font-style: normal;
+  font-weight: 600;
 }
 .hf-field-textarea {
   resize: none !important;

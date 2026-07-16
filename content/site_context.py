@@ -118,46 +118,10 @@ def get_contact_property_choices():
 
 
 def get_contact_locality_choices():
+    from content.locality_registry import ZONE_DISPLAY_NAMES, get_dropdown_grouped
+
     return [
-        # Central Chennai
-        ("adyar", "Adyar, Chennai"),
-        ("besant-nagar", "Besant Nagar, Chennai"),
-        ("mylapore", "Mylapore, Chennai"),
-        ("t-nagar", "T. Nagar, Chennai"),
-        ("nungambakkam", "Nungambakkam, Chennai"),
-        ("alwarpet", "Alwarpet, Chennai"),
-        # OMR
-        ("perungudi", "Perungudi (OMR), Chennai"),
-        ("thoraipakkam", "Thoraipakkam (OMR), Chennai"),
-        ("sholinganallur", "Sholinganallur (OMR), Chennai"),
-        ("navalur", "Navalur (OMR), Chennai"),
-        ("padur", "Padur (OMR), Chennai"),
-        ("kelambakkam", "Kelambakkam (OMR), Chennai"),
-        # ECR
-        ("palavakkam", "Palavakkam (ECR), Chennai"),
-        ("neelankarai", "Neelankarai (ECR), Chennai"),
-        ("akkarai", "Akkarai (ECR), Chennai"),
-        ("uthandi", "Uthandi (ECR), Chennai"),
-        # South Chennai
-        ("velachery", "Velachery, Chennai"),
-        ("nanganallur", "Nanganallur, Chennai"),
-        ("madipakkam", "Madipakkam, Chennai"),
-        ("chromepet", "Chromepet, Chennai"),
-        ("tambaram", "Tambaram, Chennai"),
-        ("pallavaram", "Pallavaram, Chennai"),
-        # West Chennai
-        ("anna-nagar", "Anna Nagar, Chennai"),
-        ("mogappair", "Mogappair, Chennai"),
-        ("porur", "Porur, Chennai"),
-        ("poonamallee", "Poonamallee, Chennai"),
-        ("guindy", "Guindy, Chennai"),
-        # North Chennai
-        ("kolathur", "Kolathur, Chennai"),
-        ("madhavaram", "Madhavaram, Chennai"),
-        ("perambur", "Perambur, Chennai"),
-        # Rest of TN
-        ("coimbatore", "Coimbatore"),
-        ("madurai", "Madurai"),
-        ("trichy", "Trichy"),
-        ("salem", "Salem"),
+        (ZONE_DISPLAY_NAMES.get(zone, zone.replace("-", " ").title()), choices)
+        for zone, choices in get_dropdown_grouped().items()
+        if choices
     ]

@@ -195,9 +195,9 @@
     "semantic_hash": "0bf11159e277c738c8066152d82a2c0d"
   },
   "chat/inquiry_fields.py": {
-    "mtime": 1784197025.502692,
-    "ast_hash": "19d3885860e41e27e9fa99e2d6e01832",
-    "semantic_hash": ""
+    "mtime": 1783569294.923669,
+    "ast_hash": "a085f094bbfb3f0ccbcfc61d7ce3bb87",
+    "semantic_hash": "a085f094bbfb3f0ccbcfc61d7ce3bb87"
   },
   "chat/inquiry_submission.py": {
     "mtime": 1783430834.3600929,
@@ -1000,8 +1000,8 @@
     "semantic_hash": "b3260399cc594882d9e6465fa43de899"
   },
   "content/site_context.py": {
-    "mtime": 1784213680.5744424,
-    "ast_hash": "efe418237c3cf27c49453b49dd105363",
+    "mtime": 1784038283.7739367,
+    "ast_hash": "2cdb90474955db6ecbd2ad15ff8a0d01",
     "semantic_hash": ""
   },
   "content/sitemaps.py": {
@@ -1035,8 +1035,8 @@
     "semantic_hash": "504787a596bc1fa6f2d73f60016f0043"
   },
   "content/views.py": {
-    "mtime": 1784202486.239093,
-    "ast_hash": "c7a28f0cdbf320cf1234f3987d0127b6",
+    "mtime": 1784046755.921548,
+    "ast_hash": "56c4f2aaac289277c8aea2eea0db8514",
     "semantic_hash": ""
   },
   "content/views_landing.py": {
@@ -2879,6 +2879,11 @@
     "ast_hash": "eb36cd59cb78230cda873efa5c3a2353",
     "semantic_hash": ""
   },
+  "AGENTS.md": {
+    "mtime": 1783414694.661245,
+    "ast_hash": "b34ae4de01995a53ba437d6abe672bef",
+    "semantic_hash": ""
+  },
   "AWS-post-deploy-fixes.md": {
     "mtime": 1782734389.84421,
     "ast_hash": "ef48f43c6b660d68285ba540a5a0acdf",
@@ -3625,8 +3630,8 @@
     "semantic_hash": ""
   },
   "uilayers/templates/contact.html": {
-    "mtime": 1784218474.981672,
-    "ast_hash": "3d06b43f999e3b1d1bdd2b0f54c84667",
+    "mtime": 1784039098.1710618,
+    "ast_hash": "d2d784edacdd06c399c7fcc9e8eb5122",
     "semantic_hash": ""
   },
   "uilayers/templates/emails/base_executive.html": {
@@ -3650,8 +3655,8 @@
     "semantic_hash": ""
   },
   "uilayers/templates/home/sections/_contact.html": {
-    "mtime": 1784218467.5583866,
-    "ast_hash": "84c105a31ed133cd2fc9d42133dcd203",
+    "mtime": 1784038300.434919,
+    "ast_hash": "39cce2628fa4d355ba6a7e63fc6709b6",
     "semantic_hash": ""
   },
   "uilayers/templates/home/sections/_custom_cards.html": {
@@ -3680,8 +3685,8 @@
     "semantic_hash": ""
   },
   "uilayers/templates/home/sections/_mid_page_form.html": {
-    "mtime": 1784218755.043193,
-    "ast_hash": "5e30d1f00dcd02ff40e3d3621d9ecc02",
+    "mtime": 1784039110.9859633,
+    "ast_hash": "16dbcc0d8facc9558ba34f4c369b9e05",
     "semantic_hash": ""
   },
   "uilayers/templates/home/sections/_properties.html": {
@@ -4532,41 +4537,6 @@
   "content/migrations/0023_alter_contactinquiry_service.py": {
     "mtime": 1784047010.2283328,
     "ast_hash": "82bafdc84e61a1c312414dfa3cf182e7",
-    "semantic_hash": ""
-  },
-  "content/locality_registry.py": {
-    "mtime": 1784213680.5740094,
-    "ast_hash": "4076f3ff954336f39add10ef3b5fd393",
-    "semantic_hash": ""
-  },
-  "generate_locality_json.py": {
-    "mtime": 1784197041.919738,
-    "ast_hash": "6d4830c5d9fd98aebec58aff3c7ae889",
-    "semantic_hash": ""
-  },
-  "locality_registry.json": {
-    "mtime": 1784213680.6808891,
-    "ast_hash": "9e3d23f711f78da66432514023a2b238",
-    "semantic_hash": ""
-  },
-  "backend_saved_search.txt": {
-    "mtime": 1784093020.0400362,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
-  "buyer_discovery_routes.txt": {
-    "mtime": 1784093000.3009787,
-    "ast_hash": "88ac538d29f75922babf6d60e5e1ed52",
-    "semantic_hash": ""
-  },
-  "funcs.txt": {
-    "mtime": 1784092919.2255967,
-    "ast_hash": "28bff4d0c5f01cd65d60dec2a4885a46",
-    "semantic_hash": ""
-  },
-  "saved_search.txt": {
-    "mtime": 1784092970.2537234,
-    "ast_hash": "ae18721a9409c85a0a8768c5a3690e00",
     "semantic_hash": ""
   }
 }

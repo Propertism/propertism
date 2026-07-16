@@ -433,7 +433,7 @@
                             </div>
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Service Needed <span style="color: #ff4d4d;">*</span></label>
-                                <select class="hf-field-select" name="service" required style="height: 48px !important;">
+                                <select class="hf-field-select" name="service" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                                     <option value="" disabled {% if not prefilled_service %}selected{% endif %}>Select Service Needed</option>
                                     {% for value, label in contact_service_choices %}
                                     <option value="{{ value }}" {% if prefilled_service == value %}selected{% endif %}>{{ label }}</option>
@@ -445,16 +445,20 @@
                         <div class="hf-field-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Locality / Area <span style="color: #ff4d4d;">*</span></label>
-                                <select class="hf-field-select" name="locality" required style="height: 48px !important;">
+                                <select class="hf-field-select" name="locality" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                                     <option value="" disabled selected>Select Locality / Area</option>
-                                    {% for value, label in contact_locality_choices %}
-                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% for group_name, group_choices in contact_locality_choices %}
+                                    <optgroup label="{{ group_name }}">
+                                        {% for value, label in group_choices %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </optgroup>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="hf-field-group">
                                 <label class="hf-field-label">Property Type <span style="color: #ff4d4d;">*</span></label>
-                                <select class="hf-field-select" name="property_type" required style="height: 48px !important;">
+                                <select class="hf-field-select" name="property_type" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                                     <option value="" disabled selected>Select Property Type</option>
                                     <option value="apartment">Apartment</option>
                                     <option value="villa">Villa</option>
@@ -465,7 +469,7 @@
                             </div>
                             <div class="hf-field-group">
                                 <label class="hf-field-label">I am the <span style="color: #ff4d4d;">*</span></label>
-                                <select class="hf-field-select" name="user_role" required style="height: 48px !important;">
+                                <select class="hf-field-select" name="user_role" required style="height: 48px !important; background-color: #0b0f1a; border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding-left: 12px; cursor: pointer;">
                                     <option value="" disabled selected>Select Role</option>
                                     <option value="owner">Property Owner</option>
                                     <option value="buyer">Buyer / Tenant</option>

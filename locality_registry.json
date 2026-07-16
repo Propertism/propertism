@@ -1,0 +1,1424 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "source": "content/locality_registry.py",
+    "description": "Canonical locality registry. Edit locality_registry.py, not this JSON.",
+    "dropdown_count": 90,
+    "extraction_keyword_count": 223
+  },
+  "registry": [
+    {
+      "slug": "adyar",
+      "display": "Adyar, Chennai",
+      "zone": "central",
+      "aliases": [
+        "adyar",
+        "gandhi nagar adyar",
+        "kasturibai nagar adyar",
+        "adyar gandhi nagar"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Adyar"
+    },
+    {
+      "slug": "besant-nagar",
+      "display": "Besant Nagar, Chennai",
+      "zone": "central",
+      "aliases": [
+        "besant nagar",
+        "besantnagar",
+        "elliots beach"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Besant Nagar"
+    },
+    {
+      "slug": "mylapore",
+      "display": "Mylapore, Chennai",
+      "zone": "central",
+      "aliases": [
+        "mylapore",
+        "mylapore chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Mylapore"
+    },
+    {
+      "slug": "t-nagar",
+      "display": "T. Nagar, Chennai",
+      "zone": "central",
+      "aliases": [
+        "t.nagar",
+        "t nagar",
+        "tnagar",
+        "thyagaraya nagar"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "T. Nagar"
+    },
+    {
+      "slug": "nungambakkam",
+      "display": "Nungambakkam, Chennai",
+      "zone": "central",
+      "aliases": [
+        "nungambakkam",
+        "nungambakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Nungambakkam"
+    },
+    {
+      "slug": "alwarpet",
+      "display": "Alwarpet, Chennai",
+      "zone": "central",
+      "aliases": [
+        "alwarpet",
+        "alwarpet chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Alwarpet"
+    },
+    {
+      "slug": "triplicane",
+      "display": "Triplicane, Chennai",
+      "zone": "central",
+      "aliases": [
+        "triplicane",
+        "thiruvallikeni"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Triplicane"
+    },
+    {
+      "slug": "kilpauk",
+      "display": "Kilpauk, Chennai",
+      "zone": "central",
+      "aliases": [
+        "kilpauk",
+        "kilpauk chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kilpauk"
+    },
+    {
+      "slug": "egmore",
+      "display": "Egmore, Chennai",
+      "zone": "central",
+      "aliases": [
+        "egmore",
+        "ezhumur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Egmore"
+    },
+    {
+      "slug": "royapettah",
+      "display": "Royapettah, Chennai",
+      "zone": "central",
+      "aliases": [
+        "royapettah",
+        "royapet"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Royapettah"
+    },
+    {
+      "slug": "teynampet",
+      "display": "Teynampet, Chennai",
+      "zone": "central",
+      "aliases": [
+        "teynampet",
+        "teynampet chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Teynampet"
+    },
+    {
+      "slug": "r-a-puram",
+      "display": "R.A. Puram, Chennai",
+      "zone": "central",
+      "aliases": [
+        "r a puram",
+        "ra puram",
+        "rajarathnam puram"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "R.A. Puram"
+    },
+    {
+      "slug": "poes-garden",
+      "display": "Poes Garden, Chennai",
+      "zone": "central",
+      "aliases": [
+        "poes garden",
+        "poes garden chennai"
+      ],
+      "show_in_dropdown": false,
+      "short_display": "Poes Garden"
+    },
+    {
+      "slug": "boat-club",
+      "display": "Boat Club, Chennai",
+      "zone": "central",
+      "aliases": [
+        "boat club",
+        "boat club chennai"
+      ],
+      "show_in_dropdown": false,
+      "short_display": "Boat Club"
+    },
+    {
+      "slug": "kotturpuram",
+      "display": "Kotturpuram, Chennai",
+      "zone": "central",
+      "aliases": [
+        "kotturpuram",
+        "kottur",
+        "kottur garden"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kotturpuram"
+    },
+    {
+      "slug": "purasaiwalkam",
+      "display": "Purasaiwalkam, Chennai",
+      "zone": "central",
+      "aliases": [
+        "purasaiwalkam",
+        "purasawalkam",
+        "purasai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Purasaiwalkam"
+    },
+    {
+      "slug": "gopalapuram",
+      "display": "Gopalapuram, Chennai",
+      "zone": "central",
+      "aliases": [
+        "gopalapuram",
+        "gopalapuram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Gopalapuram"
+    },
+    {
+      "slug": "chetpet",
+      "display": "Chetpet, Chennai",
+      "zone": "central",
+      "aliases": [
+        "chetpet",
+        "chetpet chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Chetpet"
+    },
+    {
+      "slug": "kodambakkam",
+      "display": "Kodambakkam, Chennai",
+      "zone": "central",
+      "aliases": [
+        "kodambakkam",
+        "kodambakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kodambakkam"
+    },
+    {
+      "slug": "choolaimedu",
+      "display": "Choolaimedu, Chennai",
+      "zone": "central",
+      "aliases": [
+        "choolaimedu",
+        "choolaimedu chennai",
+        "chaimedu"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Choolaimedu"
+    },
+    {
+      "slug": "west-mambalam",
+      "display": "West Mambalam, Chennai",
+      "zone": "central",
+      "aliases": [
+        "west mambalam",
+        "mambalam",
+        "west mambalam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "West Mambalam"
+    },
+    {
+      "slug": "perungudi",
+      "display": "Perungudi (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "perungudi",
+        "omr perungudi"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Perungudi (OMR)"
+    },
+    {
+      "slug": "thoraipakkam",
+      "display": "Thoraipakkam (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "thoraipakkam",
+        "thoraipakam",
+        "thoraipakkam omr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Thoraipakkam (OMR)"
+    },
+    {
+      "slug": "sholinganallur",
+      "display": "Sholinganallur (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "sholinganallur",
+        "sholinganallor",
+        "omr sholinganallur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Sholinganallur (OMR)"
+    },
+    {
+      "slug": "navalur",
+      "display": "Navalur (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "navalur",
+        "navalur omr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Navalur (OMR)"
+    },
+    {
+      "slug": "padur",
+      "display": "Padur (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "padur",
+        "padur omr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Padur (OMR)"
+    },
+    {
+      "slug": "kelambakkam",
+      "display": "Kelambakkam (OMR), Chennai",
+      "zone": "omr",
+      "aliases": [
+        "kelambakkam",
+        "kelambakam",
+        "omr kelambakkam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kelambakkam (OMR)"
+    },
+    {
+      "slug": "taramani",
+      "display": "Taramani, Chennai",
+      "zone": "omr",
+      "aliases": [
+        "taramani",
+        "taramani omr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Taramani"
+    },
+    {
+      "slug": "palavakkam",
+      "display": "Palavakkam (ECR), Chennai",
+      "zone": "ecr",
+      "aliases": [
+        "palavakkam",
+        "palavakkam ecr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Palavakkam (ECR)"
+    },
+    {
+      "slug": "neelankarai",
+      "display": "Neelankarai (ECR), Chennai",
+      "zone": "ecr",
+      "aliases": [
+        "neelankarai",
+        "neelangarai",
+        "neelankarai ecr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Neelankarai (ECR)"
+    },
+    {
+      "slug": "akkarai",
+      "display": "Akkarai (ECR), Chennai",
+      "zone": "ecr",
+      "aliases": [
+        "akkarai",
+        "akkarai ecr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Akkarai (ECR)"
+    },
+    {
+      "slug": "uthandi",
+      "display": "Uthandi (ECR), Chennai",
+      "zone": "ecr",
+      "aliases": [
+        "uthandi",
+        "uthandi ecr"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Uthandi (ECR)"
+    },
+    {
+      "slug": "injambakkam",
+      "display": "Injambakkam (ECR), Chennai",
+      "zone": "ecr",
+      "aliases": [
+        "injambakkam",
+        "injambakkam ecr",
+        "inja"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Injambakkam (ECR)"
+    },
+    {
+      "slug": "velachery",
+      "display": "Velachery, Chennai",
+      "zone": "south",
+      "aliases": [
+        "velachery",
+        "velachery chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Velachery"
+    },
+    {
+      "slug": "nanganallur",
+      "display": "Nanganallur, Chennai",
+      "zone": "south",
+      "aliases": [
+        "nanganallur",
+        "nanganallur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Nanganallur"
+    },
+    {
+      "slug": "madipakkam",
+      "display": "Madipakkam, Chennai",
+      "zone": "south",
+      "aliases": [
+        "madipakkam",
+        "madipakkam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Madipakkam"
+    },
+    {
+      "slug": "chromepet",
+      "display": "Chromepet, Chennai",
+      "zone": "south",
+      "aliases": [
+        "chromepet",
+        "chrome pet",
+        "chrompet"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Chromepet"
+    },
+    {
+      "slug": "tambaram",
+      "display": "Tambaram, Chennai",
+      "zone": "south",
+      "aliases": [
+        "tambaram",
+        "tambarm",
+        "tambaram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Tambaram"
+    },
+    {
+      "slug": "pallavaram",
+      "display": "Pallavaram, Chennai",
+      "zone": "south",
+      "aliases": [
+        "pallavaram",
+        "pallavaram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Pallavaram"
+    },
+    {
+      "slug": "saidapet",
+      "display": "Saidapet, Chennai",
+      "zone": "south",
+      "aliases": [
+        "saidapet",
+        "saidapet chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Saidapet"
+    },
+    {
+      "slug": "medavakkam",
+      "display": "Medavakkam, Chennai",
+      "zone": "south",
+      "aliases": [
+        "medavakkam",
+        "medavakkam chennai",
+        "medavakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Medavakkam"
+    },
+    {
+      "slug": "pallikaranai",
+      "display": "Pallikaranai, Chennai",
+      "zone": "south",
+      "aliases": [
+        "pallikaranai",
+        "pallikarani",
+        "pallikaranai chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Pallikaranai"
+    },
+    {
+      "slug": "perumbakkam",
+      "display": "Perumbakkam, Chennai",
+      "zone": "south",
+      "aliases": [
+        "perumbakkam",
+        "perumbakkam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Perumbakkam"
+    },
+    {
+      "slug": "semmancheri",
+      "display": "Semmancheri, Chennai",
+      "zone": "south",
+      "aliases": [
+        "semmancheri",
+        "semmancheri chennai",
+        "semanchheri"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Semmancheri"
+    },
+    {
+      "slug": "adambakkam",
+      "display": "Adambakkam, Chennai",
+      "zone": "south",
+      "aliases": [
+        "adambakkam",
+        "adambakkam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Adambakkam"
+    },
+    {
+      "slug": "thiruvanmiyur",
+      "display": "Thiruvanmiyur, Chennai",
+      "zone": "south",
+      "aliases": [
+        "thiruvanmiyur",
+        "thiruvanmyur",
+        "thiruvamiyur",
+        "tiruvanmiyur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Thiruvanmiyur"
+    },
+    {
+      "slug": "indira-nagar",
+      "display": "Indira Nagar, Chennai",
+      "zone": "south",
+      "aliases": [
+        "indira nagar",
+        "indiranagar",
+        "indira nagar chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Indira Nagar"
+    },
+    {
+      "slug": "selaiyur",
+      "display": "Selaiyur, Chennai",
+      "zone": "south",
+      "aliases": [
+        "selaiyur",
+        "selaiyur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Selaiyur"
+    },
+    {
+      "slug": "perungalathur",
+      "display": "Perungalathur, Chennai",
+      "zone": "south",
+      "aliases": [
+        "perungalathur",
+        "peungalathur",
+        "perungalathur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Perungalathur"
+    },
+    {
+      "slug": "vandalur",
+      "display": "Vandalur, Chennai",
+      "zone": "south",
+      "aliases": [
+        "vandalur",
+        "vandalur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Vandalur"
+    },
+    {
+      "slug": "keelkattalai",
+      "display": "Keelkattalai, Chennai",
+      "zone": "south",
+      "aliases": [
+        "keelkattalai",
+        "kilkattalai",
+        "keelkatalai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Keelkattalai"
+    },
+    {
+      "slug": "kovilambakkam",
+      "display": "Kovilambakkam, Chennai",
+      "zone": "south",
+      "aliases": [
+        "kovilambakkam",
+        "kovilambakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kovilambakkam"
+    },
+    {
+      "slug": "shastri-nagar",
+      "display": "Shastri Nagar, Chennai",
+      "zone": "south",
+      "aliases": [
+        "shastri nagar",
+        "shastrinagar"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Shastri Nagar"
+    },
+    {
+      "slug": "anna-nagar",
+      "display": "Anna Nagar, Chennai",
+      "zone": "west",
+      "aliases": [
+        "anna nagar",
+        "annanagar",
+        "anna nagar chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Anna Nagar"
+    },
+    {
+      "slug": "mogappair",
+      "display": "Mogappair, Chennai",
+      "zone": "west",
+      "aliases": [
+        "mogappair",
+        "mogapair",
+        "mogappair chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Mogappair"
+    },
+    {
+      "slug": "porur",
+      "display": "Porur, Chennai",
+      "zone": "west",
+      "aliases": [
+        "porur",
+        "porur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Porur"
+    },
+    {
+      "slug": "poonamallee",
+      "display": "Poonamallee, Chennai",
+      "zone": "west",
+      "aliases": [
+        "poonamallee",
+        "poonamalle",
+        "poona malaee"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Poonamallee"
+    },
+    {
+      "slug": "guindy",
+      "display": "Guindy, Chennai",
+      "zone": "west",
+      "aliases": [
+        "guindy",
+        "guindy chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Guindy"
+    },
+    {
+      "slug": "vadapalani",
+      "display": "Vadapalani, Chennai",
+      "zone": "west",
+      "aliases": [
+        "vadapalani",
+        "vadapalani chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Vadapalani"
+    },
+    {
+      "slug": "kk-nagar",
+      "display": "KK Nagar, Chennai",
+      "zone": "west",
+      "aliases": [
+        "kk nagar",
+        "k.k. nagar",
+        "k.k nagar",
+        "kknagar"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "KK Nagar"
+    },
+    {
+      "slug": "koyambedu",
+      "display": "Koyambedu, Chennai",
+      "zone": "west",
+      "aliases": [
+        "koyambedu",
+        "koyambedu chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Koyambedu"
+    },
+    {
+      "slug": "ambattur",
+      "display": "Ambattur, Chennai",
+      "zone": "west",
+      "aliases": [
+        "ambattur",
+        "ambattur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Ambattur"
+    },
+    {
+      "slug": "avadi",
+      "display": "Avadi, Chennai",
+      "zone": "west",
+      "aliases": [
+        "avadi",
+        "avadi chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Avadi"
+    },
+    {
+      "slug": "maduravoyal",
+      "display": "Maduravoyal, Chennai",
+      "zone": "west",
+      "aliases": [
+        "maduravoyal",
+        "maduravoyal chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Maduravoyal"
+    },
+    {
+      "slug": "ashok-nagar",
+      "display": "Ashok Nagar, Chennai",
+      "zone": "west",
+      "aliases": [
+        "ashok nagar",
+        "ashoknagar"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Ashok Nagar"
+    },
+    {
+      "slug": "virugambakkam",
+      "display": "Virugambakkam, Chennai",
+      "zone": "west",
+      "aliases": [
+        "virugambakkam",
+        "virugambakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Virugambakkam"
+    },
+    {
+      "slug": "valasaravakkam",
+      "display": "Valasaravakkam, Chennai",
+      "zone": "west",
+      "aliases": [
+        "valasaravakkam",
+        "valasaravakam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Valasaravakkam"
+    },
+    {
+      "slug": "ramapuram",
+      "display": "Ramapuram, Chennai",
+      "zone": "west",
+      "aliases": [
+        "ramapuram",
+        "ramapuram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Ramapuram"
+    },
+    {
+      "slug": "kolathur",
+      "display": "Kolathur, Chennai",
+      "zone": "north",
+      "aliases": [
+        "kolathur",
+        "kolathur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Kolathur"
+    },
+    {
+      "slug": "madhavaram",
+      "display": "Madhavaram, Chennai",
+      "zone": "north",
+      "aliases": [
+        "madhavaram",
+        "madhavaram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Madhavaram"
+    },
+    {
+      "slug": "perambur",
+      "display": "Perambur, Chennai",
+      "zone": "north",
+      "aliases": [
+        "perambur",
+        "perambur chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Perambur"
+    },
+    {
+      "slug": "villivakkam",
+      "display": "Villivakkam, Chennai",
+      "zone": "north",
+      "aliases": [
+        "villivakkam",
+        "villivakkam chennai",
+        "villiwakkam"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Villivakkam"
+    },
+    {
+      "slug": "manali",
+      "display": "Manali, Chennai",
+      "zone": "north",
+      "aliases": [
+        "manali",
+        "manali chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Manali"
+    },
+    {
+      "slug": "thiruvottiyur",
+      "display": "Thiruvottiyur, Chennai",
+      "zone": "north",
+      "aliases": [
+        "thiruvottiyur",
+        "tiruvottiyur",
+        "thiruvotriyur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Thiruvottiyur"
+    },
+    {
+      "slug": "ennore",
+      "display": "Ennore, Chennai",
+      "zone": "north",
+      "aliases": [
+        "ennore",
+        "ennore chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Ennore"
+    },
+    {
+      "slug": "tondiarpet",
+      "display": "Tondiarpet, Chennai",
+      "zone": "north",
+      "aliases": [
+        "tondiarpet",
+        "tondiarpet chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Tondiarpet"
+    },
+    {
+      "slug": "royapuram",
+      "display": "Royapuram, Chennai",
+      "zone": "north",
+      "aliases": [
+        "royapuram",
+        "royapuram chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Royapuram"
+    },
+    {
+      "slug": "washermanpet",
+      "display": "Washermanpet, Chennai",
+      "zone": "north",
+      "aliases": [
+        "washermanpet",
+        "washermanpet chennai",
+        "vannarapettai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Washermanpet"
+    },
+    {
+      "slug": "red-hills",
+      "display": "Red Hills, Chennai",
+      "zone": "north",
+      "aliases": [
+        "red hills",
+        "redhills"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Red Hills"
+    },
+    {
+      "slug": "vyasarpadi",
+      "display": "Vyasarpadi, Chennai",
+      "zone": "north",
+      "aliases": [
+        "vyasarpadi",
+        "vyasarpady"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Vyasarpadi"
+    },
+    {
+      "slug": "korukkupet",
+      "display": "Korukkupet, Chennai",
+      "zone": "north",
+      "aliases": [
+        "korukkupet",
+        "korukupet"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Korukkupet"
+    },
+    {
+      "slug": "coimbatore",
+      "display": "Coimbatore",
+      "zone": "tn",
+      "aliases": [
+        "coimbatore",
+        "kovai",
+        "coimbatore chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Coimbatore"
+    },
+    {
+      "slug": "madurai",
+      "display": "Madurai",
+      "zone": "tn",
+      "aliases": [
+        "madurai",
+        "madurai chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Madurai"
+    },
+    {
+      "slug": "trichy",
+      "display": "Trichy",
+      "zone": "tn",
+      "aliases": [
+        "trichy",
+        "tiruchirappalli",
+        "trichy chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Trichy"
+    },
+    {
+      "slug": "salem",
+      "display": "Salem",
+      "zone": "tn",
+      "aliases": [
+        "salem",
+        "salem chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Salem"
+    },
+    {
+      "slug": "sriperumbudur",
+      "display": "Sriperumbudur",
+      "zone": "tn",
+      "aliases": [
+        "sriperumbudur",
+        "sriperumbudur chennai",
+        "sriperumpudur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Sriperumbudur"
+    },
+    {
+      "slug": "thiruvallur",
+      "display": "Thiruvallur",
+      "zone": "tn",
+      "aliases": [
+        "thiruvallur",
+        "tiruvallur"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Thiruvallur"
+    },
+    {
+      "slug": "guduvanchery",
+      "display": "Guduvanchery",
+      "zone": "tn",
+      "aliases": [
+        "guduvanchery",
+        "guduvancheri",
+        "guduvancherry"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Guduvanchery"
+    },
+    {
+      "slug": "oragadam",
+      "display": "Oragadam",
+      "zone": "tn",
+      "aliases": [
+        "oragadam",
+        "oragadam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Oragadam"
+    },
+    {
+      "slug": "urapakkam",
+      "display": "Urapakkam",
+      "zone": "tn",
+      "aliases": [
+        "urapakkam",
+        "urapakam",
+        "urapakkam chennai"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Urapakkam"
+    },
+    {
+      "slug": "singaperumal-koil",
+      "display": "Singaperumal Koil",
+      "zone": "tn",
+      "aliases": [
+        "singaperumal koil",
+        "singaperumalkoil",
+        "sp koil"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Singaperumal Koil"
+    },
+    {
+      "slug": "other",
+      "display": "Other, please specify",
+      "zone": "other",
+      "aliases": [
+        "other",
+        "others"
+      ],
+      "show_in_dropdown": true,
+      "short_display": "Other, please specify"
+    }
+  ],
+  "dropdown_choices": [
+    {
+      "slug": "adyar",
+      "display": "Adyar, Chennai"
+    },
+    {
+      "slug": "besant-nagar",
+      "display": "Besant Nagar, Chennai"
+    },
+    {
+      "slug": "mylapore",
+      "display": "Mylapore, Chennai"
+    },
+    {
+      "slug": "t-nagar",
+      "display": "T. Nagar, Chennai"
+    },
+    {
+      "slug": "nungambakkam",
+      "display": "Nungambakkam, Chennai"
+    },
+    {
+      "slug": "alwarpet",
+      "display": "Alwarpet, Chennai"
+    },
+    {
+      "slug": "triplicane",
+      "display": "Triplicane, Chennai"
+    },
+    {
+      "slug": "kilpauk",
+      "display": "Kilpauk, Chennai"
+    },
+    {
+      "slug": "egmore",
+      "display": "Egmore, Chennai"
+    },
+    {
+      "slug": "royapettah",
+      "display": "Royapettah, Chennai"
+    },
+    {
+      "slug": "teynampet",
+      "display": "Teynampet, Chennai"
+    },
+    {
+      "slug": "r-a-puram",
+      "display": "R.A. Puram, Chennai"
+    },
+    {
+      "slug": "kotturpuram",
+      "display": "Kotturpuram, Chennai"
+    },
+    {
+      "slug": "purasaiwalkam",
+      "display": "Purasaiwalkam, Chennai"
+    },
+    {
+      "slug": "gopalapuram",
+      "display": "Gopalapuram, Chennai"
+    },
+    {
+      "slug": "chetpet",
+      "display": "Chetpet, Chennai"
+    },
+    {
+      "slug": "kodambakkam",
+      "display": "Kodambakkam, Chennai"
+    },
+    {
+      "slug": "choolaimedu",
+      "display": "Choolaimedu, Chennai"
+    },
+    {
+      "slug": "west-mambalam",
+      "display": "West Mambalam, Chennai"
+    },
+    {
+      "slug": "perungudi",
+      "display": "Perungudi (OMR), Chennai"
+    },
+    {
+      "slug": "thoraipakkam",
+      "display": "Thoraipakkam (OMR), Chennai"
+    },
+    {
+      "slug": "sholinganallur",
+      "display": "Sholinganallur (OMR), Chennai"
+    },
+    {
+      "slug": "navalur",
+      "display": "Navalur (OMR), Chennai"
+    },
+    {
+      "slug": "padur",
+      "display": "Padur (OMR), Chennai"
+    },
+    {
+      "slug": "kelambakkam",
+      "display": "Kelambakkam (OMR), Chennai"
+    },
+    {
+      "slug": "taramani",
+      "display": "Taramani, Chennai"
+    },
+    {
+      "slug": "palavakkam",
+      "display": "Palavakkam (ECR), Chennai"
+    },
+    {
+      "slug": "neelankarai",
+      "display": "Neelankarai (ECR), Chennai"
+    },
+    {
+      "slug": "akkarai",
+      "display": "Akkarai (ECR), Chennai"
+    },
+    {
+      "slug": "uthandi",
+      "display": "Uthandi (ECR), Chennai"
+    },
+    {
+      "slug": "injambakkam",
+      "display": "Injambakkam (ECR), Chennai"
+    },
+    {
+      "slug": "velachery",
+      "display": "Velachery, Chennai"
+    },
+    {
+      "slug": "nanganallur",
+      "display": "Nanganallur, Chennai"
+    },
+    {
+      "slug": "madipakkam",
+      "display": "Madipakkam, Chennai"
+    },
+    {
+      "slug": "chromepet",
+      "display": "Chromepet, Chennai"
+    },
+    {
+      "slug": "tambaram",
+      "display": "Tambaram, Chennai"
+    },
+    {
+      "slug": "pallavaram",
+      "display": "Pallavaram, Chennai"
+    },
+    {
+      "slug": "saidapet",
+      "display": "Saidapet, Chennai"
+    },
+    {
+      "slug": "medavakkam",
+      "display": "Medavakkam, Chennai"
+    },
+    {
+      "slug": "pallikaranai",
+      "display": "Pallikaranai, Chennai"
+    },
+    {
+      "slug": "perumbakkam",
+      "display": "Perumbakkam, Chennai"
+    },
+    {
+      "slug": "semmancheri",
+      "display": "Semmancheri, Chennai"
+    },
+    {
+      "slug": "adambakkam",
+      "display": "Adambakkam, Chennai"
+    },
+    {
+      "slug": "thiruvanmiyur",
+      "display": "Thiruvanmiyur, Chennai"
+    },
+    {
+      "slug": "indira-nagar",
+      "display": "Indira Nagar, Chennai"
+    },
+    {
+      "slug": "selaiyur",
+      "display": "Selaiyur, Chennai"
+    },
+    {
+      "slug": "perungalathur",
+      "display": "Perungalathur, Chennai"
+    },
+    {
+      "slug": "vandalur",
+      "display": "Vandalur, Chennai"
+    },
+    {
+      "slug": "keelkattalai",
+      "display": "Keelkattalai, Chennai"
+    },
+    {
+      "slug": "kovilambakkam",
+      "display": "Kovilambakkam, Chennai"
+    },
+    {
+      "slug": "shastri-nagar",
+      "display": "Shastri Nagar, Chennai"
+    },
+    {
+      "slug": "anna-nagar",
+      "display": "Anna Nagar, Chennai"
+    },
+    {
+      "slug": "mogappair",
+      "display": "Mogappair, Chennai"
+    },
+    {
+      "slug": "porur",
+      "display": "Porur, Chennai"
+    },
+    {
+      "slug": "poonamallee",
+      "display": "Poonamallee, Chennai"
+    },
+    {
+      "slug": "guindy",
+      "display": "Guindy, Chennai"
+    },
+    {
+      "slug": "vadapalani",
+      "display": "Vadapalani, Chennai"
+    },
+    {
+      "slug": "kk-nagar",
+      "display": "KK Nagar, Chennai"
+    },
+    {
+      "slug": "koyambedu",
+      "display": "Koyambedu, Chennai"
+    },
+    {
+      "slug": "ambattur",
+      "display": "Ambattur, Chennai"
+    },
+    {
+      "slug": "avadi",
+      "display": "Avadi, Chennai"
+    },
+    {
+      "slug": "maduravoyal",
+      "display": "Maduravoyal, Chennai"
+    },
+    {
+      "slug": "ashok-nagar",
+      "display": "Ashok Nagar, Chennai"
+    },
+    {
+      "slug": "virugambakkam",
+      "display": "Virugambakkam, Chennai"
+    },
+    {
+      "slug": "valasaravakkam",
+      "display": "Valasaravakkam, Chennai"
+    },
+    {
+      "slug": "ramapuram",
+      "display": "Ramapuram, Chennai"
+    },
+    {
+      "slug": "kolathur",
+      "display": "Kolathur, Chennai"
+    },
+    {
+      "slug": "madhavaram",
+      "display": "Madhavaram, Chennai"
+    },
+    {
+      "slug": "perambur",
+      "display": "Perambur, Chennai"
+    },
+    {
+      "slug": "villivakkam",
+      "display": "Villivakkam, Chennai"
+    },
+    {
+      "slug": "manali",
+      "display": "Manali, Chennai"
+    },
+    {
+      "slug": "thiruvottiyur",
+      "display": "Thiruvottiyur, Chennai"
+    },
+    {
+      "slug": "ennore",
+      "display": "Ennore, Chennai"
+    },
+    {
+      "slug": "tondiarpet",
+      "display": "Tondiarpet, Chennai"
+    },
+    {
+      "slug": "royapuram",
+      "display": "Royapuram, Chennai"
+    },
+    {
+      "slug": "washermanpet",
+      "display": "Washermanpet, Chennai"
+    },
+    {
+      "slug": "red-hills",
+      "display": "Red Hills, Chennai"
+    },
+    {
+      "slug": "vyasarpadi",
+      "display": "Vyasarpadi, Chennai"
+    },
+    {
+      "slug": "korukkupet",
+      "display": "Korukkupet, Chennai"
+    },
+    {
+      "slug": "coimbatore",
+      "display": "Coimbatore"
+    },
+    {
+      "slug": "madurai",
+      "display": "Madurai"
+    },
+    {
+      "slug": "trichy",
+      "display": "Trichy"
+    },
+    {
+      "slug": "salem",
+      "display": "Salem"
+    },
+    {
+      "slug": "sriperumbudur",
+      "display": "Sriperumbudur"
+    },
+    {
+      "slug": "thiruvallur",
+      "display": "Thiruvallur"
+    },
+    {
+      "slug": "guduvanchery",
+      "display": "Guduvanchery"
+    },
+    {
+      "slug": "oragadam",
+      "display": "Oragadam"
+    },
+    {
+      "slug": "urapakkam",
+      "display": "Urapakkam"
+    },
+    {
+      "slug": "singaperumal-koil",
+      "display": "Singaperumal Koil"
+    },
+    {
+      "slug": "other",
+      "display": "Other, please specify"
+    }
+  ]
+}

@@ -1,16 +1,16 @@
-# Graph Report - 01propertism  (2026-07-16)
+# Graph Report - 01propertism  (2026-07-14)
 
 ## Corpus Check
-- 629 files · ~3,584,906 words
+- 627 files · ~3,540,665 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 7990 nodes · 11844 edges · 664 communities (554 shown, 110 thin omitted)
+- 7987 nodes · 11833 edges · 651 communities (542 shown, 109 thin omitted)
 - Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 1885 edges (avg confidence: 0.51)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bb2936ce`
+- Built from commit: `005415e1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -468,8 +468,6 @@
 - Session — 2026-05-15
 - Session — 2026-05-18
 - InquiryAdmin
-- locality_registry.py
-- SuggestionInteractionLog
 - PART 2: GOOGLE ANALYTICS 4 (GA4) METRICS
 - OAIDF - AntiGravity Memory
 - Execution Summary Checklist
@@ -499,7 +497,6 @@
 - Security Checks in Trace
 - Session 2026-05-21 — OG v5, Inquiry Delete, Admin Tightening
 - SCCB-19052026-1 — Inquiries Dashboard (Phase 1)
-- InquiryIntegrationTests
 - RECOMMENDED READING ORDER
 - NEXT STEPS
 - PART 8: NOTES & OBSERVATIONS
@@ -538,11 +535,8 @@
 - Production vs Local Trace
 - Error Scenarios & Handling
 - advisor_waiting_list
-- 10. Conversation Transcript
-- Command
 - .save
 - send_chat_notification
-- SuggestionAPIEndpointTests
 - 🎯 Phase 1: Project Setup & Architecture (Week 1-2)
 - 🎨 Phase 4: Frontend Development (Week 4-8)
 - SUPPORT & REFERENCE
@@ -584,13 +578,11 @@
 - Phase 2: Request Processing
 - Phase 1: URL Resolution
 - Phase 4: Response Generation
-- CommunicationsConfig
 - 🧪 Phase 5: Testing (Week 7-8)
 - 🚀 Phase 6: Deployment (Week 9-10)
 - SSL/TLS Configuration
 - Connection Pool Configuration
 - RDS Connection Details
-- CompletionProvider
 - Database Schema & Migrations
 - Decision: Why PostgreSQL Over SQLite
 - INSTALLED_APPS Configuration
@@ -611,12 +603,7 @@
 - FUTURE_RECOMMENDATIONS.md
 - graphify.md
 - graphify.md
-- ContactProvider
-- InquiryProvider
-- KnowledgeProvider
-- Part 7: Minimal Targeted Recommendation
-- Part 3: Most Likely Root Cause
-- Migration Path: SQLite → PostgreSQL
+- .get_expertise_list
 - PHASE_B_PRODUCTION_INVENTORY.md
 
 ## God Nodes (most connected - your core abstractions)
@@ -646,119 +633,115 @@
 ## Import Cycles
 - None detected.
 
-## Communities (664 total, 110 thin omitted)
+## Communities (651 total, 109 thin omitted)
 
 ### Community 0 - "views.py"
 Cohesion: 0.02
-Nodes (163): chat/actions_config.py — Predefined actions registry mapping for realBOT M2.8. I, AIService, Orchestration layer managing selected providers, exception logs,     and fallba, ChatConfig, AppConfig, Get all handover requests waiting for advisor assignment., List recent conversation archives., CorrelationFilter (+155 more)
+Nodes (158): ChatConfig, AppConfig, Get all handover requests waiting for advisor assignment., List recent conversation archives., InfrastructureMetrics, Thread-safe registry for realBOT infrastructure counters., Builds a standard API response JSON payload structure with correlation identifie, standard_response() (+150 more)
 
 ### Community 1 - "RealBotSession"
-Cohesion: 0.05
-Nodes (71): AdvisorMessageAdmin, AdvisorProfileAdmin, ConversationArchiveAdmin, HandoverAnalyticsAdmin, HandoverAuditLogAdmin, HandoverRequestAdmin, KnowledgeArticleAdmin, KnowledgeDocumentAdmin (+63 more)
+Cohesion: 0.06
+Nodes (67): AdvisorMessageAdmin, AdvisorProfileAdmin, ConversationArchiveAdmin, HandoverAnalyticsAdmin, HandoverAuditLogAdmin, HandoverRequestAdmin, KnowledgeArticleAdmin, KnowledgeDocumentAdmin (+59 more)
 
 ### Community 2 - "KnowledgeArticle"
 Cohesion: 0.04
-Nodes (55): KnowledgeAdministrationManager, KnowledgePublishingFramework, KnowledgeReindexFramework, KnowledgeValidationFramework, KnowledgeVersionManager, Any, chat/knowledge_manager.py — M2.15 Knowledge Administration Framework. Implements, Saves current state as an immutable history version. (+47 more)
+Nodes (57): Indexes all published Propertism website content into KnowledgeArticle records., WebsiteContentIndexer, KnowledgeAdministrationManager, KnowledgePublishingFramework, KnowledgeReindexFramework, KnowledgeValidationFramework, KnowledgeVersionManager, Any (+49 more)
 
 ### Community 3 - "SuggestionDefinition"
-Cohesion: 0.15
-Nodes (12): M2.7 — Configuration-driven Suggestion Registry.     Each suggestion has an immu, SuggestionDefinition, BaseSuggestionProvider, ConversationRecoveryProvider, NavigationProvider, Provides fallback options on unknown/unresolved intent., Pluggable base class for suggestion providers., Provides initial chips when user greets realBOT or conversation is new. (+4 more)
+Cohesion: 0.05
+Nodes (44): Command, BaseCommand, chat/management/commands/seed_suggestions.py — M2.7 Idempotent Django management, M2.7 — Configuration-driven Suggestion Registry.     Each suggestion has an immu, M2.7 — Captures suggestion display and click analytics for analytics/diagnostics, SuggestionDefinition, SuggestionInteractionLog, BaseSuggestionProvider (+36 more)
 
 ### Community 4 - "Property"
-Cohesion: 0.19
-Nodes (17): ContactMessageAdmin, InquiryAdmin, PropertyAdmin, PropertyPhotoAdmin, PropertyPhotoInline, PropertyTypeAdmin, ContactMessage, MaintenanceRequest (+9 more)
+Cohesion: 0.21
+Nodes (18): ContactMessageAdmin, PropertyAdmin, PropertyPhotoAdmin, PropertyPhotoInline, PropertyTypeAdmin, ContactMessage, Inquiry, MaintenanceRequest (+10 more)
 
 ### Community 5 - "CustomerReviewSection"
 Cohesion: 0.04
-Nodes (30): Command, BaseCommand, CustomerReviewSection, Single review section displayed on the homepage., SCCB-PROP-SEC-001 — Google reCAPTCHA v2 Verification Service  Handles all commun, Structured result from Google reCAPTCHA verification., POST the reCAPTCHA token to Google's siteverify endpoint.          Returns a Rec, RecaptchaResult (+22 more)
+Nodes (31): BlogPost, Parse FAQ items from the content HTML.                  Look for questions in, Return structured author profile for E-E-A-T signals., _load_providers(), NullProvider, Lazily load providers to avoid circular imports., No-op provider used when CAPTCHA_PROVIDER=none or CAPTCHA_ENABLE=false., GoogleRecaptchaV2 (+23 more)
 
 ### Community 6 - "CustomerReview"
-Cohesion: 0.10
-Nodes (41): BaseInlineFormSet, BlogPostAdmin, CompanyInfoAdmin, CompanyInfoForm, CoreValueAdmin, CustomerReviewInline, CustomerReviewSectionAdmin, ExpertiseAreaAdmin (+33 more)
+Cohesion: 0.09
+Nodes (59): BaseInlineFormSet, chat/indexer.py — M2.2 Website Knowledge Base + M2.3 Internal Knowledge Reposito, BlogPostAdmin, CompanyInfoAdmin, CompanyInfoForm, CoreValueAdmin, CustomerReviewInline, CustomerReviewSectionAdmin (+51 more)
 
 ### Community 7 - "BusinessAnalyticsManager"
 Cohesion: 0.05
-Nodes (36): BusinessAnalyticsManager, ConversationOutcomeAnalyzer, ConversionAnalyticsManager, CustomerJourneyAnalyzer, InquiryAnalyticsManager, InsightEngine, KnowledgeAnalyticsManager, Any (+28 more)
+Nodes (34): BusinessAnalyticsManager, ConversationOutcomeAnalyzer, ConversionAnalyticsManager, CustomerJourneyAnalyzer, InquiryAnalyticsManager, InsightEngine, KnowledgeAnalyticsManager, Any (+26 more)
 
 ### Community 8 - "ActionDefinition"
-Cohesion: 0.07
-Nodes (32): Command, BaseCommand, ActionDefinition, ActionExecutionLog, M2.8 — Administrative Action Registry Foundation.     Represents configuration-d, M2.8 — Action Diagnostics & Analytics logs. Read-only / append-only., ActionDispatcher, ActionValidator (+24 more)
+Cohesion: 0.06
+Nodes (33): chat/actions_config.py — Predefined actions registry mapping for realBOT M2.8. I, Command, BaseCommand, ActionDefinition, ActionExecutionLog, M2.8 — Administrative Action Registry Foundation.     Represents configuration-d, M2.8 — Action Diagnostics & Analytics logs. Read-only / append-only., ActionDispatcher (+25 more)
 
 ### Community 9 - "ConversationContextManager"
-Cohesion: 0.07
-Nodes (32): ContextResolutionEngine, ContextValidator, ConversationContextManager, Any, chat/context_manager.py — M2.10 Conversation Memory & Context Management. Implem, Retrieves a variable value, enforcing expiration check., Garbage collects all expired variables. Returns count of deleted variables., Resets the context topic state, stack, and active variables. (+24 more)
+Cohesion: 0.06
+Nodes (35): ContextResolutionEngine, ContextValidator, ConversationContextManager, Any, chat/context_manager.py — M2.10 Conversation Memory & Context Management. Implem, Retrieves a variable value, enforcing expiration check., Garbage collects all expired variables. Returns count of deleted variables., Resets the context topic state, stack, and active variables. (+27 more)
 
 ### Community 10 - "ConfigurationManager"
 Cohesion: 0.07
 Nodes (26): ConfigurationCacheManager, ConfigurationManager, ConfigurationValidator, Any, chat/config_manager.py — M2.12 Administration & Configuration Management Framewo, Manages central configurations, audits histories, rollbacks and exports., Retrieves a typed, cache-backed setting.         Fallbacks to default value if n, Updates setting value, increments version, invalidates cache, and writes to audi (+18 more)
 
 ### Community 11 - "BlogPost"
-Cohesion: 0.05
-Nodes (29): Command, BaseCommand, Management command: seed_knowledge_hub_phase_a  Seeds 10 foundational NRI Knowle, Command, BaseCommand, Management command: seed_knowledge_hub_phase_b  Seeds Phase-B NRI Knowledge Hu, BlogPost, Parse FAQ items from the content HTML.                  Look for questions in (+21 more)
+Cohesion: 0.03
+Nodes (45): Command, BaseCommand, Command, BaseCommand, Command, BaseCommand, Management command: seed_knowledge_hub_phase_a  Seeds 10 foundational NRI Knowle, Meta (+37 more)
 
 ### Community 12 - "ResponseComponent"
 Cohesion: 0.07
 Nodes (25): Command, BaseCommand, M2.9 — Response Component Registry.     Represents structured, configuration-dri, M2.9 — Response Analytics & Diagnostics Log. Read-only/append-only., ResponseComponent, ResponseCompositionLog, chat/response_config.py — Predefined response components for realBOT M2.9. Defin, Any (+17 more)
 
 ### Community 13 - "ActionDispatcher"
-Cohesion: 0.06
-Nodes (29): ActionDispatcher, Dispatches resolved intent results to the appropriate ActionHandler., BusinessRule, RuleExecutionLog, chat/rule_engine.py — M2.4 Rule Engine Core Evaluates user queries against regis, Evaluates a single BusinessRule against a normalized user query., Calculates a confidence score between 0.0 and 1.0.         Formula:           sc, Deterministic intent classification engine. (+21 more)
+Cohesion: 0.05
+Nodes (32): ActionDispatcher, Dispatches resolved intent results to the appropriate ActionHandler., Command, BaseCommand, chat/management/commands/seed_rules.py — M2.4 Idempotent management command that, BusinessRule, RuleExecutionLog, chat/rule_engine.py — M2.4 Rule Engine Core Evaluates user queries against regis (+24 more)
 
 ### Community 14 - "PlatformEvent"
 Cohesion: 0.09
-Nodes (19): EventAggregationEngine, EventPublisher, HealthMonitoringFramework, MetricsCalculator, Any, chat/analytics_engine.py — M2.11 Analytics, Diagnostics & Observability Framewor, Publishes structured, immutable platform events for operational diagnostics., Verifies live health, db status, and metrics liveness diagnostics. (+11 more)
+Nodes (21): EventAggregationEngine, EventPublisher, HealthMonitoringFramework, MetricsCalculator, Any, chat/analytics_engine.py — M2.11 Analytics, Diagnostics & Observability Framewor, Publishes structured, immutable platform events for operational diagnostics., Verifies live health, db status, and metrics liveness diagnostics. (+13 more)
 
 ### Community 15 - "InquiryConversationEngine"
-Cohesion: 0.08
-Nodes (20): InquirySubmissionAdapter, Assembles and creates a PropertyInquiry from a completed     InquiryConversation, InquiryConversationAuditLog, M2.6 — Immutable, append-only audit trail for every inquiry conversation event., InquiryAuditTrailTests, InquiryConversationEngineCancelTests, InquiryConversationEngineExpiryTests, InquiryConversationEngineInitiationTests (+12 more)
+Cohesion: 0.05
+Nodes (45): InquiryConversationEngine, chat/inquiry_engine.py — M2.6 Adaptive Conversation Engine & State Manager  Orch, Adaptive, progressive conversation engine for M2.6.     Instantiate per-request, FieldExtractionResult, InquiryFieldExtractor, chat/inquiry_extractor.py — M2.6 Deterministic Field Extractor (Annexure A Core), Deterministic multi-field extraction engine (Annexure A §3).      Call extract(m, chat/inquiry_fields.py — M2.6 Configuration-driven Inquiry Field Registry  All i (+37 more)
 
 ### Community 16 - "views_landing.py"
-Cohesion: 0.10
-Nodes (26): get_intent_config(), Intent-based SEO landing page mapping. Maps URL slugs to filters, intent familie, Get configuration for an intent-based landing page., Resolve a combined geo slug like "chennai-villas-for-sale"     into (city_slug,, resolve_geo_slug(), build_hero_copy(), build_lead_capture_context(), build_page_path() (+18 more)
+Cohesion: 0.04
+Nodes (66): get_all_intents(), get_intent_config(), Intent-based SEO landing page mapping. Maps URL slugs to filters, intent familie, Get configuration for an intent-based landing page., Get all public intent slugs without aliases., Resolve a combined geo slug like "chennai-villas-for-sale"     into (city_slug,, resolve_geo_slug(), _build_description() (+58 more)
 
 ### Community 17 - "SecurityEvent"
 Cohesion: 0.11
-Nodes (31): M2.14 — Immutable, append-only security audit event log.     Every security-rele, M2.14 — Configuration-driven security policies.     Defines limits, thresholds,, SecurityEvent, SecurityPolicy, AbuseDetector, AuthorizationManager, InputSanitizer, OutputValidator (+23 more)
+Nodes (13): M2.13 — Stage tracing logs for execution steps. Append-only., WorkflowExecutionStep, AbuseDetector, Pattern-based abuse detection.     Monitors repeated identical messages and rapi, Checks for abuse patterns.         Returns (is_abusive, abuse_reason)., Resets abuse tracking. If session_id is None, resets all., AbuseDetectorTests, AuthorizationManagerTests (+5 more)
 
 ### Community 18 - "InquiryConversationSession"
-Cohesion: 0.10
-Nodes (22): _build_engine_response(), InquiryConversationEngine, _log_event(), Create a new InquiryConversationSession.         If opening_message is supplied,, Main entry point for every customer message while an ICS is open.          Proce, Run the extractor, apply validated fields, handle conflicts,         then prompt, When the user is answering the currently prompted field directly         (e.g. t, Write validated new fields to the session; log each. Return ack string. (+14 more)
+Cohesion: 0.08
+Nodes (20): _ack_extracted(), _build_engine_response(), _log_event(), Create a new InquiryConversationSession.         If opening_message is supplied,, Main entry point for every customer message while an ICS is open.          Proce, Run the extractor, apply validated fields, handle conflicts,         then prompt, When the user is answering the currently prompted field directly         (e.g. t, Write validated new fields to the session; log each. Return ack string. (+12 more)
 
 ### Community 19 - "views.py"
 Cohesion: 0.04
-Nodes (80): Render the premium realBOT AI assistant view, realbot_view(), site_content(), Tamil Nadu government property services resources configuration., get_dropdown_grouped(), Return dict of zone -> [(slug, display), ...] for optgroup rendering., get_captcha_provider(), get_site_key() (+72 more)
+Nodes (68): Render the premium realBOT AI assistant view, realbot_view(), contact(), Send email and whatsapp notification when RFQ is submitted., Homepage quote form handler., send_rfq_notification(), site_content(), Tamil Nadu government property services resources configuration. (+60 more)
 
 ### Community 20 - "WebsiteConversationalExtractor"
-Cohesion: 0.10
-Nodes (11): generate_synonyms(), KnowledgeReconciliationEngine, Any, Extracts entities and constructs raw candidate records from Django databases., Generates a list of deterministic synonyms/aliases based on name and role., Reconciles extracted candidates against existing KnowledgeArticles to prevent ov, WebsiteConversationalExtractor, ExtractedKnowledgeCandidate (+3 more)
+Cohesion: 0.09
+Nodes (13): generate_question_variants(), generate_synonyms(), KnowledgeReconciliationEngine, Any, Extracts entities and constructs raw candidate records from Django databases., Generates a list of deterministic synonyms/aliases based on name and role., Reconciles extracted candidates against existing KnowledgeArticles to prevent ov, Generates a list of deterministic question variants based on entity type and nam (+5 more)
 
 ### Community 21 - "InquiryFieldExtractorSingleFieldTests"
 Cohesion: 0.08
-Nodes (11): InquiryFieldExtractorConflictTests, InquiryFieldExtractorMultiFieldTests, InquiryFieldExtractorSingleFieldTests, I am interested in property' should NOT yield a name extraction., Annexure A §9 example: a single message with name, country, service,         pro, Three fields from one message., Email and phone in one message., Fields already in collected_data are not added again. (+3 more)
-
-### Community 22 - "CompanyInfo"
-Cohesion: 0.06
-Nodes (43): generate_question_variants(), Generates a list of deterministic question variants based on entity type and nam, Django management command to ensure demo content exists This runs automatically, Command, BaseCommand, Command, BaseCommand, CompanyInfo (+35 more)
+Nodes (9): InquiryFieldExtractorSingleFieldTests, I am interested in property' should NOT yield a name extraction., Annexure A §9 example: a single message with name, country, service,         pro, Three fields from one message., Email and phone in one message., Fields already in collected_data are not added again., If country is already India and message says Singapore, conflict is raised., Same value repeated — no conflict. (+1 more)
 
 ### Community 23 - "BusinessRule"
-Cohesion: 0.07
-Nodes (15): chat/service_builder.py — M2.5 Service Response Builder Generates standardized,, TestCase, chat/tests_m25.py — M2.5 Service Coverage Framework Test Suite Run with:     .\\, Query containing 'fees' or 'charges' returns pricing details., Broad queries without subtopic keywords return overview/details description., Querying 'buy property' should resolve intent 'buy_property', fetch profile, and, First ServiceProfile should get SRV000001., Consecutive ServiceProfiles get sequential SRV IDs. (+7 more)
+Cohesion: 0.15
+Nodes (16): M2.14 — Immutable, append-only security audit event log.     Every security-rele, M2.14 — Configuration-driven security policies.     Defines limits, thresholds,, SecurityEvent, SecurityPolicy, AuthorizationManager, InputSanitizer, OutputValidator, chat/security_manager.py — M2.14 Security, Authorization & Platform Governance F (+8 more)
 
 ### Community 24 - "SecurityManager"
-Cohesion: 0.09
-Nodes (15): Any, Validates the incoming request payload.         Returns (is_valid, list_of_viola, Sanitizes input text.         Returns (sanitized_text, has_threats, list_of_thre, Validates outgoing response payload.         Returns (is_safe, list_of_issues)., Checks if the session has exceeded the rate limit.         Returns (is_allowed,, Checks for abuse patterns.         Returns (is_abusive, abuse_reason)., Returns the raw string value of a policy key., Evaluates whether an action is authorized.         Returns (is_authorized, reaso (+7 more)
+Cohesion: 0.13
+Nodes (12): Any, Validates the incoming request payload.         Returns (is_valid, list_of_viola, Validates outgoing response payload.         Returns (is_safe, list_of_issues)., Returns the raw string value of a policy key., Evaluates whether an action is authorized.         Returns (is_authorized, reaso, Evaluates whether a request path is authorized.         Returns (is_authorized,, Top-level security facade integrating all security subsystems.     Single entry, Full pre-orchestration security validation pipeline.         Returns a result di (+4 more)
 
 ### Community 25 - "views.py"
-Cohesion: 0.16
-Nodes (10): chat/inquiry_submission.py — M2.6 Inquiry Submission Adapter  Thin bridge betwee, Inquiry, Meta, PropertyType, InquirySerializer, Meta, PropertySerializer, PropertyTypeSerializer (+2 more)
+Cohesion: 0.09
+Nodes (25): Inquiry, Meta, InquirySerializer, Meta, PropertySerializer, PropertyTypeSerializer, create_inquiry(), inquiry_delete() (+17 more)
 
 ### Community 26 - "KnowledgeSearchEngine"
-Cohesion: 0.13
-Nodes (31): BaseActionHandler, ClarificationHandler, ContactCardHandler, ExternalLinkHandler, FallbackHandler, FarewellHandler, GoogleMapsHandler, GreetingHandler (+23 more)
+Cohesion: 0.06
+Nodes (50): ActionResponse, BaseActionHandler, ClarificationHandler, ContactCardHandler, ExternalLinkHandler, FallbackHandler, FarewellHandler, get_service_profile_response() (+42 more)
 
 ### Community 27 - "models.py"
 Cohesion: 0.18
-Nodes (14): ContactMessageAdmin, InquiryAdmin, InquiryReplyAdmin, InquiryReplyInline, PropertyAdmin, PropertyPhotoAdmin, PropertyPhotoInline, PropertyTypeAdmin (+6 more)
+Nodes (15): ContactMessageAdmin, InquiryAdmin, InquiryReplyAdmin, InquiryReplyInline, PropertyAdmin, PropertyPhotoAdmin, PropertyPhotoInline, PropertyTypeAdmin (+7 more)
 
 ### Community 28 - "ViewsTest"
 Cohesion: 0.06
@@ -769,12 +752,12 @@ Cohesion: 0.04
 Nodes (46): 10. Google Posts Strategy, 11. Performance Baseline & Monthly Monitoring Framework, 12. 90-Day Improvement Roadmap, 1. Executive Summary, 1. Service: NRI Property Management & Care, 2. Profile Snapshot & Priority Matrix, 2. Service: Tenant Management & Rental Operations, 3. Category Benchmarking & Competitor Validation (+38 more)
 
 ### Community 30 - "views.py"
-Cohesion: 0.12
-Nodes (25): APIView, CommunicationConfiguration, CommunicationTemplate, CommunicationBrandSerializer, CommunicationChannelSerializer, CommunicationConfigurationSerializer, CommunicationDeliverySerializer, CommunicationLanguageSerializer (+17 more)
+Cohesion: 0.13
+Nodes (24): APIView, CommunicationConfiguration, CommunicationBrandSerializer, CommunicationChannelSerializer, CommunicationConfigurationSerializer, CommunicationDeliverySerializer, CommunicationLanguageSerializer, CommunicationLogSerializer (+16 more)
 
 ### Community 31 - "InquiryFieldValidator"
-Cohesion: 0.14
-Nodes (5): InquiryFieldValidator, Country-aware E.164 phone validation.         Strict for known countries; lenien, Accept any non-empty string for open-ended optional fields., Stateless, deterministic field validator.     Call via: InquiryFieldValidator()., Route to the correct validator by field_name.
+Cohesion: 0.29
+Nodes (3): Country-aware E.164 phone validation.         Strict for known countries; lenien, Accept any non-empty string for open-ended optional fields., Route to the correct validator by field_name.
 
 ### Community 32 - "orchestrator.py"
 Cohesion: 0.16
@@ -785,8 +768,8 @@ Cohesion: 0.09
 Nodes (12): Health check endpoint must return success=True and environment details., Initializing a session generates session_id and conversation_id., Liveness health check endpoint must return status=alive., Readiness health check endpoint must validate setup and return metrics., Version service returns correct metadata, build number, and flags., Validator lists issues for missing parameters and invalid schemas., When integration is disabled, endpoint should return success=False, status=403., When enabled and anonymous, returns mock/fallback token and configuration inside (+4 more)
 
 ### Community 34 - "admin.py"
-Cohesion: 0.17
-Nodes (9): CommunicationBrand, CommunicationChannel, CommunicationDelivery, CommunicationLanguage, CommunicationLog, CommunicationPreference, CommunicationRequest, CommunicationType (+1 more)
+Cohesion: 0.06
+Nodes (30): CommunicationBrandAdmin, CommunicationChannelAdmin, CommunicationConfigurationAdmin, CommunicationDeliveryAdmin, CommunicationDeliveryInline, CommunicationLanguageAdmin, CommunicationLogAdmin, CommunicationLogInline (+22 more)
 
 ### Community 35 - "landing-conversion.js"
 Cohesion: 0.18
@@ -794,43 +777,43 @@ Nodes (27): addUserMessage(), clearLeadErrors(), closeChatbot(), generateWhatsAp
 
 ### Community 36 - "ai_service.py"
 Cohesion: 0.10
-Nodes (15): AIProvider, CitationProvider, ContextBuilder, DeepSeekProvider, KnowledgeProvider, ABC, Interface for database knowledge retrieval., conversation_history: List of dicts in role-content schema:           [{'role': (+7 more)
+Nodes (17): AIProvider, AIService, CitationProvider, ContextBuilder, DeepSeekProvider, KnowledgeProvider, ABC, Interface for database knowledge retrieval. (+9 more)
 
 ### Community 37 - "InquiryFieldExtractor"
-Cohesion: 0.11
-Nodes (13): InquiryFieldExtractor, Extract customer name from introductory phrases., Extract country from keyword dictionary (longest match first)., Extract the first E.164-style phone number found in the message., Extract the first email address found., Map message keywords to known service names.         Longer phrases matched firs, Extract property type from keyword dictionary., Extract Chennai area/location from known area keyword list. (+5 more)
+Cohesion: 0.09
+Nodes (11): Extract customer name from introductory phrases., Extract country from keyword dictionary (longest match first)., Extract the first E.164-style phone number found in the message., Extract the first email address found., Map message keywords to known service names.         Longer phrases matched firs, Extract property type from keyword dictionary., Extract Chennai area/location from known area keyword list., Extract INR or USD budget amounts. (+3 more)
 
 ### Community 39 - "sitemaps.py"
-Cohesion: 0.11
-Nodes (12): BaseSitemap, BlogSitemap, LandingPageSitemap, PropertySitemap, Sitemap, Sitemap configuration for Propertism. Generates dynamic sitemap.xml for search e, Base sitemap that uses the canonical public host and scheme., Sitemap for static pages. (+4 more)
+Cohesion: 0.10
+Nodes (13): BaseSitemap, BlogSitemap, LandingPageSitemap, PropertySitemap, Sitemap, Sitemap configuration for Propertism. Generates dynamic sitemap.xml for search e, Generate all city, intent, and NRI combinations., Base sitemap that uses the canonical public host and scheme. (+5 more)
 
 ### Community 40 - "ClassifiedsAggregator.js"
 Cohesion: 0.13
 Nodes (16): doPost(), extractPortal(), formatHeaders(), getProp_(), getRootDomain(), inferIntent_(), jsonResponse_(), notifyTeamWhatsApp_() (+8 more)
 
 ### Community 41 - "DocumentIndexer"
-Cohesion: 0.11
-Nodes (23): _build_description(), _build_h1(), _build_title(), _classify(), Command, _prose_words(), BaseCommand, Management command: analyse_pseo_config  Analyses all pSEO page configurations s (+15 more)
+Cohesion: 0.12
+Nodes (16): BaseDocumentParser, get_parser_for(), ParsedDocument, ParsedSection, ABC, chat/document_parser.py — M2.3 Internal Knowledge Repository Modular document pa, Return the appropriate parser for the given file extension.     Raises ValueErro, Represents a single extracted section from a document. (+8 more)
 
 ### Community 42 - ".save"
-Cohesion: 0.11
-Nodes (4): Auto-generate knowledge_id on first save. Immutable thereafter., Generate next sequential KA ID in format KA000001.         Uses DB aggregate; sa, Auto-generate doc_id on first save. Immutable thereafter., Generate next sequential DOC ID in format DOC000001.
+Cohesion: 0.06
+Nodes (7): OrchestrationWorkflow, M2.13 — Orchestration Workflow record.     Tracks state transitions of incoming, Auto-generate knowledge_id on first save. Immutable thereafter., Generate next sequential KA ID in format KA000001.         Uses DB aggregate; sa, Auto-generate doc_id on first save. Immutable thereafter., Generate next sequential DOC ID in format DOC000001., chat/tests_m213.py — M2.13 Conversation Orchestration Test Suite. Tests: sequent
 
 ### Community 43 - "SecurityTester"
 Cohesion: 0.12
 Nodes (11): SCCB-46 Task 8: Security Scan Runs Django security checks and basic security va, Check security headers, Check session security, Check password validation, Check file upload limits, Run all security tests, Run Django's built-in security check, Check SECRET_KEY configuration (+3 more)
 
 ### Community 44 - "RealBotExchangeTests"
-Cohesion: 0.10
-Nodes (10): OrchestrationWorkflow, M2.13 — Orchestration Workflow record.     Tracks state transitions of incoming, M2.13 — Stage tracing logs for execution steps. Append-only., WorkflowExecutionStep, chat/orchestrator.py — M2.13 Conversation Orchestration & Workflow Engine. Coord, OrchestratorAPIEndpointTests, OrchestratorModelTests, PipelineExecutionTests (+2 more)
+Cohesion: 0.14
+Nodes (4): OrchestratorAPIEndpointTests, OrchestratorModelTests, PipelineExecutionTests, TestCase
 
 ### Community 45 - "sitemaps.py"
-Cohesion: 0.13
-Nodes (8): BlogSitemap, PropertySitemap, Sitemap, Sitemap configuration for Propertism. Generates dynamic sitemap.xml for search e, Sitemap for static pages., Sitemap for property listings., Sitemap for blog posts., StaticViewSitemap
+Cohesion: 0.10
+Nodes (11): BlogSitemap, LandingPageSitemap, PropertySitemap, Sitemap, Sitemap configuration for Propertism. Generates dynamic sitemap.xml for search e, Sitemap for static pages., Sitemap for property listings., Sitemap for blog posts. (+3 more)
 
 ### Community 46 - "seo_tags.py"
-Cohesion: 0.15
-Nodes (20): classify_page(), pSEO Quality Thresholds — single source of truth. Used by: audit_pseo_quality co, Return (recommendation, list_of_flags).     Rules applied in priority order:, article_schema(), breadcrumb_schema(), faq_schema(), _get_company(), _get_company_hero_url() (+12 more)
+Cohesion: 0.11
+Nodes (24): classify_page(), pSEO Quality Thresholds — single source of truth. Used by: audit_pseo_quality co, Return (recommendation, list_of_flags).     Rules applied in priority order:, article_schema(), breadcrumb_schema(), faq_schema(), _get_company(), _get_company_hero_url() (+16 more)
 
 ### Community 47 - "utils.js"
 Cohesion: 0.12
@@ -877,12 +860,12 @@ Cohesion: 0.18
 Nodes (17): breadcrumb_schema(), faq_schema(), _get_company(), _get_company_hero_url(), _get_public_site_url(), _make_absolute_url(), organization_schema(), property_schema() (+9 more)
 
 ### Community 58 - "services.py"
-Cohesion: 0.11
-Nodes (8): Asynchronously dispatch a delivery in a background thread., Synchronously execute a delivery dispatch (run by the background thread)., LanguageService, RetryService, TrackingService, CommunicationsModelTests, on_user_signed_up(), TransactionTestCase
+Cohesion: 0.15
+Nodes (4): Asynchronously dispatch a delivery in a background thread., Synchronously execute a delivery dispatch (run by the background thread)., RetryService, on_user_signed_up()
 
 ### Community 59 - "spam_protection.py"
-Cohesion: 0.11
-Nodes (21): Main submission entry point.         ics_session must be in 'awaiting_confirmati, contact(), Send email and whatsapp notification when RFQ is submitted., Homepage quote form handler., send_rfq_notification(), create_inquiry(), Write a SpamLog entry. Failures are silent — never block the request., Centralized spam protection orchestrator.      Layers:         1. Honeypot valid (+13 more)
+Cohesion: 0.13
+Nodes (18): get_captcha_provider(), Return the correct CAPTCHA provider instance based on feature flags.      CAPTCH, SCCB-PROP-SEC-001 — SpamProtectionService  The single entry point for all form s, Write a SpamLog entry. Failures are silent — never block the request., Structured outcome returned from SpamProtectionService.validate()., Centralized spam protection orchestrator.      Layers:         1. Honeypot valid, Run all protection layers in sequence.         Short-circuits on first failure (, SpamProtectionResult (+10 more)
 
 ### Community 60 - "MobileTester"
 Cohesion: 0.16
@@ -897,8 +880,8 @@ Cohesion: 0.83
 Nodes (3): log_cta(), _log_event(), nri_assist()
 
 ### Community 63 - "KnowledgeArticleModelTests"
-Cohesion: 0.21
-Nodes (4): ActionResponse, get_service_profile_response(), Helper to fetch from ServiceProfile database and return via ServiceResponseBuild, IntentResult
+Cohesion: 0.20
+Nodes (8): MarkdownSectionParser, Parses a Markdown (.md) file into a ParsedDocument.     Splitting strategy:, MarkdownSectionParserTests, Parser extracts H2 headings as separate sections., Text before first H2 is captured as intro_summary., Section slugs are URL-safe and derived from heading text., Same file content always produces the same SHA-256 hash., get_parser_for returns MarkdownSectionParser for .md files.
 
 ### Community 64 - ".send"
 Cohesion: 0.25
@@ -917,8 +900,8 @@ Cohesion: 0.05
 Nodes (38): 1. Navigation Bar (Top Left), 2. Footer (Optional), 3. Favicon (Browser Tab), Alternative Formats, ✅ Checklist, Color Variations Needed, 🎨 Design Guidelines (SCCB-4 & SCCB-5 Compliant), Example 1: Simple Text Logo (+30 more)
 
 ### Community 68 - "SpamProtectionService"
-Cohesion: 0.09
-Nodes (24): Inquiry, InquirySerializer, Meta, PropertySerializer, PropertyTypeSerializer, inquiry_delete(), inquiry_list_api(), inquiry_replies() (+16 more)
+Cohesion: 0.10
+Nodes (18): chat/inquiry_submission.py — M2.6 Inquiry Submission Adapter  Thin bridge betwee, Main submission entry point.         ics_session must be in 'awaiting_confirmati, create_inquiry(), inquiry_delete(), inquiry_replies(), inquiry_send_reply(), inquiry_staff_login(), inquiry_status_update() (+10 more)
 
 ### Community 70 - "seed_pages_data.py"
 Cohesion: 0.05
@@ -926,7 +909,7 @@ Nodes (37): 1. Sitemap (sitemap.xml), 2. Robots.txt, 3. Canonical Tags, 4. Artic
 
 ### Community 71 - "_upsert_article"
 Cohesion: 0.10
-Nodes (21): IndexResult, _keywords_from(), Index CompanyInfo: About, Contact, Home sections., Index active Service records., Index published BlogPost records. Category 'nri' → KA category 'NRI', others → ', Index active TeamMember records under the About category., Index available Property records., Combine text fields and extract a clean keyword string. (+13 more)
+Nodes (16): IndexResult, _keywords_from(), Index CompanyInfo: About, Contact, Home sections., Index active Service records., Index published BlogPost records. Category 'nri' → KA category 'NRI', others → ', Index active TeamMember records under the About category., Index available Property records., Combine text fields and extract a clean keyword string. (+8 more)
 
 ### Community 72 - "WebsiteContentIndexerTests"
 Cohesion: 0.05
@@ -948,6 +931,10 @@ Nodes (8): home(), Redirect to allauth login for unified auth experience (Google
 Cohesion: 0.05
 Nodes (36): `/about` - About Us, `/admin` - Admin Dashboard, `/admin/inquiries` - Inquiry Management, `/admin/maintenance` - Maintenance Management, `/admin/properties` - Property Management, Admin Routes (Admin Only), `/admin/settings` - Admin Settings, `/admin/subscriptions` - Subscription Management (+28 more)
 
+### Community 77 - "KnowledgeSearchEngineTests"
+Cohesion: 0.24
+Nodes (4): Loads, caches, and evaluates configuration-driven security policies.     Provide, Loads all active policies into the in-memory cache., SecurityPolicyEngine, OrchestratorSecurityIntegrationTests
+
 ### Community 78 - "InquiryReplyTests"
 Cohesion: 0.21
 Nodes (3): InquiryNotificationTests, InquiryReplyTests, TestCase
@@ -961,20 +948,20 @@ Cohesion: 0.06
 Nodes (35): `app/api/v1/endpoints/auth.py`, `app/api/v1/endpoints/construction.py`, `app/api/v1/endpoints/contact.py`, `app/api/v1/endpoints/inquiries.py`, `app/api/v1/endpoints/maintenance.py`, `app/api/v1/endpoints/properties.py`, `app/api/v1/endpoints/tickets.py`, `app/main.py` (+27 more)
 
 ### Community 82 - "KnowledgeDocumentModelTests"
-Cohesion: 0.04
-Nodes (49): BaseDocumentParser, get_parser_for(), MarkdownSectionParser, ParsedDocument, ParsedSection, ABC, chat/document_parser.py — M2.3 Internal Knowledge Repository Modular document pa, Return the appropriate parser for the given file extension.     Raises ValueErro (+41 more)
+Cohesion: 0.08
+Nodes (21): DocumentIndexer, M2.3 — Ingests internal business documents from chat/knowledge_docs/.     Each d, DocumentIndexEndpointTests, DocumentIndexerTests, KnowledgeDocumentModelTests, TestCase, chat/tests_m23.py — M2.3 Internal Knowledge Repository Test Suite Run with: .\sc, doc_id is auto-generated in DOC000001 format on creation. (+13 more)
 
 ### Community 83 - "MarkdownSectionParserTests"
 Cohesion: 0.06
 Nodes (35): Accuracy ✅, ✅ BLOG_REQUEST_TRACE_REPORT.md, ✅ BLOG_SLUG_VALIDATION_REPORT.md, ✅ BLOG_VIEW_ANALYSIS_REPORT.md, Clarity ✅, Completeness ✅, Comprehensive Summary Document, Constraint 1: No Code Changes (+27 more)
 
 ### Community 84 - "UnifiedSearchTests"
-Cohesion: 0.11
-Nodes (16): inquiry_delete(), inquiry_list_api(), inquiry_replies(), inquiry_send_reply(), inquiry_staff_login(), inquiry_status_update(), _parse_email_list(), property_detail() (+8 more)
+Cohesion: 0.18
+Nodes (8): TestCase, Test suite for WebsiteContentIndexer., Indexing active services creates KnowledgeArticle records., index_all() returns an IndexResult with non-zero total when data exists., Re-indexing same data results in skipped (not duplicate) articles., Inactive services are excluded from indexing., IndexResult.as_dict() contains expected keys., WebsiteContentIndexerTests
 
 ### Community 85 - "providers.py"
-Cohesion: 0.13
-Nodes (16): CommunicationDispatcher, Allows registering new transport channels at runtime., Command, BaseCommand, CommunicationRetry, ChannelProvider, SMTP provider utilizing Django's built-in email backend., WhatsApp provider utilizing Meta Cloud API integration. (+8 more)
+Cohesion: 0.15
+Nodes (17): CommunicationDispatcher, Allows registering new transport channels at runtime., Command, BaseCommand, ChannelProvider, SMTP provider utilizing Django's built-in email backend., WhatsApp provider utilizing Meta Cloud API integration., SMS provider stub for future API integration. (+9 more)
 
 ### Community 86 - "send_whatsapp_notification"
 Cohesion: 0.06
@@ -985,12 +972,12 @@ Cohesion: 0.20
 Nodes (11): get_upload_path(), Image and file validation utilities for Propertism SCCB-44: Static Files & Medi, Sanitize uploaded filename to prevent security issues          - Remove specia, Validate uploaded image files          Checks:     - File size (max 5MB), Generate upload path for property images          Format: properties/{property, Validate uploaded document files          Checks:     - File size (max 10MB), Specific validation for property images          Additional checks:     - Min, sanitize_filename() (+3 more)
 
 ### Community 89 - "search.py"
-Cohesion: 0.10
-Nodes (12): KnowledgeIndexEndpointTests, KnowledgeSearchEngineTests, TestCase, Test suite for KnowledgeSearchEngine deterministic keyword search., Searching for 'nri property' returns the NRI service article., Draft articles are excluded from search results., Source references are returned with every non-empty search result., Empty query returns an empty SearchResult. (+4 more)
+Cohesion: 0.15
+Nodes (7): KnowledgeSearchEngineTests, Test suite for KnowledgeSearchEngine deterministic keyword search., Searching for 'nri property' returns the NRI service article., Draft articles are excluded from search results., Source references are returned with every non-empty search result., Empty query returns an empty SearchResult., SearchResult.as_dict() contains expected structure.
 
 ### Community 90 - ".load_policies"
-Cohesion: 0.16
-Nodes (11): _ack_extracted(), chat/inquiry_engine.py — M2.6 Adaptive Conversation Engine & State Manager  Orch, Build a brief, natural acknowledgment for newly extracted fields., FieldExtractionResult, chat/inquiry_extractor.py — M2.6 Deterministic Field Extractor (Annexure A Core), chat/inquiry_fields.py — M2.6 Configuration-driven Inquiry Field Registry  All i, chat/inquiry_validator.py — M2.6 Stateless Field Validators  Each validator retu, InquiryConversationEngineFlowTests (+3 more)
+Cohesion: 0.28
+Nodes (5): RateLimiter, Sliding window rate limiter.     Tracks request counts per session within config, Checks if the session has exceeded the rate limit.         Returns (is_allowed,, Resets rate limit tracking. If session_id is None, resets all., RateLimiterTests
 
 ### Community 93 - "FormTester"
 Cohesion: 0.24
@@ -1017,8 +1004,8 @@ Cohesion: 0.20
 Nodes (6): AdminOnlySocialAccountAdapter, PropertismAccountAdapter, DefaultAccountAdapter, DefaultSocialAccountAdapter, SCCB-SEC-PRT-1510: Block direct email+password signup.     Google OAuth is the o, Blocks Google OAuth completions where the email is not verified by Google.     V
 
 ### Community 100 - "Command"
-Cohesion: 0.31
-Nodes (5): Command, BaseCommand, Add company statistics, Add company information in all three languages, Add services in all three languages
+Cohesion: 0.24
+Nodes (6): Command, BaseCommand, Django management command to ensure demo content exists This runs automatically, Add company statistics, Add company information in all three languages, Add services in all three languages
 
 ### Community 101 - "📡 Propertism Backend API Specification"
 Cohesion: 0.06
@@ -1041,8 +1028,8 @@ Cohesion: 0.50
 Nodes (7): buildCard(), getFormatter(), getParts(), initWorldClockWidgets(), renderWidget(), updateAvailabilityBlocks(), updateCards()
 
 ### Community 106 - "seed_actions.py"
-Cohesion: 0.06
-Nodes (33): 11. Transcript Format, 12. Automatic Email Delivery, 13. Email Subject, 14. Email Failure Handling, 15. Conversation Archive, 16. Advisor Notifications, 18. Analytics, 19. Audit Trail (+25 more)
+Cohesion: 0.04
+Nodes (48): 10. Conversation Transcript, 11. Transcript Format, 12. Automatic Email Delivery, 13. Email Subject, 14. Email Failure Handling, 15. Conversation Archive, 16. Advisor Notifications, 17. Administration (+40 more)
 
 ### Community 107 - "InputSanitizerTests"
 Cohesion: 0.06
@@ -1071,10 +1058,6 @@ Nodes (3): Meta, NRIAssistEvent, NRIService
 ### Community 113 - "address-autocomplete.js"
 Cohesion: 0.60
 Nodes (5): extractPlaceData(), initAutocompleteOnInput(), initializeAllAutocompletes(), loadGooglePlacesAPI(), populateGroupFields()
-
-### Community 114 - "PageLoadTester"
-Cohesion: 0.32
-Nodes (3): PageLoadTester, SCCB-46 Task 1: Page Load Testing Tests all pages load correctly without errors, Run all page load tests
 
 ### Community 117 - "run_all_tests.py"
 Cohesion: 0.50
@@ -1125,8 +1108,8 @@ Cohesion: 0.17
 Nodes (12): 3. Deliverables & Technical Changes, Action Handler Upgrade (`chat/action_handlers.py`), Admin (`chat/admin.py`), Conversation Engine (`chat/inquiry_engine.py`) [NEW], Database Models (`chat/models.py`), Deterministic Field Extractor (`chat/inquiry_extractor.py`) [NEW] ← Annexure A Core, Field Configuration (`chat/inquiry_fields.py`) [NEW], Field Validator (`chat/inquiry_validator.py`) [NEW] (+4 more)
 
 ### Community 192 - "Local Development: SQLite Configuration"
-Cohesion: 0.15
-Nodes (15): _canonical(), Command, _count_internal_links(), _count_words(), _extract_text(), _has_structured_data(), _meta_content(), BaseCommand (+7 more)
+Cohesion: 0.67
+Nodes (3): Local Development: SQLite Configuration, SQLite Connection, SQLite File Location
 
 ### Community 262 - "Deployment Steps"
 Cohesion: 0.06
@@ -1157,8 +1140,8 @@ Cohesion: 0.07
 Nodes (29): Action Items Based on Document Analysis, Alternative: Use Temporary SQLite ONLY IF, AWS_EB_RDS_REDEPLOY_2026.md is the SOURCE OF TRUTH, CRITICAL FINDING: Environment Mismatch, Current Reality, Definitive Recommendation from Documents, Document 1: AWS_DEPLOYMENT_COMPLETE.md, Document 2: AWS_EB_RDS_REDEPLOY_2026.md (+21 more)
 
 ### Community 269 - "ROOT_CAUSE_ANALYSIS"
-Cohesion: 0.08
-Nodes (26): Approval Checkpoint, Conclusion, Database State Comparison, Executive Summary, Expected Outcome, Next Steps, Option 1: Re-run Seed Command ✅ **RECOMMENDED (Lowest Risk)**, Option 2: Fix Seed Command ⚠️ **If Option 1 Fails** (+18 more)
+Cohesion: 0.07
+Nodes (28): Approval Checkpoint, Database State Comparison, Executive Summary, Immediate Action (Next 5 minutes), Option 1: Re-run Seed Command ✅ **RECOMMENDED (Lowest Risk)**, Option 2: Fix Seed Command ⚠️ **If Option 1 Fails**, Option 3: Manual Article Import ❌ **Not Recommended**, Part 1: Evidence Collection (+20 more)
 
 ### Community 270 - "SCCB-PROP-POSTGRES-PRODUCTION-RECONCILIATION-1606"
 Cohesion: 0.07
@@ -1297,8 +1280,8 @@ Cohesion: 0.20
 Nodes (6): Any, Detects if query matches any specific sub-topic keywords., Formats comma-separated or newline list items as markdown bullets., Formats standard '1. Step → 2. Step' process string as numbered lists., Assembles chips, CTAs, navigation, escalation, and related services metadata., Builds dynamic advisory content based on parsed sub-topic.         Returns:
 
 ### Community 304 - "BusinessRule"
-Cohesion: 0.13
-Nodes (14): CommunicationBrandAdmin, CommunicationChannelAdmin, CommunicationConfigurationAdmin, CommunicationDeliveryAdmin, CommunicationDeliveryInline, CommunicationLanguageAdmin, CommunicationLogAdmin, CommunicationLogInline (+6 more)
+Cohesion: 0.29
+Nodes (3): Splits the consolidated propertism-knowledge-base.md into individual markdown fi, Scan knowledge_docs/ via manifest.json, detect changed files,         and re-ind, Parse one document file and upsert its KnowledgeDocument record         and all
 
 ### Community 305 - "SCCB-PROP-DEFINITIVE-ACTION-PLAN-1606"
 Cohesion: 0.10
@@ -1353,8 +1336,8 @@ Cohesion: 0.11
 Nodes (18): Code-Review Mirrors, Files Modified, Follow-up: Align Status LOV, Follow-up: Branded Staff Gate For Inquiries, Follow-up: Composer Send JSON/CSRF Hardening, Follow-up: Full Compose Surface, Follow-up: Header Branding Adjustment, Follow-up: Header Controls + Flat Surface Cleanup (+10 more)
 
 ### Community 318 - "Property"
-Cohesion: 0.12
-Nodes (5): _format_indian_number(), _number_to_words(), Property, Return the best available photo URL and let template onerror handle final fallba, Standard format: Rupees X Lakhs Only
+Cohesion: 0.09
+Nodes (12): _format_indian_number(), _number_to_words(), Property, Return the best available photo URL and let template onerror handle final fallba, Standard format: Rupees X Lakhs Only, Meta, PropertySerializer, PropertyTypeSerializer (+4 more)
 
 ### Community 319 - "Monthly SEO Monitoring Framework"
 Cohesion: 0.11
@@ -1497,7 +1480,7 @@ Cohesion: 0.14
 Nodes (13): 1. Executive Summary, 2. Architecture Summary, 3. Technical Implementation Details, 4. Deliverables Compliance Checklist, 5. Acceptance Criteria Verification, 6. Test Results, 7. Files Changed, Core Config Engine (`chat/config_manager.py`) [NEW] (+5 more)
 
 ### Community 354 - "SCCB-M2.13 — Implementation Report"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): 1. Executive Summary, 2. Architecture Summary, 3. Technical Implementation Details, 4. Deliverables Compliance Checklist, 5. Acceptance Criteria Verification, 6. Test Results, 7. Files Changed, 8. Final Decision (+6 more)
 
 ### Community 355 - "SCCB-PROP-RBOT-M2.16-ANALYTICS-CUSTOMER-INSIGHTS — Implementation Report"
@@ -1517,8 +1500,8 @@ Cohesion: 0.14
 Nodes (14): Code-Review Mirrors (2026-05-15), Code-Review Mirrors, Fix 1 — Direct Google OAuth from Auth Drawer, Fix 2 — "Sign Up Closed" on New User Google OAuth Callback, Part A — Google OAuth (django-allauth), Part B — Post-Login Dashboard, Part C — NRI Assist Module, Part D/E — Navigation (+6 more)
 
 ### Community 359 - "Inquiry"
-Cohesion: 0.18
-Nodes (7): Any, Sorts suggestions by priority (lower number = higher) then order., Filters duplicate display_text items, preserving the higher ranked ones., Gathers suggestions, merges, ranks, deduplicates, and limits count.         Retu, Logs 'rendered' event in append-only log., SuggestionDeduplicationEngine, SuggestionRankingEngine
+Cohesion: 0.40
+Nodes (3): InquirySerializer, inquiry_list_api(), API endpoint for retrieving Sell inquiries.
 
 ### Community 360 - "🏠 Propertism - Modern Real Estate Platform"
 Cohesion: 0.14
@@ -1549,7 +1532,7 @@ Cohesion: 0.15
 Nodes (12): 1. Executive Summary, 2. Architecture Summary, 3. Technical Implementation Details, 4. Deliverables Compliance Checklist, 5. Acceptance Criteria Verification, 6. Test Results, 7. Files Changed, Core Framework Modules (`chat/analytics_engine.py`) [NEW] (+4 more)
 
 ### Community 367 - "task.registry.md"
-Cohesion: 0.17
+Cohesion: 0.15
 Nodes (9): 1. Executive Summary, 2. Deliverables, 3. Files Modified/Created, 4. Acceptance Criteria Verification, 5. Formal Sign-off, Final Decision, Milestone, Objective (+1 more)
 
 ### Community 368 - "Human Handover & Conversation Closure"
@@ -1765,8 +1748,8 @@ Cohesion: 0.18
 Nodes (10): 1. Run All Automated Tests (Recommended), 2. Run Individual Test Scripts, 3. Run Django Unit Tests (Task 10), 4. Manual Testing Checklists, Deployment Checklist, Documentation, Prerequisites, Running Tests (+2 more)
 
 ### Community 421 - "validate_production.py"
-Cohesion: 0.20
-Nodes (3): TestCase, SuggestionModelTests, SuggestionRankingDeduplicationTests
+Cohesion: 0.33
+Nodes (3): Command, BaseCommand, Management command: seed_knowledge_hub_phase_b  Seeds Phase-B NRI Knowledge Hu
 
 ### Community 422 - "M2.10 Future Recommendations & Backlog"
 Cohesion: 0.20
@@ -1970,7 +1953,7 @@ Nodes (7): Analysis, BLOG DATA COMPARISON REPORT, Infrastructure Note, Local vs 
 
 ### Community 473 - "DATABASE_ARCHITECTURE_RECORD"
 Cohesion: 0.25
-Nodes (7): Database Architecture Overview, DATABASE_ARCHITECTURE_RECORD, Dual-Environment Design, Local Development: SQLite Configuration, SCCB-PROP-PRODUCTION-STABILIZATION-AND-SEO-ROADMAP-CONSOLIDATION-1606, SQLite Connection, SQLite File Location
+Nodes (7): Data Loss Prevention (Going Forward), Database Architecture Overview, DATABASE_ARCHITECTURE_RECORD, Dual-Environment Design, Migration Path: SQLite → PostgreSQL, SCCB-PROP-PRODUCTION-STABILIZATION-AND-SEO-ROADMAP-CONSOLIDATION-1606, What Happened (Recent)
 
 ### Community 474 - "PRODUCTION_INFRASTRUCTURE_BASELINE"
 Cohesion: 0.25
@@ -2013,8 +1996,8 @@ Cohesion: 0.29
 Nodes (6): 🗄️ Backend Models (Data Source), 🛠️ Design System Modules, 🏗️ Homepage Architecture (Order of Appearance), 📄 Page Layouts (Main Containers), Propertism: Source File Index & Legend, 🗺️ The Legend
 
 ### Community 484 - "Agent Session Command Contract - PROPERTISM"
-Cohesion: 0.20
-Nodes (6): LandingPageSitemap, Sitemap for landing pages with sell-first weighting., Generate all city, intent, and NRI combinations., get_all_intents(), Get all public intent slugs without aliases., Generate all city, intent, and NRI combinations.
+Cohesion: 0.29
+Nodes (6): Agent Session Command Contract - PROPERTISM, Astra Closure Behavior (`/end`), Astra Startup Behavior (`/start`), Command Routing, Conversation Governance, Purpose
 
 ### Community 485 - "Phase 3: View Function Execution"
 Cohesion: 0.29
@@ -2064,10 +2047,6 @@ Nodes (5): 1. Objective & Mandate, 2. Decoupling Rules & Boundaries, 3. Handover
 Cohesion: 0.33
 Nodes (5): 1. Readiness Compliance Review, 2. Review & Sign-off Approval, Final Sign-off Report, Integration Hold & Analysis Sign-off, Reviewers:
 
-### Community 497 - "10. Conversation Transcript"
-Cohesion: 0.22
-Nodes (9): 17. Administration, Active Conversations, Completed Conversations, Conversation Analytics, Download Transcript, Resend Transcript, Search Conversation, View Transcript (+1 more)
-
 ### Community 498 - "SCCB-RBOT-M2.0 - Dependency Matrix"
 Cohesion: 0.33
 Nodes (5): 1. Overview, 2. Dependency Classification Matrix, 3. DeepSeek & AI Provider Dependency De-coupling, Analysis of Software, Network, and Architectural Dependencies, SCCB-RBOT-M2.0 - Dependency Matrix
@@ -2095,14 +2074,6 @@ Nodes (5): Files modified, Open items, Session — 2026-05-15, Suggested commit 
 ### Community 505 - "Session — 2026-05-18"
 Cohesion: 0.33
 Nodes (5): Commit Status, Files Modified This Session, Open Items, Session — 2026-05-18, What was done
-
-### Community 507 - "locality_registry.py"
-Cohesion: 0.39
-Nodes (6): get_dropdown_choices(), get_extraction_keywords(), locality_registry.py — SCCB-PRT-LOCALITY-UNIFY-001  Single source of truth for, Return list of (slug, display) tuples for use in Django form dropdowns,     gro, Return list[str] of all aliases + slugs for free-text matching.     This is wha, main()
-
-### Community 508 - "SuggestionInteractionLog"
-Cohesion: 0.29
-Nodes (4): M2.7 — Captures suggestion display and click analytics for analytics/diagnostics, SuggestionInteractionLog, Provides suggestions mapped directly to the current intent., RuleEngineProvider
 
 ### Community 509 - "PART 2: GOOGLE ANALYTICS 4 (GA4) METRICS"
 Cohesion: 0.33
@@ -2219,10 +2190,6 @@ Nodes (5): Admin Changelist — Table Tightening + Search Fix, Code-Review Mirro
 ### Community 537 - "SCCB-19052026-1 — Inquiries Dashboard (Phase 1)"
 Cohesion: 0.40
 Nodes (5): Auth: @staff_member_required on all 3 views. FAB + Ctrl+I guarded by {% if user.is_staff %}., Files Created, Files Modified, SCCB-19052026-1 — Inquiries Dashboard (Phase 1), Schema: ZERO migrations. Existing Inquiry model, no changes.
-
-### Community 538 - "InquiryIntegrationTests"
-Cohesion: 0.29
-Nodes (3): InquiryIntegrationTests, End-to-end: initiate → collect all mandatory fields → confirm → submit., When an open ICS session exists, send_message must route to the         InquiryC
 
 ### Community 539 - "RECOMMENDED READING ORDER"
 Cohesion: 0.40
@@ -2372,22 +2339,6 @@ Nodes (4): Discrepancy Analysis, Local Environment (Test Client), Production Env
 Cohesion: 0.50
 Nodes (4): Error Scenarios & Handling, Scenario 1: Article Not Found, Scenario 2: Article Exists but Unpublished, Scenario 3: Database Error
 
-### Community 576 - "advisor_waiting_list"
-Cohesion: 0.29
-Nodes (3): M26RegressionModelTests, Verify that core M2.1–M2.5 models remain functional., ICS FK to RealBotSession must not affect session behaviour.
-
-### Community 577 - "10. Conversation Transcript"
-Cohesion: 0.33
-Nodes (6): 10. Conversation Transcript, Business Information, Conversation, Customer Information, Resolution, Session Information
-
-### Community 578 - "Command"
-Cohesion: 0.33
-Nodes (3): Command, BaseCommand, chat/management/commands/seed_rules.py — M2.4 Idempotent management command that
-
-### Community 579 - ".save"
-Cohesion: 0.33
-Nodes (3): Command, BaseCommand, chat/management/commands/seed_suggestions.py — M2.7 Idempotent Django management
-
 ### Community 582 - "🎯 Phase 1: Project Setup & Architecture (Week 1-2)"
 Cohesion: 0.50
 Nodes (4): 1.1 Project Structure, 1.2 Tech Stack Details, 1.3 Setup Tasks, 🎯 Phase 1: Project Setup & Architecture (Week 1-2)
@@ -2415,6 +2366,10 @@ Nodes (3): Closure, OAIDF Session End, On `/end`
 ### Community 589 - "OAIDF Session Start"
 Cohesion: 0.50
 Nodes (3): OAIDF Session Start, On `/start`, Session Lock
+
+### Community 590 - "Conclusion"
+Cohesion: 0.50
+Nodes (4): Conclusion, Expected Outcome, Next Steps, Root Cause: **Data Loss During RDS Migration**
 
 ### Community 591 - "Future Considerations"
 Cohesion: 0.50
@@ -2536,10 +2491,6 @@ Nodes (3): Phase 1: URL Resolution, Resolution Status, URL Pattern Matching
 Cohesion: 0.67
 Nodes (3): Phase 4: Response Generation, Response Body, Response Metadata
 
-### Community 625 - "CommunicationsConfig"
-Cohesion: 0.50
-Nodes (3): CommunicationsConfig, AppConfig, seed_defaults()
-
 ### Community 626 - "🧪 Phase 5: Testing (Week 7-8)"
 Cohesion: 0.67
 Nodes (3): 5.1 Testing Strategy, 5.2 Test Coverage Goals, 🧪 Phase 5: Testing (Week 7-8)
@@ -2608,31 +2559,19 @@ Nodes (3): Part 1: Quick Inquiry Grid Refactoring ✅, Part 2: reCAPTCHA & CTA P
 Cohesion: 0.67
 Nodes (3): Part 1: Website Footer Legal Standardization (SCCB-PROP-FOOTER-LEGAL-001) ✅, Part 2: GBP Crop-Safe Cover Banner Optimization ✅, Session 54 Detail — July 05, 2026
 
-### Community 655 - "Part 7: Minimal Targeted Recommendation"
-Cohesion: 0.67
-Nodes (3): Immediate Action (Next 5 minutes), Part 7: Minimal Targeted Recommendation, Then Execute (Based on Result)
-
-### Community 656 - "Part 3: Most Likely Root Cause"
-Cohesion: 0.67
-Nodes (3): Part 3: Most Likely Root Cause, **PRIMARY HYPOTHESIS: Data Loss During RDS Migration**, **SECONDARY HYPOTHESIS: Seed Command Bug**
-
-### Community 657 - "Migration Path: SQLite → PostgreSQL"
-Cohesion: 0.67
-Nodes (3): Data Loss Prevention (Going Forward), Migration Path: SQLite → PostgreSQL, What Happened (Recent)
-
 ## Knowledge Gaps
-- **3442 isolated node(s):** `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE`, `PYTHONPATH`, `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE` (+3437 more)
+- **3447 isolated node(s):** `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE`, `PYTHONPATH`, `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE` (+3442 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **110 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **109 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `RealBotSession` connect `RealBotSession` to `views.py`, `SuggestionDefinition`, `BusinessAnalyticsManager`, `ActionDefinition`, `ConversationContextManager`, `ResponseComponent`, `ContactProvider`, `PlatformEvent`, `InquiryProvider`, `KnowledgeProvider`, `SecurityEvent`, `ActionDispatcher`, `InquiryConversationEngine`, `InquiryFieldExtractorSingleFieldTests`, `BusinessRule`, `InquiryIntegrationTests`, `orchestrator.py`, `validate_production.py`, `InquiryFieldValidatorTests`, `RealBotExchangeTests`, `advisor_waiting_list`, `SuggestionAPIEndpointTests`, `.load_policies`, `.build_response`, `InquiryAPIEndpointTests`, `ServiceResponseBuilderTests`, `Inquiry`, `CompletionProvider`, `InquiryAdmin`, `SuggestionInteractionLog`?**
+- **Why does `RealBotSession` connect `RealBotSession` to `views.py`, `SuggestionDefinition`, `BusinessAnalyticsManager`, `ActionDefinition`, `ConversationContextManager`, `ResponseComponent`, `ActionDispatcher`, `PlatformEvent`, `InquiryConversationEngine`, `SecurityEvent`, `InquiryFieldExtractorSingleFieldTests`, `KnowledgeSearchEngine`, `orchestrator.py`, `InquiryFieldValidatorTests`, `.save`, `RealBotExchangeTests`, `KnowledgeSearchEngineTests`, `.load_policies`, `.build_response`, `InquiryAPIEndpointTests`, `ServiceResponseBuilderTests`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Why does `KnowledgeArticle` connect `KnowledgeArticle` to `views.py`, `RealBotSession`, `is_feature_enabled`, `BusinessAnalyticsManager`, `_upsert_article`, `.save`, `KnowledgeDocumentModelTests`, `WebsiteConversationalExtractor`, `IntentResult`, `CompanyInfo`, `search.py`, `KnowledgeSearchEngine`?**
+- **Why does `KnowledgeArticle` connect `KnowledgeArticle` to `views.py`, `RealBotSession`, `is_feature_enabled`, `CustomerReview`, `BusinessAnalyticsManager`, `_upsert_article`, `.save`, `KnowledgeDocumentModelTests`, `WebsiteConversationalExtractor`, `IntentResult`, `UnifiedSearchTests`, `search.py`, `KnowledgeSearchEngine`, `KnowledgeArticleModelTests`?**
   _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **Why does `WebsiteContentIndexer` connect `_upsert_article` to `views.py`, `is_feature_enabled`, `KnowledgeArticle`, `KnowledgeDocumentModelTests`, `IntentResult`, `search.py`?**
+- **Why does `WebsiteContentIndexer` connect `KnowledgeArticle` to `views.py`, `is_feature_enabled`, `CustomerReview`, `_upsert_article`, `IntentResult`, `UnifiedSearchTests`, `search.py`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Are the 128 inferred relationships involving `RealBotSession` (e.g. with `AdvisorMessageAdmin` and `AdvisorProfileAdmin`) actually correct?**
   _`RealBotSession` has 128 INFERRED edges - model-reasoned connections that need verification._

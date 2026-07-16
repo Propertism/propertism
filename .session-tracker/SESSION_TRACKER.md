@@ -47,13 +47,14 @@
 | 75 | July 09 | **realBOT HARDENING & FOOTER COMPACTNESS. Integrated Google reCAPTCHA v2 checkbox validation into the footer newsletter form and dynamic landing page lead form (lp_lead_form). Formatted the footer layout to render the email field full-width and aligned the reCAPTCHA widget and submit CTA side-by-side (78px matching heights) to preserve viewport compactness. Normalized tagline copy, corrected tag nesting, adjusted margins/padding to reclaim vertical white space, and verified all 358 unit tests passing successfully.** | ✅ |
 | 76 | July 09 | **realBOT INQUIRY CHIP FIX & SITE_URL HARDENING. Fixed the Track Inquiry Status suggestion chip target_action route from /dashboard/inquiries to /inquiries/ to prevent 404 errors. Hardened SITE_URL configuration in settings.py and settings_production.py to read from environment variables with fallback to canonical domain, adding it to .env and .env.example for local developer compatibility. Verified all 315 tests passing successfully.** | ✅ |
 | 77 | July 14 | **DEAL ENGINE INQUIRIES MODULE & BUYER DISCOVERY MODE SWITCH. Added Inquiries sidebar nav, dedicated view, and data table fetching Sell inquiries from Deal Engine REST API. Implemented AI Discovered / Web Inquiries radio toggle with independent lead/inquiry selectors, lead grid view (cards), and inquiry grid view (cards). Built inquiry-aware lead selection (inquiry: prefix), automatic buyer discovery search on inquiry selection, and synced dropdown state. Refactored buyer discovery results to responsive table with category badges, contact info, status dropdown, and action icons. Added buyer details modal overlay. Moved Serper quota indicator from community-discovery header to sidebar widget with collapse support.** | ✅ |
+| 78 | July 16 | **UNIFIED SELECT ELEMENT STYLING AND LOV ALIGNMENT. Resolved visual discrepancies and mixed light/dark option items in homepage dropdowns. Updated Quick Inquiry and Contact Inquiry select inputs to use unified dark styling (`#0b0f1a` background, `rgba(255,255,255,0.2)` border, `white` color), matching the TomSelect country dropdown wrapper. Fixed the mixed options background bug by defining dark background styles for option elements in `v4-contact.css` and `hf-consultation.css` and aligned select element classes in `_mid_page_form.html`.** | ✅ |
 
 ---
 ## File Metadata
 
 **Last Updated By**: Antigravity (AI Coding Assistant)
-**Last Updated On**: July 14, 2026 (11:45 IST)
-**Last Update**: SESSION 77 — DEAL ENGINE INQUIRIES MODULE & BUYER DISCOVERY MODE SWITCH.
+**Last Updated On**: July 16, 2026 (21:52 IST)
+**Last Update**: SESSION 78 — UNIFIED SELECT ELEMENT STYLING AND LOV ALIGNMENT.
 
 ---
 

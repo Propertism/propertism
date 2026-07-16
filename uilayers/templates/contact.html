@@ -465,7 +465,7 @@
 
                 <div class="form-group">
                     <label for="property-type">PROPERTY TYPE</label>
-                    <select id="property-type" name="property_type">
+                    <select id="property-type" name="property_type" style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; background: white;">
                         <option value="">Select property type</option>
                         <option value="apartment">Apartment</option>
                         <option value="villa">Villa</option>
@@ -478,16 +478,20 @@
                 <div class="form-group">
                     <label for="locality">LOCALITY / AREA *</label>
                     <select id="locality" name="locality" required style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; background: white;">
-                        <option value="" disabled selected>Select Locality / Area</option>
-                        {% for value, label in contact_locality_choices %}
-                        <option value="{{ value }}">{{ label }}</option>
-                        {% endfor %}
-                    </select>
+                                            <option value="" disabled selected>Select Locality / Area</option>
+                                            {% for group_name, group_choices in contact_locality_choices %}
+                                            <optgroup label="{{ group_name }}">
+                                                {% for value, label in group_choices %}
+                                                <option value="{{ value }}">{{ label }}</option>
+                                                {% endfor %}
+                                            </optgroup>
+                                            {% endfor %}
+                                        </select>
                 </div>
 
                 <div class="form-group">
                     <label for="user-role">I AM THE *</label>
-                    <select id="user-role" name="user_role" required>
+                    <select id="user-role" name="user_role" required style="width: 100%; height: 48px; padding: 0 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; background: white;">
                         <option value="">Select role</option>
                         <option value="owner">Property Owner</option>
                         <option value="buyer">Buyer / Tenant</option>

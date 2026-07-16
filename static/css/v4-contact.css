@@ -467,6 +467,20 @@
     outline: none !important;
 }
 
+.hf-field-input optgroup,
+.hf-field-select optgroup {
+    background: #121829 !important;
+    color: var(--brand-gold) !important;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.hf-field-input option,
+.hf-field-select option {
+    background: #121829 !important;
+    color: #FFFFFF !important;
+}
+
 .hf-submit-btn {
     display: inline-flex !important;
     align-items: center !important;
