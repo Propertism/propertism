@@ -528,13 +528,10 @@ def inquiry_pending_count(request):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def inquiry_list_api(request):
-    """API endpoint for retrieving Sell inquiries."""
-    from django.db.models import Q
+    """API endpoint for retrieving Sell and Rent inquiries for prospect matching.
+    Excludes Manage inquiries — those are handled in-house by Propertism."""
     queryset = Inquiry.objects.filter(
-        Q(property__price_type="sale") |
-        Q(property__isnull=True, message__icontains="sell") |
-        Q(message__icontains="rent") |
-        Q(message__icontains="manage")
+        service_needed__in=["SELL", "RENT"],
     ).order_by("-created_at")
     serializer = InquirySerializer(queryset, many=True)
     return Response({

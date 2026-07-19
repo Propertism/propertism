@@ -371,6 +371,13 @@ LOCALITY_REGISTRY = [
         "show_in_dropdown": True,
     },
     {
+        "slug": "chitlapakkam",
+        "display": "Chitlapakkam, Chennai",
+        "zone": "south",
+        "aliases": ["chitlapakkam", "chitlapakkam chennai"],
+        "show_in_dropdown": True,
+    },
+    {
         "slug": "perungalathur",
         "display": "Perungalathur, Chennai",
         "zone": "south",
@@ -496,6 +503,13 @@ LOCALITY_REGISTRY = [
         "display": "Virugambakkam, Chennai",
         "zone": "west",
         "aliases": ["virugambakkam", "virugambakam"],
+        "show_in_dropdown": True,
+    },
+    {
+        "slug": "saligramam",
+        "display": "Saligramam, Chennai",
+        "zone": "west",
+        "aliases": ["saligramam", "saligramam chennai"],
         "show_in_dropdown": True,
     },
     {

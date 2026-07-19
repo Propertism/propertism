@@ -410,6 +410,15 @@ def contact(request):
             if not service_needed or service_needed == "consultation":
                 if intent_radio:
                     service_needed = intent_radio
+
+            # Normalize intent values for consistent storage: SELL, RENT, MANAGE
+            _INTENT_NORMALIZE = {
+                "buy-sell": "SELL",
+                "rental": "RENT",
+                "industrial": "MANAGE",
+            }
+            service_needed = _INTENT_NORMALIZE.get(service_needed, service_needed)
+
             property_type = request.POST.get("property_type", "").strip()
             locality = request.POST.get("locality", "").strip()
             user_role = request.POST.get("user_role", "").strip()
