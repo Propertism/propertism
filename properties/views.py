@@ -528,10 +528,10 @@ def inquiry_pending_count(request):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def inquiry_list_api(request):
-    """API endpoint for retrieving Sell and Rent inquiries for prospect matching.
+    """API endpoint for retrieving inquiries for prospect matching.
     Excludes Manage inquiries — those are handled in-house by Propertism."""
-    queryset = Inquiry.objects.filter(
-        service_needed__in=["SELL", "RENT"],
+    queryset = Inquiry.objects.exclude(
+        service_needed__in=["manage"],
     ).order_by("-created_at")
     serializer = InquirySerializer(queryset, many=True)
     return Response({
