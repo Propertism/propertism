@@ -192,4 +192,6 @@ chat/knowledge_docs/terms.md
 scratch/
 .tmp-test-media/
 .seed/
+graphify-out/cache/
+
 
