@@ -6,8 +6,51 @@ from django import template
 from django.conf import settings
 import json
 from content.site_context import get_company_info
+from content.pseo_quality import PSEO_NOINDEX_WORD_COUNT, PSEO_MIN_WORD_COUNT, classify_page
 
 register = template.Library()
+
+
+@register.filter
+def name_only(value):
+    """
+    Returns only the name part from a combined name+qualifications string.
+    e.g. "Mr. Tamilselvan B.E, M.B.A." → "Mr. Tamilselvan"
+    Splits on first space-separated token that looks like a qualification
+    (contains a dot or is all uppercase letters).
+    Falls back to splitting on ' B.' as the qualifications marker.
+    If a pipe (|) is explicitly provided, it acts as the primary delimiter.
+    """
+    if not value:
+        return value
+    if '|' in value:
+        return value.split('|')[0].strip()
+    # Split on the qualification marker — first occurrence of " B." or ", "
+    for marker in [' B.', ' M.', ' Ph.', ', ']:
+        idx = value.find(marker)
+        if idx != -1:
+            return value[:idx].strip()
+    return value
+
+
+@register.filter
+def quals_only(value):
+    """
+    Returns only the qualifications part from a combined name+qualifications string.
+    e.g. "Mr. Tamilselvan B.E, M.B.A." → "B.E, M.B.A."
+    """
+    if not value:
+        return ''
+    if '|' in value:
+        parts = value.split('|', 1)
+        if len(parts) > 1:
+            return parts[1].strip()
+        return ''
+    for marker in [' B.', ' M.', ' Ph.', ', ']:
+        idx = value.find(marker)
+        if idx != -1:
+            return value[idx:].strip().lstrip(', ')
+    return ''
 
 
 def _get_company():
@@ -82,6 +125,16 @@ def seo_meta(
     final_image = _make_absolute_url(image, site_url) if image else og_image
     final_canonical = _make_absolute_url(canonical_override or current_url, site_url)
 
+    # Quality-driven noindex: only for landing pages with thin content.
+    # word_count is injected by landing_page view via context; absent on other pages.
+    word_count = context.get('_pseo_word_count', 0)
+    has_sd = bool(context.get('_pseo_has_structured_data', True))
+    has_can = bool(final_canonical)
+    internal_links = int(context.get('_pseo_internal_links', 99))
+    recommendation = 'INDEX'
+    if word_count:  # only evaluate when explicitly provided
+        recommendation, _ = classify_page(word_count, has_sd, has_can, internal_links)
+
     return {
         'title': final_title,
         'description': final_description,
@@ -95,12 +148,13 @@ def seo_meta(
         'page_type': page_type,
         'site_name': company.company_name if company else 'Propertism Realty Advisors',
         'twitter_handle': '@PropertismIndia',
+        'noindex': recommendation == 'NOINDEX',
     }
 
 
 @register.inclusion_tag('seo/structured_data.html', takes_context=True)
 def organization_schema(context):
-    """Generate Organization schema for RealEstateAgent"""
+    """Generate Organization schema for LocalBusiness and RealEstateAgent"""
     request = context.get('request')
     site_url = f"{request.scheme}://{request.get_host()}" if request else ''
     company = _get_company()
@@ -113,7 +167,7 @@ def organization_schema(context):
 
     schema = {
         "@context": "https://schema.org",
-        "@type": "RealEstateAgent",
+        "@type": ["LocalBusiness", "RealEstateAgent"],
         "name": company.company_name,
         "description": company.tagline,
         "url": site_url,
@@ -131,9 +185,14 @@ def organization_schema(context):
         },
         "geo": {
             "@type": "GeoCoordinates",
-            "latitude": "13.0827",
-            "longitude": "80.2707"
+            "latitude": "13.0531",
+            "longitude": "80.2094"
         },
+        "hasMap": getattr(settings, "GOOGLE_BUSINESS_PROFILE_MAP_URL", "https://maps.google.com/?q=No.+30,+SSR+Pankajam+Towers,+Arunachalam+Road,+Saligramam,+Chennai"),
+        "openingHours": "Mo-Sa 09:00-18:00",
+        "priceRange": "$$",
+        "paymentAccepted": "Cash, Credit Card, Wire Transfer",
+        "currenciesAccepted": "INR, USD",
         "areaServed": {
             "@type": "City",
             "name": "Chennai"
@@ -187,36 +246,62 @@ def property_schema(property_obj, request=None):
 
 
 @register.inclusion_tag('seo/breadcrumb_schema.html', takes_context=True)
-def breadcrumb_schema(context, items):
+def breadcrumb_schema(context, items=None):
     """
-    Generate BreadcrumbList schema
+    Generate BreadcrumbList JSON-LD schema adhering to Schema.org and Google Search Console requirements.
 
-    Usage:
-        {% breadcrumb_schema items %}
-        where items = [
-            {'name': 'Home', 'url': '/'},
-            {'name': 'Properties', 'url': '/properties/'},
-            {'name': 'Villa', 'url': None}  # Current page, no URL
-        ]
+    Each ListItem MUST contain:
+      - @type: "ListItem"
+      - position: 1-based integer
+      - name: Title or label of the crumb
+      - item: Canonical absolute URL of the crumb destination
+
+    Returns:
+      {'schema': '<json_string>'} if valid items exist, else {'schema': None}
     """
+    if not items:
+        return {'schema': None}
+
     request = context.get('request')
-    site_url = f"{request.scheme}://{request.get_host()}" if request else ''
+    site_url = _get_public_site_url(request)
 
     item_list = []
     for position, item in enumerate(items, start=1):
+        if isinstance(item, dict):
+            name = item.get('name') or ''
+            raw_url = item.get('url')
+        else:
+            name = str(item)
+            raw_url = None
+
+        if not name:
+            continue
+
+        # If URL is not explicitly set (e.g. leaf/current page crumb), resolve canonical page URL
+        if not raw_url:
+            raw_url = (
+                context.get('canonical_override')
+                or context.get('page_url')
+                or (request.path if request else None)
+            )
+
+        absolute_item_url = _make_absolute_url(raw_url, site_url) if raw_url else site_url
+
         list_item = {
             "@type": "ListItem",
             "position": position,
-            "name": item['name']
+            "name": name,
+            "item": absolute_item_url,
         }
-        if item.get('url'):
-            list_item['item'] = f"{site_url}{item['url']}"
         item_list.append(list_item)
+
+    if not item_list:
+        return {'schema': None}
 
     schema = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": item_list
+        "itemListElement": item_list,
     }
 
     return {'schema': json.dumps(schema, indent=2)}
@@ -263,6 +348,52 @@ def service_schema(context, config, city, page_url=None):
         },
     }
 
+    return {'schema': json.dumps(schema, indent=2)}
+
+
+@register.inclusion_tag('seo/structured_data.html', takes_context=True)
+def article_schema(context, post):
+    """Generate Article schema for blog posts."""
+    request = context.get('request')
+    site_url = _get_public_site_url(request)
+    company = _get_company()
+
+    image_url = None
+    if post.featured_image:
+        image_url = _make_absolute_url(post.featured_image.url, site_url)
+    else:
+        image_url = _make_absolute_url('/static/images/og-propertism-v5.jpg', site_url)
+
+    author_name = post.author if post.author else (company.company_name if company else "Propertism Realty Advisors")
+    post_url = f"{site_url}/blog/{post.slug}/"
+
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": post.title,
+        "description": post.excerpt if post.excerpt else post.title,
+        "image": image_url,
+        "author": {
+            "@type": "Person",
+            "name": author_name,
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": company.company_name if company else "Propertism Realty Advisors",
+            "logo": {
+                "@type": "ImageObject",
+                "url": _make_absolute_url('/static/images/propertism-logo-tm.png', site_url),
+            }
+        },
+        "datePublished": post.published_date.isoformat() if post.published_date else None,
+        "dateModified": post.updated_date.isoformat() if post.updated_date else None,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": post_url,
+        },
+        "url": post_url,
+    }
+    schema = {k: v for k, v in schema.items() if v is not None}
     return {'schema': json.dumps(schema, indent=2)}
 
 

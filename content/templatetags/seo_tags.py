@@ -246,36 +246,62 @@ def property_schema(property_obj, request=None):
 
 
 @register.inclusion_tag('seo/breadcrumb_schema.html', takes_context=True)
-def breadcrumb_schema(context, items):
+def breadcrumb_schema(context, items=None):
     """
-    Generate BreadcrumbList schema
+    Generate BreadcrumbList JSON-LD schema adhering to Schema.org and Google Search Console requirements.
 
-    Usage:
-        {% breadcrumb_schema items %}
-        where items = [
-            {'name': 'Home', 'url': '/'},
-            {'name': 'Properties', 'url': '/properties/'},
-            {'name': 'Villa', 'url': None}  # Current page, no URL
-        ]
+    Each ListItem MUST contain:
+      - @type: "ListItem"
+      - position: 1-based integer
+      - name: Title or label of the crumb
+      - item: Canonical absolute URL of the crumb destination
+
+    Returns:
+      {'schema': '<json_string>'} if valid items exist, else {'schema': None}
     """
+    if not items:
+        return {'schema': None}
+
     request = context.get('request')
-    site_url = f"{request.scheme}://{request.get_host()}" if request else ''
+    site_url = _get_public_site_url(request)
 
     item_list = []
     for position, item in enumerate(items, start=1):
+        if isinstance(item, dict):
+            name = item.get('name') or ''
+            raw_url = item.get('url')
+        else:
+            name = str(item)
+            raw_url = None
+
+        if not name:
+            continue
+
+        # If URL is not explicitly set (e.g. leaf/current page crumb), resolve canonical page URL
+        if not raw_url:
+            raw_url = (
+                context.get('canonical_override')
+                or context.get('page_url')
+                or (request.path if request else None)
+            )
+
+        absolute_item_url = _make_absolute_url(raw_url, site_url) if raw_url else site_url
+
         list_item = {
             "@type": "ListItem",
             "position": position,
-            "name": item['name']
+            "name": name,
+            "item": absolute_item_url,
         }
-        if item.get('url'):
-            list_item['item'] = f"{site_url}{item['url']}"
         item_list.append(list_item)
+
+    if not item_list:
+        return {'schema': None}
 
     schema = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": item_list
+        "itemListElement": item_list,
     }
 
     return {'schema': json.dumps(schema, indent=2)}

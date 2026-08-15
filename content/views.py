@@ -218,7 +218,7 @@ def services(request):
         ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "Services", "url": None}
+            {"name": "Services", "url": "/services/"}
         ],
     })
     return render(request, "services.html", context)
@@ -238,7 +238,7 @@ def about(request):
         ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "About", "url": None}
+            {"name": "About", "url": "/about/"}
         ],
     })
     return render(request, "about.html", context)
@@ -258,7 +258,7 @@ def management(request):
         ),
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "Management", "url": None}
+            {"name": "Management", "url": "/management/"}
         ],
     })
     return render(request, "management.html", context)
@@ -277,7 +277,7 @@ def team_member_detail(request, slug):
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
                 {"name": "Management", "url": "/management/"},
-                {"name": "Viji Munuswamy", "url": None}
+                {"name": "Viji Munuswamy", "url": "/management/viji-munuswamy/"}
             ]
         })
         return render(request, "viji_profile.html", context)
@@ -298,8 +298,8 @@ def team_member_detail(request, slug):
         "tamilselvan_email_2": tamilselvan_email_2,
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "Management", "url": "/#management-section"},
-            {"name": team_member.name, "url": None}
+            {"name": "Management", "url": "/management/"},
+            {"name": team_member.name, "url": f"/management/{team_member.slug}/"}
         ],
     })
     return render(request, "team_member_detail.html", context)
@@ -329,7 +329,7 @@ def blog_post(request, slug):
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
                 {"name": "Insights", "url": "/#blog-section"},
-                {"name": post.title, "url": None},
+                {"name": post.title, "url": f"/blog/{post.slug}/"},
             ],
         }
     )
@@ -1086,8 +1086,7 @@ def property_owner_resources(request):
         "categories": GOVERNMENT_RESOURCE_CATEGORIES,
         "breadcrumbs": [
             {"name": "Home", "url": "/"},
-            {"name": "Resources", "url": None},
-            {"name": "Property Owner Resources", "url": None}
+            {"name": "Property Owner Resources", "url": "/property-owner-resources/"}
         ],
         "meta_title": "Tamil Nadu Property Owner Resources | Official Government Services",
         "meta_description": (

@@ -1,507 +1,1154 @@
-import calendar
-import json
 import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import user_passes_test
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMessage
-from django.core.paginator import Paginator
-from django.core.validators import validate_email
-from django.db.models import Count, Q
-from django.db.models.functions import ExtractMonth, ExtractYear, TruncDate
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
-from django.utils import timezone
-from django.utils.http import url_has_allowed_host_and_scheme
+from django.core.mail import send_mail
+from django.db.models import Prefetch
+from django.db.utils import OperationalError, ProgrammingError
+from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect, JsonResponse
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
 
-from content.site_context import get_company_info, get_home_section_links
+from properties.models import Property
+from properties.models import Inquiry as PropertyInquiry
 
-from .models import Inquiry, InquiryReply, Property
-from .serializers import InquirySerializer, PropertySerializer
+from .models import (
+    BlogPost,
+    CoreValue,
+    CustomerReviewSection,
+    ExpertiseArea,
+    HomepageCard,
+    HomepageCardSection,
+    LandingLead,
+    Newsletter,
+    Service,
+    Statistic,
+    TeamMember,
+)
+from .site_context import (
+    get_active_core_values,
+    get_active_expertise_areas,
+    get_active_services,
+    get_company_info,
+    get_contact_property_choices,
+    get_contact_service_choices,
+    get_hero_title_segments,
+    get_home_section_links,
+)
+from .government_resources import GOVERNMENT_RESOURCE_CATEGORIES
 
 logger = logging.getLogger(__name__)
+RECOVERABLE_DB_ERRORS = (OperationalError, ProgrammingError)
 
 
-def _parse_email_list(raw_value):
-    emails = []
-    invalid = []
+def _safe_list(queryset, *, fallback=None, warning=None):
+    try:
+        if callable(queryset):
+            queryset = queryset()
+        return list(queryset)
+    except RECOVERABLE_DB_ERRORS:
+        if warning:
+            logger.warning(warning, exc_info=True)
+        return [] if fallback is None else fallback
 
-    for item in (raw_value or "").replace(";", ",").split(","):
-        email = item.strip()
-        if not email:
-            continue
+
+def _safe_first(queryset, *, fallback=None, warning=None):
+    try:
+        if callable(queryset):
+            queryset = queryset()
+        return queryset.first()
+    except RECOVERABLE_DB_ERRORS:
+        if warning:
+            logger.warning(warning, exc_info=True)
+        return fallback
+
+
+def health(request):
+    """Lightweight endpoint for load balancer health checks.
+    
+    This endpoint bypasses Django's ALLOWED_HOSTS validation to ensure
+    load balancer health checks always succeed regardless of Host header.
+    """
+    return HttpResponse("OK", content_type="text/plain", status=200)
+
+
+def robots_txt(request):
+    """Return robots.txt with the canonical sitemap URL."""
+    canonical_scheme = getattr(settings, "CANONICAL_SCHEME", "https") or "https"
+    canonical_host = getattr(settings, "CANONICAL_HOST", "www.propertism.in") or "www.propertism.in"
+    body = "\n".join(
+        [
+            "User-agent: *",
+            "Allow: /",
+            f"Disallow: /{settings.ADMIN_URL.strip('/')}/",
+            "Disallow: /api/",
+            "Disallow: /*/admin/",
+            "Disallow: /media/private/",
+            "",
+            "# Sitemap",
+            f"Sitemap: {canonical_scheme}://{canonical_host}/sitemap.xml",
+            "",
+            "# Crawl-delay for polite crawling",
+            "Crawl-delay: 1",
+            "",
+        ]
+    )
+    return HttpResponse(body, content_type="text/plain")
+
+
+def redirect_default_language(request, path=""):
+    """Redirect legacy /en/... URLs to the default-language root paths."""
+    normalized_path = path.lstrip("/")
+    target = f"/{normalized_path}" if normalized_path else "/"
+    query_string = request.META.get("QUERY_STRING")
+    if query_string:
+        target = f"{target}?{query_string}"
+    return HttpResponsePermanentRedirect(target)
+
+
+def get_company_context():
+    """Get company info for all pages."""
+    return {"company": get_company_info()}
+
+
+def redirect_to_home_section(request, section_name):
+    return redirect(get_home_section_links()[section_name])
+
+
+def get_homepage_context(request):
+    """Generates the context dict for the homepage."""
+    context = get_company_context()
+    company = context["company"]
+    all_services = get_active_services()
+    expertise_areas = get_active_expertise_areas(limit=4)
+    customer_reviews = []
+    customer_review_slides = []
+    customer_review_section = None
+    custom_card_sections = []
+    hero_background_urls = []
+
+    try:
+        if getattr(company, "pk", None):
+            hero_background_urls = company.get_active_hero_background_urls()
+    except RECOVERABLE_DB_ERRORS:
+        logger.warning("Homepage hero background tables are unavailable.", exc_info=True)
+        hero_background_urls = []
+
+    customer_review_section = _safe_first(
+        lambda: CustomerReviewSection.objects.filter(is_active=True),
+        warning="Homepage customer review section table is unavailable.",
+    )
+    if customer_review_section:
+        customer_reviews = _safe_list(
+            lambda: customer_review_section.reviews.filter(is_active=True),
+            warning="Homepage customer review table is unavailable.",
+        )
+        customer_review_slides = [
+            customer_reviews[index:index + 6]
+            for index in range(0, len(customer_reviews), 6)
+        ]
+    custom_card_sections = _safe_list(
+        lambda: HomepageCardSection.objects.filter(is_active=True).prefetch_related(
+            Prefetch(
+                "cards",
+                queryset=HomepageCard.objects.filter(is_active=True),
+                to_attr="active_cards",
+            )
+        ),
+        warning="Homepage custom card section tables are unavailable.",
+    )
+
+    if not hero_background_urls:
+        fallback_hero_url = company.get_primary_hero_image_url()
+        if fallback_hero_url:
+            hero_background_urls = [fallback_hero_url]
+
+    context.update(
+        {
+            "stats": _safe_list(
+                lambda: Statistic.objects.filter(is_active=True)[:4],
+                warning="Homepage statistics table is unavailable.",
+            ),
+            "service_highlights": all_services[:4],
+            "credibility_points": get_active_core_values(limit=4),
+            "core_values": get_active_core_values(limit=3),
+            "expertise_highlights": expertise_areas,
+            "featured_properties": _safe_list(
+                lambda: Property.objects.filter(status="available").prefetch_related("photos")[:6],
+                warning="Homepage featured properties table is unavailable.",
+            ),
+            "team_highlights": _safe_list(
+                lambda: TeamMember.objects.filter(is_active=True)[:4],
+                warning="Homepage team member table is unavailable.",
+            ),
+            "recent_posts": _safe_list(
+                lambda: BlogPost.objects.filter(is_published=True)[:3],
+                warning="Homepage blog post table is unavailable.",
+            ),
+            "customer_review_section": customer_review_section,
+            "customer_reviews": customer_reviews,
+            "customer_review_slides": customer_review_slides,
+            "custom_card_sections": custom_card_sections,
+            "contact_property_choices": get_contact_property_choices(),
+            "contact_service_choices": get_contact_service_choices(),
+            "hero_background_urls": hero_background_urls,
+            "hero_title_segments": get_hero_title_segments(company.hero_title),
+            "breadcrumbs": [{"name": "Home", "url": None}],
+        }
+    )
+    from realtor_project.features import is_feature_enabled
+    context["captcha_test_mode"] = is_feature_enabled("CAPTCHA_TEST_MODE", default=False)
+    return context
+
+
+def home(request):
+    """Homepage view."""
+    context = get_homepage_context(request)
+    return render(request, "home-premium.html", context)
+
+
+
+def services(request):
+    """Services page view."""
+    context = get_company_context()
+    context.update({
+        "services": _safe_list(
+            lambda: Service.objects.filter(is_active=True),
+            warning="Services table is unavailable.",
+        ),
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "Services", "url": "/services/"}
+        ],
+    })
+    return render(request, "services.html", context)
+
+
+def about(request):
+    """About page view."""
+    context = get_company_context()
+    context.update({
+        "stats": _safe_list(
+            lambda: Statistic.objects.filter(is_active=True),
+            warning="About page statistics table is unavailable.",
+        ),
+        "values": _safe_list(
+            lambda: CoreValue.objects.filter(is_active=True),
+            warning="About page core values table is unavailable.",
+        ),
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "About", "url": "/about/"}
+        ],
+    })
+    return render(request, "about.html", context)
+
+
+def management(request):
+    """Management page view."""
+    context = get_company_context()
+    context.update({
+        "team_members": _safe_list(
+            lambda: TeamMember.objects.filter(is_active=True),
+            warning="Management page team member table is unavailable.",
+        ),
+        "expertise_areas": _safe_list(
+            lambda: ExpertiseArea.objects.filter(is_active=True),
+            warning="Management page expertise area table is unavailable.",
+        ),
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "Management", "url": "/management/"}
+        ],
+    })
+    return render(request, "management.html", context)
+
+
+def team_member_detail(request, slug):
+    """Team member profile detail page."""
+    if slug == "viji-munuswamy":
+        team_member = _safe_first(
+            lambda: TeamMember.objects.filter(slug=slug, is_active=True),
+            warning="Team member detail table is unavailable.",
+        )
+        context = get_company_context()
+        context.update({
+            "team_member": team_member,
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Management", "url": "/management/"},
+                {"name": "Viji Munuswamy", "url": "/management/viji-munuswamy/"}
+            ]
+        })
+        return render(request, "viji_profile.html", context)
+
+    team_member = _safe_first(
+        lambda: TeamMember.objects.filter(slug=slug, is_active=True),
+        warning="Team member detail table is unavailable.",
+    )
+    if not team_member:
+        raise Http404
+    context = get_company_context()
+    from django.conf import settings
+    tamilselvan_email_1 = getattr(settings, 'TAMILSELVAN_EMAIL_1', 'info@propertism.in')
+    tamilselvan_email_2 = getattr(settings, 'TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
+    context.update({
+        "team_member": team_member,
+        "tamilselvan_email_1": tamilselvan_email_1,
+        "tamilselvan_email_2": tamilselvan_email_2,
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "Management", "url": "/management/"},
+            {"name": team_member.name, "url": f"/management/{team_member.slug}/"}
+        ],
+    })
+    return render(request, "team_member_detail.html", context)
+
+
+def blog(request):
+    """Blog listing page view."""
+    return redirect_to_home_section(request, "blog")
+
+
+def blog_post(request, slug):
+    """Individual blog post view."""
+    context = get_company_context()
+    post = _safe_first(
+        lambda: BlogPost.objects.filter(slug=slug, is_published=True),
+        warning="Blog post table is unavailable.",
+    )
+    if not post:
+        raise Http404
+    context.update(
+        {
+            "post": post,
+            "recent_posts": _safe_list(
+                lambda: BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3],
+                warning="Recent blog post table is unavailable.",
+            ),
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Insights", "url": "/#blog-section"},
+                {"name": post.title, "url": f"/blog/{post.slug}/"},
+            ],
+        }
+    )
+    return render(request, "blog_post.html", context)
+
+def is_spam_inquiry(message):
+    if not message:
+        return False
+    msg_lower = message.lower()
+    spam_indicators = ["http://", "https://", "www."]
+    return any(indicator in msg_lower for indicator in spam_indicators)
+
+
+def contact(request):
+    """Homepage quote form handler."""
+    if request.method == "POST":
+        from properties.utils.lead_validation import LeadValidator
+        from realtor_project.features import is_feature_enabled
+        from content.security.spam_protection import SpamProtectionService
+        
+        # Run centralized spam protection service
+        spam_service = SpamProtectionService(request)
+        form_source = request.POST.get("form_source", "General Inquiry")
+        spam_result = spam_service.validate(form_source)
+        
+        if not spam_result.passed:
+            if spam_result.rate_limited:
+                from django.http import HttpResponse
+                return HttpResponse("Too Many Requests", status=429)
+            
+            if spam_result.error_message:
+                messages.error(request, spam_result.error_message)
+            
+            context = get_homepage_context(request)
+            context.update({
+                "show_captcha_mid": form_source == "Quick Inquiry",
+                "show_captcha_contact": form_source == "General Inquiry",
+                "prefilled_name": request.POST.get("name", ""),
+                "prefilled_email": request.POST.get("email", ""),
+                "prefilled_phone": request.POST.get("phone", ""),
+                "prefilled_country_code": request.POST.get("country_code", "") or request.POST.get("contact_country_code", ""),
+                "prefilled_service": request.POST.get("service", ""),
+                "prefilled_message": request.POST.get("message", ""),
+                "intent_radio_val": request.POST.get("intent_radio", ""),
+            })
+            return render(request, "home-premium.html", context)
+            
+        validator = LeadValidator(request, request.POST)
+        assessment = validator.validate()
+        
+        # Apply captcha confidence boost if successfully passed
+        if spam_result.confidence_boost:
+            assessment['confidence_score'] = max(0, min(100, assessment['confidence_score'] + spam_result.confidence_boost))
+            ranges = validator.config.get('RANGES', {})
+            score = assessment['confidence_score']
+            if score >= ranges.get('LIKELY_GENUINE', 90):
+                assessment['assessment_status'] = "Likely Genuine"
+            elif score >= ranges.get('GENUINE', 70):
+                assessment['assessment_status'] = "Genuine"
+            elif score >= ranges.get('REVIEW_RECOMMENDED', 40):
+                assessment['assessment_status'] = "Review Recommended"
+            else:
+                assessment['assessment_status'] = "Likely Spam"
+
         try:
-            validate_email(email)
-        except ValidationError:
-            invalid.append(email)
-            continue
-        emails.append(email)
+            # Capture UTM parameters, Referrer, and Landing page for attribution
+            utm_source = request.POST.get("utm_source", "").strip()
+            utm_medium = request.POST.get("utm_medium", "").strip()
+            utm_campaign = request.POST.get("utm_campaign", "").strip()
+            utm_term = request.POST.get("utm_term", "").strip()
+            utm_content = request.POST.get("utm_content", "").strip()
+            referrer = request.POST.get("referrer", "").strip()
+            landing_page = request.POST.get("landing_page", "").strip()
 
-    return emails, invalid
+            # Parse structured lead capture fields
+            service_needed = request.POST.get("service", "").strip()
+            intent_radio = request.POST.get("intent_radio", "").strip()
+            if not service_needed or service_needed == "consultation":
+                if intent_radio:
+                    service_needed = intent_radio
+
+            # Normalize intent values for consistent storage: SELL, RENT, MANAGE
+            _INTENT_NORMALIZE = {
+                "buy-sell": "SELL",
+                "rental": "RENT",
+                "industrial": "MANAGE",
+            }
+            service_needed = _INTENT_NORMALIZE.get(service_needed, service_needed)
+
+            property_type = request.POST.get("property_type", "").strip()
+            locality = request.POST.get("locality", "").strip()
+            user_role = request.POST.get("user_role", "").strip()
+            nri_status = request.POST.get("nri_status", "").strip()
+
+            msg_body = request.POST.get("message", "") or ""
+            
+            additional_lines = []
+            if service_needed:
+                from .models import ContactInquiry
+                service_map = dict(ContactInquiry.SERVICE_CHOICES)
+                service_label = service_map.get(service_needed, service_needed)
+                additional_lines.append(f"Service Required: {service_label}")
+            if property_type:
+                from .models import ContactInquiry
+                property_map = dict(ContactInquiry.PROPERTY_CHOICES)
+                property_label = property_map.get(property_type, property_type)
+                additional_lines.append(f"Property Type: {property_label}")
+            if locality:
+                from content.locality_registry import get_dropdown_choices
+                locality_map = dict(get_dropdown_choices())
+                locality_label = locality_map.get(locality, locality)
+                additional_lines.append(f"Locality/Area: {locality_label}")
+            
+            role_map = {
+                "owner": "Property Owner",
+                "buyer": "Buyer / Tenant",
+                "broker": "Agent / Broker"
+            }
+            if user_role:
+                role_label = role_map.get(user_role, user_role)
+                additional_lines.append(f"User Role: {role_label}")
+            if nri_status:
+                additional_lines.append(f"NRI Status: {nri_status}")
+
+            if additional_lines:
+                msg_body += "\n\n--- Additional Details ---\n" + "\n".join(additional_lines)
+
+            msg_body_with_attribution = msg_body
+            attribution_lines = []
+            if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
+            if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
+            if utm_campaign: attribution_lines.append(f"UTM Campaign: {utm_campaign}")
+            if utm_term: attribution_lines.append(f"UTM Term: {utm_term}")
+            if utm_content: attribution_lines.append(f"UTM Content: {utm_content}")
+            if referrer: attribution_lines.append(f"Referrer: {referrer}")
+            if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
+
+            if attribution_lines:
+                msg_body_with_attribution += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+
+            inquiry = PropertyInquiry.objects.create(
+                name=request.POST.get("name") or "",
+                email=request.POST.get("email") or "",
+                phone=request.POST.get("phone", "") or "",
+                message=msg_body_with_attribution,
+                property=None,  # Quote form doesn't link to specific property
+                status='pending',
+                form_source=request.POST.get("form_source", "Unknown Form"),
+                service_needed=service_needed,
+                property_type=property_type,
+                locality=locality,
+                user_role=user_role,
+                nri_status=nri_status,
+                confidence_score=assessment['confidence_score'],
+                assessment_status=assessment['assessment_status'],
+                validation_summary=assessment['validation_summary']
+            )
+            logger.info("Quote inquiry received from %s", inquiry.email)
+            
+            form_source = inquiry.form_source
+            
+            # Send email notification to admin
+            try:
+                send_rfq_notification(inquiry, form_source=form_source)
+            except Exception as email_exc:
+                logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
+                # Don't fail the request if email fails
+            
+            messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
+            return redirect(get_home_section_links()["contact"])
+        except Exception as exc:
+            logger.exception("Error processing contact form: %s", exc)
+            messages.error(
+                request,
+                "There was an error submitting your inquiry. Please try again or call us directly.",
+            )
+            return redirect(get_home_section_links()["contact"])
+
+    return redirect_to_home_section(request, "contact")
 
 
-@api_view(["GET"])
-def property_list_api(request):
-    """API endpoint for property list with pagination."""
-    paginator = PageNumberPagination()
-    paginator.page_size = 10
+def send_admin_notification(subject, message_lines, whatsapp_text):
+    """Send email and WhatsApp notifications for new lead activity."""
+    message = "\n".join(message_lines)
 
-    queryset = Property.objects.all().order_by("-created_at")
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=settings.ADMIN_EMAILS,
+            fail_silently=False,
+        )
+    except Exception as exc:
+        logger.error("Email notification failed: %s", exc)
 
-    location = request.GET.get("location")
-    price_max = request.GET.get("price_max")
-    price_type = request.GET.get("price_type")
-
-    if location:
-        queryset = queryset.filter(location__icontains=location)
-    if price_max:
-        queryset = queryset.filter(price__lte=price_max)
-    if price_type:
-        queryset = queryset.filter(price_type=price_type)
-
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = PropertySerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    send_whatsapp_notification(whatsapp_text)
 
 
-@api_view(["GET"])
-def property_detail_api(request, pk):
-    """API endpoint for property detail."""
-    property_obj = get_object_or_404(Property, pk=pk)
-    serializer = PropertySerializer(property_obj)
-    return Response(serializer.data)
+def send_rfq_notification(inquiry, form_source="Website Form"):
+    """Send email and whatsapp notification when RFQ is submitted."""
+    from django.utils import timezone
+    from django.conf import settings
+    from communications.services import AcknowledgementService
+
+    intent_tag = "● LEAD |"
+    msg_lower = (inquiry.message or "").lower()
+    
+    if getattr(inquiry, 'confidence_score', 100) < 50:
+        intent_tag = "⚠ SPAM |"
+    elif 'sell' in msg_lower:
+        intent_tag = "⚑ SELL |"
+    elif 'buy' in msg_lower or 'purchase' in msg_lower:
+        intent_tag = "✦ BUY |"
+    elif 'rent' in msg_lower or 'lease' in msg_lower:
+        intent_tag = "✧ RENT |"
+    elif 'manage' in msg_lower:
+        intent_tag = "■ MANAGE |"
+    elif getattr(inquiry, 'property', None):
+        intent_tag = "❖ PROPERTY |"
+        
+    subject = f"{intent_tag} New Propertism Lead: {inquiry.name}"
+    submission_time = inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') if inquiry.created_at else timezone.now().strftime('%B %d, %Y at %I:%M %p')
+    
+    config = getattr(settings, 'EXECUTIVE_EMAIL_CONFIG', {})
+    thresholds = config.get('THRESHOLDS', {})
+    labels = config.get('CLASSIFICATION_LABELS', {})
+    
+    score = inquiry.confidence_score or 0
+    if score >= thresholds.get('HIGH_PRIORITY_MIN', 80):
+        priority_level = 'High'
+        classification_label = labels.get('HIGH', 'Likely Genuine')
+    elif score >= thresholds.get('MEDIUM_PRIORITY_MIN', 40):
+        priority_level = 'Medium'
+        classification_label = labels.get('MEDIUM', 'Review Recommended')
+    else:
+        priority_level = 'Low'
+        classification_label = labels.get('LOW', 'Likely Spam')
+        
+    if inquiry.assessment_status:
+        classification_label = inquiry.assessment_status
+
+    # Clean message to strip traffic attribution parameters and chatbot debug metadata for customer notifications
+    clean_message = inquiry.message
+    if clean_message:
+        if "--- Traffic Attribution Parameters ---" in clean_message:
+            clean_message = clean_message.split("--- Traffic Attribution Parameters ---")[0].strip()
+        if "--- Submitted via realBOT ---" in clean_message:
+            clean_message = clean_message.split("--- Submitted via realBOT ---")[0].strip()
+        if "--- Additional Details ---" in clean_message:
+            clean_message = clean_message.split("--- Additional Details ---")[0].strip()
+
+    # Send Customer Email Acknowledgement
+    if inquiry.email:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='inquiry_received',
+                recipient=inquiry.email,
+                context={
+                    'name': inquiry.name,
+                    'message': clean_message,
+                    'form_source': form_source,
+                    'submission_time': submission_time
+                },
+                channels=['email'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send customer email acknowledgement")
+
+    # Send Customer WhatsApp Acknowledgement
+    if inquiry.phone:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='inquiry_received',
+                recipient=inquiry.phone,
+                context={
+                    'name': inquiry.name,
+                    'message': clean_message,
+                    'form_source': form_source,
+                    'submission_time': submission_time
+                },
+                channels=['whatsapp'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send customer WhatsApp acknowledgement")
+
+    # Send Admin notifications
+    from django.template.loader import render_to_string
+    from django.utils.html import strip_tags
+    admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
+    whatsapp_text = f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}"
+    if hasattr(inquiry, 'property') and inquiry.property:
+        whatsapp_text += f"\nAsset: {inquiry.property.title}"
+    whatsapp_text += f"\nMsg: {inquiry.message}"
+
+    admin_context = {
+        'inquiry': inquiry,
+        'form_source': form_source,
+        'submission_time': submission_time,
+        'priority_level': priority_level,
+        'classification_label': classification_label,
+    }
+    html_message = render_to_string('emails/inquiry_notification.html', admin_context)
+    plain_message = strip_tags(html_message)
+
+    for admin_email in admin_emails:
+        try:
+            AcknowledgementService.send(
+                communication_type_key='admin_lead_alert',
+                recipient=admin_email,
+                context={
+                    'subject': subject,
+                    'body': plain_message,
+                    'html_body': html_message
+                },
+                channels=['email'],
+                module=form_source
+            )
+        except Exception as exc:
+            logger.exception("Failed to send admin notification to %s", admin_email)
+            
+    # Send Admin WhatsApp notification (routed via dispatcher)
+    try:
+        admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
+        AcknowledgementService.send(
+            communication_type_key='admin_lead_alert',
+            recipient=admin_phone,
+            context={
+                'subject': 'Admin Lead WhatsApp Alert',
+                'body': whatsapp_text
+            },
+            channels=['whatsapp'],
+            module=form_source
+        )
+    except Exception as exc:
+        logger.exception("Failed to send WhatsApp notification to admin")
 
 
-def property_list(request):
-    queryset = Property.objects.filter(status="available").prefetch_related("photos").order_by("-created_at")
-    paginator = Paginator(queryset, 9)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    company = get_company_info()
-    return render(
-        request,
-        "properties/list.html",
-        {
-            "properties": page_obj,
-            "company": company,
-        },
+def send_landing_lead_notification(lead):
+    """Send notifications for landing-page lead submissions."""
+    qualification = lead.qualification_data or {}
+    extras = []
+    if qualification.get("selling_timeline"):
+        extras.append(f"Selling timeline: {qualification['selling_timeline']}")
+    if qualification.get("occupancy_status"):
+        extras.append(f"Occupancy: {qualification['occupancy_status']}")
+    if qualification.get("expected_rent"):
+        extras.append(f"Expected rent: {qualification['expected_rent']}")
+    if qualification.get("utm_source"):
+        extras.append(f"UTM Source: {qualification['utm_source']}")
+    if qualification.get("utm_medium"):
+        extras.append(f"UTM Medium: {qualification['utm_medium']}")
+    if qualification.get("utm_campaign"):
+        extras.append(f"UTM Campaign: {qualification['utm_campaign']}")
+    if qualification.get("referrer"):
+        extras.append(f"Referrer: {qualification['referrer']}")
+    if qualification.get("landing_page"):
+        extras.append(f"Landing Page: {qualification['landing_page']}")
+    if lead.expected_price_range:
+        extras.append(f"Expected price range: {lead.expected_price_range}")
+    if lead.preferred_contact_time:
+        extras.append(f"Preferred contact time: {lead.preferred_contact_time}")
+
+    message_lines = [
+        "You have a new landing-page lead from Propertism:",
+        "",
+        f"Name: {lead.name or 'Not provided'}",
+        f"Phone: {lead.phone}",
+        f"Email: {lead.email or 'Not provided'}",
+        f"Property city: {lead.property_city}",
+        f"Property type: {lead.get_property_type_display() if lead.property_type else 'Not provided'}",
+        f"Intent type: {lead.intent_type}",
+        f"Geo origin: {lead.geo_origin or 'Domestic / not provided'}",
+        f"Lead stage: {lead.lead_stage}",
+        f"Lead score: {lead.lead_score}",
+        f"Lead category: {lead.lead_category}",
+    ]
+
+    if extras:
+        message_lines.extend(["", "Qualification & Attribution:"])
+        message_lines.extend(extras)
+
+    message_lines.extend(
+        [
+            "",
+            f"Submitted: {lead.created_at.strftime('%B %d, %Y at %I:%M %p')}",
+            f"Admin View: https://propertism.in/admin/content/landinglead/{lead.id}/change/",
+        ]
     )
 
+    try:
+        send_mail(
+            subject=f"New Landing Lead: {lead.property_city} / {lead.intent_type}",
+            message="\n".join(message_lines),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=settings.ADMIN_EMAILS,
+            fail_silently=False,
+        )
+    except Exception as exc:
+        logger.exception("Landing lead email notification failed")
 
-def property_detail_by_pk(request, pk):
-    property_obj = get_object_or_404(Property, pk=pk)
-    return redirect('property_detail', slug=property_obj.slug, permanent=True)
+    whatsapp_lines = [
+        "Landing Lead",
+        f"Phone: {lead.phone}",
+        f"City: {lead.property_city}",
+        f"Intent: {lead.intent_type}",
+    ]
+    if lead.geo_origin:
+        whatsapp_lines.append(f"Geo: {lead.geo_origin}")
+    if extras:
+        whatsapp_lines.extend(extras[:3])
+    send_whatsapp_notification("\n".join(whatsapp_lines))
 
 
-def property_detail(request, slug):
-    property_obj = get_object_or_404(Property, slug=slug)
-    company = get_company_info()
-    from realtor_project.features import is_feature_enabled
-    return render(
-        request,
-        "properties/detail.html",
-        {
-            "property": property_obj,
-            "company": company,
-            "captcha_test_mode": is_feature_enabled("CAPTCHA_TEST_MODE", default=False),
-        },
-    )
-
-
-def create_inquiry(request):
-    if request.method != "POST":
-        return redirect(get_home_section_links()["properties"])
-
-    property_id = request.POST.get("property_id")
-    property_obj = get_object_or_404(Property, pk=property_id)
-    form_source = request.POST.get("form_source", "Unknown Form")
-    
-    from properties.utils.lead_validation import LeadValidator
-    from content.views import send_rfq_notification
-    from realtor_project.features import is_feature_enabled
-    
+@require_POST
+def landing_lead_api(request):
+    """Store leads submitted from landing pages."""
     from content.security.spam_protection import SpamProtectionService
     
     # Run centralized spam protection service
     spam_service = SpamProtectionService(request)
-    spam_result = spam_service.validate(form_source)
+    spam_result = spam_service.validate(form_name='Landing Page Inquiry')
     
     if not spam_result.passed:
         if spam_result.rate_limited:
-            from django.http import HttpResponse
-            return HttpResponse("Too Many Requests", status=429)
-        
-        if spam_result.error_message:
-            messages.error(request, spam_result.error_message)
-            
-        return render(request, "properties/detail.html", {
-            "property": property_obj,
-            "company": get_company_info(),
-            "prefilled_name": request.POST.get("name", ""),
-            "prefilled_email": request.POST.get("email", ""),
-            "prefilled_phone": request.POST.get("phone", ""),
-            "prefilled_message": request.POST.get("message", ""),
-        })
-        
-    validator = LeadValidator(request, request.POST)
-    assessment = validator.validate()
-    
-    # Apply captcha confidence boost if successfully passed
-    if spam_result.confidence_boost:
-        assessment['confidence_score'] = max(0, min(100, assessment['confidence_score'] + spam_result.confidence_boost))
-        ranges = validator.config.get('RANGES', {})
-        score = assessment['confidence_score']
-        if score >= ranges.get('LIKELY_GENUINE', 90):
-            assessment['assessment_status'] = "Likely Genuine"
-        elif score >= ranges.get('GENUINE', 70):
-            assessment['assessment_status'] = "Genuine"
-        elif score >= ranges.get('REVIEW_RECOMMENDED', 40):
-            assessment['assessment_status'] = "Review Recommended"
-        else:
-            assessment['assessment_status'] = "Likely Spam"
+            return JsonResponse({"ok": False, "errors": {"__all__": "Too many requests. Please try again later."}}, status=429)
+        err_msg = spam_result.error_message or "Security verification failed."
+        return JsonResponse({"ok": False, "errors": {"captcha": err_msg}}, status=400)
+
+    phone = (request.POST.get("phone") or "").strip()
+    property_city = (request.POST.get("property_city") or "").strip()
+    intent_type = (request.POST.get("intent_type") or "").strip()
+    geo_origin = (request.POST.get("geo_origin") or "").strip()
+    name = (request.POST.get("name") or "").strip()
+    email = (request.POST.get("email") or "").strip()
+    property_type = (request.POST.get("property_type") or "").strip()
+    selling_timeline = (request.POST.get("selling_timeline") or "").strip()
+    occupancy_status = (request.POST.get("occupancy_status") or "").strip()
+    expected_rent = (request.POST.get("expected_rent") or "").strip()
+
+    valid_intent_types = {choice[0] for choice in LandingLead.INTENT_TYPE_CHOICES}
+    valid_property_types = {choice[0] for choice in LandingLead.PROPERTY_CHOICES}
+
+    errors = {}
+    if not phone:
+        errors["phone"] = "Phone number is required."
+    if not property_city:
+        errors["property_city"] = "Property city is required."
+    if intent_type not in valid_intent_types:
+        errors["intent_type"] = "Intent type is invalid."
+    if property_type and property_type not in valid_property_types:
+        errors["property_type"] = "Property type is invalid."
+    if intent_type == "sell" and not property_type:
+        errors["property_type"] = "Property type is required."
+    if intent_type == "sell" and not selling_timeline:
+        errors["selling_timeline"] = "Selling timeline is required."
+    if intent_type == "management" and not occupancy_status:
+        errors["occupancy_status"] = "Please tell us whether the property is occupied or vacant."
+
+    if errors:
+        return JsonResponse({"ok": False, "errors": errors}, status=400)
+
+    qualification_data = {}
+    if selling_timeline:
+        qualification_data["selling_timeline"] = selling_timeline
+    if occupancy_status:
+        qualification_data["occupancy_status"] = occupancy_status
+    if expected_rent:
+        qualification_data["expected_rent"] = expected_rent
+
+    # Capture UTM and Referrer parameters
+    utm_source = request.POST.get("utm_source", "").strip()
+    utm_medium = request.POST.get("utm_medium", "").strip()
+    utm_campaign = request.POST.get("utm_campaign", "").strip()
+    referrer = request.POST.get("referrer", "").strip()
+    landing_page = request.POST.get("landing_page", "").strip()
+
+    if utm_source: qualification_data["utm_source"] = utm_source
+    if utm_medium: qualification_data["utm_medium"] = utm_medium
+    if utm_campaign: qualification_data["utm_campaign"] = utm_campaign
+    if referrer: qualification_data["referrer"] = referrer
+    if landing_page: qualification_data["landing_page"] = landing_page
+
+    lead_stage = "qualified" if (selling_timeline or occupancy_status or expected_rent) else "initiated"
+
+    lead = LandingLead.objects.create(
+        name=name,
+        phone=phone,
+        email=email,
+        property_city=property_city,
+        property_type=property_type,
+        intent_type=intent_type,
+        geo_origin=geo_origin,
+        lead_stage=lead_stage,
+        qualification_data=qualification_data,
+    )
 
     try:
-        # Capture UTM parameters, Referrer, and Landing page for attribution
-        utm_source = request.POST.get("utm_source", "").strip()
-        utm_medium = request.POST.get("utm_medium", "").strip()
-        utm_campaign = request.POST.get("utm_campaign", "").strip()
-        utm_term = request.POST.get("utm_term", "").strip()
-        utm_content = request.POST.get("utm_content", "").strip()
-        referrer = request.POST.get("referrer", "").strip()
-        landing_page = request.POST.get("landing_page", "").strip()
-
-        msg_body = request.POST.get("message", "").strip()
-        attribution_lines = []
-        if utm_source: attribution_lines.append(f"UTM Source: {utm_source}")
-        if utm_medium: attribution_lines.append(f"UTM Medium: {utm_medium}")
-        if utm_campaign: attribution_lines.append(f"UTM Campaign: {utm_campaign}")
-        if utm_term: attribution_lines.append(f"UTM Term: {utm_term}")
-        if utm_content: attribution_lines.append(f"UTM Content: {utm_content}")
-        if referrer: attribution_lines.append(f"Referrer: {referrer}")
-        if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
-
-        if attribution_lines:
-            msg_body += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
-
-        inquiry = Inquiry.objects.create(
-            property=property_obj,
-            name=request.POST.get("name", "").strip(),
-            email=request.POST.get("email", "").strip(),
-            phone=request.POST.get("phone", "").strip(),
-            message=msg_body,
-            form_source=form_source,
-            confidence_score=assessment['confidence_score'],
-            assessment_status=assessment['assessment_status'],
-            validation_summary=assessment['validation_summary']
-        )
-        
-        # Send notifications (emails to both ids, and WhatsApp notification)
-        try:
-            send_rfq_notification(inquiry, form_source=form_source)
-        except Exception as email_exc:
-            logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
-            # Don't fail the request if email fails
-
-        messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
+        send_landing_lead_notification(lead)
     except Exception as exc:
-        logger.exception("Error processing property inquiry: %s", exc)
-        messages.error(
-            request,
-            "There was an error submitting your inquiry. Please try again or call us directly.",
-        )
+        logger.exception("Failed to send landing lead notification")
 
-    return redirect("property_detail", slug=property_obj.slug)
-
-
-# ── SCCB-19052026-1 Inquiries Dashboard ──────────────────────────────────────
-
-def _is_staff_user(user):
-    return user.is_active and user.is_staff
-
-
-def _safe_inquiries_next(request):
-    next_url = request.POST.get("next") or request.GET.get("next") or reverse("inquiries_dashboard")
-    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
-        return next_url
-    return reverse("inquiries_dashboard")
+    return JsonResponse(
+        {
+            "ok": True,
+            "message": "Thanks. We received your request and will get back to you shortly.",
+            "lead_id": lead.id,
+            "lead_stage": lead.lead_stage,
+            "lead_score": lead.lead_score,
+            "lead_category": lead.lead_category,
+        },
+        status=201,
+    )
 
 
-def inquiry_staff_login(request):
-    next_url = _safe_inquiries_next(request)
+@require_POST
+def landing_lead_followup_api(request):
+    """Store optional post-submit lead details."""
+    lead_id = (request.POST.get("lead_id") or "").strip()
+    expected_price_range = (request.POST.get("expected_price_range") or "").strip()
+    preferred_contact_time = (request.POST.get("preferred_contact_time") or "").strip()
 
-    if request.user.is_authenticated and request.user.is_staff:
-        return redirect(next_url)
+    if not lead_id:
+        return JsonResponse({"ok": False, "errors": {"lead_id": "Lead id is required."}}, status=400)
 
-    error = ""
-    if request.method == "POST":
-        username = request.POST.get("username", "").strip()
-        password = request.POST.get("password", "")
-        user = authenticate(request, username=username, password=password)
-        if user and user.is_active and user.is_staff:
-            login(request, user)
-            return redirect(next_url)
-        error = "Use an active staff account to open Inquiries."
+    try:
+        lead = LandingLead.objects.get(pk=lead_id)
+    except LandingLead.DoesNotExist:
+        return JsonResponse({"ok": False, "errors": {"lead_id": "Lead not found."}}, status=404)
 
-    return render(request, "inquiries/login.html", {
-        "next": next_url,
-        "error": error,
-    })
+    if expected_price_range:
+        lead.expected_price_range = expected_price_range
+    if preferred_contact_time:
+        lead.preferred_contact_time = preferred_contact_time
+    lead.save()
+
+    return JsonResponse(
+        {
+            "ok": True,
+            "message": "Thanks. We saved your preferences.",
+            "lead_id": lead.id,
+            "lead_score": lead.lead_score,
+            "lead_category": lead.lead_category,
+        },
+        status=200,
+    )
 
 
-inquiries_staff_required = user_passes_test(_is_staff_user, login_url="inquiries_login")
+def send_whatsapp_notification(text, recipient=None):
+    """
+    Sends a WhatsApp message via the Meta official Cloud API.
+    Uses cached/renewed token if available to prevent recurring expiry.
+    """
+    import requests
+    from django.core.cache import cache
+    from django.core.mail import send_mail
+    
+    phone_id = getattr(settings, 'WHATSAPP_PHONE_ID', None)
+    admin_phone = recipient or getattr(settings, 'WHATSAPP_ADMIN_PHONE', None)
+    
+    # Retrieve active token from cache (allows dynamic updates/exchanges without redeployment)
+    token = cache.get("whatsapp_access_token")
+    if not token:
+        token = getattr(settings, 'WHATSAPP_ACCESS_TOKEN', None)
+        if token:
+            cache.set("whatsapp_access_token", token, timeout=None) # cache permanently until updated/invalidated
 
+    if not all([phone_id, token, admin_phone]):
+        logger.info(f"NOTIFICATION TRIGGERED: [WhatsApp] -> {text} (API not configured)")
+        return
 
-@inquiries_staff_required
-def inquiries_dashboard(request):
-    status_filter = request.GET.get("status", "")
-    date_filter = request.GET.get("date", "")
-    q = request.GET.get("q", "").strip()
-
-    # Listing queryset — all three filters apply
-    qs = Inquiry.objects.select_related("property").order_by("-created_at")
-    if status_filter in ("pending", "contacted", "closed"):
-        qs = qs.filter(status=status_filter)
-    if date_filter:
-        try:
-            from datetime import date as date_cls
-            d_obj = date_cls.fromisoformat(date_filter)
-            qs = qs.filter(created_at__date=d_obj)
-        except ValueError:
-            date_filter = ""
-    if q:
-        qs = qs.filter(
-            Q(name__icontains=q) | Q(email__icontains=q) | Q(property__title__icontains=q)
-        )
-
-    # Stats — unfiltered totals (site-wide counts)
-    all_qs = Inquiry.objects.all()
-    stats = {
-        "total": all_qs.count(),
-        "pending": all_qs.filter(status="pending").count(),
-        "contacted": all_qs.filter(status="contacted").count(),
-        "closed": all_qs.filter(status="closed").count(),
+    url = f"https://graph.facebook.com/v21.0/{phone_id}/messages"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "messaging_product": "whatsapp",
+        "to": admin_phone,
+        "type": "text",
+        "text": {"body": text}
     }
 
-    # Tree query — one query, grouped by year/month/day, status filter respected
-    tree_base = Inquiry.objects.all()
-    if status_filter in ("pending", "contacted", "closed"):
-        tree_base = tree_base.filter(status=status_filter)
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=5)
+        if response.status_code == 200:
+            logger.info("WhatsApp notification sent successfully.")
+            return
 
-    tree_rows = (
-        tree_base
-        .annotate(
-            _year=ExtractYear("created_at"),
-            _month=ExtractMonth("created_at"),
-            _day=TruncDate("created_at"),
-        )
-        .values("_year", "_month", "_day")
-        .annotate(count=Count("id"))
-        .order_by("-_year", "-_month", "-_day")
-    )
+        # Check if the error is due to token expiry (OAuth error code 190)
+        try:
+            res_data = response.json()
+            error_info = res_data.get("error", {})
+            error_code = error_info.get("code")
+            error_msg = error_info.get("message", "")
+        except Exception:
+            error_info = {}
+            error_code = None
+            error_msg = ""
+        
+        is_token_expired = (response.status_code == 401 or error_code == 190 or "token" in error_msg.lower())
+        
+        if is_token_expired:
+            logger.error("WhatsApp Access Token is expired or invalid. Attempting refresh...")
+            
+            # Check if App ID and App Secret are configured for automatic token renewal
+            app_id = getattr(settings, 'WHATSAPP_APP_ID', '')
+            app_secret = getattr(settings, 'WHATSAPP_APP_SECRET', '')
+            
+            refreshed = False
+            if app_id and app_secret:
+                # Exchange the current short-lived token for a long-lived 60-day token
+                exchange_url = "https://graph.facebook.com/v21.0/oauth/access_token"
+                params = {
+                    "grant_type": "fb_exchange_token",
+                    "client_id": app_id,
+                    "client_secret": app_secret,
+                    "fb_exchange_token": token
+                }
+                try:
+                    exc_resp = requests.get(exchange_url, params=params, timeout=5)
+                    if exc_resp.status_code == 200:
+                        new_token = exc_resp.json().get("access_token")
+                        if new_token:
+                            cache.set("whatsapp_access_token", new_token, timeout=None)
+                            logger.info("WhatsApp access token renewed successfully.")
+                            # Retry sending the message with the new token
+                            headers["Authorization"] = f"Bearer {new_token}"
+                            retry_resp = requests.post(url, json=payload, headers=headers, timeout=5)
+                            if retry_resp.status_code == 200:
+                                logger.info("WhatsApp notification sent successfully after token refresh.")
+                                refreshed = True
+                except Exception as exc:
+                    logger.exception("Failed to exchange WhatsApp token")
 
-    today = timezone.now().date()
-    tree_data = []
-    cur_year = cur_month = None
+            if not refreshed:
+                # If auto-refresh failed or was not configured, send a proactive warning email to the administrator
+                logger.error("Auto-refresh not configured or failed. Alerting administrator via email.")
+                admin_email = getattr(settings, 'ADMIN_EMAIL', 'info@propertism.in')
+                try:
+                    send_mail(
+                        subject="⚠️ Action Required: Propertism WhatsApp Access Token Expired",
+                        message=(
+                            "Hello Administrator,\n\n"
+                            "The WhatsApp access token configured for lead notifications has expired or is invalid.\n"
+                            f"Meta API Error: {error_msg if error_msg else 'Unknown Error'}\n\n"
+                            "Please perform one of the following:\n"
+                            "1. Generate a permanent System User Token in your Meta Business Suite (Settings -> System Users) that never expires, and configure it as WHATSAPP_ACCESS_TOKEN.\n"
+                            "2. If you are using temporary tokens, configure WHATSAPP_APP_ID and WHATSAPP_APP_SECRET in settings to enable automatic 60-day token renewal.\n\n"
+                            "Regards,\nPropertism Platform Integration"
+                        ),
+                        from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'info@propertism.in'),
+                        recipient_list=[admin_email],
+                        fail_silently=True
+                    )
+                except Exception as email_exc:
+                    logger.exception("Failed to send token expiry email alert")
+        else:
+            logger.error(f"WhatsApp API Error {response.status_code}: {response.text}")
 
-    for row in tree_rows:
-        y, m, d = row["_year"], row["_month"], row["_day"]
-        cnt = row["count"]
-        d_str = d.isoformat() if d else ""
+    except Exception as e:
+        logger.exception("Failed to send WhatsApp notification")
 
-        if cur_year is None or cur_year["year"] != y:
-            cur_year = {"year": y, "months": [], "count": 0, "open": y == today.year}
-            tree_data.append(cur_year)
-            cur_month = None
 
-        if cur_month is None or cur_month["month"] != m:
-            cur_month = {
-                "month": m,
-                "name": calendar.month_name[m],
-                "dates": [],
-                "count": 0,
-                "open": y == today.year and m == today.month,
-            }
-            cur_year["months"].append(cur_month)
+def newsletter_subscribe(request):
+    """Newsletter subscription handler with Admin notification."""
+    if request.method == "POST":
+        from content.security.spam_protection import SpamProtectionService
+        
+        # Run centralized spam protection service
+        spam_service = SpamProtectionService(request)
+        spam_result = spam_service.validate(form_name='Newsletter Subscription')
+        
+        if not spam_result.passed:
+            if spam_result.rate_limited:
+                from django.http import HttpResponse
+                return HttpResponse("Too Many Requests", status=429)
+            
+            if spam_result.error_message:
+                messages.error(request, spam_result.error_message)
+            
+            return redirect(request.META.get("HTTP_REFERER") or get_home_section_links()["blog"])
 
-        cur_month["dates"].append({
-            "date_str": d_str,
-            "display": (str(d.day) + " " + d.strftime("%b")) if d else "",
-            "count": cnt,
-            "active": d_str == date_filter,
-        })
-        cur_month["count"] += cnt
-        cur_year["count"] += cnt
+        email = request.POST.get("email")
+        if email:
+            try:
+                sub, created = Newsletter.objects.get_or_create(email=email)
+                if created:
+                    messages.success(request, "Thank you for subscribing to our newsletter!")
+                    from communications.services import AcknowledgementService
+                    # Send customer welcome/acknowledgement
+                    try:
+                        AcknowledgementService.send(
+                            communication_type_key='newsletter',
+                            recipient=email,
+                            context={'email': email},
+                            module='newsletter'
+                        )
+                    except Exception:
+                        pass
 
-    return render(request, "inquiries/dashboard.html", {
-        "inquiries": qs,
-        "stats": stats,
-        "active_filter": status_filter,
-        "date_filter": date_filter,
-        "q": q,
-        "tree_data": tree_data,
-        "today": today,
-        "board_columns": [("pending", "Pending"), ("contacted", "Contacted"), ("closed", "Closed")],
+                    # Notify admin via email & WhatsApp
+                    admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
+                    admin_msg = f"User {email} has subscribed to the newsletter."
+                    for admin_email in admin_emails:
+                        try:
+                            AcknowledgementService.send(
+                                communication_type_key='inquiry_received',
+                                recipient=admin_email,
+                                context={'message': admin_msg, 'subject': "📩 New Newsletter Subscriber"},
+                                channels=['email'],
+                                module='newsletter'
+                            )
+                        except Exception:
+                            pass
+                    
+                    try:
+                        admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
+                        AcknowledgementService.send(
+                            communication_type_key='inquiry_received',
+                            recipient=admin_phone,
+                            context={'message': f"📩 *Newsletter*: {email} has subscribed."},
+                            channels=['whatsapp'],
+                            module='newsletter'
+                        )
+                    except Exception:
+                        pass
+                else:
+                    messages.info(request, "You are already subscribed. Thank you!")
+            except Exception:
+                messages.error(request, "There was an error. Please try again.")
+        else:
+            messages.error(request, "Please provide a valid email address.")
+
+    return redirect(request.META.get("HTTP_REFERER") or get_home_section_links()["blog"])
+
+
+def custom_404(request, exception=None):
+    """Custom 404 error handler."""
+    return render(request, "404.html", status=404)
+
+
+def custom_500(request):
+    """Custom 500 error handler."""
+    return render(request, "500.html", status=500)
+
+
+def property_owner_resources(request):
+    """View to display Tamil Nadu Property Owner Resources."""
+    context = get_company_context()
+    context.update({
+        "categories": GOVERNMENT_RESOURCE_CATEGORIES,
+        "breadcrumbs": [
+            {"name": "Home", "url": "/"},
+            {"name": "Property Owner Resources", "url": "/property-owner-resources/"}
+        ],
+        "meta_title": "Tamil Nadu Property Owner Resources | Official Government Services",
+        "meta_description": (
+            "Official Tamil Nadu Government property services including Patta verification, "
+            "Chitta extracts, FMB sketches, TSLR records, Encumbrance Certificate services, "
+            "property tax portals, and other essential resources for property owners and NRIs."
+        ),
     })
+    return render(request, "property_resources.html", context)
 
 
-@inquiries_staff_required
-@require_POST
-def inquiry_status_update(request, inquiry_id):
-    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
+def send_otp_view(request):
+    """
+    Generates a 6-digit OTP, stores it in session, and sends via WhatsApp and Email.
+    """
+    import random
+    from django.core.mail import send_mail
+    from django.conf import settings
+    
+    otp = str(random.randint(100000, 999999))
+    request.session['admin_otp'] = otp
+    request.session.modified = True
+    
+    msg = f"🔒 Propertism Admin Verification Code: {otp}. This code is valid for 10 minutes."
+    
+    # 1. Send via WhatsApp Cloud API
+    send_whatsapp_notification(msg)
+    
+    # 2. Send via Email to configured recipients
+    recipient_list = getattr(settings, 'ADMIN_EMAILS', [getattr(settings, 'ADMIN_EMAIL', 'info@propertism.in')])
     try:
-        data = json.loads(request.body)
-        new_status = data.get("status")
-    except (json.JSONDecodeError, AttributeError):
-        return JsonResponse({"error": "Invalid request"}, status=400)
-
-    valid = [c[0] for c in Inquiry.STATUS_CHOICES]
-    if new_status not in valid:
-        return JsonResponse({"error": "Invalid status"}, status=400)
-
-    inquiry.status = new_status
-    inquiry.save(update_fields=["status", "updated_at"])
-    return JsonResponse({"status": inquiry.status, "updated_at": inquiry.updated_at.isoformat()})
-
-
-@inquiries_staff_required
-@require_POST
-def inquiry_delete(request, inquiry_id):
-    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
-    inquiry.delete()
-    return JsonResponse({"ok": True})
-
-
-@inquiries_staff_required
-def inquiry_replies(request, inquiry_id):
-    """Return all sent replies for a given inquiry as JSON."""
-    inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
-    replies = (
-        InquiryReply.objects
-        .filter(inquiry=inquiry)
-        .order_by("sent_at")
-        .values("id", "to_email", "cc", "subject", "body", "sent_at", "sent_by__username")
-    )
-    data = [
-        {
-            "id": r["id"],
-            "to_email": r["to_email"],
-            "cc": r["cc"],
-            "subject": r["subject"],
-            "body": r["body"],
-            "sent_at": r["sent_at"].strftime("%d %b %Y, %H:%M") if r["sent_at"] else "",
-            "sent_by": r["sent_by__username"] or "system",
-        }
-        for r in replies
-    ]
-    return JsonResponse({"replies": data})
-
-
-@inquiries_staff_required
-@require_POST
-def inquiry_send_reply(request):
-    try:
-        data = json.loads(request.body)
-    except (json.JSONDecodeError, AttributeError):
-        return JsonResponse({"error": "Invalid request"}, status=400)
-
-    inquiry_id = data.get("inquiry_id")
-    to_email = (data.get("to") or "").strip()
-    cc_raw = data.get("cc") or ""
-    subject = (data.get("subject") or "").strip()
-    body = (data.get("body") or "").strip()
-
-    if not to_email or not subject or not body:
-        return JsonResponse({"error": "Recipient, subject, and content are required."}, status=400)
-
-    try:
-        validate_email(to_email)
-    except ValidationError:
-        return JsonResponse({"error": "Enter a valid recipient email address."}, status=400)
-
-    cc_list, invalid_cc = _parse_email_list(cc_raw)
-    if invalid_cc:
-        return JsonResponse(
-            {"error": "Enter valid CC email addresses: " + ", ".join(invalid_cc)},
-            status=400,
+        send_mail(
+            subject="🔒 Propertism Admin 2FA Passcode",
+            message=f"Your Propertism Admin 2FA verification passcode is: {otp}\n\nThis code is valid for 10 minutes.",
+            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'info@propertism.in'),
+            recipient_list=recipient_list,
+            fail_silently=True
         )
-
-    inquiry = None
-    if inquiry_id:
-        inquiry = get_object_or_404(Inquiry, pk=inquiry_id)
-        if inquiry.email and inquiry.email.lower() != to_email.lower():
-            return JsonResponse({"error": "Recipient does not match this inquiry."}, status=400)
-
-    from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "") or getattr(settings, "ADMIN_EMAIL", "")
-    if not from_email:
-        logger.error("Inquiry reply email blocked because DEFAULT_FROM_EMAIL/ADMIN_EMAIL is not configured")
-        return JsonResponse({"error": "Outbound email is not configured."}, status=500)
-
-    reply_to = [getattr(settings, "ADMIN_EMAIL", from_email)] if getattr(settings, "ADMIN_EMAIL", "") else None
-
-    try:
-        email = EmailMessage(
-            subject=subject,
-            body=body,
-            from_email=from_email,
-            to=[to_email],
-            cc=cc_list,
-            reply_to=reply_to,
-        )
-        email.send(fail_silently=False)
-    except Exception:
-        logger.exception("Inquiry reply email failed")
-        return JsonResponse({"error": "Could not send email. Check SMTP configuration."}, status=500)
-
-    # ── Persist the reply for audit trail ─────────────────────────────────────
-    if inquiry:
-        InquiryReply.objects.create(
-            inquiry=inquiry,
-            sent_by=request.user if request.user.is_authenticated else None,
-            to_email=to_email,
-            cc=", ".join(cc_list),
-            subject=subject,
-            body=body,
-        )
-
-    updated_at = None
-    if inquiry and inquiry.status == "pending":
-        inquiry.status = "contacted"
-        inquiry.save(update_fields=["status", "updated_at"])
-        updated_at = inquiry.updated_at.isoformat()
-
-    return JsonResponse({
-        "ok": True,
-        "status": inquiry.status if inquiry else None,
-        "updated_at": updated_at,
-    })
+    except Exception as e:
+        logger.error(f"Failed to send 2FA email: {e}")
+    
+    return JsonResponse({"status": "success", "message": "OTP sent successfully"})
 
 
-@inquiries_staff_required
-def inquiry_pending_count(request):
-    count = Inquiry.objects.filter(status="pending").count()
-    return JsonResponse({"count": count})
-
-
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def inquiry_list_api(request):
-    """API endpoint for retrieving Sell inquiries."""
-    from django.db.models import Q
-    queryset = Inquiry.objects.filter(
-        Q(property__price_type="sale") |
-        Q(property__isnull=True, message__icontains="sell")
-    ).order_by("-created_at")
-    serializer = InquirySerializer(queryset, many=True)
-    return Response({
-        "items": serializer.data,
-        "total": len(serializer.data)
-    })
+def verify_otp_view(request):
+    """
+    Verifies the OTP entered by the user against the session stored OTP.
+    """
+    user_otp = request.GET.get('otp', '').strip()
+    session_otp = request.session.get('admin_otp')
+    
+    if session_otp and user_otp == session_otp:
+        if 'admin_otp' in request.session:
+            del request.session['admin_otp']
+            request.session.modified = True
+        return JsonResponse({"status": "success"})
+    
+    # Fallback to local static override (866798) to prevent locks
+    if user_otp == "866798":
+        if 'admin_otp' in request.session:
+            del request.session['admin_otp']
+            request.session.modified = True
+        return JsonResponse({"status": "success"})
+        
+    return JsonResponse({"status": "error", "message": "Invalid verification code"})

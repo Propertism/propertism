@@ -6,7 +6,6 @@ echo.
 
 REM Kill any existing Python processes
 echo [1/2] Killing existing Python processes...
-taskkill /F /IM python.exe /T 2>nul
 if %errorlevel% equ 0 (
     echo    - Python processes terminated
 ) else (

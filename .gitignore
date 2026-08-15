@@ -187,3 +187,9 @@ chat/knowledge_docs/company-policies.md
 chat/knowledge_docs/service-fee-structure.md
 chat/knowledge_docs/terms-and-conditions.md
 chat/knowledge_docs/terms.md
+
+# Scratch & Temporary test directories
+scratch/
+.tmp-test-media/
+.seed/
+

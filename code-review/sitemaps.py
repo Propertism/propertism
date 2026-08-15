@@ -2,6 +2,9 @@
 Sitemap configuration for Propertism.
 Generates dynamic sitemap.xml for search engines.
 """
+from types import SimpleNamespace
+
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
@@ -11,20 +14,41 @@ from .intent_mapping import CITIES, NRI_LOCATIONS, get_all_intents, get_intent_c
 from .models import BlogPost
 
 
-class StaticViewSitemap(Sitemap):
+class BaseSitemap(Sitemap):
+    """Base sitemap that uses the canonical public host and scheme."""
+
+    def get_urls(self, page=1, site=None, protocol=None):
+        canonical_host = getattr(settings, "CANONICAL_HOST", "www.propertism.in")
+        canonical_scheme = getattr(settings, "CANONICAL_SCHEME", "https")
+        canonical_site = SimpleNamespace(domain=canonical_host)
+        return super().get_urls(page=page, site=canonical_site, protocol=canonical_scheme)
+
+
+class StaticViewSitemap(BaseSitemap):
     """Sitemap for static pages."""
 
     priority = 0.8
     changefreq = "weekly"
 
     def items(self):
-        return ["home", "services", "about", "management", "contact", "property_list"]
+        return [
+            "home",
+            "services",
+            "about",
+            "management",
+            "property_owner_resources",
+            "property_list",
+            "terms",
+            "privacy",
+            "disclaimer",
+            "sitemap_guide",
+        ]
 
     def location(self, item):
         return reverse(item)
 
 
-class PropertySitemap(Sitemap):
+class PropertySitemap(BaseSitemap):
     """Sitemap for property listings."""
 
     changefreq = "daily"
@@ -40,7 +64,7 @@ class PropertySitemap(Sitemap):
         return f"/properties/{obj.slug}/"
 
 
-class BlogSitemap(Sitemap):
+class BlogSitemap(BaseSitemap):
     """Sitemap for blog posts."""
 
     changefreq = "weekly"
@@ -56,7 +80,7 @@ class BlogSitemap(Sitemap):
         return f"/blog/{obj.slug}/"
 
 
-class LandingPageSitemap(Sitemap):
+class LandingPageSitemap(BaseSitemap):
     """Sitemap for landing pages with sell-first weighting."""
 
     changefreq = "daily"
