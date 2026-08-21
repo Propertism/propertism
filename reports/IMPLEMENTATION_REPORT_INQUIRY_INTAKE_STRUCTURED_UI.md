@@ -19,9 +19,14 @@ When viewing inbound inquiries on the Propertism Inquiries console (`/inquiries/
    - **Client Remarks / Note**: Actual custom user messages cleanly separated from technical metadata.
    - **Traffic Attribution**: Referrer, Landing Page, UTM Parameters, Form flow source.
    - **Lead Assessment**: Validation score and genuine verification badge.
-2. **Structured Form-Card Layout**: Redesigned detail drawer in `03-propertism/uilayers/templates/inquiries/dashboard.html` with designated visual cards and badges.
-3. **Structured Clipboard Copy**: Updated `panelCopyDetails()` in `03-propertism` to export structured, clean text.
-4. **Admin Inquiry Change List Formatting**: Updated `03-propertism/uilayers/templates/admin/properties/inquiry/change_list.html` with `linebreaksbr` to cleanly display multiline messages.
+2. **Structured Form-Card Layout**: Redesigned detail drawer in `03-propertism/uilayers/templates/inquiries/dashboard.html` with designated visual cards, badges, and clean SVG close button.
+3. **Optimized 1-Line Table Layout & IST Timestamps**:
+   - Replaced relative time ("5 days, 18 hours ago") with canonical **Posted On** in **IST** format (`dd-MMM-YY, HH:MM`, e.g., `21-Aug-26, 12:45`).
+   - Split `Contact` into two dedicated columns: **Email** and **Phone**.
+   - Enforced single-line height per inquiry row (`white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`).
+   - Rebalanced column widths (`Status`: 110px, `Name`: 160px, `Property`: auto, `Posted On`: 140px, `Email`: 210px, `Phone`: 130px, `Actions`: 155px).
+4. **Structured Clipboard Copy**: Updated `panelCopyDetails()` in `03-propertism` to export structured, clean text.
+5. **Admin Inquiry Change List Formatting**: Updated `03-propertism/uilayers/templates/admin/properties/inquiry/change_list.html` with `linebreaksbr` to cleanly display multiline messages.
 
 ---
 
@@ -29,8 +34,9 @@ When viewing inbound inquiries on the Propertism Inquiries console (`/inquiries/
 
 | Component | File Path | Scope & Logic Implemented |
 |---|---|---|
-| **03-propertism (Dashboard Template)** | `uilayers/templates/inquiries/dashboard.html` | Added structured data attributes (`data-service-needed`, `data-property-type`, `data-locality`, `data-user-role`, `data-nri-status`, etc.), embedded `<script type="text/plain" class="inq-raw-msg">`, redesigned `#inqDetailPanel` with intake spec grid, attribution cards, and lead header card; added `unescapeRawString()`, `formatRoleLabel()`, `formatIntentLabel()`, `parseInquiryMessage()`, and updated `openDetail()` and `panelCopyDetails()`. |
-| **03-propertism (Dashboard Styles)** | `static/css/inquiries.css` | Added design system styles for `.inq-form-grid`, `.inq-spec-card`, `.inq-spec-label`, `.inq-spec-value`, `.badge-intent`, `.badge-nri`, `.inq-attribution-card`, `.inq-attr-row`, `.inq-detail-header-card`, and responsive drawer width (490px). |
+| **03-propertism (Dashboard Template)** | `uilayers/templates/inquiries/dashboard.html` | Added structured data attributes, embedded `<script type="text/plain" class="inq-raw-msg">`, redesigned `#inqDetailPanel` with intake spec grid, attribution cards, and lead header card; separated table columns into `Posted On` (IST `d-M-y, H:i`), `Email`, and `Phone`; added `unescapeRawString()`, `formatRoleLabel()`, `formatIntentLabel()`, `parseInquiryMessage()`, and updated `openDetail()` and `panelCopyDetails()`. |
+| **03-propertism (Dashboard Styles)** | `static/css/inquiries.css` | Added design system styles for `.inq-form-grid`, `.inq-spec-card`, `.inq-spec-label`, `.inq-spec-value`, `.badge-intent`, `.badge-nri`, `.inq-attribution-card`, `.inq-attr-row`, `.inq-detail-header-card`, rebalanced table column widths, and enforced single-line inquiry row constraints. |
+| **03-propertism (Django Settings)** | `realtor_project/settings.py` | Configured `TIME_ZONE = 'Asia/Kolkata'` for canonical IST date-time rendering. |
 | **03-propertism (Admin Template)** | `uilayers/templates/admin/properties/inquiry/change_list.html` | Applied `linebreaksbr` to message column preview and expanded view to prevent unformatted text wall. |
 
 ---
