@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static tz %}
 
 {% block meta_title %}Inquiries | Propertism{% endblock %}
 {% block body_class %}inq-app{% endblock %}
@@ -155,8 +155,9 @@
                                 <th class="col-status">Status</th>
                                 <th class="col-name">Name</th>
                                 <th class="col-property">Property</th>
-                                <th class="col-when">Time</th>
-                                <th class="col-contact">Contact</th>
+                                <th class="col-posted">Posted On</th>
+                                <th class="col-email">Email</th>
+                                <th class="col-phone">Phone</th>
                                 <th class="col-actions">Actions</th>
                             </tr>
                         </thead>
@@ -169,14 +170,22 @@
                                 data-name="{{ inq.name|escapejs }}"
                                 data-email="{{ inq.email|escapejs }}"
                                 data-phone="{{ inq.phone|escapejs }}"
-                                data-message="{{ inq.message|escapejs }}"
                                 data-property-title="{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}"
                                 data-property-url="{% if inq.property %}{% url 'property_detail' inq.property.slug %}{% endif %}"
-                data-status="{{ inq.status }}"
-                data-created-at="{{ inq.created_at.isoformat }}"
-                data-updated-at="{{ inq.updated_at.isoformat }}"
-                onclick="handleRowClick(event, this)"
+                                data-status="{{ inq.status }}"
+                                data-created-at="{{ inq.created_at.isoformat }}"
+                                data-updated-at="{{ inq.updated_at.isoformat }}"
+                                data-form-source="{{ inq.form_source|default:''|escapejs }}"
+                                data-service-needed="{{ inq.service_needed|default:''|escapejs }}"
+                                data-property-type="{{ inq.property_type|default:''|escapejs }}"
+                                data-locality="{{ inq.locality|default:''|escapejs }}"
+                                data-user-role="{{ inq.user_role|default:''|escapejs }}"
+                                data-nri-status="{{ inq.nri_status|default:''|escapejs }}"
+                                data-confidence-score="{{ inq.confidence_score|default:'' }}"
+                                data-assessment-status="{{ inq.assessment_status|default:''|escapejs }}"
+                                onclick="handleRowClick(event, this)"
                             >
+                                <script type="text/plain" class="inq-raw-msg">{{ inq.message }}</script>
                                 <td class="col-status inq-col-status">
                                     <div class="inq-status-menu" data-id="{{ inq.id }}" data-status="{{ inq.status }}">
                                         <button
@@ -206,39 +215,41 @@
                                     </div>
                                 </td>
                                 <td class="col-name inq-col-name">
-                                    <span class="inq-name">{{ inq.name }}</span>
+                                    <span class="inq-name" title="{{ inq.name }}">{{ inq.name }}</span>
                                 </td>
                                 <td class="col-property inq-col-property">
                                     {% if inq.property %}
-                                    <span class="inq-property-ref">{{ inq.property.title }}</span>
+                                    <span class="inq-property-ref" title="{{ inq.property.title }}">{{ inq.property.title }}</span>
                                     {% else %}
                                     <span class="inq-general">General inquiry</span>
                                     {% endif %}
                                 </td>
-                                <td class="col-when inq-col-when">
-                                    <span class="inq-time">{{ inq.created_at|timesince }} ago</span>
+                                <td class="col-posted inq-col-posted">
+                                    <span class="inq-posted-date">{{ inq.created_at|timezone:"Asia/Kolkata"|date:"d-M-y, H:i" }}</span>
                                 </td>
-                                <td class="col-contact inq-col-contact">
-                                    <div class="inq-contact-stack">
-                                        {% if inq.email %}
-                                        <a
-                                            href="#inqMailComposer"
-                                            class="inq-contact-link"
-                                            onclick="event.preventDefault();event.stopPropagation();openEmail('{{ inq.email|escapejs }}', '{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}', '{{ inq.name|escapejs }}', '{{ inq.id }}')"
-                                            title="Email {{ inq.name }}"
-                                        >{{ inq.email }}</a>
-                                        {% else %}
-                                        <span class="inq-contact-empty">No email</span>
-                                        {% endif %}
-                                        {% if inq.phone %}
-                                        <button
-                                            type="button"
-                                            class="inq-contact-copy"
-                                            onclick="event.stopPropagation();copyValue('{{ inq.phone|escapejs }}', 'Phone copied')"
-                                            title="Copy phone"
-                                        >{{ inq.phone }}</button>
-                                        {% endif %}
-                                    </div>
+                                <td class="col-email inq-col-email">
+                                    {% if inq.email %}
+                                    <a
+                                        href="#inqMailComposer"
+                                        class="inq-contact-link inq-email-text"
+                                        onclick="event.preventDefault();event.stopPropagation();openEmail('{{ inq.email|escapejs }}', '{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}', '{{ inq.name|escapejs }}', '{{ inq.id }}')"
+                                        title="{{ inq.email }}"
+                                    >{{ inq.email }}</a>
+                                    {% else %}
+                                    <span class="inq-contact-empty">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="col-phone inq-col-phone">
+                                    {% if inq.phone %}
+                                    <button
+                                        type="button"
+                                        class="inq-contact-copy inq-phone-text"
+                                        onclick="event.stopPropagation();copyValue('{{ inq.phone|escapejs }}', 'Phone copied')"
+                                        title="Copy {{ inq.phone }}"
+                                    >{{ inq.phone }}</button>
+                                    {% else %}
+                                    <span class="inq-contact-empty">—</span>
+                                    {% endif %}
                                 </td>
                                 <td class="col-actions inq-col-actions">
                                     <div class="inq-quick-actions">
@@ -250,7 +261,7 @@
                                             aria-label="WhatsApp"
                                             {% if not inq.phone %}disabled{% endif %}
                                         >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                                 <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-5A8.5 8.5 0 1 1 21 11.5z"></path>
                                                 <path d="M8.4 9.7c.1-.5.3-.8.7-.9h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c.6 1 1.4 1.7 2.4 2.3l.7-.5c.2-.1.4-.1.6 0l1.6.7c.3.1.4.3.4.5v.5c-.1.4-.4.6-.8.7-.7.2-1.8 0-3.2-.8-1.5-.8-2.7-2-3.4-3.5-.7-1.3-.9-2.4-.7-3.3z"></path>
                                             </svg>
@@ -263,7 +274,7 @@
                                             aria-label="Email"
                                             {% if not inq.email %}disabled{% endif %}
                                         >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                                 <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                                                 <polyline points="3 7 12 13 21 7"></polyline>
                                             </svg>
@@ -275,7 +286,7 @@
                                             title="Copy details"
                                             aria-label="Copy details"
                                         >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                                 <rect x="9" y="9" width="11" height="11" rx="2"></rect>
                                                 <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
                                             </svg>
@@ -287,7 +298,7 @@
                                             title="Delete"
                                             aria-label="Delete inquiry"
                                         >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                                 <polyline points="3 6 5 6 21 6"></polyline>
                                                 <path d="M19 6l-1 14H6L5 6"></path>
                                                 <path d="M10 11v6M14 11v6"></path>
@@ -414,61 +425,90 @@
 
         <div class="inq-detail-panel" id="inqDetailPanel">
             <div class="inq-panel-hd">
-                <span class="inq-panel-hd-title">Inquiry Detail</span>
-                <button class="inq-panel-close" type="button" onclick="closeDetail()" aria-label="Close">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <div class="inq-panel-hd-left">
+                    <span class="inq-panel-hd-title">Inquiry Detail</span>
+                    <span class="inq-panel-hd-id" id="panelInqId">#—</span>
+                </div>
+                <button class="inq-panel-close" type="button" onclick="closeDetail()" aria-label="Close" title="Close Panel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </button>
             </div>
             <div class="inq-panel-body">
-                <h2 class="inq-detail-name" id="panelName"></h2>
-
-                <div class="inq-detail-contact">
-                    <div class="inq-detail-contact-item">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B89668" stroke-width="1.8">
-                            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                            <polyline points="3 7 12 13 21 7"></polyline>
-                        </svg>
-                        <span class="inq-detail-contact-value" id="panelEmail"></span>
-                        <button class="inq-detail-copy-btn" type="button" onclick="copyField('panelEmail')" title="Copy email">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
-                                <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
+                <!-- Lead Contact & Meta Card -->
+                <div class="inq-detail-header-card">
+                    <h2 class="inq-detail-name" id="panelName"></h2>
+                    <div class="inq-detail-meta-row" id="panelMetaRow">
+                        <span class="inq-detail-source-badge" id="panelSourceBadge">Website Form</span>
+                        <span class="inq-detail-time-tag" id="panelCreatedTag"></span>
                     </div>
-                    <div class="inq-detail-contact-item">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B89668" stroke-width="1.8">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.08 8.9a16 16 0 0 0 6.02 6.02l1.26-1.25a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                        </svg>
-                        <span class="inq-detail-contact-value" id="panelPhone"></span>
-                        <button class="inq-detail-copy-btn" type="button" onclick="copyField('panelPhone')" title="Copy phone">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
-                                <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
+
+                    <div class="inq-detail-contact">
+                        <div class="inq-detail-contact-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B89668" stroke-width="1.8">
+                                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                <polyline points="3 7 12 13 21 7"></polyline>
                             </svg>
-                        </button>
+                            <span class="inq-detail-contact-value" id="panelEmail"></span>
+                        </div>
+                        <div class="inq-detail-contact-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B89668" stroke-width="1.8">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.08 8.9a16 16 0 0 0 6.02 6.02l1.26-1.25a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span class="inq-detail-contact-value" id="panelPhone"></span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="inq-detail-section-label">Property</div>
-                <div class="inq-detail-property" id="panelPropertyBlock"></div>
+                <!-- Property Association -->
+                <div class="inq-detail-section">
+                    <div class="inq-detail-section-label">Property Reference</div>
+                    <div class="inq-detail-property" id="panelPropertyBlock"></div>
+                </div>
 
-                <div class="inq-detail-section-label">Message</div>
-                <div class="inq-detail-message" id="panelMessage"></div>
+                <!-- Structured Intake Specifications Grid -->
+                <div class="inq-detail-section" id="panelSpecsSection">
+                    <div class="inq-detail-section-label">Intake Specifications</div>
+                    <div class="inq-form-grid" id="panelIntakeGrid"></div>
+                </div>
 
-                <div class="inq-detail-section-label">Status</div>
-                <select class="inq-detail-status-select" id="panelStatusSelect" onchange="handlePanelStatusChange()">
-                    <option value="pending">Pending</option>
-                    <option value="contacted">Contacted</option>
-                    <option value="closed">Closed</option>
-                </select>
+                <!-- Client Message / Remarks -->
+                <div class="inq-detail-section" id="panelMessageSection">
+                    <div class="inq-detail-section-label">Client Remarks / Note</div>
+                    <div class="inq-detail-message" id="panelMessage"></div>
+                </div>
 
-                <div class="inq-detail-section-label">Replies Sent</div>
-                <div class="inq-detail-replies" id="panelRepliesBlock"></div>
+                <!-- Traffic & Marketing Attribution Card -->
+                <div class="inq-detail-section" id="panelAttributionWrap">
+                    <div class="inq-detail-section-label">Traffic Attribution & Origin</div>
+                    <div class="inq-attribution-card" id="panelAttributionCard"></div>
+                </div>
 
+                <!-- Lead Quality & Validation -->
+                <div class="inq-detail-section" id="panelAssessmentWrap" style="display:none;">
+                    <div class="inq-detail-section-label">Lead Assessment & Validation</div>
+                    <div class="inq-assessment-card" id="panelAssessmentCard"></div>
+                </div>
+
+                <!-- Status Selector -->
+                <div class="inq-detail-section">
+                    <div class="inq-detail-section-label">Inquiry Status</div>
+                    <select class="inq-detail-status-select" id="panelStatusSelect" onchange="handlePanelStatusChange()">
+                        <option value="pending">Pending</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+
+                <!-- Replies Sent -->
+                <div class="inq-detail-section">
+                    <div class="inq-detail-section-label">Replies Sent</div>
+                    <div class="inq-detail-replies" id="panelRepliesBlock"></div>
+                </div>
+
+                <!-- Audit Activity -->
                 <div class="inq-detail-activity">
                     <div class="inq-detail-activity-item">
                         <span class="inq-detail-activity-label">Received</span>
@@ -480,30 +520,31 @@
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
                 <div class="inq-detail-actions">
-                    <button class="inq-detail-action-btn" type="button" id="panelWaBtn" onclick="panelWhatsApp()">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <button class="inq-detail-action-btn inq-btn-wa" type="button" id="panelWaBtn" onclick="panelWhatsApp()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                             <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-5A8.5 8.5 0 1 1 21 11.5z"></path>
                             <path d="M8.4 9.7c.1-.5.3-.8.7-.9h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c.6 1 1.4 1.7 2.4 2.3l.7-.5c.2-.1.4-.1.6 0l1.6.7c.3.1.4.3.4.5v.5c-.1.4-.4.6-.8.7-.7.2-1.8 0-3.2-.8-1.5-.8-2.7-2-3.4-3.5-.7-1.3-.9-2.4-.7-3.3z"></path>
                         </svg>
                         WhatsApp
                     </button>
-                    <button class="inq-detail-action-btn" type="button" onclick="panelOpenEmail()">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <button class="inq-detail-action-btn inq-btn-email" type="button" onclick="panelOpenEmail()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                             <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                             <polyline points="3 7 12 13 21 7"></polyline>
                         </svg>
-                        Email
+                        Reply Email
                     </button>
                     <button class="inq-detail-action-btn" type="button" onclick="panelCopyDetails()">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                             <rect x="9" y="9" width="11" height="11" rx="2"></rect>
                             <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
                         </svg>
                         Copy
                     </button>
                     <button class="inq-detail-action-btn inq-detail-action-btn-delete" type="button" onclick="panelDelete()">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path d="M19 6l-1 14H6L5 6"></path>
                             <path d="M10 11v6M14 11v6"></path>
@@ -566,7 +607,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
 
             <div class="inq-lite-expand" id="liteExpand_{{ inq.pk }}">
                 <p class="inq-lite-message{% if not inq.message %} inq-lite-message-empty{% endif %}">
-                    {% if inq.message %}{{ inq.message }}{% else %}No message.{% endif %}
+                    {% if inq.message %}{{ inq.message|linebreaksbr }}{% else %}No message.{% endif %}
                 </p>
             </div>
 
@@ -1201,44 +1242,287 @@ if (window.innerWidth < 900 && window.location.search === '') {
         openDetail(row);
     };
 
+    function unescapeRawString(str) {
+        if (!str) return '';
+        var s = String(str);
+        // Universal unicode hex escape replacement: \uXXXX or \\uXXXX
+        s = s.replace(/\\+u([0-9a-fA-F]{4})/gi, function (match, hex) {
+            return String.fromCharCode(parseInt(hex, 16));
+        });
+        s = s.replace(/\\+u([0-9a-fA-F]{4})/gi, function (match, hex) {
+            return String.fromCharCode(parseInt(hex, 16));
+        });
+        // Replace literal \r\n, \r, \n string sequences
+        s = s.replace(/\\r\\n/g, '\n').replace(/\\r/g, '\n').replace(/\\n/g, '\n');
+        // Decode common HTML entities
+        s = s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+        return s;
+    }
+
+    function formatRoleLabel(role) {
+        if (!role) return '';
+        var r = role.toLowerCase().trim();
+        if (r === 'owner') return 'Property Owner';
+        if (r === 'buyer') return 'Buyer / Tenant';
+        if (r === 'broker') return 'Agent / Broker';
+        return role;
+    }
+
+    function formatIntentLabel(service) {
+        if (!service) return '';
+        var s = service.toLowerCase().trim();
+        if (s === 'buy-sell' || s === 'sell') return 'Sell';
+        if (s === 'rental' || s === 'rent') return 'Rent';
+        if (s === 'industrial' || s === 'manage' || s === 'management') return 'Manage';
+        return cap(service);
+    }
+
+    function parseInquiryMessage(rawMessage, fallbackMeta) {
+        fallbackMeta = fallbackMeta || {};
+        var text = unescapeRawString(rawMessage || '').trim();
+
+        var result = {
+            specs: {},
+            clientMessage: '',
+            attribution: {},
+            botInfo: {},
+            formSource: fallbackMeta.formSource || ''
+        };
+
+        if (text) {
+            var boundaryRegex = /(?:---+|===+)?\s*(Additional Details|Traffic Attribution Parameters|Traffic Attribution|Submitted via realBOT|realBOT)\s*(?:---+|===+)?/gi;
+            var sections = text.split(/(?:---+|===+)?\s*(?:Additional Details|Traffic Attribution Parameters|Traffic Attribution|Submitted via realBOT|realBOT)\s*(?:---+|===+)?/i);
+            var headers = [];
+            var m;
+            while ((m = boundaryRegex.exec(text)) !== null) {
+                headers.push(m[1].toLowerCase());
+            }
+
+            // Top section lines
+            var topLines = (sections[0] || '').split('\n').map(function(l) { return l.trim(); }).filter(Boolean);
+            var msgLines = [];
+
+            topLines.forEach(function(line) {
+                var kvMatch = line.match(/^([^:]+):\s*(.+)$/);
+                if (kvMatch && !line.toLowerCase().startsWith('http://') && !line.toLowerCase().startsWith('https://') && !line.includes('?') && !line.toLowerCase().startsWith('note:')) {
+                    var k = kvMatch[1].trim();
+                    var v = kvMatch[2].trim();
+                    var kl = k.toLowerCase();
+                    if (kl === 'country of residence' || kl === 'country') {
+                        result.specs['Country of Residence'] = v;
+                    } else if (kl === 'selected intent' || kl === 'service required' || kl === 'service needed') {
+                        result.specs['Service Required'] = v;
+                    } else if (kl === 'property type') {
+                        result.specs['Property Type'] = v;
+                    } else if (kl === 'locality/area' || kl === 'locality' || kl === 'preferred location' || kl === 'location') {
+                        result.specs['Locality / Area'] = v;
+                    } else if (kl === 'user role' || kl === 'role') {
+                        result.specs['User Role'] = v;
+                    } else if (kl === 'nri status') {
+                        result.specs['NRI Status'] = v;
+                    } else if (kl === 'referrer') {
+                        result.attribution['Referrer'] = v;
+                    } else if (kl === 'landing page') {
+                        result.attribution['Landing Page'] = v;
+                    } else if (kl === 'submitted via') {
+                        result.formSource = v;
+                    } else {
+                        result.specs[k] = v;
+                    }
+                } else if (line.toLowerCase().startsWith('submitted via')) {
+                    result.formSource = line.replace(/^submitted via\s*/i, '').replace(/\.$/, '');
+                } else {
+                    msgLines.push(line);
+                }
+            });
+
+            // Subsequent sections
+            for (var i = 0; i < headers.length; i++) {
+                var hdr = headers[i];
+                var content = sections[i + 1] || '';
+                var cLines = content.split('\n').map(function(l) { return l.trim(); }).filter(Boolean);
+
+                cLines.forEach(function(line) {
+                    var kvMatch = line.match(/^([^:]+):\s*(.+)$/);
+                    if (kvMatch && !line.toLowerCase().startsWith('http://') && !line.toLowerCase().startsWith('https://')) {
+                        var k = kvMatch[1].trim();
+                        var v = kvMatch[2].trim();
+                        if (hdr.includes('attribution')) {
+                            result.attribution[k] = v;
+                        } else if (hdr.includes('realbot')) {
+                            result.botInfo[k] = v;
+                        } else {
+                            var kl = k.toLowerCase();
+                            if (kl === 'locality/area' || kl === 'locality') result.specs['Locality / Area'] = v;
+                            else if (kl === 'service required') result.specs['Service Required'] = v;
+                            else result.specs[k] = v;
+                        }
+                    } else if (hdr.includes('attribution') && line.includes(':')) {
+                        var p = line.indexOf(':');
+                        result.attribution[line.substring(0, p).trim()] = line.substring(p + 1).trim();
+                    } else if (!hdr.includes('attribution')) {
+                        msgLines.push(line);
+                    }
+                });
+            }
+
+            result.clientMessage = msgLines.join('\n').trim();
+        }
+
+        // Merge fallback structured fields from database model
+        if (!result.specs['Service Required'] && fallbackMeta.serviceNeeded) {
+            result.specs['Service Required'] = formatIntentLabel(fallbackMeta.serviceNeeded);
+        }
+        if (!result.specs['Property Type'] && fallbackMeta.propertyType) {
+            result.specs['Property Type'] = cap(fallbackMeta.propertyType);
+        }
+        if (!result.specs['Locality / Area'] && fallbackMeta.locality) {
+            result.specs['Locality / Area'] = cap(fallbackMeta.locality);
+        }
+        if (!result.specs['User Role'] && fallbackMeta.userRole) {
+            result.specs['User Role'] = formatRoleLabel(fallbackMeta.userRole);
+        }
+        if (!result.specs['NRI Status'] && fallbackMeta.nriStatus) {
+            result.specs['NRI Status'] = fallbackMeta.nriStatus;
+        }
+        if (!result.formSource && fallbackMeta.formSource) {
+            result.formSource = fallbackMeta.formSource;
+        }
+
+        return result;
+    }
+
     window.openDetail = function (row) {
         var data = row.dataset;
         var propertyBlock = document.getElementById('panelPropertyBlock');
         var messageBlock = document.getElementById('panelMessage');
         var panelStatus = document.getElementById('panelStatusSelect');
+        var intakeGrid = document.getElementById('panelIntakeGrid');
+        var attrWrap = document.getElementById('panelAttributionWrap');
+        var attrCard = document.getElementById('panelAttributionCard');
+        var assessmentWrap = document.getElementById('panelAssessmentWrap');
+        var assessmentCard = document.getElementById('panelAssessmentCard');
 
         panelId = data.id;
 
-        document.getElementById('panelName').textContent = data.name;
-        document.getElementById('panelEmail').textContent = data.email;
-        document.getElementById('panelPhone').textContent = data.phone || '-';
+        // Raw message from embedded script or dataset
+        var rawMsgEl = row.querySelector('.inq-raw-msg');
+        var rawMsg = rawMsgEl ? rawMsgEl.textContent : (data.message || '');
+        var parsed = parseInquiryMessage(rawMsg, data);
 
+        // Header info
+        document.getElementById('panelInqId').textContent = '#' + data.id;
+        document.getElementById('panelName').textContent = data.name || 'Anonymous';
+        document.getElementById('panelEmail').textContent = data.email || 'No email provided';
+        document.getElementById('panelPhone').textContent = data.phone || 'No phone provided';
+        document.getElementById('panelSourceBadge').textContent = parsed.formSource || data.formSource || 'Website Form';
+        document.getElementById('panelCreatedTag').textContent = fmtDate(data.createdAt);
+
+        // Property
         if (data.propertyTitle) {
             propertyBlock.innerHTML = '';
             var link = document.createElement('a');
             link.className = 'inq-detail-property-link';
             link.href = data.propertyUrl || '#';
             link.target = '_blank';
-            link.textContent = data.propertyTitle;
+            link.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> ' + escapeHtml(data.propertyTitle);
             propertyBlock.appendChild(link);
         } else {
-            propertyBlock.innerHTML = '<span class="inq-detail-property-none">General inquiry - no property attached</span>';
+            propertyBlock.innerHTML = '<span class="inq-detail-property-none">General inquiry — No specific property attached</span>';
         }
 
-        if (data.message && data.message.trim()) {
-            messageBlock.textContent = data.message;
-            messageBlock.classList.remove('empty');
+        // Intake Specifications Grid
+        var specKeys = Object.keys(parsed.specs);
+        if (specKeys.length > 0) {
+            intakeGrid.innerHTML = specKeys.map(function(k) {
+                var v = parsed.specs[k];
+                var valMarkup = escapeHtml(v);
+                var isFull = k.toLowerCase().includes('locality') || k.toLowerCase().includes('location') || v.length > 25;
+
+                if (k.toLowerCase().includes('service') || k.toLowerCase().includes('intent')) {
+                    valMarkup = '<span class="badge-intent">' + escapeHtml(formatIntentLabel(v) || v) + '</span>';
+                } else if (k.toLowerCase().includes('nri')) {
+                    if (v.toLowerCase() === 'yes') {
+                        valMarkup = '<span class="badge-nri">Yes (NRI / Overseas)</span>';
+                    } else if (v.toLowerCase() === 'no') {
+                        valMarkup = 'Domestic Resident';
+                    }
+                } else if (k.toLowerCase().includes('role')) {
+                    valMarkup = escapeHtml(formatRoleLabel(v));
+                }
+
+                return '<div class="inq-spec-card' + (isFull ? ' full-width' : '') + '">' +
+                    '<span class="inq-spec-label">' + escapeHtml(k) + '</span>' +
+                    '<span class="inq-spec-value">' + valMarkup + '</span>' +
+                '</div>';
+            }).join('');
+            document.getElementById('panelSpecsSection').style.display = '';
         } else {
-            messageBlock.textContent = 'No message provided.';
-            messageBlock.classList.add('empty');
+            intakeGrid.innerHTML = '';
+            document.getElementById('panelSpecsSection').style.display = 'none';
         }
 
+        // Client Message
+        if (parsed.clientMessage && parsed.clientMessage.trim()) {
+            messageBlock.innerHTML = escapeHtml(parsed.clientMessage).replace(/\n/g, '<br>');
+            messageBlock.classList.remove('empty');
+            document.getElementById('panelMessageSection').style.display = '';
+        } else if (specKeys.length === 0) {
+            messageBlock.textContent = 'No message or intake specifications provided.';
+            messageBlock.classList.add('empty');
+            document.getElementById('panelMessageSection').style.display = '';
+        } else {
+            messageBlock.textContent = 'No additional written remarks provided (structured intake only).';
+            messageBlock.classList.add('empty');
+            document.getElementById('panelMessageSection').style.display = '';
+        }
+
+        // Traffic Attribution
+        var attrKeys = Object.keys(parsed.attribution);
+        var botKeys = Object.keys(parsed.botInfo);
+        if (attrKeys.length > 0 || botKeys.length > 0 || parsed.formSource) {
+            var rowsHtml = '';
+            if (parsed.formSource && parsed.formSource !== data.formSource) {
+                rowsHtml += '<div class="inq-attr-row"><span class="inq-attr-k">Form Flow</span><span class="inq-attr-v">' + escapeHtml(parsed.formSource) + '</span></div>';
+            }
+            attrKeys.forEach(function(k) {
+                var v = parsed.attribution[k];
+                var vHtml = (v.startsWith('http://') || v.startsWith('https://')) ?
+                    '<a href="' + escapeHtml(v) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(v) + '</a>' :
+                    escapeHtml(v);
+                rowsHtml += '<div class="inq-attr-row"><span class="inq-attr-k">' + escapeHtml(k) + '</span><span class="inq-attr-v">' + vHtml + '</span></div>';
+            });
+            botKeys.forEach(function(k) {
+                rowsHtml += '<div class="inq-attr-row"><span class="inq-attr-k">' + escapeHtml(k) + '</span><span class="inq-attr-v">' + escapeHtml(parsed.botInfo[k]) + '</span></div>';
+            });
+            attrCard.innerHTML = rowsHtml;
+            attrWrap.style.display = '';
+        } else {
+            attrCard.innerHTML = '';
+            attrWrap.style.display = 'none';
+        }
+
+        // Assessment Validation
+        if (data.confidenceScore || data.assessmentStatus) {
+            var scoreVal = data.confidenceScore ? data.confidenceScore + ' / 100' : '—';
+            var statusVal = data.assessmentStatus || 'Verified';
+            assessmentCard.innerHTML =
+                '<div class="inq-attr-row"><span class="inq-attr-k">Confidence Score</span><span class="inq-attr-v" style="font-weight:700;color:var(--accent-gold);">' + escapeHtml(scoreVal) + '</span></div>' +
+                '<div class="inq-attr-row"><span class="inq-attr-k">Quality Assessment</span><span class="inq-attr-v">' + escapeHtml(statusVal) + '</span></div>';
+            assessmentWrap.style.display = '';
+        } else {
+            assessmentWrap.style.display = 'none';
+        }
+
+        // Status
         panelStatus.value = data.status;
         panelStatus.dataset.prevStatus = data.status;
 
+        // Timestamps & Actions
         document.getElementById('panelCreated').textContent = fmtDate(data.createdAt);
         document.getElementById('panelUpdated').textContent = fmtDate(data.updatedAt);
         document.getElementById('panelWaBtn').disabled = !cleanPhone(data.phone);
+
         loadPanelReplies(data.id);
         document.getElementById('inqDetailPanel').classList.add('active');
     };
@@ -1485,13 +1769,48 @@ if (window.innerWidth < 900 && window.location.search === '') {
     };
 
     window.panelCopyDetails = function () {
-        var link = document.querySelector('#panelPropertyBlock a');
-        copyDetails(
-            document.getElementById('panelName').textContent,
-            document.getElementById('panelEmail').textContent,
-            document.getElementById('panelPhone').textContent,
-            link ? link.textContent : ''
-        );
+        var row = document.querySelector('.inq-row[data-id="' + panelId + '"]');
+        if (!row) return;
+        var data = row.dataset;
+        var rawMsgEl = row.querySelector('.inq-raw-msg');
+        var rawMsg = rawMsgEl ? rawMsgEl.textContent : (data.message || '');
+        var parsed = parseInquiryMessage(rawMsg, data);
+
+        var lines = [
+            'PROPERTISM INQUIRY #' + (panelId || ''),
+            'Name: ' + (data.name || '-'),
+            'Email: ' + (data.email || '-'),
+            'Phone: ' + (data.phone || '-')
+        ];
+        if (data.propertyTitle) {
+            lines.push('Property: ' + data.propertyTitle);
+        }
+        if (parsed.formSource) {
+            lines.push('Source: ' + parsed.formSource);
+        }
+
+        var specKeys = Object.keys(parsed.specs);
+        if (specKeys.length > 0) {
+            lines.push('');
+            lines.push('--- INTAKE SPECIFICATIONS ---');
+            specKeys.forEach(function (k) {
+                lines.push(k + ': ' + parsed.specs[k]);
+            });
+        }
+        if (parsed.clientMessage) {
+            lines.push('');
+            lines.push('--- CLIENT REMARKS ---');
+            lines.push(parsed.clientMessage);
+        }
+        var attrKeys = Object.keys(parsed.attribution);
+        if (attrKeys.length > 0) {
+            lines.push('');
+            lines.push('--- TRAFFIC ATTRIBUTION ---');
+            attrKeys.forEach(function (k) {
+                lines.push(k + ': ' + parsed.attribution[k]);
+            });
+        }
+        copyText(lines.join('\n'), 'Structured inquiry details copied.');
     };
 
     window.deleteInquiry = function (id, name) {

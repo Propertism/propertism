@@ -514,10 +514,10 @@
               {% if inq.message %}
                 {% if inq.message|length > 80 %}
                   <span class="msg-preview">{{ inq.message|truncatechars:80 }}</span>
-                  <span class="msg-full">{{ inq.message }}</span>
+                  <span class="msg-full">{{ inq.message|linebreaksbr }}</span>
                   <br><button type="button" class="toggle-msg" onclick="toggleMsg(this)">&#x25BC; more</button>
                 {% else %}
-                  <span class="msg-preview">{{ inq.message }}</span>
+                  <span class="msg-preview">{{ inq.message|linebreaksbr }}</span>
                 {% endif %}
               {% else %}
                 <span style="color:var(--muted);font-style:italic">—</span>
