@@ -1281,6 +1281,30 @@ body.inq-app .header-v4-tools {
     letter-spacing: .02em;
 }
 
+.inq-detail-country-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: rgba(184, 150, 104, 0.08);
+    color: var(--accent-gold);
+    border: 1px solid rgba(184, 150, 104, 0.28);
+    border-radius: 3px;
+    letter-spacing: .02em;
+}
+
+.inq-flag-icon {
+    font-size: .85rem;
+    line-height: 1;
+}
+
+.inq-dial-code {
+    opacity: .85;
+    font-weight: 700;
+}
+
 .inq-detail-time-tag {
     font-size: .72rem;
     color: var(--ink-muted);
@@ -1297,6 +1321,31 @@ body.inq-app .header-v4-tools {
     display: flex;
     align-items: center;
     gap: .55rem;
+}
+
+.inq-country-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    background: var(--bg-subtle);
+    color: var(--ink-secondary);
+    border: 1px solid var(--border-hairline);
+    border-radius: 3px;
+    font-family: var(--font-sans);
+    flex-shrink: 0;
+}
+
+.inq-country-flag {
+    font-size: .82rem;
+    line-height: 1;
+}
+
+.inq-country-code {
+    color: var(--accent-gold);
+    font-weight: 700;
 }
 
 .inq-detail-contact-value {

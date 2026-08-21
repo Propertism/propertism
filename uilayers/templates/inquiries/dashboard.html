@@ -442,6 +442,7 @@
                     <h2 class="inq-detail-name" id="panelName"></h2>
                     <div class="inq-detail-meta-row" id="panelMetaRow">
                         <span class="inq-detail-source-badge" id="panelSourceBadge">Website Form</span>
+                        <span class="inq-detail-country-badge" id="panelCountryBadge" style="display:none;"></span>
                         <span class="inq-detail-time-tag" id="panelCreatedTag"></span>
                     </div>
 
@@ -453,10 +454,11 @@
                             </svg>
                             <span class="inq-detail-contact-value" id="panelEmail"></span>
                         </div>
-                        <div class="inq-detail-contact-item">
+                        <div class="inq-detail-contact-item" id="panelPhoneRow">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B89668" stroke-width="1.8">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.08 8.9a16 16 0 0 0 6.02 6.02l1.26-1.25a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                             </svg>
+                            <span class="inq-country-pill" id="panelPhoneCountryPill" style="display:none;"></span>
                             <span class="inq-detail-contact-value" id="panelPhone"></span>
                         </div>
                     </div>
@@ -1389,7 +1391,89 @@ if (window.innerWidth < 900 && window.location.search === '') {
             result.formSource = fallbackMeta.formSource;
         }
 
-        return result;
+    var COUNTRY_LOOKUP = [
+        { code: '+971', name: 'United Arab Emirates', flag: '🇦🇪', aliases: ['uae', 'emirates', 'dubai', 'abu dhabi'] },
+        { code: '+966', name: 'Saudi Arabia', flag: '🇸🇦', aliases: ['ksa', 'saudi'] },
+        { code: '+974', name: 'Qatar', flag: '🇶🇦', aliases: ['qatar', 'doha'] },
+        { code: '+968', name: 'Oman', flag: '🇴🇲', aliases: ['oman', 'muscat'] },
+        { code: '+965', name: 'Kuwait', flag: '🇰🇼', aliases: ['kuwait'] },
+        { code: '+973', name: 'Bahrain', flag: '🇧🇭', aliases: ['bahrain'] },
+        { code: '+852', name: 'Hong Kong', flag: '🇭🇰', aliases: ['hong kong', 'hk'] },
+        { code: '+353', name: 'Ireland', flag: '🇮🇪', aliases: ['ireland', 'dublin'] },
+        { code: '+351', name: 'Portugal', flag: '🇵🇹', aliases: ['portugal', 'lisbon'] },
+        { code: '+880', name: 'Bangladesh', flag: '🇧🇩', aliases: ['bangladesh', 'dhaka'] },
+        { code: '+977', name: 'Nepal', flag: '🇳🇵', aliases: ['nepal', 'kathmandu'] },
+        { code: '+94', name: 'Sri Lanka', flag: '🇱🇰', aliases: ['sri lanka', 'colombo'] },
+        { code: '+91', name: 'India', flag: '🇮🇳', aliases: ['india', 'bharat', 'ind'] },
+        { code: '+65', name: 'Singapore', flag: '🇸🇬', aliases: ['singapore', 'sg'] },
+        { code: '+60', name: 'Malaysia', flag: '🇲🇾', aliases: ['malaysia', 'my', 'kl'] },
+        { code: '+61', name: 'Australia', flag: '🇦🇺', aliases: ['australia', 'aus', 'sydney', 'melbourne'] },
+        { code: '+64', name: 'New Zealand', flag: '🇳🇿', aliases: ['new zealand', 'nz', 'auckland'] },
+        { code: '+48', name: 'Poland', flag: '🇵🇱', aliases: ['poland', 'pl', 'polska', 'warsaw'] },
+        { code: '+44', name: 'United Kingdom', flag: '🇬🇧', aliases: ['uk', 'united kingdom', 'great britain', 'england', 'london', 'scotland'] },
+        { code: '+49', name: 'Germany', flag: '🇩🇪', aliases: ['germany', 'de', 'deutschland', 'berlin', 'frankfurt', 'munich'] },
+        { code: '+33', name: 'France', flag: '🇫🇷', aliases: ['france', 'fr', 'paris'] },
+        { code: '+39', name: 'Italy', flag: '🇮🇹', aliases: ['italy', 'it', 'italia', 'rome', 'milan'] },
+        { code: '+34', name: 'Spain', flag: '🇪🇸', aliases: ['spain', 'es', 'espana', 'madrid', 'barcelona'] },
+        { code: '+31', name: 'Netherlands', flag: '🇳🇱', aliases: ['netherlands', 'nl', 'holland', 'amsterdam'] },
+        { code: '+41', name: 'Switzerland', flag: '🇨🇭', aliases: ['switzerland', 'ch', 'swiss', 'zurich', 'geneva'] },
+        { code: '+46', name: 'Sweden', flag: '🇸🇪', aliases: ['sweden', 'se', 'stockholm'] },
+        { code: '+47', name: 'Norway', flag: '🇳🇴', aliases: ['norway', 'no', 'oslo'] },
+        { code: '+45', name: 'Denmark', flag: '🇩🇰', aliases: ['denmark', 'dk', 'copenhagen'] },
+        { code: '+81', name: 'Japan', flag: '🇯🇵', aliases: ['japan', 'jp', 'tokyo'] },
+        { code: '+82', name: 'South Korea', flag: '🇰🇷', aliases: ['korea', 'south korea', 'kr', 'seoul'] },
+        { code: '+86', name: 'China', flag: '🇨🇳', aliases: ['china', 'cn', 'beijing', 'shanghai'] },
+        { code: '+62', name: 'Indonesia', flag: '🇮🇩', aliases: ['indonesia', 'id', 'jakarta'] },
+        { code: '+63', name: 'Philippines', flag: '🇵🇭', aliases: ['philippines', 'ph', 'manila'] },
+        { code: '+66', name: 'Thailand', flag: '🇹🇭', aliases: ['thailand', 'th', 'bangkok'] },
+        { code: '+84', name: 'Vietnam', flag: '🇻🇳', aliases: ['vietnam', 'vn', 'hanoi'] },
+        { code: '+27', name: 'South Africa', flag: '🇿🇦', aliases: ['south africa', 'za'] },
+        { code: '+7', name: 'Russia', flag: '🇷🇺', aliases: ['russia', 'ru', 'moscow'] },
+        { code: '+1', name: 'United States', flag: '🇺🇸', aliases: ['usa', 'us', 'united states', 'america', 'canada', 'ca'] }
+    ];
+
+    function resolveCountryInfo(rawCountry, rawPhone) {
+        var countryStr = (rawCountry || '').trim().toLowerCase();
+        var phoneStr = (rawPhone || '').replace(/[\s\-\(\)]/g, '');
+
+        // 1. Explicit country string
+        if (countryStr) {
+            var codeMatch = countryStr.match(/\+([0-9]{1,4})/);
+            if (codeMatch) {
+                var targetCode = '+' + codeMatch[1];
+                for (var i = 0; i < COUNTRY_LOOKUP.length; i++) {
+                    if (COUNTRY_LOOKUP[i].code === targetCode) {
+                        return COUNTRY_LOOKUP[i];
+                    }
+                }
+            }
+            for (var j = 0; j < COUNTRY_LOOKUP.length; j++) {
+                var c = COUNTRY_LOOKUP[j];
+                if (countryStr.includes(c.name.toLowerCase())) return c;
+                for (var k = 0; k < c.aliases.length; k++) {
+                    if (countryStr.includes(c.aliases[k])) return c;
+                }
+            }
+        }
+
+        // 2. Phone number prefix
+        if (phoneStr) {
+            var withPlus = phoneStr.startsWith('+') ? phoneStr : ('+' + phoneStr);
+            for (var m = 0; m < COUNTRY_LOOKUP.length; m++) {
+                var item = COUNTRY_LOOKUP[m];
+                if (withPlus.startsWith(item.code)) {
+                    return item;
+                }
+            }
+            if (phoneStr.length === 10) {
+                return { code: '+91', name: 'India', flag: '🇮🇳' };
+            }
+            if (phoneStr.startsWith('91') && phoneStr.length === 12) {
+                return { code: '+91', name: 'India', flag: '🇮🇳' };
+            }
+        }
+
+        return { code: '+91', name: 'India', flag: '🇮🇳' };
     }
 
     window.openDetail = function (row) {
@@ -1414,9 +1498,35 @@ if (window.innerWidth < 900 && window.location.search === '') {
         document.getElementById('panelInqId').textContent = '#' + data.id;
         document.getElementById('panelName').textContent = data.name || 'Anonymous';
         document.getElementById('panelEmail').textContent = data.email || 'No email provided';
-        document.getElementById('panelPhone').textContent = data.phone || 'No phone provided';
         document.getElementById('panelSourceBadge').textContent = parsed.formSource || data.formSource || 'Website Form';
         document.getElementById('panelCreatedTag').textContent = fmtDate(data.createdAt);
+
+        // Resolve & Display Country Information
+        var countryRaw = parsed.specs['Country of Residence'] || parsed.specs['Country'];
+        var countryInfo = resolveCountryInfo(countryRaw, data.phone);
+        var countryBadge = document.getElementById('panelCountryBadge');
+        var phoneCountryPill = document.getElementById('panelPhoneCountryPill');
+        var phoneVal = document.getElementById('panelPhone');
+
+        if (countryInfo && (data.phone || countryRaw)) {
+            countryBadge.innerHTML = '<span class="inq-flag-icon">' + countryInfo.flag + '</span> ' + escapeHtml(countryInfo.name) + ' <span class="inq-dial-code">(' + escapeHtml(countryInfo.code) + ')</span>';
+            countryBadge.style.display = 'inline-flex';
+
+            phoneCountryPill.innerHTML = '<span class="inq-country-flag">' + countryInfo.flag + '</span> <span class="inq-country-code">' + escapeHtml(countryInfo.code) + '</span>';
+            phoneCountryPill.style.display = 'inline-flex';
+
+            var cleanPhoneText = (data.phone || '').trim();
+            if (cleanPhoneText.startsWith(countryInfo.code)) {
+                cleanPhoneText = cleanPhoneText.substring(countryInfo.code.length).trim();
+            } else if (cleanPhoneText.startsWith('+' + countryInfo.code.replace('+', ''))) {
+                cleanPhoneText = cleanPhoneText.substring(countryInfo.code.length).trim();
+            }
+            phoneVal.textContent = cleanPhoneText || data.phone || 'No phone provided';
+        } else {
+            countryBadge.style.display = 'none';
+            phoneCountryPill.style.display = 'none';
+            phoneVal.textContent = data.phone || 'No phone provided';
+        }
 
         // Property
         if (data.propertyTitle) {
