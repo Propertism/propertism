@@ -1391,6 +1391,9 @@ if (window.innerWidth < 900 && window.location.search === '') {
             result.formSource = fallbackMeta.formSource;
         }
 
+        return result;
+    }
+
     var COUNTRY_LOOKUP = [
         { code: '+971', name: 'United Arab Emirates', flag: '🇦🇪', aliases: ['uae', 'emirates', 'dubai', 'abu dhabi'] },
         { code: '+966', name: 'Saudi Arabia', flag: '🇸🇦', aliases: ['ksa', 'saudi'] },
