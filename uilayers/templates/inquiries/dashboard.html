@@ -156,8 +156,9 @@
                                 <th class="col-name">Name</th>
                                 <th class="col-property">Property</th>
                                 <th class="col-posted">Posted On</th>
-                                <th class="col-email">Email</th>
+                                <th class="col-country">Country</th>
                                 <th class="col-phone">Phone</th>
+                                <th class="col-email">Email</th>
                                 <th class="col-actions">Actions</th>
                             </tr>
                         </thead>
@@ -181,6 +182,8 @@
                                 data-locality="{{ inq.locality|default:''|escapejs }}"
                                 data-user-role="{{ inq.user_role|default:''|escapejs }}"
                                 data-nri-status="{{ inq.nri_status|default:''|escapejs }}"
+                                data-country-code="{{ inq.country_code|default:''|escapejs }}"
+                                data-country-name="{{ inq.country_name|default:''|escapejs }}"
                                 data-confidence-score="{{ inq.confidence_score|default:'' }}"
                                 data-assessment-status="{{ inq.assessment_status|default:''|escapejs }}"
                                 onclick="handleRowClick(event, this)"
@@ -203,7 +206,7 @@
                                         </button>
                                         <div class="inq-status-dropdown" role="menu">
                                             {% if inq.status == 'pending' %}
-                                            <button type="button" class="inq-status-option" data-status="contacted" onclick="pickStatus(event, this)">Mark Contacted</button>
+                                             <button type="button" class="inq-status-option" data-status="contacted" onclick="pickStatus(event, this)">Mark Contacted</button>
                                             <button type="button" class="inq-status-option" data-status="closed" onclick="pickStatus(event, this)">Mark Closed</button>
                                             {% elif inq.status == 'contacted' %}
                                             <button type="button" class="inq-status-option" data-status="pending" onclick="pickStatus(event, this)">Mark Pending</button>
@@ -227,17 +230,8 @@
                                 <td class="col-posted inq-col-posted">
                                     <span class="inq-posted-date">{{ inq.created_at|timezone:"Asia/Kolkata"|date:"d-M-y, H:i" }}</span>
                                 </td>
-                                <td class="col-email inq-col-email">
-                                    {% if inq.email %}
-                                    <a
-                                        href="#inqMailComposer"
-                                        class="inq-contact-link inq-email-text"
-                                        onclick="event.preventDefault();event.stopPropagation();openEmail('{{ inq.email|escapejs }}', '{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}', '{{ inq.name|escapejs }}', '{{ inq.id }}')"
-                                        title="{{ inq.email }}"
-                                    >{{ inq.email }}</a>
-                                    {% else %}
-                                    <span class="inq-contact-empty">—</span>
-                                    {% endif %}
+                                <td class="col-country inq-col-country">
+                                    <span class="inq-table-country-pill" title="{{ inq.country_name|default:'India' }} ({{ inq.country_code|default:'+91' }})">{{ inq.country_display }}</span>
                                 </td>
                                 <td class="col-phone inq-col-phone">
                                     {% if inq.phone %}
@@ -247,6 +241,18 @@
                                         onclick="event.stopPropagation();copyValue('{{ inq.phone|escapejs }}', 'Phone copied')"
                                         title="Copy {{ inq.phone }}"
                                     >{{ inq.phone }}</button>
+                                    {% else %}
+                                    <span class="inq-contact-empty">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="col-email inq-col-email">
+                                    {% if inq.email %}
+                                    <a
+                                        href="#inqMailComposer"
+                                        class="inq-contact-link inq-email-text"
+                                        onclick="event.preventDefault();event.stopPropagation();openEmail('{{ inq.email|escapejs }}', '{% if inq.property %}{{ inq.property.title|escapejs }}{% endif %}', '{{ inq.name|escapejs }}', '{{ inq.id }}')"
+                                        title="{{ inq.email }}"
+                                    >{{ inq.email }}</a>
                                     {% else %}
                                     <span class="inq-contact-empty">—</span>
                                     {% endif %}
@@ -1522,8 +1528,8 @@ if (window.innerWidth < 900 && window.location.search === '') {
         document.getElementById('panelSourceBadge').textContent = parsed.formSource || data.formSource || 'Website Form';
         document.getElementById('panelCreatedTag').textContent = fmtDate(data.createdAt);
 
-        // Resolve & Display Country Information
-        var countryRaw = parsed.specs['Country of Residence'] || parsed.specs['Country'];
+        // Resolve & Display Country Information (using authoritative database fields first)
+        var countryRaw = (data.countryName ? (data.countryName + ' (' + data.countryCode + ')') : (data.countryCode || parsed.specs['Country of Residence'] || parsed.specs['Country']));
         var countryInfo = resolveCountryInfo(countryRaw, data.phone);
         var countryBadge = document.getElementById('panelCountryBadge');
         var phoneCountryPill = document.getElementById('panelPhoneCountryPill');

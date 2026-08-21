@@ -218,8 +218,12 @@ def create_inquiry(request):
         if referrer: attribution_lines.append(f"Referrer: {referrer}")
         if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
 
-        if attribution_lines:
-            msg_body_with_attribution += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+        from .country_utils import resolve_country_from_intake
+        c_code, c_name = resolve_country_from_intake(
+            message=msg_body_with_attribution,
+            phone=request.POST.get("phone", "").strip(),
+            raw_country_code=request.POST.get("country_code") or request.POST.get("contact_country_code")
+        )
 
         inquiry = Inquiry.objects.create(
             property=property_obj,
@@ -228,6 +232,8 @@ def create_inquiry(request):
             phone=request.POST.get("phone", "").strip(),
             message=msg_body_with_attribution,
             form_source=form_source,
+            country_code=c_code,
+            country_name=c_name,
             service_needed="buy-sell" if property_obj.price_type == "sale" else "rental",
             property_type=property_obj.property_type.slug if property_obj.property_type else "",
             locality=property_obj.location,

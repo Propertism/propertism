@@ -591,12 +591,27 @@ body.inq-app .header-v4-tools {
 
 /* Column width classes with clean single-line distribution */
 .inq-table .col-status   { width: 110px; }
-.inq-table .col-name     { width: 160px; min-width: 130px; }
-.inq-table .col-property { width: auto; min-width: 170px; }
-.inq-table .col-posted   { width: 140px; min-width: 130px; }
-.inq-table .col-email    { width: 210px; min-width: 170px; }
-.inq-table .col-phone    { width: 130px; min-width: 110px; }
+.inq-table .col-name     { width: 150px; min-width: 120px; }
+.inq-table .col-property { width: auto; min-width: 160px; }
+.inq-table .col-posted   { width: 135px; min-width: 125px; }
+.inq-table .col-country  { width: 95px; min-width: 85px; }
+.inq-table .col-phone    { width: 120px; min-width: 105px; }
+.inq-table .col-email    { width: 190px; min-width: 150px; }
 .inq-table .col-actions  { width: 155px; }
+
+.inq-table-country-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    background: rgba(0, 0, 0, 0.035);
+    border: 1px solid var(--border-hairline);
+    border-radius: 4px;
+    padding: 2px 7px;
+    letter-spacing: 0.02em;
+}
 
 @media (max-width: 1200px) {
     .inq-table .col-property {

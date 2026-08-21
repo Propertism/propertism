@@ -101,6 +101,12 @@ class InquirySubmissionAdapter:
                 form_source = 'realBOT Chat'
 
             # ── Create PropertyInquiry ─────────────────────────────────────────
+            from properties.country_utils import resolve_country_from_intake
+            c_code, c_name = resolve_country_from_intake(
+                message=full_message,
+                phone=mobile_number
+            )
+
             inquiry = PropertyInquiry.objects.create(
                 name=customer_name,
                 phone=mobile_number,
@@ -109,6 +115,8 @@ class InquirySubmissionAdapter:
                 property=None,                # chat inquiries are not property-specific
                 status='pending',
                 form_source=form_source,
+                country_code=c_code,
+                country_name=c_name,
                 confidence_score=REALBOT_CONFIDENCE_SCORE,
                 assessment_status=REALBOT_ASSESSMENT_STATUS,
                 validation_summary=[],        # pre-validated by engine

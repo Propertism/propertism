@@ -245,13 +245,15 @@ class InquiryAdmin(admin.ModelAdmin):
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = f'attachment; filename="inquiries_{timestamp}.csv"'
         writer = csv.writer(response)
-        writer.writerow(["ID", "Name", "Email", "Phone", "Property", "Intent", "Locality", "Prop Type", "Role", "NRI Status", "Message", "Status", "Submitted"])
+        writer.writerow(["ID", "Name", "Email", "Phone", "Country", "Code", "Property", "Intent", "Locality", "Prop Type", "Role", "NRI Status", "Message", "Status", "Submitted"])
         for inq in qs.order_by("-created_at"):
             writer.writerow([
                 inq.id,
                 inq.name,
                 inq.email,
                 inq.phone,
+                inq.country_name or "",
+                inq.country_code or "",
                 inq.property.title if inq.property else "General",
                 inq.service_needed or "",
                 inq.locality or "",

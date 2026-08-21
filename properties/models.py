@@ -1,3 +1,4 @@
+import builtins
 from decimal import Decimal
 
 from django.conf import settings
@@ -297,6 +298,8 @@ class Inquiry(models.Model):
     form_source = models.CharField(max_length=100, default="Unknown Form")
     
     # Structured intake fields
+    country_code = models.CharField(max_length=10, null=True, blank=True, help_text="e.g. +91, +48, +971, +1")
+    country_name = models.CharField(max_length=100, null=True, blank=True, help_text="e.g. India, Poland, United Arab Emirates")
     service_needed = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. buy-sell, rental, industrial")
     property_type = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. apartment, villa, plot, commercial")
     locality = models.CharField(max_length=255, null=True, blank=True, help_text="e.g. adyar, velachery")
@@ -311,6 +314,19 @@ class Inquiry(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @builtins.property
+    def country_flag(self):
+        from .country_utils import COUNTRY_DIRECTORY
+        for c in COUNTRY_DIRECTORY:
+            if c["code"] == self.country_code or c["name"] == self.country_name:
+                return c["flag"]
+        return "🇮🇳" if (self.country_code == "+91" or not self.country_code) else "🌐"
+
+    @builtins.property
+    def country_display(self):
+        code = self.country_code or "+91"
+        return f"{self.country_flag} {code}"
 
     def __str__(self):
         return f"Inquiry from {self.name} - {self.property.title if self.property else 'General'}"

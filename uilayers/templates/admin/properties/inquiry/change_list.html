@@ -118,7 +118,7 @@
     background: var(--surface); border-radius: var(--radius);
     box-shadow: var(--shadow); overflow: hidden;
   }
-  .inq-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; min-width: 1370px; }
+  .inq-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; min-width: 1440px; }
   .inq-table thead tr { background: #F1F5F9; border-bottom: 2px solid var(--border); }
   .inq-table thead th {
     padding: 7px 8px; text-align: left; font-weight: 700;
@@ -127,19 +127,20 @@
   }
   .inq-table thead th:first-child { color: var(--muted); width: 32px; }
   .inq-table thead th:nth-child(2)  { width: 110px; }  /* Name */
-  .inq-table thead th:nth-child(3)  { width: 130px; }  /* Email */
-  .inq-table thead th:nth-child(4)  { width: 110px; }  /* Phone */
-  .inq-table thead th:nth-child(5)  { width: 80px;  }  /* Property */
-  .inq-table thead th:nth-child(6)  { width: 75px;  }  /* Intent */
-  .inq-table thead th:nth-child(7)  { width: 100px; }  /* Locality */
-  .inq-table thead th:nth-child(8)  { width: 85px;  }  /* Type */
-  .inq-table thead th:nth-child(9)  { width: 80px;  }  /* Role */
-  .inq-table thead th:nth-child(10) { width: 50px;  }  /* NRI */
-  .inq-table thead th:nth-child(11) { width: 180px; }  /* Message */
-  .inq-table thead th:nth-child(12) { width: 80px;  }  /* Status */
-  .inq-table thead th:nth-child(13) { width: 115px; }  /* Submitted */
-  .inq-table thead th:nth-child(14) { width: 110px; }  /* Update Status */
-  .inq-table thead th:nth-child(15) { width: 36px;  }  /* Delete */
+  .inq-table thead th:nth-child(3)  { width: 75px;  }  /* Country */
+  .inq-table thead th:nth-child(4)  { width: 105px; }  /* Phone */
+  .inq-table thead th:nth-child(5)  { width: 130px; }  /* Email */
+  .inq-table thead th:nth-child(6)  { width: 80px;  }  /* Property */
+  .inq-table thead th:nth-child(7)  { width: 75px;  }  /* Intent */
+  .inq-table thead th:nth-child(8)  { width: 100px; }  /* Locality */
+  .inq-table thead th:nth-child(9)  { width: 85px;  }  /* Type */
+  .inq-table thead th:nth-child(10) { width: 80px;  }  /* Role */
+  .inq-table thead th:nth-child(11) { width: 50px;  }  /* NRI */
+  .inq-table thead th:nth-child(12) { width: 180px; }  /* Message */
+  .inq-table thead th:nth-child(13) { width: 80px;  }  /* Status */
+  .inq-table thead th:nth-child(14) { width: 115px; }  /* Submitted */
+  .inq-table thead th:nth-child(15) { width: 110px; }  /* Update Status */
+  .inq-table thead th:nth-child(16) { width: 36px;  }  /* Delete */
   .inq-table tbody tr {
     border-bottom: 1px solid var(--border);
     transition: background .12s;
@@ -429,8 +430,9 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Email</th>
+            <th>Country</th>
             <th>Phone</th>
+            <th>Email</th>
             <th class="hide-mobile">Property</th>
             <th class="hide-mobile">Intent</th>
             <th class="hide-mobile">Locality</th>
@@ -462,12 +464,18 @@
             </td>
 
             <td class="contact-cell">
-              <div class="email">{{ inq.email }}</div>
+              <span class="country-pill" style="display:inline-flex; align-items:center; gap:4px; font-weight:600; font-size:0.75rem; background:#F8FAFC; border:1px solid var(--border); border-radius:4px; padding:2px 6px; color:var(--navy);">
+                {{ inq.country_display }}
+              </span>
             </td>
 
             <td class="contact-cell">
               {% if inq.phone %}<div class="phone">{{ inq.phone }}</div>
               {% else %}<span style="color:var(--muted)">—</span>{% endif %}
+            </td>
+
+            <td class="contact-cell">
+              <div class="email">{{ inq.email }}</div>
             </td>
 
             <td class="prop-cell hide-mobile">

@@ -467,8 +467,12 @@ def contact(request):
             if referrer: attribution_lines.append(f"Referrer: {referrer}")
             if landing_page: attribution_lines.append(f"Landing Page: {landing_page}")
 
-            if attribution_lines:
-                msg_body_with_attribution += "\n\n--- Traffic Attribution Parameters ---\n" + "\n".join(attribution_lines)
+            from properties.country_utils import resolve_country_from_intake
+            c_code, c_name = resolve_country_from_intake(
+                message=msg_body_with_attribution,
+                phone=request.POST.get("phone", "") or "",
+                raw_country_code=request.POST.get("country_code") or request.POST.get("contact_country_code")
+            )
 
             inquiry = PropertyInquiry.objects.create(
                 name=request.POST.get("name") or "",
@@ -478,6 +482,8 @@ def contact(request):
                 property=None,  # Quote form doesn't link to specific property
                 status='pending',
                 form_source=request.POST.get("form_source", "Unknown Form"),
+                country_code=c_code,
+                country_name=c_name,
                 service_needed=service_needed,
                 property_type=property_type,
                 locality=locality,
