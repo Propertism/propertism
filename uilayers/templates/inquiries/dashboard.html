@@ -1439,7 +1439,7 @@ if (window.innerWidth < 900 && window.location.search === '') {
         var countryStr = (rawCountry || '').trim().toLowerCase();
         var phoneStr = (rawPhone || '').replace(/[\s\-\(\)]/g, '');
 
-        // 1. Explicit country string
+        // 1. Explicit country string from intake header (e.g. "Poland (+48)" or "India (+91)")
         if (countryStr) {
             var codeMatch = countryStr.match(/\+([0-9]{1,4})/);
             if (codeMatch) {
@@ -1459,20 +1459,38 @@ if (window.innerWidth < 900 && window.location.search === '') {
             }
         }
 
-        // 2. Phone number prefix
+        // 2. Phone number analysis
         if (phoneStr) {
-            var withPlus = phoneStr.startsWith('+') ? phoneStr : ('+' + phoneStr);
-            for (var m = 0; m < COUNTRY_LOOKUP.length; m++) {
-                var item = COUNTRY_LOOKUP[m];
-                if (withPlus.startsWith(item.code)) {
-                    return item;
+            // Case A: User entered an explicit '+' sign (e.g. +971507782086, +48501234567, +15105986982)
+            if (phoneStr.startsWith('+')) {
+                for (var m = 0; m < COUNTRY_LOOKUP.length; m++) {
+                    var item = COUNTRY_LOOKUP[m];
+                    if (phoneStr.startsWith(item.code)) {
+                        return item;
+                    }
                 }
             }
+
+            // Case B: Standard 10-digit Indian Mobile number (e.g. 7200057940, 9876543210, 8901234567)
             if (phoneStr.length === 10) {
                 return { code: '+91', name: 'India', flag: '🇮🇳' };
             }
+
+            // Case C: Indian number with leading 91 (e.g. 917200057940) or 0 (e.g. 07200057940)
             if (phoneStr.startsWith('91') && phoneStr.length === 12) {
                 return { code: '+91', name: 'India', flag: '🇮🇳' };
+            }
+            if (phoneStr.startsWith('0') && phoneStr.length === 11) {
+                return { code: '+91', name: 'India', flag: '🇮🇳' };
+            }
+
+            // Case D: International number entered without '+' sign (e.g. 971507782086, 48501234567, 14085551234)
+            for (var n = 0; n < COUNTRY_LOOKUP.length; n++) {
+                var cItem = COUNTRY_LOOKUP[n];
+                var rawCode = cItem.code.replace('+', '');
+                if (phoneStr.startsWith(rawCode) && phoneStr.length > rawCode.length + 6) {
+                    return cItem;
+                }
             }
         }
 
