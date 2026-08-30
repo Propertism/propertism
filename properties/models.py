@@ -317,16 +317,18 @@ class Inquiry(models.Model):
 
     @builtins.property
     def country_flag(self):
-        from .country_utils import COUNTRY_DIRECTORY
-        for c in COUNTRY_DIRECTORY:
-            if c["code"] == self.country_code or c["name"] == self.country_name:
-                return c["flag"]
-        return "🇮🇳" if (self.country_code == "+91" or not self.country_code) else "🌐"
+        from .country_utils import get_country_flag
+        return get_country_flag(self.country_code, self.country_name)
 
     @builtins.property
     def country_display(self):
+        if not self.phone and not self.country_code:
+            return ""
         code = self.country_code or "+91"
-        return f"{self.country_flag} {code}"
+        flag = self.country_flag
+        if not flag:
+            return ""
+        return f"{flag} {code}"
 
     def __str__(self):
         return f"Inquiry from {self.name} - {self.property.title if self.property else 'General'}"

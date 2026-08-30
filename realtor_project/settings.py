@@ -373,24 +373,37 @@ if not DEBUG:
 # Security headers (enabled in all environments)
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'SAMEORIGIN'  # Allow framing from same origin
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# Reverse Proxy & SSL Detection (Essential for AWS Elastic Beanstalk & CloudFront)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 # CSRF Protection
-CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = 'Lax'  # Lax for development, Strict for production
-# Add trusted origins for custom domain (HTTPS after SSL is configured)
+CSRF_COOKIE_HTTPONLY = False  # Allows client-side scripts to read token for AJAX/fetch headers
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_AGE = 60 * 60 * 24 * 14  # 14 days
+
+# Add trusted origins for custom domains and CloudFront / Elastic Beanstalk
 CSRF_TRUSTED_ORIGINS = _get_csv_env('CSRF_TRUSTED_ORIGINS', default=[
     'https://propertism.in',
     'https://www.propertism.in',
+    'https://*.propertism.in',
     'https://d1yv5od4i0bho.cloudfront.net',
+    'https://*.cloudfront.net',
+    'https://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
     'http://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
+    'https://*.elasticbeanstalk.com',
+    'http://*.elasticbeanstalk.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ])
 
-# Session Security — SCCB-19052026-1
+# Session Security
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_AGE = 60 * 60 * 8       # 8 hours
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SAMESITE = 'Lax'  # Lax allows cross-site top-level navigations (e.g. from links)
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 7 days
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
 
 # Password validation - enforce strong passwords
@@ -407,9 +420,6 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
 
 # Production-specific security settings
 if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    USE_X_FORWARDED_HOST = True
-
     # Enable strict HTTPS-only behavior only after SSL is actually configured.
     if _get_bool_env('ENABLE_HTTPS', 'FORCE_HTTPS', default=False):
         SECURE_SSL_REDIRECT = True
@@ -418,15 +428,6 @@ if not DEBUG:
         SECURE_HSTS_SECONDS = 31536000
         SECURE_HSTS_INCLUDE_SUBDOMAINS = True
         SECURE_HSTS_PRELOAD = True
-    
-    # Stricter settings for production
-    CSRF_COOKIE_SAMESITE = 'Lax'  # Changed from Strict to prevent admin form submission issues
-    SESSION_COOKIE_SAMESITE = 'Strict'
-    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-    X_FRAME_OPTIONS = 'DENY'
-
-    if not CSRF_TRUSTED_ORIGINS:
-        CSRF_TRUSTED_ORIGINS = _get_https_origins_from_hosts(ALLOWED_HOSTS)
 
 # ==============================================================================
 # EMAIL CONFIGURATION

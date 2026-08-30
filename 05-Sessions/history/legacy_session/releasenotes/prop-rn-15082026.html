@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO Health-Fix Implementation & Verification Walkthrough - Release Note</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.35;
+      font-size: 11px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      margin-bottom: 5px;
+    }
+
+    .header-card h1 {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 2px;
+      color: #ffffff;
+    }
+
+    .header-card p.subtitle {
+      font-size: 10.5px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 9.5px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 8.5px;
+      letter-spacing: 0.05em;
+      margin-bottom: 1px;
+    }
+
+    .meta-value {
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 10px 0 5px 0;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid #e2e8f0;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    h3 {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 8px 0 4px 0;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 6px;
+      color: #334155;
+    }
+
+    ul, ol {
+      margin: 4px 0 6px 16px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+
+    strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+      font-size: 10px;
+      background: #f1f5f9;
+      color: #0969da;
+      padding: 1px 3px;
+      border-radius: 3px;
+      border: 1px solid #e2e8f0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0 8px 0;
+      font-size: 9.8px;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      page-break-inside: avoid;
+    }
+
+    thead {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    th {
+      padding: 5px 7px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid #334155;
+    }
+
+    td {
+      padding: 4px 7px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+      color: #334155;
+      line-height: 1.28;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .badge-success {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 700;
+      font-size: 8.5px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #86efac;
+    }
+
+    .badge-info {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      font-size: 8.5px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #7dd3fc;
+    }
+
+    .badge-purple {
+      display: inline-block;
+      background: #f3e8ff;
+      color: #6b21a8;
+      font-weight: 700;
+      font-size: 8.5px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #d8b4fe;
+    }
+
+    .callout {
+      background: #f8fafc;
+      border-left: 3px solid #3b82f6;
+      border-radius: 0 4px 4px 0;
+      padding: 6px 10px;
+      margin: 6px 0;
+      font-size: 10.5px;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .callout-success {
+      background: #f0fdf4;
+      border-left: 3px solid #10b981;
+      border-radius: 0 4px 4px 0;
+      padding: 6px 10px;
+      margin: 6px 0;
+      font-size: 10.5px;
+      border-top: 1px solid #bbf7d0;
+      border-right: 1px solid #bbf7d0;
+      border-bottom: 1px solid #bbf7d0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 2px;
+    }
+
+    .flow-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin: 6px 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 10.5px;
+      color: #0f172a;
+      letter-spacing: 0.02em;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 6px 0;
+    }
+
+    .checklist-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 8px 10px;
+    }
+
+    .checklist-card ul {
+      margin: 4px 0 0 14px;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      color: #94a3b8;
+      font-size: 9px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="header-card">
+    <div class="badge-pill">Release Notes & Technical Walkthrough</div>
+    <h1>SEO Health-Fix Implementation & Verification</h1>
+    <p class="subtitle">Google Search Console Breadcrumb Structured Data Remediation & Sitemap Defect Fixes</p>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="meta-label">Prepared By</span>
+        <span class="meta-value">Viji Munuswamy</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Commit Hash</span>
+        <span class="meta-value"><code>e959571</code></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date & Time</span>
+        <span class="meta-value">2026-08-15 19:25 IST</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Executive Summary</h2>
+  <p>
+    Following our comprehensive technical audit of the latest Google Search Console (GSC) reports, an in-depth diagnosis of all <strong>63 non-indexed URLs</strong> and <strong>3 invalid Breadcrumb structured data items</strong> was performed across the Propertism platform. All genuine defects have been resolved with zero regressions.
+  </p>
+
+  <h2>1. Summary of Changes Applied</h2>
+  <div class="grid-2col">
+    <div class="checklist-card">
+      <strong style="color: #0f172a; font-size: 10.5px;">A. Breadcrumb Structured Data Fixes</strong>
+      <ul>
+        <li><strong><code>content/templatetags/seo_tags.py</code></strong>: Returns <code>{'schema': None}</code> when empty. Enforces canonical HTTPS URL construction via <code>_get_public_site_url(request)</code>. Populates <code>@type: "ListItem"</code>, <code>position</code>, <code>name</code>, <code>item</code> for every crumb. Resolves leaf URLs automatically.</li>
+        <li><strong><code>uilayers/templates/seo/breadcrumb_schema.html</code></strong>: Wrapped in <code>{% if schema %}</code> to prevent empty script outputs.</li>
+        <li><strong><code>content/views_landing.py</code></strong>: Added explicit <code>breadcrumbs</code> context to <code>city_hub</code> (<code>Home</code> &rarr; <code>City</code>). Bound <code>page_path</code> to leaf crumbs.</li>
+        <li><strong><code>content/views.py</code></strong>: Unified explicit URLs across services, about, management, profile, blog, and resources.</li>
+      </ul>
+    </div>
+    <div class="checklist-card">
+      <strong style="color: #0f172a; font-size: 10.5px;">B. Sitemap Redirect Remediation</strong>
+      <ul>
+        <li><strong><code>content/sitemaps.py</code></strong>: Removed <code>/contact/</code> (HTTP 302 redirect to <code>/#contact-section</code>) from <code>StaticViewSitemap.items()</code>.</li>
+        <li>Included verified 200 OK standalone pages: <code>"home"</code>, <code>"services"</code>, <code>"about"</code>, <code>"management"</code>, <code>"property_owner_resources"</code>, <code>"property_list"</code>, <code>"terms"</code>, <code>"privacy"</code>, <code>"disclaimer"</code>, <code>"sitemap_guide"</code>.</li>
+        <li>Verified that <code>sitemap.xml</code> contains <strong>0 redirected URLs</strong> (812 total URLs, 100% returning HTTP 200 OK).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>2. Analysis & Status of the 63 Non-Indexed Pages</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 26%;">Category</th>
+        <th style="width: 7%; text-align: center;">Count</th>
+        <th style="width: 42%;">Status & Root Cause</th>
+        <th style="width: 25%;">Action Taken</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Page with redirect</strong></td>
+        <td style="text-align: center;"><strong>14</strong></td>
+        <td>
+          &bull; 1 Sitemap defect: <code>/contact/</code> in <code>sitemap.xml</code> (302 redirect).<br>
+          &bull; 13 Intentional system redirects: <code>/blog/</code> (302), auth endpoints (<code>/login/</code>, <code>/register/</code>, <code>/logout/</code>, <code>/dashboard/</code>, <code>/admin/</code>, <code>/inquiries/</code>), apex <code>propertism.in</code> &rarr; <code>www.propertism.in</code>, <code>/favicon.ico</code> (301), and trailing slash redirects.
+        </td>
+        <td>
+          <span class="badge-success">Fixed Sitemap</span><br>
+          Removed <code>/contact/</code>. Kept intentional system redirects intact.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Not found (404)</strong></td>
+        <td style="text-align: center;"><strong>13</strong></td>
+        <td>Historical crawl of blog posts before production database sync and obsolete bot probe URLs. All 25 active blog articles, 9 properties, 768 landing pages, and static pages return 200 OK.</td>
+        <td>
+          <span class="badge-info">Standard 404</span><br>
+          Left as 404. Returning 404 for non-existent legacy URLs is standard practice.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Excluded by <code>noindex</code></strong></td>
+        <td style="text-align: center;"><strong>3</strong></td>
+        <td>Intentional exclusion on utility/system routes (e.g. <code>sitemap-guide.html</code>, <code>captcha_challenge.html</code>, or test routes) via <code>noindex,follow</code>.</td>
+        <td>
+          <span class="badge-info">By Design</span><br>
+          Valid quality safeguard.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Blocked due to other 4xx issue</strong></td>
+        <td style="text-align: center;"><strong>1</strong></td>
+        <td>Rate-limiting (HTTP 429) or bot probing without required headers.</td>
+        <td>
+          <span class="badge-info">By Design</span><br>
+          Security working as intended.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Server error (5xx)</strong></td>
+        <td style="text-align: center;"><strong>1</strong></td>
+        <td>Transient error during past AWS Elastic Beanstalk deployment cold-start.</td>
+        <td>
+          <span class="badge-success">Verified</span> (Zero active 5xx).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Duplicate without user-selected canonical</strong></td>
+        <td style="text-align: center;"><strong>1</strong></td>
+        <td>Tracking parameter URL (<code>?utm_source=...</code>). Renders self-referencing canonical tag.</td>
+        <td>
+          <span class="badge-success">Verified</span> (Tags consolidate params).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Blocked due to unauthorized request (401)</strong></td>
+        <td style="text-align: center;"><strong>1</strong></td>
+        <td>Private staff/admin route (<code>/inquiries/</code> or <code>/admin/</code>) discovered by crawler.</td>
+        <td>
+          <span class="badge-purple">Security Wall</span> (Mandatory auth).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Discovered — currently not indexed</strong></td>
+        <td style="text-align: center;"><strong>23</strong></td>
+        <td>Legitimate programmatic SEO pages. All 23 URLs return HTTP 200 OK with valid canonical tags.</td>
+        <td>
+          <span class="badge-info">Google Crawl Budget</span><br>
+          No technical defect identified.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Crawled — currently not indexed</strong></td>
+        <td style="text-align: center;"><strong>6</strong></td>
+        <td>Legitimate public pages evaluated by Google. All return HTTP 200 OK with valid structured data.</td>
+        <td>
+          <span class="badge-success">Hierarchy Fixed</span><br>
+          Enhanced breadcrumb schema.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PAGE 2 -->
+  <div class="page-break"></div>
+
+  <h2>3. Verification of Knowledge Hub "Insights" Breadcrumb</h2>
+  <div class="callout">
+    <div class="callout-title">Insights Trail Architecture:</div>
+    <strong>Crumb 1:</strong> <code>Home</code> &rarr; <code>https://www.propertism.in/</code> &nbsp;|&nbsp;
+    <strong>Crumb 2:</strong> <code>Insights</code> &rarr; <code>https://www.propertism.in/#blog-section</code> &nbsp;|&nbsp;
+    <strong>Crumb 3:</strong> <code>[Article Title]</code> &rarr; <code>https://www.propertism.in/blog/&lt;slug&gt;/</code>
+  </div>
+  <p>
+    <strong>Architecture & Rationale:</strong> All blog and knowledge hub articles are presented within the dedicated Insights section on the homepage (<code>/#blog-section</code>). The standalone <code>/blog/</code> route redirects to <code>/#blog-section</code>. Setting the "Insights" breadcrumb destination directly to <code>/#blog-section</code> aligns with the single-page hub architecture and avoids passing crawlers through redirects. <em>Decision: Left unchanged as intentional, canonical, and architecturally aligned.</em>
+  </p>
+
+  <h2>4. Test & Crawl Verification Results</h2>
+  <div class="grid-2col">
+    <div class="checklist-card">
+      <strong style="color: #0f172a; font-size: 10.5px;">A. Automated Unit Tests</strong>
+      <ul>
+        <li><code>BreadcrumbSchemaTests.test_breadcrumb_schema_with_explicit_urls</code> &mdash; <span class="badge-success">PASS</span></li>
+        <li><code>BreadcrumbSchemaTests.test_breadcrumb_schema_leaf_item_without_url_resolves_canonical_url</code> &mdash; <span class="badge-success">PASS</span></li>
+        <li><code>BreadcrumbSchemaTests.test_breadcrumb_schema_empty_items_returns_none</code> &mdash; <span class="badge-success">PASS</span></li>
+        <li><code>SitemapIntegrityTests.test_static_view_sitemap_has_no_redirects</code> &mdash; <span class="badge-success">PASS</span></li>
+        <li><strong>Full Content Test Suite:</strong> <span class="badge-success">40 / 40 Tests PASS</span></li>
+      </ul>
+    </div>
+    <div class="checklist-card">
+      <strong style="color: #0f172a; font-size: 10.5px;">B. Full Sitemap Crawl (812 URLs)</strong>
+      <ul>
+        <li>Non-200 URLs: <strong>0</strong></li>
+        <li>Redirected URLs in sitemap: <strong>0</strong></li>
+        <li>Pages with unintended <code>noindex</code>: <strong>0</strong></li>
+        <li>Canonical tag mismatches: <strong>0</strong></li>
+        <li>Sitemap 200 OK Delivery Rate: <strong>100%</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>5. Post-Deployment Guidance: Understanding Search Console Numbers</h2>
+  <p>
+    Now that the fixes are deployed, the important thing is <strong>not to chase the old 63 number</strong>. The 63 was a snapshot from Google Search Console before our fixes; it does not mean 63 broken pages.
+  </p>
+
+  <div class="checklist-card" style="margin-bottom: 8px;">
+    <strong style="color: #0f172a; font-size: 10.5px;">Current State of Platform Indexation:</strong>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 4px; font-size: 10px;">
+      <div>&bull; <strong>Intentional redirects</strong> remain intentional.</div>
+      <div>&bull; <strong>Genuine 404s</strong> remain 404s.</div>
+      <div>&bull; <strong>Private/protected URLs</strong> remain protected.</div>
+      <div>&bull; <strong>Intentional noindex pages</strong> remain excluded.</div>
+      <div>&bull; <strong>The sitemap is now clean</strong> (100% 200 OK).</div>
+      <div>&bull; <strong>Breadcrumb structured data is corrected.</strong></div>
+      <div style="grid-column: span 2;">&bull; <strong>Public indexable pages</strong> have been technically verified across all routes.</div>
+    </div>
+  </div>
+
+  <p>
+    The 23 <em>"Discovered &ndash; currently not indexed"</em> and 6 <em>"Crawled &ndash; currently not indexed"</em> pages are the important ones to watch. They are technically healthy, but Google decides independently whether and when to index them based on crawl budget.
+  </p>
+
+  <div class="flow-box">
+    Indexation Lifecycle: Fix &rarr; Deploy &rarr; Google recrawls &rarr; Google reevaluates &rarr; Search Console updates
+  </div>
+
+  <p style="font-size: 10.5px; margin-bottom: 6px;">
+    Don't expect the numbers to change immediately. We should give Google some time to recrawl and process the deployment.
+  </p>
+
+  <div class="callout-success">
+    <strong>Key Takeaway:</strong> Our job is to make the pages technically indexable and healthy. Google's job is to decide which pages deserve inclusion in its index. From our side: <strong>SEO Health Fix = Completed. ✅</strong>
+  </div>
+
+  <div class="footer-note">
+    <span>Propertism Platform &bull; Production Release &bull; Commit <code>e959571</code></span>
+    <span>Propertism Website &bull; Verified Build</span>
+  </div>
+
+</body>
+</html>

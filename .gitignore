@@ -194,4 +194,9 @@ scratch/
 .seed/
 graphify-out/cache/
 
+# Google OAuth & API Credentials
+client_secret.json
+token.json
+ga-credentials.json
+
 

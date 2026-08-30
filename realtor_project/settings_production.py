@@ -216,23 +216,35 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
+# Reverse Proxy & SSL Detection (Essential for AWS Elastic Beanstalk & CloudFront)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
 # CSRF Protection
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False  # Allows client-side scripts to read token for AJAX/fetch headers
 CSRF_USE_SESSIONS = False
-CSRF_COOKIE_SAMESITE = 'Lax'  # Changed from Strict to prevent admin save issues
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_AGE = 60 * 60 * 24 * 14  # 14 days
 
 # CSRF Trusted Origins - must include exact domains used in production
 CSRF_TRUSTED_ORIGINS = [
     'https://propertism.in',
     'https://www.propertism.in',
+    'https://*.propertism.in',
+    'https://d1yv5od4i0bho.cloudfront.net',
+    'https://*.cloudfront.net',
+    'https://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
+    'http://propertism-prod-2026.us-east-1.elasticbeanstalk.com',
+    'https://*.elasticbeanstalk.com',
+    'http://*.elasticbeanstalk.com',
 ]
 
 # Session Security
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_AGE = 3600  # 1 hour
+SESSION_COOKIE_SAMESITE = 'Lax'  # Lax allows cross-site top-level navigation
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 7 days
 SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Referrer Policy
 SECURE_REFERRER_POLICY = 'same-origin'

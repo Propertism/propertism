@@ -1,51 +1,2605 @@
+import os
 import re
+import json
 
 COUNTRY_DIRECTORY = [
-    { "code": "+971", "name": "United Arab Emirates", "flag": "🇦🇪", "aliases": ["uae", "emirates", "dubai", "abu dhabi"] },
-    { "code": "+966", "name": "Saudi Arabia", "flag": "🇸🇦", "aliases": ["ksa", "saudi"] },
-    { "code": "+974", "name": "Qatar", "flag": "🇶🇦", "aliases": ["qatar", "doha"] },
-    { "code": "+968", "name": "Oman", "flag": "🇴🇲", "aliases": ["oman", "muscat"] },
-    { "code": "+965", "name": "Kuwait", "flag": "🇰🇼", "aliases": ["kuwait"] },
-    { "code": "+973", "name": "Bahrain", "flag": "🇧🇭", "aliases": ["bahrain"] },
-    { "code": "+852", "name": "Hong Kong", "flag": "🇭🇰", "aliases": ["hong kong", "hk"] },
-    { "code": "+353", "name": "Ireland", "flag": "🇮🇪", "aliases": ["ireland", "dublin"] },
-    { "code": "+351", "name": "Portugal", "flag": "🇵🇹", "aliases": ["portugal", "lisbon"] },
-    { "code": "+880", "name": "Bangladesh", "flag": "🇧🇩", "aliases": ["bangladesh", "dhaka"] },
-    { "code": "+977", "name": "Nepal", "flag": "🇳🇵", "aliases": ["nepal", "kathmandu"] },
-    { "code": "+94", "name": "Sri Lanka", "flag": "🇱🇰", "aliases": ["sri lanka", "colombo"] },
-    { "code": "+91", "name": "India", "flag": "🇮🇳", "aliases": ["india", "bharat", "ind"] },
-    { "code": "+65", "name": "Singapore", "flag": "🇸🇬", "aliases": ["singapore", "sg"] },
-    { "code": "+60", "name": "Malaysia", "flag": "🇲🇾", "aliases": ["malaysia", "my", "kl"] },
-    { "code": "+61", "name": "Australia", "flag": "🇦🇺", "aliases": ["australia", "aus", "sydney", "melbourne"] },
-    { "code": "+64", "name": "New Zealand", "flag": "🇳🇿", "aliases": ["new zealand", "nz", "auckland"] },
-    { "code": "+48", "name": "Poland", "flag": "🇵🇱", "aliases": ["poland", "pl", "polska", "warsaw"] },
-    { "code": "+44", "name": "United Kingdom", "flag": "🇬🇧", "aliases": ["uk", "united kingdom", "great britain", "england", "london", "scotland"] },
-    { "code": "+49", "name": "Germany", "flag": "🇩🇪", "aliases": ["germany", "de", "deutschland", "berlin", "frankfurt", "munich"] },
-    { "code": "+33", "name": "France", "flag": "🇫🇷", "aliases": ["france", "fr", "paris"] },
-    { "code": "+39", "name": "Italy", "flag": "🇮🇹", "aliases": ["italy", "it", "italia", "rome", "milan"] },
-    { "code": "+34", "name": "Spain", "flag": "🇪🇸", "aliases": ["spain", "es", "espana", "madrid", "barcelona"] },
-    { "code": "+31", "name": "Netherlands", "flag": "🇳🇱", "aliases": ["netherlands", "nl", "holland", "amsterdam"] },
-    { "code": "+41", "name": "Switzerland", "flag": "🇨🇭", "aliases": ["switzerland", "ch", "swiss", "zurich", "geneva"] },
-    { "code": "+46", "name": "Sweden", "flag": "🇸🇪", "aliases": ["sweden", "se", "stockholm"] },
-    { "code": "+47", "name": "Norway", "flag": "🇳🇴", "aliases": ["norway", "no", "oslo"] },
-    { "code": "+45", "name": "Denmark", "flag": "🇩🇰", "aliases": ["denmark", "dk", "copenhagen"] },
-    { "code": "+81", "name": "Japan", "flag": "🇯🇵", "aliases": ["japan", "jp", "tokyo"] },
-    { "code": "+82", "name": "South Korea", "flag": "🇰🇷", "aliases": ["korea", "south korea", "kr", "seoul"] },
-    { "code": "+86", "name": "China", "flag": "🇨🇳", "aliases": ["china", "cn", "beijing", "shanghai"] },
-    { "code": "+62", "name": "Indonesia", "flag": "🇮🇩", "aliases": ["indonesia", "id", "jakarta"] },
-    { "code": "+63", "name": "Philippines", "flag": "🇵🇭", "aliases": ["philippines", "ph", "manila"] },
-    { "code": "+66", "name": "Thailand", "flag": "🇹🇭", "aliases": ["thailand", "th", "bangkok"] },
-    { "code": "+84", "name": "Vietnam", "flag": "🇻🇳", "aliases": ["vietnam", "vn", "hanoi"] },
-    { "code": "+27", "name": "South Africa", "flag": "🇿🇦", "aliases": ["south africa", "za"] },
-    { "code": "+7", "name": "Russia", "flag": "🇷🇺", "aliases": ["russia", "ru", "moscow"] },
-    { "code": "+1", "name": "United States", "flag": "🇺🇸", "aliases": ["usa", "us", "united states", "america", "canada", "ca"] }
+    {
+        "code": "+91",
+        "name": "India",
+        "iso": "in",
+        "flag": "🇮🇳",
+        "aliases": [
+            "india",
+            "bharat",
+            "ind",
+            "chennai",
+            "mumbai",
+            "delhi",
+            "bangalore"
+        ]
+    },
+    {
+        "code": "+1",
+        "name": "United States",
+        "iso": "us",
+        "flag": "🇺🇸",
+        "aliases": [
+            "usa",
+            "us",
+            "united states",
+            "america",
+            "+1201"
+        ]
+    },
+    {
+        "code": "+1",
+        "name": "Canada",
+        "iso": "ca",
+        "flag": "🇨🇦",
+        "aliases": [
+            "canada",
+            "ca",
+            "+1204"
+        ]
+    },
+    {
+        "code": "+352",
+        "name": "Luxembourg",
+        "iso": "lu",
+        "flag": "🇱🇺",
+        "aliases": [
+            "luxembourg",
+            "lu"
+        ]
+    },
+    {
+        "code": "+971",
+        "name": "United Arab Emirates",
+        "iso": "ae",
+        "flag": "🇦🇪",
+        "aliases": [
+            "uae",
+            "emirates",
+            "dubai",
+            "abu dhabi"
+        ]
+    },
+    {
+        "code": "+44",
+        "name": "United Kingdom",
+        "iso": "gb",
+        "flag": "🇬🇧",
+        "aliases": [
+            "uk",
+            "united kingdom",
+            "great britain",
+            "england",
+            "london"
+        ]
+    },
+    {
+        "code": "+61",
+        "name": "Australia",
+        "iso": "au",
+        "flag": "🇦🇺",
+        "aliases": [
+            "australia",
+            "aus",
+            "sydney",
+            "melbourne"
+        ]
+    },
+    {
+        "code": "+65",
+        "name": "Singapore",
+        "iso": "sg",
+        "flag": "🇸🇬",
+        "aliases": [
+            "singapore",
+            "sg"
+        ]
+    },
+    {
+        "code": "+60",
+        "name": "Malaysia",
+        "iso": "my",
+        "flag": "🇲🇾",
+        "aliases": [
+            "malaysia",
+            "my",
+            "kl"
+        ]
+    },
+    {
+        "code": "+49",
+        "name": "Germany",
+        "iso": "de",
+        "flag": "🇩🇪",
+        "aliases": [
+            "germany",
+            "de",
+            "deutschland"
+        ]
+    },
+    {
+        "code": "+33",
+        "name": "France",
+        "iso": "fr",
+        "flag": "🇫🇷",
+        "aliases": [
+            "france",
+            "fr",
+            "paris"
+        ]
+    },
+    {
+        "code": "+48",
+        "name": "Poland",
+        "iso": "pl",
+        "flag": "🇵🇱",
+        "aliases": [
+            "poland",
+            "pl",
+            "polska"
+        ]
+    },
+    {
+        "code": "+32",
+        "name": "Belgium",
+        "iso": "be",
+        "flag": "🇧🇪",
+        "aliases": [
+            "belgium",
+            "be"
+        ]
+    },
+    {
+        "code": "+41",
+        "name": "Switzerland",
+        "iso": "ch",
+        "flag": "🇨🇭",
+        "aliases": [
+            "switzerland",
+            "ch",
+            "swiss"
+        ]
+    },
+    {
+        "code": "+31",
+        "name": "Netherlands",
+        "iso": "nl",
+        "flag": "🇳🇱",
+        "aliases": [
+            "netherlands",
+            "nl",
+            "holland"
+        ]
+    },
+    {
+        "code": "+353",
+        "name": "Ireland",
+        "iso": "ie",
+        "flag": "🇮🇪",
+        "aliases": [
+            "ireland",
+            "dublin"
+        ]
+    },
+    {
+        "code": "+351",
+        "name": "Portugal",
+        "iso": "pt",
+        "flag": "🇵🇹",
+        "aliases": [
+            "portugal",
+            "lisbon"
+        ]
+    },
+    {
+        "code": "+966",
+        "name": "Saudi Arabia",
+        "iso": "sa",
+        "flag": "🇸🇦",
+        "aliases": [
+            "ksa",
+            "saudi"
+        ]
+    },
+    {
+        "code": "+974",
+        "name": "Qatar",
+        "iso": "qa",
+        "flag": "🇶🇦",
+        "aliases": [
+            "qatar",
+            "doha"
+        ]
+    },
+    {
+        "code": "+968",
+        "name": "Oman",
+        "iso": "om",
+        "flag": "🇴🇲",
+        "aliases": [
+            "oman",
+            "muscat"
+        ]
+    },
+    {
+        "code": "+965",
+        "name": "Kuwait",
+        "iso": "kw",
+        "flag": "🇰🇼",
+        "aliases": [
+            "kuwait"
+        ]
+    },
+    {
+        "code": "+973",
+        "name": "Bahrain",
+        "iso": "bh",
+        "flag": "🇧🇭",
+        "aliases": [
+            "bahrain"
+        ]
+    },
+    {
+        "code": "+852",
+        "name": "Hong Kong",
+        "iso": "hk",
+        "flag": "🇭🇰",
+        "aliases": [
+            "hong kong",
+            "hk"
+        ]
+    },
+    {
+        "code": "+64",
+        "name": "New Zealand",
+        "iso": "nz",
+        "flag": "🇳🇿",
+        "aliases": [
+            "new zealand",
+            "nz"
+        ]
+    },
+    {
+        "code": "+880",
+        "name": "Bangladesh",
+        "iso": "bd",
+        "flag": "🇧🇩",
+        "aliases": [
+            "bangladesh",
+            "dhaka"
+        ]
+    },
+    {
+        "code": "+977",
+        "name": "Nepal",
+        "iso": "np",
+        "flag": "🇳🇵",
+        "aliases": [
+            "nepal",
+            "kathmandu"
+        ]
+    },
+    {
+        "code": "+94",
+        "name": "Sri Lanka",
+        "iso": "lk",
+        "flag": "🇱🇰",
+        "aliases": [
+            "sri lanka",
+            "colombo"
+        ]
+    },
+    {
+        "code": "+81",
+        "name": "Japan",
+        "iso": "jp",
+        "flag": "🇯🇵",
+        "aliases": [
+            "japan",
+            "jp",
+            "tokyo"
+        ]
+    },
+    {
+        "code": "+82",
+        "name": "South Korea",
+        "iso": "kr",
+        "flag": "🇰🇷",
+        "aliases": [
+            "korea",
+            "south korea",
+            "kr"
+        ]
+    },
+    {
+        "code": "+86",
+        "name": "China",
+        "iso": "cn",
+        "flag": "🇨🇳",
+        "aliases": [
+            "china",
+            "cn",
+            "beijing"
+        ]
+    },
+    {
+        "code": "+62",
+        "name": "Indonesia",
+        "iso": "id",
+        "flag": "🇮🇩",
+        "aliases": [
+            "indonesia",
+            "id"
+        ]
+    },
+    {
+        "code": "+63",
+        "name": "Philippines",
+        "iso": "ph",
+        "flag": "🇵🇭",
+        "aliases": [
+            "philippines",
+            "ph"
+        ]
+    },
+    {
+        "code": "+66",
+        "name": "Thailand",
+        "iso": "th",
+        "flag": "🇹🇭",
+        "aliases": [
+            "thailand",
+            "th"
+        ]
+    },
+    {
+        "code": "+84",
+        "name": "Vietnam",
+        "iso": "vn",
+        "flag": "🇻🇳",
+        "aliases": [
+            "vietnam",
+            "vn"
+        ]
+    },
+    {
+        "code": "+27",
+        "name": "South Africa",
+        "iso": "za",
+        "flag": "🇿🇦",
+        "aliases": [
+            "south africa",
+            "za"
+        ]
+    },
+    {
+        "code": "+7",
+        "name": "Russia",
+        "iso": "ru",
+        "flag": "🇷🇺",
+        "aliases": [
+            "russia",
+            "ru"
+        ]
+    },
+    {
+        "code": "+93",
+        "name": "Afghanistan",
+        "iso": "af",
+        "flag": "🇦🇫",
+        "aliases": [
+            "af",
+            "afghanistan"
+        ]
+    },
+    {
+        "code": "+355",
+        "name": "Albania",
+        "iso": "al",
+        "flag": "🇦🇱",
+        "aliases": [
+            "al",
+            "albania"
+        ]
+    },
+    {
+        "code": "+213",
+        "name": "Algeria",
+        "iso": "dz",
+        "flag": "🇩🇿",
+        "aliases": [
+            "dz",
+            "algeria"
+        ]
+    },
+    {
+        "code": "+1684",
+        "name": "American Samoa",
+        "iso": "as",
+        "flag": "🇦🇸",
+        "aliases": [
+            "as",
+            "american samoa"
+        ]
+    },
+    {
+        "code": "+376",
+        "name": "Andorra",
+        "iso": "ad",
+        "flag": "🇦🇩",
+        "aliases": [
+            "ad",
+            "andorra"
+        ]
+    },
+    {
+        "code": "+244",
+        "name": "Angola",
+        "iso": "ao",
+        "flag": "🇦🇴",
+        "aliases": [
+            "ao",
+            "angola"
+        ]
+    },
+    {
+        "code": "+1264",
+        "name": "Anguilla",
+        "iso": "ai",
+        "flag": "🇦🇮",
+        "aliases": [
+            "ai",
+            "anguilla"
+        ]
+    },
+    {
+        "code": "+1268",
+        "name": "Antigua and Barbuda",
+        "iso": "ag",
+        "flag": "🇦🇬",
+        "aliases": [
+            "ag",
+            "antigua and barbuda"
+        ]
+    },
+    {
+        "code": "+54",
+        "name": "Argentina",
+        "iso": "ar",
+        "flag": "🇦🇷",
+        "aliases": [
+            "ar",
+            "argentina"
+        ]
+    },
+    {
+        "code": "+374",
+        "name": "Armenia",
+        "iso": "am",
+        "flag": "🇦🇲",
+        "aliases": [
+            "am",
+            "armenia"
+        ]
+    },
+    {
+        "code": "+297",
+        "name": "Aruba",
+        "iso": "aw",
+        "flag": "🇦🇼",
+        "aliases": [
+            "aw",
+            "aruba"
+        ]
+    },
+    {
+        "code": "+43",
+        "name": "Austria",
+        "iso": "at",
+        "flag": "🇦🇹",
+        "aliases": [
+            "austria",
+            "at",
+            "vienna"
+        ]
+    },
+    {
+        "code": "+994",
+        "name": "Azerbaijan",
+        "iso": "az",
+        "flag": "🇦🇿",
+        "aliases": [
+            "az",
+            "azerbaijan"
+        ]
+    },
+    {
+        "code": "+1242",
+        "name": "Bahamas",
+        "iso": "bs",
+        "flag": "🇧🇸",
+        "aliases": [
+            "bs",
+            "bahamas"
+        ]
+    },
+    {
+        "code": "+1246",
+        "name": "Barbados",
+        "iso": "bb",
+        "flag": "🇧🇧",
+        "aliases": [
+            "bb",
+            "barbados"
+        ]
+    },
+    {
+        "code": "+375",
+        "name": "Belarus",
+        "iso": "by",
+        "flag": "🇧🇾",
+        "aliases": [
+            "by",
+            "belarus"
+        ]
+    },
+    {
+        "code": "+501",
+        "name": "Belize",
+        "iso": "bz",
+        "flag": "🇧🇿",
+        "aliases": [
+            "bz",
+            "belize"
+        ]
+    },
+    {
+        "code": "+229",
+        "name": "Benin",
+        "iso": "bj",
+        "flag": "🇧🇯",
+        "aliases": [
+            "bj",
+            "benin"
+        ]
+    },
+    {
+        "code": "+1441",
+        "name": "Bermuda",
+        "iso": "bm",
+        "flag": "🇧🇲",
+        "aliases": [
+            "bm",
+            "bermuda"
+        ]
+    },
+    {
+        "code": "+975",
+        "name": "Bhutan",
+        "iso": "bt",
+        "flag": "🇧🇹",
+        "aliases": [
+            "bt",
+            "bhutan"
+        ]
+    },
+    {
+        "code": "+591",
+        "name": "Bolivia",
+        "iso": "bo",
+        "flag": "🇧🇴",
+        "aliases": [
+            "bo",
+            "bolivia"
+        ]
+    },
+    {
+        "code": "+387",
+        "name": "Bosnia and Herzegovina",
+        "iso": "ba",
+        "flag": "🇧🇦",
+        "aliases": [
+            "ba",
+            "bosnia and herzegovina"
+        ]
+    },
+    {
+        "code": "+267",
+        "name": "Botswana",
+        "iso": "bw",
+        "flag": "🇧🇼",
+        "aliases": [
+            "bw",
+            "botswana"
+        ]
+    },
+    {
+        "code": "+47",
+        "name": "Bouvet Island",
+        "iso": "bv",
+        "flag": "🇧🇻",
+        "aliases": [
+            "norway",
+            "no",
+            "oslo",
+            "bv",
+            "bouvet island"
+        ]
+    },
+    {
+        "code": "+55",
+        "name": "Brazil",
+        "iso": "br",
+        "flag": "🇧🇷",
+        "aliases": [
+            "br",
+            "brazil"
+        ]
+    },
+    {
+        "code": "+246",
+        "name": "British Indian Ocean Territory",
+        "iso": "io",
+        "flag": "🇮🇴",
+        "aliases": [
+            "io",
+            "british indian ocean territory"
+        ]
+    },
+    {
+        "code": "+1284",
+        "name": "British Virgin Islands",
+        "iso": "vg",
+        "flag": "🇻🇬",
+        "aliases": [
+            "vg",
+            "british virgin islands"
+        ]
+    },
+    {
+        "code": "+673",
+        "name": "Brunei",
+        "iso": "bn",
+        "flag": "🇧🇳",
+        "aliases": [
+            "bn",
+            "brunei"
+        ]
+    },
+    {
+        "code": "+359",
+        "name": "Bulgaria",
+        "iso": "bg",
+        "flag": "🇧🇬",
+        "aliases": [
+            "bg",
+            "bulgaria"
+        ]
+    },
+    {
+        "code": "+226",
+        "name": "Burkina Faso",
+        "iso": "bf",
+        "flag": "🇧🇫",
+        "aliases": [
+            "bf",
+            "burkina faso"
+        ]
+    },
+    {
+        "code": "+257",
+        "name": "Burundi",
+        "iso": "bi",
+        "flag": "🇧🇮",
+        "aliases": [
+            "bi",
+            "burundi"
+        ]
+    },
+    {
+        "code": "+855",
+        "name": "Cambodia",
+        "iso": "kh",
+        "flag": "🇰🇭",
+        "aliases": [
+            "kh",
+            "cambodia"
+        ]
+    },
+    {
+        "code": "+237",
+        "name": "Cameroon",
+        "iso": "cm",
+        "flag": "🇨🇲",
+        "aliases": [
+            "cm",
+            "cameroon"
+        ]
+    },
+    {
+        "code": "+238",
+        "name": "Cape Verde",
+        "iso": "cv",
+        "flag": "🇨🇻",
+        "aliases": [
+            "cv",
+            "cape verde"
+        ]
+    },
+    {
+        "code": "+599",
+        "name": "Caribbean Netherlands",
+        "iso": "bq",
+        "flag": "🇧🇶",
+        "aliases": [
+            "bq",
+            "caribbean netherlands"
+        ]
+    },
+    {
+        "code": "+1345",
+        "name": "Cayman Islands",
+        "iso": "ky",
+        "flag": "🇰🇾",
+        "aliases": [
+            "ky",
+            "cayman islands"
+        ]
+    },
+    {
+        "code": "+236",
+        "name": "Central African Republic",
+        "iso": "cf",
+        "flag": "🇨🇫",
+        "aliases": [
+            "cf",
+            "central african republic"
+        ]
+    },
+    {
+        "code": "+235",
+        "name": "Chad",
+        "iso": "td",
+        "flag": "🇹🇩",
+        "aliases": [
+            "td",
+            "chad"
+        ]
+    },
+    {
+        "code": "+56",
+        "name": "Chile",
+        "iso": "cl",
+        "flag": "🇨🇱",
+        "aliases": [
+            "cl",
+            "chile"
+        ]
+    },
+    {
+        "code": "+61",
+        "name": "Christmas Island",
+        "iso": "cx",
+        "flag": "🇨🇽",
+        "aliases": [
+            "australia",
+            "aus",
+            "sydney",
+            "melbourne",
+            "perth",
+            "brisbane",
+            "cx",
+            "christmas island"
+        ]
+    },
+    {
+        "code": "+61",
+        "name": "Cocos (Keeling) Islands",
+        "iso": "cc",
+        "flag": "🇨🇨",
+        "aliases": [
+            "australia",
+            "aus",
+            "sydney",
+            "melbourne",
+            "perth",
+            "brisbane",
+            "cc",
+            "cocos (keeling) islands"
+        ]
+    },
+    {
+        "code": "+57",
+        "name": "Colombia",
+        "iso": "co",
+        "flag": "🇨🇴",
+        "aliases": [
+            "co",
+            "colombia"
+        ]
+    },
+    {
+        "code": "+269",
+        "name": "Comoros",
+        "iso": "km",
+        "flag": "🇰🇲",
+        "aliases": [
+            "km",
+            "comoros"
+        ]
+    },
+    {
+        "code": "+242",
+        "name": "Congo",
+        "iso": "cg",
+        "flag": "🇨🇬",
+        "aliases": [
+            "cg",
+            "congo"
+        ]
+    },
+    {
+        "code": "+682",
+        "name": "Cook Islands",
+        "iso": "ck",
+        "flag": "🇨🇰",
+        "aliases": [
+            "ck",
+            "cook islands"
+        ]
+    },
+    {
+        "code": "+506",
+        "name": "Costa Rica",
+        "iso": "cr",
+        "flag": "🇨🇷",
+        "aliases": [
+            "cr",
+            "costa rica"
+        ]
+    },
+    {
+        "code": "+385",
+        "name": "Croatia",
+        "iso": "hr",
+        "flag": "🇭🇷",
+        "aliases": [
+            "hr",
+            "croatia"
+        ]
+    },
+    {
+        "code": "+53",
+        "name": "Cuba",
+        "iso": "cu",
+        "flag": "🇨🇺",
+        "aliases": [
+            "cu",
+            "cuba"
+        ]
+    },
+    {
+        "code": "+599",
+        "name": "Curaçao",
+        "iso": "cw",
+        "flag": "🇨🇼",
+        "aliases": [
+            "cw",
+            "curaçao"
+        ]
+    },
+    {
+        "code": "+357",
+        "name": "Cyprus",
+        "iso": "cy",
+        "flag": "🇨🇾",
+        "aliases": [
+            "cy",
+            "cyprus"
+        ]
+    },
+    {
+        "code": "+420",
+        "name": "Czechia",
+        "iso": "cz",
+        "flag": "🇨🇿",
+        "aliases": [
+            "cz",
+            "czechia"
+        ]
+    },
+    {
+        "code": "+243",
+        "name": "DR Congo",
+        "iso": "cd",
+        "flag": "🇨🇩",
+        "aliases": [
+            "cd",
+            "dr congo"
+        ]
+    },
+    {
+        "code": "+45",
+        "name": "Denmark",
+        "iso": "dk",
+        "flag": "🇩🇰",
+        "aliases": [
+            "denmark",
+            "dk",
+            "copenhagen"
+        ]
+    },
+    {
+        "code": "+253",
+        "name": "Djibouti",
+        "iso": "dj",
+        "flag": "🇩🇯",
+        "aliases": [
+            "dj",
+            "djibouti"
+        ]
+    },
+    {
+        "code": "+1767",
+        "name": "Dominica",
+        "iso": "dm",
+        "flag": "🇩🇲",
+        "aliases": [
+            "dm",
+            "dominica"
+        ]
+    },
+    {
+        "code": "+1809",
+        "name": "Dominican Republic",
+        "iso": "do",
+        "flag": "🇩🇴",
+        "aliases": [
+            "do",
+            "dominican republic"
+        ]
+    },
+    {
+        "code": "+593",
+        "name": "Ecuador",
+        "iso": "ec",
+        "flag": "🇪🇨",
+        "aliases": [
+            "ec",
+            "ecuador"
+        ]
+    },
+    {
+        "code": "+20",
+        "name": "Egypt",
+        "iso": "eg",
+        "flag": "🇪🇬",
+        "aliases": [
+            "eg",
+            "egypt"
+        ]
+    },
+    {
+        "code": "+503",
+        "name": "El Salvador",
+        "iso": "sv",
+        "flag": "🇸🇻",
+        "aliases": [
+            "sv",
+            "el salvador"
+        ]
+    },
+    {
+        "code": "+240",
+        "name": "Equatorial Guinea",
+        "iso": "gq",
+        "flag": "🇬🇶",
+        "aliases": [
+            "gq",
+            "equatorial guinea"
+        ]
+    },
+    {
+        "code": "+291",
+        "name": "Eritrea",
+        "iso": "er",
+        "flag": "🇪🇷",
+        "aliases": [
+            "er",
+            "eritrea"
+        ]
+    },
+    {
+        "code": "+372",
+        "name": "Estonia",
+        "iso": "ee",
+        "flag": "🇪🇪",
+        "aliases": [
+            "ee",
+            "estonia"
+        ]
+    },
+    {
+        "code": "+268",
+        "name": "Eswatini",
+        "iso": "sz",
+        "flag": "🇸🇿",
+        "aliases": [
+            "sz",
+            "eswatini"
+        ]
+    },
+    {
+        "code": "+251",
+        "name": "Ethiopia",
+        "iso": "et",
+        "flag": "🇪🇹",
+        "aliases": [
+            "et",
+            "ethiopia"
+        ]
+    },
+    {
+        "code": "+500",
+        "name": "Falkland Islands",
+        "iso": "fk",
+        "flag": "🇫🇰",
+        "aliases": [
+            "fk",
+            "falkland islands"
+        ]
+    },
+    {
+        "code": "+298",
+        "name": "Faroe Islands",
+        "iso": "fo",
+        "flag": "🇫🇴",
+        "aliases": [
+            "fo",
+            "faroe islands"
+        ]
+    },
+    {
+        "code": "+679",
+        "name": "Fiji",
+        "iso": "fj",
+        "flag": "🇫🇯",
+        "aliases": [
+            "fj",
+            "fiji"
+        ]
+    },
+    {
+        "code": "+358",
+        "name": "Finland",
+        "iso": "fi",
+        "flag": "🇫🇮",
+        "aliases": [
+            "fi",
+            "finland"
+        ]
+    },
+    {
+        "code": "+594",
+        "name": "French Guiana",
+        "iso": "gf",
+        "flag": "🇬🇫",
+        "aliases": [
+            "gf",
+            "french guiana"
+        ]
+    },
+    {
+        "code": "+689",
+        "name": "French Polynesia",
+        "iso": "pf",
+        "flag": "🇵🇫",
+        "aliases": [
+            "pf",
+            "french polynesia"
+        ]
+    },
+    {
+        "code": "+262",
+        "name": "French Southern and Antarctic Lands",
+        "iso": "tf",
+        "flag": "🇹🇫",
+        "aliases": [
+            "tf",
+            "french southern and antarctic lands"
+        ]
+    },
+    {
+        "code": "+241",
+        "name": "Gabon",
+        "iso": "ga",
+        "flag": "🇬🇦",
+        "aliases": [
+            "ga",
+            "gabon"
+        ]
+    },
+    {
+        "code": "+220",
+        "name": "Gambia",
+        "iso": "gm",
+        "flag": "🇬🇲",
+        "aliases": [
+            "gm",
+            "gambia"
+        ]
+    },
+    {
+        "code": "+995",
+        "name": "Georgia",
+        "iso": "ge",
+        "flag": "🇬🇪",
+        "aliases": [
+            "ge",
+            "georgia"
+        ]
+    },
+    {
+        "code": "+233",
+        "name": "Ghana",
+        "iso": "gh",
+        "flag": "🇬🇭",
+        "aliases": [
+            "gh",
+            "ghana"
+        ]
+    },
+    {
+        "code": "+350",
+        "name": "Gibraltar",
+        "iso": "gi",
+        "flag": "🇬🇮",
+        "aliases": [
+            "gi",
+            "gibraltar"
+        ]
+    },
+    {
+        "code": "+30",
+        "name": "Greece",
+        "iso": "gr",
+        "flag": "🇬🇷",
+        "aliases": [
+            "gr",
+            "greece"
+        ]
+    },
+    {
+        "code": "+299",
+        "name": "Greenland",
+        "iso": "gl",
+        "flag": "🇬🇱",
+        "aliases": [
+            "gl",
+            "greenland"
+        ]
+    },
+    {
+        "code": "+1473",
+        "name": "Grenada",
+        "iso": "gd",
+        "flag": "🇬🇩",
+        "aliases": [
+            "gd",
+            "grenada"
+        ]
+    },
+    {
+        "code": "+590",
+        "name": "Guadeloupe",
+        "iso": "gp",
+        "flag": "🇬🇵",
+        "aliases": [
+            "gp",
+            "guadeloupe"
+        ]
+    },
+    {
+        "code": "+1671",
+        "name": "Guam",
+        "iso": "gu",
+        "flag": "🇬🇺",
+        "aliases": [
+            "gu",
+            "guam"
+        ]
+    },
+    {
+        "code": "+502",
+        "name": "Guatemala",
+        "iso": "gt",
+        "flag": "🇬🇹",
+        "aliases": [
+            "gt",
+            "guatemala"
+        ]
+    },
+    {
+        "code": "+44",
+        "name": "Guernsey",
+        "iso": "gg",
+        "flag": "🇬🇬",
+        "aliases": [
+            "uk",
+            "united kingdom",
+            "great britain",
+            "england",
+            "london",
+            "scotland",
+            "gg",
+            "guernsey"
+        ]
+    },
+    {
+        "code": "+224",
+        "name": "Guinea",
+        "iso": "gn",
+        "flag": "🇬🇳",
+        "aliases": [
+            "gn",
+            "guinea"
+        ]
+    },
+    {
+        "code": "+245",
+        "name": "Guinea-Bissau",
+        "iso": "gw",
+        "flag": "🇬🇼",
+        "aliases": [
+            "gw",
+            "guinea-bissau"
+        ]
+    },
+    {
+        "code": "+592",
+        "name": "Guyana",
+        "iso": "gy",
+        "flag": "🇬🇾",
+        "aliases": [
+            "gy",
+            "guyana"
+        ]
+    },
+    {
+        "code": "+509",
+        "name": "Haiti",
+        "iso": "ht",
+        "flag": "🇭🇹",
+        "aliases": [
+            "ht",
+            "haiti"
+        ]
+    },
+    {
+        "code": "+504",
+        "name": "Honduras",
+        "iso": "hn",
+        "flag": "🇭🇳",
+        "aliases": [
+            "hn",
+            "honduras"
+        ]
+    },
+    {
+        "code": "+36",
+        "name": "Hungary",
+        "iso": "hu",
+        "flag": "🇭🇺",
+        "aliases": [
+            "hu",
+            "hungary"
+        ]
+    },
+    {
+        "code": "+354",
+        "name": "Iceland",
+        "iso": "is",
+        "flag": "🇮🇸",
+        "aliases": [
+            "is",
+            "iceland"
+        ]
+    },
+    {
+        "code": "+98",
+        "name": "Iran",
+        "iso": "ir",
+        "flag": "🇮🇷",
+        "aliases": [
+            "ir",
+            "iran"
+        ]
+    },
+    {
+        "code": "+964",
+        "name": "Iraq",
+        "iso": "iq",
+        "flag": "🇮🇶",
+        "aliases": [
+            "iq",
+            "iraq"
+        ]
+    },
+    {
+        "code": "+44",
+        "name": "Isle of Man",
+        "iso": "im",
+        "flag": "🇮🇲",
+        "aliases": [
+            "uk",
+            "united kingdom",
+            "great britain",
+            "england",
+            "london",
+            "scotland",
+            "im",
+            "isle of man"
+        ]
+    },
+    {
+        "code": "+972",
+        "name": "Israel",
+        "iso": "il",
+        "flag": "🇮🇱",
+        "aliases": [
+            "il",
+            "israel"
+        ]
+    },
+    {
+        "code": "+39",
+        "name": "Italy",
+        "iso": "it",
+        "flag": "🇮🇹",
+        "aliases": [
+            "italy",
+            "it",
+            "italia",
+            "rome",
+            "milan"
+        ]
+    },
+    {
+        "code": "+225",
+        "name": "Ivory Coast",
+        "iso": "ci",
+        "flag": "🇨🇮",
+        "aliases": [
+            "ci",
+            "ivory coast"
+        ]
+    },
+    {
+        "code": "+1876",
+        "name": "Jamaica",
+        "iso": "jm",
+        "flag": "🇯🇲",
+        "aliases": [
+            "jm",
+            "jamaica"
+        ]
+    },
+    {
+        "code": "+44",
+        "name": "Jersey",
+        "iso": "je",
+        "flag": "🇯🇪",
+        "aliases": [
+            "uk",
+            "united kingdom",
+            "great britain",
+            "england",
+            "london",
+            "scotland",
+            "je",
+            "jersey"
+        ]
+    },
+    {
+        "code": "+962",
+        "name": "Jordan",
+        "iso": "jo",
+        "flag": "🇯🇴",
+        "aliases": [
+            "jo",
+            "jordan"
+        ]
+    },
+    {
+        "code": "+76",
+        "name": "Kazakhstan",
+        "iso": "kz",
+        "flag": "🇰🇿",
+        "aliases": [
+            "kz",
+            "kazakhstan"
+        ]
+    },
+    {
+        "code": "+254",
+        "name": "Kenya",
+        "iso": "ke",
+        "flag": "🇰🇪",
+        "aliases": [
+            "ke",
+            "kenya"
+        ]
+    },
+    {
+        "code": "+686",
+        "name": "Kiribati",
+        "iso": "ki",
+        "flag": "🇰🇮",
+        "aliases": [
+            "ki",
+            "kiribati"
+        ]
+    },
+    {
+        "code": "+383",
+        "name": "Kosovo",
+        "iso": "xk",
+        "flag": "🇽🇰",
+        "aliases": [
+            "xk",
+            "kosovo"
+        ]
+    },
+    {
+        "code": "+996",
+        "name": "Kyrgyzstan",
+        "iso": "kg",
+        "flag": "🇰🇬",
+        "aliases": [
+            "kg",
+            "kyrgyzstan"
+        ]
+    },
+    {
+        "code": "+856",
+        "name": "Laos",
+        "iso": "la",
+        "flag": "🇱🇦",
+        "aliases": [
+            "la",
+            "laos"
+        ]
+    },
+    {
+        "code": "+371",
+        "name": "Latvia",
+        "iso": "lv",
+        "flag": "🇱🇻",
+        "aliases": [
+            "lv",
+            "latvia"
+        ]
+    },
+    {
+        "code": "+961",
+        "name": "Lebanon",
+        "iso": "lb",
+        "flag": "🇱🇧",
+        "aliases": [
+            "lb",
+            "lebanon"
+        ]
+    },
+    {
+        "code": "+266",
+        "name": "Lesotho",
+        "iso": "ls",
+        "flag": "🇱🇸",
+        "aliases": [
+            "ls",
+            "lesotho"
+        ]
+    },
+    {
+        "code": "+231",
+        "name": "Liberia",
+        "iso": "lr",
+        "flag": "🇱🇷",
+        "aliases": [
+            "lr",
+            "liberia"
+        ]
+    },
+    {
+        "code": "+218",
+        "name": "Libya",
+        "iso": "ly",
+        "flag": "🇱🇾",
+        "aliases": [
+            "ly",
+            "libya"
+        ]
+    },
+    {
+        "code": "+423",
+        "name": "Liechtenstein",
+        "iso": "li",
+        "flag": "🇱🇮",
+        "aliases": [
+            "li",
+            "liechtenstein"
+        ]
+    },
+    {
+        "code": "+370",
+        "name": "Lithuania",
+        "iso": "lt",
+        "flag": "🇱🇹",
+        "aliases": [
+            "lt",
+            "lithuania"
+        ]
+    },
+    {
+        "code": "+853",
+        "name": "Macau",
+        "iso": "mo",
+        "flag": "🇲🇴",
+        "aliases": [
+            "mo",
+            "macau"
+        ]
+    },
+    {
+        "code": "+261",
+        "name": "Madagascar",
+        "iso": "mg",
+        "flag": "🇲🇬",
+        "aliases": [
+            "mg",
+            "madagascar"
+        ]
+    },
+    {
+        "code": "+265",
+        "name": "Malawi",
+        "iso": "mw",
+        "flag": "🇲🇼",
+        "aliases": [
+            "mw",
+            "malawi"
+        ]
+    },
+    {
+        "code": "+960",
+        "name": "Maldives",
+        "iso": "mv",
+        "flag": "🇲🇻",
+        "aliases": [
+            "mv",
+            "maldives"
+        ]
+    },
+    {
+        "code": "+223",
+        "name": "Mali",
+        "iso": "ml",
+        "flag": "🇲🇱",
+        "aliases": [
+            "ml",
+            "mali"
+        ]
+    },
+    {
+        "code": "+356",
+        "name": "Malta",
+        "iso": "mt",
+        "flag": "🇲🇹",
+        "aliases": [
+            "mt",
+            "malta"
+        ]
+    },
+    {
+        "code": "+692",
+        "name": "Marshall Islands",
+        "iso": "mh",
+        "flag": "🇲🇭",
+        "aliases": [
+            "mh",
+            "marshall islands"
+        ]
+    },
+    {
+        "code": "+596",
+        "name": "Martinique",
+        "iso": "mq",
+        "flag": "🇲🇶",
+        "aliases": [
+            "mq",
+            "martinique"
+        ]
+    },
+    {
+        "code": "+222",
+        "name": "Mauritania",
+        "iso": "mr",
+        "flag": "🇲🇷",
+        "aliases": [
+            "mr",
+            "mauritania"
+        ]
+    },
+    {
+        "code": "+230",
+        "name": "Mauritius",
+        "iso": "mu",
+        "flag": "🇲🇺",
+        "aliases": [
+            "mu",
+            "mauritius"
+        ]
+    },
+    {
+        "code": "+262",
+        "name": "Mayotte",
+        "iso": "yt",
+        "flag": "🇾🇹",
+        "aliases": [
+            "yt",
+            "mayotte"
+        ]
+    },
+    {
+        "code": "+52",
+        "name": "Mexico",
+        "iso": "mx",
+        "flag": "🇲🇽",
+        "aliases": [
+            "mx",
+            "mexico"
+        ]
+    },
+    {
+        "code": "+691",
+        "name": "Micronesia",
+        "iso": "fm",
+        "flag": "🇫🇲",
+        "aliases": [
+            "fm",
+            "micronesia"
+        ]
+    },
+    {
+        "code": "+373",
+        "name": "Moldova",
+        "iso": "md",
+        "flag": "🇲🇩",
+        "aliases": [
+            "md",
+            "moldova"
+        ]
+    },
+    {
+        "code": "+377",
+        "name": "Monaco",
+        "iso": "mc",
+        "flag": "🇲🇨",
+        "aliases": [
+            "mc",
+            "monaco"
+        ]
+    },
+    {
+        "code": "+976",
+        "name": "Mongolia",
+        "iso": "mn",
+        "flag": "🇲🇳",
+        "aliases": [
+            "mn",
+            "mongolia"
+        ]
+    },
+    {
+        "code": "+382",
+        "name": "Montenegro",
+        "iso": "me",
+        "flag": "🇲🇪",
+        "aliases": [
+            "me",
+            "montenegro"
+        ]
+    },
+    {
+        "code": "+1664",
+        "name": "Montserrat",
+        "iso": "ms",
+        "flag": "🇲🇸",
+        "aliases": [
+            "ms",
+            "montserrat"
+        ]
+    },
+    {
+        "code": "+212",
+        "name": "Morocco",
+        "iso": "ma",
+        "flag": "🇲🇦",
+        "aliases": [
+            "ma",
+            "morocco"
+        ]
+    },
+    {
+        "code": "+258",
+        "name": "Mozambique",
+        "iso": "mz",
+        "flag": "🇲🇿",
+        "aliases": [
+            "mz",
+            "mozambique"
+        ]
+    },
+    {
+        "code": "+95",
+        "name": "Myanmar",
+        "iso": "mm",
+        "flag": "🇲🇲",
+        "aliases": [
+            "mm",
+            "myanmar"
+        ]
+    },
+    {
+        "code": "+264",
+        "name": "Namibia",
+        "iso": "na",
+        "flag": "🇳🇦",
+        "aliases": [
+            "na",
+            "namibia"
+        ]
+    },
+    {
+        "code": "+674",
+        "name": "Nauru",
+        "iso": "nr",
+        "flag": "🇳🇷",
+        "aliases": [
+            "nr",
+            "nauru"
+        ]
+    },
+    {
+        "code": "+687",
+        "name": "New Caledonia",
+        "iso": "nc",
+        "flag": "🇳🇨",
+        "aliases": [
+            "nc",
+            "new caledonia"
+        ]
+    },
+    {
+        "code": "+505",
+        "name": "Nicaragua",
+        "iso": "ni",
+        "flag": "🇳🇮",
+        "aliases": [
+            "ni",
+            "nicaragua"
+        ]
+    },
+    {
+        "code": "+227",
+        "name": "Niger",
+        "iso": "ne",
+        "flag": "🇳🇪",
+        "aliases": [
+            "ne",
+            "niger"
+        ]
+    },
+    {
+        "code": "+234",
+        "name": "Nigeria",
+        "iso": "ng",
+        "flag": "🇳🇬",
+        "aliases": [
+            "ng",
+            "nigeria"
+        ]
+    },
+    {
+        "code": "+683",
+        "name": "Niue",
+        "iso": "nu",
+        "flag": "🇳🇺",
+        "aliases": [
+            "nu",
+            "niue"
+        ]
+    },
+    {
+        "code": "+672",
+        "name": "Norfolk Island",
+        "iso": "nf",
+        "flag": "🇳🇫",
+        "aliases": [
+            "nf",
+            "norfolk island"
+        ]
+    },
+    {
+        "code": "+850",
+        "name": "North Korea",
+        "iso": "kp",
+        "flag": "🇰🇵",
+        "aliases": [
+            "kp",
+            "north korea"
+        ]
+    },
+    {
+        "code": "+389",
+        "name": "North Macedonia",
+        "iso": "mk",
+        "flag": "🇲🇰",
+        "aliases": [
+            "mk",
+            "north macedonia"
+        ]
+    },
+    {
+        "code": "+1670",
+        "name": "Northern Mariana Islands",
+        "iso": "mp",
+        "flag": "🇲🇵",
+        "aliases": [
+            "mp",
+            "northern mariana islands"
+        ]
+    },
+    {
+        "code": "+47",
+        "name": "Norway",
+        "iso": "no",
+        "flag": "🇳🇴",
+        "aliases": [
+            "norway",
+            "no",
+            "oslo"
+        ]
+    },
+    {
+        "code": "+92",
+        "name": "Pakistan",
+        "iso": "pk",
+        "flag": "🇵🇰",
+        "aliases": [
+            "pk",
+            "pakistan"
+        ]
+    },
+    {
+        "code": "+680",
+        "name": "Palau",
+        "iso": "pw",
+        "flag": "🇵🇼",
+        "aliases": [
+            "pw",
+            "palau"
+        ]
+    },
+    {
+        "code": "+970",
+        "name": "Palestine",
+        "iso": "ps",
+        "flag": "🇵🇸",
+        "aliases": [
+            "ps",
+            "palestine"
+        ]
+    },
+    {
+        "code": "+507",
+        "name": "Panama",
+        "iso": "pa",
+        "flag": "🇵🇦",
+        "aliases": [
+            "pa",
+            "panama"
+        ]
+    },
+    {
+        "code": "+675",
+        "name": "Papua New Guinea",
+        "iso": "pg",
+        "flag": "🇵🇬",
+        "aliases": [
+            "pg",
+            "papua new guinea"
+        ]
+    },
+    {
+        "code": "+595",
+        "name": "Paraguay",
+        "iso": "py",
+        "flag": "🇵🇾",
+        "aliases": [
+            "py",
+            "paraguay"
+        ]
+    },
+    {
+        "code": "+51",
+        "name": "Peru",
+        "iso": "pe",
+        "flag": "🇵🇪",
+        "aliases": [
+            "pe",
+            "peru"
+        ]
+    },
+    {
+        "code": "+64",
+        "name": "Pitcairn Islands",
+        "iso": "pn",
+        "flag": "🇵🇳",
+        "aliases": [
+            "new zealand",
+            "nz",
+            "auckland",
+            "pn",
+            "pitcairn islands"
+        ]
+    },
+    {
+        "code": "+1787",
+        "name": "Puerto Rico",
+        "iso": "pr",
+        "flag": "🇵🇷",
+        "aliases": [
+            "pr",
+            "puerto rico"
+        ]
+    },
+    {
+        "code": "+40",
+        "name": "Romania",
+        "iso": "ro",
+        "flag": "🇷🇴",
+        "aliases": [
+            "ro",
+            "romania"
+        ]
+    },
+    {
+        "code": "+73",
+        "name": "Russia",
+        "iso": "ru",
+        "flag": "🇷🇺",
+        "aliases": [
+            "ru",
+            "russia"
+        ]
+    },
+    {
+        "code": "+250",
+        "name": "Rwanda",
+        "iso": "rw",
+        "flag": "🇷🇼",
+        "aliases": [
+            "rw",
+            "rwanda"
+        ]
+    },
+    {
+        "code": "+262",
+        "name": "Réunion",
+        "iso": "re",
+        "flag": "🇷🇪",
+        "aliases": [
+            "re",
+            "réunion"
+        ]
+    },
+    {
+        "code": "+590",
+        "name": "Saint Barthélemy",
+        "iso": "bl",
+        "flag": "🇧🇱",
+        "aliases": [
+            "bl",
+            "saint barthélemy"
+        ]
+    },
+    {
+        "code": "+290",
+        "name": "Saint Helena, Ascension and Tristan da Cunha",
+        "iso": "sh",
+        "flag": "🇸🇭",
+        "aliases": [
+            "sh",
+            "saint helena, ascension and tristan da cunha"
+        ]
+    },
+    {
+        "code": "+1869",
+        "name": "Saint Kitts and Nevis",
+        "iso": "kn",
+        "flag": "🇰🇳",
+        "aliases": [
+            "kn",
+            "saint kitts and nevis"
+        ]
+    },
+    {
+        "code": "+1758",
+        "name": "Saint Lucia",
+        "iso": "lc",
+        "flag": "🇱🇨",
+        "aliases": [
+            "lc",
+            "saint lucia"
+        ]
+    },
+    {
+        "code": "+590",
+        "name": "Saint Martin",
+        "iso": "mf",
+        "flag": "🇲🇫",
+        "aliases": [
+            "mf",
+            "saint martin"
+        ]
+    },
+    {
+        "code": "+508",
+        "name": "Saint Pierre and Miquelon",
+        "iso": "pm",
+        "flag": "🇵🇲",
+        "aliases": [
+            "pm",
+            "saint pierre and miquelon"
+        ]
+    },
+    {
+        "code": "+1784",
+        "name": "Saint Vincent and the Grenadines",
+        "iso": "vc",
+        "flag": "🇻🇨",
+        "aliases": [
+            "vc",
+            "saint vincent and the grenadines"
+        ]
+    },
+    {
+        "code": "+685",
+        "name": "Samoa",
+        "iso": "ws",
+        "flag": "🇼🇸",
+        "aliases": [
+            "ws",
+            "samoa"
+        ]
+    },
+    {
+        "code": "+378",
+        "name": "San Marino",
+        "iso": "sm",
+        "flag": "🇸🇲",
+        "aliases": [
+            "sm",
+            "san marino"
+        ]
+    },
+    {
+        "code": "+221",
+        "name": "Senegal",
+        "iso": "sn",
+        "flag": "🇸🇳",
+        "aliases": [
+            "sn",
+            "senegal"
+        ]
+    },
+    {
+        "code": "+381",
+        "name": "Serbia",
+        "iso": "rs",
+        "flag": "🇷🇸",
+        "aliases": [
+            "rs",
+            "serbia"
+        ]
+    },
+    {
+        "code": "+248",
+        "name": "Seychelles",
+        "iso": "sc",
+        "flag": "🇸🇨",
+        "aliases": [
+            "sc",
+            "seychelles"
+        ]
+    },
+    {
+        "code": "+232",
+        "name": "Sierra Leone",
+        "iso": "sl",
+        "flag": "🇸🇱",
+        "aliases": [
+            "sl",
+            "sierra leone"
+        ]
+    },
+    {
+        "code": "+1721",
+        "name": "Sint Maarten",
+        "iso": "sx",
+        "flag": "🇸🇽",
+        "aliases": [
+            "sx",
+            "sint maarten"
+        ]
+    },
+    {
+        "code": "+421",
+        "name": "Slovakia",
+        "iso": "sk",
+        "flag": "🇸🇰",
+        "aliases": [
+            "sk",
+            "slovakia"
+        ]
+    },
+    {
+        "code": "+386",
+        "name": "Slovenia",
+        "iso": "si",
+        "flag": "🇸🇮",
+        "aliases": [
+            "si",
+            "slovenia"
+        ]
+    },
+    {
+        "code": "+677",
+        "name": "Solomon Islands",
+        "iso": "sb",
+        "flag": "🇸🇧",
+        "aliases": [
+            "sb",
+            "solomon islands"
+        ]
+    },
+    {
+        "code": "+252",
+        "name": "Somalia",
+        "iso": "so",
+        "flag": "🇸🇴",
+        "aliases": [
+            "so",
+            "somalia"
+        ]
+    },
+    {
+        "code": "+500",
+        "name": "South Georgia",
+        "iso": "gs",
+        "flag": "🇬🇸",
+        "aliases": [
+            "gs",
+            "south georgia"
+        ]
+    },
+    {
+        "code": "+211",
+        "name": "South Sudan",
+        "iso": "ss",
+        "flag": "🇸🇸",
+        "aliases": [
+            "ss",
+            "south sudan"
+        ]
+    },
+    {
+        "code": "+34",
+        "name": "Spain",
+        "iso": "es",
+        "flag": "🇪🇸",
+        "aliases": [
+            "spain",
+            "es",
+            "espana",
+            "madrid",
+            "barcelona"
+        ]
+    },
+    {
+        "code": "+249",
+        "name": "Sudan",
+        "iso": "sd",
+        "flag": "🇸🇩",
+        "aliases": [
+            "sd",
+            "sudan"
+        ]
+    },
+    {
+        "code": "+597",
+        "name": "Suriname",
+        "iso": "sr",
+        "flag": "🇸🇷",
+        "aliases": [
+            "sr",
+            "suriname"
+        ]
+    },
+    {
+        "code": "+4779",
+        "name": "Svalbard and Jan Mayen",
+        "iso": "sj",
+        "flag": "🇸🇯",
+        "aliases": [
+            "sj",
+            "svalbard and jan mayen"
+        ]
+    },
+    {
+        "code": "+46",
+        "name": "Sweden",
+        "iso": "se",
+        "flag": "🇸🇪",
+        "aliases": [
+            "sweden",
+            "se",
+            "stockholm"
+        ]
+    },
+    {
+        "code": "+963",
+        "name": "Syria",
+        "iso": "sy",
+        "flag": "🇸🇾",
+        "aliases": [
+            "sy",
+            "syria"
+        ]
+    },
+    {
+        "code": "+239",
+        "name": "São Tomé and Príncipe",
+        "iso": "st",
+        "flag": "🇸🇹",
+        "aliases": [
+            "st",
+            "são tomé and príncipe"
+        ]
+    },
+    {
+        "code": "+886",
+        "name": "Taiwan",
+        "iso": "tw",
+        "flag": "🇹🇼",
+        "aliases": [
+            "tw",
+            "taiwan"
+        ]
+    },
+    {
+        "code": "+992",
+        "name": "Tajikistan",
+        "iso": "tj",
+        "flag": "🇹🇯",
+        "aliases": [
+            "tj",
+            "tajikistan"
+        ]
+    },
+    {
+        "code": "+255",
+        "name": "Tanzania",
+        "iso": "tz",
+        "flag": "🇹🇿",
+        "aliases": [
+            "tz",
+            "tanzania"
+        ]
+    },
+    {
+        "code": "+670",
+        "name": "Timor-Leste",
+        "iso": "tl",
+        "flag": "🇹🇱",
+        "aliases": [
+            "tl",
+            "timor-leste"
+        ]
+    },
+    {
+        "code": "+228",
+        "name": "Togo",
+        "iso": "tg",
+        "flag": "🇹🇬",
+        "aliases": [
+            "tg",
+            "togo"
+        ]
+    },
+    {
+        "code": "+690",
+        "name": "Tokelau",
+        "iso": "tk",
+        "flag": "🇹🇰",
+        "aliases": [
+            "tk",
+            "tokelau"
+        ]
+    },
+    {
+        "code": "+676",
+        "name": "Tonga",
+        "iso": "to",
+        "flag": "🇹🇴",
+        "aliases": [
+            "to",
+            "tonga"
+        ]
+    },
+    {
+        "code": "+1868",
+        "name": "Trinidad and Tobago",
+        "iso": "tt",
+        "flag": "🇹🇹",
+        "aliases": [
+            "tt",
+            "trinidad and tobago"
+        ]
+    },
+    {
+        "code": "+216",
+        "name": "Tunisia",
+        "iso": "tn",
+        "flag": "🇹🇳",
+        "aliases": [
+            "tn",
+            "tunisia"
+        ]
+    },
+    {
+        "code": "+993",
+        "name": "Turkmenistan",
+        "iso": "tm",
+        "flag": "🇹🇲",
+        "aliases": [
+            "tm",
+            "turkmenistan"
+        ]
+    },
+    {
+        "code": "+1649",
+        "name": "Turks and Caicos Islands",
+        "iso": "tc",
+        "flag": "🇹🇨",
+        "aliases": [
+            "tc",
+            "turks and caicos islands"
+        ]
+    },
+    {
+        "code": "+688",
+        "name": "Tuvalu",
+        "iso": "tv",
+        "flag": "🇹🇻",
+        "aliases": [
+            "tv",
+            "tuvalu"
+        ]
+    },
+    {
+        "code": "+90",
+        "name": "Türkiye",
+        "iso": "tr",
+        "flag": "🇹🇷",
+        "aliases": [
+            "tr",
+            "türkiye"
+        ]
+    },
+    {
+        "code": "+256",
+        "name": "Uganda",
+        "iso": "ug",
+        "flag": "🇺🇬",
+        "aliases": [
+            "ug",
+            "uganda"
+        ]
+    },
+    {
+        "code": "+380",
+        "name": "Ukraine",
+        "iso": "ua",
+        "flag": "🇺🇦",
+        "aliases": [
+            "ua",
+            "ukraine"
+        ]
+    },
+    {
+        "code": "+268",
+        "name": "United States Minor Outlying Islands",
+        "iso": "um",
+        "flag": "🇺🇲",
+        "aliases": [
+            "um",
+            "united states minor outlying islands"
+        ]
+    },
+    {
+        "code": "+1340",
+        "name": "United States Virgin Islands",
+        "iso": "vi",
+        "flag": "🇻🇮",
+        "aliases": [
+            "vi",
+            "united states virgin islands"
+        ]
+    },
+    {
+        "code": "+598",
+        "name": "Uruguay",
+        "iso": "uy",
+        "flag": "🇺🇾",
+        "aliases": [
+            "uy",
+            "uruguay"
+        ]
+    },
+    {
+        "code": "+998",
+        "name": "Uzbekistan",
+        "iso": "uz",
+        "flag": "🇺🇿",
+        "aliases": [
+            "uz",
+            "uzbekistan"
+        ]
+    },
+    {
+        "code": "+678",
+        "name": "Vanuatu",
+        "iso": "vu",
+        "flag": "🇻🇺",
+        "aliases": [
+            "vu",
+            "vanuatu"
+        ]
+    },
+    {
+        "code": "+3906698",
+        "name": "Vatican City",
+        "iso": "va",
+        "flag": "🇻🇦",
+        "aliases": [
+            "va",
+            "vatican city"
+        ]
+    },
+    {
+        "code": "+58",
+        "name": "Venezuela",
+        "iso": "ve",
+        "flag": "🇻🇪",
+        "aliases": [
+            "ve",
+            "venezuela"
+        ]
+    },
+    {
+        "code": "+681",
+        "name": "Wallis and Futuna",
+        "iso": "wf",
+        "flag": "🇼🇫",
+        "aliases": [
+            "wf",
+            "wallis and futuna"
+        ]
+    },
+    {
+        "code": "+2125288",
+        "name": "Western Sahara",
+        "iso": "eh",
+        "flag": "🇪🇭",
+        "aliases": [
+            "eh",
+            "western sahara"
+        ]
+    },
+    {
+        "code": "+967",
+        "name": "Yemen",
+        "iso": "ye",
+        "flag": "🇾🇪",
+        "aliases": [
+            "ye",
+            "yemen"
+        ]
+    },
+    {
+        "code": "+260",
+        "name": "Zambia",
+        "iso": "zm",
+        "flag": "🇿🇲",
+        "aliases": [
+            "zm",
+            "zambia"
+        ]
+    },
+    {
+        "code": "+263",
+        "name": "Zimbabwe",
+        "iso": "zw",
+        "flag": "🇿🇼",
+        "aliases": [
+            "zw",
+            "zimbabwe"
+        ]
+    },
+    {
+        "code": "+35818",
+        "name": "Åland Islands",
+        "iso": "ax",
+        "flag": "🇦🇽",
+        "aliases": [
+            "ax",
+            "åland islands"
+        ]
+    }
 ]
+
+
+def get_country_flag(country_code="", country_name=""):
+    """
+    Returns the flag emoji for a given country code or name.
+    Defaults to India flag for +91, globe for unrecognized international codes.
+    """
+    code = (country_code or "").strip()
+    name = (country_name or "").strip().lower()
+    
+    if code:
+        if not code.startswith("+") and code.isdigit():
+            code = "+" + code
+        for c in COUNTRY_DIRECTORY:
+            if c["code"] == code:
+                return c["flag"]
+                
+    if name:
+        for c in COUNTRY_DIRECTORY:
+            if c["name"].lower() == name:
+                return c["flag"]
+            if name in c.get("aliases", []):
+                return c["flag"]
+                
+    if not code and not name:
+        return ""
+
+    if code == "+91":
+        return "🇮🇳"
+    return "🌐"
 
 
 def resolve_country_from_intake(message="", phone="", raw_country_code=""):
     """
-    Extracts canonical country_code (e.g. '+91') and country_name (e.g. 'India')
+    Extracts canonical country_code (e.g. '+91', '+352') and country_name (e.g. 'India', 'Luxembourg')
     from form inputs, intake message headers, or phone strings.
+    If no phone and no country information exists, returns ('', '').
     """
     # 1. Direct country code from form field if provided
     if raw_country_code:
@@ -55,17 +2609,25 @@ def resolve_country_from_intake(message="", phone="", raw_country_code=""):
         for c in COUNTRY_DIRECTORY:
             if c["code"] == raw_clean:
                 return c["code"], c["name"]
+        # If user selected or passed an explicit custom/unlisted code, preserve it
+        if raw_clean.startswith("+") and len(raw_clean) >= 2:
+            return raw_clean, ""
 
     msg = (message or "").lower()
-    ph = (phone or "").replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+    raw_p = str(phone or "").strip()
+    ph_clean = re.sub(r"[^\d+]", "", raw_p)
+    digits = re.sub(r"[^\d]", "", raw_p)
 
-    # 2. From message header: Country of Residence: Poland (+48)
+    # 2. From message header: Country of Residence: Luxembourg (+352) or Country: Poland (+48)
     country_match = re.search(r'(?:country of residence|country)\s*:\s*([^\n\r]+)', msg, re.IGNORECASE)
     if country_match:
         c_text = country_match.group(1).strip().lower()
         code_match = re.search(r'\+([0-9]{1,4})', c_text)
         if code_match:
             target_code = "+" + code_match.group(1)
+            # Special case for US full area code injected like (+1201) -> +1
+            if target_code.startswith("+1") and len(target_code) > 2:
+                return "+1", "United States"
             for c in COUNTRY_DIRECTORY:
                 if c["code"] == target_code:
                     return c["code"], c["name"]
@@ -79,23 +2641,54 @@ def resolve_country_from_intake(message="", phone="", raw_country_code=""):
                     return c["code"], c["name"]
 
     # 3. Explicit + prefix in phone
-    if ph.startswith("+"):
-        for c in COUNTRY_DIRECTORY:
-            if ph.startswith(c["code"]):
+    if ph_clean.startswith("+"):
+        for c in sorted(COUNTRY_DIRECTORY, key=lambda x: len(x["code"]), reverse=True):
+            if ph_clean.startswith(c["code"]):
                 return c["code"], c["name"]
 
-    # 4. Standard 10-digit Indian Mobile
-    if len(ph) == 10:
+    # 4. Pattern & Length-specific heuristics without leading +:
+
+    # A. Australia (+61)
+    if len(digits) == 9 and digits.startswith("4"):
+        return "+61", "Australia"
+    if len(digits) == 10 and digits.startswith("04"):
+        return "+61", "Australia"
+
+    # B. UAE (+971)
+    if len(digits) == 9 and digits.startswith("5"):
+        return "+971", "United Arab Emirates"
+    if len(digits) == 10 and digits.startswith("05"):
+        return "+971", "United Arab Emirates"
+
+    # C. United Kingdom (+44)
+    if len(digits) == 11 and digits.startswith("07"):
+        return "+44", "United Kingdom"
+
+    # D. United States / Canada (+1)
+    if len(digits) == 11 and digits.startswith("1"):
+        return "+1", "United States"
+    is_nri = ("nri status: yes" in msg or "overseas" in msg)
+    if len(digits) == 10 and digits[0] in "23":
+        return "+1", "United States"
+    if len(digits) == 10 and is_nri and digits.startswith("718"):
+        return "+1", "United States"
+
+    # E. India (+91)
+    if len(digits) == 10 and digits[0] in "6789":
         return "+91", "India"
-    if ph.startswith("91") and len(ph) == 12:
+    if len(digits) == 11 and digits.startswith("0") and digits[1] in "6789":
         return "+91", "India"
-    if ph.startswith("0") and len(ph) == 11:
+    if len(digits) == 12 and digits.startswith("91"):
         return "+91", "India"
 
-    # 5. International without +
-    for c in COUNTRY_DIRECTORY:
+    # F. Multi-digit country dial codes without + (sorted longest prefix first)
+    for c in sorted(COUNTRY_DIRECTORY, key=lambda x: len(x["code"]), reverse=True):
         raw_c = c["code"].replace("+", "")
-        if ph.startswith(raw_c) and len(ph) > len(raw_c) + 6:
+        if digits.startswith(raw_c) and len(digits) >= len(raw_c) + 6:
             return c["code"], c["name"]
+
+    # If no phone digits were entered and no country specified, do not force India
+    if not digits:
+        return "", ""
 
     return "+91", "India"
