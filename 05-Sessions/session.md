@@ -1,6 +1,6 @@
 <!-- AUDIT METADATA -->
 <!-- Date: 2026-09-03 -->
-<!-- Time: 13:23 IST -->
+<!-- Time: 14:05 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra -->
 <!-- Module: 03-propertism -->
@@ -27,7 +27,7 @@
 ---
 
 ## 2. ⏩ Active Session Priorities
-- **Priority 1 (Primary Session Focus)**: **AWS Lightsail Migration Cutover** — Infrastructure right-sizing and cutover execution from Elastic Beanstalk + RDS to Unified AWS Lightsail VPS per [`reports/LIGHTSAIL_MIGRATION_PLAN.md`](file:///d:/viji/viji-olivine/03-propertism/reports/LIGHTSAIL_MIGRATION_PLAN.md). Architecture plan revised to **REV-8.4**; on strict HOLD standby for Mindra / Viji approval.
+- **Priority 1 (Primary Session Focus)**: **AWS Lightsail Migration Cutover** — Infrastructure right-sizing and cutover execution from Elastic Beanstalk + RDS to Unified AWS Lightsail VPS per [`05-Sessions/lightsail-cutover.md`](file:///d:/viji/viji-olivine/03-propertism/05-Sessions/lightsail-cutover.md). The academic REV-8.4 has been formally superseded by the **Frozen Lean Execution Plan (15 Tasks)**. Ready to initiate Phase 1 (Provisioning & Setup).
 - **Priority 2**: **Frontend Synchronization** — Synchronize and align APIs with `04-propertism-ui`.
 - **Priority 3**: **Property Detail Pages (PDP)** — Validate schema markup, OpenGraph tags, and SSR performance.
 - **Priority 4**: **Lead Capture Journey** — Level 4 end-to-end traversal of buyer lead submission.
