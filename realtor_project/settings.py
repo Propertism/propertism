@@ -597,7 +597,7 @@ DEEPSEEK_MAX_TOKENS = int(os.environ.get('DEEPSEEK_MAX_TOKENS', '2000'))
 DEEPSEEK_TIMEOUT = int(os.environ.get('DEEPSEEK_TIMEOUT', '15'))
 
 # realBOT Integration Settings (Milestones M2.1 & M2.2)
-REALBOT_INTEGRATION_ENABLED = os.environ.get('REALBOT_INTEGRATION_ENABLED', 'False').lower() in ('true', '1', 'yes')
+REALBOT_INTEGRATION_ENABLED = os.environ.get('REALBOT_INTEGRATION_ENABLED', 'True').lower() in ('true', '1', 'yes')
 REALBOT_BASE_URL = os.environ.get('REALBOT_BASE_URL', 'http://127.0.0.1:8010')
 REALBOT_API_KEY = os.environ.get('REALBOT_API_KEY', '')
 REALBOT_TENANT = os.environ.get('REALBOT_TENANT', 'propertism')

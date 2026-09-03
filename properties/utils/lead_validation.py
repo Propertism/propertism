@@ -79,6 +79,16 @@ class LeadValidator:
             self.validation_summary.append({'text': f'External URL Detected ({url_count})', 'type': 'danger'})
         elif url_count == 0:
             self.validation_summary.append({'text': 'No Suspicious URLs', 'type': 'success'})
+
+        # Cyrillic / Foreign Non-Target Script Spam Check
+        if re.search(r'[\u0400-\u04FF]', message):
+            self.score -= 80
+            self.validation_summary.append({'text': 'Cyrillic Script Detected (Foreign Spam)', 'type': 'danger'})
+
+        # High-risk Spam TLDs Check
+        if re.search(r'\.(ru|su|рф|xyz|top|work)\b', message):
+            self.score -= 60
+            self.validation_summary.append({'text': 'High-Risk TLD in Content', 'type': 'danger'})
             
         # Spam Keywords
         spam_keywords = self.config.get('SPAM_KEYWORDS', [])

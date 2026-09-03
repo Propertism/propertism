@@ -438,3 +438,6 @@ WHATSAPP_APP_SECRET = os.environ.get('WHATSAPP_APP_SECRET', '')
 TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
 TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
 
+# realBOT Integration Setting
+REALBOT_INTEGRATION_ENABLED = os.environ.get('REALBOT_INTEGRATION_ENABLED', 'True').lower() in ('true', '1', 'yes')
+

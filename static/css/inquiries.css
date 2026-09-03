@@ -353,7 +353,7 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-sidebar {
-    width: 292px;
+    width: 165px;
     flex-shrink: 0;
     background: var(--bg-surface);
     border-right: 1px solid var(--border-hairline);
@@ -364,7 +364,29 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-sidebar.collapsed {
-    width: 56px;
+    width: 44px;
+}
+
+.inq-sidebar.collapsed .inq-sidebar-hd,
+.inq-sidebar.collapsed .inq-sidebar-inner {
+    display: none;
+}
+
+.inq-sidebar.collapsed .inq-sidebar-footer {
+    padding: .75rem 0;
+    border-top: none;
+    display: flex;
+    justify-content: center;
+}
+
+.inq-sidebar.collapsed #inqCollapseLabel {
+    display: none;
+}
+
+.inq-sidebar.collapsed .inq-sidebar-collapse-btn {
+    justify-content: center;
+    width: 100%;
+    padding: .5rem 0;
 }
 
 .inq-sidebar-hd {
@@ -426,14 +448,14 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-tree-all {
-    padding: .7rem 1rem;
-    font-size: .8125rem;
+    padding: .5rem .75rem;
+    font-size: .8rem;
     color: var(--ink-secondary);
 }
 
 .inq-tree-year-hd {
-    padding: .65rem 1rem;
-    font-size: .75rem;
+    padding: .45rem .75rem;
+    font-size: .72rem;
     font-weight: 500;
     color: var(--ink-secondary);
     letter-spacing: .04em;
@@ -441,14 +463,14 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-tree-month-hd {
-    padding: .55rem 1rem .55rem 2rem;
-    font-size: .75rem;
+    padding: .4rem .75rem .4rem 1.4rem;
+    font-size: .72rem;
     color: var(--ink-secondary);
 }
 
 .inq-tree-date {
-    padding: .55rem 1rem .55rem 3rem;
-    font-size: .8125rem;
+    padding: .4rem .75rem .4rem 2rem;
+    font-size: .78rem;
     color: var(--ink-secondary);
 }
 
@@ -513,7 +535,7 @@ body.inq-app .header-v4-tools {
 .inq-zone-c-scroll {
     flex: 1;
     overflow-y: auto;
-    padding: 24px;
+    padding: 16px 20px;
 }
 
 .inq-zone-c-scroll.composing #inqListView {
@@ -524,20 +546,14 @@ body.inq-app .header-v4-tools {
     background: var(--bg-surface);
     border: 1px solid var(--border-hairline);
     border-radius: 0;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .inq-table {
     width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-sans);
-}
-
-/* ── Outreach Console Alignment: Data Table ── */
-/* Matching .data-table pattern from index.html (Outreach Lead Management Console) */
-
-.inq-table {
-    width: 100%;
+    min-width: 980px;
     border-collapse: collapse;
     font-family: var(--font-sans);
     table-layout: fixed;
@@ -547,18 +563,21 @@ body.inq-app .header-v4-tools {
     font-size: .59375rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .12em;
+    letter-spacing: .1em;
     color: var(--accent-gold);
     text-align: left;
-    padding: .9rem 1rem;
+    padding: .75rem .65rem;
     border-bottom: 1px solid var(--border-hairline);
     background: var(--bg-subtle);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
     font-family: var(--font-sans);
 }
 
 .inq-table tbody td {
-    padding: .62rem .8rem;
+    padding: .55rem .65rem;
     border-bottom: 1px solid var(--border-hairline);
     vertical-align: middle;
     font-size: .8125rem;
@@ -590,19 +609,99 @@ body.inq-app .header-v4-tools {
 }
 
 /* Column width classes with clean single-line distribution */
-.inq-table .col-status   { width: 110px; }
-.inq-table .col-name     { width: 150px; min-width: 120px; }
-.inq-table .col-property { width: auto; min-width: 160px; }
-.inq-table .col-posted   { width: 135px; min-width: 125px; }
-.inq-table .col-country  { width: 95px; min-width: 85px; }
-.inq-table .col-phone    { width: 120px; min-width: 105px; }
-.inq-table .col-email    { width: 190px; min-width: 150px; }
-.inq-table .col-actions  { width: 155px; }
+.inq-table .col-id       { width: 56px; min-width: 56px; text-align: center; }
+.inq-table .col-status   { width: 104px; }
+.inq-table .col-name     { width: 135px; }
+.inq-table .col-property { width: 175px; }
+.inq-table .col-posted   { width: 115px; }
+.inq-table .col-country  { width: 80px; }
+.inq-table .col-phone    { width: 115px; }
+.inq-table .col-email    { width: 160px; }
+.inq-table .col-actions  { width: 105px; text-align: center; }
+
+.inq-table th.col-id,
+.inq-table td.col-id {
+    padding-left: 2px;
+    padding-right: 2px;
+    text-overflow: clip;
+}
+
+.inq-table th.col-property,
+.inq-table td.col-property {
+    padding-right: 0.4rem;
+}
+
+.inq-table th.col-posted,
+.inq-table td.col-posted {
+    padding-left: 0.4rem;
+}
+
+.inq-table th.col-email,
+.inq-table td.col-email {
+    padding-right: 0.4rem;
+}
+
+.inq-table th.col-actions,
+.inq-table td.col-actions {
+    text-align: center;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.inq-empty-dash {
+    color: var(--ink-muted);
+    opacity: 0.5;
+    font-size: 0.9rem;
+}
+
+.inq-id-cell {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.775rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    background: rgba(184, 150, 104, 0.08);
+    border: 1px solid rgba(184, 150, 104, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    display: inline-block;
+}
+
+.inq-prop-main {
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 2px;
+}
+
+.inq-prop-sub {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+}
+
+.inq-sub-badge {
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(184, 150, 104, 0.12);
+    color: #8a6a3b;
+    letter-spacing: 0.03em;
+}
+
+.inq-sub-text {
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 .inq-table-country-pill {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-size: 0.775rem;
     font-weight: 600;
     color: var(--ink-secondary);
@@ -611,6 +710,7 @@ body.inq-app .header-v4-tools {
     border-radius: 4px;
     padding: 2px 7px;
     letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 @media (max-width: 1200px) {
@@ -665,14 +765,15 @@ body.inq-app .header-v4-tools {
 .inq-status-trigger {
     display: inline-flex;
     align-items: center;
-    gap: .45rem;
-    min-height: 34px;
-    padding: .35rem .65rem;
+    gap: .35rem;
+    min-height: 26px;
+    padding: .2rem .4rem;
     border: 1px solid transparent;
     border-radius: 999px;
     background: transparent;
     color: var(--ink-primary);
     cursor: pointer;
+    white-space: nowrap;
     font-family: var(--font-sans);
     font-size: .75rem;
     font-weight: 500;
@@ -826,14 +927,17 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-quick-actions {
-    display: flex;
-    gap: .35rem;
+    display: inline-flex;
+    gap: 3px;
     align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .inq-action-btn {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border-radius: 4px;
     border: 1px solid var(--border-hairline);
     background: var(--bg-surface);
@@ -856,6 +960,19 @@ body.inq-app .header-v4-tools {
 .inq-action-btn:disabled {
     opacity: .35;
     cursor: not-allowed;
+}
+
+.inq-action-btn-delete {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.22);
+}
+
+.inq-action-btn-delete:hover {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 1px 3px rgba(220, 38, 38, 0.15);
 }
 
 .inq-empty {
@@ -1183,7 +1300,7 @@ body.inq-app .header-v4-tools {
 }
 
 .inq-detail-panel.active {
-    width: 490px;
+    width: 500px;
     overflow-y: auto;
 }
 
