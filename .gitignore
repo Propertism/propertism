@@ -199,4 +199,8 @@ client_secret.json
 token.json
 ga-credentials.json
 
-
+# Infrastructure credentials, SSH keys & execution artifacts
+*.pem
+*.key
+03-Execute/*.pem
+03-Execute/lightsail-03-09-2026-ipdetails.png
