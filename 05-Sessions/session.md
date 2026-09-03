@@ -1,6 +1,6 @@
 <!-- AUDIT METADATA -->
-<!-- Date: 2026-08-30 -->
-<!-- Time: 09:25 IST -->
+<!-- Date: 2026-09-03 -->
+<!-- Time: 13:23 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra -->
 <!-- Module: 03-propertism -->
@@ -26,9 +26,12 @@
 
 ---
 
-## 2. ⏩ Next Session
-- **Property Detail Pages (PDP)**: Validate schema markup, OpenGraph tags, and SSR performance.
-- **Lead Capture Journey**: Level 4 end-to-end traversal of buyer lead submission.
+## 2. ⏩ Active Session Priorities
+- **Priority 1 (Primary Session Focus)**: **AWS Lightsail Migration Cutover** — Infrastructure right-sizing and cutover execution from Elastic Beanstalk + RDS to Unified AWS Lightsail VPS per [`reports/LIGHTSAIL_MIGRATION_PLAN.md`](file:///d:/viji/viji-olivine/03-propertism/reports/LIGHTSAIL_MIGRATION_PLAN.md). Architecture plan revised to **REV-8.4**; on strict HOLD standby for Mindra / Viji approval.
+- **Priority 2**: **Frontend Synchronization** — Synchronize and align APIs with `04-propertism-ui`.
+- **Priority 3**: **Property Detail Pages (PDP)** — Validate schema markup, OpenGraph tags, and SSR performance.
+- **Priority 4**: **Lead Capture Journey** — Level 4 end-to-end traversal of buyer lead submission.
+- **Priority 5**: **Multi-Cloud & Deployments** — Azure deployment explorations for core Olivine domains.
 
 ---
 
