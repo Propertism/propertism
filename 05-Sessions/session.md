@@ -1,11 +1,11 @@
 <!-- AUDIT METADATA -->
 <!-- Date: 2026-09-03 -->
-<!-- Time: 14:05 IST -->
+<!-- Time: 16:35 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra -->
 <!-- Module: 03-propertism -->
-<!-- Status: ACTIVE -->
-<!-- Git Commit: HEAD (uncommitted) -->
+<!-- Status: ACTIVE (Phase 1 DONE, Phase 2 in progress) -->
+<!-- Git Commit: HEAD -->
 
 # 📌 SESSION STATE & CONTINUITY: 03-propertism
 
@@ -27,7 +27,13 @@
 ---
 
 ## 2. ⏩ Active Session Priorities
-- **Priority 1 (Primary Session Focus)**: **AWS Lightsail Migration Cutover** — Infrastructure right-sizing and cutover execution from Elastic Beanstalk + RDS to Unified AWS Lightsail VPS per [`05-Sessions/lightsail-cutover.md`](file:///d:/viji/viji-olivine/03-propertism/05-Sessions/lightsail-cutover.md). The academic REV-8.4 has been formally superseded by the **Frozen Lean Execution Plan (15 Tasks)**. Ready to initiate Phase 1 (Provisioning & Setup).
+- **Priority 1 (Primary Session Focus)**: **AWS Lightsail Migration Cutover** — Infrastructure right-sizing and cutover execution from Elastic Beanstalk + RDS (`us-east-1`) to Unified AWS Lightsail VPS (`ap-south-1` Mumbai `13.207.123.15`).
+  - **Phase 1 (Setup & Base Stack)**: 🟢 **100% DONE** (Tasks 1, 2, 3, 4 completed; Gunicorn/Nginx responding with HTTP 200 OK).
+  - **Safety Insurance (Task 6)**: 🟢 **100% DONE** (RDS snapshot `propertism-rds-safety-pre-cutover-20260903` is available).
+  - **Triple-Layer Backup**: 🟢 **DONE** (RDS cloud snapshot + Local disk dump `propertism_prod_backup_20260903.dump` + Lightsail copy).
+  - **Media Asset Migration (Task 10)**: 🟢 **DONE** (48 files, 34 MB synced from S3 to `/var/www/propertism/media/` and serving HTTP 200).
+  - **Execution Report**: Authored [`05-Sessions/LIGHTSAIL_MIGRATION_EXECUTION_PROGRESS_REPORT.md`](file:///d:/viji/viji-olivine/03-propertism/05-Sessions/LIGHTSAIL_MIGRATION_EXECUTION_PROGRESS_REPORT.md).
+  - **Immediate Next Step**: Task 7 (Stop EB web process, restore database to Mumbai, reset sequences, and flip DNS).
 - **Priority 2**: **Frontend Synchronization** — Synchronize and align APIs with `04-propertism-ui`.
 - **Priority 3**: **Property Detail Pages (PDP)** — Validate schema markup, OpenGraph tags, and SSR performance.
 - **Priority 4**: **Lead Capture Journey** — Level 4 end-to-end traversal of buyer lead submission.
