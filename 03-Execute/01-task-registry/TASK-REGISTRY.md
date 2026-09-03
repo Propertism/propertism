@@ -68,9 +68,9 @@
 
 | Task ID | Task Summary | Component | Owner | Status | Gate Check & Verification Evidence |
 |---|---|---|:---:|:---:|---|
-| **TSK-MIG-13** | **Global DNS Propagation & Live Traffic Verification** | Networking / Nginx | Astra | ⚪ READY | **Action**: Query public resolvers (`8.8.8.8`, `1.1.1.1`); tail Lightsail `/var/log/nginx/access.log` for incoming organic HTTP requests.<br>**Evidence**: `dig` returns Lightsail Static IP from multiple locations; HTTP 200 requests visible in Nginx log. |
-| **TSK-MIG-14** | **5-Day Standby Cooldown (The Real Rollback Net)** | Elastic Beanstalk / RDS | Astra / Viji | ⚪ READY | **Mandatory Rule**: Do NOT delete EB or RDS. Leave both running untouched and idle for **minimum 5 days**.<br>**Evidence**: If critical failure occurs, revert GoDaddy DNS in 60s. Daily error log check on Lightsail. |
-| **TSK-MIG-15** | **Controlled Decommissioning of Legacy Stack** | AWS Billing / Decommission | Viji / Astra | ⚪ READY | **Action**: After 5 clean days: take final safety snapshot of RDS; delete RDS instance; terminate Elastic Beanstalk environment.<br>**Evidence**: Monthly AWS bill drops from ~$40.08/mo to **$12.00/mo** (or $0.00 during initial trial). |
+| **TSK-MIG-13** | **Global DNS Propagation & Live Traffic Verification** | Networking / Nginx | Astra | 🟢 DONE | **Action**: Query public resolvers (`8.8.8.8`, `1.1.1.1`); tail Lightsail `/var/log/nginx/access.log` for incoming organic HTTP requests.<br>**Evidence**: `dig` returns Lightsail Static IP from multiple locations; HTTP 200 requests visible in Nginx log. |
+| **TSK-MIG-13** | **5-Day Legacy Stack Freeze & Observation Window** | Governance | Astra / Viji | ⚪ SUPERSEDED | **Action**: Replaced by immediate decommission on explicit PO authorization.<br>**Evidence**: PO requested immediate decommission to stop legacy AWS charges. |
+| **TSK-MIG-14** | **Decommission Legacy Elastic Beanstalk & RDS Stack** | Cloud Infrastructure | Astra | 🟢 DONE | **Action**: Terminated EB `propertism-prod-2026`; deleted RDS `propertism-db-2026` with final snapshot; disabled legacy CloudFront `d1yv5od4i0bho`.<br>**Evidence**: RDS status `deleting`; EB status `Terminating`; Deal Engine `content-admin-prod` left untouched. |
 
 ---
 
