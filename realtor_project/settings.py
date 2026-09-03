@@ -277,7 +277,7 @@ if _S3_MEDIA_BUCKET:
     MEDIA_ROOT = ''
 else:
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', str(BASE_DIR / 'media')))
 
 # File upload settings
 FILE_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE

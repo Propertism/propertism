@@ -1,11 +1,11 @@
 # Graph Report - 03-propertism  (2026-09-03)
 
 ## Corpus Check
-- 659 files · ~2,737,358 words
+- 659 files · ~2,737,318 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 8813 nodes · 12462 edges · 788 communities (650 shown, 138 thin omitted)
+- 8813 nodes · 12462 edges · 789 communities (650 shown, 139 thin omitted)
 - Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 1946 edges (avg confidence: 0.51)
 - Token cost: 0 input · 0 output
 
@@ -748,6 +748,7 @@
 - 7. PostgreSQL Production vs. Sandbox Ownership & ACL Strategy
 - 9. Initial Resource Budget & Conservative Gunicorn Tuning
 - 2. Financial Audit & Lightsail IPv4 Pricing Model
+- Local Development: SQLite Configuration
 - 02-Epics.md
 - SPEC-TRACEABILITY-MATRIX.md
 - 01-Tasks.md
@@ -783,7 +784,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (788 total, 138 thin omitted)
+## Communities (789 total, 139 thin omitted)
 
 ### Community 0 - "views.py"
 Cohesion: 0.07
@@ -806,12 +807,12 @@ Cohesion: 0.08
 Nodes (31): ContactMessageAdmin, InquiryAdmin, PropertyAdmin, PropertyPhotoAdmin, PropertyPhotoInline, PropertyTypeAdmin, ContactMessage, _format_indian_number() (+23 more)
 
 ### Community 5 - "CustomerReviewSection"
-Cohesion: 0.06
-Nodes (27): Structured result from Google reCAPTCHA verification., RecaptchaResult, name_only(), quals_only(), Returns only the name part from a combined name+qualifications string.     e.g., Returns only the qualifications part from a combined name+qualifications string., AddressAutocompleteFrameworkTests, BlogPostEEATTests (+19 more)
+Cohesion: 0.07
+Nodes (25): Structured result from Google reCAPTCHA verification., RecaptchaResult, AddressAutocompleteFrameworkTests, BlogPostEEATTests, CaptchaVerificationTests, HeroBackgroundImageTests, LandingLeadApiTests, LinkRoutingTests (+17 more)
 
 ### Community 6 - "CustomerReview"
 Cohesion: 0.12
-Nodes (39): BaseInlineFormSet, BlogPostAdmin, CompanyInfoAdmin, CompanyInfoForm, CoreValueAdmin, CustomerReviewInline, CustomerReviewSectionAdmin, ExpertiseAreaAdmin (+31 more)
+Nodes (37): BaseInlineFormSet, BlogPostAdmin, CompanyInfoAdmin, CompanyInfoForm, CoreValueAdmin, CustomerReviewInline, CustomerReviewSectionAdmin, ExpertiseAreaAdmin (+29 more)
 
 ### Community 7 - "BusinessAnalyticsManager"
 Cohesion: 0.07
@@ -906,8 +907,8 @@ Cohesion: 0.04
 Nodes (46): 10. Google Posts Strategy, 11. Performance Baseline & Monthly Monitoring Framework, 12. 90-Day Improvement Roadmap, 1. Executive Summary, 1. Service: NRI Property Management & Care, 2. Profile Snapshot & Priority Matrix, 2. Service: Tenant Management & Rental Operations, 3. Category Benchmarking & Competitor Validation (+38 more)
 
 ### Community 30 - "views.py"
-Cohesion: 0.11
-Nodes (22): CommunicationChannel, CommunicationConfiguration, CommunicationDelivery, CommunicationLog, CommunicationRequest, CommunicationTemplate, CommunicationType, Meta (+14 more)
+Cohesion: 0.12
+Nodes (25): APIView, CommunicationConfiguration, CommunicationType, CommunicationBrandSerializer, CommunicationChannelSerializer, CommunicationConfigurationSerializer, CommunicationDeliverySerializer, CommunicationLanguageSerializer (+17 more)
 
 ### Community 31 - "InquiryFieldValidator"
 Cohesion: 0.13
@@ -923,7 +924,7 @@ Nodes (12): Health check endpoint must return success=True and environment detai
 
 ### Community 34 - "admin.py"
 Cohesion: 0.22
-Nodes (5): CommunicationsConfig, AppConfig, seed_defaults(), CommunicationBrand, CommunicationLanguage
+Nodes (5): CommunicationsConfig, AppConfig, seed_defaults(), CommunicationBrand, CommunicationChannel
 
 ### Community 35 - "landing-conversion.js"
 Cohesion: 0.18
@@ -1014,7 +1015,7 @@ Cohesion: 0.14
 Nodes (23): article_schema(), breadcrumb_schema(), faq_schema(), _get_company(), _get_company_hero_url(), _get_public_site_url(), _make_absolute_url(), name_only() (+15 more)
 
 ### Community 58 - "services.py"
-Cohesion: 0.13
+Cohesion: 0.16
 Nodes (13): CommunicationDispatcher, Allows registering new transport channels at runtime., Asynchronously dispatch a delivery in a background thread., Synchronously execute a delivery dispatch (run by the background thread)., Command, BaseCommand, CommunicationRetry, BrandingService (+5 more)
 
 ### Community 59 - "spam_protection.py"
@@ -1658,8 +1659,8 @@ Cohesion: 0.33
 Nodes (3): Command, BaseCommand, Management command: seed_knowledge_hub_phase_a  Seeds 10 foundational NRI Know
 
 ### Community 272 - "PHASE 5 COMPLETION REPORT"
-Cohesion: 0.10
-Nodes (21): CONSTRAINTS MAINTAINED, CONTACT & SUPPORT, DELIVERABLES, Documentation Created, EXECUTIVE SUMMARY, Final Technical Metrics, Key Metrics, Month 1 Success Metrics (+13 more)
+Cohesion: 0.07
+Nodes (27): All 10 Articles (Published), Article Verification, ✓ COMPLETE & VERIFIED, CONSTRAINTS MAINTAINED, CONTACT & SUPPORT, DELIVERABLES, Documentation Created, EXECUTIVE SUMMARY (+19 more)
 
 ### Community 273 - "Google Business Profile — Master Tracker"
 Cohesion: 0.08
@@ -1758,8 +1759,8 @@ Cohesion: 0.12
 Nodes (15): 1. Summary of Changes Applied, 2. Analysis & Status of the 63 Non-Indexed Pages, 3. Verification of Knowledge Hub "Insights" Breadcrumb, 4. Test & Crawl Verification Results, 5. Post-Deployment Guidance: Understanding Search Console Numbers, A. Breadcrumb Structured Data Fixes, A. Unit Tests, Architecture & Rationale: (+7 more)
 
 ### Community 298 - "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606"
-Cohesion: 0.33
-Nodes (6): All 10 Articles (Published), Article Verification, ✓ COMPLETE & VERIFIED, PRIORITY 1: KNOWLEDGE HUB PUBLICATION VERIFICATION, Verification Evidence, Verification Method
+Cohesion: 0.17
+Nodes (8): CommunicationDelivery, CommunicationLanguage, CommunicationLog, CommunicationRequest, CommunicationTemplate, Meta, CommunicationsModelTests, TransactionTestCase
 
 ### Community 299 - "Propertism - Session Tracker"
 Cohesion: 0.10
@@ -2307,7 +2308,7 @@ Nodes (7): Anchor Text Guidelines, Cluster 1: NRI Property Chennai, Cluster 2: N
 
 ### Community 473 - "DATABASE_ARCHITECTURE_RECORD"
 Cohesion: 0.25
-Nodes (7): Database Architecture Overview, DATABASE_ARCHITECTURE_RECORD, Dual-Environment Design, Local Development: SQLite Configuration, SCCB-PROP-PRODUCTION-STABILIZATION-AND-SEO-ROADMAP-CONSOLIDATION-1606, SQLite Connection, SQLite File Location
+Nodes (7): Data Loss Prevention (Going Forward), Database Architecture Overview, DATABASE_ARCHITECTURE_RECORD, Dual-Environment Design, Migration Path: SQLite → PostgreSQL, SCCB-PROP-PRODUCTION-STABILIZATION-AND-SEO-ROADMAP-CONSOLIDATION-1606, What Happened (Recent)
 
 ### Community 474 - "PRODUCTION_INFRASTRUCTURE_BASELINE"
 Cohesion: 0.25
@@ -2545,10 +2546,6 @@ Nodes (5): Early Organic Traffic Signals, Indexation Observations, PART 8: NOTES
 Cohesion: 0.25
 Nodes (7): 📋 15-TASK EXECUTION CHECKLIST, 🚀 LIGHTSAIL MIGRATION — LEAN EXECUTION RUNBOOK, PHASE 1: PRE-CUTOVER SETUP (Zero Production Downtime, Zero Risk), PHASE 2: CUTOVER EXECUTION (Scheduled Maintenance Window: ~20-30 Mins), PHASE 3: GO-LIVE & COOLDOWN, ⚠️ RISKS & PRAGMATIC MITIGATIONS, Target: `propertism.in` — Elastic Beanstalk + RDS (`us-east-1`) ➔ Unified Lightsail (`ap-south-1`, 2GB / 2vCPU)
 
-### Community 543 - "Verification Evidence"
-Cohesion: 0.18
-Nodes (12): APIView, AcknowledgementService, CommunicationChannelViewSet, CommunicationConfigurationViewSet, CommunicationDashboardView, CommunicationDeliveryListView, CommunicationHistoryListView, CommunicationLogListView (+4 more)
-
 ### Community 544 - "Phase 2 — Publish Knowledge Hub Articles"
 Cohesion: 0.32
 Nodes (3): PageLoadTester, SCCB-46 Task 1: Page Load Testing Tests all pages load correctly without errors, Run all page load tests
@@ -2638,8 +2635,8 @@ Cohesion: 0.50
 Nodes (3): 1. Summary of Pending Enhancements, Pending Items, SCCB-PROP-M2.X-COMM-001-07
 
 ### Community 573 - "Database Queries Executed"
-Cohesion: 0.67
-Nodes (3): Data Loss Prevention (Going Forward), Migration Path: SQLite → PostgreSQL, What Happened (Recent)
+Cohesion: 0.40
+Nodes (4): name_only(), quals_only(), Returns only the name part from a combined name+qualifications string.     e.g., Returns only the qualifications part from a combined name+qualifications string.
 
 ### Community 574 - "Production vs Local Trace"
 Cohesion: 0.33
@@ -3193,10 +3190,14 @@ Nodes (3): 1. Initial Resource Budget (2,048 MB Physical RAM), 2. Runtime Measur
 Cohesion: 0.67
 Nodes (3): 1. Itemized Cost Breakdown (Fixed vs. Usage-Dependent), 2. Credit Runway Analysis & Promotional Credit Caveats, 2. Financial Audit & Lightsail IPv4 Pricing Model
 
+### Community 781 - "Local Development: SQLite Configuration"
+Cohesion: 0.67
+Nodes (3): Local Development: SQLite Configuration, SQLite Connection, SQLite File Location
+
 ## Knowledge Gaps
 - **3967 isolated node(s):** `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE`, `PYTHONPATH`, `00_collectstatic_current.sh script`, `DJANGO_SETTINGS_MODULE` (+3962 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **138 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **139 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

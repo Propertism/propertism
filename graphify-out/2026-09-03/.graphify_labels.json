@@ -780,6 +780,7 @@
   "778": "7. PostgreSQL Production vs. Sandbox Ownership & ACL Strategy",
   "779": "9. Initial Resource Budget & Conservative Gunicorn Tuning",
   "780": "2. Financial Audit & Lightsail IPv4 Pricing Model",
+  "781": "Local Development: SQLite Configuration",
   "782": "02-Epics.md",
   "783": "SPEC-TRACEABILITY-MATRIX.md",
   "784": "01-Tasks.md",

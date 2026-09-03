@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "content/views.py": {
-    "mtime": 1788445214.309837,
-    "ast_hash": "c88c9601510df7b378ccbed3b571c050",
+    "mtime": 1787842028.0982919,
+    "ast_hash": "bc75a98e74cc358796da2e2e0524d30e",
     "semantic_hash": ""
   },
   "content/views_landing.py": {
@@ -1250,13 +1250,13 @@
     "semantic_hash": ""
   },
   "realtor_project/settings.py": {
-    "mtime": 1788446888.8939338,
-    "ast_hash": "5fb0fc2b4e6da767dfbec237790006d6",
+    "mtime": 1788062269.8569005,
+    "ast_hash": "e990a5854f16128756b79521a03a15fd",
     "semantic_hash": ""
   },
   "realtor_project/settings_production.py": {
-    "mtime": 1788446888.8939338,
-    "ast_hash": "995e64115f2db1baf3e361dc4f72259d",
+    "mtime": 1788062278.544128,
+    "ast_hash": "eb5ac1295bd8e5e40577d0aeb95952a4",
     "semantic_hash": ""
   },
   "realtor_project/urls.py": {
@@ -3265,8 +3265,8 @@
     "semantic_hash": ""
   },
   "uilayers/templates/emails/inquiry_notification.html": {
-    "mtime": 1788445214.309837,
-    "ast_hash": "57a641be27d2fc7af9e447c9952e1499",
+    "mtime": 1785831530.967034,
+    "ast_hash": "4477d6aa5482628ed1dc3afb0ffb91cf",
     "semantic_hash": ""
   },
   "uilayers/templates/home-premium.html": {
@@ -4612,21 +4612,6 @@
   "media/properties/photo_qDHUnkM.jpg": {
     "mtime": 1787842028.1008244,
     "ast_hash": "86c0460e2f881850a75eac2f5e0b7d07",
-    "semantic_hash": ""
-  },
-  "media/properties/01.jpeg": {
-    "mtime": 1777179282.8153486,
-    "ast_hash": "540e61213004f5f57f0ce16d4b04c5c7",
-    "semantic_hash": ""
-  },
-  "media/properties/02.jpeg": {
-    "mtime": 1777179307.42899,
-    "ast_hash": "ee49af7486c9049e8da9a0b65d4b5e94",
-    "semantic_hash": ""
-  },
-  "media/properties/03.jpg": {
-    "mtime": 1777179351.49309,
-    "ast_hash": "0a960c405cf4457c2bb3e6ce4364fed4",
     "semantic_hash": ""
   }
 }

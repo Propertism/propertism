@@ -161,7 +161,7 @@ if USE_LOCAL_STORAGE:
     # FORCE local storage - NO S3 AT ALL
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, "media"))
     # Ensure media directory exists
     os.makedirs(MEDIA_ROOT, exist_ok=True)
     # HARD BLOCK S3 VARIABLES - prevent any implicit S3 usage
@@ -192,7 +192,7 @@ else:
         # Fallback to local if S3 not configured
         DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
         MEDIA_URL = "/media/"
-        MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+        MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, "media"))
         os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -24076,8 +24076,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "communications_models",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "models.py"
     },
     {
@@ -24142,8 +24142,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "communications_models_communicationlanguage",
-      "community": 34,
-      "community_name": "admin.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationlanguage"
     },
     {
@@ -24153,8 +24153,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "communications_models_communicationlanguage_str",
-      "community": 34,
-      "community_name": "admin.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__str__()"
     },
     {
@@ -24164,8 +24164,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "communications_models_communicationtemplate",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationtemplate"
     },
     {
@@ -24175,8 +24175,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "communications_models_meta",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "meta"
     },
     {
@@ -24186,8 +24186,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "communications_models_communicationtemplate_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__str__()"
     },
     {
@@ -24197,8 +24197,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "communications_models_communicationchannel",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": "communicationchannel"
     },
     {
@@ -24208,8 +24208,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "communications_models_communicationchannel_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": ".__str__()"
     },
     {
@@ -24263,8 +24263,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "communications_models_communicationrequest",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationrequest"
     },
     {
@@ -24274,8 +24274,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "communications_models_communicationrequest_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__str__()"
     },
     {
@@ -24285,8 +24285,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "communications_models_communicationdelivery",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationdelivery"
     },
     {
@@ -24296,8 +24296,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "communications_models_communicationdelivery_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__str__()"
     },
     {
@@ -24307,8 +24307,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "communications_models_communicationlog",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationlog"
     },
     {
@@ -24318,8 +24318,8 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "communications_models_communicationlog_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__str__()"
     },
     {
@@ -24659,8 +24659,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "communications_services_languageservice_resolve_language",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 543,
+      "community_name": "Verification Evidence",
       "norm_label": ".resolve_language()"
     },
     {
@@ -24703,8 +24703,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "communications_services_templateservice_render_template",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 543,
+      "community_name": "Verification Evidence",
       "norm_label": ".render_template()"
     },
     {
@@ -24725,8 +24725,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "communications_services_trackingservice_generate_tracking_reference",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 543,
+      "community_name": "Verification Evidence",
       "norm_label": ".generate_tracking_reference()"
     },
     {
@@ -24791,8 +24791,8 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "communications_services_acknowledgementservice",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "acknowledgementservice"
     },
     {
@@ -24802,8 +24802,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "communications_services_acknowledgementservice_send",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 543,
+      "community_name": "Verification Evidence",
       "norm_label": ".send()"
     },
     {
@@ -24813,8 +24813,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "communications_tests",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "tests.py"
     },
     {
@@ -24824,8 +24824,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "communications_tests_communicationsmodeltests",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "communicationsmodeltests"
     },
     {
@@ -24835,8 +24835,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "transactiontestcase",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "transactiontestcase"
     },
     {
@@ -24846,8 +24846,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "communications_tests_communicationsmodeltests_setup",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".setup()"
     },
     {
@@ -24857,8 +24857,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "communications_tests_communicationsmodeltests_test_acknowledgement_send_and_asynchronous_dispatch",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 543,
+      "community_name": "Verification Evidence",
       "norm_label": ".test_acknowledgement_send_and_asynchronous_dispatch()"
     },
     {
@@ -24923,8 +24923,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "communications_urls",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "urls.py"
     },
     {
@@ -24945,8 +24945,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "communications_views_communicationtemplateviewset",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationtemplateviewset"
     },
     {
@@ -24956,8 +24956,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "communications_views_communicationchannelviewset",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationchannelviewset"
     },
     {
@@ -24967,8 +24967,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "communications_views_communicationchannelviewset_toggle",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": ".toggle()"
     },
     {
@@ -24978,8 +24978,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "communications_views_communicationconfigurationviewset",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationconfigurationviewset"
     },
     {
@@ -24989,8 +24989,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "communications_views_sendacknowledgementview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "sendacknowledgementview"
     },
     {
@@ -25000,8 +25000,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apiview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "apiview"
     },
     {
@@ -25011,8 +25011,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "communications_views_sendacknowledgementview_post",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": ".post()"
     },
     {
@@ -25022,8 +25022,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "communications_views_communicationhistorylistview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationhistorylistview"
     },
     {
@@ -25033,8 +25033,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "communications_views_communicationdeliverylistview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationdeliverylistview"
     },
     {
@@ -25044,8 +25044,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "communications_views_communicationloglistview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationloglistview"
     },
     {
@@ -25055,8 +25055,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "communications_views_communicationretrylistview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationretrylistview"
     },
     {
@@ -25066,8 +25066,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "communications_views_communicationdashboardview",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationdashboardview"
     },
     {
@@ -25077,8 +25077,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "communications_views_communicationdashboardview_get",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": ".get()"
     },
     {
@@ -28047,8 +28047,8 @@
       "source_location": "L611",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_landinglead",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 5,
+      "community_name": "CustomerReviewSection",
       "norm_label": "landinglead"
     },
     {
@@ -28058,8 +28058,8 @@
       "source_location": "L656",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_landinglead_str",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 5,
+      "community_name": "CustomerReviewSection",
       "norm_label": ".__str__()"
     },
     {
@@ -28311,8 +28311,8 @@
       "source_location": "L612",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_rationale_612",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 5,
+      "community_name": "CustomerReviewSection",
       "norm_label": "lead submissions captured directly from dynamic landing pages."
     },
     {
@@ -29488,8 +29488,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "content_templatetags_seo_tags_name_only",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "name_only()"
     },
     {
@@ -29499,8 +29499,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "content_templatetags_seo_tags_quals_only",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "quals_only()"
     },
     {
@@ -29642,8 +29642,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "content_templatetags_seo_tags_rationale_16",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "returns only the name part from a combined name+qualifications string.     e.g."
     },
     {
@@ -29653,8 +29653,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "content_templatetags_seo_tags_rationale_38",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "returns only the qualifications part from a combined name+qualifications string."
     },
     {
@@ -30137,8 +30137,8 @@
       "source_location": "L318",
       "_origin": "ast",
       "id": "content_tests_seotagsfiltertests_test_name_only_and_quals_only_with_pipe",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": ".test_name_only_and_quals_only_with_pipe()"
     },
     {
@@ -30148,8 +30148,8 @@
       "source_location": "L329",
       "_origin": "ast",
       "id": "content_tests_seotagsfiltertests_test_name_only_and_quals_only_fallback",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": ".test_name_only_and_quals_only_fallback()"
     },
     {
@@ -30915,7 +30915,7 @@
       "label": "send_landing_lead_notification()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L680",
+      "source_location": "L679",
       "_origin": "ast",
       "id": "content_views_send_landing_lead_notification",
       "community": 19,
@@ -30926,7 +30926,7 @@
       "label": "landing_lead_api()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L757",
+      "source_location": "L756",
       "_origin": "ast",
       "id": "content_views_landing_lead_api",
       "community": 19,
@@ -30937,7 +30937,7 @@
       "label": "landing_lead_followup_api()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L858",
+      "source_location": "L857",
       "_origin": "ast",
       "id": "content_views_landing_lead_followup_api",
       "community": 19,
@@ -30948,7 +30948,7 @@
       "label": "send_whatsapp_notification()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L890",
+      "source_location": "L889",
       "_origin": "ast",
       "id": "content_views_send_whatsapp_notification",
       "community": 19,
@@ -30959,7 +30959,7 @@
       "label": "newsletter_subscribe()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1006",
+      "source_location": "L1005",
       "_origin": "ast",
       "id": "content_views_newsletter_subscribe",
       "community": 117,
@@ -30970,7 +30970,7 @@
       "label": "custom_404()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1079",
+      "source_location": "L1078",
       "_origin": "ast",
       "id": "content_views_custom_404",
       "community": 19,
@@ -30981,7 +30981,7 @@
       "label": "custom_500()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1084",
+      "source_location": "L1083",
       "_origin": "ast",
       "id": "content_views_custom_500",
       "community": 19,
@@ -30992,7 +30992,7 @@
       "label": "property_owner_resources()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1089",
+      "source_location": "L1088",
       "_origin": "ast",
       "id": "content_views_property_owner_resources",
       "community": 19,
@@ -31003,7 +31003,7 @@
       "label": "send_otp_view()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1108",
+      "source_location": "L1107",
       "_origin": "ast",
       "id": "content_views_send_otp_view",
       "community": 19,
@@ -31014,7 +31014,7 @@
       "label": "verify_otp_view()",
       "file_type": "code",
       "source_file": "content/views.py",
-      "source_location": "L1141",
+      "source_location": "L1140",
       "_origin": "ast",
       "id": "content_views_verify_otp_view",
       "community": 19,
@@ -31157,9 +31157,9 @@
       "label": "Send notifications for landing-page lead submissions.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L681",
+      "source_location": "L680",
       "_origin": "ast",
-      "id": "content_views_rationale_681",
+      "id": "content_views_rationale_680",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "send notifications for landing-page lead submissions."
@@ -31168,9 +31168,9 @@
       "label": "Store leads submitted from landing pages.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L758",
+      "source_location": "L757",
       "_origin": "ast",
-      "id": "content_views_rationale_758",
+      "id": "content_views_rationale_757",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "store leads submitted from landing pages."
@@ -31179,9 +31179,9 @@
       "label": "Store optional post-submit lead details.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L859",
+      "source_location": "L858",
       "_origin": "ast",
-      "id": "content_views_rationale_859",
+      "id": "content_views_rationale_858",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "store optional post-submit lead details."
@@ -31190,9 +31190,9 @@
       "label": "Sends a WhatsApp message via the Meta official Cloud API.     Uses cached/renew",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L891",
+      "source_location": "L890",
       "_origin": "ast",
-      "id": "content_views_rationale_891",
+      "id": "content_views_rationale_890",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "sends a whatsapp message via the meta official cloud api.     uses cached/renew"
@@ -31201,9 +31201,9 @@
       "label": "Newsletter subscription handler with Admin notification.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1007",
+      "source_location": "L1006",
       "_origin": "ast",
-      "id": "content_views_rationale_1007",
+      "id": "content_views_rationale_1006",
       "community": 117,
       "community_name": "run_all_tests.py",
       "norm_label": "newsletter subscription handler with admin notification."
@@ -31212,9 +31212,9 @@
       "label": "Custom 404 error handler.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1080",
+      "source_location": "L1079",
       "_origin": "ast",
-      "id": "content_views_rationale_1080",
+      "id": "content_views_rationale_1079",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "custom 404 error handler."
@@ -31223,9 +31223,9 @@
       "label": "Custom 500 error handler.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1085",
+      "source_location": "L1084",
       "_origin": "ast",
-      "id": "content_views_rationale_1085",
+      "id": "content_views_rationale_1084",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "custom 500 error handler."
@@ -31234,9 +31234,9 @@
       "label": "View to display Tamil Nadu Property Owner Resources.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1090",
+      "source_location": "L1089",
       "_origin": "ast",
-      "id": "content_views_rationale_1090",
+      "id": "content_views_rationale_1089",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "view to display tamil nadu property owner resources."
@@ -31245,9 +31245,9 @@
       "label": "Generates a 6-digit OTP, stores it in session, and sends via WhatsApp and Email.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1109",
+      "source_location": "L1108",
       "_origin": "ast",
-      "id": "content_views_rationale_1109",
+      "id": "content_views_rationale_1108",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "generates a 6-digit otp, stores it in session, and sends via whatsapp and email."
@@ -31256,9 +31256,9 @@
       "label": "Verifies the OTP entered by the user against the session stored OTP.",
       "file_type": "rationale",
       "source_file": "content/views.py",
-      "source_location": "L1142",
+      "source_location": "L1141",
       "_origin": "ast",
-      "id": "content_views_rationale_1142",
+      "id": "content_views_rationale_1141",
       "community": 19,
       "community_name": "views.py",
       "norm_label": "verifies the otp entered by the user against the session stored otp."
@@ -44160,8 +44160,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_local_development_sqlite_configuration",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 781,
+      "community_name": "Local Development: SQLite Configuration",
       "norm_label": "local development: sqlite configuration"
     },
     {
@@ -44171,8 +44171,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_sqlite_file_location",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 781,
+      "community_name": "Local Development: SQLite Configuration",
       "norm_label": "sqlite file location"
     },
     {
@@ -44182,8 +44182,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_sqlite_connection",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 781,
+      "community_name": "Local Development: SQLite Configuration",
       "norm_label": "sqlite connection"
     },
     {
@@ -44512,8 +44512,8 @@
       "source_location": "L540",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_migration_path_sqlite_postgresql",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "migration path: sqlite \u2192 postgresql"
     },
     {
@@ -44523,8 +44523,8 @@
       "source_location": "L542",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_what_happened_recent",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "what happened (recent)"
     },
     {
@@ -44534,8 +44534,8 @@
       "source_location": "L559",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_data_loss_prevention_going_forward",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "data loss prevention (going forward)"
     },
     {
@@ -78612,8 +78612,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_priority_1_knowledge_hub_publication_verification",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "priority 1: knowledge hub publication verification"
     },
     {
@@ -78623,8 +78623,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_complete_verified",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "\u2713 complete & verified"
     },
     {
@@ -78634,8 +78634,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_article_verification",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "article verification"
     },
     {
@@ -78645,8 +78645,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_all_10_articles_published",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "all 10 articles (published)"
     },
     {
@@ -78656,8 +78656,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_verification_method",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "verification method"
     },
     {
@@ -78667,8 +78667,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_verification_evidence",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "verification evidence"
     },
     {
@@ -150349,7 +150349,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "content/views.py",
-      "source_location": "L1034",
+      "source_location": "L1033",
       "weight": 1.0,
       "source": "content_views_newsletter_subscribe",
       "target": "communications_services_acknowledgementservice_send"
@@ -150360,7 +150360,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "content/views.py",
-      "source_location": "L595",
+      "source_location": "L594",
       "weight": 1.0,
       "source": "content_views_send_rfq_notification",
       "target": "communications_services_acknowledgementservice_send"
@@ -160464,7 +160464,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "content/views.py",
-      "source_location": "L762",
+      "source_location": "L761",
       "weight": 1.0,
       "source": "content_views_landing_lead_api",
       "target": "content_security_spam_protection_spamprotectionservice"
@@ -160474,7 +160474,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1012",
+      "source_location": "L1011",
       "weight": 1.0,
       "source": "content_views_newsletter_subscribe",
       "target": "content_security_spam_protection_spamprotectionservice",
@@ -160828,7 +160828,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1023",
+      "source_location": "L1022",
       "weight": 1.0,
       "source": "content_views_newsletter_subscribe",
       "target": "d_viji_viji_olivine_03rolledout_01propertism_content_site_context_get_home_section_links",
@@ -163269,7 +163269,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1079",
+      "source_location": "L1078",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_custom_404",
@@ -163279,7 +163279,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1084",
+      "source_location": "L1083",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_custom_500",
@@ -163339,7 +163339,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L757",
+      "source_location": "L756",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_landing_lead_api",
@@ -163349,7 +163349,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L858",
+      "source_location": "L857",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_landing_lead_followup_api",
@@ -163369,7 +163369,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1006",
+      "source_location": "L1005",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_newsletter_subscribe",
@@ -163379,7 +163379,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1089",
+      "source_location": "L1088",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_property_owner_resources",
@@ -163449,7 +163449,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L680",
+      "source_location": "L679",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_send_landing_lead_notification",
@@ -163459,7 +163459,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1108",
+      "source_location": "L1107",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_send_otp_view",
@@ -163479,7 +163479,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L890",
+      "source_location": "L889",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_send_whatsapp_notification",
@@ -163509,7 +163509,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1141",
+      "source_location": "L1140",
       "weight": 1.0,
       "source": "content_views",
       "target": "content_views_verify_otp_view",
@@ -163759,7 +163759,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1091",
+      "source_location": "L1090",
       "weight": 1.0,
       "source": "content_views_property_owner_resources",
       "target": "content_views_get_company_context",
@@ -164014,7 +164014,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L840",
+      "source_location": "L839",
       "weight": 1.0,
       "source": "content_views_landing_lead_api",
       "target": "content_views_send_landing_lead_notification",
@@ -164024,9 +164024,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L681",
+      "source_location": "L680",
       "weight": 1.0,
-      "source": "content_views_rationale_681",
+      "source": "content_views_rationale_680",
       "target": "content_views_send_landing_lead_notification",
       "confidence_score": 1.0
     },
@@ -164035,7 +164035,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L753",
+      "source_location": "L752",
       "weight": 1.0,
       "source": "content_views_send_landing_lead_notification",
       "target": "content_views_send_whatsapp_notification",
@@ -164045,9 +164045,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L758",
+      "source_location": "L757",
       "weight": 1.0,
-      "source": "content_views_rationale_758",
+      "source": "content_views_rationale_757",
       "target": "content_views_landing_lead_api",
       "confidence_score": 1.0
     },
@@ -164055,9 +164055,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L859",
+      "source_location": "L858",
       "weight": 1.0,
-      "source": "content_views_rationale_859",
+      "source": "content_views_rationale_858",
       "target": "content_views_landing_lead_followup_api",
       "confidence_score": 1.0
     },
@@ -164065,9 +164065,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L891",
+      "source_location": "L890",
       "weight": 1.0,
-      "source": "content_views_rationale_891",
+      "source": "content_views_rationale_890",
       "target": "content_views_send_whatsapp_notification",
       "confidence_score": 1.0
     },
@@ -164076,7 +164076,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1123",
+      "source_location": "L1122",
       "weight": 1.0,
       "source": "content_views_send_otp_view",
       "target": "content_views_send_whatsapp_notification",
@@ -164086,9 +164086,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1007",
+      "source_location": "L1006",
       "weight": 1.0,
-      "source": "content_views_rationale_1007",
+      "source": "content_views_rationale_1006",
       "target": "content_views_newsletter_subscribe",
       "confidence_score": 1.0
     },
@@ -164096,9 +164096,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1080",
+      "source_location": "L1079",
       "weight": 1.0,
-      "source": "content_views_rationale_1080",
+      "source": "content_views_rationale_1079",
       "target": "content_views_custom_404",
       "confidence_score": 1.0
     },
@@ -164106,9 +164106,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1085",
+      "source_location": "L1084",
       "weight": 1.0,
-      "source": "content_views_rationale_1085",
+      "source": "content_views_rationale_1084",
       "target": "content_views_custom_500",
       "confidence_score": 1.0
     },
@@ -164116,9 +164116,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1090",
+      "source_location": "L1089",
       "weight": 1.0,
-      "source": "content_views_rationale_1090",
+      "source": "content_views_rationale_1089",
       "target": "content_views_property_owner_resources",
       "confidence_score": 1.0
     },
@@ -164126,9 +164126,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1109",
+      "source_location": "L1108",
       "weight": 1.0,
-      "source": "content_views_rationale_1109",
+      "source": "content_views_rationale_1108",
       "target": "content_views_send_otp_view",
       "confidence_score": 1.0
     },
@@ -164136,9 +164136,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "content/views.py",
-      "source_location": "L1142",
+      "source_location": "L1141",
       "weight": 1.0,
-      "source": "content_views_rationale_1142",
+      "source": "content_views_rationale_1141",
       "target": "content_views_verify_otp_view",
       "confidence_score": 1.0
     },

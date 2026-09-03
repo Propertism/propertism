@@ -543,16 +543,17 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
 
     intent_tag = "● LEAD |"
     msg_lower = (inquiry.message or "").lower()
+    service_str = (getattr(inquiry, 'service_needed', '') or getattr(inquiry, 'service', '') or '').upper()
     
     if getattr(inquiry, 'confidence_score', 100) < 50:
         intent_tag = "⚠ SPAM |"
-    elif 'sell' in msg_lower:
+    elif service_str in ('SELL', 'BUY-SELL') or 'sell' in msg_lower:
         intent_tag = "⚑ SELL |"
-    elif 'buy' in msg_lower or 'purchase' in msg_lower:
-        intent_tag = "✦ BUY |"
-    elif 'rent' in msg_lower or 'lease' in msg_lower:
+    elif service_str in ('RENT', 'RENTAL') or 'rent' in msg_lower or 'lease' in msg_lower:
         intent_tag = "✧ RENT |"
-    elif 'manage' in msg_lower:
+    elif service_str in ('BUY', 'PURCHASE') or 'buy' in msg_lower or 'purchase' in msg_lower:
+        intent_tag = "✦ BUY |"
+    elif service_str in ('MANAGE', 'INDUSTRIAL') or 'manage' in msg_lower:
         intent_tag = "■ MANAGE |"
     elif getattr(inquiry, 'property', None):
         intent_tag = "❖ PROPERTY |"
