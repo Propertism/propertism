@@ -1,9 +1,8 @@
-name: Deploy to AWS Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk (Legacy)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: # Manual trigger only - automated push disabled during Lightsail migration
+
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
