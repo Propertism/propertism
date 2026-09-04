@@ -26,7 +26,8 @@
 | **EPC-01** | S.P.E.C. Governance & Core Scaffolding | Framework baseline | 🟢 DONE |
 | **EPC-02** | Core Domain & Global Directory Synchronization | Inquiry #290 / 249-country sync | 🟢 DONE |
 | **EPC-03** | SEO Authority & Conversational RealBot Engine | pSEO & Knowledge Base | 🟢 DONE |
-| **EPC-04** | **AWS Lightsail Migration (EB + RDS ➔ Unified Lightsail VPS)** | Cost reduction to $12/mo & Mumbai latency | 🟡 IN PROGRESS |
+| **EPC-04** | **AWS Lightsail Migration (EB + RDS ➔ Unified Lightsail VPS)** | Cost reduction to $12/mo & Mumbai latency | 🟢 DONE |
+| **EPC-05** | **Communication Pipeline Hardening & Anti-Spam Gate** | Decommission WhatsApp auto-msgs, silence expiry alerts, gate spam | 🟢 DONE |
 
 ---
 

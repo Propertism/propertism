@@ -797,7 +797,7 @@ class RelatedLinksTests(TestCase):
 class WhatsAppNotificationTests(TestCase):
     @patch('requests.post')
     @patch('django.core.mail.send_mail')
-    def test_send_whatsapp_notification_sends_email_on_expired_token(self, mock_send_mail, mock_post):
+    def test_send_whatsapp_notification_does_not_send_email_on_expired_token(self, mock_send_mail, mock_post):
         from content.views import send_whatsapp_notification
         from django.conf import settings
         from django.core.cache import cache
@@ -828,11 +828,47 @@ class WhatsAppNotificationTests(TestCase):
         # Run notification
         send_whatsapp_notification("Test message")
         
-        # Verify that send_mail was called to alert administrator
-        mock_send_mail.assert_called_once()
-        args, kwargs = mock_send_mail.call_args
-        self.assertIn("Action Required: Propertism WhatsApp Access Token Expired", kwargs['subject'])
-        self.assertIn("admin@example.com", kwargs['recipient_list'])
+        # Verify that send_mail was NOT called (email alerts removed per policy)
+        mock_send_mail.assert_not_called()
+
+    @patch('content.security.spam_protection.SpamProtectionService.validate')
+    @patch('content.views.send_rfq_notification')
+    def test_contact_view_suppresses_notification_for_likely_spam(self, mock_send_rfq, mock_spam_validate):
+        from content.security.spam_protection import SpamProtectionResult
+        mock_spam_validate.return_value = SpamProtectionResult(passed=True)
+        from django.test import RequestFactory
+        from content.views import contact
+        from properties.models import Inquiry
+        
+        factory = RequestFactory()
+        post_data = {
+            'name': 'SpamBot',
+            'email': 'spam@bad-domain.xyz',
+            'phone': '1234567890',
+            'message': 'Купить квартиру в Москве http://spam.ru',
+            'service': 'consultation',
+            'form_source': 'Quick Inquiry'
+        }
+        request = factory.post('/contact/', post_data)
+        
+        # Add session and messages
+        from django.contrib.sessions.middleware import SessionMiddleware
+        from django.contrib.messages.middleware import MessageMiddleware
+        middleware = SessionMiddleware(lambda req: None)
+        middleware.process_request(request)
+        request.session.save()
+        msg_middleware = MessageMiddleware(lambda req: None)
+        msg_middleware.process_request(request)
+        
+        response = contact(request)
+        
+        # Check that inquiry was saved with assessment_status 'Likely Spam'
+        inquiry = Inquiry.objects.filter(name='SpamBot').first()
+        self.assertIsNotNone(inquiry)
+        self.assertEqual(inquiry.assessment_status, 'Likely Spam')
+        
+        # Verify that send_rfq_notification was suppressed
+        mock_send_rfq.assert_not_called()
 
 
 class AddressAutocompleteFrameworkTests(TestCase):

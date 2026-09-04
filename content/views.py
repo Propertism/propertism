@@ -497,12 +497,19 @@ def contact(request):
             
             form_source = inquiry.form_source
             
-            # Send email notification to admin
-            try:
-                send_rfq_notification(inquiry, form_source=form_source)
-            except Exception as email_exc:
-                logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
-                # Don't fail the request if email fails
+            # Send email notification to admin (gate: suppress for likely spam)
+            if assessment.get('assessment_status') == 'Likely Spam':
+                logger.warning(
+                    "[SpamGate] Suppressed notification dispatch for likely spam inquiry ID %s (score: %s)",
+                    inquiry.id,
+                    assessment.get('confidence_score')
+                )
+            else:
+                try:
+                    send_rfq_notification(inquiry, form_source=form_source)
+                except Exception as email_exc:
+                    logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
+                    # Don't fail the request if email fails
             
             messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
             return redirect(get_home_section_links()["contact"])
@@ -607,32 +614,10 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
         except Exception as exc:
             logger.exception("Failed to send customer email acknowledgement")
 
-    # Send Customer WhatsApp Acknowledgement
-    if inquiry.phone:
-        try:
-            AcknowledgementService.send(
-                communication_type_key='inquiry_received',
-                recipient=inquiry.phone,
-                context={
-                    'name': inquiry.name,
-                    'message': clean_message,
-                    'form_source': form_source,
-                    'submission_time': submission_time
-                },
-                channels=['whatsapp'],
-                module=form_source
-            )
-        except Exception as exc:
-            logger.exception("Failed to send customer WhatsApp acknowledgement")
-
     # Send Admin notifications
     from django.template.loader import render_to_string
     from django.utils.html import strip_tags
     admin_emails = getattr(settings, 'ADMIN_EMAILS', [settings.ADMIN_EMAIL])
-    whatsapp_text = f"🚀 *New Lead*: {inquiry.name}\nPhone: {inquiry.phone}"
-    if hasattr(inquiry, 'property') and inquiry.property:
-        whatsapp_text += f"\nAsset: {inquiry.property.title}"
-    whatsapp_text += f"\nMsg: {inquiry.message}"
 
     admin_context = {
         'inquiry': inquiry,
@@ -659,22 +644,6 @@ def send_rfq_notification(inquiry, form_source="Website Form"):
             )
         except Exception as exc:
             logger.exception("Failed to send admin notification to %s", admin_email)
-            
-    # Send Admin WhatsApp notification (routed via dispatcher)
-    try:
-        admin_phone = getattr(settings, 'WHATSAPP_ADMIN_PHONE', '918667020798')
-        AcknowledgementService.send(
-            communication_type_key='admin_lead_alert',
-            recipient=admin_phone,
-            context={
-                'subject': 'Admin Lead WhatsApp Alert',
-                'body': whatsapp_text
-            },
-            channels=['whatsapp'],
-            module=form_source
-        )
-    except Exception as exc:
-        logger.exception("Failed to send WhatsApp notification to admin")
 
 
 def send_landing_lead_notification(lead):
@@ -739,18 +708,6 @@ def send_landing_lead_notification(lead):
         )
     except Exception as exc:
         logger.exception("Landing lead email notification failed")
-
-    whatsapp_lines = [
-        "Landing Lead",
-        f"Phone: {lead.phone}",
-        f"City: {lead.property_city}",
-        f"Intent: {lead.intent_type}",
-    ]
-    if lead.geo_origin:
-        whatsapp_lines.append(f"Geo: {lead.geo_origin}")
-    if extras:
-        whatsapp_lines.extend(extras[:3])
-    send_whatsapp_notification("\n".join(whatsapp_lines))
 
 
 @require_POST
@@ -975,27 +932,10 @@ def send_whatsapp_notification(text, recipient=None):
                     logger.exception("Failed to exchange WhatsApp token")
 
             if not refreshed:
-                # If auto-refresh failed or was not configured, send a proactive warning email to the administrator
-                logger.error("Auto-refresh not configured or failed. Alerting administrator via email.")
-                admin_email = getattr(settings, 'ADMIN_EMAIL', 'info@propertism.in')
-                try:
-                    send_mail(
-                        subject="⚠️ Action Required: Propertism WhatsApp Access Token Expired",
-                        message=(
-                            "Hello Administrator,\n\n"
-                            "The WhatsApp access token configured for lead notifications has expired or is invalid.\n"
-                            f"Meta API Error: {error_msg if error_msg else 'Unknown Error'}\n\n"
-                            "Please perform one of the following:\n"
-                            "1. Generate a permanent System User Token in your Meta Business Suite (Settings -> System Users) that never expires, and configure it as WHATSAPP_ACCESS_TOKEN.\n"
-                            "2. If you are using temporary tokens, configure WHATSAPP_APP_ID and WHATSAPP_APP_SECRET in settings to enable automatic 60-day token renewal.\n\n"
-                            "Regards,\nPropertism Platform Integration"
-                        ),
-                        from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'info@propertism.in'),
-                        recipient_list=[admin_email],
-                        fail_silently=True
-                    )
-                except Exception as email_exc:
-                    logger.exception("Failed to send token expiry email alert")
+                logger.error(
+                    "WhatsApp token expired or invalid (Meta API Error: %s). Auto-refresh unavailable. Email alerts disabled per policy.",
+                    error_msg or "Unknown Error"
+                )
         else:
             logger.error(f"WhatsApp API Error {response.status_code}: {response.text}")
 
