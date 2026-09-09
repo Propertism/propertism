@@ -64,14 +64,14 @@
 /* 1. THE PROPERTY GRID */
 #properties-section .property-grid-hybrid {
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
     gap: 1px !important; /* Sharp 1px separator logic */
     background-color: var(--border-subtle) !important;
 }
 
-@media (max-width: 1200px) and (min-width: 769px) {
+@media (max-width: 768px) {
     #properties-section .property-grid-hybrid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: 1fr !important;
     }
 }
 
