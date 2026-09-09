@@ -1132,8 +1132,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_actions_config",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": "actions_config.py"
     },
     {
@@ -1143,8 +1143,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_actions_config_rationale_1",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": "chat/actions_config.py \u2014 predefined actions registry mapping for realbot m2.8."
     },
     {
@@ -1935,8 +1935,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_analytics_engine_py_any",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": "any"
     },
     {
@@ -1968,8 +1968,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": "metricscalculator"
     },
     {
@@ -1979,8 +1979,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_compute_all_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".compute_all_metrics()"
     },
     {
@@ -1990,8 +1990,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_conversation_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_conversation_metrics()"
     },
     {
@@ -2001,8 +2001,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_knowledge_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_knowledge_metrics()"
     },
     {
@@ -2012,8 +2012,8 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_inquiry_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_inquiry_metrics()"
     },
     {
@@ -2023,8 +2023,8 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_suggestion_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_suggestion_metrics()"
     },
     {
@@ -2034,8 +2034,8 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_action_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_action_metrics()"
     },
     {
@@ -2045,8 +2045,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_response_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_response_metrics()"
     },
     {
@@ -2056,8 +2056,8 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_context_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_context_metrics()"
     },
     {
@@ -2067,8 +2067,8 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "chat_analytics_engine_metricscalculator_get_platform_metrics",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".get_platform_metrics()"
     },
     {
@@ -2089,8 +2089,8 @@
       "source_location": "L288",
       "_origin": "ast",
       "id": "chat_analytics_engine_healthmonitoringframework_check_health",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": ".check_health()"
     },
     {
@@ -2144,8 +2144,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "chat_analytics_engine_rationale_95",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 14,
+      "community_name": "PlatformEvent",
       "norm_label": "computes comprehensive operational visibility metrics from database and event st"
     },
     {
@@ -2804,8 +2804,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_document_parser",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "document_parser.py"
     },
     {
@@ -2815,8 +2815,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "chat_document_parser_parsedsection",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "parsedsection"
     },
     {
@@ -2826,8 +2826,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "chat_document_parser_parseddocument",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "parseddocument"
     },
     {
@@ -2837,8 +2837,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "chat_document_parser_parseddocument_total_sections",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".total_sections()"
     },
     {
@@ -2848,8 +2848,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "chat_document_parser_basedocumentparser",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "basedocumentparser"
     },
     {
@@ -2859,8 +2859,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_document_parser_py_abc",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "abc"
     },
     {
@@ -2870,8 +2870,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "chat_document_parser_basedocumentparser_parse",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".parse()"
     },
     {
@@ -2881,8 +2881,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "path",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "path"
     },
     {
@@ -2892,8 +2892,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "chat_document_parser_basedocumentparser_compute_hash",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".compute_hash()"
     },
     {
@@ -2903,8 +2903,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "chat_document_parser_basedocumentparser_slugify",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "._slugify()"
     },
     {
@@ -2914,8 +2914,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "chat_document_parser_basedocumentparser_extract_keywords",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "._extract_keywords()"
     },
     {
@@ -2925,8 +2925,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "chat_document_parser_markdownsectionparser",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "markdownsectionparser"
     },
     {
@@ -2936,8 +2936,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "chat_document_parser_markdownsectionparser_parse",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".parse()"
     },
     {
@@ -2947,8 +2947,8 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "chat_document_parser_get_parser_for",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "get_parser_for()"
     },
     {
@@ -2958,8 +2958,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_1",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "chat/document_parser.py \u2014 m2.3 internal knowledge repository modular document p"
     },
     {
@@ -2969,8 +2969,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_22",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "represents a single extracted section from a document."
     },
     {
@@ -2980,8 +2980,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_32",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "represents a fully parsed document with all its sections."
     },
     {
@@ -2991,8 +2991,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_47",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "abstract base for all document format parsers.     implement parse() to support"
     },
     {
@@ -3002,8 +3002,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_54",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "parse file at file_path and return a parseddocument."
     },
     {
@@ -3013,8 +3013,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_59",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "compute sha-256 of a file's content for change detection."
     },
     {
@@ -3024,8 +3024,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_68",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "convert heading text to a url-safe slug."
     },
     {
@@ -3035,8 +3035,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_77",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "extract meaningful keyword terms from heading and body."
     },
     {
@@ -3046,8 +3046,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_95",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "parses a markdown (.md) file into a parseddocument.     splitting strategy:"
     },
     {
@@ -3057,8 +3057,8 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "chat_document_parser_rationale_213",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "return the appropriate parser for the given file extension.     raises valueerr"
     },
     {
@@ -3761,8 +3761,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_indexer",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "indexer.py"
     },
     {
@@ -3970,8 +3970,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_indexer_rationale_1",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "chat/indexer.py \u2014 m2.2 website knowledge base + m2.3 internal knowledge reposito"
     },
     {
@@ -4135,8 +4135,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_engine",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiry_engine.py"
     },
     {
@@ -4157,8 +4157,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "chat_inquiry_engine_ack_extracted",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "_ack_extracted()"
     },
     {
@@ -4179,8 +4179,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "chat_inquiry_engine_inquiryconversationengine",
-      "community": 18,
-      "community_name": "InquiryConversationSession",
+      "community": 15,
+      "community_name": "InquiryConversationEngine",
       "norm_label": "inquiryconversationengine"
     },
     {
@@ -4190,8 +4190,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "chat_inquiry_engine_inquiryconversationengine_init",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__init__()"
     },
     {
@@ -4443,8 +4443,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_engine_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "chat/inquiry_engine.py \u2014 m2.6 adaptive conversation engine & state manager  or"
     },
     {
@@ -4454,8 +4454,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "chat_inquiry_engine_rationale_58",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "build a brief, natural acknowledgment for newly extracted fields."
     },
     {
@@ -4465,8 +4465,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "chat_inquiry_engine_rationale_90",
-      "community": 18,
-      "community_name": "InquiryConversationSession",
+      "community": 15,
+      "community_name": "InquiryConversationEngine",
       "norm_label": "adaptive, progressive conversation engine for m2.6.     instantiate per-request"
     },
     {
@@ -4652,8 +4652,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_extractor",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiry_extractor.py"
     },
     {
@@ -4663,8 +4663,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "chat_inquiry_extractor_fieldextractionresult",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "fieldextractionresult"
     },
     {
@@ -4685,8 +4685,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "chat_inquiry_extractor_inquiryfieldextractor_init",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".__init__()"
     },
     {
@@ -4817,8 +4817,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_extractor_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "chat/inquiry_extractor.py \u2014 m2.6 deterministic field extractor (annexure a core)"
     },
     {
@@ -4960,8 +4960,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_fields",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiry_fields.py"
     },
     {
@@ -4971,8 +4971,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_fields_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "chat/inquiry_fields.py \u2014 m2.6 configuration-driven inquiry field registry  all"
     },
     {
@@ -4982,8 +4982,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_submission",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "inquiry_submission.py"
     },
     {
@@ -5004,8 +5004,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "chat_inquiry_submission_inquirysubmissionadapter_submit",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": ".submit()"
     },
     {
@@ -5015,8 +5015,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_submission_rationale_1",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "chat/inquiry_submission.py \u2014 m2.6 inquiry submission adapter  thin bridge betw"
     },
     {
@@ -5037,8 +5037,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "chat_inquiry_submission_rationale_32",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "main submission entry point.         ics_session must be in 'awaiting_confirmat"
     },
     {
@@ -5048,8 +5048,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_validator",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiry_validator.py"
     },
     {
@@ -5059,8 +5059,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "inquiryfieldvalidator"
     },
     {
@@ -5070,8 +5070,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate()"
     },
     {
@@ -5081,8 +5081,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_customer_name",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_customer_name()"
     },
     {
@@ -5092,8 +5092,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_name",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_name()"
     },
     {
@@ -5103,8 +5103,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_phone",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_phone()"
     },
     {
@@ -5114,8 +5114,8 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_mobile_number",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_mobile_number()"
     },
     {
@@ -5147,8 +5147,8 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_country",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_country()"
     },
     {
@@ -5158,8 +5158,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_service",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_service()"
     },
     {
@@ -5169,8 +5169,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_service_required",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_service_required()"
     },
     {
@@ -5180,8 +5180,8 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_message",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_message()"
     },
     {
@@ -5191,8 +5191,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_inquiry_message",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_inquiry_message()"
     },
     {
@@ -5202,8 +5202,8 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_budget",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_budget()"
     },
     {
@@ -5213,8 +5213,8 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "chat_inquiry_validator_inquiryfieldvalidator_validate_free_text",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".validate_free_text()"
     },
     {
@@ -5224,8 +5224,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_inquiry_validator_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "chat/inquiry_validator.py \u2014 m2.6 stateless field validators  each validator re"
     },
     {
@@ -5235,8 +5235,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "chat_inquiry_validator_rationale_77",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "stateless, deterministic field validator.     call via: inquiryfieldvalidator()"
     },
     {
@@ -5246,8 +5246,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "chat_inquiry_validator_rationale_84",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "route to the correct validator by field_name."
     },
     {
@@ -5257,8 +5257,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "chat_inquiry_validator_rationale_113",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "country-aware e.164 phone validation.         strict for known countries; lenie"
     },
     {
@@ -5268,8 +5268,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "chat_inquiry_validator_rationale_247",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": "accept any non-empty string for open-ended optional fields."
     },
     {
@@ -5290,8 +5290,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "chat_insights_manager_businessanalyticsmanager",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "businessanalyticsmanager"
     },
     {
@@ -5301,8 +5301,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "chat_insights_manager_businessanalyticsmanager_init",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".__init__()"
     },
     {
@@ -5323,8 +5323,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "chat_insights_manager_businessanalyticsmanager_apply_filters",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "._apply_filters()"
     },
     {
@@ -5587,8 +5587,8 @@
       "source_location": "L423",
       "_origin": "ast",
       "id": "chat_insights_manager_reportgenerator",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "reportgenerator"
     },
     {
@@ -5609,8 +5609,8 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "chat_insights_manager_reportgenerator_generate_csv_report",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".generate_csv_report()"
     },
     {
@@ -5620,8 +5620,8 @@
       "source_location": "L445",
       "_origin": "ast",
       "id": "chat_insights_manager_insightengine",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "insightengine"
     },
     {
@@ -5664,8 +5664,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "chat_insights_manager_rationale_18",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "central facade orchestrating customer journeys, inquiries, knowledge and convers"
     },
     {
@@ -5774,8 +5774,8 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "chat_insights_manager_rationale_424",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "compiles tabular reports for download/export operations."
     },
     {
@@ -5785,8 +5785,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "chat_insights_manager_rationale_446",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "analyses metrics indicators and yields business insight recommendations."
     },
     {
@@ -6258,8 +6258,8 @@
       "source_location": "L423",
       "_origin": "ast",
       "id": "chat_knowledge_manager_knowledgeadministrationmanager_clone_article",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".clone_article()"
     },
     {
@@ -6544,8 +6544,8 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "chat_knowledge_manager_rationale_424",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "clones an existing article into a new draft article."
     },
     {
@@ -6676,8 +6676,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_logging",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "logging.py"
     },
     {
@@ -6687,8 +6687,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "chat_logging_correlationfilter",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "correlationfilter"
     },
     {
@@ -6698,8 +6698,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "chat_logging_correlationfilter_filter",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": ".filter()"
     },
     {
@@ -6709,8 +6709,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "chat_logging_rationale_5",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "logging filter that injects the request correlation_id into the log record."
     },
     {
@@ -6720,8 +6720,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_management_commands_seed_actions",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": "seed_actions.py"
     },
     {
@@ -6731,8 +6731,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "chat_management_commands_seed_actions_command",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": "command"
     },
     {
@@ -6742,8 +6742,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_management_commands_seed_actions_py_basecommand",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": "basecommand"
     },
     {
@@ -6753,8 +6753,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "chat_management_commands_seed_actions_command_add_arguments",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": ".add_arguments()"
     },
     {
@@ -6764,8 +6764,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "chat_management_commands_seed_actions_command_handle",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 8,
+      "community_name": "ActionDefinition",
       "norm_label": ".handle()"
     },
     {
@@ -6830,8 +6830,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_management_commands_seed_responses",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 12,
+      "community_name": "ResponseComponent",
       "norm_label": "seed_responses.py"
     },
     {
@@ -7677,8 +7677,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "chat_models_realbotsession",
-      "community": 8,
-      "community_name": "ActionDefinition",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "realbotsession"
     },
     {
@@ -7699,8 +7699,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "chat_models_realbotsession_str",
-      "community": 8,
-      "community_name": "ActionDefinition",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": ".__str__()"
     },
     {
@@ -7732,8 +7732,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "chat_models_knowledgearticle",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "knowledgearticle"
     },
     {
@@ -7743,8 +7743,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "chat_models_knowledgearticle_save",
-      "community": 42,
-      "community_name": ".save",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".save()"
     },
     {
@@ -7754,8 +7754,8 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "chat_models_knowledgearticle_generate_knowledge_id",
-      "community": 42,
-      "community_name": ".save",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "._generate_knowledge_id()"
     },
     {
@@ -7765,8 +7765,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "chat_models_knowledgearticle_str",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".__str__()"
     },
     {
@@ -8095,8 +8095,8 @@
       "source_location": "L715",
       "_origin": "ast",
       "id": "chat_models_inquiryconversationauditlog",
-      "community": 15,
-      "community_name": "InquiryConversationEngine",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiryconversationauditlog"
     },
     {
@@ -8117,8 +8117,8 @@
       "source_location": "L744",
       "_origin": "ast",
       "id": "chat_models_inquiryconversationauditlog_generate_log_id",
-      "community": 15,
-      "community_name": "InquiryConversationEngine",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "._generate_log_id()"
     },
     {
@@ -8128,8 +8128,8 @@
       "source_location": "L755",
       "_origin": "ast",
       "id": "chat_models_inquiryconversationauditlog_str",
-      "community": 15,
-      "community_name": "InquiryConversationEngine",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".__str__()"
     },
     {
@@ -8502,8 +8502,8 @@
       "source_location": "L1173",
       "_origin": "ast",
       "id": "chat_models_platformevent_save",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 42,
+      "community_name": ".save",
       "norm_label": ".save()"
     },
     {
@@ -8711,8 +8711,8 @@
       "source_location": "L1340",
       "_origin": "ast",
       "id": "chat_models_workflowexecutionstep",
-      "community": 44,
-      "community_name": "RealBotExchangeTests",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": "workflowexecutionstep"
     },
     {
@@ -8722,8 +8722,8 @@
       "source_location": "L1352",
       "_origin": "ast",
       "id": "chat_models_workflowexecutionstep_save",
-      "community": 44,
-      "community_name": "RealBotExchangeTests",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": ".save()"
     },
     {
@@ -8733,8 +8733,8 @@
       "source_location": "L1358",
       "_origin": "ast",
       "id": "chat_models_workflowexecutionstep_generate_step_id",
-      "community": 44,
-      "community_name": "RealBotExchangeTests",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": "._generate_step_id()"
     },
     {
@@ -8744,8 +8744,8 @@
       "source_location": "L1369",
       "_origin": "ast",
       "id": "chat_models_workflowexecutionstep_str",
-      "community": 44,
-      "community_name": "RealBotExchangeTests",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": ".__str__()"
     },
     {
@@ -8766,8 +8766,8 @@
       "source_location": "L1434",
       "_origin": "ast",
       "id": "chat_models_securityevent_save",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 42,
+      "community_name": ".save",
       "norm_label": ".save()"
     },
     {
@@ -8777,8 +8777,8 @@
       "source_location": "L1440",
       "_origin": "ast",
       "id": "chat_models_securityevent_generate_event_id",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 42,
+      "community_name": ".save",
       "norm_label": "._generate_event_id()"
     },
     {
@@ -8843,8 +8843,8 @@
       "source_location": "L1494",
       "_origin": "ast",
       "id": "chat_models_knowledgeversionhistory",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "knowledgeversionhistory"
     },
     {
@@ -8854,8 +8854,8 @@
       "source_location": "L1517",
       "_origin": "ast",
       "id": "chat_models_knowledgeversionhistory_save",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 42,
+      "community_name": ".save",
       "norm_label": ".save()"
     },
     {
@@ -8865,8 +8865,8 @@
       "source_location": "L1523",
       "_origin": "ast",
       "id": "chat_models_knowledgeversionhistory_generate_version_id",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 42,
+      "community_name": ".save",
       "norm_label": "._generate_version_id()"
     },
     {
@@ -8876,8 +8876,8 @@
       "source_location": "L1534",
       "_origin": "ast",
       "id": "chat_models_knowledgeversionhistory_str",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": ".__str__()"
     },
     {
@@ -9239,8 +9239,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "chat_models_rationale_64",
-      "community": 8,
-      "community_name": "ActionDefinition",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "tracks an active realbot chat session."
     },
     {
@@ -9261,8 +9261,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "chat_models_rationale_98",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "unified knowledge record for all realbot knowledge sources.     source_type='we"
     },
     {
@@ -9272,8 +9272,8 @@
       "source_location": "L147",
       "_origin": "ast",
       "id": "chat_models_rationale_147",
-      "community": 42,
-      "community_name": ".save",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "auto-generate knowledge_id on first save. immutable thereafter."
     },
     {
@@ -9283,8 +9283,8 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "chat_models_rationale_155",
-      "community": 42,
-      "community_name": ".save",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "generate next sequential ka id in format ka000001.         uses db aggregate; s"
     },
     {
@@ -9371,8 +9371,8 @@
       "source_location": "L716",
       "_origin": "ast",
       "id": "chat_models_rationale_716",
-      "community": 15,
-      "community_name": "InquiryConversationEngine",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "m2.6 \u2014 immutable, append-only audit trail for every inquiry conversation event."
     },
     {
@@ -9525,8 +9525,8 @@
       "source_location": "L1341",
       "_origin": "ast",
       "id": "chat_models_rationale_1341",
-      "community": 44,
-      "community_name": "RealBotExchangeTests",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": "m2.13 \u2014 stage tracing logs for execution steps. append-only."
     },
     {
@@ -9558,8 +9558,8 @@
       "source_location": "L1495",
       "_origin": "ast",
       "id": "chat_models_rationale_1495",
-      "community": 2,
-      "community_name": "KnowledgeArticle",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "m2.15 \u2014 immutable, historical record of a knowledgearticle or knowledgedocument"
     },
     {
@@ -10031,8 +10031,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_orchestrator",
-      "community": 9,
-      "community_name": "ConversationContextManager",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": "orchestrator.py"
     },
     {
@@ -10053,7 +10053,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "chat_orchestrator_conversationorchestrator_init",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".__init__()"
     },
@@ -10251,8 +10251,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_orchestrator_rationale_1",
-      "community": 9,
-      "community_name": "ConversationContextManager",
+      "community": 95,
+      "community_name": "ServiceResponseBuilderTests",
       "norm_label": "chat/orchestrator.py \u2014 m2.13 conversation orchestration & workflow engine. coor"
     },
     {
@@ -10306,8 +10306,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_response_config",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 12,
+      "community_name": "ResponseComponent",
       "norm_label": "response_config.py"
     },
     {
@@ -10317,8 +10317,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_response_config_rationale_1",
-      "community": 200,
-      "community_name": "0005_inquiry_indexes.py",
+      "community": 12,
+      "community_name": "ResponseComponent",
       "norm_label": "chat/response_config.py \u2014 predefined response components for realbot m2.9. defi"
     },
     {
@@ -10603,8 +10603,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "chat_rule_engine_ruleevaluator_init",
-      "community": 13,
-      "community_name": "ActionDispatcher",
+      "community": 578,
+      "community_name": "Command",
       "norm_label": ".__init__()"
     },
     {
@@ -10867,8 +10867,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "securitypolicyengine"
     },
     {
@@ -10878,8 +10878,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine_load_policies",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".load_policies()"
     },
     {
@@ -10889,8 +10889,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine_get_policy",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".get_policy()"
     },
     {
@@ -10900,7 +10900,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_security_manager_py_any",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "any"
     },
@@ -10911,8 +10911,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine_get_int",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".get_int()"
     },
     {
@@ -10922,8 +10922,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine_get_bool",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".get_bool()"
     },
     {
@@ -10933,8 +10933,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "chat_security_manager_securitypolicyengine_clear_cache",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".clear_cache()"
     },
     {
@@ -10955,7 +10955,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "chat_security_manager_securityauditmanager_log_event",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".log_event()"
     },
@@ -10977,8 +10977,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "chat_security_manager_requestvalidator_validate",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".validate()"
     },
     {
@@ -10999,7 +10999,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "chat_security_manager_inputsanitizer_sanitize",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".sanitize()"
     },
@@ -11021,7 +11021,7 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "chat_security_manager_outputvalidator_validate",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".validate()"
     },
@@ -11043,8 +11043,8 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "chat_security_manager_ratelimiter_check_rate",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".check_rate()"
     },
     {
@@ -11087,8 +11087,8 @@
       "source_location": "L376",
       "_origin": "ast",
       "id": "chat_security_manager_abusedetector_reset",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".reset()"
     },
     {
@@ -11109,8 +11109,8 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "chat_security_manager_authorizationmanager_authorize_action",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".authorize_action()"
     },
     {
@@ -11120,8 +11120,8 @@
       "source_location": "L431",
       "_origin": "ast",
       "id": "chat_security_manager_authorizationmanager_authorize_request",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".authorize_request()"
     },
     {
@@ -11131,7 +11131,7 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "chat_security_manager_securitymanager",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "securitymanager"
     },
@@ -11153,7 +11153,7 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "chat_security_manager_securitymanager_validate_request",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".validate_request()"
     },
@@ -11164,7 +11164,7 @@
       "source_location": "L546",
       "_origin": "ast",
       "id": "chat_security_manager_securitymanager_validate_output",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".validate_output()"
     },
@@ -11175,7 +11175,7 @@
       "source_location": "L564",
       "_origin": "ast",
       "id": "chat_security_manager_securitymanager_authorize",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".authorize()"
     },
@@ -11186,7 +11186,7 @@
       "source_location": "L578",
       "_origin": "ast",
       "id": "chat_security_manager_securitymanager_log_security_event",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": ".log_security_event()"
     },
@@ -11208,8 +11208,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_21",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "loads, caches, and evaluates configuration-driven security policies.     provid"
     },
     {
@@ -11219,8 +11219,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_29",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": "loads all active policies into the in-memory cache."
     },
     {
@@ -11230,8 +11230,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_38",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "returns the raw string value of a policy key."
     },
     {
@@ -11263,8 +11263,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_112",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "validates the incoming request payload.         returns (is_valid, list_of_viol"
     },
     {
@@ -11285,7 +11285,7 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_178",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "sanitizes input text.         returns (sanitized_text, has_threats, list_of_thr"
     },
@@ -11307,7 +11307,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_242",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "validates outgoing response payload.         returns (is_safe, list_of_issues)."
     },
@@ -11329,8 +11329,8 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_275",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "checks if the session has exceeded the rate limit.         returns (is_allowed,"
     },
     {
@@ -11373,8 +11373,8 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_377",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": "resets abuse tracking. if session_id is none, resets all."
     },
     {
@@ -11395,8 +11395,8 @@
       "source_location": "L395",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_395",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "evaluates whether an action is authorized.         returns (is_authorized, reas"
     },
     {
@@ -11406,8 +11406,8 @@
       "source_location": "L432",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_432",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": "evaluates whether a request path is authorized.         returns (is_authorized,"
     },
     {
@@ -11417,7 +11417,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_451",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "top-level security facade integrating all security subsystems.     single entry"
     },
@@ -11428,7 +11428,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_468",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "full pre-orchestration security validation pipeline.         returns a result d"
     },
@@ -11439,7 +11439,7 @@
       "source_location": "L547",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_547",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "post-composition output validation.         returns result with is_safe and any"
     },
@@ -11450,7 +11450,7 @@
       "source_location": "L565",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_565",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "centralized authorization check.         returns result with is_authorized and"
     },
@@ -11461,7 +11461,7 @@
       "source_location": "L587",
       "_origin": "ast",
       "id": "chat_security_manager_rationale_587",
-      "community": 24,
+      "community": 316,
       "community_name": "SecurityManager",
       "norm_label": "convenience proxy for direct security event logging."
     },
@@ -12209,8 +12209,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "realbotexchangetests"
     },
     {
@@ -12231,8 +12231,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_setup",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".setup()"
     },
     {
@@ -12242,8 +12242,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_exchange_disabled",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_exchange_disabled()"
     },
     {
@@ -12253,8 +12253,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_exchange_enabled_anonymous",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_exchange_enabled_anonymous()"
     },
     {
@@ -12264,8 +12264,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_exchange_enabled_authenticated",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_exchange_enabled_authenticated()"
     },
     {
@@ -12275,8 +12275,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_correlation_id_present",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_correlation_id_present()"
     },
     {
@@ -12286,8 +12286,8 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_health_check_endpoint",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_health_check_endpoint()"
     },
     {
@@ -12297,8 +12297,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_session_init_with_conversation_id",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_session_init_with_conversation_id()"
     },
     {
@@ -12308,8 +12308,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_health_live_endpoint",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_health_live_endpoint()"
     },
     {
@@ -12319,8 +12319,8 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_health_ready_endpoint",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_health_ready_endpoint()"
     },
     {
@@ -12330,8 +12330,8 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_version_service_endpoint",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_version_service_endpoint()"
     },
     {
@@ -12341,8 +12341,8 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "chat_tests_realbotexchangetests_test_configuration_validation_errors",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 0,
+      "community_name": "views.py",
       "norm_label": ".test_configuration_validation_errors()"
     },
     {
@@ -12352,8 +12352,8 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledgearticlemodeltests"
     },
     {
@@ -12363,8 +12363,8 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_setup",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".setup()"
     },
     {
@@ -12374,8 +12374,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_knowledge_article_created",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_knowledge_article_created()"
     },
     {
@@ -12385,8 +12385,8 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_published_status_default",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_published_status_default()"
     },
     {
@@ -12396,8 +12396,8 @@
       "source_location": "L250",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_str_representation",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_str_representation()"
     },
     {
@@ -12407,8 +12407,8 @@
       "source_location": "L256",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_knowledge_id_auto_generated",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_knowledge_id_auto_generated()"
     },
     {
@@ -12418,8 +12418,8 @@
       "source_location": "L262",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_knowledge_id_is_unique_across_articles",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_knowledge_id_is_unique_across_articles()"
     },
     {
@@ -12429,8 +12429,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "chat_tests_knowledgearticlemodeltests_test_knowledge_id_immutable_on_update",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".test_knowledge_id_immutable_on_update()"
     },
     {
@@ -12528,8 +12528,8 @@
       "source_location": "L382",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledgesearchenginetests"
     },
     {
@@ -12539,8 +12539,8 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests_setup",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": ".setup()"
     },
     {
@@ -12550,8 +12550,8 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests_test_search_returns_relevant_results",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": ".test_search_returns_relevant_results()"
     },
     {
@@ -12572,8 +12572,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests_test_search_source_references_populated",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 149,
+      "community_name": "0001_initial.py",
       "norm_label": ".test_search_source_references_populated()"
     },
     {
@@ -12583,8 +12583,8 @@
       "source_location": "L455",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests_test_search_empty_query_returns_empty",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": ".test_search_empty_query_returns_empty()"
     },
     {
@@ -12594,8 +12594,8 @@
       "source_location": "L463",
       "_origin": "ast",
       "id": "chat_tests_knowledgesearchenginetests_test_search_result_as_dict",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": ".test_search_result_as_dict()"
     },
     {
@@ -12649,8 +12649,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "chat_tests_rationale_9",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "test suite for the realbot token exchange endpoint."
     },
     {
@@ -12660,8 +12660,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "chat_tests_rationale_23",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "when integration is disabled, endpoint should return success=false, status=403."
     },
     {
@@ -12671,8 +12671,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "chat_tests_rationale_41",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "when enabled and anonymous, returns mock/fallback token and configuration inside"
     },
     {
@@ -12682,8 +12682,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "chat_tests_rationale_65",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "when enabled and authenticated, returns mock/fallback token and email user ident"
     },
     {
@@ -12693,8 +12693,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "chat_tests_rationale_86",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "responses must include the x-correlation-id header."
     },
     {
@@ -12704,8 +12704,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "chat_tests_rationale_104",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "health check endpoint must return success=true and environment details."
     },
     {
@@ -12715,8 +12715,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "chat_tests_rationale_124",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "initializing a session generates session_id and conversation_id."
     },
     {
@@ -12726,8 +12726,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "chat_tests_rationale_143",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "liveness health check endpoint must return status=alive."
     },
     {
@@ -12737,8 +12737,8 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "chat_tests_rationale_162",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "readiness health check endpoint must validate setup and return metrics."
     },
     {
@@ -12748,8 +12748,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "chat_tests_rationale_185",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "version service returns correct metadata, build number, and flags."
     },
     {
@@ -12759,8 +12759,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "chat_tests_rationale_197",
-      "community": 33,
-      "community_name": "is_feature_enabled",
+      "community": 0,
+      "community_name": "views.py",
       "norm_label": "validator lists issues for missing parameters and invalid schemas."
     },
     {
@@ -12770,8 +12770,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "chat_tests_rationale_218",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "test suite for knowledgearticle model creation and retrieval."
     },
     {
@@ -12781,8 +12781,8 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "chat_tests_rationale_239",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledgearticle records can be created and retrieved by source_ref."
     },
     {
@@ -12792,8 +12792,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "chat_tests_rationale_247",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "default published_status is 'published'."
     },
     {
@@ -12803,8 +12803,8 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "chat_tests_rationale_251",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "__str__ returns [knowledge_id][source_type:category] page_title format."
     },
     {
@@ -12814,8 +12814,8 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "chat_tests_rationale_257",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledge_id is auto-generated on creation and matches ka format."
     },
     {
@@ -12825,8 +12825,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "chat_tests_rationale_263",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "two different articles receive different knowledge_ids."
     },
     {
@@ -12836,8 +12836,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "chat_tests_rationale_282",
-      "community": 52,
-      "community_name": "IntentResult",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledge_id does not change when the article is updated."
     },
     {
@@ -12924,8 +12924,8 @@
       "source_location": "L383",
       "_origin": "ast",
       "id": "chat_tests_rationale_383",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "test suite for knowledgesearchengine deterministic keyword search."
     },
     {
@@ -12935,8 +12935,8 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "chat_tests_rationale_430",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": "searching for 'nri property' returns the nri service article."
     },
     {
@@ -12957,8 +12957,8 @@
       "source_location": "L447",
       "_origin": "ast",
       "id": "chat_tests_rationale_447",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 149,
+      "community_name": "0001_initial.py",
       "norm_label": "source references are returned with every non-empty search result."
     },
     {
@@ -12968,8 +12968,8 @@
       "source_location": "L456",
       "_origin": "ast",
       "id": "chat_tests_rationale_456",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": "empty query returns an empty searchresult."
     },
     {
@@ -12979,8 +12979,8 @@
       "source_location": "L464",
       "_origin": "ast",
       "id": "chat_tests_rationale_464",
-      "community": 89,
-      "community_name": "search.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": "searchresult.as_dict() contains expected structure."
     },
     {
@@ -13749,8 +13749,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m213",
-      "community": 9,
-      "community_name": "ConversationContextManager",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "tests_m213.py"
     },
     {
@@ -13925,8 +13925,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m213_rationale_1",
-      "community": 9,
-      "community_name": "ConversationContextManager",
+      "community": 1,
+      "community_name": "RealBotSession",
       "norm_label": "chat/tests_m213.py \u2014 m2.13 conversation orchestration test suite. tests: sequen"
     },
     {
@@ -14068,8 +14068,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "chat_tests_m214_requestvalidatortests",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": "requestvalidatortests"
     },
     {
@@ -14079,8 +14079,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "chat_tests_m214_requestvalidatortests_setup",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".setup()"
     },
     {
@@ -14090,8 +14090,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "chat_tests_m214_requestvalidatortests_test_request_validation_length_exceeded",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".test_request_validation_length_exceeded()"
     },
     {
@@ -14101,8 +14101,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "chat_tests_m214_requestvalidatortests_test_request_validation_missing_fields",
-      "community": 17,
-      "community_name": "SecurityEvent",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".test_request_validation_missing_fields()"
     },
     {
@@ -14134,8 +14134,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "chat_tests_m214_ratelimitertests_test_rate_limiting_triggers",
-      "community": 320,
-      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
+      "community": 77,
+      "community_name": "KnowledgeSearchEngineTests",
       "norm_label": ".test_rate_limiting_triggers()"
     },
     {
@@ -14156,8 +14156,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "chat_tests_m214_abusedetectortests_setup",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".setup()"
     },
     {
@@ -14189,8 +14189,8 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "chat_tests_m214_authorizationmanagertests_setup",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".setup()"
     },
     {
@@ -14277,8 +14277,8 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "chat_tests_m214_securityapiendpointtests_setup",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".setup()"
     },
     {
@@ -14365,8 +14365,8 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "chat_tests_m214_orchestratorsecurityintegrationtests_setup",
-      "community": 77,
-      "community_name": "KnowledgeSearchEngineTests",
+      "community": 320,
+      "community_name": "SCCB-PROP-POSTGRES-RESTORATION-STATUS-1606",
       "norm_label": ".setup()"
     },
     {
@@ -14750,8 +14750,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m216",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "tests_m216.py"
     },
     {
@@ -14761,8 +14761,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsmodelquerytests",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "insightsmodelquerytests"
     },
     {
@@ -14772,8 +14772,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_tests_m216_py_testcase",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "testcase"
     },
     {
@@ -14783,8 +14783,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsmodelquerytests_setup",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".setup()"
     },
     {
@@ -14794,8 +14794,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsmodelquerytests_test_date_range_filters",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_date_range_filters()"
     },
     {
@@ -14805,8 +14805,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsmodelquerytests_test_country_filter",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_country_filter()"
     },
     {
@@ -14816,8 +14816,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsmodelquerytests_test_service_filter",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_service_filter()"
     },
     {
@@ -14827,8 +14827,8 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "chat_tests_m216_dashboardbuildertests",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "dashboardbuildertests"
     },
     {
@@ -14838,8 +14838,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "chat_tests_m216_dashboardbuildertests_setup",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".setup()"
     },
     {
@@ -14849,8 +14849,8 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "chat_tests_m216_dashboardbuildertests_test_all_dashboards_render",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_all_dashboards_render()"
     },
     {
@@ -14860,8 +14860,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "chat_tests_m216_insightrecommendationstests",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "insightrecommendationstests"
     },
     {
@@ -14871,8 +14871,8 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "chat_tests_m216_insightrecommendationstests_test_recommendations_low_coverage",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_recommendations_low_coverage()"
     },
     {
@@ -14882,8 +14882,8 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "insightsapitests"
     },
     {
@@ -14893,8 +14893,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests_setup",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".setup()"
     },
     {
@@ -14904,8 +14904,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests_test_dashboard_endpoint",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_dashboard_endpoint()"
     },
     {
@@ -14915,8 +14915,8 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests_test_report_endpoint",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_report_endpoint()"
     },
     {
@@ -14926,8 +14926,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests_test_export_endpoint",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_export_endpoint()"
     },
     {
@@ -14937,8 +14937,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "chat_tests_m216_insightsapitests_test_recommendations_endpoint",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": ".test_recommendations_endpoint()"
     },
     {
@@ -14948,8 +14948,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m216_rationale_1",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 7,
+      "community_name": "BusinessAnalyticsManager",
       "norm_label": "chat/tests_m216.py \u2014 m2.16 analytics & customer insights test suite. tests calc"
     },
     {
@@ -14959,8 +14959,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m23",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "tests_m23.py"
     },
     {
@@ -14970,8 +14970,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "markdownsectionparsertests"
     },
     {
@@ -14981,8 +14981,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "chat_tests_m23_py_testcase",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "testcase"
     },
     {
@@ -14992,8 +14992,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_setup",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".setup()"
     },
     {
@@ -15003,8 +15003,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_teardown",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".teardown()"
     },
     {
@@ -15014,8 +15014,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_make_md",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "._make_md()"
     },
     {
@@ -15025,8 +15025,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_parses_sections_correctly",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_parses_sections_correctly()"
     },
     {
@@ -15036,8 +15036,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_intro_captured_as_summary",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_intro_captured_as_summary()"
     },
     {
@@ -15047,8 +15047,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_section_slug_generated",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_section_slug_generated()"
     },
     {
@@ -15058,8 +15058,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_content_hash_is_deterministic",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_content_hash_is_deterministic()"
     },
     {
@@ -15069,8 +15069,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_get_parser_for_md_returns_markdown_parser",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_get_parser_for_md_returns_markdown_parser()"
     },
     {
@@ -15080,8 +15080,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "chat_tests_m23_markdownsectionparsertests_test_get_parser_raises_for_unsupported_format",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_get_parser_raises_for_unsupported_format()"
     },
     {
@@ -15091,8 +15091,8 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "knowledgedocumentmodeltests"
     },
     {
@@ -15102,8 +15102,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_make_doc",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "._make_doc()"
     },
     {
@@ -15113,8 +15113,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_test_doc_id_auto_generated_in_doc_format",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_doc_id_auto_generated_in_doc_format()"
     },
     {
@@ -15124,8 +15124,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_test_doc_id_unique_across_documents",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_doc_id_unique_across_documents()"
     },
     {
@@ -15135,8 +15135,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_test_doc_id_immutable_on_update",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_doc_id_immutable_on_update()"
     },
     {
@@ -15146,8 +15146,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_test_is_changed_detects_content_change",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_is_changed_detects_content_change()"
     },
     {
@@ -15157,8 +15157,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "chat_tests_m23_knowledgedocumentmodeltests_test_str_includes_all_key_identifiers",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_str_includes_all_key_identifiers()"
     },
     {
@@ -15223,8 +15223,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "unifiedsearchtests"
     },
     {
@@ -15234,8 +15234,8 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests_setup",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".setup()"
     },
     {
@@ -15256,8 +15256,8 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests_test_unified_search_finds_website_article",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 152,
+      "community_name": "0004_realbotsession_conversation_id.py",
       "norm_label": ".test_unified_search_finds_website_article()"
     },
     {
@@ -15267,8 +15267,8 @@
       "source_location": "L256",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests_test_source_type_filter_restricts_to_website",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 159,
+      "community_name": "0011_m27_suggestion_framework.py",
       "norm_label": ".test_source_type_filter_restricts_to_website()"
     },
     {
@@ -15278,8 +15278,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests_test_document_ref_populated_for_internal_section",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 178,
+      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
       "norm_label": ".test_document_ref_populated_for_internal_section()"
     },
     {
@@ -15289,8 +15289,8 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "chat_tests_m23_unifiedsearchtests_test_as_dict_includes_document_ref_in_all_matches",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": ".test_as_dict_includes_document_ref_in_all_matches()"
     },
     {
@@ -15300,8 +15300,8 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "documentindexendpointtests"
     },
     {
@@ -15311,8 +15311,8 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests_setup",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".setup()"
     },
     {
@@ -15322,8 +15322,8 @@
       "source_location": "L302",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests_test_get_document_list_returns_three_documents",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_get_document_list_returns_three_documents()"
     },
     {
@@ -15333,8 +15333,8 @@
       "source_location": "L316",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests_test_get_document_list_source_type_filter",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_get_document_list_source_type_filter()"
     },
     {
@@ -15344,8 +15344,8 @@
       "source_location": "L324",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests_test_get_document_list_includes_valid_doc_id",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_get_document_list_includes_valid_doc_id()"
     },
     {
@@ -15355,8 +15355,8 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "chat_tests_m23_documentindexendpointtests_test_post_reindex_returns_website_and_document_breakdown",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".test_post_reindex_returns_website_and_document_breakdown()"
     },
     {
@@ -15366,8 +15366,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_1",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "chat/tests_m23.py \u2014 m2.3 internal knowledge repository test suite run with: .\\s"
     },
     {
@@ -15377,8 +15377,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_30",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "parser extracts h2 headings as separate sections."
     },
     {
@@ -15388,8 +15388,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_44",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "text before first h2 is captured as intro_summary."
     },
     {
@@ -15399,8 +15399,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_54",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "section slugs are url-safe and derived from heading text."
     },
     {
@@ -15410,8 +15410,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_61",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "same file content always produces the same sha-256 hash."
     },
     {
@@ -15421,8 +15421,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_70",
-      "community": 149,
-      "community_name": "0001_initial.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "get_parser_for returns markdownsectionparser for .md files."
     },
     {
@@ -15432,8 +15432,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_76",
-      "community": 159,
-      "community_name": "0011_m27_suggestion_framework.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "get_parser_for raises valueerror for unsupported extensions."
     },
     {
@@ -15443,8 +15443,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_100",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "doc_id is auto-generated in doc000001 format on creation."
     },
     {
@@ -15454,8 +15454,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_105",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "two documents receive different doc_ids."
     },
     {
@@ -15465,8 +15465,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_111",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "doc_id does not change when version is bumped."
     },
     {
@@ -15476,8 +15476,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_120",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "is_changed returns true for different hash, false for same hash."
     },
     {
@@ -15487,8 +15487,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_130",
-      "community": 178,
-      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "__str__ includes doc_id, title, version, source_type."
     },
     {
@@ -15553,8 +15553,8 @@
       "source_location": "L250",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_250",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 152,
+      "community_name": "0004_realbotsession_conversation_id.py",
       "norm_label": "source_types=none also returns website articles."
     },
     {
@@ -15564,8 +15564,8 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_257",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 159,
+      "community_name": "0011_m27_suggestion_framework.py",
       "norm_label": "source_types=['website'] excludes all internal documents."
     },
     {
@@ -15575,8 +15575,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_264",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 178,
+      "community_name": "0005_alter_companyinfo_tagline_en_and_more.py",
       "norm_label": "document_ref is non-empty for matched internal sections."
     },
     {
@@ -15586,8 +15586,8 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_272",
-      "community": 179,
-      "community_name": "0006_companyinfo_logo.py",
+      "community": 26,
+      "community_name": "KnowledgeSearchEngine",
       "norm_label": "as_dict() always includes document_ref key in each match dict."
     },
     {
@@ -15597,8 +15597,8 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_303",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "get /knowledge/documents/ returns all indexed documents in manifest."
     },
     {
@@ -15608,8 +15608,8 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_317",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "?source_type=terms returns only terms documents."
     },
     {
@@ -15619,8 +15619,8 @@
       "source_location": "L325",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_325",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "each returned document has a valid doc format doc_id."
     },
     {
@@ -15630,8 +15630,8 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "chat_tests_m23_rationale_332",
-      "community": 202,
-      "community_name": "0008_inquiry_reply.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "post /knowledge/index/ returns combined result with website and documents keys."
     },
     {
@@ -16400,8 +16400,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m26",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "tests_m26.py"
     },
     {
@@ -16521,8 +16521,8 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryfieldvalidatortests_setup",
-      "community": 31,
-      "community_name": "InquiryFieldValidator",
+      "community": 298,
+      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
       "norm_label": ".setup()"
     },
     {
@@ -17621,8 +17621,8 @@
       "source_location": "L905",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryintegrationtests",
-      "community": 578,
-      "community_name": "Command",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "inquiryintegrationtests"
     },
     {
@@ -17632,8 +17632,8 @@
       "source_location": "L907",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryintegrationtests_setup",
-      "community": 578,
-      "community_name": "Command",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".setup()"
     },
     {
@@ -17643,8 +17643,8 @@
       "source_location": "L919",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryintegrationtests_post",
-      "community": 578,
-      "community_name": "Command",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "._post()"
     },
     {
@@ -17654,8 +17654,8 @@
       "source_location": "L923",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryintegrationtests_test_full_inquiry_lifecycle_via_engine",
-      "community": 578,
-      "community_name": "Command",
+      "community": 15,
+      "community_name": "InquiryConversationEngine",
       "norm_label": ".test_full_inquiry_lifecycle_via_engine()"
     },
     {
@@ -17665,8 +17665,8 @@
       "source_location": "L979",
       "_origin": "ast",
       "id": "chat_tests_m26_inquiryintegrationtests_test_send_message_routes_to_open_ics",
-      "community": 578,
-      "community_name": "Command",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".test_send_message_routes_to_open_ics()"
     },
     {
@@ -17676,8 +17676,8 @@
       "source_location": "L1012",
       "_origin": "ast",
       "id": "chat_tests_m26_m26regressionmodeltests",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "m26regressionmodeltests"
     },
     {
@@ -17687,8 +17687,8 @@
       "source_location": "L1015",
       "_origin": "ast",
       "id": "chat_tests_m26_m26regressionmodeltests_test_realbot_session_creation",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".test_realbot_session_creation()"
     },
     {
@@ -17698,8 +17698,8 @@
       "source_location": "L1019",
       "_origin": "ast",
       "id": "chat_tests_m26_m26regressionmodeltests_test_business_rule_creation",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".test_business_rule_creation()"
     },
     {
@@ -17709,8 +17709,8 @@
       "source_location": "L1027",
       "_origin": "ast",
       "id": "chat_tests_m26_m26regressionmodeltests_test_service_profile_creation",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".test_service_profile_creation()"
     },
     {
@@ -17720,8 +17720,8 @@
       "source_location": "L1036",
       "_origin": "ast",
       "id": "chat_tests_m26_m26regressionmodeltests_test_inquiry_session_does_not_break_realbot_session",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": ".test_inquiry_session_does_not_break_realbot_session()"
     },
     {
@@ -17731,8 +17731,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "chat_tests_m26_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "chat/tests_m26.py \u2014 m2.6 conversational inquiry creation test suite covers: val"
     },
     {
@@ -17918,8 +17918,8 @@
       "source_location": "L924",
       "_origin": "ast",
       "id": "chat_tests_m26_rationale_924",
-      "community": 578,
-      "community_name": "Command",
+      "community": 15,
+      "community_name": "InquiryConversationEngine",
       "norm_label": "end-to-end: initiate \u2192 collect all mandatory fields \u2192 confirm \u2192 submit."
     },
     {
@@ -17929,8 +17929,8 @@
       "source_location": "L980",
       "_origin": "ast",
       "id": "chat_tests_m26_rationale_980",
-      "community": 578,
-      "community_name": "Command",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "when an open ics session exists, send_message must route to the         inquiry"
     },
     {
@@ -17940,8 +17940,8 @@
       "source_location": "L1013",
       "_origin": "ast",
       "id": "chat_tests_m26_rationale_1013",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "verify that core m2.1\u2013m2.5 models remain functional."
     },
     {
@@ -17951,8 +17951,8 @@
       "source_location": "L1037",
       "_origin": "ast",
       "id": "chat_tests_m26_rationale_1037",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 31,
+      "community_name": "InquiryFieldValidator",
       "norm_label": "ics fk to realbotsession must not affect session behaviour."
     },
     {
@@ -19128,8 +19128,8 @@
       "source_location": "L649",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_knowledge_index",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "knowledge_index()"
     },
     {
@@ -19326,8 +19326,8 @@
       "source_location": "L1476",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_inquiry_context_get",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 9,
+      "community_name": "ConversationContextManager",
       "norm_label": "inquiry_context_get()"
     },
     {
@@ -19337,8 +19337,8 @@
       "source_location": "L1501",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_inquiry_context_update",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 9,
+      "community_name": "ConversationContextManager",
       "norm_label": "inquiry_context_update()"
     },
     {
@@ -19381,8 +19381,8 @@
       "source_location": "L1680",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_analytics_metrics_get",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "analytics_metrics_get()"
     },
     {
@@ -19392,8 +19392,8 @@
       "source_location": "L1697",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_analytics_health_get",
-      "community": 14,
-      "community_name": "PlatformEvent",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "analytics_health_get()"
     },
     {
@@ -19403,8 +19403,8 @@
       "source_location": "L1716",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_analytics_aggregate_trigger",
-      "community": 14,
-      "community_name": "PlatformEvent",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "analytics_aggregate_trigger()"
     },
     {
@@ -19645,8 +19645,8 @@
       "source_location": "L2475",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_insights_dashboard_view",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "insights_dashboard_view()"
     },
     {
@@ -19656,8 +19656,8 @@
       "source_location": "L2499",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_insights_report_view",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "insights_report_view()"
     },
     {
@@ -19667,8 +19667,8 @@
       "source_location": "L2529",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_insights_export_view",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "insights_export_view()"
     },
     {
@@ -19678,8 +19678,8 @@
       "source_location": "L2561",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_insights_recommendations_view",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "insights_recommendations_view()"
     },
     {
@@ -19997,8 +19997,8 @@
       "source_location": "L650",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_650",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 71,
+      "community_name": "_upsert_article",
       "norm_label": "m2.2 \u2014 knowledge index management.     get: returns current index statistics (a"
     },
     {
@@ -20195,8 +20195,8 @@
       "source_location": "L1477",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_1477",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 9,
+      "community_name": "ConversationContextManager",
       "norm_label": "get /api/v1/realbot/context/get/     retrieves the resolved context snapshot fo"
     },
     {
@@ -20206,8 +20206,8 @@
       "source_location": "L1502",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_1502",
-      "community": 25,
-      "community_name": "views.py",
+      "community": 9,
+      "community_name": "ConversationContextManager",
       "norm_label": "post /api/v1/realbot/context/update/     updates intents, service mappings, sta"
     },
     {
@@ -20250,8 +20250,8 @@
       "source_location": "L1681",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_1681",
-      "community": 316,
-      "community_name": "1. Defects Resolved",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/analytics/metrics/     retrieves aggregated operational met"
     },
     {
@@ -20261,8 +20261,8 @@
       "source_location": "L1698",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_1698",
-      "community": 14,
-      "community_name": "PlatformEvent",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/analytics/health/     retrieves live platform liveness heal"
     },
     {
@@ -20272,8 +20272,8 @@
       "source_location": "L1717",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_1717",
-      "community": 14,
-      "community_name": "PlatformEvent",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "post /api/v1/realbot/analytics/aggregate/     triggers consolidating aggregated"
     },
     {
@@ -20514,8 +20514,8 @@
       "source_location": "L2476",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_2476",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/inquiry/insights/dashboard/     resolves metrics for the 8"
     },
     {
@@ -20525,8 +20525,8 @@
       "source_location": "L2500",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_2500",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/inquiry/insights/report/     compiles operational telemetry"
     },
     {
@@ -20536,8 +20536,8 @@
       "source_location": "L2530",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_2530",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/inquiry/insights/export/     generates downloadable csv met"
     },
     {
@@ -20547,8 +20547,8 @@
       "source_location": "L2562",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_chat_views_rationale_2562",
-      "community": 455,
-      "community_name": "Activities",
+      "community": 25,
+      "community_name": "views.py",
       "norm_label": "get /api/v1/realbot/inquiry/insights/recommendations/     yields dynamic busine"
     },
     {
@@ -22866,8 +22866,8 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "code_review_views_get_homepage_context",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 59,
+      "community_name": "spam_protection.py",
       "norm_label": "get_homepage_context()"
     },
     {
@@ -22877,8 +22877,8 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "code_review_views_home",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 59,
+      "community_name": "spam_protection.py",
       "norm_label": "home()"
     },
     {
@@ -22965,8 +22965,8 @@
       "source_location": "L346",
       "_origin": "ast",
       "id": "code_review_views_contact",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "contact()"
     },
     {
@@ -22987,8 +22987,8 @@
       "source_location": "L532",
       "_origin": "ast",
       "id": "code_review_views_send_rfq_notification",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "send_rfq_notification()"
     },
     {
@@ -23042,8 +23042,8 @@
       "source_location": "L999",
       "_origin": "ast",
       "id": "code_review_views_newsletter_subscribe",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "newsletter_subscribe()"
     },
     {
@@ -23152,8 +23152,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "code_review_views_rationale_119",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 59,
+      "community_name": "spam_protection.py",
       "norm_label": "generates the context dict for the homepage."
     },
     {
@@ -23207,8 +23207,8 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "code_review_views_rationale_347",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "homepage quote form handler."
     },
     {
@@ -23229,8 +23229,8 @@
       "source_location": "L533",
       "_origin": "ast",
       "id": "code_review_views_rationale_533",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "send email and whatsapp notification when rfq is submitted."
     },
     {
@@ -23284,8 +23284,8 @@
       "source_location": "L1000",
       "_origin": "ast",
       "id": "code_review_views_rationale_1000",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "newsletter subscription handler with admin notification."
     },
     {
@@ -24197,8 +24197,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "communications_models_communicationchannel",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": "communicationchannel"
     },
     {
@@ -24208,8 +24208,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "communications_models_communicationchannel_str",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": ".__str__()"
     },
     {
@@ -24329,8 +24329,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "communications_models_communicationretry",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": "communicationretry"
     },
     {
@@ -24340,8 +24340,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "communications_models_communicationretry_str",
-      "community": 58,
-      "community_name": "services.py",
+      "community": 30,
+      "community_name": "views.py",
       "norm_label": ".__str__()"
     },
     {
@@ -24351,8 +24351,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "communications_providers",
-      "community": 85,
-      "community_name": "providers.py",
+      "community": 19,
+      "community_name": "views.py",
       "norm_label": "providers.py"
     },
     {
@@ -24417,8 +24417,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "communications_providers_whatsappprovider_send",
-      "community": 19,
-      "community_name": "views.py",
+      "community": 85,
+      "community_name": "providers.py",
       "norm_label": ".send()"
     },
     {
@@ -24813,8 +24813,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "communications_tests",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": "tests.py"
     },
     {
@@ -24824,8 +24824,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "communications_tests_communicationsmodeltests",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": "communicationsmodeltests"
     },
     {
@@ -24835,8 +24835,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "transactiontestcase",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": "transactiontestcase"
     },
     {
@@ -24846,8 +24846,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "communications_tests_communicationsmodeltests_setup",
-      "community": 30,
-      "community_name": "views.py",
+      "community": 34,
+      "community_name": "admin.py",
       "norm_label": ".setup()"
     },
     {
@@ -25693,8 +25693,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_locality_registry",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "locality_registry.py"
     },
     {
@@ -25704,8 +25704,8 @@
       "source_location": "L730",
       "_origin": "ast",
       "id": "content_locality_registry_get_dropdown_choices",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "get_dropdown_choices()"
     },
     {
@@ -25715,8 +25715,8 @@
       "source_location": "L740",
       "_origin": "ast",
       "id": "content_locality_registry_get_dropdown_grouped",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "get_dropdown_grouped()"
     },
     {
@@ -25726,8 +25726,8 @@
       "source_location": "L753",
       "_origin": "ast",
       "id": "content_locality_registry_get_extraction_keywords",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "get_extraction_keywords()"
     },
     {
@@ -25737,8 +25737,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_locality_registry_rationale_1",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "locality_registry.py \u2014 sccb-prt-locality-unify-001  single source of truth for"
     },
     {
@@ -25748,8 +25748,8 @@
       "source_location": "L731",
       "_origin": "ast",
       "id": "content_locality_registry_rationale_731",
-      "community": 68,
-      "community_name": "SpamProtectionService",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "return list of (slug, display) tuples for use in django form dropdowns,     gro"
     },
     {
@@ -25759,8 +25759,8 @@
       "source_location": "L741",
       "_origin": "ast",
       "id": "content_locality_registry_rationale_741",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "return dict of zone -> [(slug, display), ...] for optgroup rendering."
     },
     {
@@ -25770,8 +25770,8 @@
       "source_location": "L754",
       "_origin": "ast",
       "id": "content_locality_registry_rationale_754",
-      "community": 90,
-      "community_name": ".load_policies",
+      "community": 79,
+      "community_name": "LeadValidator",
       "norm_label": "return list[str] of all aliases + slugs for free-text matching.     this is wha"
     },
     {
@@ -27497,8 +27497,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_py",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "models.py"
     },
     {
@@ -27530,8 +27530,8 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_meta",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "meta"
     },
     {
@@ -27552,8 +27552,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_companyinfo_save",
-      "community": 153,
-      "community_name": "0005_knowledge_article.py",
+      "community": 145,
+      "community_name": "SearchHistory",
       "norm_label": ".save()"
     },
     {
@@ -27607,8 +27607,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_herobackgroundimage",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "herobackgroundimage"
     },
     {
@@ -27618,8 +27618,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_herobackgroundimage_str",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": ".__str__()"
     },
     {
@@ -27640,8 +27640,8 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_herobackgroundimage_clean",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": ".clean()"
     },
     {
@@ -27684,8 +27684,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_service",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "service"
     },
     {
@@ -27695,8 +27695,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_service_str",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": ".__str__()"
     },
     {
@@ -27717,8 +27717,8 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_service_get_features_list",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 202,
+      "community_name": "0008_inquiry_reply.py",
       "norm_label": ".get_features_list()"
     },
     {
@@ -28047,8 +28047,8 @@
       "source_location": "L611",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_landinglead",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 153,
+      "community_name": "0005_knowledge_article.py",
       "norm_label": "landinglead"
     },
     {
@@ -28058,8 +28058,8 @@
       "source_location": "L656",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_landinglead_str",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 153,
+      "community_name": "0005_knowledge_article.py",
       "norm_label": ".__str__()"
     },
     {
@@ -28146,8 +28146,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_rationale_209",
-      "community": 5,
-      "community_name": "CustomerReviewSection",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "hero background images that rotate on the homepage."
     },
     {
@@ -28168,8 +28168,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_rationale_264",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 6,
+      "community_name": "CustomerReview",
       "norm_label": "services offered by the company"
     },
     {
@@ -28179,8 +28179,8 @@
       "source_location": "L291",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_rationale_291",
-      "community": 145,
-      "community_name": "SearchHistory",
+      "community": 202,
+      "community_name": "0008_inquiry_reply.py",
       "norm_label": "return features as a list"
     },
     {
@@ -28311,8 +28311,8 @@
       "source_location": "L612",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_models_rationale_612",
-      "community": 6,
-      "community_name": "CustomerReview",
+      "community": 153,
+      "community_name": "0005_knowledge_article.py",
       "norm_label": "lead submissions captured directly from dynamic landing pages."
     },
     {
@@ -28564,8 +28564,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_security_captcha_provider",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "captcha_provider.py"
     },
     {
@@ -28575,8 +28575,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "content_security_captcha_provider_load_providers",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "_load_providers()"
     },
     {
@@ -28586,8 +28586,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "content_security_captcha_provider_nullprovider",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "nullprovider"
     },
     {
@@ -28597,8 +28597,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "content_security_captcha_provider_nullprovider_verify",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": ".verify()"
     },
     {
@@ -28608,8 +28608,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "content_security_captcha_provider_get_captcha_provider",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "get_captcha_provider()"
     },
     {
@@ -28630,8 +28630,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_security_captcha_provider_rationale_1",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "sccb-prop-sec-001 \u2014 captcha provider abstraction layer  allows switching betwe"
     },
     {
@@ -28641,8 +28641,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "content_security_captcha_provider_rationale_17",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "lazily load providers to avoid circular imports."
     },
     {
@@ -28652,8 +28652,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "content_security_captcha_provider_rationale_28",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "no-op provider used when captcha_provider=none or captcha_enable=false."
     },
     {
@@ -28663,8 +28663,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "content_security_captcha_provider_rationale_37",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "return the correct captcha provider instance based on feature flags.      capt"
     },
     {
@@ -28685,8 +28685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_security_google_recaptcha",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "google_recaptcha.py"
     },
     {
@@ -28740,8 +28740,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "content_security_google_recaptcha_googlerecaptchav2",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "googlerecaptchav2"
     },
     {
@@ -28751,8 +28751,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "content_security_google_recaptcha_googlerecaptchav2_verify",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": ".verify()"
     },
     {
@@ -28762,8 +28762,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "content_security_google_recaptcha_rationale_1",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "sccb-prop-sec-001 \u2014 google recaptcha v2 verification service  handles all comm"
     },
     {
@@ -28784,8 +28784,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "content_security_google_recaptcha_rationale_47",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "google recaptcha v2 checkbox verification provider.      usage:         provi"
     },
     {
@@ -28795,8 +28795,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "content_security_google_recaptcha_rationale_58",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "post the recaptcha token to google's siteverify endpoint.          returns a r"
     },
     {
@@ -28850,8 +28850,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "content_security_spam_protection_spamprotectionservice",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "spamprotectionservice"
     },
     {
@@ -28861,8 +28861,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "content_security_spam_protection_spamprotectionservice_init",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": ".__init__()"
     },
     {
@@ -28883,8 +28883,8 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "content_security_spam_protection_spamprotectionservice_log_spam",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "._log_spam()"
     },
     {
@@ -28916,8 +28916,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "content_security_spam_protection_rationale_57",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "centralized spam protection orchestrator.      layers:         1. honeypot va"
     },
     {
@@ -28938,8 +28938,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "content_security_spam_protection_rationale_181",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "write a spamlog entry. failures are silent \u2014 never block the request."
     },
     {
@@ -29092,8 +29092,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_content_site_context_get_company_info",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "get_company_info()"
     },
     {
@@ -30775,8 +30775,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "content_views_redirect_to_home_section",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 19,
+      "community_name": "views.py",
       "norm_label": "redirect_to_home_section()"
     },
     {
@@ -30852,8 +30852,8 @@
       "source_location": "L308",
       "_origin": "ast",
       "id": "content_views_blog",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 19,
+      "community_name": "views.py",
       "norm_label": "blog()"
     },
     {
@@ -30885,8 +30885,8 @@
       "source_location": "L346",
       "_origin": "ast",
       "id": "content_views_contact",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "contact()"
     },
     {
@@ -30907,8 +30907,8 @@
       "source_location": "L538",
       "_origin": "ast",
       "id": "content_views_send_rfq_notification",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "send_rfq_notification()"
     },
     {
@@ -30962,8 +30962,8 @@
       "source_location": "L1006",
       "_origin": "ast",
       "id": "content_views_newsletter_subscribe",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "newsletter_subscribe()"
     },
     {
@@ -31105,8 +31105,8 @@
       "source_location": "L309",
       "_origin": "ast",
       "id": "content_views_rationale_309",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 19,
+      "community_name": "views.py",
       "norm_label": "blog listing page view."
     },
     {
@@ -31127,8 +31127,8 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "content_views_rationale_347",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "homepage quote form handler."
     },
     {
@@ -31149,8 +31149,8 @@
       "source_location": "L539",
       "_origin": "ast",
       "id": "content_views_rationale_539",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "send email and whatsapp notification when rfq is submitted."
     },
     {
@@ -31204,8 +31204,8 @@
       "source_location": "L1007",
       "_origin": "ast",
       "id": "content_views_rationale_1007",
-      "community": 117,
-      "community_name": "run_all_tests.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "newsletter subscription handler with admin notification."
     },
     {
@@ -31798,8 +31798,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "nri_assist_signals",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 58,
+      "community_name": "services.py",
       "norm_label": "signals.py"
     },
     {
@@ -31809,8 +31809,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "nri_assist_signals_on_google_login",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 58,
+      "community_name": "services.py",
       "norm_label": "on_google_login()"
     },
     {
@@ -31820,8 +31820,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "nri_assist_signals_on_user_signed_up",
-      "community": 543,
-      "community_name": "Verification Evidence",
+      "community": 58,
+      "community_name": "services.py",
       "norm_label": "on_user_signed_up()"
     },
     {
@@ -32106,8 +32106,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "properties_country_utils",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "country_utils.py"
     },
     {
@@ -32117,8 +32117,8 @@
       "source_location": "L2568",
       "_origin": "ast",
       "id": "properties_country_utils_get_country_flag",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "get_country_flag()"
     },
     {
@@ -32128,8 +32128,8 @@
       "source_location": "L2598",
       "_origin": "ast",
       "id": "properties_country_utils_resolve_country_from_intake",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "resolve_country_from_intake()"
     },
     {
@@ -32139,8 +32139,8 @@
       "source_location": "L2569",
       "_origin": "ast",
       "id": "properties_country_utils_rationale_2569",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "returns the flag emoji for a given country code or name.     defaults to india"
     },
     {
@@ -32150,8 +32150,8 @@
       "source_location": "L2599",
       "_origin": "ast",
       "id": "properties_country_utils_rationale_2599",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "extracts canonical country_code (e.g. '+91', '+352') and country_name (e.g. 'ind"
     },
     {
@@ -32293,8 +32293,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_management_commands_test_static_media_py",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "test_static_media.py"
     },
     {
@@ -32304,8 +32304,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_management_commands_test_static_media_command",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "command"
     },
     {
@@ -32326,8 +32326,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_management_commands_test_static_media_command_handle",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": ".handle()"
     },
     {
@@ -32337,8 +32337,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_management_commands_test_static_media_rationale_1",
-      "community": 152,
-      "community_name": "0004_realbotsession_conversation_id.py",
+      "community": 82,
+      "community_name": "KnowledgeDocumentModelTests",
       "norm_label": "test static files and media configuration sccb-44 compliance check"
     },
     {
@@ -32656,8 +32656,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "properties_models_format_indian_number",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "_format_indian_number()"
     },
     {
@@ -32667,8 +32667,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "properties_models_number_to_words",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "_number_to_words()"
     },
     {
@@ -32711,8 +32711,8 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "properties_models_property",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "property"
     },
     {
@@ -32722,8 +32722,8 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "properties_models_property_save",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".save()"
     },
     {
@@ -32733,8 +32733,8 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "properties_models_property_get_absolute_url",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".get_absolute_url()"
     },
     {
@@ -32744,8 +32744,8 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "properties_models_property_normalize_image_reference",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "._normalize_image_reference()"
     },
     {
@@ -32755,8 +32755,8 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "properties_models_property_get_display_image_url",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".get_display_image_url()"
     },
     {
@@ -32766,8 +32766,8 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "properties_models_property_currency_symbol",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".currency_symbol()"
     },
     {
@@ -32777,8 +32777,8 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "properties_models_property_currency_unit_label",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".currency_unit_label()"
     },
     {
@@ -32788,8 +32788,8 @@
       "source_location": "L221",
       "_origin": "ast",
       "id": "properties_models_property_currency_minor_unit_label",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".currency_minor_unit_label()"
     },
     {
@@ -32799,8 +32799,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "properties_models_property_formatted_price_value",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".formatted_price_value()"
     },
     {
@@ -32810,8 +32810,8 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "properties_models_property_formatted_price",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".formatted_price()"
     },
     {
@@ -32821,8 +32821,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "properties_models_property_price_in_words",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".price_in_words()"
     },
     {
@@ -32832,8 +32832,8 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "properties_models_property_price_in_words_standard",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".price_in_words_standard()"
     },
     {
@@ -32843,8 +32843,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "properties_models_property_price_in_words_with_currency",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".price_in_words_with_currency()"
     },
     {
@@ -32854,8 +32854,8 @@
       "source_location": "L261",
       "_origin": "ast",
       "id": "properties_models_property_str",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": ".__str__()"
     },
     {
@@ -32898,8 +32898,8 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "properties_models_inquiry_country_flag",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": ".country_flag()"
     },
     {
@@ -33019,8 +33019,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "properties_models_rationale_197",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "return the best available photo url and let template onerror handle final fallba"
     },
     {
@@ -33030,8 +33030,8 @@
       "source_location": "L252",
       "_origin": "ast",
       "id": "properties_models_rationale_252",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "standard format: rupees x lakhs only"
     },
     {
@@ -33063,8 +33063,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "properties_serializers_propertyserializer",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "propertyserializer"
     },
     {
@@ -33151,8 +33151,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "properties_tests_py_testcase",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": "testcase"
     },
     {
@@ -33283,8 +33283,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": "inquiryreplytests"
     },
     {
@@ -33294,8 +33294,8 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_setup",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".setup()"
     },
     {
@@ -33305,8 +33305,8 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_post_reply",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".post_reply()"
     },
     {
@@ -33316,8 +33316,8 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_send_reply_sends_email_and_marks_inquiry_contacted",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_send_reply_sends_email_and_marks_inquiry_contacted()"
     },
     {
@@ -33327,8 +33327,8 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_send_reply_rejects_invalid_cc_addresses",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_send_reply_rejects_invalid_cc_addresses()"
     },
     {
@@ -33338,8 +33338,8 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_send_reply_rejects_mismatched_recipient",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_send_reply_rejects_mismatched_recipient()"
     },
     {
@@ -33349,8 +33349,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_send_reply_requires_configured_sender",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_send_reply_requires_configured_sender()"
     },
     {
@@ -33360,8 +33360,8 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_inquiry_replies_returns_sent_replies_json",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_inquiry_replies_returns_sent_replies_json()"
     },
     {
@@ -33371,8 +33371,8 @@
       "source_location": "L308",
       "_origin": "ast",
       "id": "properties_tests_inquiryreplytests_test_inquiry_replies_requires_staff",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_inquiry_replies_requires_staff()"
     },
     {
@@ -33382,8 +33382,8 @@
       "source_location": "L316",
       "_origin": "ast",
       "id": "properties_tests_inquirynotificationtests",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": "inquirynotificationtests"
     },
     {
@@ -33393,8 +33393,8 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "properties_tests_inquirynotificationtests_setup",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".setup()"
     },
     {
@@ -33404,8 +33404,8 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "properties_tests_inquirynotificationtests_test_create_inquiry_sends_email_and_whatsapp",
-      "community": 74,
-      "community_name": "PropertyCurrencyFormattingTests",
+      "community": 33,
+      "community_name": "is_feature_enabled",
       "norm_label": ".test_create_inquiry_sends_email_and_whatsapp()"
     },
     {
@@ -33415,8 +33415,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_translation_py",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "translation.py"
     },
     {
@@ -33426,8 +33426,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_properties_translation_propertytranslationoptions",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 24,
+      "community_name": "SecurityManager",
       "norm_label": "propertytranslationoptions"
     },
     {
@@ -33566,7 +33566,7 @@
       "label": "._check_business_relevance()",
       "file_type": "code",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L99",
+      "source_location": "L109",
       "_origin": "ast",
       "id": "properties_utils_lead_validation_leadvalidator_check_business_relevance",
       "community": 79,
@@ -33577,7 +33577,7 @@
       "label": "._check_contact_info()",
       "file_type": "code",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L112",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "properties_utils_lead_validation_leadvalidator_check_contact_info",
       "community": 79,
@@ -33588,7 +33588,7 @@
       "label": "._compute_final_status()",
       "file_type": "code",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L136",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "properties_utils_lead_validation_leadvalidator_compute_final_status",
       "community": 79,
@@ -33599,7 +33599,7 @@
       "label": "._get_client_ip()",
       "file_type": "code",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L149",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "properties_utils_lead_validation_leadvalidator_get_client_ip",
       "community": 79,
@@ -33778,8 +33778,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "properties_views_property_list_api",
-      "community": 84,
-      "community_name": "UnifiedSearchTests",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "property_list_api()"
     },
     {
@@ -33789,8 +33789,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "properties_views_property_detail_api",
-      "community": 84,
-      "community_name": "UnifiedSearchTests",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "property_detail_api()"
     },
     {
@@ -33822,8 +33822,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "properties_views_property_detail",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "property_detail()"
     },
     {
@@ -33833,8 +33833,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "properties_views_create_inquiry",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 84,
+      "community_name": "UnifiedSearchTests",
       "norm_label": "create_inquiry()"
     },
     {
@@ -33954,8 +33954,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "properties_views_rationale_54",
-      "community": 84,
-      "community_name": "UnifiedSearchTests",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "api endpoint for property list with pagination."
     },
     {
@@ -33965,8 +33965,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "properties_views_rationale_78",
-      "community": 84,
-      "community_name": "UnifiedSearchTests",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "api endpoint for property detail."
     },
     {
@@ -34042,8 +34042,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "realtor_project_features_is_feature_enabled",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "is_feature_enabled()"
     },
     {
@@ -34053,8 +34053,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "realtor_project_features_rationale_11",
-      "community": 59,
-      "community_name": "spam_protection.py",
+      "community": 117,
+      "community_name": "run_all_tests.py",
       "norm_label": "reads the feature flag from feature_flags.json.     returns the boolean value f"
     },
     {
@@ -34295,8 +34295,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_audit_model_counts",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 90,
+      "community_name": ".load_policies",
       "norm_label": "audit_model_counts.py"
     },
     {
@@ -34306,8 +34306,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "scripts_audit_model_counts_get_model_count",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 90,
+      "community_name": ".load_policies",
       "norm_label": "get_model_count()"
     },
     {
@@ -34317,8 +34317,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "scripts_audit_model_counts_build_report",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 90,
+      "community_name": ".load_policies",
       "norm_label": "build_report()"
     },
     {
@@ -34328,8 +34328,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_scripts_audit_production_content_py",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "audit_production_content.py"
     },
     {
@@ -34339,8 +34339,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_scripts_audit_production_content_tuples",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "tuples()"
     },
     {
@@ -34350,8 +34350,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_backfill_inquiry_countries",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "backfill_inquiry_countries.py"
     },
     {
@@ -34405,8 +34405,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_create_or_reset_prod_superuser",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "create_or_reset_prod_superuser.py"
     },
     {
@@ -34416,8 +34416,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "scripts_create_or_reset_prod_superuser_main",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "main()"
     },
     {
@@ -34490,8 +34490,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_django",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "django.ps1"
     },
     {
@@ -34875,8 +34875,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_prod_backfill_runner",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "prod_backfill_runner.py"
     },
     {
@@ -34897,8 +34897,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_scripts_safe_import_phase_b_py",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "safe_import_phase_b.py"
     },
     {
@@ -34985,8 +34985,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_sync_db_media_to_s3",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "sync_db_media_to_s3.py"
     },
     {
@@ -34996,8 +34996,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "scripts_sync_db_media_to_s3_s3_exists",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "s3_exists()"
     },
     {
@@ -35007,8 +35007,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "scripts_sync_db_media_to_s3_collect_paths",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "collect_paths()"
     },
     {
@@ -35018,8 +35018,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_sync_db_media_to_s3_rationale_1",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "run once to ensure every media file referenced in the db exists in s3. usage (l"
     },
     {
@@ -35029,8 +35029,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_test_form_submits",
-      "community": 22,
-      "community_name": "CompanyInfo",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "test_form_submits.py"
     },
     {
@@ -35184,8 +35184,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_search_views_py",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "views.py"
     },
     {
@@ -35195,8 +35195,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_search_views_search_properties",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "search_properties()"
     },
     {
@@ -35206,8 +35206,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_search_views_search",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "search()"
     },
     {
@@ -35217,8 +35217,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_search_views_rationale_9",
-      "community": 27,
-      "community_name": "models.py",
+      "community": 74,
+      "community_name": "PropertyCurrencyFormattingTests",
       "norm_label": "search properties by location and price"
     },
     {
@@ -36438,8 +36438,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_tests_test_admin_py",
-      "community": 158,
-      "community_name": "0010_m26_inquiry_conversation.py",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "test_admin.py"
     },
     {
@@ -36548,8 +36548,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_tests_test_admin_rationale_1",
-      "community": 158,
-      "community_name": "0010_m26_inquiry_conversation.py",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "sccb-46 task 3: admin panel testing tests admin panel functionality and crud op"
     },
     {
@@ -37197,8 +37197,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_tests_test_pages_py",
-      "community": 544,
-      "community_name": "Phase 2 \u2014 Publish Knowledge Hub Articles",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "test_pages.py"
     },
     {
@@ -37263,8 +37263,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "d_viji_viji_olivine_03rolledout_01propertism_tests_test_pages_rationale_1",
-      "community": 544,
-      "community_name": "Phase 2 \u2014 Publish Knowledge Hub Articles",
+      "community": 27,
+      "community_name": "models.py",
       "norm_label": "sccb-46 task 1: page load testing tests all pages load correctly without errors"
     },
     {
@@ -44160,8 +44160,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_local_development_sqlite_configuration",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "local development: sqlite configuration"
     },
     {
@@ -44171,8 +44171,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_sqlite_file_location",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "sqlite file location"
     },
     {
@@ -44182,8 +44182,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_sqlite_connection",
-      "community": 473,
-      "community_name": "DATABASE_ARCHITECTURE_RECORD",
+      "community": 573,
+      "community_name": "Database Queries Executed",
       "norm_label": "sqlite connection"
     },
     {
@@ -44512,8 +44512,8 @@
       "source_location": "L540",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_migration_path_sqlite_postgresql",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "migration path: sqlite \u2192 postgresql"
     },
     {
@@ -44523,8 +44523,8 @@
       "source_location": "L542",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_what_happened_recent",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "what happened (recent)"
     },
     {
@@ -44534,8 +44534,8 @@
       "source_location": "L559",
       "_origin": "ast",
       "id": "session_tracker_seo_16052026_database_architecture_record_data_loss_prevention_going_forward",
-      "community": 573,
-      "community_name": "Database Queries Executed",
+      "community": 473,
+      "community_name": "DATABASE_ARCHITECTURE_RECORD",
       "norm_label": "data loss prevention (going forward)"
     },
     {
@@ -72512,37 +72512,81 @@
       "norm_label": "\ud83d\udccc session state & continuity: 03-propertism"
     },
     {
-      "label": "1. \u23ea Last Session / Active Fixes",
+      "label": "1. \u23ea Completed Checkpoints (AWS Lightsail Cutover & Stabilization)",
       "file_type": "document",
       "source_file": "05-Sessions/session.md",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
-      "id": "05_sessions_session_1_last_session_active_fixes",
+      "id": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
       "community": 699,
       "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
-      "norm_label": "1. \u23ea last session / active fixes"
+      "norm_label": "1. \u23ea completed checkpoints (aws lightsail cutover & stabilization)"
     },
     {
-      "label": "2. \u23e9 Active Session Priorities",
+      "label": "\ud83d\udfe2 1. Migration & Decommissioning (100% Complete)",
+      "file_type": "document",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "05_sessions_session_1_migration_decommissioning_100_complete",
+      "community": 699,
+      "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
+      "norm_label": "\ud83d\udfe2 1. migration & decommissioning (100% complete)"
+    },
+    {
+      "label": "\ud83d\udfe2 2. Outbound SMTP Lead Notification Pipeline (100% Restored)",
       "file_type": "document",
       "source_file": "05-Sessions/session.md",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "05_sessions_session_2_active_session_priorities",
+      "id": "05_sessions_session_2_outbound_smtp_lead_notification_pipeline_100_restored",
       "community": 699,
       "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
-      "norm_label": "2. \u23e9 active session priorities"
+      "norm_label": "\ud83d\udfe2 2. outbound smtp lead notification pipeline (100% restored)"
     },
     {
-      "label": "3. \ud83d\udccb Backlog",
+      "label": "\ud83d\udfe2 3. Permanent Media Storage Architecture (No More Image Loss)",
       "file_type": "document",
       "source_file": "05-Sessions/session.md",
-      "source_location": "L44",
+      "source_location": "L35",
       "_origin": "ast",
-      "id": "05_sessions_session_3_backlog",
+      "id": "05_sessions_session_3_permanent_media_storage_architecture_no_more_image_loss",
       "community": 699,
       "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
-      "norm_label": "3. \ud83d\udccb backlog"
+      "norm_label": "\ud83d\udfe2 3. permanent media storage architecture (no more image loss)"
+    },
+    {
+      "label": "\ud83d\udfe2 4. Nginx SSL & Protocol Hardening",
+      "file_type": "document",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "05_sessions_session_4_nginx_ssl_protocol_hardening",
+      "community": 699,
+      "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
+      "norm_label": "\ud83d\udfe2 4. nginx ssl & protocol hardening"
+    },
+    {
+      "label": "\ud83d\udfe2 5. Git CI/CD & Knowledge Graph",
+      "file_type": "document",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "05_sessions_session_5_git_ci_cd_knowledge_graph",
+      "community": 699,
+      "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
+      "norm_label": "\ud83d\udfe2 5. git ci/cd & knowledge graph"
+    },
+    {
+      "label": "2. \u23e9 Active Priorities / Next Steps",
+      "file_type": "document",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "05_sessions_session_2_active_priorities_next_steps",
+      "community": 699,
+      "community_name": "\ud83d\udccc SESSION STATE & CONTINUITY: 03-propertism",
+      "norm_label": "2. \u23e9 active priorities / next steps"
     },
     {
       "label": "AGENTS.md",
@@ -78612,8 +78656,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_priority_1_knowledge_hub_publication_verification",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "priority 1: knowledge hub publication verification"
     },
     {
@@ -78623,8 +78667,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_complete_verified",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "\u2713 complete & verified"
     },
     {
@@ -78634,8 +78678,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_article_verification",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "article verification"
     },
     {
@@ -78645,8 +78689,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_all_10_articles_published",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "all 10 articles (published)"
     },
     {
@@ -78656,8 +78700,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_verification_method",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "verification method"
     },
     {
@@ -78667,8 +78711,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "documents_phase_5_completion_report_verification_evidence",
-      "community": 298,
-      "community_name": "SCCB-PROP-KNOWLEDGE-HUB-ROUTING-VALIDATION-AND-SETTINGS-ANNEXURE-1606",
+      "community": 272,
+      "community_name": "PHASE 5 COMPLETION REPORT",
       "norm_label": "verification evidence"
     },
     {
@@ -90734,8 +90778,8 @@
       "source_location": "L312",
       "_origin": "ast",
       "id": "reports_legacy_root_cause_analysis_part_6_remediation_strategies",
-      "community": 216,
-      "community_name": "test-all-blog-urls.sh",
+      "community": 455,
+      "community_name": "Part 6: Remediation Strategies",
       "norm_label": "part 6: remediation strategies"
     },
     {
@@ -90745,8 +90789,8 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "reports_legacy_root_cause_analysis_option_1_re_run_seed_command_recommended_lowest_risk",
-      "community": 216,
-      "community_name": "test-all-blog-urls.sh",
+      "community": 455,
+      "community_name": "Part 6: Remediation Strategies",
       "norm_label": "option 1: re-run seed command \u2705 **recommended (lowest risk)**"
     },
     {
@@ -90756,8 +90800,8 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "reports_legacy_root_cause_analysis_option_2_fix_seed_command_if_option_1_fails",
-      "community": 216,
-      "community_name": "test-all-blog-urls.sh",
+      "community": 455,
+      "community_name": "Part 6: Remediation Strategies",
       "norm_label": "option 2: fix seed command \u26a0\ufe0f **if option 1 fails**"
     },
     {
@@ -90767,8 +90811,8 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "reports_legacy_root_cause_analysis_option_3_manual_article_import_not_recommended",
-      "community": 216,
-      "community_name": "test-all-blog-urls.sh",
+      "community": 455,
+      "community_name": "Part 6: Remediation Strategies",
       "norm_label": "option 3: manual article import \u274c **not recommended**"
     },
     {
@@ -167778,7 +167822,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L99",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "properties_utils_lead_validation_leadvalidator",
       "target": "properties_utils_lead_validation_leadvalidator_check_business_relevance",
@@ -167788,7 +167832,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L112",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "properties_utils_lead_validation_leadvalidator",
       "target": "properties_utils_lead_validation_leadvalidator_check_contact_info",
@@ -167838,7 +167882,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L136",
+      "source_location": "L146",
       "weight": 1.0,
       "source": "properties_utils_lead_validation_leadvalidator",
       "target": "properties_utils_lead_validation_leadvalidator_compute_final_status",
@@ -167848,7 +167892,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "properties/utils/lead_validation.py",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0,
       "source": "properties_utils_lead_validation_leadvalidator",
       "target": "properties_utils_lead_validation_leadvalidator_get_client_ip",
@@ -202618,10 +202662,30 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "05-Sessions/session.md",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "05_sessions_session_session_state_continuity_03_propertism",
-      "target": "05_sessions_session_1_last_session_active_fixes",
+      "target": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "05_sessions_session_session_state_continuity_03_propertism",
+      "target": "05_sessions_session_2_active_priorities_next_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "target": "05_sessions_session_1_migration_decommissioning_100_complete",
       "confidence_score": 1.0
     },
     {
@@ -202630,18 +202694,38 @@
       "source_file": "05-Sessions/session.md",
       "source_location": "L29",
       "weight": 1.0,
-      "source": "05_sessions_session_session_state_continuity_03_propertism",
-      "target": "05_sessions_session_2_active_session_priorities",
+      "source": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "target": "05_sessions_session_2_outbound_smtp_lead_notification_pipeline_100_restored",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "05-Sessions/session.md",
-      "source_location": "L44",
+      "source_location": "L35",
       "weight": 1.0,
-      "source": "05_sessions_session_session_state_continuity_03_propertism",
-      "target": "05_sessions_session_3_backlog",
+      "source": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "target": "05_sessions_session_3_permanent_media_storage_architecture_no_more_image_loss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "target": "05_sessions_session_4_nginx_ssl_protocol_hardening",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05-Sessions/session.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "05_sessions_session_1_completed_checkpoints_aws_lightsail_cutover_stabilization",
+      "target": "05_sessions_session_5_git_ci_cd_knowledge_graph",
       "confidence_score": 1.0
     },
     {
@@ -224066,5 +224150,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f38cf42a6f4ac3fb4c533582af5bfef7238d6894"
+  "built_at_commit": "15eb2a690f2a620b107242e369e9aeca3cc30875"
 }

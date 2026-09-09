@@ -655,11 +655,16 @@ LEAD_VALIDATION_CONFIG = {
     'BONUS_BUSINESS_RELEVANCE': 10,
     
     # Layer 6 & 7: Assessment Ranges
+    # Adjusted thresholds to reduce false positives:
+    # - Likely Genuine: 80+ (reduced from 90)
+    # - Genuine: 60+ (reduced from 70)
+    # - Review Recommended: 30+ (reduced from 40)
+    # - Likely Spam: Below 30 (more conservative threshold)
     'RANGES': {
-        'LIKELY_GENUINE': 90,
-        'GENUINE': 70,
-        'REVIEW_RECOMMENDED': 40,
-        # Below 40 is Likely Spam
+        'LIKELY_GENUINE': 80,
+        'GENUINE': 60,
+        'REVIEW_RECOMMENDED': 30,
+        # Below 30 is Likely Spam (more conservative)
     },
 
     # Layer 9: Conditional CAPTCHA (deprecated — reCAPTCHA now handles this via CAPTCHA_ENABLE)
@@ -692,7 +697,7 @@ EXECUTIVE_EMAIL_CONFIG = {
     },
     'THRESHOLDS': {
         'HIGH_PRIORITY_MIN': 80,
-        'MEDIUM_PRIORITY_MIN': 40,
+        'MEDIUM_PRIORITY_MIN': 30,  # Adjusted to match new REVIEW_RECOMMENDED threshold
     },
     'CLASSIFICATION_LABELS': {
         'HIGH': 'Likely Genuine',

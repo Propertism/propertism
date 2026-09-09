@@ -84,3 +84,4 @@
 - Commit and push to `origin/main` on `Propertism/propertism` via GitHub CLI.
 - Monitor automated GitHub Actions deployment to Lightsail VPS (`13.207.123.15`).
 - Verify Gunicorn reload and confirm live HTTPS response.
+

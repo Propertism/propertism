@@ -1,7 +1,10 @@
 import re
 import time
+import logging
 from django.conf import settings
 from django.core.cache import cache
+
+logger = logging.getLogger(__name__)
 
 class LeadValidator:
     def __init__(self, request, data):
@@ -12,8 +15,25 @@ class LeadValidator:
         self.validation_summary = []
         self.status = "Pending Validation"
         
+        # International inquiry detection flags
+        self.has_international_context = False
+        self.country_code = data.get('country_code', '') or data.get('contact_country_code', '')
+        self.phone = data.get('phone', '')
+        
+        # Check if inquiry appears to be international
+        self._detect_international_context()
+        
     def validate(self):
         """Runs the validation rules and computes the final assessment."""
+        # Log start of validation for monitoring
+        inquiry_id = self.data.get('inquiry_id', 'NEW')
+        name = self.data.get('name', 'Unknown')
+        email = self.data.get('email', 'Unknown')
+        
+        logger.info(f"[VALIDATION-START] Inquiry: {inquiry_id}, Name: {name}, Email: {email}, International: {self.has_international_context}")
+        
+        initial_score = self.score
+        
         self._check_honeypot()
         self._check_timing()
         self._check_rate_limit()
@@ -23,12 +43,59 @@ class LeadValidator:
         
         self._compute_final_status()
         
+        # Calculate score change for monitoring
+        score_change = self.score - initial_score
+        
+        # Log detailed results for monitoring and debugging
+        logger.info(
+            f"[VALIDATION-END] Inquiry: {inquiry_id}, Final Score: {self.score}, "
+            f"Status: {self.status}, Score Change: {score_change}, "
+            f"International: {self.has_international_context}, "
+            f"Rules Triggered: {len(self.validation_summary)}"
+        )
+        
+        # Log critical decisions (Likely Spam classification)
+        if self.status == "Likely Spam":
+            logger.warning(
+                f"[SPAM-CLASSIFICATION] Inquiry: {inquiry_id} classified as Likely Spam. "
+                f"Score: {self.score}, Name: {name}, Email: {email}, "
+                f"International: {self.has_international_context}"
+            )
+        
         return {
             'confidence_score': max(0, min(100, self.score)),  # Clamp between 0 and 100
             'assessment_status': self.status,
             'validation_summary': self.validation_summary
         }
 
+    def _detect_international_context(self):
+        """Detect if inquiry appears to be from an international client."""
+        # Non-India country codes indicate international inquiry
+        non_india_codes = ['+1', '+44', '+65', '+61', '+971', '+48', '+49', '+33', '+39', '+81', '+82', '+86', '+7']
+        
+        previous_international_status = self.has_international_context
+        
+        if self.country_code:
+            if any(self.country_code.startswith(code) for code in non_india_codes):
+                self.has_international_context = True
+                self.validation_summary.append({'text': f'International Inquiry ({self.country_code})', 'type': 'info'})
+                logger.info(f"[INTERNATIONAL-DETECTED] Country Code: {self.country_code}")
+            elif self.country_code.startswith('+91'):
+                logger.info(f"[INDIA-DETECTED] Country Code: {self.country_code}")
+        
+        # Also check phone number for non-India prefixes
+        if self.phone:
+            international_prefixes = ['+1', '+44', '+65', '+61', '+971', '+48', '+49', '+33', '+39', '+81', '+82', '+86', '+7']
+            if any(self.phone.startswith(prefix) for prefix in international_prefixes):
+                self.has_international_context = True
+                logger.info(f"[INTERNATIONAL-DETECTED] Phone Prefix: {self.phone[:5]}...")
+            elif self.phone.startswith('+91'):
+                logger.info(f"[INDIA-DETECTED] Phone Prefix: {self.phone[:5]}...")
+        
+        # Log context change for monitoring
+        if self.has_international_context != previous_international_status:
+            logger.info(f"[CONTEXT-CHANGE] International status changed to: {self.has_international_context}")
+                
     def _check_honeypot(self):
         honeypot_field = self.config.get('HONEYPOT_FIELD_NAME', 'website_url_check')
         honeypot_value = self.data.get(honeypot_field, '')
@@ -81,30 +148,94 @@ class LeadValidator:
             self.validation_summary.append({'text': 'No Suspicious URLs', 'type': 'success'})
 
         # Cyrillic / Foreign Non-Target Script Spam Check
-        if re.search(r'[\u0400-\u04FF]', message):
-            self.score -= 80
-            self.validation_summary.append({'text': 'Cyrillic Script Detected (Foreign Spam)', 'type': 'danger'})
+        # Reduced penalty for Cyrillic - legitimate international inquiries may contain Cyrillic
+        # Only penalize if excessive Cyrillic content
+        cyrillic_chars = len(re.findall(r'[\u0400-\u04FF]', message))
+        total_chars = len(message)
+        if cyrillic_chars > 0:
+            cyrillic_ratio = cyrillic_chars / max(total_chars, 1)
+            # Only penalize if more than 50% of content is Cyrillic
+            if cyrillic_ratio > 0.5:
+                penalty = min(40, int(80 * cyrillic_ratio))  # Max 40 instead of 80
+                self.score -= penalty
+                self.validation_summary.append({'text': f'Excessive Cyrillic Script Detected ({cyrillic_ratio:.0%})', 'type': 'danger'})
+                # Log Cyrillic penalty for monitoring
+                logger.info(
+                    f"[CYRILLIC-PENALTY] Ratio: {cyrillic_ratio:.2%}, Penalty: {penalty}, "
+                    f"International: {self.has_international_context}"
+                )
+            else:
+                self.validation_summary.append({'text': 'Minimal Cyrillic Content', 'type': 'info'})
+                # Log minimal Cyrillic for monitoring
+                logger.info(
+                    f"[CYRILLIC-MINIMAL] Ratio: {cyrillic_ratio:.2%}, No penalty, "
+                    f"International: {self.has_international_context}"
+                )
 
         # High-risk Spam TLDs Check
-        if re.search(r'\.(ru|su|рф|xyz|top|work)\b', message):
-            self.score -= 60
-            self.validation_summary.append({'text': 'High-Risk TLD in Content', 'type': 'danger'})
+        # Removed .xyz, .top, .work from high-risk list - these are legitimate TLDs
+        # Added pattern to check for URLs with suspicious context
+        high_risk_tlds = r'\.(ru|su|рф)\b'
+        # Check for TLDs in suspicious context (e.g., promotion/ads)
+        tld_pattern = re.compile(rf'(?:http|https|www)[^\s]*{high_risk_tlds}[^\s]*', re.IGNORECASE)
+        tld_matches = list(tld_pattern.finditer(message))
+        if tld_matches:
+            # Penalize per suspicious URL found
+            penalty_per_url = 20  # Reduced from 60
+            total_penalty = min(40, penalty_per_url * len(tld_matches))
+            self.score -= total_penalty
+            self.validation_summary.append({'text': f'High-Risk TLD URLs Found ({len(tld_matches)})', 'type': 'danger'})
+            # Log TLD penalty for monitoring
+            logger.info(
+                f"[TLD-PENALTY] URLs: {len(tld_matches)}, Penalty: {total_penalty}, "
+                f"International: {self.has_international_context}"
+            )
+        else:
+            # Also check for standalone TLD mentions without URLs
+            standalone_tlds = re.findall(rf'\b[a-z0-9]+\.(ru|su|рф)\b', message, re.IGNORECASE)
+            if standalone_tlds:
+                self.score -= 15  # Small penalty for TLD mentions
+                self.validation_summary.append({'text': 'High-Risk TLD Mentioned', 'type': 'warning'})
+                # Log standalone TLD for monitoring
+                logger.info(
+                    f"[TLD-MENTION] Domains: {len(standalone_tlds)}, Penalty: 15, "
+                    f"International: {self.has_international_context}"
+                )
             
-        # Spam Keywords
+        # Context-aware spam keyword detection
         spam_keywords = self.config.get('SPAM_KEYWORDS', [])
-        found_spam = [kw for kw in spam_keywords if kw in message]
+        found_spam = []
+        
+        for keyword in spam_keywords:
+            # Check if keyword appears in suspicious context
+            pattern = r'\b' + re.escape(keyword) + r'\b'
+            if re.search(pattern, message):
+                found_spam.append(keyword)
+        
         if found_spam:
-            self.score -= self.config.get('PENALTY_SPAM_KEYWORD', 30)
-            self.validation_summary.append({'text': 'Spam Keywords Found', 'type': 'danger'})
+            penalty = self.config.get('PENALTY_SPAM_KEYWORD', 30)
+            # Reduce penalty for international inquiries (they might use different phrasing)
+            if self.has_international_context:
+                penalty = penalty // 2  # Halve penalty for international
+                self.validation_summary.append({'text': f'Spam Keywords Found (International context)', 'type': 'warning'})
+            else:
+                self.validation_summary.append({'text': f'Spam Keywords Found ({len(found_spam)})', 'type': 'danger'})
+            self.score -= penalty
         else:
             self.validation_summary.append({'text': 'No Spam Keywords', 'type': 'success'})
             
-        # Promo Keywords
+        # Promo Keywords - less strict for international inquiries
         promo_keywords = self.config.get('PROMO_KEYWORDS', [])
         found_promo = [kw for kw in promo_keywords if kw in message]
         if found_promo:
-            self.score -= self.config.get('PENALTY_PROMO_KEYWORD', 15)
-            self.validation_summary.append({'text': 'Promotional Language', 'type': 'warning'})
+            penalty = self.config.get('PENALTY_PROMO_KEYWORD', 15)
+            # Reduce penalty for international inquiries
+            if self.has_international_context:
+                penalty = penalty // 2  # Halve penalty
+                self.validation_summary.append({'text': 'Marketing Language (International context)', 'type': 'info'})
+            else:
+                self.validation_summary.append({'text': 'Promotional Language', 'type': 'warning'})
+            self.score -= penalty
 
     def _check_business_relevance(self):
         message = self.data.get('message', '').lower()
@@ -113,35 +244,76 @@ class LeadValidator:
             
         business_keywords = self.config.get('BUSINESS_KEYWORDS', [])
         found = [kw for kw in business_keywords if kw in message]
+        
+        # International inquiries might use different terminology
         if found:
-            self.score += self.config.get('BONUS_BUSINESS_RELEVANCE', 10)
-            self.validation_summary.append({'text': 'Relevant Property Intent', 'type': 'success'})
+            bonus = self.config.get('BONUS_BUSINESS_RELEVANCE', 10)
+            # Give extra bonus for international with relevant intent
+            if self.has_international_context:
+                bonus += 5  # Extra bonus for international with clear intent
+                self.validation_summary.append({'text': f'Relevant Property Intent (International +{bonus})', 'type': 'success'})
+            else:
+                self.validation_summary.append({'text': f'Relevant Property Intent (+{bonus})', 'type': 'success'})
+            self.score += bonus
         else:
-            self.validation_summary.append({'text': 'Vague Intent', 'type': 'warning'})
+            # Less strict for international inquiries
+            if self.has_international_context:
+                self.validation_summary.append({'text': 'General Intent (International)', 'type': 'info'})
+                # Small bonus for international even without specific keywords
+                self.score += 5
+            else:
+                self.validation_summary.append({'text': 'Vague Intent', 'type': 'warning'})
 
     def _check_contact_info(self):
         name = self.data.get('name', '')
         if name:
-            self.validation_summary.append({'text': 'Human Name Format', 'type': 'success'})
+            # Be more lenient with international name formats
+            if self.has_international_context:
+                self.validation_summary.append({'text': 'Name Provided (International)', 'type': 'info'})
+            else:
+                self.validation_summary.append({'text': 'Human Name Format', 'type': 'success'})
             
         phone = self.data.get('phone', '')
         if phone:
             digits = re.sub(r'\D', '', phone)
             if len(digits) < 7:
-                self.score -= self.config.get('PENALTY_INVALID_PHONE', 15)
-                self.validation_summary.append({'text': 'Invalid Phone Format', 'type': 'danger'})
+                # Be more lenient for international inquiries
+                if self.has_international_context:
+                    self.validation_summary.append({'text': 'Phone Format Review (International)', 'type': 'warning'})
+                else:
+                    self.score -= self.config.get('PENALTY_INVALID_PHONE', 15)
+                    self.validation_summary.append({'text': 'Invalid Phone Format', 'type': 'danger'})
             else:
                 self.validation_summary.append({'text': 'Valid Phone Format', 'type': 'success'})
         else:
-            self.validation_summary.append({'text': 'Phone Not Provided', 'type': 'warning'})
+            # Less strict warning for international inquiries
+            if self.has_international_context:
+                self.validation_summary.append({'text': 'Phone Optional (International)', 'type': 'info'})
+            else:
+                self.validation_summary.append({'text': 'Phone Not Provided', 'type': 'warning'})
 
         email = self.data.get('email', '')
         if email:
             if '@' not in email or '.' not in email.split('@')[-1]:
-                self.score -= self.config.get('PENALTY_INVALID_EMAIL', 15)
-                self.validation_summary.append({'text': 'Invalid Email Format', 'type': 'danger'})
+                # Be more lenient for international inquiries
+                if self.has_international_context:
+                    self.validation_summary.append({'text': 'Email Format Review (International)', 'type': 'warning'})
+                else:
+                    self.score -= self.config.get('PENALTY_INVALID_EMAIL', 15)
+                    self.validation_summary.append({'text': 'Invalid Email Format', 'type': 'danger'})
+            else:
+                # Bonus for valid email from international clients
+                if self.has_international_context:
+                    self.score += 5  # Small bonus for international with valid email
+                    self.validation_summary.append({'text': 'Valid Email (International)', 'type': 'success'})
+                else:
+                    self.validation_summary.append({'text': 'Valid Email Format', 'type': 'success'})
         elif self.data.get('form_source') != 'Quick Inquiry':
-            self.validation_summary.append({'text': 'Email Not Provided', 'type': 'warning'})
+            # Less strict for international inquiries
+            if self.has_international_context:
+                self.validation_summary.append({'text': 'Email Optional (International)', 'type': 'info'})
+            else:
+                self.validation_summary.append({'text': 'Email Not Provided', 'type': 'warning'})
 
     def _compute_final_status(self):
         ranges = self.config.get('RANGES', {})
