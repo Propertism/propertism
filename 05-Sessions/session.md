@@ -1,11 +1,11 @@
 <!-- AUDIT METADATA -->
-<!-- Date: 2026-09-04 -->
-<!-- Time: 12:55 IST -->
+<!-- Date: 2026-09-09 -->
+<!-- Time: 13:56 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra -->
 <!-- Module: 03-propertism -->
-<!-- Status: WHATSAPP DECOMMISSIONED & SPAM GATE HARDENED (LEVEL 4 VERIFIED) -->
-<!-- Git Commit: HEAD (uncommitted) -->
+<!-- Status: BROADSTONE ASSET RESTORED, MEDIA PIPELINE SYNCED & 4-COLUMN GRID DEPLOYED -->
+<!-- Git Commit: 9dbd9e3 -->
 
 # 📌 SESSION STATE & CONTINUITY: 03-propertism
 
@@ -14,7 +14,7 @@
 **Product Owner**: Viji  
 **Supervisor / Platform Owner**: Astra  
 **Protocol**: S.P.E.C.S. (`05-Sessions`)  
-**Status**: 🟢 PRODUCTION STABLE & HARDENED (COMMIT: `200d7f4`)  
+**Status**: 🟢 PRODUCTION STABLE & ASSETS RESTORED (COMMIT: `9dbd9e3`)  
 
 ---
 
@@ -75,6 +75,13 @@
 - **Anti-Spam Notification Gate (`[SpamGate]`)**: In `content/views.py:contact()`, gated notification dispatch so submissions classified as `Likely Spam` (score < 40) are saved in DB for audit trail, but completely bypass `send_rfq_notification()`.
 - **VPS Hardening**: Blanked `WHATSAPP_PHONE_ID=""`, `WHATSAPP_ACCESS_TOKEN=""`, and `WHATSAPP_ADMIN_PHONE=""` in `/var/www/propertism/.env` on Lightsail with safety backup at `.env.bak_20260904_whatsapp`.
 - **Testing**: 45/45 unit tests passing with zero regressions (`.\scripts\django.cmd test content`). Full report: [`reports/IMPLEMENTATION_REPORT_DECOMMISSION_WHATSAPP_ALERTS.md`](file:///d:/viji/viji-olivine/03-propertism/reports/IMPLEMENTATION_REPORT_DECOMMISSION_WHATSAPP_ALERTS.md).
+
+### 🟢 9. Broadstone Asset Restoration, Media Pipeline Sync & 4-Column Grid (2026-09-09)
+- **Broadstone Photo Restored**: Deployed high-resolution illuminated lobby photos to `media/properties/1.jpeg` and `media/properties/2.jpeg`. Verified live in production serving **`HTTP/2 200 OK`** (275 KB).
+- **Automated CI/CD Media Sync**: Added automated repository media sync in `.github/workflows/deploy.yml` (`cp -u -r media/* /var/www/propertism_media/` and `chown -R www-data:www-data`), ensuring repo-tracked photos are automatically propagated to persistent storage on every deploy.
+- **Permanent MEDIA_ROOT Decoupling**: In `realtor_project/settings.py`, updated `MEDIA_ROOT` to respect `os.environ.get('MEDIA_ROOT')`, preventing git reset wipes on future admin uploads.
+- **4-Property Desktop Grid**: Updated `static/css/v4-properties.css` to `grid-template-columns: repeat(4, 1fr)`, displaying all 4 available properties (The Broadstone, Full Residential Building, Builder Floor, and Radiance Mandarin) side-by-side in a single row.
+- **Hardened Git Push**: Upgraded `commit-push.bat` with automated GitHub CLI account switching (`gh auth switch --user Propertism`) and clean-state check.
 
 ---
 
