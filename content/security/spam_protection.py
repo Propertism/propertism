@@ -110,8 +110,30 @@ class SpamProtectionService:
             )
 
         # ── Layer 1: reCAPTCHA Verification ───────────────────────────── #
+        from django.conf import settings as dj_settings
         from realtor_project.features import is_feature_enabled
+
         captcha_enabled = is_feature_enabled('CAPTCHA_ENABLE', default=False)
+        production_enforce = (
+            not getattr(dj_settings, 'DEBUG', False)
+            and not getattr(dj_settings, 'TESTING', False)
+        )
+
+        # Production cannot silently skip CAPTCHA via feature flag.
+        if not captcha_enabled and production_enforce:
+            logger.error(
+                '[SpamProtection] CAPTCHA_ENABLE is off in production — rejecting. '
+                'ip=%s form=%s',
+                ip, form_name,
+            )
+            self._log_spam(form_name, ip, user_agent, path, referer, 'captcha-disabled-in-production')
+            return SpamProtectionResult(
+                passed=False,
+                failure_reason='captcha-disabled-in-production',
+                error_message='Please complete the security verification before submitting your enquiry.',
+                captcha_failed=True,
+            )
+
         if captcha_enabled:
             token = self.request.POST.get('g-recaptcha-response', '')
             provider = get_captcha_provider()
@@ -123,11 +145,9 @@ class SpamProtectionService:
                     e in error_codes for e in ('network-error', 'timeout', 'unexpected-error')
                 )
 
-                fail_open = getattr(
-                    __import__('django.conf', fromlist=['settings']).settings,
-                    'RECAPTCHA_FAIL_OPEN',
-                    True,
-                )
+                fail_open = bool(getattr(dj_settings, 'RECAPTCHA_FAIL_OPEN', False))
+                if production_enforce:
+                    fail_open = False
 
                 if is_network_error and fail_open:
                     logger.warning(

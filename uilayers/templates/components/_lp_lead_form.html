@@ -16,6 +16,7 @@
 
                 <form id="landing-lead-form-element" class="lead-capture-form" data-endpoint="{% url 'landing_lead_api' %}" novalidate>
                     {% csrf_token %}
+                    {% include 'includes/_form_validation_fields_hidden.html' %}
                     <input type="hidden" name="intent_type" value="{{ config.intent_type }}">
                     <input type="hidden" name="geo_origin" value="{{ nri_origin|default:'' }}">
 

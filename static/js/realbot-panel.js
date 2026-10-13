@@ -9,6 +9,7 @@
     let dbProperties = [];
     let sessionId = null;
     let messages = [];
+    let lastSubmitNonce = null;
 
     // Initialize triggers
     function init() {
@@ -600,7 +601,8 @@
             },
             body: JSON.stringify({
                 session_id: sessionId,
-                message: text
+                message: text,
+                submit_nonce: lastSubmitNonce || undefined
             })
         })
         .then(response => {
@@ -611,6 +613,9 @@
             if (indicator) indicator.classList.add('hidden');
             if (data.success && data.data) {
                 messages.push(data.data.message);
+                const meta = (data.data.message && data.data.message.metadata) || {};
+                const inquiryMeta = meta.inquiry || {};
+                lastSubmitNonce = inquiryMeta.submit_nonce || meta.submit_nonce || null;
                 renderMessages();
             } else {
                 showAPIError((data.error && data.error.message) || "The advisor is currently offline. Please try again.");

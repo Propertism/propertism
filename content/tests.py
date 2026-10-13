@@ -846,6 +846,7 @@ class WhatsAppNotificationTests(TestCase):
             'email': 'spam@bad-domain.xyz',
             'phone': '1234567890',
             'message': 'Купить квартиру в Москве http://spam.ru',
+            'website_url_check': 'spambot_triggered',
             'service': 'consultation',
             'form_source': 'Quick Inquiry'
         }

@@ -25,10 +25,26 @@ def _load_providers():
 
 
 class NullProvider:
-    """No-op provider used when CAPTCHA_PROVIDER=none or CAPTCHA_ENABLE=false."""
+    """No-op provider used when CAPTCHA_PROVIDER=none or CAPTCHA_ENABLE=false.
+
+    Local DEBUG and test runs may skip verification. Production always fails closed.
+    """
 
     def verify(self, token: str, remote_ip: str = ''):
+        from django.conf import settings
         from content.security.google_recaptcha import RecaptchaResult
+
+        production_enforce = (
+            not getattr(settings, 'DEBUG', False)
+            and not getattr(settings, 'TESTING', False)
+        )
+        if production_enforce:
+            logger.error(
+                '[CaptchaProvider] NullProvider refused in production. '
+                'CAPTCHA cannot be bypassed when DEBUG=False.'
+            )
+            return RecaptchaResult(success=False, error_codes=['captcha-disabled-in-production'])
+
         logger.info('[CaptchaProvider] NullProvider: verification bypassed (CAPTCHA disabled or provider=none).')
         return RecaptchaResult(success=True, error_codes=['captcha-disabled'])
 

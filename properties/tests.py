@@ -335,8 +335,7 @@ class InquiryNotificationTests(TestCase):
         WHATSAPP_ADMIN_PHONE="918667020798",
     )
     @patch("realtor_project.features.is_feature_enabled")
-    @patch("communications.providers.send_whatsapp_notification")
-    def test_create_inquiry_sends_email_and_whatsapp(self, mock_send_whatsapp, mock_is_feature_enabled):
+    def test_create_inquiry_sends_email_and_whatsapp(self, mock_is_feature_enabled):
         mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
         # Initial inquiry count
         self.assertEqual(Inquiry.objects.count(), 0)
@@ -383,16 +382,7 @@ class InquiryNotificationTests(TestCase):
             self.assertIn("Premium Beach Villa", sent_email.body)
             self.assertIn("ECR villa open for visits?", sent_email.body)
 
-        # WhatsApp mock should be called with correct details (one for customer, one for admin)
-        self.assertEqual(mock_send_whatsapp.call_count, 2)
-
-        # Verify customer notification
-        customer_call = next(c for c in mock_send_whatsapp.call_args_list if c[0][1] == '919876543210')
-        self.assertIn("Viji Buyer", customer_call[0][0])
-        self.assertIn("Is this ECR villa open for visits?", customer_call[0][0])
-
-        # Verify admin notification
-        admin_call = next(c for c in mock_send_whatsapp.call_args_list if c[0][1] == '918667020798')
-        self.assertIn("Viji Buyer", admin_call[0][0])
-        self.assertIn("Premium Beach Villa", admin_call[0][0])
+        # WhatsApp is not dispatched on this path: send_rfq_notification uses
+        # AcknowledgementService with channels=['email'] only (commit 2c21a2c
+        # decommissioned auto WhatsApp). Persistence + email remain the contract.
 

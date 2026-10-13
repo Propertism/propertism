@@ -303,6 +303,11 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+DEAL_ENGINE_INQUIRIES_KEY = os.environ.get('DEAL_ENGINE_INQUIRIES_KEY', '').strip()
+DEAL_ENGINE_INQUIRIES_KEY_PREVIOUS = os.environ.get(
+    'DEAL_ENGINE_INQUIRIES_KEY_PREVIOUS', ''
+).strip()
+
 # ==============================================================================
 # LOGGING
 # ==============================================================================

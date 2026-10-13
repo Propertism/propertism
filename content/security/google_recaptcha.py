@@ -64,11 +64,11 @@ class GoogleRecaptchaV2:
         secret_key = getattr(settings, 'RECAPTCHA_SECRET_KEY', '')
 
         if not secret_key:
-            logger.warning(
-                '[reCAPTCHA] RECAPTCHA_SECRET_KEY is not configured. '
-                'Verification will be skipped. Set the key in environment variables.'
+            logger.error(
+                '[reCAPTCHA] CRITICAL: RECAPTCHA_SECRET_KEY is not configured. '
+                'Verification FAILED. Set the key in environment variables.'
             )
-            return RecaptchaResult(success=True, error_codes=['secret-key-missing'])
+            return RecaptchaResult(success=False, error_codes=['secret-key-missing'])
 
         if not token:
             logger.warning('[reCAPTCHA] Empty token received — verification failed.')

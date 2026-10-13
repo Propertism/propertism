@@ -6,8 +6,9 @@ properties.Inquiry model. This module:
   - Maps InquiryConversationSession.collected_data → PropertyInquiry fields.
   - Calls PropertyInquiry.objects.create() — the single source of truth.
   - Calls send_rfq_notification() — reuses existing notification pipeline.
-  - DOES NOT re-implement any validation, spam detection, or notification logic.
-  - DOES NOT call LeadValidator — fields are pre-validated by the conversation engine.
+  - Maps fields, then assesses via LeadValidator when available.
+  - Never hardcodes assessment_status='Genuine' or confidence_score=80.
+  - Does not call SpamProtectionService (HTML-form CAPTCHA/honeypot/timing).
 """
 import logging
 
@@ -15,10 +16,7 @@ from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
-# Confidence score for realBOT-submitted inquiries.
-# Fields have been validated deterministically — assign Genuine baseline.
-REALBOT_CONFIDENCE_SCORE = 80
-REALBOT_ASSESSMENT_STATUS = 'Genuine'
+# Assessment is produced by LeadValidator. Never hardcode Genuine/80.
 
 
 class InquirySubmissionAdapter:
@@ -107,6 +105,35 @@ class InquirySubmissionAdapter:
                 phone=mobile_number
             )
 
+            confidence_score = None
+            assessment_status = 'Pending Validation'
+            validation_summary = []
+            try:
+                from properties.utils.lead_validation import LeadValidator
+
+                class _AdapterRequest:
+                    META = {}
+                    session = type("S", (), {"session_key": "realbot"})()
+
+                assessment = LeadValidator(
+                    request=_AdapterRequest(),
+                    data={
+                        'name': customer_name,
+                        'phone': mobile_number,
+                        'email': email_address,
+                        'message': full_message,
+                        'country_code': c_code,
+                    },
+                ).validate()
+                confidence_score = assessment.get('confidence_score')
+                assessment_status = assessment.get('assessment_status') or 'Pending Validation'
+                validation_summary = assessment.get('validation_summary') or []
+            except Exception as assess_exc:
+                logger.info(
+                    '[InquirySubmissionAdapter] LeadValidator unavailable; pending validation. %s',
+                    assess_exc,
+                )
+
             inquiry = PropertyInquiry.objects.create(
                 name=customer_name,
                 phone=mobile_number,
@@ -117,9 +144,9 @@ class InquirySubmissionAdapter:
                 form_source=form_source,
                 country_code=c_code,
                 country_name=c_name,
-                confidence_score=REALBOT_CONFIDENCE_SCORE,
-                assessment_status=REALBOT_ASSESSMENT_STATUS,
-                validation_summary=[],        # pre-validated by engine
+                confidence_score=confidence_score,
+                assessment_status=assessment_status,
+                validation_summary=validation_summary,
             )
 
             logger.info(

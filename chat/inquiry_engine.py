@@ -15,8 +15,10 @@ The engine NEVER persists PropertyInquiry records — that is delegated exclusiv
 to InquirySubmissionAdapter → properties.Inquiry.objects.create().
 """
 import logging
+import secrets
 from datetime import timedelta
 
+from django.db import transaction
 from django.utils import timezone
 
 from chat.models import InquiryConversationSession, InquiryConversationAuditLog
@@ -40,6 +42,41 @@ OPEN_STATES = frozenset([
     'awaiting_conflict_resolution',
     'awaiting_confirmation',
 ])
+
+MIN_SUBMIT_SECONDS = 20
+MIN_ENGINE_TURNS = 2
+NONCE_KEY = '_submit_nonce'
+TURNS_KEY = '_engine_turns'
+MANDATORY_SUBMIT_FIELDS = (
+    'customer_name',
+    'country',
+    'mobile_number',
+    'service_required',
+    'inquiry_message',
+)
+
+
+def _bump_engine_turns(ics_session):
+    data = dict(ics_session.collected_data or {})
+    data[TURNS_KEY] = int(data.get(TURNS_KEY) or 0) + 1
+    ics_session.collected_data = data
+    ics_session.save(update_fields=['collected_data', 'updated_at'])
+
+
+def _issue_submit_nonce(ics_session) -> str:
+    nonce = secrets.token_urlsafe(24)
+    data = dict(ics_session.collected_data or {})
+    data[NONCE_KEY] = nonce
+    ics_session.collected_data = data
+    ics_session.save(update_fields=['collected_data', 'updated_at'])
+    return nonce
+
+
+def _clear_submit_nonce(ics_session):
+    data = dict(ics_session.collected_data or {})
+    data.pop(NONCE_KEY, None)
+    ics_session.collected_data = data
+    ics_session.save(update_fields=['collected_data', 'updated_at'])
 
 
 # ── Response builder helpers ──────────────────────────────────────────────────
@@ -120,6 +157,7 @@ class InquiryConversationEngine:
             extraction_result = self._extractor.extract(opening_message, ics)
             extraction_ack = self._apply_extraction(ics, extraction_result, opening_message)
             self._backfill_phone_from_history(ics)
+            _bump_engine_turns(ics)
 
         # Check if all mandatory fields are already satisfied
         if self._all_mandatory_collected(ics):
@@ -131,7 +169,7 @@ class InquiryConversationEngine:
     # ── Primary message processor ──────────────────────────────────────────────
 
     def process_message(self, ics_session: InquiryConversationSession,
-                        raw_message: str) -> dict:
+                        raw_message: str, submit_nonce: str = None) -> dict:
         """
         Main entry point for every customer message while an ICS is open.
 
@@ -153,6 +191,7 @@ class InquiryConversationEngine:
             )
 
         _log_event(ics_session, 'message_received', raw_input=raw_message)
+        _bump_engine_turns(ics_session)
 
         # Cancel detection (any state)
         if self._detect_cancel_intent(raw_message):
@@ -164,7 +203,9 @@ class InquiryConversationEngine:
             return self._handle_conflict_response(ics_session, raw_message)
 
         if state == 'awaiting_confirmation':
-            return self._handle_confirmation_response(ics_session, raw_message)
+            return self._handle_confirmation_response(
+                ics_session, raw_message, submit_nonce=submit_nonce
+            )
 
         # Default: collecting_information
         return self._process_collection(ics_session, raw_message)
@@ -418,7 +459,8 @@ class InquiryConversationEngine:
         """Transition to AWAITING_CONFIRMATION and present summary."""
         ics_session.state = 'awaiting_confirmation'
         ics_session.current_prompt_field = ''
-        ics_session.save()
+        ics_session.save(update_fields=['state', 'current_prompt_field', 'updated_at'])
+        nonce = _issue_submit_nonce(ics_session)
 
         summary = self.build_confirmation_summary(ics_session)
         _log_event(ics_session, 'confirmation_prompted', notes='All mandatory fields collected')
@@ -433,11 +475,14 @@ class InquiryConversationEngine:
         return _build_engine_response(
             text,
             chips=['Yes, Submit', 'Edit Details', 'Cancel'],
-            metadata={'ics_state': 'awaiting_confirmation'},
+            metadata={
+                'ics_state': 'awaiting_confirmation',
+                'submit_nonce': nonce,
+            },
         )
 
     def _handle_confirmation_response(self, ics_session: InquiryConversationSession,
-                                       raw_message: str) -> dict:
+                                       raw_message: str, submit_nonce: str = None) -> dict:
         """
         Customer is responding to the confirmation summary.
         Detect confirm vs edit vs cancel.
@@ -445,9 +490,10 @@ class InquiryConversationEngine:
         msg_lower = raw_message.lower().strip()
 
         if self._detect_confirm_intent(raw_message):
-            return self._submit_inquiry(ics_session)
+            return self._submit_inquiry(ics_session, submit_nonce=submit_nonce)
 
         if 'edit' in msg_lower or 'change' in msg_lower or 'update' in msg_lower or 'wrong' in msg_lower:
+            _clear_submit_nonce(ics_session)
             ics_session.state = 'collecting_information'
             ics_session.save()
             return _build_engine_response(
@@ -468,17 +514,89 @@ class InquiryConversationEngine:
 
     # ── Submission ─────────────────────────────────────────────────────────────
 
-    def _submit_inquiry(self, ics_session: InquiryConversationSession) -> dict:
-        """Delegate to InquirySubmissionAdapter and update session state."""
+    def _submit_inquiry(self, ics_session: InquiryConversationSession,
+                        submit_nonce: str = None) -> dict:
+        """Delegate to InquirySubmissionAdapter after C2 persist gates."""
         from chat.inquiry_submission import InquirySubmissionAdapter
-        adapter = InquirySubmissionAdapter()
-        result = adapter.submit(ics_session)
+
+        gate_error = (
+            "I could not submit that just yet. Please confirm using the summary "
+            "prompt, or start the inquiry again."
+        )
+
+        with transaction.atomic():
+            ics = InquiryConversationSession.objects.select_for_update().get(
+                pk=ics_session.pk
+            )
+            data = dict(ics.collected_data or {})
+
+            if ics.state == 'submitted' or ics.submitted_inquiry_id:
+                return _build_engine_response(
+                    "This inquiry has already been submitted.",
+                    chips=['Contact Us', 'New Inquiry'],
+                    metadata={'ics_state': 'submitted', 'inquiry_submitted': True},
+                )
+
+            if ics.state != 'awaiting_confirmation':
+                return _build_engine_response(
+                    gate_error,
+                    chips=['Start Inquiry'],
+                    metadata={'ics_state': ics.state},
+                )
+
+            missing = [
+                field for field in MANDATORY_SUBMIT_FIELDS
+                if not str(data.get(field, '')).strip()
+            ]
+            if missing:
+                return _build_engine_response(
+                    gate_error,
+                    chips=['Edit Details', 'Cancel'],
+                    metadata={'ics_state': 'awaiting_confirmation'},
+                )
+
+            stored_nonce = data.get(NONCE_KEY) or ''
+            provided = (submit_nonce or '').strip()
+            nonce_ok = False
+            if stored_nonce and provided and len(stored_nonce) == len(provided):
+                nonce_ok = secrets.compare_digest(stored_nonce, provided)
+            if not nonce_ok:
+                return _build_engine_response(
+                    gate_error,
+                    chips=['Yes, Submit', 'Edit Details', 'Cancel'],
+                    metadata={'ics_state': 'awaiting_confirmation'},
+                )
+
+            elapsed = (timezone.now() - ics.created_at).total_seconds()
+            turns = int(data.get(TURNS_KEY) or 0)
+            if elapsed < MIN_SUBMIT_SECONDS or turns < MIN_ENGINE_TURNS:
+                return _build_engine_response(
+                    "Please take a moment to review the summary, then confirm again.",
+                    chips=['Yes, Submit', 'Edit Details', 'Cancel'],
+                    metadata={
+                        'ics_state': 'awaiting_confirmation',
+                        'submit_nonce': stored_nonce,
+                    },
+                )
+
+            data.pop(NONCE_KEY, None)
+            ics.collected_data = data
+            ics.save(update_fields=['collected_data', 'updated_at'])
+
+            adapter = InquirySubmissionAdapter()
+            result = adapter.submit(ics)
+
+            if result['success']:
+                ics.state = 'submitted'
+                ics.submitted_inquiry_id = result['inquiry_id']
+                ics.submitted_at = timezone.now()
+                ics.save(update_fields=[
+                    'state', 'submitted_inquiry_id', 'submitted_at', 'updated_at',
+                ])
+
+        ics_session.refresh_from_db()
 
         if result['success']:
-            ics_session.state = 'submitted'
-            ics_session.submitted_inquiry_id = result['inquiry_id']
-            ics_session.submitted_at = timezone.now()
-            ics_session.save()
             _log_event(ics_session, 'submitted',
                        notes=f"inquiry_id={result['inquiry_id']}")
             _log_event(ics_session, 'confirmed')
@@ -498,12 +616,17 @@ class InquiryConversationEngine:
                 },
             )
         else:
+            nonce = _issue_submit_nonce(ics_session)
             logger.error(f'[InquiryEngine] Submission failed for {ics_session.ics_id}: {result.get("error")}')
             return _build_engine_response(
                 "I'm sorry, something went wrong while submitting your inquiry. "
                 "Please try again or contact us directly at **+91 86670 20798**.",
                 chips=['Try Again', 'Contact Us'],
-                metadata={'ics_state': 'awaiting_confirmation', 'submission_error': True},
+                metadata={
+                    'ics_state': 'awaiting_confirmation',
+                    'submission_error': True,
+                    'submit_nonce': nonce,
+                },
             )
 
     # ── Cancellation ───────────────────────────────────────────────────────────

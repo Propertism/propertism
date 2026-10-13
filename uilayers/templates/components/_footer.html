@@ -93,6 +93,7 @@
                 <p>Curate property management updates for NRIs.</p>
                 <form action="{% url 'newsletter_subscribe' %}" method="POST" class="footer-newsletter-form-v4">
                     {% csrf_token %}
+                    {% include 'includes/_form_validation_fields_hidden.html' %}
                     <div class="footer-newsletter-row-email">
                         <input type="email" name="email" placeholder="Email Address" required>
                     </div>

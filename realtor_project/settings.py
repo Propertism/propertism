@@ -1,5 +1,6 @@
 # Django settings for realtor_project
 import os
+import sys
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
@@ -111,6 +112,13 @@ SECRET_KEY = (
 
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
+# Detect Django/pytest test runs so production CAPTCHA enforcement
+# does not break local tests that intentionally disable CAPTCHA.
+TESTING = (
+    any(arg == 'test' or arg.endswith('pytest') or arg == 'pytest' for arg in sys.argv)
+    or os.environ.get('DJANGO_TEST') == '1'
+)
 
 # Allowed hosts
 ALLOWED_HOSTS = _get_csv_env('DJANGO_ALLOWED_HOSTS', 'ALLOWED_HOSTS', default=['*'])
@@ -328,6 +336,13 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+# Deal Engine server-to-server key for GET /api/inquiries/ (Option B).
+# Empty = key-auth disabled; staff JWT/session still required. Never hardcode.
+DEAL_ENGINE_INQUIRIES_KEY = os.environ.get('DEAL_ENGINE_INQUIRIES_KEY', '').strip()
+DEAL_ENGINE_INQUIRIES_KEY_PREVIOUS = os.environ.get(
+    'DEAL_ENGINE_INQUIRIES_KEY_PREVIOUS', ''
+).strip()
+
 # ==============================================================================
 # ALLAUTH — Google OAuth (SCCB-PROP-NRIASSIST-0805)
 # ==============================================================================
@@ -460,6 +475,7 @@ CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')
 # Notification recipients — all inquiry/lead alerts go to both inboxes
 extra_emails = [e.strip() for e in os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in').split(',') if e.strip()]
 ADMIN_EMAILS = list({ADMIN_EMAIL} | set(extra_emails))
+
 
 # Email timeout (seconds)
 EMAIL_TIMEOUT = 10
@@ -607,6 +623,7 @@ REALBOT_ENVIRONMENT = os.environ.get('REALBOT_ENVIRONMENT', 'development')
 REALBOT_WIDGET_URL = os.environ.get('REALBOT_WIDGET_URL', 'http://127.0.0.1:8010')
 REALBOT_API_VERSION = os.environ.get('REALBOT_API_VERSION', 'v1')
 
+
 # Tamilselvan Profile Contact Settings
 TAMILSELVAN_EMAIL_1 = os.environ.get('TAMILSELVAN_EMAIL_1', 'info@propertism.in')
 TAMILSELVAN_EMAIL_2 = os.environ.get('TAMILSELVAN_EMAIL_2', 'propertism.tamil@gmail.com')
@@ -683,8 +700,17 @@ RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')      # Public — 
 RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')  # Private — never expose
 
 # Fail-open: if True, allows enquiries through when Google's API is unreachable.
-# Set to False in production for strict enforcement.
-RECAPTCHA_FAIL_OPEN = _get_bool_env('RECAPTCHA_FAIL_OPEN', default=True)
+# Default is fail-closed. Production (DEBUG=False, not TESTING) always fail-closed
+# even if RECAPTCHA_FAIL_OPEN is set in the environment.
+RECAPTCHA_FAIL_OPEN = _get_bool_env('RECAPTCHA_FAIL_OPEN', default=False)
+if not DEBUG and not TESTING:
+    RECAPTCHA_FAIL_OPEN = False
+    if not RECAPTCHA_SITE_KEY or not RECAPTCHA_SECRET_KEY:
+        import logging as _recaptcha_logging
+        _recaptcha_logging.getLogger(__name__).error(
+            '[reCAPTCHA] Production site or secret key is missing. '
+            'Verification will fail closed. Set RECAPTCHA_SITE_KEY and RECAPTCHA_SECRET_KEY.'
+        )
 
 # --- EXECUTIVE LEAD EMAIL NOTIFICATION SETTINGS (SCCB-DMP-LEAD-M1.5) ---
 EXECUTIVE_EMAIL_CONFIG = {

@@ -32,7 +32,28 @@ def is_ai_enabled():
 @require_POST
 @csrf_exempt
 def submit_chat_message(request):
-    """Handle chat message submission"""
+    """Handle chat message submission
+    
+    SECURITY NOTE: This endpoint creates ContactMessage (not Inquiry).
+    Legacy endpoint - consider deprecating in favor of protected endpoints.
+    """
+    # SECURITY: Add spam protection
+    from content.security.spam_protection import SpamProtectionService
+    
+    spam_service = SpamProtectionService(request)
+    spam_result = spam_service.validate(form_name='Chat Widget')
+    
+    if not spam_result.passed:
+        if spam_result.rate_limited:
+            return JsonResponse({
+                'success': False,
+                'error': 'Too many requests. Please try again later.'
+            }, status=429)
+        return JsonResponse({
+            'success': False,
+            'error': spam_result.error_message or 'Validation failed'
+        }, status=400)
+    
     try:
         name = request.POST.get('name', '').strip()
         email = request.POST.get('email', '').strip()
@@ -124,6 +145,15 @@ def init_session(request):
             error_code=ERR_INTEGRATION_DISABLED,
             error_message="realBOT integration is disabled locally",
             status=403
+        )
+
+    from chat.request_limits import allow_session_init
+    if not allow_session_init(request):
+        return standard_response(
+            success=False,
+            error_code=ERR_RATE_LIMIT_EXCEEDED,
+            error_message="Too many requests. Please try again later.",
+            status=429,
         )
 
     try:
@@ -219,13 +249,25 @@ def send_message(request):
         session_id_str = None
         prompt_text = ""
 
+        submit_nonce = None
         try:
             data = json.loads(request.body.decode('utf-8'))
             session_id_str = data.get('session_id')
             prompt_text = data.get('message', '').strip()
+            submit_nonce = data.get('submit_nonce')
         except Exception:
             session_id_str = request.POST.get('session_id')
             prompt_text = request.POST.get('message', '').strip()
+            submit_nonce = request.POST.get('submit_nonce')
+
+        from chat.request_limits import allow_send_message
+        if not allow_send_message(request, session_id_str or ""):
+            return standard_response(
+                success=False,
+                error_code=ERR_RATE_LIMIT_EXCEEDED,
+                error_message="Too many requests. Please try again later.",
+                status=429,
+            )
 
         if not session_id_str or not prompt_text:
             InfrastructureMetrics.increment("failed_requests")
@@ -292,7 +334,9 @@ def send_message(request):
         if open_ics:
             inq_engine = InquiryConversationEngine()
             inq_engine.refresh_expiry(open_ics)
-            inq_result = inq_engine.process_message(open_ics, prompt_text)
+            inq_result = inq_engine.process_message(
+                open_ics, prompt_text, submit_nonce=submit_nonce
+            )
             response_text = inq_result['text']
             response_metadata = inq_result['metadata']
             # Annotate with inquiry context
@@ -1009,6 +1053,14 @@ def inquiry_initiate(request):
     if not is_realbot_enabled():
         return standard_response(success=False, error_code=ERR_INTEGRATION_DISABLED,
                                  error_message="realBOT integration is disabled", status=403)
+    from chat.request_limits import allow_inquiry_initiate
+    if not allow_inquiry_initiate(request):
+        return standard_response(
+            success=False,
+            error_code=ERR_RATE_LIMIT_EXCEEDED,
+            error_message="Too many requests. Please try again later.",
+            status=429,
+        )
     try:
         data = json.loads(request.body.decode('utf-8'))
     except Exception:

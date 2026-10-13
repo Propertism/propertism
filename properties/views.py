@@ -18,10 +18,12 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from .permissions import IsStaffOrDealEngineKey
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from content.site_context import get_company_info, get_home_section_links
 
@@ -532,10 +534,16 @@ def inquiry_pending_count(request):
 
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@authentication_classes([JWTAuthentication, SessionAuthentication])
+@permission_classes([IsStaffOrDealEngineKey])
 def inquiry_list_api(request):
-    """API endpoint for retrieving inquiries for prospect matching.
-    Excludes Manage inquiries — those are handled in-house by Propertism."""
+    """Enquiry list for prospect matching.
+
+    Access: staff JWT/session (is_staff=True) OR Authorization: DealEngine <key>.
+    An empty DEAL_ENGINE_INQUIRIES_KEY does not reopen anonymous access.
+    The service key is accepted only on this view. GET-only.
+    Excludes Manage inquiries — those are handled in-house by Propertism.
+    """
     queryset = Inquiry.objects.exclude(
         service_needed__in=["manage"],
     ).order_by("-created_at")
