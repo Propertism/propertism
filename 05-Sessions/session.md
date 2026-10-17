@@ -139,16 +139,20 @@
 8. **UI Refinements (`ceea752`)**:
    - Reordered Django Admin Inquiries table: `Submitted` date column placed before `Name`.
    - Removed the floating speech/teaser bubble ("realBOT BY PROPERTISM") from the site's floating trigger button across JS and CSS.
-9. **SystemConfig DB Subsystem Deployment**:
+9. **SystemConfig DB Subsystem Deployment & Live Verification**:
    - Model `SystemConfig` (`0024_systemconfig.py`) and Admin UI with masked secret presentation.
    - Dynamic caching config loader `content/utils/config.py` (`get_system_config`).
    - Hardened `seed_system_config` command with canonical reCAPTCHA v2 keys (`6Lfv...`), fail-closed default, and non-destructive upsert.
    - Dynamic fallback integrated into `captcha_provider.get_site_key()` and `GoogleRecaptchaV2.verify()`.
    - Automatic execution of `migrate` and `seed_system_config` added to `.github/workflows/deploy.yml`.
    - Comprehensive unit tests in `content/tests.py` (`SystemConfigSubsystemTests`), verified 75/75 tests passing.
+   - **Production Evidence `[VERIFIED IN LIVE PRODUCTION]`**:
+     - Migration `0024_systemconfig` applied successfully on Lightsail.
+     - `seed_system_config` seeded 16 parameters into PostgreSQL `content_systemconfig`.
+     - Live curl to `https://www.propertism.in/` verified `data-sitekey="6LfvTkctAAAAAI6HkkGwvyEIAmdrzq6qYy3zb7FM"` dynamically rendered.
+     - Live curl to `https://www.propertism.in/api/inquiries/` verified `HTTP 401 Unauthorized` strictly enforced.
 
 ### PENDING / NEXT ACTION
-- Empirically verify live production deployment of SystemConfig on `https://www.propertism.in`.
 - Viji to check the live spam count on `https://www.propertism.in/admin/properties/inquiry/` and confirm bulk deletion.
 - Verify Deal Engine synchronization on `https://admin.propertism.in`.
 
