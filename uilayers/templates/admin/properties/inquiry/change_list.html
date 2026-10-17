@@ -200,7 +200,7 @@
   .status-select.saved  { border-color: var(--closed-bd); }
 
   /* ── Date cell ── */
-  .date-cell { color: var(--muted); font-size: .72rem; white-space: nowrap; }
+  .date-cell { color: var(--navy); font-size: .76rem; font-weight: 500; white-space: nowrap; }
   .sort-th { cursor: pointer; user-select: none; }
   .sort-th:hover { color: var(--gold); }
   .sort-arrow { margin-left: 4px; font-size: .62rem; opacity: .7; }
@@ -487,6 +487,13 @@
         <thead>
           <tr>
             <th>#</th>
+            <th class="sort-th">
+              <a href="?sort={% if current_sort == 'asc' %}desc{% else %}asc{% endif %}{% if current_q %}&amp;q={{ current_q }}{% endif %}{% if current_status %}&amp;status={{ current_status }}{% endif %}{% if current_year %}&amp;year={{ current_year }}{% endif %}{% if current_month %}&amp;month={{ current_month }}{% endif %}"
+                 style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px;">
+                Submitted
+                <span class="sort-arrow">{% if current_sort == 'asc' %}&#x25B2;{% else %}&#x25BC;{% endif %}</span>
+              </a>
+            </th>
             <th>Name</th>
             <th>Country</th>
             <th>Phone</th>
@@ -499,13 +506,6 @@
             <th class="hide-mobile">NRI</th>
             <th class="hide-mobile">Message</th>
             <th>Status</th>
-            <th class="hide-mobile sort-th">
-              <a href="?sort={% if current_sort == 'asc' %}desc{% else %}asc{% endif %}{% if current_q %}&amp;q={{ current_q }}{% endif %}{% if current_status %}&amp;status={{ current_status }}{% endif %}{% if current_year %}&amp;year={{ current_year }}{% endif %}{% if current_month %}&amp;month={{ current_month }}{% endif %}"
-                 style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px;">
-                Submitted
-                <span class="sort-arrow">{% if current_sort == 'asc' %}&#x25B2;{% else %}&#x25BC;{% endif %}</span>
-              </a>
-            </th>
             <th>Update Status</th>
             <th></th>
           </tr>
@@ -514,6 +514,10 @@
           {% for inq in inquiries %}
           <tr>
             <td class="id-col">{{ inq.id }}</td>
+
+            <td class="date-cell">
+              {{ inq.created_at|date:"d M Y, H:i" }}
+            </td>
 
             <td class="name-cell">
               <strong>
@@ -594,10 +598,6 @@
               <span class="badge badge-{{ inq.status }}" id="badge-{{ inq.id }}">
                 {{ inq.get_status_display }}
               </span>
-            </td>
-
-            <td class="date-cell hide-mobile">
-              {{ inq.created_at|date:"d M Y, H:i" }}
             </td>
 
             <td>

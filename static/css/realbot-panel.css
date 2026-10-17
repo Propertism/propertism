@@ -542,6 +542,7 @@
 /* -------------------------------------------------------------------------- */
 
 .realbot-teaser-bubble {
+    display: none !important;
     position: absolute;
     bottom: 72px; /* Positioned directly above the trigger button */
     right: -47px; /* Center horizontally relative to 56px FAB */
