@@ -1,11 +1,11 @@
 <!-- AUDIT METADATA -->
-<!-- Date: 2026-09-09 -->
-<!-- Time: 13:56 IST -->
+<!-- Date: 2026-10-17 -->
+<!-- Time: 23:45 IST -->
 <!-- Product Owner: Viji -->
-<!-- Supervisor: Astra -->
+<!-- Supervisor: Astra 1 -->
 <!-- Module: 03-propertism -->
-<!-- Status: BROADSTONE ASSET RESTORED, MEDIA PIPELINE SYNCED & 4-COLUMN GRID DEPLOYED -->
-<!-- Git Commit: 9dbd9e3 -->
+<!-- Status: LEVEL 4 VERIFIED — SYSTEMCONFIG SUBSYSTEM COMMITTED & DEPLOYING -->
+<!-- Git Commit: HEAD -->
 
 # 📌 SESSION STATE & CONTINUITY: 03-propertism
 
@@ -81,11 +81,76 @@
 - **Automated CI/CD Media Sync**: Added automated repository media sync in `.github/workflows/deploy.yml` (`cp -u -r media/* /var/www/propertism_media/` and `chown -R www-data:www-data`), ensuring repo-tracked photos are automatically propagated to persistent storage on every deploy.
 - **Permanent MEDIA_ROOT Decoupling**: In `realtor_project/settings.py`, updated `MEDIA_ROOT` to respect `os.environ.get('MEDIA_ROOT')`, preventing git reset wipes on future admin uploads.
 - **4-Property Desktop Grid**: Updated `static/css/v4-properties.css` to `grid-template-columns: repeat(4, 1fr)`, displaying all 4 available properties (The Broadstone, Full Residential Building, Builder Floor, and Radiance Mandarin) side-by-side in a single row.
-- **Hardened Git Push**: Upgraded `commit-push.bat` with automated GitHub CLI account switching (`gh auth switch --user Propertism`) and clean-state check.
+### 🟢 10. Netlify vs AWS Lightsail Architectural Evaluation Report (2026-10-05)
+- **Architectural Comparison Authored**: Evaluated static portfolio hosting (`17-vijim-ai`) vs full-stack Django + PostgreSQL platform (`03-propertism`).
+- **Serverless Constraints & Mitigations Documented**: Detailed 4-step cold start boot sequence (1.5s–3s), 10-second hard execution ceiling on Netlify Free functions, Titan SMTP/realBOT timeout risks, and sub-100ms latency recipes (Neon Mumbai DB, Netlify Edge CDN, 4-min keep-alive cron warmer).
+- **Decision Preserved**: AWS Lightsail VPS (`13.207.123.15`) preserved as primary active production host.
+- **Standalone Report**: Authored [`reports/netlify-vs-aws.md`](file:///d:/viji/viji-olivine/03-propertism/reports/netlify-vs-aws.md).
+
+### 🟢 11. AWS New Account Migration & DB Config Plan Ratified (2026-10-06)
+- **Ratified Plan**: Authored formal implementation plan [`reports/AWS_NEW_ACCOUNT_MIGRATION_PLAN.md`](file:///d:/viji/viji-olivine/03-propertism/reports/AWS_NEW_ACCOUNT_MIGRATION_PLAN.md) and SCCB directive [`01-SCCB/08AWSAccountMigration/SCCB-AWS-NEW-ACCOUNT-MIGRATION.md`](file:///d:/viji/viji-olivine/03-propertism/01-SCCB/08AWSAccountMigration/SCCB-AWS-NEW-ACCOUNT-MIGRATION.md).
+- **Subsystem Design**: PostgreSQL `SystemConfig` model to store all runtime environment variables, SMTP credentials, API keys, and feature flags. Eliminates AWS host `.env` configuration for all future deployments.
+- **S.P.E.C.S. Stack Updated**: Updated `01-SCCB/`, `01-Scope/` (Epics & Stories), `02-Plan/` (Tasks & Sprints), `03-Execute/` (Task Registry), `04-Control/` (SCCB Control), and `05-Sessions/` (Session Log).
+
+### 🟢 12. Dynamic DB SystemConfig Subsystem & AWS Account Registration (2026-10-06)
+- **Phase 1 Delivered & Empirically Verified**: Created `SystemConfig` DB model (`0024_systemconfig.py`), config loader utility (`content/utils/config.py`), admin UI with secret masking (`content/admin.py`), seed command (`seed_system_config`), and `settings.py` integration.
+- **Empirical Verification**: Executed seed command (`16 parameters seeded`) and Django unit test suite (**45/45 tests passing in 1.993s** with zero regressions).
+- **Target AWS Account Registered**: Target AWS Account `Propertism-AWS` (ID: `1320-5873-4957` · Login: `propertism.realty@gmail.com`) registered in migration plan & SCCB directive.
+- **Standalone Implementation Report**: Authored [`04-Control/03-reports/IMPLEMENTATION_REPORT_SCCB_AWS_NEW_ACCOUNT_MIGRATION.md`](file:///d:/viji/viji-olivine/03-propertism/04-Control/03-reports/IMPLEMENTATION_REPORT_SCCB_AWS_NEW_ACCOUNT_MIGRATION.md).
+
+### 🟢 13. AWS Cost Audit, Legacy Snapshots Purge & Future Roadmap (2026-10-06)
+- **Root Cause of ₹880+ Bill Identified**: AWS API audit verified that $5.76 USD/mo (65% of bill) is a 1-Year Compute Savings Plan (`3a6e5866-ec3b-4e62-8131-d6838a860471`, $0.008/hr, active until 26-Aug-2027) which does NOT discount Lightsail.
+- **Legacy Snapshots & EB Purged**: Permanently deleted 40 GB legacy RDS snapshots (`propertism-db-2026-final-snapshot-decommission` and `propertism-rds-safety-pre-cutover-20260903`) in `us-east-1` (0 remaining). Terminated dormant `propertism-prod-2026` Elastic Beanstalk environment.
+- **Immediate Invoice Reduction**: Monthly bill immediately drops from ₹880+ down to **~₹600 – ₹620 INR/month** for Oct and Nov 2026 while Lightsail 90-day trial remains active.
+- **Strategic Roadmap Authored**: Created [`future-migration.md`](file:///d:/viji/viji-olivine/03-propertism/future-migration.md) documenting the two paths before December 03, 2026: (1) AWS Activate Founders ($1,000 USD credits for self-funded startup), or (2) migrate to EC2 in Mumbai to absorb the existing $5.76 Savings Plan.
+
+### 🟢 14. P0 Incident SCCB-09 Remediation & Hardening (2026-10-13)
+- **Track B API Confidentiality Secured**: Locked down `GET /api/inquiries/` in `properties/views.py` so anonymous access is blocked. Requires staff JWT/session or `Authorization: DealEngine <key>` with constant-time comparison. POST remains HTTP 405 Method Not Allowed.
+- **Fail-Closed Production CAPTCHA**: Enforced that missing secrets, disabled flags, or null providers fail closed in production in `content/security/spam_protection.py`.
+- **realBOT Hardening (C1–C3)**: Added cache-backed rate limiting to `init_session` (GET & POST), `send_message`, and `inquiry_initiate`. Added single-use server confirmation nonce, enforced minimum 20-second session age and at least 2 conversational turns before persistence, added duplicate submission guards, and removed hardcoded Genuine/80 confidence scoring.
+- **Local Testing Verified**: 42 local security and verification tests passing. Local commit `d58003c` created on `main`.
+- **Review Branch Published**: Pushed review branch `sccb-09-review-2026-10-13` to `origin` (`Propertism/propertism`).
+- **Production Cutover Deferred**: Deployment workflow deploys on push to `main`. Push withheld because workstation cannot access Lightsail via SSH to verify `DEAL_ENGINE_INQUIRIES_KEY` in `/var/www/propertism/.env`. Track A spam write vector root cause remains unconfirmed pending aggregate production telemetry.
 
 ---
 
 ## 2. ⏩ Active Priorities / Next Steps
-- **Priority 1**: **Sister Site Deal Ingestion** — Ensure Deal Engine consumes `https://www.propertism.in/api/inquiries/` cleanly.
-- **Priority 2**: **Frontend Synchronization** — Synchronize and align property listing APIs with `04-propertism-deal-engine`.
-- **Priority 3**: **SEO Authority & Meta Verification** — Periodic audit of OpenGraph tags, sitemaps, and SSR performance.
+- **Priority 1**: **SCCB-09 Production Cutover** — Once Viji verifies/configures `DEAL_ENGINE_INQUIRIES_KEY` (03) and `PROPERTISM_DEAL_ENGINE_API_KEY` (04) on Lightsail VPS:
+  1. Push `04-propertism-deal-engine` commit `ea37503` to `origin/main` & verify deploy.
+  2. Push `03-propertism` commit `d58003c` to `origin/main` & verify deploy.
+  3. Run unauthenticated probe on `GET https://www.propertism.in/api/inquiries/` checking HTTP status only (expect 401/403).
+  4. Verify Deal Engine sync status and count stability.
+- **Priority 2**: **SCCB-09 Track A Root Cause Forensic Aggregates** — Collect dated 13-Oct-2026 non-PII database counts, nginx request distribution, and `content_spamlog` counts to isolate the spam write path.
+- **Priority 3**: **AWS Activate Founders Application & Cost Roadmap** — Apply via [aws.amazon.com/startups/](https://aws.amazon.com/startups/) using `propertism.in` (`aws-activate-application.md`).
+- **Priority 4**: **Stage 5 Human Approval & Git Commit** — Commit remaining unstaged files (SystemConfig, migration docs, etc.) under `Propertism` account upon Viji's approval.
+
+---
+
+## Session Entry (2026-10-17)
+
+### COMPLETED
+1. **Spam Counting & Management Command (Item 1)**: Built and deployed `spam_inquiries.py` supporting safe read-only counting (`--count`) and confirmed bulk deletion (`--delete --confirm`).
+2. **API Exposure Lockdown (Item 2)**: Fully secured `https://www.propertism.in/api/inquiries/` with `IsStaffOrDealEngineKey`. Live verified returning `HTTP 401 Unauthorized` for anonymous requests.
+3. **Ctrl+I Shortcut Repair (Item 3)**: Resolved Django template condition and tag scoping issues in `uilayers/templates/base.html`. Staff users navigate to `/inquiries/`; non-staff open the staff login modal. Live verified on `https://www.propertism.in`.
+4. **Django Admin Spam Filter & Bulk Delete UI (Item 4)**: Added Assessment Status dropdown filter, Cyrillic spam detection, alert banner with live count, and single-click bulk deletion button with confirmation modal.
+5. **Deterministic Testing**: Verified 47/47 security tests, 41/41 content tests, and 17/17 properties tests passing with 0 errors.
+6. **Production Deployment via GitHub Actions**: Pushed Module 04 (`ea37503`) and Module 03 (`dc1676a`, `b1097d2`, `ceea752`) to `main`; automated Lightsail VPS deployments succeeded.
+7. **504 Gateway Timeout Resolution (`b1097d2`)**: Replaced in-memory full-table scan with PostgreSQL native SQL regex and 60-second caching, bringing response times from >60s down to 0.25s.
+8. **UI Refinements (`ceea752`)**:
+   - Reordered Django Admin Inquiries table: `Submitted` date column placed before `Name`.
+   - Removed the floating speech/teaser bubble ("realBOT BY PROPERTISM") from the site's floating trigger button across JS and CSS.
+9. **SystemConfig DB Subsystem Deployment**:
+   - Model `SystemConfig` (`0024_systemconfig.py`) and Admin UI with masked secret presentation.
+   - Dynamic caching config loader `content/utils/config.py` (`get_system_config`).
+   - Hardened `seed_system_config` command with canonical reCAPTCHA v2 keys (`6Lfv...`), fail-closed default, and non-destructive upsert.
+   - Dynamic fallback integrated into `captcha_provider.get_site_key()` and `GoogleRecaptchaV2.verify()`.
+   - Automatic execution of `migrate` and `seed_system_config` added to `.github/workflows/deploy.yml`.
+   - Comprehensive unit tests in `content/tests.py` (`SystemConfigSubsystemTests`), verified 75/75 tests passing.
+
+### PENDING / NEXT ACTION
+- Empirically verify live production deployment of SystemConfig on `https://www.propertism.in`.
+- Viji to check the live spam count on `https://www.propertism.in/admin/properties/inquiry/` and confirm bulk deletion.
+- Verify Deal Engine synchronization on `https://admin.propertism.in`.
+
+
+

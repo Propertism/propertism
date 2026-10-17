@@ -207,3 +207,4 @@ ga-credentials.json
 03-Execute/*.pem
 03-Execute/lightsail-03-09-2026-ipdetails.png
 media_backup/
+.migration_bundle/

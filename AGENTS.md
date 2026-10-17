@@ -29,3 +29,13 @@ The mandatory 8-stage delivery lifecycle for all engineering and code fixes:
 - **NO direct Lightsail environment changes** for any application code.
 - Direct VPS edits are strictly limited to runtime `.env` secret updates or isolated one-off scripts.
 - If anything requires a code fix, it MUST strictly travel the 8-stage lifecycle above.
+
+## SCCB / Report-First Execution Rule
+When a task prompt requires an SCCB, audit report, implementation brief or other task-control report:
+1. Read the canonical governance (`AGENTS.md`, applicable `CLAUDE.md`) and the relevant task context.
+2. Create or update the applicable SCCB/report in the designated directory **before** starting implementation.
+3. Record scope, planned actions, risks, and validation criteria in that artifact.
+4. Execute the authorised task.
+5. Update the same SCCB/report with actual changes, tests, evidence, unresolved issues, and final status.
+
+Never defer creation of the required report until after the task. When Viji specifies a mandatory report location for an ongoing exercise, save all associated SCCBs and reports there until Viji explicitly closes the exercise. Do not invent a separate Task-Rules skill; this file is the governing instruction.

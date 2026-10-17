@@ -189,6 +189,8 @@ class InquiryAPIAuthenticationTests(APITestCase):
 
 class CAPTCHAFailClosedTests(TestCase):
     def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
         self.property = _property()
         self.form_data = {
             "property_id": self.property.id,

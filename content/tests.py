@@ -893,6 +893,91 @@ class AddressAutocompleteFrameworkTests(TestCase):
         self.assertEqual(context['google_maps_default_country'], 'in')
 
 
+class SystemConfigSubsystemTests(TestCase):
+    """Unit tests for database-backed SystemConfig subsystem and dynamic fallback."""
+
+    def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
+
+    def test_get_system_config_fallback_to_default(self):
+        from content.utils.config import get_system_config
+        val = get_system_config("NON_EXISTENT_KEY_12345", default="fallback_default")
+        self.assertEqual(val, "fallback_default")
+
+    def test_get_and_set_system_config(self):
+        from content.utils.config import get_system_config, set_system_config
+        from content.models import SystemConfig
+
+        set_system_config(
+            key="SAMPLE_TEST_SETTING",
+            value="sample_value_123",
+            category="general",
+            is_secret=True,
+            description="Test parameter"
+        )
+
+        # Database verification
+        cfg = SystemConfig.objects.get(key="SAMPLE_TEST_SETTING")
+        self.assertEqual(cfg.value, "sample_value_123")
+        self.assertTrue(cfg.is_secret)
+
+        # Loader verification
+        val = get_system_config("SAMPLE_TEST_SETTING")
+        self.assertEqual(val, "sample_value_123")
+
+    def test_seed_system_config_command(self):
+        from django.core.management import call_command
+        from content.models import SystemConfig
+
+        call_command("seed_system_config")
+
+        self.assertGreaterEqual(SystemConfig.objects.count(), 16)
+        site_key = SystemConfig.objects.get(key="RECAPTCHA_SITE_KEY")
+        self.assertEqual(site_key.value, "6LfvTkctAAAAAI6HkkGwvyEIAmdrzq6qYy3zb7FM")
+        secret_key = SystemConfig.objects.get(key="RECAPTCHA_SECRET_KEY")
+        self.assertEqual(secret_key.value, "6LfvTkctAAAAACRtPV3w2dO8IulaVfBUhGB4syyY")
+        fail_open = SystemConfig.objects.get(key="RECAPTCHA_FAIL_OPEN")
+        self.assertEqual(fail_open.value, "False")
+
+    @override_settings(RECAPTCHA_SITE_KEY="")
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_captcha_provider_reads_from_system_config(self, mock_is_feature_enabled):
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: True if flag == "CAPTCHA_ENABLE" else default
+        from content.models import SystemConfig
+        from content.security.captcha_provider import get_site_key
+
+        SystemConfig.objects.update_or_create(
+            key="RECAPTCHA_SITE_KEY",
+            defaults={"value": "db-backed-site-key-test"}
+        )
+
+        site_key = get_site_key()
+        self.assertEqual(site_key, "db-backed-site-key-test")
+
+    @override_settings(RECAPTCHA_SECRET_KEY="")
+    @patch("urllib.request.urlopen")
+    def test_google_recaptcha_reads_secret_from_system_config(self, mock_urlopen):
+        import io
+        import json
+        from content.models import SystemConfig
+        from content.security.google_recaptcha import GoogleRecaptchaV2
+
+        mock_resp = io.BytesIO(json.dumps({"success": True}).encode("utf-8"))
+        mock_resp.status = 200
+        mock_urlopen.return_value.__enter__.return_value = mock_resp
+
+        SystemConfig.objects.update_or_create(
+            key="RECAPTCHA_SECRET_KEY",
+            defaults={"value": "db-backed-secret-key-test"}
+        )
+
+        provider = GoogleRecaptchaV2()
+        result = provider.verify(token="valid-token-sample")
+        self.assertTrue(result.success)
+
+
+
 
 
 

@@ -20,3 +20,5 @@
 | **SPRINT-01** | Scaffolding & Foundation Architecture | TSK-001, TSK-002 | 🟡 ACTIVE |
 | **SPRINT-02** | Core Domain & Journey Implementation | TSK-003, TSK-004 | ⚪ QUEUED |
 | **SPRINT-03** | Verification, Hardening & Reports | TSK-005 | ⚪ QUEUED |
+| **SPRINT-06** | **DB Config Subsystem & AWS Account Migration** | TSK-CFG-01..06, TSK-MIG-15..20 | 🟡 PLANNED |
+

@@ -10,7 +10,7 @@ from .models import (
     CompanyInfo, Statistic, Service, CoreValue, TeamMember,
     ExpertiseArea, BlogPost, Newsletter, ContactInquiry,
     CustomerReviewSection, CustomerReview, HomepageCardSection, HomepageCard,
-    HeroBackgroundImage, LandingLead, SpamLog,
+    HeroBackgroundImage, LandingLead, SpamLog, SystemConfig,
 )
 
 
@@ -461,3 +461,28 @@ class SpamLogAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+# ─────────────────────────────────────────────────────────────────────────── #
+# DATABASE-BACKED SYSTEM CONFIGURATION ADMIN                                  #
+# ─────────────────────────────────────────────────────────────────────────── #
+
+@admin.register(SystemConfig)
+class SystemConfigAdmin(admin.ModelAdmin):
+    list_display = ('key', 'category', 'masked_value', 'is_secret', 'updated_at')
+    list_filter = ('category', 'is_secret')
+    search_fields = ('key', 'value', 'description')
+    ordering = ('category', 'key')
+    fieldsets = (
+        ('Configuration Item', {
+            'fields': ('key', 'category', 'value', 'is_secret', 'description')
+        }),
+    )
+
+    def masked_value(self, obj):
+        if obj.is_secret and obj.value:
+            return "••••••••••••••••"
+        return obj.value
+
+    masked_value.short_description = "Value"
+

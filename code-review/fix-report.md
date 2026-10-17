@@ -1,5 +1,21 @@
 # Fix Report — Propertism (01propertism)
-# Current State as of 2026-05-21
+# Current State as of 2026-10-13
+
+---
+
+## Session 2026-10-13 — SCCB-09 local security remediation
+
+**Status:** Local only. Not committed. Not deployed. SCCB-09 not closed.
+
+**Canonical report:** `04-Control/01-sccb/SCCB-09-PROPERTISM-SPAM-INCIDENT-END-TO-END-001.md` §24
+
+**Project 03:** Option B `IsStaffOrDealEngineKey` on GET `/api/inquiries/`; CAPTCHA fail-closed retained; realBOT C1–C3. C4 not implemented. `login_api` and `seed_system_config.py` untouched.
+
+**Project 04:** Shared `fetch_inquiries()` with `Authorization: DealEngine <key>` at all four former anonymous sites; inbound + direct-leads require SPA session. Failed sync does not write `DealShortlist`.
+
+**Tests:** 03 security subset 42 OK (Django 4.2.16 `.venv`); 03+m26 133 with 1 pre-existing extractor failure; 04 inbound tests 18 OK (Django 5.2.16 `00-oec` venv).
+
+**Copies:** `code-review/sccb-09/`
 
 ---
 

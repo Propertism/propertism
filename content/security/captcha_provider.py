@@ -84,4 +84,11 @@ def get_site_key() -> str:
     captcha_enabled = is_feature_enabled('CAPTCHA_ENABLE', default=False)
     if not captcha_enabled:
         return ''
-    return getattr(settings, 'RECAPTCHA_SITE_KEY', '')
+    site_key = getattr(settings, 'RECAPTCHA_SITE_KEY', '')
+    if not site_key:
+        try:
+            from content.utils.config import get_system_config
+            site_key = get_system_config('RECAPTCHA_SITE_KEY', '') or ''
+        except Exception:
+            pass
+    return site_key

@@ -1,8 +1,8 @@
 <!-- AUDIT METADATA -->
-<!-- Date: 2026-09-03 -->
-<!-- Time: 14:20 IST -->
+<!-- Date: 2026-10-06 -->
+<!-- Time: 23:15 IST -->
 <!-- Product Owner: Viji -->
-<!-- Supervisor: Astra -->
+<!-- Supervisor: Astra 1 -->
 <!-- Module: 03-propertism -->
 <!-- Status: ACTIVE -->
 <!-- Git Commit: HEAD (uncommitted) -->
@@ -75,6 +75,27 @@
 
 ---
 
+## 🚀 EPIC-06: DB-BACKED DYNAMIC CONFIGURATION & AWS ACCOUNT MIGRATION
+
+*Objective: Create database-backed configuration subsystem to eliminate AWS host .env configuration, migrate production deployment to Viji's new AWS Account without downtime, validate thoroughly, and safely decommission old AWS VPS.*
+
+| Task ID | Task Summary | Component | Owner | Status | Gate Check & Verification Evidence |
+|---|---|---|:---:|:---:|---|
+| **TSK-CFG-01** | **Create `SystemConfig` DB Model & Migration** | `content/models.py` | Astra | 🟢 DONE | Migration `0024_systemconfig` applied cleanly to PostgreSQL. |
+| **TSK-CFG-02** | **Implement Dynamic Config Loader Utility** | `content/utils/config.py` | Astra | 🟢 DONE | `get_system_config()` utility created with 5-min memory caching. |
+| **TSK-CFG-03** | **Implement Django Admin Interface** | `content/admin.py` | Astra | 🟢 DONE | Categorized Admin UI with secret masking (`••••••••`) active. |
+| **TSK-CFG-04** | **Create Seed Data Management Command** | `content/management/commands/seed_system_config.py` | Astra | 🟢 DONE | Command seeded 16 environment parameters into `SystemConfig` table. |
+| **TSK-CFG-05** | **Refactor `settings.py` for DB Sourcing** | `realtor_project/settings.py` | Astra | 🟢 DONE | SMTP, AI Chatbot, reCAPTCHA, and site URLs sourced from DB config. |
+| **TSK-CFG-06** | **Execute Automated Test Suite & Sanity Sweep** | Test Suite | Astra | 🟢 DONE | **45/45 Django unit tests passing** with zero regressions (`1.41s`). |
+| **TSK-MIG-15** | **Provision Target AWS Account Lightsail VPS** | Target AWS Account | Viji / Astra | ⚪ PLANNED | Ubuntu 24.04 LTS (1GB RAM / 2 vCPU) + Static IP attached. |
+| **TSK-MIG-16** | **Transfer Database & Dynamic Media Storage** | PostgreSQL / Media | Astra | ⚪ PLANNED | `pg_dump` restored into PG16; `/var/www/propertism_media` rsynced. |
+| **TSK-MIG-17** | **Deploy Application Code & Web Daemon** | Gunicorn / Nginx | Astra | ⚪ PLANNED | Git pull, virtualenv, Gunicorn systemd daemon & Certbot SSL active. |
+| **TSK-MIG-18** | **Empirical Validation & Testing Gate** | Testing Gate | Astra / Viji | ⚪ PLANNED | Form intake, admin login, Titan SMTP & realBOT verified on new IP. |
+| **TSK-MIG-19** | **GoDaddy DNS Cutover & CI/CD Secret Update** | DNS / GitHub | Viji / Astra | ⚪ PLANNED | Update `@` & `www` A records; update GitHub Action secrets. |
+| **TSK-MIG-20** | **5-Day Observation & Legacy VPS Decommission** | Governance | Astra / Viji | ⚪ PLANNED | Monitor 5 days; terminate old Lightsail instance `13.207.123.15`. |
+
+---
+
 ## 🛠️ Baseline Scaffolding Tasks (Archive)
 
 | Task ID | Epic / Feature | Task Summary | Component | Owner | Status | Gate Check & Verification Evidence |
@@ -84,3 +105,4 @@
 | **TSK-003** | EPC-02 | Global Country Directory Synchronization | `properties/` | Astra | 🟢 DONE | 249 canonical country entities synced; Inquiry #290 verified |
 | **TSK-004** | EPC-03 | SEO Authority & Conversational RealBot | `chat/`, `search/` | Astra | 🟢 DONE | RealBot knowledge state machine and schema markup verified |
 | **TSK-005** | EPC-04 | Lightsail Migration Architecture Hardening | `reports/` | Astra | 🟢 DONE | REV-8.4 completed; Lean 15-Task Runbook adopted |
+

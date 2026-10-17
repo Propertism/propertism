@@ -62,6 +62,12 @@ class GoogleRecaptchaV2:
         and returned as a failed result so views can decide on fail-open policy.
         """
         secret_key = getattr(settings, 'RECAPTCHA_SECRET_KEY', '')
+        if not secret_key:
+            try:
+                from content.utils.config import get_system_config
+                secret_key = get_system_config('RECAPTCHA_SECRET_KEY', '') or ''
+            except Exception:
+                pass
 
         if not secret_key:
             logger.error(

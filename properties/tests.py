@@ -315,6 +315,8 @@ class InquiryReplyTests(TestCase):
 
 class InquiryNotificationTests(TestCase):
     def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
         self.property_type = PropertyType.objects.create(name="Villa", slug="villa")
         self.property_obj = Property.objects.create(
             title="Premium Beach Villa",

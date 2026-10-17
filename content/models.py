@@ -732,3 +732,39 @@ class SpamLog(models.Model):
             f'{self.ip_address} — {self.failure_reason} — {self.form_name}'
         )
 
+
+# ─────────────────────────────────────────────────────────────────────────── #
+# DATABASE-BACKED SYSTEM CONFIGURATION (ZERO-AWS-HOST-CONFIG)                #
+# ─────────────────────────────────────────────────────────────────────────── #
+
+class SystemConfig(models.Model):
+    """
+    Database-backed configuration model.
+    Stores application environment variables, API keys, SMTP credentials, and feature flags.
+    Allows zero-AWS-host-configuration deployments.
+    """
+    CATEGORY_CHOICES = [
+        ('site', 'Site & Canonical URLs'),
+        ('smtp', 'Outbound Email (SMTP)'),
+        ('ai_chat', 'realBOT & AI Settings'),
+        ('security', 'reCAPTCHA & Security'),
+        ('analytics', 'Analytics & Tracking'),
+        ('general', 'General System'),
+    ]
+
+    key = models.CharField(max_length=100, unique=True, db_index=True, help_text="Unique environment/config key name")
+    value = models.TextField(blank=True, help_text="Configuration value")
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='general')
+    is_secret = models.BooleanField(default=False, help_text="Mask value in Admin UI for security")
+    description = models.CharField(max_length=255, blank=True, help_text="Short description of this configuration variable")
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "System Configuration"
+        verbose_name_plural = "System Configurations"
+        ordering = ["category", "key"]
+
+    def __str__(self):
+        return f"{self.key} ({self.get_category_display()})"
+
+
