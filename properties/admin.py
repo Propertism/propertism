@@ -3,6 +3,7 @@ import json
 import re
 
 from django.contrib import admin
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db import models as db_models
 from django.http import HttpResponse, JsonResponse
@@ -162,14 +163,17 @@ class InquiryAdmin(admin.ModelAdmin):
 
         localities = list(Inquiry.objects.exclude(locality__isnull=True).exclude(locality='').values_list('locality', flat=True).distinct())
 
-        # Spam count for the admin banner (Cyrillic detection in Python)
-        all_rows = list(all_qs.values_list("id", "name", "message"))
-        spam_ids = [
-            row[0]
-            for row in all_rows
-            if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
-        ]
-        spam_count = len(spam_ids)
+        # Spam count for admin banner (cached for 60s, native SQL regex, 0 in-memory load)
+        spam_count = cache.get("admin_inquiry_spam_count")
+        if spam_count is None:
+            try:
+                spam_count = all_qs.filter(
+                    db_models.Q(name__regex=r"[\u0400-\u052F]")
+                    | db_models.Q(message__regex=r"[\u0400-\u052F]")
+                ).count()
+            except Exception:
+                spam_count = all_qs.filter(assessment_status="Likely Spam").count()
+            cache.set("admin_inquiry_spam_count", spam_count, 60)
 
         context = {
             **self.admin_site.each_context(request),
@@ -233,28 +237,30 @@ class InquiryAdmin(admin.ModelAdmin):
 
     def spam_count_view(self, request):
         """Return current Cyrillic spam count (read-only, for the admin banner)."""
-        all_rows = list(Inquiry.objects.values_list("id", "name", "message"))
-        spam_ids = [
-            row[0]
-            for row in all_rows
-            if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
-        ]
-        return JsonResponse({"ok": True, "spam_count": len(spam_ids), "total": len(all_rows)})
+        spam_count = cache.get("admin_inquiry_spam_count")
+        if spam_count is None:
+            try:
+                spam_count = Inquiry.objects.filter(
+                    db_models.Q(name__regex=r"[\u0400-\u052F]")
+                    | db_models.Q(message__regex=r"[\u0400-\u052F]")
+                ).count()
+            except Exception:
+                spam_count = Inquiry.objects.filter(assessment_status="Likely Spam").count()
+            cache.set("admin_inquiry_spam_count", spam_count, 60)
+        total = Inquiry.objects.count()
+        return JsonResponse({"ok": True, "spam_count": spam_count, "total": total})
 
     def bulk_delete_spam_view(self, request):
         """Delete all Cyrillic spam inquiries. POST + staff-only (enforced by admin_view)."""
         if request.method != "POST":
             return JsonResponse({"ok": False, "error": "POST required"}, status=405)
         try:
-            all_rows = list(Inquiry.objects.values_list("id", "name", "message"))
-            spam_ids = [
-                row[0]
-                for row in all_rows
-                if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
-            ]
-            if not spam_ids:
-                return JsonResponse({"ok": True, "deleted": 0})
-            deleted_count, _ = Inquiry.objects.filter(id__in=spam_ids).delete()
+            spam_qs = Inquiry.objects.filter(
+                db_models.Q(name__regex=r"[\u0400-\u052F]")
+                | db_models.Q(message__regex=r"[\u0400-\u052F]")
+            )
+            deleted_count, _ = spam_qs.delete()
+            cache.delete("admin_inquiry_spam_count")
             return JsonResponse({"ok": True, "deleted": deleted_count})
         except Exception as exc:
             return JsonResponse({"ok": False, "error": str(exc)}, status=400)
