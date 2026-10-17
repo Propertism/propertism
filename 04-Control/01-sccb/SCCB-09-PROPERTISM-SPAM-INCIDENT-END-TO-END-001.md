@@ -2181,12 +2181,12 @@ Viji's decision package is recorded here. Application behaviour was not expanded
 |---|---|
 | D2 service-key provisioning | Approved for Viji to set in Lightsail `.env` only. Astra did not generate or write a key. |
 | D4 commit | Local commits of verified incident files only. See file lists below. |
-| D4 push | **Withheld.** `.github/workflows/deploy.yml` in both repositories runs on push to `main` and resets the Lightsail working tree. Pushing `main` would deploy. Deployment is deferred. |
+| D4 push | **`main` not pushed.** Review branch `sccb-09-review-2026-10-13` published on both remotes. 03 remote hash `d58003c7215d8a0b8966620ae36bd676d3cd005a`. 04 remote hash `ea37503f97de17ff8768e4cb869d36114d95aead`. Deploy workflows trigger only on push to `main`. This SCCB line is local and uncommitted. Deployment remains deferred. |
 | D6 aggregate evidence | Approved, not collected. No production read was performed. Each §23.4 item remains outstanding. Deployment that introduced public GET access: **UNVERIFIED**. |
 | D7 quarantine/delete | Rejected. No production data change. |
 | D8 status-only probe | Conditional on a later deploy. Not performed. |
 | C4 | Deferred. Not implemented. |
-| Deploy | Deferred. Not performed. |
+| Deploy | **Stopped before push to `main` on 2026-10-13.** Fast-forward was possible (03 `c8f03ae` → `d58003c`; 04 `9af452e` → `ea37503`). Service-key presence on Lightsail was not confirmed: SSH to `13.207.123.15` as `ubuntu` returned `Permission denied (publickey)`, and this workstation has no Lightsail key. No `main` push. |
 
 ### 26.1 Commit boundary applied
 
@@ -2203,3 +2203,139 @@ Track A remains **ROOT CAUSE UNCONFIRMED**. SCCB-09 is not closed.
 ---
 
 **End of SCCB Document**
+
+---
+
+## 27. Production aggregate count collection — corrected to Lightsail, 2026-10-16 IST
+
+**Requested action:** Viji requested a read-only production collection to establish how many `properties.Inquiry` records currently meet the persisted `assessment_status = "Likely Spam"` classification, beginning from the Django admin inquiry dataset.
+
+**Infrastructure correction:** The live `www.propertism.in` production path is the Lightsail Mumbai VPS at `13.207.123.15`, not Elastic Beanstalk. The repository's current `deploy.yml` uses GitHub Actions SSH deployment to `/var/www/propertism`; the legacy EB scripts are historical artefacts and must not be used for this incident evidence collection.
+
+**Scope and controls:**
+
+- Read-only database queries only: no inserts, updates, deletes, migrations, seeds, exports of enquiry bodies, or individual customer records.
+- Report aggregate counts only: total inquiries, `Likely Spam` count, and, where the production schema supports them, status/source/time aggregates needed to distinguish the 13 October incident.
+- Do not display credentials, service keys, database URLs, enquiry names, emails, phone numbers, messages, IP addresses, or user-agent values.
+- This count is a classification measurement, not proof of the spam write path. Rows may have been scored by the lead validator after persistence, and the incident root cause remains open.
+
+**Validation criteria:**
+
+1. The command has no production write capability or write statement.
+2. Output contains aggregates only and can be reproduced from the recorded query.
+3. The result identifies the timezone/window used for any 13 October breakdown.
+4. Any unavailable EB/AWS access is recorded as an evidence-collection blocker; no direct database connection is substituted without a separate explicit authorization.
+
+**Execution record (2026-10-16 IST):**
+
+- AWS CLI v2.38.1 was installed during an incorrect EB preflight; it is not the execution path for the live service and no EB command was issued.
+- Local preflight found no Lightsail private key in the workspace or user SSH directory and no usable SSH agent identity. A previous session also recorded `Permission denied (publickey)` for `ubuntu@13.207.123.15`.
+- GitHub Actions is configured with deployment SSH secrets, but the local GitHub CLI token is invalid. No workflow was dispatched, because the existing workflow is a deployment workflow and is not an approved aggregate-query runner.
+- No SSH, production database, EB, RDS, or production HTTP request was issued by this collection attempt. No production data was read or changed.
+
+**Next authorized action once Lightsail access is available:** run a reviewed, read-only command on the VPS that prints only the aggregate `Inquiry` counts described above. The command must be reviewed for aggregate-only output before it is issued. No code deployment, database modification, or fallback to the retired EB environment is permitted.
+
+---
+
+## 28. End-to-end spam injection root-cause trace — opened 2026-10-16 IST
+
+**Requested action:** Trace all application paths capable of persisting `properties.Inquiry` and determine, from local source and deployment history, how the reported spam could have been injected.
+
+**Scope:** Source-only forensic trace against the last deployed `origin/main` baseline (`c8f03ae`) and the local SCCB-09 remediation commit (`d58003c`). No production requests, database reads, logs, changes, or credential handling are in scope.
+
+**Method:**
+
+1. Enumerate every direct and indirect `Inquiry` create/update path and map its public trigger.
+2. Record the execution order of anti-bot checks, CAPTCHA, lead classification, notification dispatch, and database persistence for each path.
+3. Identify the exact fail-open or bypass conditions present in the deployed baseline.
+4. Compare those conditions with the incident's reported payload shape and volume, while clearly separating confirmed code facts from unverified production causation.
+5. State the minimum aggregate evidence needed to prove or disprove each viable injection route.
+
+**Validation criteria:** The report must contain no PII or secrets; must not equate public GET API exposure with a write path; and must not identify a root cause as confirmed absent production evidence tying affected rows to a write path.
+
+### 28.1 Result: source-confirmed injection surfaces in the deployed baseline
+
+The deployment baseline is `origin/main` commit `c8f03ae` (9 September 2026). The SCCB-09 remediation commit `d58003c` is not deployed. Source review found exactly three application paths that persist `properties.Inquiry`:
+
+| Rank | Public trigger and persist chain | Baseline anti-bot boundary | Incident fit |
+|---|---|---|---|
+| 1 | `POST /contact/` → `content.views.contact()` → `SpamProtectionService.validate()` → `LeadValidator.validate()` → `PropertyInquiry.objects.create()` | CAPTCHA enforcement could fail open or be skipped; optional hidden checks; per-IP cache limit | **Most consistent** with the reported single-message Russian / promotional-link payload |
+| 1 | `POST /properties/inquiry/` → `properties.views.create_inquiry()` → same service/validator sequence → `Inquiry.objects.create()` | Same as contact path | **Most consistent** with the reported payload; requires a valid property id |
+| 2 | Public realBOT session/initiate/query APIs → conversation confirmation → `InquirySubmissionAdapter.submit()` → `PropertyInquiry.objects.create()` | No HTML CAPTCHA, honeypot, timing control, or request rate limit; hardcoded `Genuine` / 80 | Technically capable, but requires a multi-field conversational flow and no evidence links the reported records to `realBOT` |
+
+`POST /chat/submit/` creates `ContactMessage`, not `Inquiry`; landing-lead creates `LandingLead`, not `Inquiry`; and `GET /api/inquiries/` only reads `Inquiry`. None can directly explain the reported `Inquiry` spam rows.
+
+### 28.2 Confirmed failure mechanism on the two HTML Inquiry paths
+
+The baseline code did call `SpamProtectionService`, but that service did not guarantee CAPTCHA enforcement:
+
+1. `CAPTCHA_ENABLE` came from repository `feature_flags.json`; a false/missing/unreadable flag defaulted to false, skipping CAPTCHA verification entirely.
+2. When CAPTCHA was enabled, an unset `RECAPTCHA_SECRET_KEY` returned `RecaptchaResult(success=True, error_codes=['secret-key-missing'])`. The request therefore proceeded as CAPTCHA-passed.
+3. `RECAPTCHA_FAIL_OPEN` defaulted to true. Google verification network errors, timeouts, and unexpected errors allowed the request to proceed and only wrote a `captcha-network-error-fail-open` audit record.
+4. The honeypot was bypassable by leaving `website_url_check` empty. `form_render_time` was optional; missing or malformed values passed. These controls do not establish human origin.
+5. The IP limit allowed five requests per ten minutes per cache key, but it did not stop a distributed attack and its trust in the first `X-Forwarded-For` address requires production proxy verification.
+6. `LeadValidator` assigned `Likely Spam` **after** the spam-protection decision and both form views still called `Inquiry.objects.create()` for that result. It suppressed notification only in the homepage contact flow; it did not reject or quarantine the row. Therefore a large `Likely Spam` count is compatible with a successful bulk submission attack.
+
+### 28.3 Root-cause conclusion and confidence
+
+**Confirmed root-cause class (source):** The deployed application accepted untrusted public form POSTs into `Inquiry` whenever CAPTCHA was disabled, had no configured secret, or encountered a verification network failure with fail-open enabled. The remaining controls were bypassable/insufficient for a distributed automated sender, and post-persist scoring labelled spam rather than preventing persistence.
+
+**Most likely incident route (moderate confidence):** automated direct POSTs to `/contact/` and/or `/properties/inquiry/` during one of the above CAPTCHA bypass states. This matches the reported one-message Russian / `share.google` promotional pattern and is the only route that maps naturally to that payload shape.
+
+**Not yet confirmed:** Which of the two HTML routes was used; whether one or more production CAPTCHA bypass states actually existed on 13 October; whether proxy/cache behaviour weakened the rate limit; and whether realBOT contributed. The public GET API exposure is a separate confidentiality defect and is not a write mechanism.
+
+### 28.4 Evidence that will close the causal gap
+
+Read-only, aggregate-only collection from Lightsail is required:
+
+1. `properties_inquiry` counts for 13 October 2026 Asia/Kolkata, grouped by `form_source`, hour, and `assessment_status`, plus promotional-pattern count by `form_source` (no row data).
+2. `content_spamlog` counts grouped by `failure_reason`, `form_name`, request path, and hour — particularly `captcha-network-error-fail-open`, CAPTCHA failure, honeypot, timing, and rate-limit events.
+3. Nginx aggregate counts by request path, method, status, and hour for `/contact/`, `/properties/inquiry/`, realBOT endpoints, and `/api/inquiries/`.
+4. Non-secret runtime facts: `DJANGO_SETTINGS_MODULE`; CAPTCHA feature/provider flag values; whether site/secret keys were present (yes/no); fail-open value; cache backend; realBOT enablement.
+5. realBOT aggregate count for completed inquiry conversations versus `Inquiry.form_source` values beginning `realBOT`.
+
+**Execution status:** COMPLETE for source-only tracing. No production interaction occurred. SCCB-09 Track A remains OPEN pending the above evidence.
+
+---
+
+## 29. Local remediation re-verification and validation — opened 2026-10-16 IST
+
+**Authorised scope:** Re-verify the actual `d58003c` local SCCB-09 implementation against the incident findings, trace all Inquiry persistence paths, reproduce security boundaries through focused automated tests where practical, and make only the smallest necessary local corrections. This section is not authority to access Lightsail, production data, logs, configuration, or customer records.
+
+**Delivery controls:** Preserve all pre-existing working-tree changes; do not reset, clean, change branches, commit, push, merge, or deploy. The current tree contains unrelated work. Results must distinguish existing committed SCCB-09 code from any new local edits.
+
+**Focused validation plan:**
+
+1. Inspect CAPTCHA enforcement, provider failure paths, the form views, lead classification, IP extraction, and cache-backed throttles.
+2. Inspect every realBOT public entry point and the conversation-to-Inquiry adapter for limits, replay protection, timing/turn validation, duplicate handling, and classification.
+3. Confirm model/table identity for `Inquiry` and the `PropertyInquiry` import alias, and retain the read-only API issue as a separate concern.
+4. Run Django checks and targeted tests for form CAPTCHA, inquiry persistence/API access, notification flow, and realBOT security; then run the relevant broader suite.
+5. If a demonstrated current-tree defect requires a code change, add a minimal regression test and record exact test evidence. Do not introduce an unapproved business rule that rejects or deletes heuristic `Likely Spam` leads where the existing workflow has no quarantine state.
+
+**Acceptance criteria:** Protected public forms cannot persist an inquiry when production CAPTCHA validation is missing, disabled unexpectedly, rejected, or untrustworthy; realBOT controls have tested flood/replay/duplicate boundaries; anonymous Inquiry API reads are denied; legitimate validated flows remain covered; cache/proxy topology limitations and any historical-causation gaps are explicitly recorded.
+
+### 29.1 Local implementation additions
+
+**New local changes, uncommitted:**
+
+1. `content/security/validators.py` now treats a cache read/write failure as a failed required form rate-limit check. It no longer accepts `X-Forwarded-For` merely because it is present: it uses the direct peer unless that peer appears in an explicit `TRUSTED_PROXY_IPS` setting. A malformed proxy setting or forwarded address fails safely to the peer address.
+2. `content/security/spam_protection.py` returns a non-rate-limit, retry-safe security error for a failed cache dependency rather than presenting it as an ordinary quota response.
+3. `chat/request_limits.py` uses the same deny-on-cache-failure policy for public realBOT session, message, and inquiry-initiation limits.
+4. `realtor_project/settings.py` defines `TRUSTED_PROXY_IPS` from an optional environment list, defaulting to no trusted proxies. The live Nginx/Lightsail peer topology must be verified before this value is populated.
+5. `properties/views.py` retains `Likely Spam` property inquiries for audit, consistent with the existing data model, but suppresses their notification dispatch. This makes the existing classification an operational routing boundary without silently deleting leads or introducing a new quarantine schema.
+6. Regression coverage was added for forwarded-header trust, form cache unavailability/cache write refusal, and realBOT cache unavailability.
+
+**Reason for change:** `d58003c` correctly closes the CAPTCHA fail-open paths, but its rate-limit implementations could raise an error or become operationally unreliable when the cache failed, and they trusted a caller-supplied forwarding header. The property-detail flow also dispatched notifications for `Likely Spam`, unlike the contact flow. These are current-tree local findings; they do not establish the historical production route.
+
+### 29.2 Validation status and environment blocker
+
+- Static diff validation: `git diff --check` completed with no whitespace errors in the SCCB-09 files. The command reports only pre-existing end-of-file blank-line warnings in unrelated modified files.
+- Automated Django validation: **blocked locally before test discovery.** The project `.venv` interpreter is a Python 3.11 launcher bound to the removed path `C:\Users\vijay\AppData\Local\Programs\Python\Python311\python.exe`; invoking `.venv\Scripts\python.exe manage.py check` and the targeted test command fails immediately with `No Python at ...`. The only discoverable alternate interpreter is another broken virtual environment with the same missing base interpreter. No test ran, no test database was created, and no production system was contacted.
+- Required next local step: repair/recreate the project virtual environment with the repository's supported Python version and dependencies, then execute `manage.py check` followed by the targeted SCCB-09 suite and the broader realBOT suite. Do not treat the new regression tests as validated until that evidence exists.
+
+### 29.3 Outstanding architectural limits
+
+- This source tree's default settings have no shared `CACHES` declaration, so Django defaults to process-local cache behaviour. `settings_production.py` declares Redis, but the actual Lightsail settings module/cache availability remains unverified. Deny-on-error protects an outage, but cross-worker throttling requires a verified shared cache.
+- `TRUSTED_PROXY_IPS` deliberately defaults empty. This prevents spoofing but can group traffic by the reverse proxy if production does not configure the verified peer address. That configuration must follow a read-only Nginx/runtime review.
+- There is no explicit `Inquiry` quarantine state. `Likely Spam` records remain auditable but now have notification suppression on both HTML Inquiry paths. Whether they should be automatically rejected or moved to a new quarantine workflow needs an approved business/data-model decision.
+- realBOT retains its separate non-CAPTCHA design. Existing C1-C3 rate, nonce, timing, turn, and duplicate gates apply, but CAPTCHA for realBOT (C4) remains intentionally deferred and is not claimed as implemented.

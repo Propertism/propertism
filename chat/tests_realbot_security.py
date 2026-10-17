@@ -11,6 +11,7 @@ from django.utils import timezone
 
 from chat.models import RealBotSession, InquiryConversationSession
 from chat.inquiry_engine import InquiryConversationEngine
+from chat.request_limits import allow_session_init
 from properties.models import Inquiry
 
 
@@ -128,3 +129,8 @@ class RealbotC1C3Tests(TestCase):
             })
         self.assertEqual(last.status_code, 429)
         self.assertEqual(Inquiry.objects.count(), 0)
+
+    @patch('chat.request_limits.cache.get', side_effect=Exception('cache down'))
+    def test_session_init_fails_closed_when_rate_limit_cache_is_unavailable(self, mock_get):
+        request = self.client.get('/chat/session/init/').wsgi_request
+        self.assertFalse(allow_session_init(request))

@@ -1,5 +1,6 @@
 import csv
 import json
+import re
 
 from django.contrib import admin
 from django.core.paginator import Paginator
@@ -10,6 +11,9 @@ from django.urls import path
 from django.utils import timezone
 
 from .models import ContactMessage, Inquiry, InquiryReply, MaintenanceRequest, Property, PropertyPhoto, PropertyType, SupportTicket
+
+# Cyrillic Unicode block detection (Basic + Supplement)
+_CYRILLIC_RE = re.compile(r"[\u0400-\u052F]")
 
 
 @admin.register(PropertyType)
@@ -78,6 +82,16 @@ class InquiryAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.delete_inquiry_view),
                 name="properties_inquiry_delete",
             ),
+            path(
+                "bulk-delete-spam/",
+                self.admin_site.admin_view(self.bulk_delete_spam_view),
+                name="properties_inquiry_bulk_delete_spam",
+            ),
+            path(
+                "spam-count/",
+                self.admin_site.admin_view(self.spam_count_view),
+                name="properties_inquiry_spam_count",
+            ),
         ]
         return custom_urls + urls
 
@@ -124,6 +138,11 @@ class InquiryAdmin(admin.ModelAdmin):
         if nri_status_filter:
             qs = qs.filter(nri_status=nri_status_filter)
 
+        # Assessment status filter (spam management)
+        assessment_filter = request.GET.get("assessment_status", "").strip()
+        if assessment_filter:
+            qs = qs.filter(assessment_status=assessment_filter)
+
         sort = request.GET.get("sort", "desc")
         qs = qs.order_by("created_at" if sort == "asc" else "-created_at")
         paginator = Paginator(qs, 25)
@@ -143,6 +162,15 @@ class InquiryAdmin(admin.ModelAdmin):
 
         localities = list(Inquiry.objects.exclude(locality__isnull=True).exclude(locality='').values_list('locality', flat=True).distinct())
 
+        # Spam count for the admin banner (Cyrillic detection in Python)
+        all_rows = list(all_qs.values_list("id", "name", "message"))
+        spam_ids = [
+            row[0]
+            for row in all_rows
+            if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
+        ]
+        spam_count = len(spam_ids)
+
         context = {
             **self.admin_site.each_context(request),
             "title": "Inquiries",
@@ -157,6 +185,7 @@ class InquiryAdmin(admin.ModelAdmin):
                 "contacted": all_qs.filter(status="contacted").count(),
                 "closed": all_qs.filter(status="closed").count(),
             },
+            "spam_count": spam_count,
             "status_choices": Inquiry.STATUS_CHOICES,
             "current_q": q,
             "current_status": status_filter,
@@ -167,6 +196,7 @@ class InquiryAdmin(admin.ModelAdmin):
             "current_locality": locality_filter,
             "current_user_role": user_role_filter,
             "current_nri_status": nri_status_filter,
+            "current_assessment": assessment_filter,
             "locality_options": sorted(localities),
             "current_sort": sort,
             "date_years": years,
@@ -198,6 +228,34 @@ class InquiryAdmin(admin.ModelAdmin):
         try:
             Inquiry.objects.filter(pk=inquiry_id).delete()
             return JsonResponse({"ok": True})
+        except Exception as exc:
+            return JsonResponse({"ok": False, "error": str(exc)}, status=400)
+
+    def spam_count_view(self, request):
+        """Return current Cyrillic spam count (read-only, for the admin banner)."""
+        all_rows = list(Inquiry.objects.values_list("id", "name", "message"))
+        spam_ids = [
+            row[0]
+            for row in all_rows
+            if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
+        ]
+        return JsonResponse({"ok": True, "spam_count": len(spam_ids), "total": len(all_rows)})
+
+    def bulk_delete_spam_view(self, request):
+        """Delete all Cyrillic spam inquiries. POST + staff-only (enforced by admin_view)."""
+        if request.method != "POST":
+            return JsonResponse({"ok": False, "error": "POST required"}, status=405)
+        try:
+            all_rows = list(Inquiry.objects.values_list("id", "name", "message"))
+            spam_ids = [
+                row[0]
+                for row in all_rows
+                if _CYRILLIC_RE.search(row[1] or "") or _CYRILLIC_RE.search(row[2] or "")
+            ]
+            if not spam_ids:
+                return JsonResponse({"ok": True, "deleted": 0})
+            deleted_count, _ = Inquiry.objects.filter(id__in=spam_ids).delete()
+            return JsonResponse({"ok": True, "deleted": deleted_count})
         except Exception as exc:
             return JsonResponse({"ok": False, "error": str(exc)}, status=400)
 

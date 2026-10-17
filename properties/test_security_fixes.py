@@ -21,6 +21,7 @@ from rest_framework.test import APITestCase, APIClient
 from properties.models import ContactMessage, Inquiry, Property, PropertyType
 from content.security.google_recaptcha import GoogleRecaptchaV2, RecaptchaResult
 from content.security.spam_protection import SpamProtectionService
+from content.security.validators import _get_ip, validate_rate_limit
 
 
 User = get_user_model()
@@ -246,6 +247,42 @@ class CAPTCHAFailClosedTests(TestCase):
         inquiry = Inquiry.objects.filter(email="test@example.com").first()
         self.assertIsNotNone(inquiry)
         self.assertEqual(inquiry.name, "Test User")
+
+
+class RequestControlFailClosedTests(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    @override_settings(TRUSTED_PROXY_IPS=[])
+    def test_untrusted_forwarded_for_cannot_choose_rate_limit_identity(self):
+        request = self.factory.post(
+            "/contact/", {}, REMOTE_ADDR="198.51.100.10",
+            HTTP_X_FORWARDED_FOR="203.0.113.99",
+        )
+        self.assertEqual(_get_ip(request), "198.51.100.10")
+
+    @override_settings(TRUSTED_PROXY_IPS=["127.0.0.1"])
+    def test_trusted_proxy_uses_valid_forwarded_client_identity(self):
+        request = self.factory.post(
+            "/contact/", {}, REMOTE_ADDR="127.0.0.1",
+            HTTP_X_FORWARDED_FOR="203.0.113.99, 127.0.0.1",
+        )
+        self.assertEqual(_get_ip(request), "203.0.113.99")
+
+    @patch("content.security.validators.cache.get", side_effect=Exception("cache down"))
+    def test_form_rate_limit_fails_closed_when_cache_is_unavailable(self, mock_get):
+        request = self.factory.post("/contact/", {}, REMOTE_ADDR="198.51.100.10")
+        passed, reason = validate_rate_limit(request)
+        self.assertFalse(passed)
+        self.assertEqual(reason, "rate-limit-cache-unavailable")
+
+    @patch("content.security.validators.cache.set", return_value=False)
+    @patch("content.security.validators.cache.get", return_value=0)
+    def test_form_rate_limit_fails_closed_when_cache_rejects_write(self, mock_get, mock_set):
+        request = self.factory.post("/contact/", {}, REMOTE_ADDR="198.51.100.10")
+        passed, reason = validate_rate_limit(request)
+        self.assertFalse(passed)
+        self.assertEqual(reason, "rate-limit-cache-unavailable")
 
 
 class ChatEndpointSpamProtectionTests(TestCase):

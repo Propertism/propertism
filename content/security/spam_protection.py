@@ -92,11 +92,17 @@ class SpamProtectionService:
         passed, reason = validate_rate_limit(self.request)
         if not passed:
             self._log_spam(form_name, ip, user_agent, path, referer, reason)
+            cache_unavailable = reason == 'rate-limit-cache-unavailable'
             return SpamProtectionResult(
                 passed=False,
                 failure_reason=reason,
-                error_message='Too many submissions. Please try again later.',
-                rate_limited=True,
+                error_message=(
+                    'We cannot securely process your enquiry right now. '
+                    'Please try again later.'
+                    if cache_unavailable else
+                    'Too many submissions. Please try again later.'
+                ),
+                rate_limited=not cache_unavailable,
             )
 
         # ── Layer 4: Submission Timing ─────────────────────────────────── #

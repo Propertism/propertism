@@ -210,7 +210,8 @@
 
     {% if user.is_staff %}
     <!-- SCCB-19052026-1/A1: Inquiries FAB — hidden on /inquiries/* routes -->
-    {% if not request.path|slice:":11" == "/inquiries/" %}
+    {% with on_inq=request.path|slice:":11" %}
+    {% if on_inq != "/inquiries/" %}
     <style>
     .inq-fab{position:fixed;bottom:calc(5.75rem + env(safe-area-inset-bottom,0px));right:calc(1.5rem + env(safe-area-inset-right,0px));width:56px;height:56px;border-radius:50%;background:#0b0f1a;border:1px solid #C49C52;color:#C49C52;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .2s}
     .inq-fab:hover{background:rgba(196,156,82,.1);box-shadow:0 4px 20px rgba(196,156,82,.18)}
@@ -258,9 +259,11 @@
     })();
     </script>
     {% endif %}
+    {% endwith %}
     {% endif %}
 
-    {% if not user.is_staff and not request.path|slice:":11" == "/inquiries/" %}
+    {% with on_inq=request.path|slice:":11" %}
+    {% if not user.is_staff and on_inq != "/inquiries/" %}
     <style>
     .inq-gate-overlay{position:fixed;inset:0;z-index:10020;background:rgba(15,23,42,.52);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1.25rem}
     .inq-gate-overlay.active{display:flex}
@@ -340,6 +343,7 @@
     })();
     </script>
     {% endif %}
+    {% endwith %}
 
     <!-- Pass home page featured properties to realBOT template -->
     <script id="featured-properties-data" type="application/json">

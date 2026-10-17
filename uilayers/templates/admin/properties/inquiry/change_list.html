@@ -285,6 +285,29 @@
     transition: background .15s, color .15s;
   }
   .btn-delete-inq:hover { background: #FEE2E2; color: #DC2626; }
+
+  /* ── Spam banner ── */
+  .spam-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    background: #FEF2F2; border: 1.5px solid #FCA5A5;
+    border-radius: 10px; padding: 14px 20px; margin-bottom: 20px;
+  }
+  .spam-banner-text { display: flex; align-items: center; gap: 10px; }
+  .spam-banner-icon { font-size: 1.3rem; }
+  .spam-banner-title { font-weight: 700; color: #991B1B; font-size: .92rem; }
+  .spam-banner-sub { color: #B91C1C; font-size: .82rem; margin-top: 2px; }
+  .btn-delete-spam {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 18px; border-radius: 7px;
+    background: #DC2626; color: #fff;
+    border: none; font-size: .85rem; font-weight: 700;
+    cursor: pointer; transition: background .18s, transform .12s;
+    white-space: nowrap;
+  }
+  .btn-delete-spam:hover { background: #B91C1C; }
+  .btn-delete-spam:active { transform: scale(.97); }
+  .btn-delete-spam:disabled { opacity: .6; pointer-events: none; }
 </style>
 {% endblock %}
 
@@ -296,6 +319,31 @@
     {% for message in messages %}
     <div class="inq-msg {{ message.tags }}">{{ message }}</div>
     {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if spam_count > 0 %}
+  <div class="spam-banner" id="spam-banner">
+    <div class="spam-banner-text">
+      <span class="spam-banner-icon">🚨</span>
+      <div>
+        <div class="spam-banner-title">{{ spam_count|floatformat:0 }} Russian / Cyrillic spam records detected</div>
+        <div class="spam-banner-sub">These records contain Cyrillic text and are likely automated spam injections. Review before deleting.</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <a href="?assessment_status=Likely+Spam" class="btn btn-outline" style="border-color:#FCA5A5;color:#991B1B;font-size:.82rem;padding:7px 14px;">Filter Likely Spam</a>
+      <button type="button" class="btn-delete-spam" id="bulk-delete-btn"
+              onclick="bulkDeleteSpam({{ spam_count }})">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6l-1 14H6L5 6"></path>
+          <path d="M10 11v6M14 11v6"></path>
+          <path d="M9 6V4h6v2"></path>
+        </svg>
+        Delete All {{ spam_count }} Spam Records
+      </button>
+    </div>
   </div>
   {% endif %}
 
@@ -419,6 +467,16 @@
       <option value="">All NRI Statuses</option>
       <option value="Yes" {% if current_nri_status == "Yes" %}selected{% endif %}>NRI / Overseas Resident</option>
       <option value="No" {% if current_nri_status == "No" %}selected{% endif %}>Domestic Resident</option>
+    </select>
+
+    <!-- Assessment Status Filter (Spam Management) -->
+    <select class="status-select" id="filter-assessment" onchange="applyMetaFilter('assessment_status', this.value)" style="width: auto; height: 36px; padding: 0 10px; background: #fff; color: var(--navy); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: 500;">
+      <option value="">All Assessments</option>
+      <option value="Likely Genuine" {% if current_assessment == "Likely Genuine" %}selected{% endif %}>Likely Genuine</option>
+      <option value="Genuine" {% if current_assessment == "Genuine" %}selected{% endif %}>Genuine</option>
+      <option value="Review Recommended" {% if current_assessment == "Review Recommended" %}selected{% endif %}>Review Recommended</option>
+      <option value="Likely Spam" {% if current_assessment == "Likely Spam" %}selected{% endif %}>⚠ Likely Spam</option>
+      <option value="Pending Validation" {% if current_assessment == "Pending Validation" %}selected{% endif %}>Pending Validation</option>
     </select>
   </div>
 
@@ -617,6 +675,7 @@
 <script>
 const CSRF = '{{ csrf_token }}';
 const SET_STATUS_URL = '{% url "admin:properties_inquiry_set_status" %}';
+const BULK_DELETE_SPAM_URL = '{% url "admin:properties_inquiry_bulk_delete_spam" %}';
 
 function setStatus(id, status) {
   const sel = document.getElementById('sel-' + id);
@@ -689,6 +748,41 @@ function deleteAdminInquiry(id, name) {
     toast('Inquiry deleted.', false);
   })
   .catch(() => toast('Network error — could not delete.', true));
+}
+
+function bulkDeleteSpam(count) {
+  var msg = 'DELETE ALL ' + count + ' RUSSIAN / CYRILLIC SPAM RECORDS?\n\n' +
+    'This will permanently delete all inquiries containing Cyrillic text.\n' +
+    'This action CANNOT be undone.\n\n' +
+    'Type DELETE to confirm:';
+  var input = window.prompt(msg);
+  if (!input || input.trim().toUpperCase() !== 'DELETE') {
+    toast('Bulk delete cancelled.', false);
+    return;
+  }
+  var btn = document.getElementById('bulk-delete-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Deleting…'; }
+  fetch(BULK_DELETE_SPAM_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
+    body: JSON.stringify({}),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      toast('Deleted ' + data.deleted + ' spam records. Reloading…', false);
+      var banner = document.getElementById('spam-banner');
+      if (banner) banner.remove();
+      setTimeout(() => location.reload(), 1800);
+    } else {
+      toast('Error: ' + (data.error || 'Delete failed'), true);
+      if (btn) { btn.disabled = false; btn.textContent = 'Delete All Spam Records'; }
+    }
+  })
+  .catch(() => {
+    toast('Network error — could not delete.', true);
+    if (btn) { btn.disabled = false; btn.textContent = 'Delete All Spam Records'; }
+  });
 }
 
 // Search on Enter

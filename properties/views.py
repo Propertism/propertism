@@ -246,12 +246,21 @@ def create_inquiry(request):
             validation_summary=assessment['validation_summary']
         )
         
-        # Send notifications (emails to both ids, and WhatsApp notification)
-        try:
-            send_rfq_notification(inquiry, form_source=form_source)
-        except Exception as email_exc:
-            logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
-            # Don't fail the request if email fails
+        # Classification is an operational boundary as well as an audit label:
+        # retain the row for review, but do not dispatch it into the normal
+        # lead-notification workflow when it is assessed as likely spam.
+        if assessment.get('assessment_status') == 'Likely Spam':
+            logger.warning(
+                "[SpamGate] Suppressed notification dispatch for likely spam property inquiry ID %s (score: %s)",
+                inquiry.id,
+                assessment.get('confidence_score'),
+            )
+        else:
+            try:
+                send_rfq_notification(inquiry, form_source=form_source)
+            except Exception as email_exc:
+                logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
+                # Don't fail the request if email fails
 
         messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
     except Exception as exc:

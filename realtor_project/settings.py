@@ -57,6 +57,25 @@ def _get_bool_env(*names, default=False):
     return default
 
 
+def _get_config(key, default=None):
+    """
+    Sourcing configuration parameter from PostgreSQL SystemConfig DB table first,
+    falling back to os.environ and finally the static default.
+    """
+    try:
+        from content.utils.config import get_system_config
+        val = get_system_config(key)
+        if val is not None and str(val).strip() != '':
+            return val
+    except Exception:
+        pass
+    env_val = os.environ.get(key)
+    if env_val is not None and str(env_val).strip() != '':
+        return env_val
+    return default
+
+
+
 def _database_config_from_url(database_url):
     parsed = urlparse(database_url)
     engine_map = {
@@ -394,6 +413,11 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
+# Rate-limit client IPs use X-Forwarded-For only when the immediate peer is
+# listed here. Keep empty until the reverse-proxy/Lightsail topology is
+# verified; accepting arbitrary forwarded headers permits limit evasion.
+TRUSTED_PROXY_IPS = _get_csv_env('TRUSTED_PROXY_IPS', default=[])
+
 # CSRF Protection
 CSRF_COOKIE_HTTPONLY = False  # Allows client-side scripts to read token for AJAX/fetch headers
 CSRF_COOKIE_SAMESITE = 'Lax'
@@ -458,22 +482,22 @@ else:
 
 # Gmail SMTP Configuration
 # GoDaddy Titan SMTP configuration
-EMAIL_HOST = 'smtpout.secureserver.net'
-EMAIL_PORT = 587
+EMAIL_HOST = _get_config('EMAIL_HOST', 'smtpout.secureserver.net')
+EMAIL_PORT = int(_get_config('EMAIL_PORT', 587))
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tamil@propertism.in'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = _get_config('EMAIL_HOST_USER', 'tamil@propertism.in')
+EMAIL_HOST_PASSWORD = _get_config('EMAIL_HOST_PASSWORD', '')
 
 # Default email addresses
 DEFAULT_FROM_EMAIL = 'Propertism Admin <tamil@propertism.in>'
 SERVER_EMAIL = 'Propertism Admin <tamil@propertism.in>'
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@propertism.in')
+ADMIN_EMAIL = _get_config('ADMIN_EMAIL', 'info@propertism.in')
 
 # Microsoft Clarity Project ID
-CLARITY_PROJECT_ID = os.environ.get('CLARITY_PROJECT_ID', '')
+CLARITY_PROJECT_ID = _get_config('CLARITY_PROJECT_ID', '')
 
 # Notification recipients — all inquiry/lead alerts go to both inboxes
-extra_emails = [e.strip() for e in os.environ.get('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in').split(',') if e.strip()]
+extra_emails = [e.strip() for e in _get_config('EXTRA_NOTIFICATION_EMAIL', 'propertism.tamil@gmail.com,tamil@propertism.in').split(',') if e.strip()]
 ADMIN_EMAILS = list({ADMIN_EMAIL} | set(extra_emails))
 
 
@@ -605,23 +629,23 @@ GOOGLE_MAPS_DEFAULT_COUNTRY = os.environ.get(
 )
 
 # realBOT AI Assistant Configurations
-REALBOT_AI_ENABLED = os.environ.get('REALBOT_AI_ENABLED', 'False').lower() in ('true', '1', 'yes')
-DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
-DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-chat')
-DEEPSEEK_TEMPERATURE = float(os.environ.get('DEEPSEEK_TEMPERATURE', '0.2'))
-DEEPSEEK_MAX_TOKENS = int(os.environ.get('DEEPSEEK_MAX_TOKENS', '2000'))
-DEEPSEEK_TIMEOUT = int(os.environ.get('DEEPSEEK_TIMEOUT', '15'))
+REALBOT_AI_ENABLED = str(_get_config('REALBOT_AI_ENABLED', 'False')).lower() in ('true', '1', 'yes')
+DEEPSEEK_API_KEY = _get_config('DEEPSEEK_API_KEY', 'AIzaSyBAOA3xvBpa3FQF4l27hVh7-_5mlTR3zB0')
+DEEPSEEK_MODEL = _get_config('DEEPSEEK_MODEL', 'deepseek-chat')
+DEEPSEEK_TEMPERATURE = float(_get_config('DEEPSEEK_TEMPERATURE', '0.2'))
+DEEPSEEK_MAX_TOKENS = int(_get_config('DEEPSEEK_MAX_TOKENS', '2000'))
+DEEPSEEK_TIMEOUT = int(_get_config('DEEPSEEK_TIMEOUT', '15'))
 
 # realBOT Integration Settings (Milestones M2.1 & M2.2)
-REALBOT_INTEGRATION_ENABLED = os.environ.get('REALBOT_INTEGRATION_ENABLED', 'True').lower() in ('true', '1', 'yes')
-REALBOT_BASE_URL = os.environ.get('REALBOT_BASE_URL', 'http://127.0.0.1:8010')
-REALBOT_API_KEY = os.environ.get('REALBOT_API_KEY', '')
-REALBOT_TENANT = os.environ.get('REALBOT_TENANT', 'propertism')
-REALBOT_PRODUCT = os.environ.get('REALBOT_PRODUCT', 'propertism.in')
-REALBOT_DOMAIN = os.environ.get('REALBOT_DOMAIN', 'real_estate')
-REALBOT_ENVIRONMENT = os.environ.get('REALBOT_ENVIRONMENT', 'development')
-REALBOT_WIDGET_URL = os.environ.get('REALBOT_WIDGET_URL', 'http://127.0.0.1:8010')
-REALBOT_API_VERSION = os.environ.get('REALBOT_API_VERSION', 'v1')
+REALBOT_INTEGRATION_ENABLED = str(_get_config('REALBOT_INTEGRATION_ENABLED', 'True')).lower() in ('true', '1', 'yes')
+REALBOT_BASE_URL = _get_config('REALBOT_BASE_URL', 'http://127.0.0.1:8010')
+REALBOT_API_KEY = _get_config('REALBOT_API_KEY', '')
+REALBOT_TENANT = _get_config('REALBOT_TENANT', 'propertism')
+REALBOT_PRODUCT = _get_config('REALBOT_PRODUCT', 'propertism.in')
+REALBOT_DOMAIN = _get_config('REALBOT_DOMAIN', 'real_estate')
+REALBOT_ENVIRONMENT = _get_config('REALBOT_ENVIRONMENT', 'development')
+REALBOT_WIDGET_URL = _get_config('REALBOT_WIDGET_URL', 'http://127.0.0.1:8010')
+REALBOT_API_VERSION = _get_config('REALBOT_API_VERSION', 'v1')
 
 
 # Tamilselvan Profile Contact Settings

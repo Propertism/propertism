@@ -17,16 +17,23 @@ INITIATE_PER_IP = 5
 
 
 def _bump(cache_key: str, limit: int) -> bool:
-    count = cache.get(cache_key, 0)
+    try:
+        count = cache.get(cache_key, 0)
+    except Exception as exc:
+        logger.error('[realBOT] rate-limit cache unavailable: %s', exc)
+        return False
     if count >= limit:
         return False
-    if count == 0:
-        cache.set(cache_key, 1, WINDOW_SECONDS)
-    else:
-        try:
-            cache.incr(cache_key)
-        except ValueError:
-            cache.set(cache_key, 1, WINDOW_SECONDS)
+    try:
+        if count == 0:
+            if cache.set(cache_key, 1, WINDOW_SECONDS) is False:
+                raise RuntimeError('cache refused rate-limit write')
+        else:
+            if cache.incr(cache_key) is False:
+                raise RuntimeError('cache refused rate-limit increment')
+    except Exception as exc:
+        logger.error('[realBOT] rate-limit cache update failed: %s', exc)
+        return False
     return True
 
 

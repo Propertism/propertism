@@ -6,8 +6,10 @@ Each validator is independently testable and returns a
 """
 
 import logging
+import ipaddress
 import time
 
+from django.conf import settings
 from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
@@ -82,7 +84,14 @@ def validate_rate_limit(request) -> tuple[bool, str]:
     ip = _get_ip(request)
     cache_key = f'{RATE_LIMIT_CACHE_PREFIX}{ip}'
 
-    count = cache.get(cache_key, 0)
+    try:
+        count = cache.get(cache_key, 0)
+    except Exception as exc:
+        # A broken shared cache must not silently turn a mandatory control into
+        # an allow-all path.  The caller presents a retry-safe error response.
+        logger.error('[SpamProtection] Rate-limit cache unavailable: %s', exc)
+        return False, 'rate-limit-cache-unavailable'
+
     if count >= RATE_LIMIT_MAX:
         logger.warning(
             '[SpamProtection] Rate limit exceeded. ip=%s count=%d',
@@ -91,10 +100,16 @@ def validate_rate_limit(request) -> tuple[bool, str]:
         return False, f'rate-limit-exceeded:{count}'
 
     # Increment — set expiry only on first hit
-    if count == 0:
-        cache.set(cache_key, 1, RATE_LIMIT_WINDOW)
-    else:
-        cache.incr(cache_key)
+    try:
+        if count == 0:
+            if cache.set(cache_key, 1, RATE_LIMIT_WINDOW) is False:
+                raise RuntimeError('cache refused rate-limit write')
+        else:
+            if cache.incr(cache_key) is False:
+                raise RuntimeError('cache refused rate-limit increment')
+    except Exception as exc:
+        logger.error('[SpamProtection] Rate-limit cache update failed: %s', exc)
+        return False, 'rate-limit-cache-unavailable'
 
     return True, ''
 
@@ -104,8 +119,32 @@ def validate_rate_limit(request) -> tuple[bool, str]:
 # --------------------------------------------------------------------------- #
 
 def _get_ip(request) -> str:
-    """Extract real IP, respecting X-Forwarded-For from load balancers."""
+    """Return the rate-limit client IP without trusting arbitrary headers.
+
+    ``X-Forwarded-For`` is accepted only when the immediate peer is explicitly
+    configured as a trusted reverse proxy.  Production must provide
+    ``TRUSTED_PROXY_IPS`` after its Nginx/Lightsail topology is verified; the
+    secure default is the direct peer address.
+    """
+    remote_addr = request.META.get('REMOTE_ADDR', '0.0.0.0')
+    trusted_proxies = getattr(settings, 'TRUSTED_PROXY_IPS', ()) or ()
+    if isinstance(trusted_proxies, str):
+        trusted_proxies = [item.strip() for item in trusted_proxies.split(',')]
+
+    try:
+        peer_is_trusted = ipaddress.ip_address(remote_addr) in {
+            ipaddress.ip_address(item) for item in trusted_proxies if item
+        }
+    except ValueError:
+        # A malformed setting must fail safe: ignore forwarded input.
+        logger.error('[SpamProtection] Invalid TRUSTED_PROXY_IPS configuration.')
+        peer_is_trusted = False
+
     x_forwarded = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded:
-        return x_forwarded.split(',')[0].strip()
-    return request.META.get('REMOTE_ADDR', '0.0.0.0')
+    if peer_is_trusted and x_forwarded:
+        candidate = x_forwarded.split(',')[0].strip()
+        try:
+            return str(ipaddress.ip_address(candidate))
+        except ValueError:
+            logger.warning('[SpamProtection] Ignoring malformed X-Forwarded-For.')
+    return remote_addr
