@@ -16,7 +16,7 @@
 {% block extra_css %}
 <style>
     .management-page {
-        padding: 124px 0 36px !important;
+        padding: 128px 0 36px !important;
         background: #fdfbf7 !important;
         min-height: calc(100vh - 350px);
         color: #0f172a;
@@ -114,7 +114,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        border-radius: 4px;
+        border-radius: 0 !important;
         text-decoration: none;
         transition: all 0.25s ease;
     }
@@ -138,7 +138,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        border-radius: 4px;
+        border-radius: 0 !important;
         text-decoration: none;
         transition: all 0.25s ease;
     }
@@ -182,7 +182,7 @@
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-top: 3px solid #b89a4a !important;
-        border-radius: 8px;
+        border-radius: 0 !important;
         padding: 14px 16px;
         display: flex;
         flex-direction: column;
@@ -208,7 +208,7 @@
     .mgmt-pillar-icon {
         width: 28px;
         height: 28px;
-        border-radius: 6px;
+        border-radius: 0 !important;
         background: rgba(184, 154, 74, 0.12);
         color: #b89a4a;
         display: flex;
@@ -268,7 +268,7 @@
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-top: 3px solid #0f172a !important;
-        border-radius: 8px;
+        border-radius: 0 !important;
         padding: 14px 16px;
         display: flex;
         flex-direction: column;
@@ -291,7 +291,7 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
         padding: 2px 6px;
-        border-radius: 4px;
+        border-radius: 0 !important;
         width: fit-content;
         margin-bottom: 4px;
     }
@@ -327,7 +327,7 @@
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-left: 3px solid #b89a4a !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         padding: 12px 16px !important;
         display: flex !important;
         flex-direction: column !important;
@@ -363,7 +363,7 @@
     .mgmt-team-card {
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
-        border-radius: 8px;
+        border-radius: 0 !important;
         padding: 10px 12px;
         display: flex;
         flex-direction: column;
@@ -387,7 +387,7 @@
     .mgmt-team-avatar {
         width: 38px;
         height: 38px;
-        border-radius: 50%;
+        border-radius: 50% !important;
         object-fit: cover;
         border: 1.5px solid #b89a4a;
         box-shadow: 0 2px 6px rgba(184, 154, 74, 0.2);
@@ -397,7 +397,7 @@
     .mgmt-team-avatar-placeholder {
         width: 38px;
         height: 38px;
-        border-radius: 50%;
+        border-radius: 50% !important;
         border: 1.5px solid #b89a4a;
         background: rgba(184, 154, 74, 0.1);
         color: #b89a4a;
@@ -446,7 +446,7 @@
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-left: 4px solid #b89a4a !important;
-        border-radius: 8px;
+        border-radius: 0 !important;
         padding: 16px 22px;
         display: flex;
         justify-content: space-between;
@@ -477,7 +477,7 @@
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.12em !important;
-        border-radius: 4px !important;
+        border-radius: 0 !important;
         flex-shrink: 0 !important;
         transition: all 0.25s ease !important;
     }
@@ -502,6 +502,9 @@
     }
 
     @media (max-width: 768px) {
+        .management-page {
+            padding-top: 104px !important;
+        }
         .management-page .management-page-inner,
         .management-page .container {
             padding-left: 16px !important;

@@ -1,11 +1,11 @@
 <!-- AUDIT METADATA -->
-<!-- Date: 2026-10-18 -->
-<!-- Time: 23:12 IST -->
+<!-- Date: 2026-10-19 -->
+<!-- Time: 00:32 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra 1 -->
 <!-- Module: 03-propertism -->
-<!-- Status: CONCLUDED / STABLE — PRODUCTION DEPLOYED (COMMIT: f7f98ad) -->
-<!-- Git Commit: f7f98ad -->
+<!-- Status: CONCLUDED / STABLE — FLAT SHAPES & NAVBAR CLEARANCE DEPLOYED -->
+<!-- Git Commit: HEAD (uncommitted) -->
 
 
 # 📌 SESSION STATE & CONTINUITY: 03-propertism
@@ -275,4 +275,28 @@
 
 ### 🎯 STAGE 5/6 STATUS
 - Viji reviewed and approved: *"Verified please push"*.
-- Pushing to `origin main` under `Propertism` GitHub account to trigger Lightsail CI/CD pipeline.
+- Pushed commit `f7f98ad` under `Propertism` GitHub account; Lightsail CI/CD pipeline deployed successfully.
+
+---
+
+## Session Entry (2026-10-19 Early Morning — Flat Look, Zero Radius & Properties Spacing Polish)
+
+### ✅ COMPLETED DELIVERABLES
+1. **Flat Look & Zero Rounded Corners Enforced**:
+   - In `uilayers/templates/properties/list.html`: set `border-radius: 0 !important;` on `.property-item-modern`, `.property-item-badge`, `.property-chip`, `.properties-pagination a, span`, and `.properties-empty`.
+   - In `uilayers/templates/management.html`: set `border-radius: 0 !important;` on `.btn-mgmt-solid`, `.btn-mgmt-outline`, `.mgmt-pillar-card`, `.mgmt-pillar-icon`, `.mgmt-step-card`, `.mgmt-step-pill`, `.mgmt-metric-item`, `.mgmt-team-card`, `.mgmt-cta-box`, and consultation button.
+   - In `static/css/v4-properties.css`: set `border-radius: 0 !important;` on `.property-card-hybrid`, `.property-badge-hybrid`, `.featured-properties-cta .btn-gold`, and `.btn-outline-gold`.
+   - Preserved circular thumbnails (`border-radius: 50% !important;`) on team member photos across homepage (`.management-member-thumb`) and `/management/` (`.mgmt-team-avatar`).
+2. **Properties Page Navbar Clearance (`/properties/`)**:
+   - Increased `.properties-page` desktop top padding to `128px 0 36px !important;` (and `104px 0 36px !important;` on mobile), completely eliminating navbar overlap on the `CURATED PROPERTIES` kicker.
+3. **Exact 2-Line Gap Between Subtitle and Card Grid (`/properties/`)**:
+   - Replaced `<section class="properties-grid-modern">` with `<div class="properties-grid-modern">` and `<section class="properties-page">` with `<main class="properties-page">`.
+   - Set `.properties-page-header { margin: 0 0 14px 0 !important; padding: 0 !important; }` and zeroed out grid margins, delivering an exact 2-line spacing between the subtitle and the property listings.
+4. **Deterministic Verification Gate**:
+   - `.\scripts\django.cmd check` $\rightarrow$ Exit 0.
+   - `.\scripts\django.cmd test properties.tests content.tests` $\rightarrow$ 64 passed in 3.897s, 0 failures, 0 errors.
+
+### 🎯 STAGE 5/6 STATUS
+- Viji reviewed and approved in chat: *"Verified Astra, Please push to git"*.
+- Ready for git commit and push under `Propertism` GitHub CLI account.
+

@@ -6,7 +6,7 @@
 {% block extra_css %}
 <style>
     .properties-page {
-        padding: 88px 0 28px !important;
+        padding: 128px 0 36px !important;
         background: #f8fafc;
         min-height: calc(100vh - 400px);
     }
@@ -23,16 +23,18 @@
     }
 
     .properties-page-shell {
-        display: grid;
-        gap: 16px;
+        display: flex;
+        flex-direction: column;
         width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .properties-page-header {
         background: transparent;
         border: none;
-        padding: 0;
-        margin: 0;
+        padding: 0 !important;
+        margin: 0 0 14px 0 !important;
         text-align: left;
     }
 
@@ -82,6 +84,8 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     @media (max-width: 1024px) {
@@ -99,7 +103,7 @@
     .property-item-modern {
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        border-radius: 12px;
+        border-radius: 0 !important;
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -146,7 +150,7 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        border-radius: 4px;
+        border-radius: 0 !important;
     }
 
     .property-item-body {
@@ -290,7 +294,7 @@
         align-items: center;
         padding: 4px 8px;
         border: 1px solid #e2e8f0;
-        border-radius: 4px;
+        border-radius: 0 !important;
         font-size: 0.7rem;
         font-weight: 600;
         letter-spacing: 0.04em;
@@ -310,7 +314,7 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
-        margin-top: 12px;
+        margin-top: 36px;
     }
 
     .properties-pagination a,
@@ -321,7 +325,7 @@
         min-height: 40px;
         padding: 0 16px;
         border: 1px solid #dbe3ea;
-        border-radius: 8px;
+        border-radius: 0 !important;
         background: #ffffff;
         color: #0f172a;
         text-decoration: none;
@@ -346,7 +350,7 @@
     .properties-empty {
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        border-radius: 12px;
+        border-radius: 0 !important;
         padding: 40px;
         text-align: center;
     }
@@ -359,7 +363,7 @@
 
     @media (max-width: 900px) {
         .properties-page {
-            padding: calc(var(--nav-height, 76px) + 16px) 0 40px;
+            padding: 104px 0 36px !important;
         }
 
         .properties-page .properties-page-inner,
@@ -375,7 +379,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="properties-page">
+<main class="properties-page">
     <div class="properties-page-inner">
         <div class="properties-page-shell">
             <header class="properties-page-header">
@@ -392,7 +396,7 @@
             </header>
 
             {% if properties %}
-            <section class="properties-grid-modern" aria-label="Property listings">
+            <div class="properties-grid-modern" aria-label="Property listings">
                 {% for property in properties %}
                 <article class="property-item-modern">
                     <div class="property-item-media">
@@ -423,7 +427,7 @@
                     </div>
                 </article>
                 {% endfor %}
-            </section>
+            </div>
 
             {% if properties.has_other_pages %}
             <nav class="properties-pagination" aria-label="Properties pagination">
@@ -443,5 +447,5 @@
             {% endif %}
         </div>
     </div>
-</section>
+</main>
 {% endblock %}
