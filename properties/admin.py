@@ -170,6 +170,8 @@ class InquiryAdmin(admin.ModelAdmin):
                 spam_count = all_qs.filter(
                     db_models.Q(name__regex=r"[\u0400-\u052F]")
                     | db_models.Q(message__regex=r"[\u0400-\u052F]")
+                    | db_models.Q(assessment_status="Likely Spam")
+                    | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
                 ).count()
             except Exception:
                 spam_count = all_qs.filter(assessment_status="Likely Spam").count()
@@ -236,13 +238,15 @@ class InquiryAdmin(admin.ModelAdmin):
             return JsonResponse({"ok": False, "error": str(exc)}, status=400)
 
     def spam_count_view(self, request):
-        """Return current Cyrillic spam count (read-only, for the admin banner)."""
+        """Return current spam count (read-only, for the admin banner)."""
         spam_count = cache.get("admin_inquiry_spam_count")
         if spam_count is None:
             try:
                 spam_count = Inquiry.objects.filter(
                     db_models.Q(name__regex=r"[\u0400-\u052F]")
                     | db_models.Q(message__regex=r"[\u0400-\u052F]")
+                    | db_models.Q(assessment_status="Likely Spam")
+                    | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
                 ).count()
             except Exception:
                 spam_count = Inquiry.objects.filter(assessment_status="Likely Spam").count()
@@ -251,17 +255,55 @@ class InquiryAdmin(admin.ModelAdmin):
         return JsonResponse({"ok": True, "spam_count": spam_count, "total": total})
 
     def bulk_delete_spam_view(self, request):
-        """Delete all Cyrillic spam inquiries. POST + staff-only (enforced by admin_view)."""
+        """
+        Directly purges historical Cyrillic spam (zero SpamLog bloat) and
+        quarantines only recent bot suspects (RobertTharp, etc.) to SpamLog.
+        """
         if request.method != "POST":
             return JsonResponse({"ok": False, "error": "POST required"}, status=405)
         try:
-            spam_qs = Inquiry.objects.filter(
+            from content.models import SpamLog
+
+            # 1. 40k+ Cyrillic spam: Directly PURGE (do NOT copy to SpamLog)
+            cyrillic_qs = Inquiry.objects.filter(
                 db_models.Q(name__regex=r"[\u0400-\u052F]")
                 | db_models.Q(message__regex=r"[\u0400-\u052F]")
             )
-            deleted_count, _ = spam_qs.delete()
+            purged_cyrillic_count, _ = cyrillic_qs.delete()
+
+            # 2. Recent English bot suspects: Quarantine to SpamLog
+            bot_qs = Inquiry.objects.filter(
+                db_models.Q(assessment_status="Likely Spam")
+                | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
+                | db_models.Q(message__icontains="wellorena.com")
+            )
+            moved_count = 0
+            for item in bot_qs:
+                SpamLog.objects.create(
+                    ip_address="127.0.0.1",
+                    user_agent="Admin Bulk Quarantine",
+                    form_name=item.form_source or "Inquiry Table",
+                    request_path="/admin/properties/inquiry/",
+                    failure_reason=f"Admin Quarantined ({item.assessment_status or 'Bot Detected'})",
+                    confidence_score=item.confidence_score or 0,
+                    name=item.name,
+                    email=item.email,
+                    phone=item.phone,
+                    message=item.message,
+                    country_code=item.country_code or "",
+                    country_name=item.country_name or "",
+                    validation_summary=item.validation_summary or [],
+                )
+                moved_count += 1
+            deleted_bots, _ = bot_qs.delete()
+
             cache.delete("admin_inquiry_spam_count")
-            return JsonResponse({"ok": True, "deleted": deleted_count})
+            return JsonResponse({
+                "ok": True,
+                "purged_cyrillic": purged_cyrillic_count,
+                "moved_to_spam_log": moved_count,
+                "total_cleaned": purged_cyrillic_count + deleted_bots,
+            })
         except Exception as exc:
             return JsonResponse({"ok": False, "error": str(exc)}, status=400)
 

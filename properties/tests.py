@@ -388,3 +388,49 @@ class InquiryNotificationTests(TestCase):
         # AcknowledgementService with channels=['email'] only (commit 2c21a2c
         # decommissioned auto WhatsApp). Persistence + email remain the contract.
 
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        DEFAULT_FROM_EMAIL="info@propertism.in",
+        ADMIN_EMAIL="info@propertism.in",
+        COMMUNICATIONS_ASYNC=False,
+    )
+    @patch("realtor_project.features.is_feature_enabled")
+    def test_create_inquiry_quarantined_to_spam_log(self, mock_is_feature_enabled):
+        from content.models import SpamLog
+        mock_is_feature_enabled.side_effect = lambda flag, default=True: False if flag == "CAPTCHA_ENABLE" else True
+        mail.outbox = []
+
+        initial_inquiry_count = Inquiry.objects.count()
+        initial_spam_count = SpamLog.objects.count()
+
+        # Submit inquiry matching concatenated bot name + spam affiliate URL
+        with self.captureOnCommitCallbacks(execute=True):
+            response = self.client.post(
+                reverse("create_inquiry"),
+                data={
+                    "property_id": self.property_obj.id,
+                    "name": "RobertTharp",
+                    "email": "robert.tharp@example.com",
+                    "phone": "+491234567890",
+                    "country_code": "+49",
+                    "message": "Visit our health guide at https://wellorena.com for discounts.",
+                },
+            )
+
+        # Primary Inquiry table must NOT be polluted
+        self.assertEqual(Inquiry.objects.count(), initial_inquiry_count)
+
+        # Record must be quarantined to SpamLog
+        self.assertEqual(SpamLog.objects.count(), initial_spam_count + 1)
+        spam_entry = SpamLog.objects.filter(name="RobertTharp").first()
+        self.assertIsNotNone(spam_entry)
+        self.assertEqual(spam_entry.email, "robert.tharp@example.com")
+        self.assertIn("Likely Spam", spam_entry.failure_reason)
+
+        # Outbound notification emails must be completely suppressed
+        self.assertEqual(len(mail.outbox), 0)
+
+        # Response must return standard success redirect (tarpit bot defense)
+        self.assertRedirects(response, reverse("property_detail", kwargs={"slug": self.property_obj.slug}))
+
+

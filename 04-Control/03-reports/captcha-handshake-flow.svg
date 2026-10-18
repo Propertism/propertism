@@ -1,0 +1,83 @@
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" style="background: #0b0f1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- Definitions for gradients, markers, filters -->
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="blueCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    
+    <!-- Arrows -->
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#eab308"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <!-- Background Border Frame -->
+  <rect width="820" height="420" rx="14" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="2"/>
+  
+  <!-- Title Badge -->
+  <rect x="250" y="16" width="320" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="410" y="35" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="0.5">RECAPTCHA V2 CRYPTOGRAPHIC HANDSHAKE</text>
+
+  <!-- Lifeline 1: Visitor Browser -->
+  <line x1="140" y1="95" x2="140" y2="390" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <rect x="35" y="55" width="210" height="50" rx="8" fill="url(#blueCard)" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="140" y="76" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="middle">👤 Visitor Browser</text>
+  <text x="140" y="93" fill="#38bdf8" font-size="11" text-anchor="middle">Public RECAPTCHA_SITE_KEY</text>
+
+  <!-- Lifeline 2: Django Server -->
+  <line x1="410" y1="95" x2="410" y2="390" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <rect x="305" y="55" width="210" height="50" rx="8" fill="url(#blueCard)" stroke="#eab308" stroke-width="1.5"/>
+  <text x="410" y="76" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="middle">⚙️ Propertism Django Server</text>
+  <text x="410" y="93" fill="#eab308" font-size="11" text-anchor="middle">SystemConfig SECRET_KEY (DB)</text>
+
+  <!-- Lifeline 3: Google reCAPTCHA Cloud -->
+  <line x1="680" y1="95" x2="680" y2="390" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <rect x="575" y="55" width="210" height="50" rx="8" fill="url(#blueCard)" stroke="#10b981" stroke-width="1.5"/>
+  <text x="680" y="76" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="middle">☁️ Google reCAPTCHA API</text>
+  <text x="680" y="93" fill="#10b981" font-size="11" text-anchor="middle">AI Behavioral Risk Engine</text>
+
+  <!-- ==================== STEP 1 ==================== -->
+  <path d="M 140 135 L 672 135" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+  <rect x="235" y="122" width="350" height="26" rx="5" fill="#020617" stroke="#38bdf8" stroke-width="1"/>
+  <text x="410" y="139" fill="#38bdf8" font-size="11" font-weight="600" text-anchor="middle">① Clicks Checkbox (sends mouse physics, speed &amp; cookies)</text>
+
+  <!-- ==================== STEP 2 ==================== -->
+  <path d="M 680 185 L 148 185" stroke="#10b981" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-green)"/>
+  <rect x="230" y="172" width="360" height="26" rx="5" fill="#020617" stroke="#10b981" stroke-width="1"/>
+  <text x="410" y="189" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle">② Verified: Issues 2-min single-use cryptographic token</text>
+
+  <!-- ==================== STEP 3 ==================== -->
+  <path d="M 140 235 L 402 235" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <rect x="180" y="222" width="210" height="26" rx="5" fill="#020617" stroke="#c084fc" stroke-width="1"/>
+  <text x="285" y="239" fill="#c084fc" font-size="11" font-weight="600" text-anchor="middle">③ Submits Form + Token (POST)</text>
+
+  <!-- ==================== STEP 4 ==================== -->
+  <path d="M 410 285 L 672 285" stroke="#eab308" stroke-width="2" marker-end="url(#arrow-gold)"/>
+  <rect x="430" y="272" width="230" height="26" rx="5" fill="#020617" stroke="#eab308" stroke-width="1"/>
+  <text x="545" y="289" fill="#eab308" font-size="11" font-weight="600" text-anchor="middle">④ /siteverify (Token + SECRET_KEY)</text>
+
+  <!-- ==================== STEP 5 ==================== -->
+  <path d="M 680 335 L 418 335" stroke="#10b981" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-green)"/>
+  <rect x="430" y="322" width="230" height="26" rx="5" fill="#020617" stroke="#10b981" stroke-width="1"/>
+  <text x="545" y="339" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle">⑤ Confirms Authenticity: {"success": true}</text>
+
+  <!-- ==================== STEP 6 ==================== -->
+  <path d="M 410 380 L 148 380" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-cyan)"/>
+  <rect x="180" y="367" width="210" height="26" rx="5" fill="#020617" stroke="#38bdf8" stroke-width="1"/>
+  <text x="285" y="384" fill="#38bdf8" font-size="11" font-weight="600" text-anchor="middle">⑥ Saves Lead to DB &amp; 200 OK</text>
+</svg>

@@ -203,6 +203,14 @@ class SpamProtectionService:
         failure_reason: str,
         google_error_codes: list = None,
         confidence_score: int = 0,
+        name: str = '',
+        email: str = '',
+        phone: str = '',
+        message: str = '',
+        country_code: str = '',
+        country_name: str = '',
+        validation_summary: list = None,
+        payload: dict = None,
     ):
         """Write a SpamLog entry. Failures are silent — never block the request."""
         try:
@@ -216,6 +224,14 @@ class SpamProtectionService:
                 failure_reason=failure_reason[:200],
                 google_error_code=','.join(google_error_codes or [])[:100],
                 confidence_score=confidence_score,
+                name=name[:255],
+                email=email[:255],
+                phone=phone[:50],
+                message=message,
+                country_code=country_code[:20],
+                country_name=country_name[:100],
+                validation_summary=validation_summary or [],
+                payload=payload or {},
             )
         except Exception as e:
             logger.error('[SpamProtection] Failed to write SpamLog: %s', e)

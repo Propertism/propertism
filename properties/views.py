@@ -227,6 +227,40 @@ def create_inquiry(request):
             raw_country_code=request.POST.get("country_code") or request.POST.get("contact_country_code")
         )
 
+        # Operational gate: If assessed as Likely Spam, quarantine to SpamLog table
+        # instead of polluting the primary Inquiry table or dispatching lead notifications.
+        if assessment.get('assessment_status') == 'Likely Spam':
+            from content.models import SpamLog
+            from content.security.validators import _get_ip
+            summary_reasons = [v.get('text', '') for v in assessment.get('validation_summary', [])]
+            reason_str = f"Likely Spam ({', '.join(summary_reasons)})"[:200]
+
+            SpamLog.objects.create(
+                ip_address=_get_ip(request),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+                form_name=form_source,
+                request_path=request.path,
+                referer=request.META.get('HTTP_REFERER', '')[:200],
+                failure_reason=reason_str,
+                confidence_score=assessment.get('confidence_score', 0),
+                name=request.POST.get("name", "").strip()[:255],
+                email=request.POST.get("email", "").strip()[:255],
+                phone=request.POST.get("phone", "").strip()[:50],
+                message=msg_body_with_attribution,
+                country_code=c_code,
+                country_name=c_name,
+                validation_summary=assessment.get('validation_summary', []),
+                payload={k: v for k, v in request.POST.items() if k != 'csrfmiddlewaretoken'},
+            )
+            logger.warning(
+                "[SpamGate] Quarantined likely spam property inquiry to SpamLog: %s / %s (score: %s)",
+                request.POST.get("name", "").strip(),
+                request.POST.get("email", "").strip(),
+                assessment.get('confidence_score'),
+            )
+            messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
+            return redirect("property_detail", slug=property_obj.slug)
+
         inquiry = Inquiry.objects.create(
             property=property_obj,
             name=request.POST.get("name", "").strip(),
@@ -245,22 +279,12 @@ def create_inquiry(request):
             assessment_status=assessment['assessment_status'],
             validation_summary=assessment['validation_summary']
         )
-        
-        # Classification is an operational boundary as well as an audit label:
-        # retain the row for review, but do not dispatch it into the normal
-        # lead-notification workflow when it is assessed as likely spam.
-        if assessment.get('assessment_status') == 'Likely Spam':
-            logger.warning(
-                "[SpamGate] Suppressed notification dispatch for likely spam property inquiry ID %s (score: %s)",
-                inquiry.id,
-                assessment.get('confidence_score'),
-            )
-        else:
-            try:
-                send_rfq_notification(inquiry, form_source=form_source)
-            except Exception as email_exc:
-                logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
-                # Don't fail the request if email fails
+
+        try:
+            send_rfq_notification(inquiry, form_source=form_source)
+        except Exception as email_exc:
+            logger.exception("Failed to send notification for property inquiry %s", inquiry.email)
+            # Don't fail the request if email fails
 
         messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
     except Exception as exc:

@@ -863,11 +863,17 @@ class WhatsAppNotificationTests(TestCase):
         
         response = contact(request)
         
-        # Check that inquiry was saved with assessment_status 'Likely Spam'
+        # Check that inquiry was NOT saved to the primary Inquiry table
         inquiry = Inquiry.objects.filter(name='SpamBot').first()
-        self.assertIsNotNone(inquiry)
-        self.assertEqual(inquiry.assessment_status, 'Likely Spam')
-        
+        self.assertIsNone(inquiry)
+
+        # Check that it was quarantined to the SpamLog table
+        from content.models import SpamLog
+        spam_entry = SpamLog.objects.filter(name='SpamBot').first()
+        self.assertIsNotNone(spam_entry)
+        self.assertEqual(spam_entry.email, 'spam@bad-domain.xyz')
+        self.assertIn('Likely Spam', spam_entry.failure_reason)
+
         # Verify that send_rfq_notification was suppressed
         mock_send_rfq.assert_not_called()
 

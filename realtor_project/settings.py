@@ -668,12 +668,14 @@ LEAD_VALIDATION_CONFIG = {
     # Layer 3: Content Heuristics
     'SPAM_KEYWORDS': [
         'seo', 'ranking', 'casino', 'viagra', 'crypto', 'bitcoin', 'investment plan',
-        'guaranteed return', 'hacker', 'lottery', 'inheritance', 'dating', 'sex'
+        'guaranteed return', 'hacker', 'lottery', 'inheritance', 'dating', 'sex',
+        # English-language affiliate spam keywords detected 18-Oct-2026
+        'wellness', 'sexual', 'wellbeing', 'intimate',
     ],
     'PROMO_KEYWORDS': [
         'marketing', 'digital agency', 'grow your business', 'free audit', 'cheap traffic'
     ],
-    'MAX_HYPERLINKS': 1,
+    'MAX_HYPERLINKS': 0,  # Any URL in a property inquiry is a red flag — set to 0 (18-Oct-2026)
     
     # Layer 4: Business Relevance
     'BUSINESS_KEYWORDS': [
@@ -690,7 +692,10 @@ LEAD_VALIDATION_CONFIG = {
     'PENALTY_RATE_LIMIT': 30,
     'PENALTY_SPAM_KEYWORD': 30,
     'PENALTY_PROMO_KEYWORD': 15,
-    'PENALTY_MULTIPLE_URLS': 40,
+    'PENALTY_MULTIPLE_URLS': 50,         # Raised from 40; now fires on first URL (18-Oct-2026)
+    'PENALTY_CONCATENATED_NAME': 60,     # New 18-Oct-2026: CamelCase bot name (e.g. RobertTharp)
+    'PENALTY_DUPLICATE_SUBMISSION': 70,  # New 18-Oct-2026: same name+phone within 24h
+    'PENALTY_NOISE_COUNTRY': 30,         # New 18-Oct-2026: European low-probability NRI country code
     'PENALTY_INVALID_PHONE': 15,
     'PENALTY_INVALID_EMAIL': 15,
     'BONUS_BUSINESS_RELEVANCE': 10,

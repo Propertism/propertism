@@ -474,6 +474,40 @@ def contact(request):
                 raw_country_code=request.POST.get("country_code") or request.POST.get("contact_country_code")
             )
 
+            # Operational gate: If assessed as Likely Spam, quarantine to SpamLog table
+            # instead of polluting the primary PropertyInquiry table or dispatching lead notifications.
+            if assessment.get('assessment_status') == 'Likely Spam':
+                from content.models import SpamLog
+                from content.security.validators import _get_ip
+                summary_reasons = [v.get('text', '') for v in assessment.get('validation_summary', [])]
+                reason_str = f"Likely Spam ({', '.join(summary_reasons)})"[:200]
+
+                SpamLog.objects.create(
+                    ip_address=_get_ip(request),
+                    user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+                    form_name=request.POST.get("form_source", "Unknown Form"),
+                    request_path=request.path,
+                    referer=request.META.get('HTTP_REFERER', '')[:200],
+                    failure_reason=reason_str,
+                    confidence_score=assessment.get('confidence_score', 0),
+                    name=(request.POST.get("name") or "").strip()[:255],
+                    email=(request.POST.get("email") or "").strip()[:255],
+                    phone=(request.POST.get("phone") or "").strip()[:50],
+                    message=msg_body_with_attribution,
+                    country_code=c_code,
+                    country_name=c_name,
+                    validation_summary=assessment.get('validation_summary', []),
+                    payload={k: v for k, v in request.POST.items() if k != 'csrfmiddlewaretoken'},
+                )
+                logger.warning(
+                    "[SpamGate] Quarantined likely spam contact inquiry to SpamLog: %s / %s (score: %s)",
+                    request.POST.get("name"),
+                    request.POST.get("email"),
+                    assessment.get('confidence_score')
+                )
+                messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
+                return redirect(get_home_section_links()["contact"])
+
             inquiry = PropertyInquiry.objects.create(
                 name=request.POST.get("name") or "",
                 email=request.POST.get("email") or "",
@@ -497,19 +531,11 @@ def contact(request):
             
             form_source = inquiry.form_source
             
-            # Send email notification to admin (gate: suppress for likely spam)
-            if assessment.get('assessment_status') == 'Likely Spam':
-                logger.warning(
-                    "[SpamGate] Suppressed notification dispatch for likely spam inquiry ID %s (score: %s)",
-                    inquiry.id,
-                    assessment.get('confidence_score')
-                )
-            else:
-                try:
-                    send_rfq_notification(inquiry, form_source=form_source)
-                except Exception as email_exc:
-                    logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
-                    # Don't fail the request if email fails
+            try:
+                send_rfq_notification(inquiry, form_source=form_source)
+            except Exception as email_exc:
+                logger.exception("Failed to send email notification for inquiry %s", inquiry.email)
+                # Don't fail the request if email fails
             
             messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
             return redirect(get_home_section_links()["contact"])

@@ -717,6 +717,16 @@ class SpamLog(models.Model):
     google_error_code = models.CharField(max_length=100, blank=True)
     confidence_score = models.IntegerField(default=0)
 
+    # Quarantined inquiry details (prevent polluting primary Inquiry lead table)
+    name = models.CharField(max_length=255, blank=True)
+    email = models.CharField(max_length=255, blank=True)
+    phone = models.CharField(max_length=50, blank=True)
+    message = models.TextField(blank=True)
+    country_code = models.CharField(max_length=20, blank=True)
+    country_name = models.CharField(max_length=100, blank=True)
+    validation_summary = models.JSONField(default=list, blank=True)
+    payload = models.JSONField(default=dict, blank=True)
+
     class Meta:
         ordering = ['-timestamp']
         verbose_name = 'Spam Log'

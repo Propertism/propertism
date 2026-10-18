@@ -6,6 +6,26 @@ from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
+# Country codes with near-zero real NRI lead probability for Chennai real estate.
+# These are flagged (not hard-blocked) — row retained for manual review.
+# Propertism's genuine diaspora: +971 UAE, +1 US/CA, +44 UK, +61 AU, +65 SG, +91 IN
+# Added 18-Oct-2026 after European noise-country spam wave.
+_NOISE_COUNTRY_CODES = {
+    '+370',  # Lithuania
+    '+358',  # Finland / Poland (shared prefix — flag both)
+    '+43',   # Austria
+    '+45',   # Denmark
+    '+351',  # Portugal
+    '+32',   # Belgium
+    '+36',   # Hungary
+    '+420',  # Czech Republic
+    '+421',  # Slovakia
+    '+385',  # Croatia
+    '+40',   # Romania
+    '+380',  # Ukraine (also Cyrillic spam source)
+    '+375',  # Belarus
+}
+
 class LeadValidator:
     def __init__(self, request, data):
         self.request = request
@@ -37,6 +57,8 @@ class LeadValidator:
         self._check_honeypot()
         self._check_timing()
         self._check_rate_limit()
+        self._check_duplicate_submission()
+        self._check_noise_country()
         self._check_content_heuristics()
         self._check_business_relevance()
         self._check_contact_info()
@@ -96,6 +118,28 @@ class LeadValidator:
         if self.has_international_context != previous_international_status:
             logger.info(f"[CONTEXT-CHANGE] International status changed to: {self.has_international_context}")
                 
+    def _check_noise_country(self):
+        """Flag country codes with near-zero legitimate NRI lead probability.
+
+        Not a hard block — applies a penalty so that combined with any other
+        signal the entry reaches 'Likely Spam'. A clean submission from one
+        of these codes will land in 'Review Recommended' for human triage.
+        """
+        code = (self.country_code or '').strip()
+        if not code:
+            return
+        # Match exact prefix against the noise set
+        is_noise = any(code.startswith(nc) for nc in _NOISE_COUNTRY_CODES)
+        if is_noise:
+            penalty = self.config.get('PENALTY_NOISE_COUNTRY', 30)
+            self.score -= penalty
+            self.validation_summary.append(
+                {'text': f'Low-probability NRI source country ({code})', 'type': 'warning'}
+            )
+            logger.warning(
+                "[NOISE-COUNTRY] Low-probability country code flagged: %s", code
+            )
+
     def _check_honeypot(self):
         honeypot_field = self.config.get('HONEYPOT_FIELD_NAME', 'website_url_check')
         honeypot_value = self.data.get(honeypot_field, '')
@@ -138,13 +182,14 @@ class LeadValidator:
             self.validation_summary.append({'text': 'Message Body Empty', 'type': 'warning'})
             return
             
-        # URL check
+        # URL check — MAX_HYPERLINKS is 0; real property inquirers never paste URLs
         url_count = message.count('http://') + message.count('https://') + message.count('www.')
-        max_urls = self.config.get('MAX_HYPERLINKS', 1)
+        max_urls = self.config.get('MAX_HYPERLINKS', 0)
         if url_count > max_urls:
-            self.score -= self.config.get('PENALTY_MULTIPLE_URLS', 40)
-            self.validation_summary.append({'text': f'External URL Detected ({url_count})', 'type': 'danger'})
-        elif url_count == 0:
+            self.score -= self.config.get('PENALTY_MULTIPLE_URLS', 50)
+            self.validation_summary.append({'text': f'URL Detected in Message ({url_count})', 'type': 'danger'})
+            logger.warning("[URL-INJECTION] URL detected in message body. Count: %d", url_count)
+        else:
             self.validation_summary.append({'text': 'No Suspicious URLs', 'type': 'success'})
 
         # Cyrillic / Foreign Non-Target Script Spam Check
@@ -264,11 +309,20 @@ class LeadValidator:
             else:
                 self.validation_summary.append({'text': 'Vague Intent', 'type': 'warning'})
 
+    # Regex for concatenated bot names: capital mid-name, no space (e.g. RobertTharp, DylanUncer)
+    _BOT_NAME_RE = re.compile(r'^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$')
+
     def _check_contact_info(self):
         name = self.data.get('name', '')
         if name:
+            # Detect concatenated bot name pattern before any other name checks
+            if self._BOT_NAME_RE.match(name.strip()):
+                penalty = self.config.get('PENALTY_CONCATENATED_NAME', 60)
+                self.score -= penalty
+                self.validation_summary.append({'text': 'Concatenated Bot Name Pattern', 'type': 'danger'})
+                logger.warning("[BOT-NAME] Concatenated name detected: %s", name)
             # Be more lenient with international name formats
-            if self.has_international_context:
+            elif self.has_international_context:
                 self.validation_summary.append({'text': 'Name Provided (International)', 'type': 'info'})
             else:
                 self.validation_summary.append({'text': 'Human Name Format', 'type': 'success'})
@@ -328,6 +382,35 @@ class LeadValidator:
         else:
             self.status = "Likely Spam"
             
+    def _check_duplicate_submission(self):
+        """Penalise bot retry loops: same name + phone submitted twice within 24h."""
+        name = self.data.get('name', '').strip()
+        phone = re.sub(r'\D', '', self.data.get('phone', ''))
+        if not name or not phone or len(phone) < 7:
+            return
+        from django.utils import timezone
+        from datetime import timedelta
+        try:
+            from properties.models import Inquiry
+            cutoff = timezone.now() - timedelta(hours=24)
+            exists = Inquiry.objects.filter(
+                name__iexact=name,
+                phone__icontains=phone[-7:],
+                created_at__gte=cutoff,
+            ).exists()
+            if exists:
+                penalty = self.config.get('PENALTY_DUPLICATE_SUBMISSION', 70)
+                self.score -= penalty
+                self.validation_summary.append(
+                    {'text': 'Duplicate Submission (Name+Phone within 24h)', 'type': 'danger'}
+                )
+                logger.warning(
+                    "[DUPLICATE] Duplicate name+phone within 24h: %s / ***%s",
+                    name, phone[-4:]
+                )
+        except Exception as exc:
+            logger.error("[DUPLICATE-CHECK] DB check failed, skipping: %s", exc)
+
     def _get_client_ip(self):
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:

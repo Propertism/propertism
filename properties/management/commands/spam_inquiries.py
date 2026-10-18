@@ -1,19 +1,22 @@
-﻿"""
+"""
 Management command: spam_inquiries
 
-Counts (and optionally deletes) Cyrillic-text spam inquiries from the
-properties_inquiry table.
+Handles two distinct spam categories:
+1. 40,000+ historical Russian/Cyrillic ad spam: HARD PURGED (never moves to SpamLog).
+2. Recent English bot suspects (RobertTharp, DylanUncer, etc.): Quarantined to SpamLog.
 
 Usage:
-  # Count only -- safe read-only report:
+  # Count only -- safe read-only breakdown:
   python manage.py spam_inquiries --count
 
-  # Delete (requires explicit --confirm flag):
-  python manage.py spam_inquiries --delete --confirm
+  # Clean all -- hard purges 40k+ Cyrillic, quarantines only recent bots to SpamLog:
+  python manage.py spam_inquiries --clean-all --confirm
 
-Detection logic:
-  Any inquiry whose name OR message contains at least one Cyrillic Unicode
-  character (U+0400-U+04FF, U+0500-U+052F) is considered spam.
+  # Purge 40k+ Cyrillic only (direct deletion, zero SpamLog bloat):
+  python manage.py spam_inquiries --purge-cyrillic --confirm
+
+  # Quarantine recent English bot suspects only to SpamLog:
+  python manage.py spam_inquiries --quarantine-bots --confirm
 """
 
 import re
@@ -25,16 +28,26 @@ from django.utils import timezone
 from properties.models import Inquiry
 
 _CYRILLIC_RE = re.compile(r"[\u0400-\u052F]")
+_BOT_NAME_RE = re.compile(r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
 
 
-def _is_cyrillic(text):
-    return bool(_CYRILLIC_RE.search(text or ""))
+def _is_cyrillic(name, message):
+    return bool(_CYRILLIC_RE.search(name or "") or _CYRILLIC_RE.search(message or ""))
+
+
+def _is_bot_lead(name, message, assessment_status):
+    if _BOT_NAME_RE.match((name or "").strip()):
+        return True, "Concatenated Bot Name"
+    if assessment_status == "Likely Spam":
+        return True, "Likely Spam Assessment"
+    if "wellorena.com" in (message or "").lower() or "share.google" in (message or "").lower():
+        return True, "Affiliate Link Injection"
+    return False, ""
 
 
 class Command(BaseCommand):
     help = (
-        "Count (and optionally delete) Cyrillic/Russian spam inquiries. "
-        "Run with --count for a safe read-only report."
+        "Purge 40k+ Cyrillic spam directly and quarantine only recent bot suspects to SpamLog."
     )
 
     def add_arguments(self, parser):
@@ -42,18 +55,28 @@ class Command(BaseCommand):
         group.add_argument(
             "--count",
             action="store_true",
-            help="Report the total count of Cyrillic spam inquiries (read-only).",
+            help="Report count breakdown of Cyrillic spam vs recent bot suspects (read-only).",
         )
         group.add_argument(
-            "--delete",
+            "--clean-all",
             action="store_true",
-            help="Delete all Cyrillic spam inquiries. REQUIRES --confirm.",
+            help="Purge Cyrillic spam directly and quarantine only recent bot suspects to SpamLog. REQUIRES --confirm.",
+        )
+        group.add_argument(
+            "--purge-cyrillic",
+            action="store_true",
+            help="Directly delete 40k+ Cyrillic spam (zero SpamLog bloat). REQUIRES --confirm.",
+        )
+        group.add_argument(
+            "--quarantine-bots",
+            action="store_true",
+            help="Move only recent English bot suspects into SpamLog. REQUIRES --confirm.",
         )
         parser.add_argument(
             "--confirm",
             action="store_true",
             default=False,
-            help="Required alongside --delete to actually execute deletion.",
+            help="Required alongside execution flags.",
         )
 
     def handle(self, *args, **options):
@@ -61,68 +84,79 @@ class Command(BaseCommand):
             "\n[spam_inquiries] Run at %s\n" % timezone.now().strftime("%Y-%m-%d %H:%M:%S %Z")
         )
 
-        self.stdout.write("  Scanning inquiries for Cyrillic content...")
-        all_rows = list(Inquiry.objects.values_list("id", "name", "message"))
-        spam_ids = [
-            row[0]
-            for row in all_rows
-            if _is_cyrillic(row[1]) or _is_cyrillic(row[2])
-        ]
+        all_rows = list(Inquiry.objects.values_list("id", "name", "message", "assessment_status"))
         total = len(all_rows)
-        spam_count = len(spam_ids)
 
-        self.stdout.write("\n  Total inquiries in DB : %d" % total)
-        self.stdout.write("  Cyrillic spam records : %d" % spam_count)
-        self.stdout.write("  Legitimate records    : %d\n" % (total - spam_count))
+        cyrillic_ids = []
+        bot_records = []
+
+        for row in all_rows:
+            inq_id, name, message, status = row[0], row[1], row[2], row[3]
+            if _is_cyrillic(name, message):
+                cyrillic_ids.append(inq_id)
+            else:
+                is_bot, reason = _is_bot_lead(name, message, status)
+                if is_bot:
+                    bot_records.append((inq_id, reason))
+
+        cyrillic_count = len(cyrillic_ids)
+        bot_count = len(bot_records)
+        legitimate_count = total - (cyrillic_count + bot_count)
+
+        self.stdout.write("  Total inquiries in DB           : %d" % total)
+        self.stdout.write("  Historical Cyrillic spam (40k+) : %d  (Target: Direct Purge)" % cyrillic_count)
+        self.stdout.write("  Recent English bot suspects     : %d  (Target: Quarantine to SpamLog)" % bot_count)
+        self.stdout.write("  Legitimate genuine leads        : %d\n" % legitimate_count)
 
         if options["count"]:
-            from django.db.models import Count as DjCount
-            breakdown = (
-                Inquiry.objects.filter(id__in=spam_ids)
-                .values("assessment_status")
-                .annotate(n=DjCount("id"))
-                .order_by("-n")
-            )
-            if breakdown:
-                self.stdout.write("  Breakdown by assessment_status:")
-                for row in breakdown:
-                    self.stdout.write(
-                        "    %-30s  %6d" % (row["assessment_status"] or "None", row["n"])
-                    )
-
-            fs_breakdown = (
-                Inquiry.objects.filter(id__in=spam_ids)
-                .values("form_source")
-                .annotate(n=DjCount("id"))
-                .order_by("-n")[:10]
-            )
-            if fs_breakdown:
-                self.stdout.write("\n  Top form sources (spam):")
-                for row in fs_breakdown:
-                    self.stdout.write(
-                        "    %-40s  %6d" % (row["form_source"] or "None", row["n"])
-                    )
-
             self.stdout.write(
-                "\n  [READ-ONLY] No data was modified. Run with --delete --confirm to delete.\n"
+                "  [READ-ONLY] No data modified. Run with --clean-all --confirm to clean up.\n"
             )
             return
 
-        if options["delete"] and not options["confirm"]:
-            self.stderr.write(
-                "  ERROR: --delete requires --confirm. Add --confirm to execute the deletion.\n"
-            )
+        if not options["confirm"]:
+            self.stderr.write("  ERROR: Execution requires --confirm flag.\n")
             return
 
-        if not spam_ids:
-            self.stdout.write("  No Cyrillic spam records found. Nothing to delete.\n")
-            return
+        # Execute Clean-All or specific operations
+        if options["clean_all"] or options["purge_cyrillic"]:
+            if cyrillic_ids:
+                self.stdout.write("  Purging %d Cyrillic spam records directly from Inquiry table..." % cyrillic_count)
+                with transaction.atomic():
+                    deleted_cyr, _ = Inquiry.objects.filter(id__in=cyrillic_ids).delete()
+                self.stdout.write("  PURGED %d Cyrillic records (zero SpamLog bloat)." % deleted_cyr)
+            else:
+                self.stdout.write("  No Cyrillic spam records found to purge.")
 
-        self.stdout.write("  Deleting %d Cyrillic spam inquiries..." % spam_count)
-        with transaction.atomic():
-            deleted_count, _ = Inquiry.objects.filter(id__in=spam_ids).delete()
+        if options["clean_all"] or options["quarantine_bots"]:
+            if bot_records:
+                from content.models import SpamLog
+                bot_ids = [r[0] for r in bot_records]
+                self.stdout.write("  Quarantining %d recent bot suspects to SpamLog..." % bot_count)
+                bot_qs = Inquiry.objects.filter(id__in=bot_ids)
+                with transaction.atomic():
+                    moved = 0
+                    for item in bot_qs:
+                        SpamLog.objects.create(
+                            ip_address="127.0.0.1",
+                            user_agent="Management Command Quarantine",
+                            form_name=item.form_source or "Inquiry Table",
+                            request_path="/admin/properties/inquiry/",
+                            failure_reason=f"CLI Quarantined ({item.assessment_status or 'Bot Pattern'})",
+                            confidence_score=item.confidence_score or 0,
+                            name=item.name,
+                            email=item.email,
+                            phone=item.phone,
+                            message=item.message,
+                            country_code=item.country_code or "",
+                            country_name=item.country_name or "",
+                            validation_summary=item.validation_summary or [],
+                        )
+                        moved += 1
+                    deleted_bots, _ = bot_qs.delete()
+                self.stdout.write("  QUARANTINED %d recent bot suspects to SpamLog table." % moved)
+            else:
+                self.stdout.write("  No recent bot suspects found to quarantine.")
 
-        self.stdout.write(
-            "  DONE -- deleted %d records. Remaining: %d.\n"
-            % (deleted_count, total - deleted_count)
-        )
+        remaining = Inquiry.objects.count()
+        self.stdout.write("\n  DONE. Clean Inquiry table now contains %d legitimate leads.\n" % remaining)

@@ -134,6 +134,39 @@ class InquirySubmissionAdapter:
                     assess_exc,
                 )
 
+            # Operational gate: If assessed as Likely Spam, quarantine to SpamLog table
+            # instead of polluting the primary PropertyInquiry table.
+            if assessment_status == 'Likely Spam':
+                from content.models import SpamLog
+                summary_reasons = [v.get('text', '') for v in validation_summary]
+                reason_str = f"Chat Likely Spam ({', '.join(summary_reasons)})"[:200]
+
+                SpamLog.objects.create(
+                    ip_address='127.0.0.1',
+                    user_agent='realBOT conversation',
+                    form_name=form_source,
+                    request_path='/chat/',
+                    failure_reason=reason_str,
+                    confidence_score=confidence_score or 0,
+                    name=customer_name[:255],
+                    email=email_address[:255],
+                    phone=mobile_number[:50],
+                    message=full_message,
+                    country_code=c_code,
+                    country_name=c_name,
+                    validation_summary=validation_summary,
+                    payload=data,
+                )
+                logger.warning(
+                    "[SpamGate] Quarantined likely spam chat inquiry to SpamLog: %s / %s (score: %s)",
+                    customer_name, email_address, confidence_score
+                )
+                return {
+                    'success': True,
+                    'inquiry_id': None,
+                    'error': '',
+                }
+
             inquiry = PropertyInquiry.objects.create(
                 name=customer_name,
                 phone=mobile_number,

@@ -437,20 +437,21 @@ admin.site.register(User, PropertismUserAdmin)
 
 @admin.register(SpamLog)
 class SpamLogAdmin(admin.ModelAdmin):
-    """Read-only admin view for spam protection audit events."""
+    """Read-only admin view for spam protection and quarantined lead audit events."""
 
     list_display = (
-        'timestamp', 'ip_address', 'form_name',
-        'failure_reason', 'google_error_code', 'confidence_score',
+        'timestamp', 'name', 'phone', 'ip_address', 'form_name',
+        'failure_reason', 'confidence_score',
     )
     list_filter = ('failure_reason', 'form_name')
-    search_fields = ('ip_address', 'user_agent', 'failure_reason', 'request_path')
+    search_fields = ('name', 'email', 'phone', 'ip_address', 'user_agent', 'failure_reason', 'request_path', 'message')
     date_hierarchy = 'timestamp'
     ordering = ('-timestamp',)
     readonly_fields = (
-        'timestamp', 'ip_address', 'user_agent', 'form_name',
-        'request_path', 'referer', 'failure_reason',
-        'google_error_code', 'confidence_score',
+        'timestamp', 'name', 'email', 'phone', 'country_code', 'country_name',
+        'ip_address', 'user_agent', 'form_name', 'request_path', 'referer',
+        'failure_reason', 'google_error_code', 'confidence_score',
+        'validation_summary', 'message', 'payload',
     )
 
     def has_add_permission(self, request):
@@ -460,7 +461,7 @@ class SpamLogAdmin(admin.ModelAdmin):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return True
 
 
 # ─────────────────────────────────────────────────────────────────────────── #
