@@ -435,9 +435,15 @@ admin.site.register(User, PropertismUserAdmin)
 # SCCB-PROP-SEC-001 — Spam Log Admin (Read-Only Audit Log)
 # ─────────────────────────────────────────────────────────────────────────── #
 
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse, path
+
+
 @admin.register(SpamLog)
 class SpamLogAdmin(admin.ModelAdmin):
     """Read-only admin view for spam protection and quarantined lead audit events."""
+
+    change_list_template = "admin/content/spamlog/change_list.html"
 
     list_display = (
         'timestamp', 'name', 'phone', 'ip_address', 'form_name',
@@ -462,6 +468,28 @@ class SpamLogAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return True
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "empty-spam/",
+                self.admin_site.admin_view(self.empty_spam_view),
+                name="content_spamlog_empty_spam",
+            ),
+        ]
+        return custom_urls + urls
+
+    def empty_spam_view(self, request):
+        if request.method != "POST":
+            return JsonResponse({"ok": False, "error": "POST required"}, status=405)
+        try:
+            count = SpamLog.objects.count()
+            SpamLog.objects.all().delete()
+            return JsonResponse({"ok": True, "deleted": count})
+        except Exception as exc:
+            return JsonResponse({"ok": False, "error": str(exc)}, status=400)
+
 
 
 # ─────────────────────────────────────────────────────────────────────────── #

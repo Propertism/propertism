@@ -322,17 +322,34 @@
   </div>
   {% endif %}
 
-  {% if spam_count > 0 %}
+  {% if spam_count > 0 or current_is_spam %}
   <div class="spam-banner" id="spam-banner">
     <div class="spam-banner-text">
       <span class="spam-banner-icon">🚨</span>
       <div>
-        <div class="spam-banner-title">{{ spam_count|floatformat:0 }} Russian / Cyrillic spam records detected</div>
-        <div class="spam-banner-sub">These records contain Cyrillic text and are likely automated spam injections. Review before deleting.</div>
+        <div class="spam-banner-title">
+          {% if current_is_spam %}
+            Showing {{ page_obj.paginator.count }} Detected Spam Records
+          {% else %}
+            {{ spam_count|floatformat:0 }} Spam records detected (Russian & Bot Suspects)
+          {% endif %}
+        </div>
+        <div class="spam-banner-sub">
+          {% if current_is_spam %}
+            Reviewing filtered spam and bot inquiries. Click 'Show All' to exit filter.
+          {% else %}
+            These records match automated bot injections or foreign spam. Review before deleting.
+          {% endif %}
+        </div>
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <a href="?assessment_status=Likely+Spam" class="btn btn-outline" style="border-color:#FCA5A5;color:#991B1B;font-size:.82rem;padding:7px 14px;">Filter Likely Spam</a>
+      {% if current_is_spam %}
+        <a href="?" class="btn btn-outline" style="border-color:#9CA3AF;color:#4B5563;font-size:.82rem;padding:7px 14px;">Show All Inquiries</a>
+      {% else %}
+        <a href="?is_spam=1" class="btn btn-outline" style="border-color:#FCA5A5;color:#991B1B;font-size:.82rem;padding:7px 14px;">Filter {{ spam_count|floatformat:0 }} Spam Records</a>
+      {% endif %}
+      {% if spam_count > 0 %}
       <button type="button" class="btn-delete-spam" id="bulk-delete-btn"
               onclick="bulkDeleteSpam({{ spam_count }})">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -343,6 +360,7 @@
         </svg>
         Delete All {{ spam_count }} Spam Records
       </button>
+      {% endif %}
     </div>
   </div>
   {% endif %}
@@ -751,8 +769,8 @@ function deleteAdminInquiry(id, name) {
 }
 
 function bulkDeleteSpam(count) {
-  var msg = 'DELETE ALL ' + count + ' RUSSIAN / CYRILLIC SPAM RECORDS?\n\n' +
-    'This will permanently delete all inquiries containing Cyrillic text.\n' +
+  var msg = 'DELETE ALL ' + count + ' SPAM & BOT RECORDS?\n\n' +
+    'This will purge Russian/Cyrillic spam and quarantine bot suspects to SpamLog.\n' +
     'This action CANNOT be undone.\n\n' +
     'Type DELETE to confirm:';
   var input = window.prompt(msg);
@@ -770,7 +788,7 @@ function bulkDeleteSpam(count) {
   .then(r => r.json())
   .then(data => {
     if (data.ok) {
-      toast('Deleted ' + data.deleted + ' spam records. Reloading…', false);
+      toast('Cleaned ' + (data.total_cleaned || data.deleted) + ' spam records. Reloading…', false);
       var banner = document.getElementById('spam-banner');
       if (banner) banner.remove();
       setTimeout(() => location.reload(), 1800);

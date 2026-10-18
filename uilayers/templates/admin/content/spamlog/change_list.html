@@ -1,0 +1,70 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static %}
+
+{% block object-tools %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px; background:#F8FAFC; padding:12px 16px; border-radius:8px; border:1px solid #E2E8F0;">
+  <div style="display:flex; align-items:center; gap:10px;">
+    <span style="font-size:1.1rem; font-weight:700; color:#0F172A;">🛡️ Spam Audit Logs</span>
+    {% if cl.result_count is not None %}
+      <span style="background:#E2E8F0; color:#334155; padding:3px 10px; border-radius:12px; font-size:0.82rem; font-weight:700;">
+        {{ cl.result_count }} Total
+      </span>
+    {% endif %}
+  </div>
+  <div>
+    {% if cl.result_count and cl.result_count > 0 %}
+    <button type="button" id="btn-empty-spam" onclick="confirmEmptySpam({{ cl.result_count }})"
+            style="background:#DC2626; color:#FFF; border:none; padding:8px 18px; border-radius:6px; font-weight:600; font-size:0.85rem; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 3px rgba(220,38,38,0.3); transition:background 0.2s;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6l-1 14H6L5 6"></path>
+        <path d="M10 11v6M14 11v6"></path>
+        <path d="M9 6V4h6v2"></path>
+      </svg>
+      Empty Spam Log ({{ cl.result_count }})
+    </button>
+    {% endif %}
+  </div>
+</div>
+{{ block.super }}
+
+<script>
+function confirmEmptySpam(count) {
+  var promptMsg = 'EMPTY ALL ' + count + ' SPAM LOG ENTRIES?\n\n' +
+    'This will permanently delete all logged spam attempts from the database.\n' +
+    'This action CANNOT be undone.\n\n' +
+    'Type EMPTY to confirm:';
+  var reply = window.prompt(promptMsg);
+  if (!reply || reply.trim().toUpperCase() !== 'EMPTY') {
+    return;
+  }
+  var btn = document.getElementById('btn-empty-spam');
+  if (btn) { btn.disabled = true; btn.textContent = 'Emptying...'; }
+  
+  var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
+  
+  fetch('{% url "admin:content_spamlog_empty_spam" %}', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken
+    },
+    body: JSON.stringify({})
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      alert('Successfully emptied spam log (' + data.deleted + ' entries deleted).');
+      window.location.reload();
+    } else {
+      alert('Error emptying spam log: ' + (data.error || 'Unknown error'));
+      if (btn) { btn.disabled = false; btn.textContent = 'Empty Spam Log (' + count + ')'; }
+    }
+  })
+  .catch(function(err) {
+    alert('Network error while emptying spam log: ' + err);
+    if (btn) { btn.disabled = false; btn.textContent = 'Empty Spam Log (' + count + ')'; }
+  });
+}
+</script>
+{% endblock %}

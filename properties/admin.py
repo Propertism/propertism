@@ -96,6 +96,16 @@ class InquiryAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
+    @staticmethod
+    def get_spam_query():
+        return (
+            db_models.Q(name__regex=r"[\u0400-\u052F]")
+            | db_models.Q(message__regex=r"[\u0400-\u052F]")
+            | db_models.Q(assessment_status="Likely Spam")
+            | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
+            | db_models.Q(message__icontains="wellorena.com")
+        )
+
     def changelist_view(self, request, extra_context=None):
         qs = Inquiry.objects.select_related("property")
 
@@ -139,9 +149,14 @@ class InquiryAdmin(admin.ModelAdmin):
         if nri_status_filter:
             qs = qs.filter(nri_status=nri_status_filter)
 
-        # Assessment status filter (spam management)
+        # Assessment status / Spam filter (unified with banner detection)
+        is_spam_filter = request.GET.get("is_spam", "").strip()
         assessment_filter = request.GET.get("assessment_status", "").strip()
-        if assessment_filter:
+        is_spam_active = is_spam_filter in ("1", "true", "True") or assessment_filter.lower() in ("likely spam", "spam")
+
+        if is_spam_active:
+            qs = qs.filter(self.get_spam_query())
+        elif assessment_filter:
             qs = qs.filter(assessment_status=assessment_filter)
 
         sort = request.GET.get("sort", "desc")
@@ -167,12 +182,7 @@ class InquiryAdmin(admin.ModelAdmin):
         spam_count = cache.get("admin_inquiry_spam_count")
         if spam_count is None:
             try:
-                spam_count = all_qs.filter(
-                    db_models.Q(name__regex=r"[\u0400-\u052F]")
-                    | db_models.Q(message__regex=r"[\u0400-\u052F]")
-                    | db_models.Q(assessment_status="Likely Spam")
-                    | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
-                ).count()
+                spam_count = all_qs.filter(self.get_spam_query()).count()
             except Exception:
                 spam_count = all_qs.filter(assessment_status="Likely Spam").count()
             cache.set("admin_inquiry_spam_count", spam_count, 60)
@@ -192,6 +202,7 @@ class InquiryAdmin(admin.ModelAdmin):
                 "closed": all_qs.filter(status="closed").count(),
             },
             "spam_count": spam_count,
+            "current_is_spam": is_spam_active,
             "status_choices": Inquiry.STATUS_CHOICES,
             "current_q": q,
             "current_status": status_filter,
@@ -242,12 +253,7 @@ class InquiryAdmin(admin.ModelAdmin):
         spam_count = cache.get("admin_inquiry_spam_count")
         if spam_count is None:
             try:
-                spam_count = Inquiry.objects.filter(
-                    db_models.Q(name__regex=r"[\u0400-\u052F]")
-                    | db_models.Q(message__regex=r"[\u0400-\u052F]")
-                    | db_models.Q(assessment_status="Likely Spam")
-                    | db_models.Q(name__regex=r"^[A-Z][a-z]{2,}[A-Z][a-zA-Z]{2,}$")
-                ).count()
+                spam_count = Inquiry.objects.filter(self.get_spam_query()).count()
             except Exception:
                 spam_count = Inquiry.objects.filter(assessment_status="Likely Spam").count()
             cache.set("admin_inquiry_spam_count", spam_count, 60)
@@ -300,6 +306,7 @@ class InquiryAdmin(admin.ModelAdmin):
             cache.delete("admin_inquiry_spam_count")
             return JsonResponse({
                 "ok": True,
+                "deleted": purged_cyrillic_count + deleted_bots,
                 "purged_cyrillic": purged_cyrillic_count,
                 "moved_to_spam_log": moved_count,
                 "total_cleaned": purged_cyrillic_count + deleted_bots,
