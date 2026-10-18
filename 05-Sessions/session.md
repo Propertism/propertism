@@ -185,9 +185,12 @@
   - Tarpit response: Spammers receive standard `messages.success` thank-you confirmation so bots do not retry or mutate attack payloads.
   - Quarantine auditing: Quarantined submissions (name, email, phone, message, country, score, reasons) are preserved and searchable in Django Admin under **Content $\rightarrow$ Spam Logs**.
   - Management & Admin Tools: Updated `spam_inquiries` CLI (`--quarantine --confirm`) and `bulk_delete_spam_view` to move all historical spam to `SpamLog`.
-- **Deterministic Testing Evidence**:
-  - Full suite passed: `Ran 93 tests in 21.953s — OK` (93/93 tests passing, 0 errors, 0 failures).
-  - Migration `content.0025_spamlog_country_code_spamlog_country_name_and_more` applied cleanly.
+- **Deployment & Production Validation (Commit `e310a45`)**:
+  - Live on Lightsail Mumbai VPS (`13.207.123.15`).
+  - **Spam Log Admin UI**: Added prominent **"Empty Spam Log (count)"** button in Django Admin with safety prompt (`Type EMPTY to confirm`), enabling zero-terminal purging of historical DDoS logs.
+  - **Inquiry Admin Banner & Filter Alignment**: Unified detection logic (`get_spam_query()`) across banner count, bulk delete, and `Filter Spam Records` CTA. Filtering by spam now displays the exact matching records count and toggles to `Show All Inquiries`.
+  - **Execution Proof**: Quarantined 16 historical bot inquiries to `SpamLog` table; `Inquiry` table cleanly reduced to 82 legitimate customer leads.
+
 
 
 
