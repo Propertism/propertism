@@ -1,7 +1,7 @@
 {% load static %}
 {% load seo_tags %}
 <!-- MANAGEMENT SECTION V4 - ON-GROUND AUTHORITY -->
-<link rel="stylesheet" href="{% static 'css/v4-management.css' %}">
+<link rel="stylesheet" href="{% static 'css/v4-management.css' %}?v=4.2">
 
 <section id="management-section" class="management-preview-section">
     <div class="section-inner">
@@ -13,9 +13,18 @@
         <div class="grid-3">
             {% for member in team_highlights %}
             <article class="management-preview-card">
-                <div class="management-preview-meta">
-                    <span>{{ member.role }}</span>
-                    {% if member.department %}<span>{{ member.department }}</span>{% endif %}
+                <div class="management-card-header">
+                    <div class="management-preview-meta">
+                        <span>{{ member.role }}</span>
+                        {% if member.department %}<span>{{ member.department }}</span>{% endif %}
+                    </div>
+                    {% if member.photo %}
+                    <img src="{{ member.photo.url }}" alt="{{ member.name|name_only }}" class="management-member-thumb" loading="lazy" />
+                    {% else %}
+                    <div class="management-member-thumb management-member-thumb-placeholder">
+                        <span>{{ member.name|slice:":1" }}</span>
+                    </div>
+                    {% endif %}
                 </div>
                 <h3>{{ member.name|name_only }}{% if member.name|quals_only %} <span class="member-quals-inline">{{ member.name|quals_only }}</span>{% endif %}</h3>
                 <p>{{ member.bio|truncatewords:28 }}</p>
@@ -28,7 +37,9 @@
             </article>
             {% empty %}
             <article class="management-preview-card">
-                <div class="management-preview-meta"><span>Management</span></div>
+                <div class="management-card-header">
+                    <div class="management-preview-meta"><span>Management</span></div>
+                </div>
                 <h3>Propertism Advisory Team</h3>
                 <p>Experienced coordination for NRI ownership, rentals, maintenance, and transaction support in Chennai.
                 </p>
@@ -36,10 +47,10 @@
             {% endfor %}
         </div>
 
-        <div class="section-cta-left" style="margin-top: 60px;">
-            <a href="{{ home_section_links.management }}" class="btn-premium-solid" style="max-width: 300px;">
-                Meet Our Full Team
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
+        <div class="section-cta-left" style="margin-top: 16px;">
+            <a href="{{ home_section_links.management }}" class="btn-premium-solid" style="white-space: nowrap; width: auto; max-width: max-content;">
+                Explore Management Framework
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px; flex-shrink: 0;">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
             </a>

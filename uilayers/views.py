@@ -9,7 +9,7 @@ def home(request):
     company = CompanyInfo.objects.first()
     stats = Statistic.objects.all()[:4]  # Get 4 stats for the new design
     services = Service.objects.all()[:3]
-    featured_properties = Property.objects.filter(status='available').prefetch_related('photos')[:6]  # Show more properties
+    featured_properties = Property.objects.filter(status='available').prefetch_related('photos')[:12]  # Show all properties
     
     context = {
         'company': company,

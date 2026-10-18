@@ -1,22 +1,37 @@
 @echo off
 setlocal
 
-set "PYTHON_HOME=C:\Python"
-set "PYTHON_EXE=%PYTHON_HOME%\python.exe"
-set "PYTHON_DLL_DIR=%PYTHON_HOME%\django"
-
-if not exist "%PYTHON_EXE%" (
-    echo Expected Python interpreter was not found at %PYTHON_EXE%.
-    exit /b 1
+REM Priority 1: Project dedicated virtualenv (.venv)
+if exist "%~dp0..\.venv\Scripts\python.exe" (
+    set "PYTHON_EXE=%~dp0..\.venv\Scripts\python.exe"
+    goto :run
 )
 
-if not exist "%PYTHON_DLL_DIR%" (
-    echo Expected Python DLL directory was not found at %PYTHON_DLL_DIR%.
-    exit /b 1
+REM Priority 2: Standard User Python 3.11 installation
+if exist "%LOCALAPPDATA%\Programs\Python\Python311\python.exe" (
+    set "PYTHON_EXE=%LOCALAPPDATA%\Programs\Python\Python311\python.exe"
+    goto :run
 )
 
-set "PATH=%PYTHON_DLL_DIR%;%PATH%"
+REM Priority 3: Legacy C:\Python path
+if exist "C:\Python\python.exe" (
+    set "PYTHON_EXE=C:\Python\python.exe"
+    if exist "C:\Python\django" set "PATH=C:\Python\django;%PATH%"
+    goto :run
+)
 
+REM Priority 4: Fallback to PATH python
+for %%X in (python.exe) do (set "PYTHON_EXE=%%~$PATH:X")
+if defined PYTHON_EXE goto :run
+
+echo [ERROR] No valid Python interpreter found.
+echo Checked:
+echo   - %~dp0..\.venv\Scripts\python.exe
+echo   - %LOCALAPPDATA%\Programs\Python\Python311\python.exe
+echo   - C:\Python\python.exe
+exit /b 1
+
+:run
 if "%~1"=="" (
     "%PYTHON_EXE%" manage.py check
 ) else (

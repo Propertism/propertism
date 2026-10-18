@@ -1,6 +1,7 @@
 import calendar
 import json
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import messages
@@ -157,8 +158,9 @@ def create_inquiry(request):
     validator = LeadValidator(request, request.POST)
     assessment = validator.validate()
     
-    # Apply captcha confidence boost if successfully passed
-    if spam_result.confidence_boost:
+    # Apply captcha confidence boost if successfully passed and no danger flags present
+    has_spam_danger = any(v.get('type') == 'danger' for v in assessment.get('validation_summary', []))
+    if spam_result.confidence_boost and not has_spam_danger:
         assessment['confidence_score'] = max(0, min(100, assessment['confidence_score'] + spam_result.confidence_boost))
         ranges = validator.config.get('RANGES', {})
         score = assessment['confidence_score']
@@ -227,13 +229,34 @@ def create_inquiry(request):
             raw_country_code=request.POST.get("country_code") or request.POST.get("contact_country_code")
         )
 
-        # Operational gate: If assessed as Likely Spam, quarantine to SpamLog table
+        # Operational gate: If assessed as Likely Spam or matching spam heuristics, quarantine to SpamLog table
         # instead of polluting the primary Inquiry table or dispatching lead notifications.
-        if assessment.get('assessment_status') == 'Likely Spam':
+        name_val = request.POST.get("name", "").strip()
+        msg_combined = f"{name_val} {msg_body_with_attribution}".strip()
+
+        is_quarantine_spam = (
+            assessment.get('assessment_status') == 'Likely Spam'
+            or bool(re.search(r"[\u0400-\u052F]", msg_combined))
+            or bool(LeadValidator._BOT_NAME_RE.match(name_val))
+            or ("wellorena.com" in msg_combined.lower())
+            or any(v.get('type') == 'danger' for v in assessment.get('validation_summary', []))
+        )
+
+        if is_quarantine_spam:
             from content.models import SpamLog
             from content.security.validators import _get_ip
             summary_reasons = [v.get('text', '') for v in assessment.get('validation_summary', [])]
-            reason_str = f"Likely Spam ({', '.join(summary_reasons)})"[:200]
+            if not summary_reasons:
+                if re.search(r"[\u0400-\u052F]", msg_combined):
+                    summary_reasons.append("Cyrillic Script")
+                if LeadValidator._BOT_NAME_RE.match(name_val):
+                    summary_reasons.append("Concatenated Bot Name")
+                if "wellorena.com" in msg_combined.lower():
+                    summary_reasons.append("Blacklisted Affiliate Domain")
+            if summary_reasons:
+                reason_str = f"Likely Spam ({', '.join(summary_reasons)})"[:200]
+            else:
+                reason_str = "Likely Spam (Heuristic Quarantine)"
 
             SpamLog.objects.create(
                 ip_address=_get_ip(request),
@@ -243,7 +266,7 @@ def create_inquiry(request):
                 referer=request.META.get('HTTP_REFERER', '')[:200],
                 failure_reason=reason_str,
                 confidence_score=assessment.get('confidence_score', 0),
-                name=request.POST.get("name", "").strip()[:255],
+                name=name_val[:255],
                 email=request.POST.get("email", "").strip()[:255],
                 phone=request.POST.get("phone", "").strip()[:50],
                 message=msg_body_with_attribution,
@@ -253,10 +276,11 @@ def create_inquiry(request):
                 payload={k: v for k, v in request.POST.items() if k != 'csrfmiddlewaretoken'},
             )
             logger.warning(
-                "[SpamGate] Quarantined likely spam property inquiry to SpamLog: %s / %s (score: %s)",
-                request.POST.get("name", "").strip(),
+                "[SpamGate] Quarantined spam property inquiry to SpamLog: %s / %s (score: %s, reasons: %s)",
+                name_val,
                 request.POST.get("email", "").strip(),
                 assessment.get('confidence_score'),
+                reason_str,
             )
             messages.success(request, "Thank you for your inquiry! We will get back to you soon.")
             return redirect("property_detail", slug=property_obj.slug)

@@ -1,11 +1,12 @@
 <!-- AUDIT METADATA -->
 <!-- Date: 2026-10-18 -->
-<!-- Time: 14:43 IST -->
+<!-- Time: 23:05 IST -->
 <!-- Product Owner: Viji -->
 <!-- Supervisor: Astra 1 -->
 <!-- Module: 03-propertism -->
-<!-- Status: LEVEL 4 VERIFIED — SPAMLOG QUARANTINE ARCHITECTURE & P0/P1 BOT HEURISTICS READY -->
+<!-- Status: RATIFIED & VERIFIED — PUSHING UI POLISH & MANAGEMENT REDESIGN -->
 <!-- Git Commit: HEAD (uncommitted) -->
+
 
 # 📌 SESSION STATE & CONTINUITY: 03-propertism
 
@@ -14,7 +15,7 @@
 **Product Owner**: Viji  
 **Supervisor / Platform Owner**: Astra  
 **Protocol**: S.P.E.C.S. (`05-Sessions`)  
-**Status**: 🟢 PRODUCTION STABLE & ASSETS RESTORED (COMMIT: `9dbd9e3`)  
+**Status**: 🟢 PRODUCTION STABLE & DEPLOYED (COMMIT: `04c2b0c`)  
 
 ---
 
@@ -191,7 +192,87 @@
   - **Inquiry Admin Banner & Filter Alignment**: Unified detection logic (`get_spam_query()`) across banner count, bulk delete, and `Filter Spam Records` CTA. Filtering by spam now displays the exact matching records count and toggles to `Show All Inquiries`.
   - **Execution Proof**: Quarantined 16 historical bot inquiries to `SpamLog` table; `Inquiry` table cleanly reduced to 82 legitimate customer leads.
 
+---
 
+## Session Entry (2026-10-18 Evening)
 
+### 🛡️ Real-Time Intake Quarantine Gate, Luxury Properties Carousel & Option C Dual CTA
+1. **Real-Time Intake Quarantine Gate (`content/views.py` & `properties/views.py`)**:
+   - Fully operationalized dynamic quarantine: When an inquiry is submitted via general contact or property detail, if assessed as `Likely Spam` or containing Cyrillic, CamelCase bot names, or affiliate URLs, it is saved directly to `content.models.SpamLog` and **never written to `Inquiry`**.
+   - Guarded reCAPTCHA confidence boost (+10): Suppressed whenever any `danger` type validation summary item is present, preventing commercial CAPTCHA solving farms from lifting spam scores into "Review Recommended".
+   - Added Cyrillic script validation on `name` in `LeadValidator._check_contact_info()` (-80 pts penalty).
+2. **Luxury Properties Carousel Redesign (`uilayers/templates/home/sections/_properties.html` & `static/css/v4-properties.css`)**:
+   - **Prominent 52px Floating Chevrons**: Large circular buttons (`.prop-floating-chevron`) positioned on the left and right edges directly vertically centered with property cards for intuitive sliding.
+   - **Header Controls & Live Counter**: Gold counter pill (`1 / 9`) and paired circular buttons aligned to the right of the section title.
+   - **Data & Visual Polish**:
+     - Assigned real photos (`01.jpeg`, `02.jpeg`, `03.jpg`) and realistic specs to properties 13, 14, and 15, eliminating all wireframe boxes.
+     - Fixed duplicate location display: guarded against `Chennai, Chennai`.
+     - Guarded specs to completely eliminate `0 BHK` and `NONE SQ FT`.
+     - Equalized card geometry: fixed `min-height: 52px` for 2-line title clamps, 12px border radius, and bottom feature bar pinned to baseline via `margin-top: auto`.
+   - **Full Catalog Access**: Expanded view queries in `content/views.py` and `uilayers/views.py` to `[:12]`, enabling all 9 database properties to be browsed.
+3. **Option C Dual CTA Deployment**:
+   - Primary CTA: `[ View All Properties → ]` routes to full catalog search (`{% url 'property_list' %}`).
+   - Secondary CTA: `[ Request Off-Market Shortlist → ]` smoothly scrolls to intake form (`{{ home_section_links.contact }}`).
+4. **Environment & Launcher Fix (`scripts/django.cmd` & `scripts/django.ps1`)**:
+   - Replaced broken `C:\Python` with 4-tier discovery cascade (project `.venv` $\rightarrow$ user Python 3.11 $\rightarrow$ `C:\Python` $\rightarrow$ system `PATH`), restoring instant functionality to `C:\Users\vijay\gofolder.bat 03`.
+5. **Visual Refinements & Geometry Optimization (Viji Directives 1–4)**:
+   - **Excised Header Pill & Counter (Directive 1)**: Completely removed `.properties-carousel-header-nav` (`2 / 9` counter pill and duplicate buttons) from `_properties.html` and `v4-properties.css`. Navigation is now handled exclusively via floating chevrons.
+   - **Symmetrical Floating Chevrons on Card Edges (Directive 2)**: Diagnosed and removed legacy override `#properties-section .property-grid-hybrid { gap: 1px !important; }` at line 438 of `v4-properties.css` that was shrinking the carousel gap to 1px and causing Card 4 to peek. Decoupled carousel track from `.property-grid-hybrid` (`class="properties-carousel-track"`) and enforced `width: 100% !important; max-width: 100% !important;`. The floating chevrons now sit 100% symmetrically on the outer edges of Card 1 (`left: -24px`) and Card 3 (`right: -24px`).
+   - **Properties Page Compact Header & Left Margin Normalization (Directive 3)**: Eliminated `.properties-page-hero` dark box on `/properties/`. Replaced with a clean, compact 3-line header (`Curated Properties` gold kicker, serif title, muted subtitle). Fixed tight left margin by replacing `<div class="container">` with `<div class="properties-page-inner">` (`max-width: 1400px; padding: 0 40px; margin: 0 auto;`), insulating it from Tailwind CSS overrides and matching navbar/homepage alignment.
+   - **Single-Line Space Rhythm (Directive 4)**: Normalized vertical padding and margins across `#properties-section` (28px/32px) and `/properties/` (124px top clearance, 20px header gap, 20px card body, 16px CTA margin) for a cohesive single-line breathing rhythm.
+6. **Deterministic Verification Gate**:
+   - Unit Tests: `manage.py test properties.tests properties.test_security_fixes content.tests` $\rightarrow$ **93 passed, 0 failures, 0 errors** in 23.230s.
+   - Visual Evidence Captured:
+     - `homepage_properties_carousel_aligned.png`: Exact 3-card layout, zero peeking of Card 4, floating chevrons centered on card edges.
+     - `homepage_properties_carousel_scrolled.png`: Smooth 1-step slide maintaining card-edge chevron symmetry.
+     - `properties_page_compact_clean.png`: Dark hero box removed, compact 3-line header with balanced 40px margins and single-line spacing.
 
+### 🎯 PENDING STAGE 4/5 ACTIONS
+- Viji human review and approval in chat.
+- Git push under `Propertism` account (`gh auth switch --user Propertism`) to trigger Lightsail CI/CD deployment.
 
+---
+
+## Session Entry (2026-10-18 Late Evening — UI & Editorial Modernization)
+
+### ✅ COMPLETED DELIVERABLES
+1. **Modernized Management CTA**:
+   - Updated homepage CTA from *"Meet Our Full Team"* to **`Explore Management Framework →`** in `uilayers/templates/home/sections/_management.html`.
+   - Removed `max-width: 320px;` and enforced `white-space: nowrap !important;` so the button label and arrow sit cleanly on one single line with zero text wrapping.
+2. **Complete Redesign of Management Page (`/management/`)**:
+   - In `uilayers/templates/management.html`, completely replaced the heavy dark blue gradient box with an executive editorial header (`ON-GROUND PROPERTY MANAGEMENT` kicker + Playfair serif title + 2-line subtitle + dual consultation CTAs).
+   - Replaced `<div class="container">` with `<div class="management-page-inner">` (`max-width: 1400px; padding: 0 40px; margin: 0 auto;` with 104px top navbar clearance), eliminating the tight left margin.
+   - Deployed high-signal editorial blocks: 4 Execution Pillars, 4-Stage Operating Lifecycle, Sleek Trust & Scale Metrics (`50+` Properties, `100+` Tenants, `3+` Continents, `< 24h` SLA), and On-Ground Leadership with circular team member photos.
+3. **Circular Team Member Thumbnails with Subtle Gold Rings**:
+   - In `_management.html` and `static/css/v4-management.css`, added a 48px circular thumbnail on the right side of each card (`1.5px solid var(--brand-gold)` ring + subtle shadow).
+4. **Clean Property Card Details & Anti-Truncation Geometry**:
+   - Replaced horizontal title/price crunch (which previously caused `3BHK Apartment in Ady...`) with a clean, full-width vertical stack with tight 2px spacing:
+     - **Line 1**: Full Title (`3BHK Apartment in Adyar →`) across full card width (zero truncation, no wrap).
+     - **Line 2**: Price (`₹2,50,00,000`) prominent in gold Playfair serif directly below.
+     - **Line 3**: Words (`TWO CRORES FIFTY LAKHS INDIAN RUPEES`) in compact 0.68rem uppercase.
+     - **Line 4**: Location with pin icon (`Adyar, Chennai`).
+     - **Line 5**: Specifications divider (`3 BHK` | `1650 SQ FT`).
+   - Applied across both homepage `#properties-section` and `/properties/`.
+5. **Top-Bar CTA Alignment on `Featured Properties` Line**:
+   - Created `.properties-top-bar` where the `Featured Properties` kicker (left) and `[View All Properties →] [Unlock Off-Market Homes →]` (right) sit level on the exact same horizontal line.
+   - Renamed secondary CTA from *"Request Off-Market Shortlist"* to **`Unlock Off-Market Homes`**.
+   - Fixed hover bug: buttons now invert to solid gold with dark navy text (`color: #0F172A; background: var(--brand-gold);`), completely eliminating the washed-out white text bug.
+6. **1-Line No-Wrap Section Headings**:
+   - Root-caused and excised legacy `max-width: 15ch !important; white-space: normal !important;` from responsive media queries across `v4-management.css`, `v4-properties.css`, `v4-services.css`, and `v4-insights.css`.
+   - Applied fluid clamp with `white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;` ensuring titles like *"One team coordinating owners, tenants, vendors, and follow-through."* remain on 1 single line.
+7. **2-Line Subtitle Clamp Across All Sections**:
+   - Removed duplicated sentence from `CompanyInfo.management_section_description` in the database.
+   - Enforced strict 2-line clamp (`-webkit-line-clamp: 2 !important;`) across all section subtitles globally in `propertism-premium.css` and all modular V4 stylesheets.
+
+8. **Management Page Polish & Anti-Clutter Optimization (`/management/`)**:
+   - Expanded top padding to `124px !important;` for ample clearance beneath the 92px fixed desktop navigation.
+   - Set `.management-shell` gap to `36px !important;` (strict 2-line breathing rhythm between all sections).
+   - Eliminated `<section>` tags in `.management-page`, curing global `section:nth-of-type(even)` zebra gray bands.
+   - Upgraded Four Pillars cards with top gold borders and individual inline SVG checkmarks instead of plain bullet dots.
+   - Upgraded Trust Metrics from a heavy black bar into 4 discrete white cards with gold left borders (`50+`, `100+`, `3+`, `< 24h`).
+   - Converted bottom consultation CTA from a heavy black bar into a light editorial card with gold accent and dark button.
+   - Zero black bars remaining in page content.
+
+### 🎯 STAGE 5/6 STATUS
+- Viji reviewed and approved: *"Verified please push"*.
+- Pushing to `origin main` under `Propertism` GitHub account to trigger Lightsail CI/CD pipeline.

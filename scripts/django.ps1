@@ -3,20 +3,28 @@ param(
     [string[]]$DjangoArgs
 )
 
-$pythonHome = "C:\Python"
-$pythonExe = Join-Path $pythonHome "python.exe"
-$pythonDllDir = Join-Path $pythonHome "django"
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$venvPython = Join-Path $projectRoot ".venv\Scripts\python.exe"
+$userPython = Join-Path $env:LOCALAPPDATA "Programs\Python\Python311\python.exe"
+$legacyPython = "C:\Python\python.exe"
 
-if (-not (Test-Path $pythonExe)) {
-    throw "Expected Python interpreter was not found at $pythonExe."
-}
-
-if (-not (Test-Path $pythonDllDir)) {
-    throw "Expected Python DLL directory was not found at $pythonDllDir."
-}
-
-if ($env:PATH -notlike "$pythonDllDir*") {
-    $env:PATH = "$pythonDllDir;$env:PATH"
+if (Test-Path $venvPython) {
+    $pythonExe = $venvPython
+} elseif (Test-Path $userPython) {
+    $pythonExe = $userPython
+} elseif (Test-Path $legacyPython) {
+    $pythonExe = $legacyPython
+    $legacyDll = "C:\Python\django"
+    if ((Test-Path $legacyDll) -and ($env:PATH -notlike "*$legacyDll*")) {
+        $env:PATH = "$legacyDll;$env:PATH"
+    }
+} else {
+    $cmd = Get-Command python.exe -ErrorAction SilentlyContinue
+    if ($cmd) {
+        $pythonExe = $cmd.Source
+    } else {
+        throw "No valid Python interpreter found. Looked in .venv, Python311, and C:\Python."
+    }
 }
 
 if (-not $DjangoArgs -or $DjangoArgs.Count -eq 0) {

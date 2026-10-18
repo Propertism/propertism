@@ -315,8 +315,14 @@ class LeadValidator:
     def _check_contact_info(self):
         name = self.data.get('name', '')
         if name:
+            # Check for Cyrillic characters in name
+            if re.search(r'[\u0400-\u052F]', name):
+                penalty = 80
+                self.score -= penalty
+                self.validation_summary.append({'text': 'Cyrillic Script in Name', 'type': 'danger'})
+                logger.warning("[CYRILLIC-NAME] Cyrillic script detected in name: %s", name)
             # Detect concatenated bot name pattern before any other name checks
-            if self._BOT_NAME_RE.match(name.strip()):
+            elif self._BOT_NAME_RE.match(name.strip()):
                 penalty = self.config.get('PENALTY_CONCATENATED_NAME', 60)
                 self.score -= penalty
                 self.validation_summary.append({'text': 'Concatenated Bot Name Pattern', 'type': 'danger'})

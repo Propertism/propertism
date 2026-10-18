@@ -61,6 +61,12 @@
     font-size: 1.2rem !important;
     line-height: 1.6 !important;
     color: var(--text-muted) !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 900px !important;
 }
 
 /* 1. THE JOURNAL GRID */
@@ -169,10 +175,11 @@
     }
 
     #blog-section .section-title {
-        white-space: normal !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        max-width: 15ch !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        font-size: 1.3rem !important;
+        max-width: 100% !important;
     }
 
     .journal-preview-grid {

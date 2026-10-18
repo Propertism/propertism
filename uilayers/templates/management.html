@@ -15,637 +15,722 @@
 
 {% block extra_css %}
 <style>
-    /* Management Page Specific Styles */
-    .management-hero {
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        color: var(--white);
-        padding: 120px 24px 80px;
-        text-align: center;
+    .management-page {
+        padding: 124px 0 36px !important;
+        background: #fdfbf7 !important;
+        min-height: calc(100vh - 350px);
+        color: #0f172a;
     }
-    
-    .management-hero h1 {
-        font-family: var(--font-display);
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 500;
-        line-height: 1.2;
-        margin-bottom: 24px;
+
+    .management-page .management-page-inner,
+    .management-page .container {
+        max-width: 1440px !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+        box-sizing: border-box !important;
+    }
+
+    .management-shell {
+        display: flex;
+        flex-direction: column;
+        gap: 36px !important;
+        width: 100%;
+    }
+
+    .management-page .mgmt-block {
+        background: transparent !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* 1. EDITORIAL HEADER */
+    .management-header {
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    .management-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #b89a4a;
+        margin-bottom: 2px;
+    }
+
+    .management-kicker-icon {
+        width: 14px;
+        height: 14px;
+        color: #b89a4a;
+        flex-shrink: 0;
+    }
+
+    .management-title {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: #0f172a;
+        margin: 0 0 4px 0;
         max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-        color: var(--white);
     }
-    
-    .management-hero-subtext {
-        font-size: 1.25rem;
-        line-height: 1.6;
-        color: rgba(255, 255, 255, 0.85);
-        max-width: 700px;
-        margin: 0 auto 40px;
+
+    .management-subtitle {
+        font-size: 0.92rem;
+        line-height: 1.35;
+        color: #64748b;
+        max-width: 780px;
+        margin: 0 0 8px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    
-    /* Core Process Section */
-    .core-process-section {
-        padding: 80px 24px;
-        background: var(--white);
-    }
-    
-    .section-header {
-        text-align: center;
-        margin-bottom: 60px;
-    }
-    
-    .section-header h2 {
-        font-family: var(--font-display);
-        font-size: clamp(2rem, 4vw, 2.75rem);
-        color: var(--brand-navy);
-        margin-bottom: 16px;
-    }
-    
-    .section-header p {
-        font-size: 1.125rem;
-        color: var(--gray-600);
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    .process-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 32px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    .process-card {
-        background: var(--white);
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        border-radius: 16px;
-        padding: 32px;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .process-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
-    }
-    
-    .process-icon {
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, #B89A4A 0%, #C9A961 100%);
-        border-radius: 12px;
+
+    .management-header-cta {
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
+        gap: 10px;
+        flex-wrap: wrap;
     }
-    
-    .process-icon svg {
-        width: 28px;
-        height: 28px;
-        color: var(--white);
+
+    .btn-mgmt-solid {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #0f172a;
+        color: #ffffff !important;
+        padding: 8px 16px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.25s ease;
     }
-    
-    .process-card h3 {
-        font-size: 1.375rem;
-        color: var(--brand-navy);
+
+    .btn-mgmt-solid:hover {
+        background: #b89a4a;
+        color: #0f172a !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(184, 154, 74, 0.25);
+    }
+
+    .btn-mgmt-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        color: #b89a4a !important;
+        border: 1.5px solid #b89a4a;
+        padding: 7px 14px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .btn-mgmt-outline:hover {
+        background: #b89a4a;
+        color: #0f172a !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(184, 154, 74, 0.25);
+    }
+
+    /* 2. SECTION BLOCK TITLES */
+    .mgmt-block-header {
+        text-align: left;
         margin-bottom: 12px;
-        font-weight: 600;
     }
-    
-    .process-card ul {
-        list-style: none;
-        padding: 0;
+
+    .mgmt-block-header h2 {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 2px 0;
+        line-height: 1.2;
+    }
+
+    .mgmt-block-header p {
+        font-size: 0.84rem;
+        color: #64748b;
         margin: 0;
     }
-    
-    .process-card li {
-        padding: 8px 0;
-        color: var(--gray-700);
-        font-size: 0.9375rem;
-        line-height: 1.6;
-        position: relative;
-        padding-left: 24px;
-    }
-    
-    .process-card li::before {
-        content: "";
-        position: absolute;
-        left: 4px;
-        top: 13px;
-        width: 5px;
-        height: 5px;
-        background-color: #B89A4A;
-        transform: rotate(45deg);
-    }
-    
-    /* How It Works Flow */
-    .how-it-works-section {
-        padding: 80px 24px;
-        background: #F8FAFC;
-    }
-    
-    .flow-steps {
+
+    /* 3. FOUR PILLARS GRID */
+    .mgmt-pillars-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 24px;
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
     }
-    
-    .flow-step {
-        background: var(--white);
-        border-radius: 12px;
-        padding: 28px;
-        text-align: center;
-        position: relative;
+
+    .mgmt-pillar-card {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-top: 3px solid #b89a4a !important;
+        border-radius: 8px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
     }
-    
-    .step-number {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #B89A4A 0%, #C9A961 100%);
-        color: var(--white);
-        border-radius: 50%;
+
+    .mgmt-pillar-card:hover {
+        border-color: #b89a4a !important;
+        box-shadow: 0 8px 20px rgba(184, 154, 74, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .mgmt-pillar-top {
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 1.125rem;
-        margin: 0 auto 16px;
-    }
-    
-    .flow-step h3 {
-        font-size: 1.125rem;
-        color: var(--brand-navy);
+        gap: 8px;
         margin-bottom: 8px;
-        font-weight: 600;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #f1f5f9;
     }
-    
-    .flow-step p {
-        font-size: 0.9375rem;
-        color: var(--gray-600);
-        line-height: 1.6;
-    }
-    
-    /* Trust Metrics */
-    .trust-metrics-section {
-        padding: 80px 24px;
-        background: var(--brand-navy);
-        color: var(--white);
-    }
-    
-    .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 48px;
-        max-width: 1000px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    
-    .metric-item {
-        padding: 20px;
-    }
-    
-    .metric-number {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #B89A4A;
-        line-height: 1;
-        margin-bottom: 12px;
-    }
-    
-    .metric-label {
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.9);
-        line-height: 1.4;
-    }
-    
-    /* Why NRIs Trust Us */
-    .trust-reasons-section {
-        padding: 80px 24px;
-        background: var(--white);
-    }
-    
-    .trust-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 32px;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    
-    .trust-item {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
-    }
-    
-    .trust-icon {
-        width: 48px;
-        height: 48px;
-        background: rgba(184, 154, 74, 0.1);
-        border-radius: 50%;
+
+    .mgmt-pillar-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: rgba(184, 154, 74, 0.12);
+        color: #b89a4a;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
     }
-    
-    .trust-icon svg {
-        width: 24px;
-        height: 24px;
-        color: #B89A4A;
+
+    .mgmt-pillar-icon svg {
+        width: 16px;
+        height: 16px;
     }
-    
-    .trust-content h3 {
-        font-size: 1.125rem;
-        color: var(--brand-navy);
-        margin-bottom: 8px;
+
+    .mgmt-pillar-card h3 {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .mgmt-pillar-list {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .mgmt-pillar-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 0.8rem;
+        color: #475569;
+        line-height: 1.35;
+    }
+
+    .mgmt-check {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: #b89a4a;
+    }
+
+    /* 4. WORKFLOW ROADMAP */
+    .mgmt-steps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .mgmt-step-card {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-top: 3px solid #0f172a !important;
+        border-radius: 8px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        transition: all 0.25s ease;
+    }
+
+    .mgmt-step-card:hover {
+        border-color: #b89a4a !important;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .mgmt-step-pill {
+        display: inline-block;
+        background: rgba(184, 154, 74, 0.12);
+        color: #b89a4a;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        border-radius: 4px;
+        width: fit-content;
+        margin-bottom: 4px;
+    }
+
+    .mgmt-step-card h4 {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 3px 0;
+        line-height: 1.25;
+    }
+
+    .mgmt-step-card p {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin: 0;
+        line-height: 1.35;
+    }
+
+    /* 5. METRICS & TRUST ROW (LIGHT CARDS WITH GOLD ACCENTS — NO BLACK BAR) */
+    .management-page .mgmt-metrics-row {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 12px !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .management-page .mgmt-metric-item {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-left: 3px solid #b89a4a !important;
+        border-radius: 8px !important;
+        padding: 12px 16px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    }
+
+    .management-page .mgmt-metric-num {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif) !important;
+        font-size: 1.65rem !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        line-height: 1.1 !important;
+    }
+
+    .management-page .mgmt-metric-lbl {
+        font-size: 0.72rem !important;
+        color: #64748b !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 600 !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    /* 6. TEAM HIGHLIGHTS */
+    .mgmt-team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .mgmt-team-card {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .mgmt-team-card:hover {
+        border-color: #b89a4a !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(184, 154, 74, 0.12);
+    }
+
+    .mgmt-team-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+
+    .mgmt-team-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1.5px solid #b89a4a;
+        box-shadow: 0 2px 6px rgba(184, 154, 74, 0.2);
+        flex-shrink: 0;
+    }
+
+    .mgmt-team-avatar-placeholder {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1.5px solid #b89a4a;
+        background: rgba(184, 154, 74, 0.1);
+        color: #b89a4a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+    }
+
+    .mgmt-team-info h4 {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .mgmt-team-info span {
+        font-size: 0.7rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
         font-weight: 600;
     }
-    
-    .trust-content p {
-        font-size: 0.9375rem;
-        color: var(--gray-600);
-        line-height: 1.6;
-    }
-    
-    /* CTA Section */
-    .management-cta-section {
-        padding: 80px 24px;
-        background: linear-gradient(135deg, #B89A4A 0%, #C9A961 100%);
-        text-align: center;
-        color: var(--white);
-    }
-    
-    .management-cta-section h2 {
-        font-family: var(--font-display);
-        font-size: clamp(2rem, 4vw, 2.75rem);
-        margin-bottom: 16px;
-    }
-    
-    .management-cta-section p {
-        font-size: 1.125rem;
-        margin-bottom: 32px;
-        opacity: 0.95;
-    }
-    
-    .btn-cta-white {
+
+    .mgmt-team-link {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #b89a4a;
+        text-decoration: none;
+        margin-top: auto;
         display: inline-flex;
         align-items: center;
-        gap: 12px;
-        padding: 16px 40px;
-        background: var(--white);
-        color: var(--brand-navy);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1rem;
+        gap: 4px;
+    }
+
+    .mgmt-team-link:hover {
+        color: #0f172a;
+    }
+
+    /* 7. BOTTOM BANNER (LIGHT ELEGANT CARD — NO BLACK BAR) */
+    .mgmt-cta-box {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-left: 4px solid #b89a4a !important;
         border-radius: 8px;
-        transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 16px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
-    
-    .btn-cta-white:hover {
+
+    .mgmt-cta-box h3 {
+        font-family: var(--serif-main, "Playfair Display", Georgia, serif);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0f172a !important;
+        margin: 0 0 2px 0;
+    }
+
+    .mgmt-cta-box p {
+        font-size: 0.84rem;
+        color: #64748b !important;
+        margin: 0;
+    }
+
+    .mgmt-cta-box .btn-mgmt-solid {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        padding: 9px 18px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.12em !important;
+        border-radius: 4px !important;
+        flex-shrink: 0 !important;
+        transition: all 0.25s ease !important;
+    }
+
+    .mgmt-cta-box .btn-mgmt-solid:hover {
+        background: #b89a4a !important;
+        color: #0f172a !important;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 6px 18px rgba(184, 154, 74, 0.25);
     }
-    
-    /* Team Section (De-emphasized) */
-    .team-minimal-section {
-        padding: 60px 24px;
-        background: #F8FAFC;
-        scroll-margin-top: var(--nav-height, 92px);
-    }
-    
-    .team-minimal-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 24px;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-    
-    .team-minimal-card {
-        background: var(--white);
-        border-radius: 12px;
-        padding: 24px;
-        text-align: center;
-        border: 1px solid rgba(15, 23, 42, 0.06);
-    }
-    
-    .team-minimal-card h4 {
-        font-size: 1rem;
-        color: var(--brand-navy);
-        margin-bottom: 4px;
-        font-weight: 600;
-    }
-    
-    .team-minimal-card p {
-        font-size: 0.875rem;
-        color: var(--gray-600);
-        margin-bottom: 12px;
-    }
-    
-    .team-minimal-card a {
-        font-size: 0.875rem;
-        color: #B89A4A;
-        text-decoration: none;
-        font-weight: 500;
-    }
-    
-    .team-minimal-card a:hover {
-        text-decoration: underline;
-    }
-    
-    @media (max-width: 768px) {
-        .management-hero {
-            padding: 80px 20px 60px;
-        }
-        
-        .process-grid,
-        .flow-steps,
-        .trust-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .metrics-grid {
+
+    @media (max-width: 1024px) {
+        .mgmt-pillars-grid,
+        .mgmt-steps-grid,
+        .mgmt-team-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+        }
+        .management-page .mgmt-metrics-row {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 16px !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .management-page .management-page-inner,
+        .management-page .container {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+        }
+        .mgmt-pillars-grid,
+        .mgmt-steps-grid,
+        .mgmt-team-grid,
+        .management-page .mgmt-metrics-row {
+            grid-template-columns: 1fr !important;
+        }
+        .mgmt-cta-box {
+            flex-direction: column;
+            align-items: flex-start;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="management-hero">
-    <div class="container">
-        <h1>How We Manage Your Property in Chennai While You Live Abroad</h1>
-        <p class="management-hero-subtext">A structured, on-ground system ensuring transparency, control, and reliable execution.</p>
-        <a href="{% url 'contact' %}" class="btn-cta-white">
-            Schedule a Consultation
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-        </a>
-    </div>
-</section>
+<main class="management-page">
+    <div class="management-page-inner">
+        <div class="management-shell">
+            <!-- 1. EDITORIAL HEADER -->
+            <header class="management-header">
+                <span class="management-kicker">
+                    <svg class="management-kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <path d="M3 10.5 12 3l9 7.5" />
+                        <path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8" />
+                        <path d="M9 21v-9h6v9" />
+                    </svg>
+                    On-Ground Property Management
+                </span>
+                <h1 class="management-title">How We Manage Your Property in Chennai While You Live Abroad</h1>
+                <p class="management-subtitle">A structured, on-ground execution model providing complete oversight, vetted tenant coordination, transparent reporting, and asset care for NRI owners worldwide.</p>
+                <div class="management-header-cta">
+                    <a href="{% url 'contact' %}" class="btn-mgmt-solid">
+                        Schedule a Consultation
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="tel:{{ company.phone|default:'+919841000000' }}" class="btn-mgmt-outline">
+                        Direct Inquiry &rarr;
+                    </a>
+                </div>
+            </header>
 
-<!-- Core Process Section -->
-<section class="core-process-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Our Management Process</h2>
-            <p>Four pillars of reliable property management for NRI owners</p>
-        </div>
-        
-        <div class="process-grid">
-            <!-- Owner Coordination -->
-            <div class="process-card">
-                <div class="process-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
+            <!-- 2. FOUR PILLARS OF MANAGEMENT -->
+            <div class="mgmt-block" aria-label="Management Pillars">
+                <div class="mgmt-block-header">
+                    <h2>Four Pillars of Reliable Execution</h2>
+                    <p>Disciplined, on-ground operating systems designed specifically for overseas owners.</p>
                 </div>
-                <h3>Owner Coordination</h3>
-                <ul>
-                    <li>Approvals across time zones</li>
-                    <li>Regular status updates</li>
-                    <li>Decision tracking</li>
-                    <li>Clear communication channels</li>
-                </ul>
-            </div>
-            
-            <!-- On-Ground Execution -->
-            <div class="process-card">
-                <div class="process-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                        <polyline points="9 22 9 12 15 12 15 22"/>
-                    </svg>
-                </div>
-                <h3>On-Ground Execution</h3>
-                <ul>
-                    <li>Regular property visits</li>
-                    <li>Maintenance handling</li>
-                    <li>Vendor coordination</li>
-                    <li>Emergency response</li>
-                </ul>
-            </div>
-            
-            <!-- Tenant & Rental Management -->
-            <div class="process-card">
-                <div class="process-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
-                </div>
-                <h3>Tenant & Rental Management</h3>
-                <ul>
-                    <li>Tenant screening & onboarding</li>
-                    <li>Rent collection follow-ups</li>
-                    <li>Issue resolution</li>
-                    <li>Lease management</li>
-                </ul>
-            </div>
-            
-            <!-- Reporting & Transparency -->
-            <div class="process-card">
-                <div class="process-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                </div>
-                <h3>Reporting & Transparency</h3>
-                <ul>
-                    <li>Photo & video updates</li>
-                    <li>Periodic detailed reports</li>
-                    <li>Financial tracking</li>
-                    <li>Clear documentation</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+                <div class="mgmt-pillars-grid">
+                    <article class="mgmt-pillar-card">
+                        <div class="mgmt-pillar-top">
+                            <div class="mgmt-pillar-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <h3>Owner Coordination</h3>
+                        </div>
+                        <ul class="mgmt-pillar-list">
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Approvals across global time zones</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Weekly status updates & dispatch</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Clear decision and audit tracking</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Single dedicated point of contact</li>
+                        </ul>
+                    </article>
 
-<!-- How It Works Flow -->
-<section class="how-it-works-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>How It Works</h2>
-            <p>A simple, structured process from onboarding to ongoing management</p>
-        </div>
-        
-        <div class="flow-steps">
-            <div class="flow-step">
-                <div class="step-number">1</div>
-                <h3>Property Onboarding</h3>
-                <p>Complete property assessment, documentation, and system setup</p>
-            </div>
-            
-            <div class="flow-step">
-                <div class="step-number">2</div>
-                <h3>Tenant Placement / Inspection</h3>
-                <p>Tenant screening, lease setup, or regular property inspection</p>
-            </div>
-            
-            <div class="flow-step">
-                <div class="step-number">3</div>
-                <h3>Ongoing Management</h3>
-                <p>Day-to-day operations, maintenance, and tenant coordination</p>
-            </div>
-            
-            <div class="flow-step">
-                <div class="step-number">4</div>
-                <h3>Reporting & Updates</h3>
-                <p>Regular reports, photos, and transparent communication</p>
-            </div>
-        </div>
-    </div>
-</section>
+                    <article class="mgmt-pillar-card">
+                        <div class="mgmt-pillar-top">
+                            <div class="mgmt-pillar-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                    <polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                            </div>
+                            <h3>On-Ground Execution</h3>
+                        </div>
+                        <ul class="mgmt-pillar-list">
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Scheduled physical visits in Chennai</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Vetted vendor repairs & supervision</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Property maintenance & upkeep</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 24-hour emergency response</li>
+                        </ul>
+                    </article>
 
-<!-- Trust Metrics -->
-<section class="trust-metrics-section">
-    <div class="container">
-        <div class="section-header" style="color: var(--white); margin-bottom: 60px;">
-            <h2 style="color: var(--white);">Trusted by NRI Property Owners</h2>
-        </div>
-        
-        <div class="metrics-grid">
-            <div class="metric-item">
-                <div class="metric-number">50+</div>
-                <div class="metric-label">Properties Managed</div>
-            </div>
-            
-            <div class="metric-item">
-                <div class="metric-number">100+</div>
-                <div class="metric-label">Tenants Handled</div>
-            </div>
-            
-            <div class="metric-item">
-                <div class="metric-number">3</div>
-                <div class="metric-label">Countries Served<br><small style="opacity: 0.8;">(USA, UK, Middle East)</small></div>
-            </div>
-            
-            <div class="metric-item">
-                <div class="metric-number">24h</div>
-                <div class="metric-label">Response Time</div>
-            </div>
-        </div>
-    </div>
-</section>
+                    <article class="mgmt-pillar-card">
+                        <div class="mgmt-pillar-top">
+                            <div class="mgmt-pillar-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </div>
+                            <h3>Tenant & Rental Care</h3>
+                        </div>
+                        <ul class="mgmt-pillar-list">
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Rigid tenant screening & KYC verification</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Rent collection follow-ups & deposits</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Strict lease agreement drafting</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Smooth move-in & move-out audits</li>
+                        </ul>
+                    </article>
 
-<!-- Why NRIs Trust Us -->
-<section class="trust-reasons-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Why NRIs Trust Propertism</h2>
-            <p>Built specifically for owners managing properties from abroad</p>
-        </div>
-        
-        <div class="trust-grid">
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <div class="trust-content">
-                    <h3>Local Chennai Execution</h3>
-                    <p>On-ground team handling all property needs in Chennai</p>
-                </div>
-            </div>
-            
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                    </svg>
-                </div>
-                <div class="trust-content">
-                    <h3>Structured Communication</h3>
-                    <p>Regular updates across time zones with clear channels</p>
+                    <article class="mgmt-pillar-card">
+                        <div class="mgmt-pillar-top">
+                            <div class="mgmt-pillar-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                </svg>
+                            </div>
+                            <h3>Reporting & Transparency</h3>
+                        </div>
+                        <ul class="mgmt-pillar-list">
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Timestamped photo & video logs</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Quarterly comprehensive audits</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Clean financial statements</li>
+                            <li><svg class="mgmt-check" viewBox="0 0 16 16" fill="none"><path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="#b89a4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Secure digital document repository</li>
+                        </ul>
+                    </article>
                 </div>
             </div>
-            
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
+
+            <!-- 3. PROCESS STEPS -->
+            <div class="mgmt-block" aria-label="Management Process">
+                <div class="mgmt-block-header">
+                    <h2>How It Works</h2>
+                    <p>A predictable, 4-stage process from onboarding to continuous asset stewardship.</p>
                 </div>
-                <div class="trust-content">
-                    <h3>Transparent Reporting</h3>
-                    <p>Photo updates, detailed reports, and financial tracking</p>
+                <div class="mgmt-steps-grid">
+                    <div class="mgmt-step-card">
+                        <span class="mgmt-step-pill">Stage 01</span>
+                        <h4>Property Onboarding</h4>
+                        <p>Complete physical inspection, inventory documentation, title and utility verification.</p>
+                    </div>
+                    <div class="mgmt-step-card">
+                        <span class="mgmt-step-pill">Stage 02</span>
+                        <h4>Tenant Placement</h4>
+                        <p>Background verification, tenancy agreements, security deposit handling, and handover.</p>
+                    </div>
+                    <div class="mgmt-step-card">
+                        <span class="mgmt-step-pill">Stage 03</span>
+                        <h4>Ongoing Operations</h4>
+                        <p>Routine maintenance dispatch, rent remittance, tenant coordination, and bill clearing.</p>
+                    </div>
+                    <div class="mgmt-step-card">
+                        <span class="mgmt-step-pill">Stage 04</span>
+                        <h4>Scheduled Audits</h4>
+                        <p>Periodic photographic condition audits, financial summaries, and lease renewals.</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="8.5" cy="7" r="4"/>
-                        <line x1="20" y1="8" x2="20" y2="14"/>
-                        <line x1="23" y1="11" x2="17" y2="11"/>
+
+            <!-- 4. TRUST METRICS (LIGHT CARDS WITH GOLD ACCENTS) -->
+            <div class="mgmt-metrics-row" aria-label="Key Performance Indicators">
+                <div class="mgmt-metric-item">
+                    <span class="mgmt-metric-num">50+</span>
+                    <span class="mgmt-metric-lbl">Properties Managed</span>
+                </div>
+                <div class="mgmt-metric-item">
+                    <span class="mgmt-metric-num">100+</span>
+                    <span class="mgmt-metric-lbl">Tenants Handled</span>
+                </div>
+                <div class="mgmt-metric-item">
+                    <span class="mgmt-metric-num">3+</span>
+                    <span class="mgmt-metric-lbl">Continents Served</span>
+                </div>
+                <div class="mgmt-metric-item">
+                    <span class="mgmt-metric-num">&lt; 24h</span>
+                    <span class="mgmt-metric-lbl">Response Time SLA</span>
+                </div>
+            </div>
+
+            <!-- 5. ON-GROUND LEADERSHIP -->
+            {% if team_members %}
+            <div class="mgmt-block" aria-label="On Ground Team">
+                <div class="mgmt-block-header">
+                    <h2>Your Chennai Advisory & Management Team</h2>
+                    <p>Experienced professionals executing property operations on the ground.</p>
+                </div>
+                <div class="mgmt-team-grid">
+                    {% for member in team_members|slice:":4" %}
+                    <article class="mgmt-team-card">
+                        <div class="mgmt-team-header">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name|name_only }}" class="mgmt-team-avatar" loading="lazy" />
+                            {% else %}
+                            <div class="mgmt-team-avatar-placeholder">
+                                <span>{{ member.name|slice:":1" }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="mgmt-team-info">
+                                <h4>{{ member.name|name_only }}</h4>
+                                <span>{{ member.role }}</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'team_member_detail' member.slug %}" class="mgmt-team-link">
+                            View Full Profile &rarr;
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 6. BOTTOM CONSULTATION BANNER -->
+            <div class="mgmt-cta-box" aria-label="Consultation Banner">
+                <div>
+                    <h3>Ready for Structured On-Ground Management?</h3>
+                    <p>Discuss your Chennai property with our team and receive a tailored management brief.</p>
+                </div>
+                <a href="{% url 'contact' %}" class="btn-mgmt-solid">
+                    Schedule a Consultation
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
-                </div>
-                <div class="trust-content">
-                    <h3>Single Point of Contact</h3>
-                    <p>One dedicated team managing all aspects of your property</p>
-                </div>
+                </a>
             </div>
         </div>
     </div>
-</section>
-
-<!-- CTA Section -->
-<section class="management-cta-section">
-    <div class="container">
-        <h2>Talk to Our Chennai Team</h2>
-        <p>Schedule a consultation to discuss your property management needs</p>
-        <a href="{% url 'contact' %}" class="btn-cta-white">
-            Schedule a Consultation
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-        </a>
-    </div>
-</section>
-
-<!-- Team Section (De-emphasized) -->
-{% if team_members %}
-<section class="team-minimal-section" id="team-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Your Chennai Team</h2>
-            <p>Meet the professionals managing your property</p>
-        </div>
-        
-        <div class="team-minimal-grid">
-            {% for member in team_members|slice:":4" %}
-            <div class="team-minimal-card">
-                <h4>{{ member.name|name_only }}{% if member.name|quals_only %} <span class="member-quals-inline">{{ member.name|quals_only }}</span>{% endif %}</h4>
-                <p>{{ member.role }}</p>
-                <a href="{% url 'team_member_detail' member.slug %}">View Profile →</a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endif %}
-
+</main>
 {% endblock %}

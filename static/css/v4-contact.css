@@ -58,6 +58,12 @@
     font-size: 1rem !important;
     line-height: 1.4 !important;
     color: var(--text-muted) !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 900px !important;
 }
 
 #contact-section .contact-split-container {
