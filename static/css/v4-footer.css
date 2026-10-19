@@ -307,7 +307,7 @@
 .site-footer .world-clock-flag {
     width: 24px;
     height: 17px;
-    border-radius: 2px;
+    border-radius: 0;
     flex-shrink: 0;
     box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     display: inline-block;
@@ -663,7 +663,7 @@ body .site-footer .footer-office-phones .footer-phone-item {
     gap: 8px !important;
     background: var(--brand-gold) !important;
     border: 1px solid var(--brand-gold) !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     padding: 6px 14px !important;
     color: #0F172A !important; /* Navy text on Gold */
     font-size: 0.85rem !important;

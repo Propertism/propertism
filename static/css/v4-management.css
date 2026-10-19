@@ -203,23 +203,59 @@
 
 @media (max-width: 768px) {
     #management-section .section-inner {
-        padding: 0 24px !important;
+        padding: 0 20px !important;
     }
 
     #management-section .section-title {
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        font-size: 1.3rem !important;
+        white-space: normal !important;
+        text-wrap: balance !important;
+        line-height: 1.25 !important;
+        font-size: clamp(1.25rem, 5.5vw, 1.45rem) !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
         max-width: 100% !important;
     }
 
     #management-section .grid-3 {
         grid-template-columns: 1fr;
+        gap: 16px !important;
     }
 
     .management-preview-card {
-        padding: 36px 24px !important;
+        padding: 24px 20px !important;
+    }
+
+    .management-preview-card p {
+        margin-bottom: 16px !important;
+        font-size: 0.92rem !important;
+        line-height: 1.6 !important;
+    }
+
+    #management-section .section-cta-left {
+        width: auto !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        margin-top: 18px !important;
+    }
+
+    #management-section .btn-premium-solid {
+        width: auto !important;
+        max-width: max-content !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 9px 18px !important;
+        font-size: 0.78rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        min-height: auto !important;
+        border-radius: 0 !important;
+    }
+
+    #management-section .btn-premium-solid svg {
+        width: 16px !important;
+        height: 16px !important;
     }
 }
 
@@ -230,6 +266,7 @@
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
+    border-radius: 0 !important;
 }
 
 /* ============================================

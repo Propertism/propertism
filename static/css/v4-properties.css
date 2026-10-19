@@ -470,14 +470,35 @@
 
 @media (max-width: 768px) {
     #properties-section .section-inner {
-        padding: 0 24px !important;
+        padding: 0 20px !important;
     }
 
     #properties-section .section-title {
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        font-size: 1.3rem !important;
+        white-space: normal !important;
+        text-wrap: balance !important;
+        line-height: 1.25 !important;
+        font-size: clamp(1.25rem, 5.5vw, 1.45rem) !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+
+    #properties-section .featured-properties-cta.dual-cta {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+        margin-top: 10px !important;
+    }
+
+    #properties-section .featured-properties-cta.dual-cta a {
+        width: 100% !important;
+        min-height: 44px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 12px 18px !important;
+        font-size: 0.76rem !important;
+        border-radius: 0 !important;
     }
 
     .property-grid-hybrid {

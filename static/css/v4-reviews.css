@@ -196,8 +196,25 @@
 }
 
 @media (max-width: 768px) {
+    #reviews-section .section-inner {
+        padding: 0 20px !important;
+    }
+
+    #reviews-section .section-title {
+        white-space: normal !important;
+        text-wrap: balance !important;
+        line-height: 1.25 !important;
+        font-size: clamp(1.25rem, 5.5vw, 1.45rem) !important;
+    }
+
     .cr-masonry-grid {
         grid-template-columns: 1fr;
+        gap: 16px !important;
+    }
+
+    .cr-card {
+        padding: 22px 18px !important;
+        border-radius: 0 !important;
     }
 }
 

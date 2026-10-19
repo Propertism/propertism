@@ -176,6 +176,12 @@
         min-width: 0 !important;
         height: auto !important;
         padding: 18px 16px !important;
+        background-color: #FFFFFF !important;
+    }
+
+    .metrics-performance .metric-item,
+    .metrics-brand .metric-item {
+        background-color: #FFFFFF !important;
     }
 
     .metric-item:not(:last-child)::after {
@@ -203,17 +209,18 @@
     }
 
     .metrics-brand .metric-value {
-        font-size: clamp(1.15rem, 5vw, 1.45rem) !important;
-        line-height: 1.2 !important;
-        max-width: 14ch;
+        font-size: clamp(1.15rem, 5vw, 1.35rem) !important;
+        line-height: 1.25 !important;
+        max-width: 100% !important;
     }
 
     .metric-label {
-        font-size: 0.68rem !important;
-        letter-spacing: 0.12em !important;
+        font-size: 0.72rem !important;
+        letter-spacing: 0.1em !important;
     }
 
     .metrics-brand .metric-label {
-        max-width: 28ch !important;
+        max-width: 100% !important;
+        line-height: 1.5 !important;
     }
 }

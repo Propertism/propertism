@@ -277,14 +277,9 @@
     .inq-gate-input{width:100%;border:1px solid rgba(15,23,42,.16);background:#fff;padding:.78rem .82rem;font-family:'Jost',sans-serif;font-size:.92rem;color:#0f172a;outline:none}
     .inq-gate-input:focus{border-color:#C49C52}
     .inq-gate-submit{border:1px solid #C49C52;background:#0b0f1a;color:#fff;padding:.82rem 1rem;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-    .inq-gate-fab{position:fixed;right:calc(1rem + env(safe-area-inset-right,0px));bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:300;display:inline-flex;align-items:center;gap:.55rem;height:52px;padding:0 1rem;border:1px solid #C49C52;background:#0b0f1a;color:#fff;text-decoration:none;box-shadow:0 12px 30px rgba(15,23,42,.22)}
-    .inq-gate-fab span{font-family:'Jost',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-    @media (min-width:900px){.inq-gate-fab{display:none}}
+    .inq-gate-fab{display:none !important}
     </style>
-    <button type="button" class="inq-gate-fab" onclick="openInquiryGate()" aria-label="Open staff inquiries login">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-        <span>Staff Inquiries</span>
-    </button>
+    <!-- Staff Inquiries FAB hidden to keep visitor mobile journey pristine; accessible via footer -->
     <div class="inq-gate-overlay" id="inqGateOverlay" aria-hidden="true">
         <div class="inq-gate-modal" role="dialog" aria-modal="true" aria-labelledby="inqGateTitle">
             <button type="button" class="inq-gate-close" onclick="closeInquiryGate()" aria-label="Close">&times;</button>

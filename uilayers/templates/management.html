@@ -399,8 +399,8 @@
         height: 38px;
         border-radius: 50% !important;
         border: 1.5px solid #b89a4a;
-        background: rgba(184, 154, 74, 0.1);
-        color: #b89a4a;
+        background: rgba(184, 154, 74, 0.15) !important;
+        color: #0f172a !important;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -700,7 +700,10 @@
                     <article class="mgmt-team-card">
                         <div class="mgmt-team-header">
                             {% if member.photo %}
-                            <img src="{{ member.photo.url }}" alt="{{ member.name|name_only }}" class="mgmt-team-avatar" loading="lazy" />
+                            <img src="{{ member.photo.url }}" alt="{{ member.name|name_only }}" class="mgmt-team-avatar" loading="lazy" onerror="this.onerror=null; this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+                            <div class="mgmt-team-avatar-placeholder" style="display: none;">
+                                <span>{{ member.name|slice:":1" }}</span>
+                            </div>
                             {% else %}
                             <div class="mgmt-team-avatar-placeholder">
                                 <span>{{ member.name|slice:":1" }}</span>

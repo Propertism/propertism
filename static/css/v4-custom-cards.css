@@ -176,14 +176,16 @@
 
 @media (max-width: 768px) {
     .custom-cards-section .section-inner {
-        padding: 0 24px !important;
+        padding: 0 20px !important;
     }
 
     .custom-cards-section .section-title {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: clip !important;
-        max-width: 15ch !important;
+        max-width: 100% !important;
+        line-height: 1.25 !important;
+        font-size: clamp(1.25rem, 5.5vw, 1.45rem) !important;
     }
 
     .custom-cards-grid {
@@ -191,7 +193,7 @@
     }
 
     .custom-card-panel {
-        padding: 36px 24px !important;
+        padding: 24px 20px !important;
     }
 }
 

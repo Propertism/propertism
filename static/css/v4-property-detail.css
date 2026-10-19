@@ -5,7 +5,7 @@
 
 .property-detail-section {
     background-color: var(--bg-surface) !important;
-    padding: var(--section-v-padding) 0 !important;
+    padding: calc(var(--nav-height, 92px) + 24px) 0 50px !important;
     color: var(--text-main) !important;
     min-height: 80vh;
 }
@@ -254,8 +254,12 @@
 }
 
 @media (max-width: 768px) {
+    .property-detail-section {
+        padding-top: 104px !important;
+    }
     .gallery-main-v4 img {
-        height: 400px;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important;
     }
     .property-detail-section .section-inner {
         padding: 0 20px !important;
