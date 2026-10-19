@@ -298,5 +298,35 @@
 
 ### 🎯 STAGE 5/6 STATUS
 - Viji reviewed and approved in chat: *"Verified Astra, Please push to git"*.
-- Ready for git commit and push under `Propertism` GitHub CLI account.
+- Pushed commit `f7f98ad` under `Propertism` GitHub CLI account.
+
+---
+
+## Session Entry (2026-10-19 Afternoon — Mobile View & Alignment Polish Overhaul)
+
+### ✅ COMPLETED DELIVERABLES
+1. **Universal Zero-Radius Enforcement across Mobile Styles**:
+   - Stripped rounded corners (`border-radius: 0 !important;`) across `mobile-layout.css`, `v4-tokens.css`, `v4-nav.css`, `v4-contact.css`, `v4-footer.css`, `v4-team-detail.css`, `v4-property-resources.css`, `contact.html`, and `about.html`.
+   - Preserved `border-radius: 50% !important;` strictly for human face avatars only.
+2. **Screen Obstruction & Visual Collision Elimination**:
+   - Removed `.inq-gate-fab` floating button (`display: none !important;`) on mobile in `base.html`; moved staff login to discrete `Staff Access` footer link in `_footer.html`.
+   - Hidden `.floating-social-rail` on screens $\le 900\text{px}$ in `home-premium.html` to eliminate side content clipping.
+3. **Card & Service Refinements**:
+   - Cured duplicate arrow glitch (`.service-depth-link::after { display: none !important; }`) in `v4-services.css`.
+   - Cleaned service card `.insight-icon` background to transparent with gold architectural vector line art.
+   - Cured trust strip dead space void (`max-width: 100% !important;`) and unified mobile background to clean `#FFFFFF` with gold borders.
+4. **PO Feedback Items Resolved**:
+   - **Item 1: Hamburger Menu**: Hardened mobile menu toggle button with gold border (`border: 1px solid rgba(184, 154, 74, 0.4); border-radius: 0 !important;`) and high-contrast lines for both light/dark themes in `mobile-layout.css`. Added mobile hamburger toggle and slide-out navigation drawers to `contact.html` and `about.html`.
+   - **Item 2: Hero CTAs**: Replaced rigid 2-column grid with a centered, un-stretched flex layout (`v4-hero.css`); enabled dynamic text wrap (`white-space: normal !important; text-wrap: balance !important;`) to eliminate text clipping on `RENT OUT MY PROPERTY`.
+   - **Item 3: Management Framework CTA**: Reduced button size (`padding: 9px 18px !important; font-size: 0.78rem !important;`) and un-stretched from full width (`width: auto !important; max-width: max-content !important;`) in `v4-management.css`.
+5. **Deterministic Verification & Commit**:
+   - Browser subagent verified clean visual state across mobile viewports (390x844 & 502x751).
+   - `.\scripts\django.cmd check` $\rightarrow$ 0 errors.
+   - Standalone implementation report authored: `reports/IMPLEMENTATION_REPORT_MOBILE_VIEW_ALIGNMENTS.md`.
+
+### 🎯 STAGE 5/6 STATUS
+- Viji reviewed and approved in chat: *"All Good Push to GIT"*.
+- Staged, committed (`7e00751`), and pushed to `origin main` on `https://github.com/Propertism/propertism.git` under `Propertism` GitHub CLI account.
+- Lightsail CI/CD pipeline triggered.
+
 
